@@ -11,7 +11,7 @@ describe('DefaultImport', () => {
     let mockValidator;
     let mockProjectConfiguration;
     let importFunction;
-    let importReport;
+    let importResult;
 
 
     beforeEach(() => {
@@ -40,16 +40,14 @@ describe('DefaultImport', () => {
             mockValidator,
             mockProjectConfiguration,
             false, () => '101');
-
-        importReport = {errors: [], warnings: [], importedResourcesIds: []};
     });
 
 
     it('should resolve on success', async done => {
 
-        importReport = await importFunction([
+        await importFunction([
             { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
-            importReport, mockDatastore, 'user1');
+            mockDatastore, 'user1');
 
         expect(mockDatastore.create).toHaveBeenCalled();
         done();
@@ -64,13 +62,11 @@ describe('DefaultImport', () => {
             documents: [{resource: {identifier: '123', id: '1'}}]
         }));
 
-        const importReport = {errors: [], warnings: [], importedResourcesIds: []};
-
         await (DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
              true, () => '101') as any)(
-            [{ resource: {id: '1', relations: undefined } } as any], importReport, mockDatastore,'user1');
+            [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
         expect(mockDatastore.update).toHaveBeenCalled();
@@ -87,7 +83,7 @@ describe('DefaultImport', () => {
             mockProjectConfiguration,
              false, () => '101') as any)([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
-                importReport, mockDatastore,'user1');
+                mockDatastore,'user1');
 
         expect(mockDatastore.create).toHaveBeenCalled();
         expect(mockDatastore.update).not.toHaveBeenCalled();
@@ -100,11 +96,11 @@ describe('DefaultImport', () => {
 
         mockDatastore.create.and.returnValue(Promise.reject(['abc']));
 
-        importReport = await importFunction(
+        const {errors} = await importFunction(
             [{resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any],
-            importReport, mockDatastore,'user1');
+            mockDatastore,'user1');
 
-        expect(importReport.errors[0][0]).toBe('abc');
+        expect(errors[0][0]).toBe('abc');
         done();
     });
 
@@ -126,8 +122,7 @@ describe('DefaultImport', () => {
             mockProjectConfiguration,
             true,  () => '101');
 
-        await importFunction([docToMerge as any],
-                importReport, mockDatastore, 'user1');
+        await importFunction([docToMerge as any], mockDatastore, 'user1');
 
         const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
         expect(importedDoc.resource).toEqual({
@@ -154,8 +149,8 @@ describe('DefaultImport', () => {
 
         mockDatastore.find.and.returnValue(
             Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }));
-        importReport = await importFunction([ docToImport as any ],
-            importReport, mockDatastore,'user1');
+        await importFunction([ docToImport as any ],
+            mockDatastore,'user1');
 
         expect(docToImport.resource.relations.isRecordedIn[0]).toEqual('3');
         done();
@@ -175,9 +170,9 @@ describe('DefaultImport', () => {
 
         mockDatastore.find.and.returnValues(
             Promise.resolve({ totalCount: 0 }));
-        importReport = await importFunction([ docToImport as any ], importReport, mockDatastore,'user1');
+        const {errors} = await importFunction([ docToImport as any ], mockDatastore,'user1');
 
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);
+        expect(errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);
         done();
     });
 
@@ -186,12 +181,12 @@ describe('DefaultImport', () => {
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.INVALID_TYPE]});
 
-        importReport = await importFunction([
+        const {errors} = await importFunction([
             { resource: { type: 'Nonexisting', identifier: '1a', relations: { isRecordedIn: ['0'] } } } as any
-        ], importReport, mockDatastore, 'user1');
+        ], mockDatastore, 'user1');
 
-        expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ValidationErrors.INVALID_TYPE);
+        expect(errors.length).toBe(1);
+        expect(errors[0][0]).toEqual(ValidationErrors.INVALID_TYPE);
         done();
     });
 
@@ -201,14 +196,14 @@ describe('DefaultImport', () => {
 
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
 
-        importReport = await importFunction([
+        const {errors} = await importFunction([
             { resource: { type: 'Place', identifier: '1a' } } as any,
             { resource: { type: 'Trench', identifier: '1a' } } as any
-        ], importReport, mockDatastore, 'user1');
+        ], mockDatastore, 'user1');
 
-        expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.DUPLICATE_IDENTIFIER);
-        expect(importReport.errors[0][1]).toEqual('1a');
+        expect(errors.length).toBe(1);
+        expect(errors[0][0]).toEqual(ImportErrors.DUPLICATE_IDENTIFIER);
+        expect(errors[0][1]).toEqual('1a');
         done();
     });
 
@@ -218,13 +213,13 @@ describe('DefaultImport', () => {
         mockDatastore.find.and.returnValues(Promise.resolve(
             { documents: [{ resource: { type: 'Place', identifier: '1a'} }], totalCount: 1 }));
 
-        importReport = await importFunction([
+        const {errors} = await importFunction([
             { resource: { type: 'Place', identifier: '1a', relations: { isRecordedIn: {}}} } as any
-        ], importReport, mockDatastore, 'user1');
+        ], mockDatastore, 'user1');
 
-        expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.RESOURCE_EXISTS);
-        expect(importReport.errors[0][1]).toEqual('1a');
+        expect(errors.length).toBe(1);
+        expect(errors[0][0]).toEqual(ImportErrors.RESOURCE_EXISTS);
+        expect(errors[0][1]).toEqual('1a');
         done();
     });
 });

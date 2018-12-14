@@ -4,7 +4,6 @@ import {ImportErrors} from '../import-errors';
 import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ImportReport} from '../import-facade';
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {duplicates, to} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
@@ -52,25 +51,24 @@ export module DefaultImport {
          *      [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
          */
         return async (documents: Array<Document>,
-                      importReport: ImportReport,
                       datastore: DocumentDatastore,
-                      username: string): Promise<ImportReport> => {
+                      username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
             if (!mergeMode) {
                 const duplicates_ = duplicates(documents.map(to('resource.identifier')));
                 if (duplicates_.length > 0) {
-                    for (let duplicate of duplicates_) importReport.errors.push(
+                    const errors = [];
+                    for (let duplicate of duplicates_) errors.push(
                         [ImportErrors.DUPLICATE_IDENTIFIER, duplicate]);
-                    return importReport;
+                    return { errors: errors, successfulImports: 0} ;
                 }
             }
             const identifierMap: { [identifier: string]: string } = mergeMode ?
                 {}
                 : assignIds(documents, generateId);
 
-            const documentsForUpdate = await prepareDocumentsForUpdate(
+            const { documentsForUpdate, errors } = await prepareDocumentsForUpdate(
                 documents,
-                importReport,
                 findByIdentifier(datastore),
                 identifierMap,
                 mergeMode,
@@ -78,7 +76,7 @@ export module DefaultImport {
                 mainTypeDocumentId,
                 useIdentifiersInRelations);
 
-            if (importReport.errors.length > 0) return importReport;
+            if (errors.length > 0) return { errors: errors, successfulImports: 0 };
 
             let targetDocuments;
             if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
@@ -86,6 +84,7 @@ export module DefaultImport {
                 projectConfiguration,
                 documents);
 
+            const updateErrors = [];
             try {
                 await ImportUpdater.go(
                     documentsForUpdate as any,
@@ -96,24 +95,23 @@ export module DefaultImport {
                     mergeMode);
 
             } catch (errWithParams) {
-                importReport.errors.push(errWithParams);
+                updateErrors.push(errWithParams);
             }
 
-            importReport.importedResourcesIds = documents.map(to('resource.id'));
-            return importReport;
+            return { errors: updateErrors, successfulImports: documents.length };
         }
     }
 
 
     async function prepareDocumentsForUpdate(documents: Array<Document>,
-                                             importReport: ImportReport,
                                              find: (identifier: string) => Promise<Document|undefined>,
                                              identifierMap: { [identifier: string]: string },
                                              mergeMode: boolean,
                                              validator: ImportValidator,
                                              mainTypeDocumentId: string,
-                                             useIdentifiersInRelations: boolean): Promise<Array<NewDocument>> {
+                                             useIdentifiersInRelations: boolean) {
 
+        const errors: string[][] = [];
         const documentsForUpdate: Array<NewDocument> = [];
         for (let document of documents) {
 
@@ -129,10 +127,10 @@ export module DefaultImport {
 
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {
-                importReport.errors.push(errWithParams);
+                errors.push(errWithParams);
             }
         }
-        return documentsForUpdate;
+        return { documentsForUpdate: documentsForUpdate, errors: errors };
     }
 
 

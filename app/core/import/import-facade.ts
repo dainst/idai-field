@@ -15,7 +15,7 @@ import {MeninxFindImport} from './exec/meninx-find-import';
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
 
-export type ImportReport = { errors: any[], warnings: any[], importedResourcesIds: string[] };
+export type ImportReport = { errors: any[], warnings: any[], successfulImports: number };
 
 
 
@@ -61,13 +61,7 @@ export module ImportFacade {
                                    fileContent: string,
                                    generateId: () => string) {
 
-
-        const importReport = {
-            errors: [],
-            warnings: [],
-            importedResourcesIds: []
-        };
-
+        let parserWarnings: string[][] = [];
         const parser = createParser(format);
         const docsToUpdate: Document[] = [];
         try {
@@ -76,11 +70,11 @@ export module ImportFacade {
                 .parse(fileContent)
                 .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
 
-            importReport.warnings = parser.getWarnings() as never[];
+            parserWarnings = parser.getWarnings() as never[];
 
         } catch (msgWithParams) {
 
-            importReport.errors.push(msgWithParams as never);
+            return { errors: [msgWithParams], warnings: parserWarnings, successfulImports: 0 };
         }
 
         const importFunction = buildImportFunction(
@@ -91,7 +85,8 @@ export module ImportFacade {
             allowMergingExistingResources,
             generateId);
 
-        return await importFunction(docsToUpdate, importReport, datastore, usernameProvider.getUsername());
+        const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
+        return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
 

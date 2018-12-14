@@ -1,5 +1,4 @@
 import {Document} from 'idai-components-2'
-import {ImportReport} from '../import-facade';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 
 /**
@@ -7,7 +6,6 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
  */
 export type ImportFunction =
     (documents: Array<Document>,
-     importReport: ImportReport,
      datastore: DocumentDatastore,
      username: string) =>
-        Promise<ImportReport>;
+        Promise<{ errors: string[][], successfulImports: number }>;

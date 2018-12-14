@@ -167,16 +167,16 @@ export class ImportComponent implements OnInit {
         if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
 
         this.showMessages(importReport.warnings);
-        this.showSuccessMessage(importReport.importedResourcesIds);
+        this.showSuccessMessage(importReport.successfulImports);
     }
 
 
-    private showSuccessMessage(importedResourcesIds: string[]) {
+    private showSuccessMessage(successfulImports: number) {
 
-        if (importedResourcesIds.length === 1) {
+        if (successfulImports === 1) {
             this.messages.add([M.IMPORT_SUCCESS_SINGLE]);
-        } else if (importedResourcesIds.length > 1) {
-            this.messages.add([M.IMPORT_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);
+        } else if (successfulImports > 1) {
+            this.messages.add([M.IMPORT_SUCCESS_MULTIPLE, successfulImports.toString()]);
         }
     }
 

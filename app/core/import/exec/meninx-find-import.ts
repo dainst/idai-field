@@ -4,7 +4,6 @@ import {Document} from 'idai-components-2/src/model/core/document';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ImportErrors} from '../import-errors';
 import {clone} from '../../util/object-util';
-import {ImportReport} from '../import-facade';
 import {ImportFunction} from './import-function';
 
 
@@ -23,23 +22,23 @@ export module MeninxFindImport {
     export function build(): ImportFunction {
 
         return async (documents: Array<Document>,
-                      importReport: ImportReport,
                       datastore: DocumentDatastore,
-                      username: string): Promise<ImportReport> => {
+                      username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
+            let successfulImports = 0;
             for (let docToUpdate of documents) {
 
                 try {
                     const importedDoc = await MeninxFindImport.importDoc(docToUpdate, datastore, username);
-                    if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
+                    if (importedDoc) successfulImports += 1;
 
                 } catch (msgWithParams) {
-                    importReport.errors.push(msgWithParams);
-                    return importReport;
+
+                    return { errors: [msgWithParams], successfulImports: successfulImports };
                 }
             }
 
-            return importReport;
+            return { errors: [], successfulImports: successfulImports };
         }
     }
 

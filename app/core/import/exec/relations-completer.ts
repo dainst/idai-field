@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {ImportErrors} from '../import-errors';
+import {ImportErrors} from './import-errors';
 import {isUndefinedOrEmpty, on, isEmpty} from 'tsfun';
 
 

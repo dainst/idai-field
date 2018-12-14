@@ -2,7 +2,7 @@ import {NewDocument} from 'idai-components-2/src/model/core/new-document';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Document} from 'idai-components-2/src/model/core/document';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
-import {ImportErrors} from '../import-errors';
+import {ImportErrors} from './import-errors';
 import {clone} from '../../util/object-util';
 import {ImportFunction} from './import-function';
 

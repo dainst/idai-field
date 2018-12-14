@@ -5,7 +5,7 @@ import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
 import {ValidationErrors} from '../../model/validation-errors';
-import {ImportErrors} from '../import-errors';
+import {ImportErrors} from './import-errors';
 
 
 @Injectable()

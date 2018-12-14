@@ -1,10 +1,10 @@
 import {Document} from 'idai-components-2/src/model/core/document';
 import {NewDocument} from 'idai-components-2/src/model/core/new-document';
-import {ImportErrors} from '../import-errors';
+import {ImportErrors} from './import-errors';
 import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-components-2';
 import {duplicates, to} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {ImportUpdater} from './import-updater';

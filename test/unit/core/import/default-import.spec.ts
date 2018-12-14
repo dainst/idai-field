@@ -1,4 +1,4 @@
-import {ImportErrors} from '../../../../app/core/import/import-errors';
+import {ImportErrors} from '../../../../app/core/import/exec/import-errors';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {DefaultImport} from '../../../../app/core/import/exec/default-import';
 

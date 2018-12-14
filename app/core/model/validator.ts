@@ -3,7 +3,7 @@ import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
-import {ImportErrors} from '../import/import-errors';
+import {ImportErrors} from '../import/exec/import-errors';
 
 
 @Injectable()
@@ -64,7 +64,7 @@ export class Validator {
     }
 
 
-    public async assertIsNotOverviewType(document: Document|NewDocument) {
+    public async assertIsNotOverviewType(document: Document|NewDocument) { // TODO consider moving to import package
 
         if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
 

@@ -80,9 +80,9 @@ export module DefaultImport {
 
             let targetDocuments;
             if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
+                documents,
                 (resourceId: string) => datastore.get(resourceId),
-                projectConfiguration,
-                documents);
+                projectConfiguration);
 
             const updateErrors = [];
             try {

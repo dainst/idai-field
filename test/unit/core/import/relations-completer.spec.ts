@@ -56,7 +56,7 @@ describe('RelationsCompleter', () => {
     it('set inverse relation', async done => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
-        const documents = await RelationsCompleter.completeInverseRelations(get, mockProjectConfiguration, [doc1 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, mockProjectConfiguration);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');

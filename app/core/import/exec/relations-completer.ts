@@ -14,9 +14,10 @@ export module RelationsCompleter {
      * @throws [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws DatastoreErrors.*
      */
-    export async function completeInverseRelations(get: (_: string) => Promise<Document>,
+    export async function completeInverseRelations(documents: Array<Document>,
+                                                   get: (_: string) => Promise<Document>,
                                                    projectConfiguration: ProjectConfiguration,
-                                                   documents: Array<Document>): Promise<Array<Document>> {
+                                                   ): Promise<Array<Document>> {
 
 
         let targetDocuments: Array<Document> = [];

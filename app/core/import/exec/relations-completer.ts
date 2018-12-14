@@ -1,5 +1,7 @@
 import {Document, ProjectConfiguration, Relations} from 'idai-components-2';
 import {ImportErrors} from '../import-errors';
+import {on} from 'tsfun';
+
 
 /**
  * @author Thomas Kleinke
@@ -11,62 +13,84 @@ export module RelationsCompleter {
     /**
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
      *
+     * @param documents If one of these references another from the import file, the validity of the relations gets checked
+     *   for contradictory relations and missing inverses are added.
+     * @param get
+     * @param projectConfiguration
+     *
+     * @returns the target documents which should be updated. Only those fetched from the db are included. If a target document comes from
+     *   the import file itself, <code>documents</code> gets modified in place accordingly.
+     *
+     * side-effects: if an inverse of one of documents is not set, it gets completed automatically.
+     *   The document from documents then gets modified in place.
+     *
      * @throws [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws DatastoreErrors.*
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
-                                                   projectConfiguration: ProjectConfiguration,
-                                                   ): Promise<Array<Document>> {
+                                                   projectConfiguration: ProjectConfiguration): Promise<Array<Document>> {
 
 
         let targetDocuments: Array<Document> = [];
         for (let document of documents) {
            targetDocuments = targetDocuments.concat(await setInverseRelationsForResource(
-               get, projectConfiguration, document.resource.relations, document.resource.id));
+               documents, get, projectConfiguration, document.resource.relations, document.resource.id));
         }
         return targetDocuments;
     }
 
 
-    /**
-     * Creates/removes inverse relations for a single resource.
-     */
-    async function setInverseRelationsForResource(get: (_: string) => Promise<Document>,
+    async function setInverseRelationsForResource(otherDocumentsFromImport: Array<Document>, // TODO filter doc under consideration
+                                                  get: (_: string) => Promise<Document>,
                                                   projectConfiguration: ProjectConfiguration,
                                                   relations: Relations,
                                                   resourceId: string): Promise<Array<Document>> {
 
-        const targetDocuments: Array<Document> = [];
+        const targetDocumentsForUpdate: Array<Document> = [];
 
-        for (let relationName of Object
+        const relationNamesExceptRecordeIn = Object
             .keys(relations)
             .filter(relationName => relationName !== 'isRecordedIn')
-            .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
+            .filter(relationName => projectConfiguration.isRelationProperty(relationName));
+
+
+        for (let relationName of relationNamesExceptRecordeIn) {
 
             for (let targetId of relations[relationName]) {
 
-                let targetDocument;
-                try {
-                    targetDocument = await get(targetId);
-                } catch {
+                let targetDocument = otherDocumentsFromImport.find(on('resource.id:')(targetId));
 
-                    // TODO this could also be a reference within the import itself
-                    throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
+                if (targetDocument /* from import file */) {
+
+                    // TODO validate and augment inverse if necessary
+
+                } else /* from db */ {
+
+                    try {
+
+                        targetDocument = await get(targetId);
+
+                        const targetDocumentForUpdate = await createRelation(resourceId, targetDocument,
+                            projectConfiguration.getInverseRelations(relationName) as any);
+                        if (targetDocumentForUpdate) targetDocumentsForUpdate.push(targetDocumentForUpdate);
+
+                    } catch {
+
+                        // TODO this could also be a reference within the import itself
+                        throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
+                    }
                 }
-
-                targetDocuments.push(await createRelation(resourceId, targetDocument,
-                    projectConfiguration.getInverseRelations(relationName) as any));
             }
         }
 
-        return targetDocuments;
+        return targetDocumentsForUpdate;
     }
 
 
     async function createRelation(resourceId: string,
                                   targetDocument: Document,
-                                  relationName: string): Promise<any> {
+                                  relationName: string): Promise<Document|undefined> {
 
         let relations = targetDocument.resource.relations[relationName];
 

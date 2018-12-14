@@ -9,16 +9,7 @@ describe('RelationsCompleter', () => {
     let isRelationProperty;
     let getInverseRelation;
 
-    let doc1: any = {
-        resource: {
-            id: '1',
-            identifier: 'one',
-            type: 'Object',
-            relations: {liesWithin: [], isRecordedIn: []}
-        }
-    };
-
-
+    let doc1: any;
     let doc2: any;
 
 
@@ -31,6 +22,15 @@ describe('RelationsCompleter', () => {
                 identifier: 'two',
                 type: 'Object',
                 relations: {}
+            }
+        };
+
+        doc1 = {
+            resource: {
+                id: '1',
+                identifier: 'one',
+                type: 'Object',
+                relations: {liesWithin: [], isRecordedIn: []}
             }
         };
 
@@ -86,10 +86,27 @@ describe('RelationsCompleter', () => {
     });
 
 
+    it('set inverse relation within import itself - both directions set', async done => {
+
+        doc1.resource.relations['liesWithin'] = ['2'];
+        doc1.resource.relations['includes'] = ['2'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(ImportErrors.NOT_INTERRELATED);
+            expect(errWithParams[1]).toEqual('one');
+            expect(errWithParams[2]).toEqual('two');
+        }
+        done();
+    });
+
+
     it('set inverse relation with database resource', async done => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter
+            .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -102,7 +119,8 @@ describe('RelationsCompleter', () => {
 
         doc2.resource.relations['includes'] = ['3'];
         doc1.resource.relations['liesWithin'][0] = '2';
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter
+            .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -117,7 +135,8 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations['liesWithin'][0] = '3';
         try {
 
-            await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            await RelationsCompleter
+                .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET)

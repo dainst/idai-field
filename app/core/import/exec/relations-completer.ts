@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
-import {isUndefinedOrEmpty, on, isEmpty} from 'tsfun';
+import {isUndefinedOrEmpty, on, isEmpty, union} from 'tsfun';
 
 
 /**
@@ -53,6 +53,12 @@ export module RelationsCompleter {
     }
 
 
+    /**
+     * Implementation note:
+     * Runtime of O(2) could lead to problems.
+     * The for loops over the different relations and relations targets are no problem.
+     * The critical places are marked with '!', together with the for loop in the call.
+     */
     async function setInverseRelationsForResource(document: Document,
                                                   otherDocumentsFromImport: Array<Document>,
                                                   get: (_: string) => Promise<Document>,
@@ -73,24 +79,34 @@ export module RelationsCompleter {
             const inverseRelationName = getInverseRelation(relationName);
             if (!inverseRelationName) continue;
 
+            if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
+                const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
+                if (u.length > 0) {
+                    throw [ImportErrors.NOT_INTERRELATED,
+                        document.resource.identifier,
+                        (otherDocumentsFromImport.find(on('resource.id:')(u[0])) as any).resource.identifier]; // ! not critical, can easily be taken out
+                }
+            }
+
+
             for (let targetId of document.resource.relations[relationName]) {
-                let targetDocument = otherDocumentsFromImport.find(on('resource.id:')(targetId));
+                let targetDocument = otherDocumentsFromImport.find(on('resource.id:')(targetId)); // ! could be improved by hash lookup
 
                 if (targetDocument /* from import file */) {
 
-                    if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
-                        throw [ImportErrors.NOT_INTERRELATED, document.resource.identifier, targetDocument.resource.identifier];
+                    if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])
+                        || !targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
+
+                        throw [ImportErrors.NOT_INTERRELATED,
+                            document.resource.identifier,
+                            targetDocument.resource.identifier];
                     }
-                    if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
-                        throw [ImportErrors.NOT_INTERRELATED, document.resource.identifier, targetDocument.resource.identifier];
-                    }
-                    // TODO also validate that they interrelate not mutually, for example both have isAfter as well as isBefore pointing to each other
 
                 } else /* from db */ {
 
                     try {
 
-                        targetDocument = await get(targetId);
+                        targetDocument = await get(targetId); // ! depends on lookup time
                         if (!targetDocument.resource.relations[inverseRelationName]) targetDocument.resource.relations[inverseRelationName] = [];
                         targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
                         targetDocumentsForUpdate.push(targetDocument);

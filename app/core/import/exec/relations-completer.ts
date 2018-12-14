@@ -100,7 +100,7 @@ export module RelationsCompleter {
         let relations = targetDocument.resource.relations[relationName];
 
         if (!relations) relations = [];
-        if (!relations.includes(resourceId)) {
+        if (!relations.includes(resourceId)) { // TODO this should not be necessary
             relations.push(resourceId);
             targetDocument.resource.relations[relationName] = relations;
             return targetDocument;

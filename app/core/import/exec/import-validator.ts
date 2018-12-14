@@ -52,6 +52,15 @@ export class ImportValidator extends Validator {
     }
 
 
+    public async assertIsNotOverviewType(document: Document|NewDocument) {
+
+        if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
+
+            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
+        }
+    }
+
+
     /**
      * Wellformedness test specifically written for use in import package.
      *

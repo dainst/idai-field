@@ -64,15 +64,6 @@ export class Validator {
     }
 
 
-    public async assertIsNotOverviewType(document: Document|NewDocument) { // TODO consider moving to import package
-
-        if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
-
-            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
-        }
-    }
-
-
     /**
      * @throws [NO_ISRECORDEDIN]
      */

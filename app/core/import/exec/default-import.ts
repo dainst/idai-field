@@ -20,8 +20,8 @@ export module DefaultImport {
 
     export function build(validator: ImportValidator,
                           projectConfiguration: ProjectConfiguration,
-                          mergeMode: boolean,
                           generateId: () => string,
+                          mergeMode: boolean = false,
                           mainTypeDocumentId: string = '' /* '' => no assignment */,
                           useIdentifiersInRelations: boolean = false): ImportFunction {
 

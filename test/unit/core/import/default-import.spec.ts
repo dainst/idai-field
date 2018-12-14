@@ -11,7 +11,6 @@ describe('DefaultImport', () => {
     let mockValidator;
     let mockProjectConfiguration;
     let importFunction;
-    let importResult;
 
 
     beforeEach(() => {
@@ -39,7 +38,7 @@ describe('DefaultImport', () => {
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-            false, () => '101');
+            () => '101', false);
     });
 
 
@@ -65,7 +64,7 @@ describe('DefaultImport', () => {
         await (DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-             true, () => '101') as any)(
+             () => '101', true) as any)(
             [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -81,7 +80,7 @@ describe('DefaultImport', () => {
         await (DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-             false, () => '101') as any)([
+            () => '101', false) as any)([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
                 mockDatastore,'user1');
 
@@ -89,7 +88,6 @@ describe('DefaultImport', () => {
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();
     });
-
 
 
     it('should reject on err in datastore', async done => {
@@ -120,7 +118,7 @@ describe('DefaultImport', () => {
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-            true,  () => '101');
+            () => '101', true);
 
         await importFunction([docToMerge as any], mockDatastore, 'user1');
 
@@ -141,8 +139,8 @@ describe('DefaultImport', () => {
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-            false,
-             () => '101', '', true);
+
+             () => '101', false,  '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };
@@ -162,8 +160,7 @@ describe('DefaultImport', () => {
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-            false,
-             () => '101', '', true);
+             () => '101', false, '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };

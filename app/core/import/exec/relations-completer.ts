@@ -24,24 +24,29 @@ export module RelationsCompleter {
      * side-effects: if an inverse of one of documents is not set, it gets completed automatically.
      *   The document from documents then gets modified in place.
      *
-     * @throws [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
-     * @throws DatastoreErrors.*
+     * @throws ImportErrors.*
+     * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
+     * @throws DatastoreErrors.* TODO ?
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
                                                    projectConfiguration: ProjectConfiguration): Promise<Array<Document>> {
 
 
-        let targetDocuments: Array<Document> = [];
+        let allDBDocumentsToUpdate: Array<Document> = [];
         for (let document of documents) {
-           targetDocuments = targetDocuments.concat(await setInverseRelationsForResource(
-               documents, get, projectConfiguration, document.resource.relations, document.resource.id));
+
+            const dbDocumentsToUpdate = await setInverseRelationsForResource(
+                documents.filter(doc => doc.resource.id !== document.resource.id),
+                get, projectConfiguration, document.resource.relations, document.resource.id);
+
+            allDBDocumentsToUpdate = allDBDocumentsToUpdate.concat(dbDocumentsToUpdate);
         }
-        return targetDocuments;
+        return allDBDocumentsToUpdate;
     }
 
 
-    async function setInverseRelationsForResource(otherDocumentsFromImport: Array<Document>, // TODO filter doc under consideration
+    async function setInverseRelationsForResource(otherDocumentsFromImport: Array<Document>,
                                                   get: (_: string) => Promise<Document>,
                                                   projectConfiguration: ProjectConfiguration,
                                                   relations: Relations,

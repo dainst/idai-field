@@ -172,6 +172,9 @@ a list of all allowed values in a dropdown menu.
 term must match the content of the resource field exactly for the resource to appear in the list of search
 results. 
 
+As an alternative to specifying a specific search term, you can also search for all resources in which the
+field is set (option "Any value") or not set (option "No value"). 
+
 The number appearing next to the type filter button indicates the number of active search criteria. You can
 remove search criteria by clicking the number. This opens up the menu again and you can choose the search criterium to
 remove.

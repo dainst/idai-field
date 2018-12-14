@@ -31,8 +31,6 @@ export module DefaultImport {
 
 
         /**
-         * TODO validate relations that refer to each other in import file
-         *
          * @param datastore
          * @param username
          * @param documents documents with the field resource.identifier set to a non empty string.

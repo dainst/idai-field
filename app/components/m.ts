@@ -43,8 +43,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
     // ImportPackage - ReaderErrors, ParserErrors
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER = 'importer.warning.geojsonDuplicateIdentifier';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS = 'importer.warning.geojsonDuplicateIdentifiers';
     public static IMPORT_ERROR_GENERIC_START_ERROR = 'importer.error.genericStartError';
     public static IMPORT_FILE_UNREADABLE = 'importer.error.fileUnreadable';
     public static IMPORT_INVALID_JSON = 'importer.error.invalidJson';
@@ -358,24 +356,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                     id: 'messages.import.success.multiple.defaultParameter',
                     value: 'Mehrere'
                 })],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.warning.geojson.duplicateIdentifier',
-                value: 'In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.'
-            }),
-            level: 'warning',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS] = {
-            content: i18n({
-                id: 'messages.import.warning.geojson.duplicateIdentifiers',
-                value: 'In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.'
-            }),
-            level: 'warning',
-            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_ERROR_GENERIC_START_ERROR] = {

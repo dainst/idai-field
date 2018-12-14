@@ -1,8 +1,6 @@
 import {Observable, Observer} from 'rxjs';
-import {duplicates} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {M} from '../../../components/m';
 import {ParserErrors} from './parser-errors';
 
 export interface Geojson {
@@ -71,33 +69,17 @@ export class GeojsonParser extends AbstractParser {
 
             if (this.postProcess) this.postProcess(geojson);
 
-            this.iterateDocs(geojson, observer);
+            GeojsonParser.iterateDocs(geojson, observer);
             observer.complete();
         });
     }
 
 
-    private iterateDocs(content: Geojson, observer: Observer<any>) {
-
-        const identifiers: string[] = [];
+    private static iterateDocs(content: Geojson, observer: Observer<any>) {
 
         for (let feature of content.features) {
             const document: any = GeojsonParser.makeDoc(feature);
-            identifiers.push(document.resource.identifier);
             observer.next(document);
-        }
-
-        this.addDuplicateIdentifierWarnings(identifiers); // TODO remove
-    }
-
-
-    private addDuplicateIdentifierWarnings(identifiers: string[]) {
-
-        const duplicateIdentifiers: string[] = duplicates(identifiers);
-        if (duplicateIdentifiers.length === 1) {
-            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
-        } else if (duplicateIdentifiers.length > 1) {
-            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS, duplicateIdentifiers.join(', ')]);
         }
     }
 

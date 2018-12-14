@@ -1,6 +1,5 @@
 import {GeojsonParser} from '../../../../app/core/import/parser/geojson-parser';
 import {Document} from 'idai-components-2';
-import {M} from '../../../../app/components/m';
 import {ParserErrors} from '../../../../app/core/import/parser/parser-errors';
 
 
@@ -106,28 +105,5 @@ describe('GeojsonParser', () => {
             '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { "identifier": 122 } } ] }'
             , ParserErrors.WRONG_IDENTIFIER_FORMAT, done);
-    });
-
-
-    it('should produce a warning on duplicate identifiers', done => {
-
-        const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
-            '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "id1" } },' +
-            '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [16.71875,-16.96875] },' +
-            '"properties": { "identifier": "id1" } } ] }';
-
-        const parser = new GeojsonParser(undefined, undefined);
-        parser.parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
-            const warnings = parser.getWarnings();
-            expect(warnings.length).toBe(1);
-            expect(warnings[0][0]).toEqual(M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER);
-            expect(warnings[0][1]).toEqual('id1');
-            done();
-        });
     });
 });

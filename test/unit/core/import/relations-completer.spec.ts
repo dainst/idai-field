@@ -124,4 +124,18 @@ describe('RelationsCompleter', () => {
         }
         done();
     });
+
+
+    it('empty relation', async done => {
+
+        doc1.resource.relations['liesWithin'] = [];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(ImportErrors.EMPTY_RELATION);
+            expect(errWithParams[1]).toEqual('one');
+        }
+        done();
+    });
 });

@@ -2780,16 +2780,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
-              <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
-              <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>
-              <context-group purpose="location">
-                <context context-type="sourcefile">app/components/m.ts</context>
-                <context context-type="linenumber">1</context>
-              </context-group>
-            </trans-unit>
-
+        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.emptyRelation" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>

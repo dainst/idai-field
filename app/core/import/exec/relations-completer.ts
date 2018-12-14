@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from '../import-errors';
-import {isUndefinedOrEmpty, on} from 'tsfun';
+import {isUndefinedOrEmpty, on, isEmpty} from 'tsfun';
 
 
 /**
@@ -11,7 +11,8 @@ export module RelationsCompleter {
 
 
     /**
-     * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
+     * Iterates over all relation (ex) of the given resources. Between import resources, it validates the relations.
+     * Between import resources and db resources, it adds the inverses.
      *
      * @param documents If one of these references another from the import file, the validity of the relations gets checked
      *   for contradictory relations and missing inverses are added.
@@ -27,6 +28,8 @@ export module RelationsCompleter {
      *
      * @throws ImportErrors.*
      * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
+     * @throws [NOT_INTERRELATED, sourceId, targetId]
+     * @throws [EMPTY_RELATION, resourceId]
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
@@ -38,11 +41,11 @@ export module RelationsCompleter {
         for (let document of documents) {
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
+                document,
                 documents.filter(doc => doc.resource.id !== document.resource.id),
                 get,
                 isRelationProperty,
-                getInverseRelation,
-                document);
+                getInverseRelation);
 
             allDBDocumentsToUpdate = allDBDocumentsToUpdate.concat(dbDocumentsToUpdate);
         }
@@ -50,21 +53,23 @@ export module RelationsCompleter {
     }
 
 
-    async function setInverseRelationsForResource(otherDocumentsFromImport: Array<Document>,
+    async function setInverseRelationsForResource(document: Document,
+                                                  otherDocumentsFromImport: Array<Document>,
                                                   get: (_: string) => Promise<Document>,
                                                   isRelationProperty: (_: string) => boolean,
-                                                  getInverseRelation: (_: string) => string|undefined,
-                                                  document: Document): Promise<Array<Document>> {
+                                                  getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
         const targetDocumentsForUpdate: Array<Document> = [];
 
-        const relationNamesExceptRecordeIn = Object
+        const relationNamesExceptIsRecordedIn = Object
             .keys(document.resource.relations)
             .filter(relationName => relationName !== 'isRecordedIn')
             .filter(relationName => isRelationProperty(relationName));
 
 
-        for (let relationName of relationNamesExceptRecordeIn) {
+        for (let relationName of relationNamesExceptIsRecordedIn) {
+            if (isEmpty(document.resource.relations[relationName])) throw [ImportErrors.EMPTY_RELATION, document.resource.identifier];
+
             const inverseRelationName = getInverseRelation(relationName);
             if (!inverseRelationName) continue;
 
@@ -79,9 +84,7 @@ export module RelationsCompleter {
                     if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
                         throw [ImportErrors.NOT_INTERRELATED, document.resource.identifier, targetDocument.resource.identifier];
                     }
-
                     // TODO also validate that they interrelate not mutually, for example both have isAfter as well as isBefore pointing to each other
-                    // TODO throw on empty but defined relations
 
                 } else /* from db */ {
 

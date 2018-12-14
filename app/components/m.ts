@@ -42,7 +42,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
-    // Import Package - IO, parsing
+    // ImportPackage - ReaderErrors, ParserErrors
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER = 'importer.warning.geojsonDuplicateIdentifier';
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS = 'importer.warning.geojsonDuplicateIdentifiers';
     public static IMPORT_ERROR_GENERIC_START_ERROR = 'importer.error.genericStartError';
@@ -65,17 +65,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
     public static IMPORT_PARSING_ID_MUST_NOT_BE_SET = 'import.importerrors.parsing.idnottobeset';
 
-    // ImportPackage - ImportErrors - ValidationErrors
-    public static IMPORT_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
-    public static IMPORT_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
-    public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
-    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
-    public static IMPORT_VALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
-    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.error.prevalidation.duplicateidentifier';
-    public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'importer.error.prevalidation.missingRelationTarget';
-    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'import.error.typeNotAllowed';
-    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'import.error.typeOnlyAllowedOnUpdate';
-    public static IMPORT_ERROR_NOT_UPDATED = 'importer.error.notupdated';
+    // ImportPackage ValidationErrors
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'import.validation.error.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
@@ -86,11 +76,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import.validation.error.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import.validation.error.invalidNumericValues';
 
-    // ImportPackage - Exec
+    // Import Package - ImportErrors
+    public static IMPORT_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
+    public static IMPORT_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
+    public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
+    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
+    public static IMPORT_VALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
+    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.error.prevalidation.duplicateidentifier';
+    public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'importer.error.prevalidation.missingRelationTarget';
+    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'import.error.typeNotAllowed';
+    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'import.error.typeOnlyAllowedOnUpdate';
+    public static IMPORT_ERROR_NOT_UPDATED = 'importer.error.notupdated';
     public static IMPORT_SUCCESS_SINGLE = 'importer.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'importer.success.multiple';
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
     public static IMPORT_EXEC_NOT_INTERRELATED = 'importer.error.notInterrelated';
+    public static IMPORT_EXEC_EMPTY_RELATION = 'importer.error.emptyRelation';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -555,6 +556,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_EXEC_EMPTY_RELATION] = {
+            content: i18n({
+                id: 'messages.import.error.emptyRelation',
+                value: 'Beim Import ist ein Fehler aufgetreten: Leere Relation bei \'[0]\'.'
+            }),
+            level: 'danger',
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {

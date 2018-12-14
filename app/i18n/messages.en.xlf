@@ -3116,7 +3116,15 @@
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
-        <target state="new">An error has occured during import: Relation between '[0]' and '[1]' erroneous.</target>
+        <target state="final">An error has occured during import: Relation between '[0]' and '[1]' erroneous.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.emptyRelation" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</source>
+        <target state="final">An error has occured during import: Empty relation at '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

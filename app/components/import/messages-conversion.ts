@@ -53,6 +53,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
+        if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
         if (msg === ImportErrors.NOT_INTERRELATED) replacement = M.IMPORT_EXEC_NOT_INTERRELATED;
         if (msg === ImportErrors.UPDATE_TARGET_NOT_FOUND) replacement = M.IMPORT_ERROR_NOT_UPDATED;
         if (msg === ImportErrors.TYPE_NOT_ALLOWED) replacement = M.IMPORT_ERROR_TYPE_NOT_ALLOWED;

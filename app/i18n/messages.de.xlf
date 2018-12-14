@@ -691,7 +691,7 @@
                         gesicherten Zwischenstand wiederherzustellen.
                         <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                        in dem unter<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
+                        in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
                     </source>
         <target state="final">
                         Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
@@ -699,7 +699,7 @@
                         gesicherten Zwischenstand wiederherzustellen.
                         <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                        in dem unter<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
+                        in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-creation.html</context>

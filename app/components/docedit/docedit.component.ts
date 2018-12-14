@@ -293,4 +293,4 @@ export class DoceditComponent {
 }
 
 
-const doNothing = () => {}; // TODO move to tsfun;
+const doNothing = () => {};

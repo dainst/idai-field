@@ -43,7 +43,7 @@ export module RelationsCompleter {
         }, {});
 
         let allDBDocumentsToUpdate: Array<Document> = [];
-        for (let document of documents) { // n
+        for (let document of documents) {
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
                 document,
@@ -58,13 +58,6 @@ export module RelationsCompleter {
     }
 
 
-    /**
-     * Implementation note:
-     * Time complexity is supposed to be around O([x<n]*n).
-     * The for loops over the different relations and relations targets are negligible.
-     * The x stands for the corresponding lookup times.
-     * The n is for the for loop in the call.
-     */
     async function setInverseRelationsForResource(document: Document,
                                                   documentsMap: {[id: string]: Document},
                                                   get: (_: string) => Promise<Document>,
@@ -90,12 +83,12 @@ export module RelationsCompleter {
                 if (u.length > 0) {
                     throw [ImportErrors.BAD_INTERRELATION,
                         document.resource.identifier,
-                        documentsMap[u[0]].resource.identifier]; // x
+                        documentsMap[u[0]].resource.identifier];
                 }
             }
 
             for (let targetId of document.resource.relations[relationName]) {
-                let targetDocument = documentsMap[targetId]; // x
+                let targetDocument = documentsMap[targetId];
 
                 if (targetDocument /* from import file */) {
 
@@ -110,7 +103,7 @@ export module RelationsCompleter {
 
                     try {
 
-                        targetDocument = await get(targetId); // x
+                        targetDocument = await get(targetId);
                         if (!targetDocument.resource.relations[inverseRelationName]) targetDocument.resource.relations[inverseRelationName] = [];
                         targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
                         targetDocumentsForUpdate.push(targetDocument);

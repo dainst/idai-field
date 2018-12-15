@@ -43,7 +43,7 @@ export module RelationsCompleter {
         }, {});
 
         let allDBDocumentsToUpdate: Array<Document> = [];
-        for (let document of documents) {
+        for (let document of documents) { // n
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
                 document,
@@ -61,7 +61,7 @@ export module RelationsCompleter {
     /**
      * Implementation note:
      * Time complexity is supposed to be around O([x<n]*n).
-     * The for loops over the different relations and relations targets are no problem.
+     * The for loops over the different relations and relations targets are negligible.
      * The x stands for the corresponding lookup times.
      * The n is for the for loop in the call.
      */

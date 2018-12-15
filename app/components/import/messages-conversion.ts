@@ -19,11 +19,9 @@ export module MessagesConversion {
             console.warn('convertMessage. arg not of type array', msgWithParams);
             return [];
         }
-
         if (msgWithParams.length === 0) return [];
         let replacement = undefined;
         const msg = msgWithParams[0];
-
 
         if (msg === ReaderErrors.FILE_UNREADABLE) replacement = M.IMPORT_FILE_UNREADABLE;
         if (msg === ReaderErrors.SHAPEFILE_READ) replacement = M.IMPORT_SHAPEFILE_READ_ERROR;
@@ -42,7 +40,6 @@ export module MessagesConversion {
         if (msg === ParserErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_MISSING_IDENTIFIER;
         if (msg === ParserErrors.ID_MUST_NOT_BE_SET) replacement = M.IMPORT_PARSING_ID_MUST_NOT_BE_SET;
 
-        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
         if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
@@ -53,6 +50,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
+        if (msg === ImportErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
         if (msg === ImportErrors.BAD_INTERRELATION) replacement = M.IMPORT_EXEC_NOT_INTERRELATED;
         if (msg === ImportErrors.UPDATE_TARGET_NOT_FOUND) replacement = M.IMPORT_ERROR_NOT_UPDATED;
@@ -68,15 +66,14 @@ export module MessagesConversion {
         if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_EXEC_MISSING_RELATION_TARGET;
         if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_INVALID_OPERATION_RESOURCE;
+
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_ROLLBACK;
-
-
-        if (msg === ValidationErrors.INVALID_FIELDS) {
+        if (msg === ImportErrors.INVALID_FIELDS) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_FIELDS
                 : M.IMPORT_VALIDATION_ERROR_INVALID_FIELD
         }
-        if (msg === ValidationErrors.INVALID_RELATIONS) {
+        if (msg === ImportErrors.INVALID_RELATIONS) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS
                 : M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD
@@ -88,7 +85,6 @@ export module MessagesConversion {
         }
 
         if (replacement) msgWithParams[0] = replacement;
-
         return msgWithParams;
     }
 }

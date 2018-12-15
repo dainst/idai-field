@@ -4,6 +4,7 @@
  */
 export module ImportErrors {
 
+    export const INVALID_TYPE = 'validationerror/invalidtype';
     export const OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
     export const NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
     export const DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicateidentifier';
@@ -19,4 +20,6 @@ export module ImportErrors {
     export const EXEC_MISSING_RELATION_TARGET = 'importerrors/exec/missingrelationtarget';
     export const BAD_INTERRELATION = 'importerrors/exec/notinterrelated';
     export const EMPTY_RELATION = 'importerrors/exec/emptyrelation';
+    export const INVALID_RELATIONS = 'validationerror/invalidrelations';
+    export const INVALID_FIELDS = 'validationerror/invalidfields';
 }

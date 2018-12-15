@@ -1,6 +1,7 @@
-import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {ImportValidator} from '../../../../../app/core/import/exec/import-validator';
+import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
+import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 
 
 /**
@@ -97,7 +98,7 @@ describe('ImportValidation', () => {
             fail();
         } catch (errWithParams) {
 
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a']);
+            expect(errWithParams).toEqual([ImportErrors.INVALID_FIELDS, 'T', 'a']);
         }
     });
 
@@ -120,7 +121,7 @@ describe('ImportValidation', () => {
             fail();
         } catch (errWithParams) {
 
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a, b']);
+            expect(errWithParams).toEqual([ImportErrors.INVALID_FIELDS, 'T', 'a, b']);
         }
     });
 
@@ -142,7 +143,7 @@ describe('ImportValidation', () => {
             fail();
         } catch (errWithParams) {
 
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
+            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
                 'isRelatedTo']);
         }
     });
@@ -166,7 +167,7 @@ describe('ImportValidation', () => {
             fail();
         } catch (errWithParams) {
 
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
+            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
                 'isRelatedTo, isDepictedIn']);
         }
     });

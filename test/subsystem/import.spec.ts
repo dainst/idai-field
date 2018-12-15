@@ -106,7 +106,7 @@ describe('Import/Subsystem', () => {
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}',
             () => '101');
 
-        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
+        expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1); // only the trench
         done();

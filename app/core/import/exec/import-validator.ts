@@ -4,13 +4,16 @@ import {IdaiFieldDocumentDatastore} from '../../datastore/field/idai-field-docum
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
-import {ValidationErrors} from '../../model/validation-errors';
 import {ImportErrors} from './import-errors';
 
 
 @Injectable()
 /**
  * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
+ *
+ * Errors thrown are of type
+ *   ImportError.* if specified in ImportValidator itself and of type
+ *   ValidationError.* if coming from the Validator
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -31,7 +34,7 @@ export class ImportValidator extends Validator {
     public assertIsKnownType(document: Document|NewDocument) {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
+            throw [ImportErrors.INVALID_TYPE, document.resource.type];
         }
     }
 
@@ -77,22 +80,21 @@ export class ImportValidator extends Validator {
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
-     * @throws ValidationErrors.*
-     * @throws [INVALID_RELATIONS]
-     * @throws [INVALID_FIELDS]
-     * @throws [MISSING_PROPERTY]
-     * @throws [MISSING_GEOMETRYTYPE]
-     * @throws [MISSING_COORDINATES]
-     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
-     * @throws [INVALID_COORDINATES]
-     * @throws [INVALID_NUMERICAL_VALUE]
+     * @throws [ImportErrors.INVALID_RELATIONS]
+     * @throws [ImportErrors.INVALID_FIELDS]
+     * @throws [ValidationErrors.MISSING_PROPERTY]
+     * @throws [ValidationErrors.MISSING_GEOMETRYTYPE]
+     * @throws [ValidationErrors.MISSING_COORDINATES]
+     * @throws [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE]
+     * @throws [ValidationErrors.INVALID_COORDINATES]
+     * @throws [ValidationErrors.INVALID_NUMERICAL_VALUE]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
         const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
             throw [
-                ValidationErrors.INVALID_FIELDS,
+                ImportErrors.INVALID_FIELDS,
                 document.resource.type,
                 invalidFields.join(', ')
             ];
@@ -104,7 +106,7 @@ export class ImportValidator extends Validator {
             .filter(item => item !== 'isRecordedIn');
         if (invalidRelationFields.length > 0) {
             throw [
-                ValidationErrors.INVALID_RELATIONS,
+                ImportErrors.INVALID_RELATIONS,
                 document.resource.type,
                 invalidRelationFields.join(', ')
             ];

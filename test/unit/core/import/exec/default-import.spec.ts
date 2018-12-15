@@ -1,5 +1,4 @@
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {DefaultImport} from '../../../../../app/core/import/exec/default-import';
 
 /**
@@ -176,14 +175,14 @@ describe('DefaultImport', () => {
 
     it('preValidate - not well formed ', async done => {
 
-        mockValidator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.INVALID_TYPE]});
+        mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
         const {errors} = await importFunction([
             { resource: { type: 'Nonexisting', identifier: '1a', relations: { isRecordedIn: ['0'] } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors.length).toBe(1);
-        expect(errors[0][0]).toEqual(ValidationErrors.INVALID_TYPE);
+        expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
         done();
     });
 

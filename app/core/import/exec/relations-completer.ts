@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
-import {isUndefinedOrEmpty, on, isEmpty, union} from 'tsfun';
+import {isUndefinedOrEmpty, isEmpty, union} from 'tsfun';
 
 
 /**
@@ -37,12 +37,17 @@ export module RelationsCompleter {
                                                    getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
 
+        const documentsMap: {[id: string]: Document} = documents.reduce((documentsMap: {[id: string]: Document}, document: Document) => {
+            documentsMap[document.resource.id] = document;
+            return documentsMap;
+        }, {});
+
         let allDBDocumentsToUpdate: Array<Document> = [];
         for (let document of documents) {
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
                 document,
-                documents.filter(doc => doc.resource.id !== document.resource.id),
+                documentsMap,
                 get,
                 isRelationProperty,
                 getInverseRelation);
@@ -55,12 +60,13 @@ export module RelationsCompleter {
 
     /**
      * Implementation note:
-     * Runtime of O(n^2) could lead to problems.
+     * Time complexity is supposed to be around O([x<n]*n).
      * The for loops over the different relations and relations targets are no problem.
-     * The critical places are marked with '!', together with the for loop in the call.
+     * The x stands for the corresponding lookup times.
+     * The n is for the for loop in the call.
      */
     async function setInverseRelationsForResource(document: Document,
-                                                  otherDocumentsFromImport: Array<Document>,
+                                                  documentsMap: {[id: string]: Document},
                                                   get: (_: string) => Promise<Document>,
                                                   isRelationProperty: (_: string) => boolean,
                                                   getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
@@ -84,13 +90,13 @@ export module RelationsCompleter {
                 if (u.length > 0) {
                     throw [ImportErrors.NOT_INTERRELATED,
                         document.resource.identifier,
-                        (otherDocumentsFromImport.find(on('resource.id:')(u[0])) as any).resource.identifier]; // ! not critical, can easily be taken out
+                        documentsMap[u[0]].resource.identifier]; // x
                 }
             }
 
 
             for (let targetId of document.resource.relations[relationName]) {
-                let targetDocument = otherDocumentsFromImport.find(on('resource.id:')(targetId)); // ! could be improved by hash lookup
+                let targetDocument = documentsMap[targetId]; // x
 
                 if (targetDocument /* from import file */) {
 
@@ -106,7 +112,7 @@ export module RelationsCompleter {
 
                     try {
 
-                        targetDocument = await get(targetId); // ! depends on lookup time
+                        targetDocument = await get(targetId); // x
                         if (!targetDocument.resource.relations[inverseRelationName]) targetDocument.resource.relations[inverseRelationName] = [];
                         targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
                         targetDocumentsForUpdate.push(targetDocument);

@@ -1,5 +1,5 @@
-import {RelationsCompleter} from '../../../../app/core/import/exec/relations-completer';
-import {ImportErrors} from '../../../../app/core/import/exec/import-errors';
+import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
+import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 
 
 describe('RelationsCompleter', () => {

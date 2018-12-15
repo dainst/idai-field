@@ -1,7 +1,7 @@
-import {GeojsonParser} from '../../../../app/core/import/parser/geojson-parser';
+import {GeojsonParser} from '../../../../../app/core/import/parser/geojson-parser';
 import {Document} from 'idai-components-2';
-import {GazGeojsonParserAddOn} from '../../../../app/core/import/parser/gaz-geojson-parser-add-on';
-import {ParserErrors} from '../../../../app/core/import/parser/parser-errors';
+import {GazGeojsonParserAddOn} from '../../../../../app/core/import/parser/gaz-geojson-parser-add-on';
+import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 
 
 /**

@@ -88,24 +88,22 @@ export module RelationsCompleter {
             if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
                 const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
                 if (u.length > 0) {
-                    throw [ImportErrors.NOT_INTERRELATED,
+                    throw [ImportErrors.BAD_INTERRELATION,
                         document.resource.identifier,
                         documentsMap[u[0]].resource.identifier]; // x
                 }
             }
-
 
             for (let targetId of document.resource.relations[relationName]) {
                 let targetDocument = documentsMap[targetId]; // x
 
                 if (targetDocument /* from import file */) {
 
-                    if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])
-                        || !targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
-
-                        throw [ImportErrors.NOT_INTERRELATED,
-                            document.resource.identifier,
-                            targetDocument.resource.identifier];
+                    if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
+                        targetDocument.resource.relations[inverseRelationName] = [];
+                    }
+                    if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
+                        targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
                     }
 
                 } else /* from db */ {

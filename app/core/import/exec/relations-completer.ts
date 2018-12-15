@@ -37,17 +37,18 @@ export module RelationsCompleter {
                                                    getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
 
-        const documentsMap: {[id: string]: Document} = documents.reduce((documentsMap: {[id: string]: Document}, document: Document) => {
-            documentsMap[document.resource.id] = document;
-            return documentsMap;
-        }, {});
+        const documentsLookup = documents
+            .reduce((documentsMap: {[id: string]: Document}, document: Document) => {
+                documentsMap[document.resource.id] = document;
+                return documentsMap;
+            }, {});
 
         let allDBDocumentsToUpdate: Array<Document> = [];
         for (let document of documents) {
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
                 document,
-                documentsMap,
+                documentsLookup,
                 get,
                 isRelationProperty,
                 getInverseRelation);
@@ -59,7 +60,7 @@ export module RelationsCompleter {
 
 
     async function setInverseRelationsForResource(document: Document,
-                                                  documentsMap: {[id: string]: Document},
+                                                  documentsLookup: {[id: string]: Document},
                                                   get: (_: string) => Promise<Document>,
                                                   isRelationProperty: (_: string) => boolean,
                                                   getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
@@ -83,12 +84,12 @@ export module RelationsCompleter {
                 if (u.length > 0) {
                     throw [ImportErrors.BAD_INTERRELATION,
                         document.resource.identifier,
-                        documentsMap[u[0]].resource.identifier];
+                        documentsLookup[u[0]].resource.identifier];
                 }
             }
 
             for (let targetId of document.resource.relations[relationName]) {
-                let targetDocument = documentsMap[targetId];
+                let targetDocument = documentsLookup[targetId];
 
                 if (targetDocument /* from import file */) {
 

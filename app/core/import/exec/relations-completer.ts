@@ -91,7 +91,6 @@ export module RelationsCompleter {
     }
 
 
-    // TODO test that things get overwritten
     function addOrOverwrite(to: Array<Document>) {
 
         return (from: Array<Document>) => {

@@ -137,7 +137,7 @@ export module DefaultImport {
                                             find: (identifier: string) => Promise<Document|undefined>,
                                             generateId: () => string): Promise<Array<Document>> {
 
-        if (!mergeMode) {
+        if (!mergeMode) { // TODO only in non merge mode?
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
             if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
         }

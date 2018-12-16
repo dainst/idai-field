@@ -29,7 +29,8 @@ export module DefaultImport {
         if (mainTypeDocumentId && mergeMode) {
             throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
-
+        const isRelationProperty = (propertyName: string) => projectConfiguration.isRelationProperty(propertyName);
+        const getInverseRelation = (propertyName: string) => projectConfiguration.getInverseRelations(propertyName);
 
         /**
          * @param datastore
@@ -53,6 +54,11 @@ export module DefaultImport {
                       datastore: DocumentDatastore,
                       username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
+            const get = (resourceId: string) => datastore.get(resourceId);
+            const find = findByIdentifier(datastore);
+            const update = (d: Document, u: string) => datastore.update(d, u);
+            const create = (d: Document, u: string) => datastore.create(d, u);
+
             // BEGIN id and identifier //
             if (!mergeMode) {
                 const duplicates_ = duplicates(documents.map(to('resource.identifier')));
@@ -67,7 +73,7 @@ export module DefaultImport {
             for (let document of documents) {
                 try {
                     if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                        await rewriteRelations(document, findByIdentifier(datastore), identifierMap);
+                        await rewriteRelations(document, find, identifierMap);
                     }
                 } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
             }
@@ -80,7 +86,7 @@ export module DefaultImport {
             for (let document of documents) {
 
                 try {
-                    const documentForUpdate = await mergeOrUseAsIs(document, findByIdentifier(datastore), mergeMode, allowOverwriteRelationsInMergeMode);
+                    const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
                     await doValidations(documentForUpdate, validator, mergeMode);
 
                     documentsForUpdate.push(documentForUpdate);
@@ -102,9 +108,7 @@ export module DefaultImport {
                 if (!mergeMode || allowOverwriteRelationsInMergeMode) {
                     relatedDocuments = await RelationsCompleter.completeInverseRelations(
                         documentsForUpdate as any,
-                        (resourceId: string) => datastore.get(resourceId),
-                        (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
-                        (propertyName: string) => projectConfiguration.getInverseRelations(propertyName),
+                        get, isRelationProperty, getInverseRelation,
                         mergeMode);
                 }
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
@@ -117,9 +121,7 @@ export module DefaultImport {
                 await ImportUpdater.go(
                     documentsForUpdate as any,
                     relatedDocuments,
-                    (d: Document, u: string) => datastore.update(d, u),
-                    (d: Document, u: string) => datastore.create(d, u),
-                    username,
+                    update, create, username,
                     mergeMode);
 
             } catch (errWithParams) { updateErrors.push(errWithParams)}

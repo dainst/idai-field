@@ -63,7 +63,6 @@ export module RelationsCompleter {
     }
 
 
-    // TODO extend connecteddocsresolution instead of having that here
     async function setInverseRelationsForDbResources(documents: Array<Document>,
                                                     documentsLookup: {[id: string]: Document},
                                                     get: (_: string) => Promise<Document>,

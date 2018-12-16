@@ -477,7 +477,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Relationen und der Ressourcentyp werden generell nicht verändert. Die Zuordnung von Datensätzen
+                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
@@ -487,7 +487,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Relationen und der Ressourcentyp werden generell nicht verändert. Die Zuordnung von Datensätzen
+                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </target>

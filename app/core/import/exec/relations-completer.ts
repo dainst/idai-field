@@ -64,10 +64,10 @@ export module RelationsCompleter {
 
 
     async function setInverseRelationsForDbResources(documents: Array<Document>,
-                                                    documentsLookup: {[id: string]: Document},
-                                                    get: (_: string) => Promise<Document>,
-                                                    isRelationProperty: (_: string) => boolean,
-                                                    getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
+                                                     documentsLookup: {[id: string]: Document},
+                                                     get: (_: string) => Promise<Document>,
+                                                     isRelationProperty: (_: string) => boolean,
+                                                     getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
         const totalDocsToUpdate: Array<Document> = [];
 

@@ -81,9 +81,12 @@ export module RelationsCompleter {
                 document, documentTargetDocs, isRelationProperty, getInverseRelation);
 
             addTheOnesNotAlreadyContainedIn(totalDocsToUpdate)(documentTargetDocsToUpdate);
+
+            // find and add the ids of all the db items pointing back to document,
+            // maybe an existing relation is to be removed.
+            // right now this poses a problem since there is no general indexing over all relations
         }
 
-        // TODO also find and add the ids of all the db items pointing back to document, maybe an existing relation is to be removed
         return totalDocsToUpdate;
     }
 

@@ -495,12 +495,37 @@
           <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.mergeOption.relationsLabel" datatype="html">
+        <source>
+                            Relationen überschreiben
+                        </source>
+        <target state="translated">
+            Overwrite relations
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
+        <source>
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
+                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                    </source>
+        <target state="final">
+                        If this option is active, relations also can get updated. Relations not set get treated by removing possibly existing inverse relations from the database.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
         <source>Daten einer Maßnahme zuordnen</source>
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -508,7 +533,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -527,7 +552,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -541,7 +566,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -560,7 +585,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

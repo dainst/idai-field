@@ -21,6 +21,7 @@ export module RelationsCompleter {
      * @param get
      * @param isRelationProperty
      * @param getInverseRelation
+     * @param mergeMode
      *
      * @returns the target documents which should be updated. Only those fetched from the db are included. If a target document comes from
      *   the import file itself, <code>documents</code> gets modified in place accordingly.
@@ -36,7 +37,8 @@ export module RelationsCompleter {
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
                                                    isRelationProperty: (_: string) => boolean,
-                                                   getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
+                                                   getInverseRelation: (_: string) => string|undefined,
+                                                   mergeMode: boolean = false): Promise<Array<Document>> {
 
 
         const documentsLookup: {[id: string]: Document} = documents
@@ -59,7 +61,8 @@ export module RelationsCompleter {
             documentsLookup,
             get,
             isRelationProperty,
-            getInverseRelation);
+            getInverseRelation,
+            mergeMode);
     }
 
 
@@ -67,23 +70,29 @@ export module RelationsCompleter {
                                                      documentsLookup: {[id: string]: Document},
                                                      get: (_: string) => Promise<Document>,
                                                      isRelationProperty: (_: string) => boolean,
-                                                     getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
+                                                     getInverseRelation: (_: string) => string|undefined,
+                                                     mergeMode: boolean): Promise<Array<Document>> {
 
         let totalDocsToUpdate: Array<Document> = [];
 
         for (let document of documents) {
 
             const documentTargetDocs: Array<Document> = [];
-            for (let targetId of targetIdsReferingToObjects(document, documentsLookup, isRelationProperty)) {
-                documentTargetDocs.push(await getTargetDocument(targetId, totalDocsToUpdate, get));
+
+            let targetIds = targetIdsReferingToObjects(document, documentsLookup, isRelationProperty);
+            if (mergeMode) {
+                let oldVersion;
+                try {
+                    oldVersion = await get(document.resource.id);
+                } catch { throw "FATAL" } // TODO improve
+                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, documentsLookup, isRelationProperty)]);
             }
-            // find and add also the ids of all the db items pointing back to document,
-            // since we are not generally indexing over all relations
-            // we could see if we are in update mode. then we know there is a previous version
-            // of the document from which we can determine the targets previously set
+            for (let targetId of targetIds) documentTargetDocs.push(
+                await getTargetDocument(targetId, totalDocsToUpdate, get));
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocs, isRelationProperty, getInverseRelation);
+
             totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate)(documentTargetDocsToUpdate);
         }
 

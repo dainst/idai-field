@@ -1,5 +1,6 @@
 import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {clone} from '../../../../../app/core/util/object-util';
 
 
 describe('RelationsCompleter', () => {
@@ -221,6 +222,22 @@ describe('RelationsCompleter', () => {
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations['isBefore'][0]).toBe('1');
+        expect(documents[0].resource.relations['includes']).toBeUndefined();
+        done();
+    });
+
+
+    it('remove one - where they are not related by other relations', async done => {
+
+        doc2.resource.relations['includes'] = ['1'];
+        doc1.resource.relations['liesWithin'] = ['2'];
+
+        const doc1New = clone(doc1);
+        doc1New.resource.relations = { isRecordedIn: [] };
+
+        const documents = await RelationsCompleter.completeInverseRelations([doc1New as any], get, isRelationProperty, getInverseRelation, true);
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations['includes']).toBeUndefined();
         done();
     });

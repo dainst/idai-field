@@ -44,6 +44,7 @@ export module Importer {
      * @param projectConfiguration
      * @param mainTypeDocumentId
      * @param allowMergingExistingResources
+     * @param allowUpdatingRelationsOnMerg
      * @param fileContent
      *
      * @param generateId
@@ -58,6 +59,7 @@ export module Importer {
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,
                                    allowMergingExistingResources: boolean,
+                                   allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
                                    generateId: () => string) {
 
@@ -83,6 +85,7 @@ export module Importer {
             projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources,
+            allowUpdatingRelationsOnMerge,
             generateId);
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
@@ -117,6 +120,7 @@ export module Importer {
                                  projectConfiguration: ProjectConfiguration,
                                  mainTypeDocumentId: string,
                                  mergeMode = false,
+                                 updateRelationsOnMergeMode = false,
                                  generateId: () => string) {
 
         switch (format) {
@@ -131,7 +135,7 @@ export module Importer {
             case 'geojson-gazetteer':
                 return DefaultImport.build(validator, projectConfiguration, generateId);
             default: // native
-                return DefaultImport.build(validator, projectConfiguration, generateId, mergeMode, mainTypeDocumentId, true);
+                return DefaultImport.build(validator, projectConfiguration, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

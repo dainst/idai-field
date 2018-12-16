@@ -22,6 +22,7 @@ export module DefaultImport {
                           projectConfiguration: ProjectConfiguration,
                           generateId: () => string,
                           mergeMode: boolean = false,
+                          allowOverwriteRelationsInMergeMode = false,
                           mainTypeDocumentId: string = '' /* '' => no assignment */,
                           useIdentifiersInRelations: boolean = false): ImportFunction {
 
@@ -70,6 +71,7 @@ export module DefaultImport {
                 findByIdentifier(datastore),
                 identifierMap,
                 mergeMode,
+                allowOverwriteRelationsInMergeMode,
                 validator,
                 mainTypeDocumentId,
                 useIdentifiersInRelations);
@@ -78,11 +80,14 @@ export module DefaultImport {
 
             let targetDocuments;
             try {
-                if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
-                    documents,
-                    (resourceId: string) => datastore.get(resourceId),
-                    (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
-                    (propertyName: string) => projectConfiguration.getInverseRelations(propertyName));
+                if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+                    targetDocuments = await RelationsCompleter.completeInverseRelations(
+                        documentsForUpdate as any,
+                        (resourceId: string) => datastore.get(resourceId),
+                        (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
+                        (propertyName: string) => projectConfiguration.getInverseRelations(propertyName),
+                        mergeMode);
+                }
             } catch (errWithParams) {
                 return { errors: [errWithParams], successfulImports: 0 };
             }
@@ -110,6 +115,7 @@ export module DefaultImport {
                                              find: (identifier: string) => Promise<Document|undefined>,
                                              identifierMap: { [identifier: string]: string },
                                              mergeMode: boolean,
+                                             allowOverwriteRelationsOnMerge: boolean,
                                              validator: ImportValidator,
                                              mainTypeDocumentId: string,
                                              useIdentifiersInRelations: boolean) {
@@ -119,16 +125,12 @@ export module DefaultImport {
         for (let document of documents) {
 
             try {
-                if (!mergeMode && useIdentifiersInRelations) {
+                if ((!mergeMode || allowOverwriteRelationsOnMerge)  && useIdentifiersInRelations) {
                     await rewriteRelations(document, find, identifierMap);
                 }
-                const documentForUpdate: Document|undefined =
-                    await mergeOrUseAsIs(document, find, mergeMode);
-
-                await prepareDocumentForUpdate(
-                    document, validator, mainTypeDocumentId, mergeMode);
-
-                if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
+                const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsOnMerge);
+                await prepareDocumentForUpdate(documentForUpdate, validator, mainTypeDocumentId, mergeMode);
+                documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {
                 errors.push(errWithParams);
             }
@@ -167,12 +169,13 @@ export module DefaultImport {
 
     async function mergeOrUseAsIs(document: NewDocument|Document,
                                   find: (identifier: string) => Promise<Document|undefined>,
-                                  mergeIfExists: boolean) {
+                                  mergeIfExists: boolean,
+                                  allowOverwriteRelationsOnMerge: boolean): Promise<Document> {
 
         let documentForUpdate: Document = document as Document;
         const existingDocument = await find(document.resource.identifier);
         if (mergeIfExists) {
-            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
+            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate, allowOverwriteRelationsOnMerge);
             else throw [ImportErrors.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
         } else {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
@@ -217,7 +220,6 @@ export module DefaultImport {
             validator.assertIsAllowedType(document, mergeIfExists);
             await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
         }
-
         validator.assertIsWellformed(document);
         return document;
     }

@@ -35,7 +35,8 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            undefined,
+            false,
+           false,
                 '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}', () => '101');
 
         const result = await datastore.find({});
@@ -56,7 +57,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             trench.resource.id,
-            undefined,
+            false, false,
                     '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
             () => '101');
 
@@ -76,7 +77,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             stored.resource.id,
-            false,
+            false, false,
                     '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
             () => '101');
 
@@ -101,7 +102,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             resourceId,
-            false,
+            false, false,
             '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}',
             () => '101');
@@ -124,7 +125,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            true,
+            true, false,
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}',
             () => '101');
 
@@ -145,7 +146,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            true,
+            true, false,
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
                 + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}',
             () => '101');
@@ -170,7 +171,7 @@ describe('Import/Subsystem', () => {
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             'f1',
-            false,
+            false, false,
                     '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}',
             () => '101');
 

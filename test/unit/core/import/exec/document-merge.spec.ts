@@ -38,7 +38,7 @@ describe('DocumentMerge', () => {
             }
         };
 
-        const result = DocumentMerge.merge(target, source);
+        const result = DocumentMerge.merge(target, source, false);
         expect(result.resource.shortDescription).toEqual('shortDescription2');
         expect(result.resource.anotherField).toEqual('field2');
     });
@@ -60,7 +60,7 @@ describe('DocumentMerge', () => {
             }
         };
 
-        const result = DocumentMerge.merge(target, source);
+        const result = DocumentMerge.merge(target, source, false);
         expect(result.resource.identifier).toEqual('identifier1');
         expect(result.resource.id).toEqual('id1');
         expect(result.resource.relations).toEqual({});

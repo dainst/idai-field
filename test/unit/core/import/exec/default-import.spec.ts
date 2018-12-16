@@ -139,7 +139,7 @@ describe('DefaultImport', () => {
             mockValidator,
             mockProjectConfiguration,
 
-             () => '101', false,  '', true);
+             () => '101', false,  false, '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };
@@ -159,7 +159,7 @@ describe('DefaultImport', () => {
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-             () => '101', false, '', true);
+             () => '101', false, false, '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };

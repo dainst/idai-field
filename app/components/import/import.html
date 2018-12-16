@@ -86,6 +86,19 @@
                         zugeordnet werden können, werden ignoriert.
                     </div>
 
+                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="form-group form-check-inline">
+                        <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
+                               [(ngModel)]="allowUpdatingRelationOnMerge">
+                        <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.relationsLabel">
+                            Relationen überschreiben
+                        </label>
+                    </div>
+
+                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="import-info" i18n="@@import.mergeOption.relationsInfo">
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
+                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                    </div>
+
                     <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
                         <label class="control-label col-form-label"
                                for="mainTypeDocumentSelect"

@@ -44,6 +44,7 @@ export class ImportComponent implements OnInit {
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId: string = ''; // no assignment to a mainType
     public allowMergingExistingResources = false;
+    public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
 
 
@@ -108,6 +109,7 @@ export class ImportComponent implements OnInit {
             this.projectConfiguration,
             this.mainTypeDocumentId,
             this.allowMergingExistingResources,
+            this.allowUpdatingRelationOnMerge,
             await reader.go(),
             () => this.idGenerator.generateId()
         );

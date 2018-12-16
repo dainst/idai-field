@@ -54,7 +54,7 @@ export module RelationsCompleter {
                 relationNamesExceptRecordedIn(document, isRelationProperty));
         }
 
-        return await setInverseRelationsForDbResource(
+        return await setInverseRelationsForDbResources(
             documents,
             documentsLookup,
             get,
@@ -64,7 +64,7 @@ export module RelationsCompleter {
 
 
     // TODO extend connecteddocsresolution instead of having that here
-    async function setInverseRelationsForDbResource(documents: Array<Document>,
+    async function setInverseRelationsForDbResources(documents: Array<Document>,
                                                     documentsLookup: {[id: string]: Document},
                                                     get: (_: string) => Promise<Document>,
                                                     isRelationProperty: (_: string) => boolean,
@@ -85,7 +85,6 @@ export module RelationsCompleter {
         }
 
         // TODO also find and add the ids of all the db items pointing back to document, maybe an existing relation is to be removed
-
         return totalDocsToUpdate;
     }
 

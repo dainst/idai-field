@@ -53,6 +53,7 @@ export module DefaultImport {
                       datastore: DocumentDatastore,
                       username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
+            // BEGIN id and identifier //
             if (!mergeMode) {
                 const duplicates_ = duplicates(documents.map(to('resource.identifier')));
                 if (duplicates_.length > 0) {
@@ -62,20 +63,31 @@ export module DefaultImport {
                     return { errors: errors, successfulImports: 0} ;
                 }
             }
-            const identifierMap: { [identifier: string]: string } = mergeMode ?
-                {}
-                : assignIds(documents, generateId);
+            const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
+            for (let document of documents) {
+                try {
+                    if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+                        await rewriteRelations(document, findByIdentifier(datastore), identifierMap);
+                    }
+                } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
+            }
+            // BEGIN id and identifier //
 
-            const { documentsForUpdate, errors } = await prepareDocumentsForUpdate(
-                documents,
-                findByIdentifier(datastore),
-                identifierMap,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode,
-                validator,
-                mainTypeDocumentId,
-                useIdentifiersInRelations);
 
+
+            const errors: string[][] = [];
+            const documentsForUpdate: Array<NewDocument> = [];
+            for (let document of documents) {
+
+                try {
+                    const documentForUpdate = await mergeOrUseAsIs(document, findByIdentifier(datastore), mergeMode, allowOverwriteRelationsInMergeMode);
+                    await prepareDocumentForUpdate(documentForUpdate, validator, mainTypeDocumentId, mergeMode);
+
+                    documentsForUpdate.push(documentForUpdate);
+                } catch (errWithParams) {
+                    errors.push(errWithParams);
+                }
+            }
             if (errors.length > 0) return { errors: errors, successfulImports: 0 };
 
             let targetDocuments;
@@ -108,34 +120,6 @@ export module DefaultImport {
 
             return { errors: updateErrors, successfulImports: documents.length };
         }
-    }
-
-
-    async function prepareDocumentsForUpdate(documents: Array<Document>,
-                                             find: (identifier: string) => Promise<Document|undefined>,
-                                             identifierMap: { [identifier: string]: string },
-                                             mergeMode: boolean,
-                                             allowOverwriteRelationsOnMerge: boolean,
-                                             validator: ImportValidator,
-                                             mainTypeDocumentId: string,
-                                             useIdentifiersInRelations: boolean) {
-
-        const errors: string[][] = [];
-        const documentsForUpdate: Array<NewDocument> = [];
-        for (let document of documents) {
-
-            try {
-                if ((!mergeMode || allowOverwriteRelationsOnMerge)  && useIdentifiersInRelations) {
-                    await rewriteRelations(document, find, identifierMap);
-                }
-                const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsOnMerge);
-                await prepareDocumentForUpdate(documentForUpdate, validator, mainTypeDocumentId, mergeMode);
-                documentsForUpdate.push(documentForUpdate);
-            } catch (errWithParams) {
-                errors.push(errWithParams);
-            }
-        }
-        return { documentsForUpdate: documentsForUpdate, errors: errors };
     }
 
 

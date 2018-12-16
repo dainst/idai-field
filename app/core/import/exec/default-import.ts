@@ -81,7 +81,7 @@ export module DefaultImport {
 
                 try {
                     const documentForUpdate = await mergeOrUseAsIs(document, findByIdentifier(datastore), mergeMode, allowOverwriteRelationsInMergeMode);
-                    await prepareDocumentForUpdate(documentForUpdate, validator, mainTypeDocumentId, mergeMode);
+                    await doValidations(documentForUpdate, validator, mergeMode);
 
                     documentsForUpdate.push(documentForUpdate);
                 } catch (errWithParams) {
@@ -90,35 +90,41 @@ export module DefaultImport {
             }
             if (errors.length > 0) return { errors: errors, successfulImports: 0 };
 
-            let targetDocuments;
+            // BEGIN relations
+            let relatedDocuments;
             try {
+                if (!mergeMode) {
+                    for (let document of documents) {
+                        await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
+                    }
+                }
+
                 if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-                    targetDocuments = await RelationsCompleter.completeInverseRelations(
+                    relatedDocuments = await RelationsCompleter.completeInverseRelations(
                         documentsForUpdate as any,
                         (resourceId: string) => datastore.get(resourceId),
                         (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
                         (propertyName: string) => projectConfiguration.getInverseRelations(propertyName),
                         mergeMode);
                 }
-            } catch (errWithParams) {
-                return { errors: [errWithParams], successfulImports: 0 };
-            }
+            } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
+            // END relations
 
+
+            // BEGIN updates
             const updateErrors = [];
             try {
                 await ImportUpdater.go(
                     documentsForUpdate as any,
-                    targetDocuments,
+                    relatedDocuments,
                     (d: Document, u: string) => datastore.update(d, u),
                     (d: Document, u: string) => datastore.create(d, u),
                     username,
                     mergeMode);
 
-            } catch (errWithParams) {
-                updateErrors.push(errWithParams);
-            }
-
+            } catch (errWithParams) { updateErrors.push(errWithParams)}
             return { errors: updateErrors, successfulImports: documents.length };
+            // END updates
         }
     }
 
@@ -194,15 +200,13 @@ export module DefaultImport {
     }
 
 
-    async function prepareDocumentForUpdate(document: NewDocument,
+    async function doValidations(document: NewDocument,
                                             validator: ImportValidator,
-                                            mainTypeDocumentId: string,
                                             mergeIfExists: boolean): Promise<Document|NewDocument> {
 
         if (!mergeIfExists) {
             validator.assertIsKnownType(document);
             validator.assertIsAllowedType(document, mergeIfExists);
-            await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
         }
         validator.assertIsWellformed(document);
         return document;

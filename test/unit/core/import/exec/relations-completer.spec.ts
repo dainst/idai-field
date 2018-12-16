@@ -62,7 +62,10 @@ describe('RelationsCompleter', () => {
             throw "not found";
         };
         isRelationProperty = (_: any) => true;
-        getInverseRelation = (_: string) => _ === 'includes' ? 'liesWithin' : 'includes';
+        getInverseRelation = (_: string) => {
+            if (_ === 'isAfter') return 'isBefore';
+            return _ === 'includes' ? 'liesWithin' : 'includes';
+        }
     });
 
 
@@ -203,6 +206,22 @@ describe('RelationsCompleter', () => {
         expect(documents[0].resource.relations['includes'][0]).toBe('4');
         expect(documents[0].resource.relations['includes'][1]).toBe('1');
         expect(documents[0].resource.relations['includes'][2]).toBe('2');
+        done();
+    });
+
+
+    it('remove one - where they are also related by other relation', async done => {
+
+        doc1.resource.relations = {isRecordedIn: [], isAfter: ['2']};
+
+        doc2.resource.relations['isBefore'] = ['1'];
+        doc2.resource.relations['includes'] = ['1'];
+
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('2');
+        expect(documents[0].resource.relations['isBefore'][0]).toBe('1');
+        expect(documents[0].resource.relations['includes']).toBeUndefined();
         done();
     });
 });

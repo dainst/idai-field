@@ -81,12 +81,23 @@ export module RelationsCompleter {
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocs, isRelationProperty, getInverseRelation);
 
-            documentTargetDocsToUpdate
-                .filter(doc => !totalDocsToUpdate.find(on('resource.id')(doc)))
-                .forEach(doc => totalDocsToUpdate.push(doc));
+            addTheOnesNotAlreadyContainedIn(totalDocsToUpdate)(documentTargetDocsToUpdate);
         }
 
+        // TODO also find and add the ids of all the db items pointing back to document, maybe an existing relation is to be removed
+
         return totalDocsToUpdate;
+    }
+
+
+    function addTheOnesNotAlreadyContainedIn(to: Array<Document>) {
+
+        return (from: Array<Document>) => {
+
+            from
+                .filter(doc => !to.find(on('resource.id')(doc)))
+                .forEach(doc => to.push(doc));
+        }
     }
 
 
@@ -112,7 +123,6 @@ export module RelationsCompleter {
     }
 
 
-    // TODO also find and add the ids of all the db items pointing back to document, maybe an existing relation is to be removed
     function targetIdsReferingToObjects(document: Document, isRelationProperty: Function, documentsLookup: any) {
 
         return flow(relationNamesExceptRecordedIn(document, isRelationProperty),

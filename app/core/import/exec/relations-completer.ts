@@ -54,9 +54,6 @@ export module RelationsCompleter {
                 relationNamesExceptRecordedIn(document, isRelationProperty));
         }
 
-
-
-
         return await setInverseRelationsForDbResource(
             documents,
             documentsLookup,

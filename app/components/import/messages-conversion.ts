@@ -66,6 +66,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_EXEC_MISSING_RELATION_TARGET;
         if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_INVALID_OPERATION_RESOURCE;
+        if (msg === ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN) replacement = M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_ROLLBACK;
         if (msg === ImportErrors.INVALID_FIELDS) {

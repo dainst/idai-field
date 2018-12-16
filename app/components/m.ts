@@ -90,6 +90,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
     public static IMPORT_EXEC_NOT_INTERRELATED = 'importer.error.notInterrelated';
     public static IMPORT_EXEC_EMPTY_RELATION = 'importer.error.emptyRelation';
+    public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'importer.error.liesWithinRecordedInMismatch';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -542,6 +543,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.emptyRelation',
                 value: 'Beim Import ist ein Fehler aufgetreten: Leere Relation bei \'[0]\'.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN] = {
+            content: i18n({
+                id: 'messages.import.error.liesWithinRecordedInMismatch',
+                value: 'Beim Import ist ein Fehler aufgetreten: Liegt in Beziehung zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
             }),
             level: 'danger',
             params: ['?'],

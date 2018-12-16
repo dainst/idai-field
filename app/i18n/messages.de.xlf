@@ -2806,6 +2806,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Liegt in Beziehung zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Liegt in Beziehung zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>

@@ -1,2 +1,2 @@
-{ "type": "Feature", "identifier" : "feat1", "shortDescription" : "ImportedTrench", "relations": {"isBefore": ["feat2"]}  }
-{ "type": "Feature", "identifier" : "feat2", "shortDescription" : "ImportedTrench", "relations": {"isAfter": ["feat1"]}  }
+{ "type": "Feature", "identifier" : "feat1", "shortDescription" : "feature1", "relations": {"liesWithin": ["SE0"]}  }
+{ "type": "Feature", "identifier" : "feat2", "shortDescription" : "feature2", "relations": {"liesWithin": ["SE0"]}  }

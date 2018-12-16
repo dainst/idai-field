@@ -117,7 +117,8 @@ describe('RelationsCompleter', () => {
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
-        expect(doc2.resource.relations['includes'][0]).toBe('1');
+        expect(documents[0].resource.relations['includes'][0]).toBe('1');
+        expect(doc2.resource.relations['includes']).toBeUndefined(); // dont touch original (cached instance in production setting
         done();
     });
 
@@ -131,8 +132,8 @@ describe('RelationsCompleter', () => {
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
-        expect(doc2.resource.relations['includes'][0]).toBe('3');
-        expect(doc2.resource.relations['includes'][1]).toBe('1');
+        expect(documents[0].resource.relations['includes'][0]).toBe('3');
+        expect(documents[0].resource.relations['includes'][1]).toBe('1');
         done();
     });
 
@@ -162,6 +163,19 @@ describe('RelationsCompleter', () => {
             expect(errWithParams[0]).toEqual(ImportErrors.EMPTY_RELATION);
             expect(errWithParams[1]).toEqual('one');
         }
+        done();
+    });
+
+
+    it('add two to the same', async done => {
+
+        doc1.resource.relations['liesWithin'] = ['3'];
+        doc2.resource.relations['liesWithin'] = ['3'];
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, isRelationProperty, getInverseRelation);
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('3');
+        expect(documents[0].resource.relations['includes'][0]).toBe('1');
+        expect(documents[0].resource.relations['includes'][1]).toBe('2');
         done();
     });
 });

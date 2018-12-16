@@ -1,8 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, Relations, toResourceId} from 'idai-components-2';
+import {Document, ProjectConfiguration, Relations, toResourceId} from 'idai-components-2';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
+import {flatMap, subtract, to} from 'tsfun';
 
 
 /**

@@ -69,7 +69,7 @@ export module DefaultImport {
                     return { errors: errors, successfulImports: 0} ;
                 }
             }
-            const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
+            const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
             for (let document of documents) {
                 try {
                     if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {

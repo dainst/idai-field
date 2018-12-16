@@ -55,16 +55,23 @@ export module DefaultImport {
 
             const {get, find, update, create, isRelationProperty, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
 
-            let {errors, documentsForUpdate} = await prepareIdsAndIdentifiersValidateAndMerge(
-                documents, validator, mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations, find, generateId);
-            if (errors.length > 0) return { errors: errors, successfulImports: 0 };
-
+            let documentsForUpdate: Array<Document> = [];
             let relatedDocuments: Array<Document> = [];
             try {
-                relatedDocuments = await prepareRelations(documentsForUpdate,
-                    validator, mergeMode, allowOverwriteRelationsInMergeMode,
+
+                documentsForUpdate =
+                    await prepareIdsAndIdentifiersValidateAndMerge(
+                        documents, validator,
+                        mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
+                        find, generateId);
+
+                relatedDocuments = await prepareRelations(
+                    documentsForUpdate,
+                    validator,
+                    mergeMode, allowOverwriteRelationsInMergeMode,
                     isRelationProperty, getInverseRelation, get,
                     mainTypeDocumentId)
+
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
 
             const updateErrors = [];
@@ -128,38 +135,29 @@ export module DefaultImport {
                                             allowOverwriteRelationsInMergeMode: boolean,
                                             useIdentifiersInRelations: boolean,
                                             find: (identifier: string) => Promise<Document|undefined>,
-                                            generateId: () => string): Promise<{errors: string[][], documentsForUpdate: Array<Document>}> {
+                                            generateId: () => string): Promise<Array<Document>> {
 
-        const errors: string[][] = [];
         if (!mergeMode) {
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
-            if (duplicates_.length > 0) {
-                for (let duplicate of duplicates_) errors.push([ImportErrors.DUPLICATE_IDENTIFIER, duplicate]);
-                return { errors: errors, documentsForUpdate: []} ;
-            }
+            if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
         }
+
         const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
         for (let document of documents) {
-            // TODO throw if resource targets itself with relation
-            try {
-                if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                    await rewriteRelations(document, find, identifierMap);
-                }
-            } catch (errWithParams) { return { errors: [errWithParams], documentsForUpdate: []} }
+            if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+                await rewriteRelations(document, find, identifierMap);
+            }
         }
+        // TODO throw if resource targets itself with relation
 
         const documentsForUpdate: Array<Document> = [];
         for (let document of documents) {
 
-            try {
-                const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
-                await doValidations(documentForUpdate, validator, mergeMode);
-                documentsForUpdate.push(documentForUpdate);
-            } catch (errWithParams) {
-                errors.push(errWithParams);
-            }
+            const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
+            await doValidations(documentForUpdate, validator, mergeMode);
+            documentsForUpdate.push(documentForUpdate);
         }
-        return { errors: errors, documentsForUpdate: documentsForUpdate} ;
+        return documentsForUpdate;
     }
 
 

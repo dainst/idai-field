@@ -85,6 +85,8 @@ export module RelationsCompleter {
             // find and add the ids of all the db items pointing back to document,
             // maybe an existing relation is to be removed.
             // right now this poses a problem since there is no general indexing over all relations
+            // we could see if we are in update mode. then we know there is a previous version
+            // of the document from which we can determine the targets previously set
         }
 
         return totalDocsToUpdate;

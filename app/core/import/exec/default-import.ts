@@ -148,13 +148,12 @@ export module DefaultImport {
                 await rewriteRelations(document, find, identifierMap);
             }
         }
-        // TODO throw if resource targets itself with relation
 
         const documentsForUpdate: Array<Document> = [];
         for (let document of documents) {
-
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             await doValidations(documentForUpdate, validator, mergeMode);
+            // TODO throw if resource targets itself with relation
             documentsForUpdate.push(documentForUpdate);
         }
         return documentsForUpdate;

@@ -38,16 +38,7 @@ export module DefaultImport {
          *   The relations map is assumed to be at least existent, but can be empty.
          *   The resource.type field may be empty.
          * @param importReport
-         *   .errors {ImportError.*}
-         *      [PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier] if duplicate identifier is found in import file.
-         *      [PREVALIDATION_INVALID_TYPE, doc.resource.type]
-         *      [PREVALIDATION_OPERATIONS_NOT_ALLOWED]
-         *      [PREVALIDATION_NO_OPERATION_ASSIGNED]
-         *      [PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
-         *      [EXEC_MISSING_RELATION_TARGET]
-         *      [INVALID_MAIN_TYPE_DOCUMENT]
-         *      [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
-         *      [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN]
+         *   .errors of ImportError or Validation Error
          */
         return async (documents: Array<Document>,
                       datastore: DocumentDatastore,
@@ -149,7 +140,7 @@ export module DefaultImport {
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 await rewriteRelations(document, find, identifierMap);
             }
-            // TODO throw if resource targets itself with relation, or just erase these targetids
+            // TODO erase self referencing target ids in relations
 
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             if (!mergeMode) {

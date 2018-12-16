@@ -141,19 +141,22 @@ export module DefaultImport {
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
             if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
         }
-
         const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
-        for (let document of documents) {
-            if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                await rewriteRelations(document, find, identifierMap);
-            }
-        }
 
         const documentsForUpdate: Array<Document> = [];
         for (let document of documents) {
+
+            if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+                await rewriteRelations(document, find, identifierMap);
+            }
+            // TODO throw if resource targets itself with relation, or just erase these targetids
+
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
-            await doValidations(documentForUpdate, validator, mergeMode);
-            // TODO throw if resource targets itself with relation
+            if (!mergeMode) {
+                validator.assertIsKnownType(document);
+                validator.assertIsAllowedType(document, mergeMode);
+            }
+            validator.assertIsWellformed(document);
             documentsForUpdate.push(documentForUpdate);
         }
         return documentsForUpdate;
@@ -228,19 +231,6 @@ export module DefaultImport {
                 i++;
             }
         }
-    }
-
-
-    async function doValidations(document: NewDocument,
-                                 validator: ImportValidator,
-                                 mergeIfExists: boolean): Promise<Document|NewDocument> {
-
-        if (!mergeIfExists) {
-            validator.assertIsKnownType(document);
-            validator.assertIsAllowedType(document, mergeIfExists);
-        }
-        validator.assertIsWellformed(document);
-        return document;
     }
 
 

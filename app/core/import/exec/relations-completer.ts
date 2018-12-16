@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
-import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, union, on} from 'tsfun';
+import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, on, subtractBy, union} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 
@@ -69,7 +69,7 @@ export module RelationsCompleter {
                                                      isRelationProperty: (_: string) => boolean,
                                                      getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
-        const totalDocsToUpdate: Array<Document> = [];
+        let totalDocsToUpdate: Array<Document> = [];
 
         for (let document of documents) {
 
@@ -84,21 +84,21 @@ export module RelationsCompleter {
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocs, isRelationProperty, getInverseRelation);
-            addTheOnesNotAlreadyContainedIn(totalDocsToUpdate)(documentTargetDocsToUpdate);
-
+            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate)(documentTargetDocsToUpdate);
         }
 
         return totalDocsToUpdate;
     }
 
 
-    function addTheOnesNotAlreadyContainedIn(to: Array<Document>) {
+    // TODO test that things get overwritten
+    function addOrOverwrite(to: Array<Document>) {
 
         return (from: Array<Document>) => {
 
-            from
-                .filter(doc => !to.find(on('resource.id')(doc)))
-                .forEach(doc => to.push(doc));
+            const result = subtractBy(on('resource.id'))(from)(to);
+            from.forEach(doc => result.push(doc));
+            return result;
         }
     }
 

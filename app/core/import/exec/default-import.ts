@@ -111,13 +111,15 @@ export module DefaultImport {
                         mergeMode);
                 }
 
+                // TODO throw if resource targets itself with relation
+
                 for (let document of documentsForUpdate) {
                     if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
 
                     for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
                         const liesWithinTarget = await get(liesWithinTargeId);
                         if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
-                            throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier]; // TODO convert to M and add msg in M
+                            throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
                         }
                     }
                 }

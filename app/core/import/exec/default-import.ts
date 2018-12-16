@@ -29,8 +29,6 @@ export module DefaultImport {
         if (mainTypeDocumentId && mergeMode) {
             throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
-        const isRelationProperty = (propertyName: string) => projectConfiguration.isRelationProperty(propertyName);
-        const getInverseRelation = (propertyName: string) => projectConfiguration.getInverseRelations(propertyName);
 
         /**
          * @param datastore
@@ -49,96 +47,119 @@ export module DefaultImport {
          *      [EXEC_MISSING_RELATION_TARGET]
          *      [INVALID_MAIN_TYPE_DOCUMENT]
          *      [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
+         *      [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN]
          */
         return async (documents: Array<Document>,
                       datastore: DocumentDatastore,
                       username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
-            const get = (resourceId: string) => datastore.get(resourceId);
-            const find = findByIdentifier(datastore);
-            const update = (d: Document, u: string) => datastore.update(d, u);
-            const create = (d: Document, u: string) => datastore.create(d, u);
+            const {get, find, update, create, isRelationProperty, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
 
-            // BEGIN id and identifier //
-            if (!mergeMode) {
-                const duplicates_ = duplicates(documents.map(to('resource.identifier')));
-                if (duplicates_.length > 0) {
-                    const errors = [];
-                    for (let duplicate of duplicates_) errors.push(
-                        [ImportErrors.DUPLICATE_IDENTIFIER, duplicate]);
-                    return { errors: errors, successfulImports: 0} ;
-                }
-            }
-            const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
-            for (let document of documents) {
-                try {
-                    if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                        await rewriteRelations(document, find, identifierMap);
-                    }
-                } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
-            }
-            // BEGIN id and identifier //
-
-
-
-            const errors: string[][] = [];
-            const documentsForUpdate: Array<NewDocument> = [];
-            for (let document of documents) {
-
-                try {
-                    const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
-                    await doValidations(documentForUpdate, validator, mergeMode);
-                    documentsForUpdate.push(documentForUpdate);
-                } catch (errWithParams) {
-                    errors.push(errWithParams);
-                }
-            }
+            let {errors, documentsForUpdate} = await prepareIdsAndIdentifiersValidateAndMerge(
+                documents, validator, mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations, find, generateId);
             if (errors.length > 0) return { errors: errors, successfulImports: 0 };
 
-            // BEGIN relations
-            let relatedDocuments;
+            let relatedDocuments: Array<Document> = [];
             try {
-                for (let document of documentsForUpdate) {
-                    if (!mergeMode) await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
-                    // TODO throw if resource targets itself with relation
-                }
-
-                if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-                    relatedDocuments = await RelationsCompleter.completeInverseRelations(
-                        documentsForUpdate as any,
-                        get, isRelationProperty, getInverseRelation,
-                        mergeMode);
-                }
-
-
-                for (let document of documentsForUpdate) {
-                    if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
-
-                    for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
-                        const liesWithinTarget = await get(liesWithinTargeId);
-                        if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
-                            throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
-                        }
-                    }
-                }
-
+                relatedDocuments = await prepareRelations(documentsForUpdate,
+                    validator, mergeMode, allowOverwriteRelationsInMergeMode,
+                    isRelationProperty, getInverseRelation, get,
+                    mainTypeDocumentId)
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
-            // END relations
 
-
-            // BEGIN updates
             const updateErrors = [];
             try {
                 await ImportUpdater.go(
-                    documentsForUpdate as any,
+                    documentsForUpdate,
                     relatedDocuments,
                     update, create, username,
                     mergeMode);
 
             } catch (errWithParams) { updateErrors.push(errWithParams)}
             return { errors: updateErrors, successfulImports: documents.length };
-            // END updates
         }
+    }
+
+
+    async function prepareRelations(documentsForUpdate: Array<Document>,
+                                    validator: ImportValidator,
+                                    mergeMode: boolean,
+                                    allowOverwriteRelationsInMergeMode: boolean,
+                                    isRelationProperty: (_: string) => boolean,
+                                    getInverseRelation: (_: string) => string|undefined,
+                                    get: (_: string) => Promise<Document>,
+                                    mainTypeDocumentId: string) {
+
+        let relatedDocuments: Array<Document> = [];
+        if (!mergeMode) for (let document of documentsForUpdate) {
+            await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
+        }
+
+        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+            relatedDocuments = await RelationsCompleter.completeInverseRelations(
+                documentsForUpdate as any,
+                get, isRelationProperty, getInverseRelation,
+                mergeMode);
+        }
+
+        for (let document of documentsForUpdate) {
+            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+
+            for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
+                const liesWithinTarget = await get(liesWithinTargeId);
+                if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
+                    throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+                }
+            }
+        }
+        return relatedDocuments;
+    }
+
+
+    /**
+     * Assigns ids if necessary.
+     * Rewrites relations in identifiers.
+     * Does validations, mostly of structural nature, most of relation validation is done later.
+     * Merges with existing documents from db if necessary.
+     */
+    async function prepareIdsAndIdentifiersValidateAndMerge(documents: Array<Document>,
+                                            validator: ImportValidator,
+                                            mergeMode: boolean,
+                                            allowOverwriteRelationsInMergeMode: boolean,
+                                            useIdentifiersInRelations: boolean,
+                                            find: (identifier: string) => Promise<Document|undefined>,
+                                            generateId: () => string): Promise<{errors: string[][], documentsForUpdate: Array<Document>}> {
+
+        const errors: string[][] = [];
+        if (!mergeMode) {
+            const duplicates_ = duplicates(documents.map(to('resource.identifier')));
+            if (duplicates_.length > 0) {
+                for (let duplicate of duplicates_) errors.push([ImportErrors.DUPLICATE_IDENTIFIER, duplicate]);
+                return { errors: errors, documentsForUpdate: []} ;
+            }
+        }
+        const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
+        for (let document of documents) {
+            // TODO throw if resource targets itself with relation
+            try {
+                if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+                    await rewriteRelations(document, find, identifierMap);
+                }
+            } catch (errWithParams) { return { errors: [errWithParams], documentsForUpdate: []} }
+        }
+
+        const documentsForUpdate: Array<Document> = [];
+        for (let document of documents) {
+
+            try {
+                const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
+                await doValidations(documentForUpdate, validator, mergeMode);
+                documentsForUpdate.push(documentForUpdate);
+            } catch (errWithParams) {
+                errors.push(errWithParams);
+            }
+        }
+        return { errors: errors, documentsForUpdate: documentsForUpdate} ;
     }
 
 
@@ -253,6 +274,19 @@ export module DefaultImport {
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
         if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
             relations['isRecordedIn'].push(mainTypeDocumentId);
+        }
+    }
+
+
+    function neededFunctions(datastore: DocumentDatastore, projectConfiguration: ProjectConfiguration) {
+
+        return {
+            get: (resourceId: string) => datastore.get(resourceId),
+            find: findByIdentifier(datastore),
+            update: (d: Document, u: string) => datastore.update(d, u),
+            create: (d: Document, u: string) => datastore.create(d, u),
+            isRelationProperty: (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
+            getInverseRelation: (propertyName: string) => projectConfiguration.getInverseRelations(propertyName)
         }
     }
 }

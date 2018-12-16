@@ -30,8 +30,11 @@ export class ConnectedDocsWriter {
             [document].concat(otherVersions));
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            this.projectConfiguration, document,
-            connectedDocs, true);
+            document,
+            connectedDocs,
+            (propertyName: string) => this. projectConfiguration.isRelationProperty(propertyName),
+            (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
+            true);
 
         await this.updateDocs(docsToUpdate, username);
     }
@@ -42,8 +45,11 @@ export class ConnectedDocsWriter {
         const connectedDocs = await this.getExistingConnectedDocs([document]);
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            this.projectConfiguration, document,
-            connectedDocs, false);
+            document,
+            connectedDocs,
+            (propertyName: string) => this.projectConfiguration.isRelationProperty(propertyName),
+            (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
+            false);
 
         await this.updateDocs(docsToUpdate, username);
     }

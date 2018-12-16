@@ -1,5 +1,5 @@
-import {Document, ProjectConfiguration, relationsEquivalent} from 'idai-components-2';
-import {arrayEquivalent, isNot, objectEqualBy, on, tripleEqual} from 'tsfun';
+import {Document, relationsEquivalent} from 'idai-components-2';
+import {isNot, on, tripleEqual} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -12,9 +12,10 @@ export module ConnectedDocsResolution {
      * on the relations seen in <i>document</i> alone. Relations in targetDocuments,
      * which correspond to other documents, are left as they are.
      *
-     * @param projectConfiguration
      * @param document
      * @param targetDocuments
+     * @param isRelationProperty
+     * @param getInverseRelation
      * @param shouldSetInverseRelations if <b>false</b>, relations of <i>targetDocuments</i>
      *   which point to <i>document</i>, get only removed, but not (re-)created
      *
@@ -23,9 +24,10 @@ export module ConnectedDocsResolution {
      *   Note that targetDocuments relations get modified <b>in place</b>.
      */
     export function determineDocsToUpdate(
-        projectConfiguration: ProjectConfiguration,
         document: Document,
         targetDocuments: Array<Document>,
+        isRelationProperty: (_: string) => boolean,
+        getInverseRelation: (_: string) => string|undefined,
         shouldSetInverseRelations: boolean = true
     ): Array<Document> {
 
@@ -34,40 +36,41 @@ export module ConnectedDocsResolution {
         for (let targetDocument of targetDocuments) {
 
             pruneInverseRelations(
-                projectConfiguration,
                 document.resource.id,
                 targetDocument,
+                isRelationProperty,
                 shouldSetInverseRelations);
 
             if (shouldSetInverseRelations) setInverseRelations(
-                projectConfiguration, document, targetDocument);
+                document, targetDocument, isRelationProperty, getInverseRelation);
         }
 
         return compare(targetDocuments, copyOfTargetDocuments);
     }
 
 
-    function pruneInverseRelations(projectConfiguration: ProjectConfiguration,
-                                   resourceId: string,
+    function pruneInverseRelations(resourceId: string,
                                    targetDocument: Document,
+                                   isRelationProperty: (_: string) => boolean,
                                    keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
-            .filter(relation => projectConfiguration.isRelationProperty(relation))
+            .filter(relation => isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
             .forEach(removeRelation(resourceId, targetDocument.resource.relations));
     }
 
 
-    function setInverseRelations(projectConfiguration: ProjectConfiguration,
-                                 document: Document,
-                                 targetDocument: Document) {
+    function setInverseRelations(document: Document,
+                                 targetDocument: Document,
+                                 isRelationProperty: (_: string) => boolean,
+                                 getInverseRelation: (_: string) => string|undefined) {
 
         Object.keys(document.resource.relations)
-            .filter(relation => projectConfiguration.isRelationProperty(relation))
+            .filter(relation => isRelationProperty(relation))
             .filter(isNot(tripleEqual("isRecordedIn")) )
             .forEach(relation => setInverseRelation(document, targetDocument,
-                    relation, projectConfiguration.getInverseRelations(relation)));
+                    relation, getInverseRelation(relation)));
     }
 
 

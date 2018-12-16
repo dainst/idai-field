@@ -1,6 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
-import {isUndefinedOrEmpty, isEmpty, union} from 'tsfun';
+import {isUndefinedOrEmpty, isEmpty, union, flatMap, flow, filter} from 'tsfun';
+import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 
 
 /**
@@ -46,12 +47,24 @@ export module RelationsCompleter {
         let allDBDocumentsToUpdate: Array<Document> = [];
         for (let document of documents) {
 
-            const dbDocumentsToUpdate = await setInverseRelationsForResource(
+            const relationNamesExceptIsRecordedIn = Object
+                .keys(document.resource.relations)
+                .filter(relationName => relationName !== 'isRecordedIn')
+                .filter(relationName => isRelationProperty(relationName));
+
+            await setInverseRelationsForImportResource(
+                document,
+                documentsLookup,
+                getInverseRelation,
+                relationNamesExceptIsRecordedIn);
+
+            const dbDocumentsToUpdate = await setInverseRelationsForDbResource(
                 document,
                 documentsLookup,
                 get,
                 isRelationProperty,
-                getInverseRelation);
+                getInverseRelation,
+                relationNamesExceptIsRecordedIn);
 
             allDBDocumentsToUpdate = allDBDocumentsToUpdate.concat(dbDocumentsToUpdate);
         }
@@ -59,18 +72,37 @@ export module RelationsCompleter {
     }
 
 
-    async function setInverseRelationsForResource(document: Document,
+
+    async function setInverseRelationsForDbResource(document: Document,
+                                                    documentsLookup: {[id: string]: Document},
+                                                    get: (_: string) => Promise<Document>,
+                                                    isRelationProperty: (_: string) => boolean,
+                                                    getInverseRelation: (_: string) => string|undefined,
+                                                    relationNamesExceptIsRecordedIn: string[]): Promise<Array<Document>> {
+
+        const targetIdsReferingToDbObjects =
+            flow(relationNamesExceptIsRecordedIn,
+                flatMap(relationName => document.resource.relations[relationName]),
+                filter(targetId => !documentsLookup[targetId]));
+
+        const targetsDbObjects: Array<Document> = [];
+        for (let targetId of targetIdsReferingToDbObjects) {
+            try {
+                targetsDbObjects.push(await get(targetId));
+            } catch {
+                throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
+            }
+        }
+        return ConnectedDocsResolution.determineDocsToUpdate(
+            document, targetsDbObjects, isRelationProperty, getInverseRelation);
+    }
+
+
+
+    async function setInverseRelationsForImportResource(document: Document,
                                                   documentsLookup: {[id: string]: Document},
-                                                  get: (_: string) => Promise<Document>,
-                                                  isRelationProperty: (_: string) => boolean,
-                                                  getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
-
-        const targetDocumentsForUpdate: Array<Document> = [];
-
-        const relationNamesExceptIsRecordedIn = Object
-            .keys(document.resource.relations)
-            .filter(relationName => relationName !== 'isRecordedIn')
-            .filter(relationName => isRelationProperty(relationName));
+                                                  getInverseRelation: (_: string) => string|undefined,
+                                                  relationNamesExceptIsRecordedIn: string[]): Promise<void> {
 
 
         for (let relationName of relationNamesExceptIsRecordedIn) {
@@ -91,7 +123,7 @@ export module RelationsCompleter {
             for (let targetId of document.resource.relations[relationName]) {
                 let targetDocument = documentsLookup[targetId];
 
-                if (targetDocument /* from import file */) {
+                if (targetDocument) {
 
                     if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
                         targetDocument.resource.relations[inverseRelationName] = [];
@@ -100,20 +132,8 @@ export module RelationsCompleter {
                         targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
                     }
 
-                } else /* from db */ {
-
-                    try {
-
-                        targetDocument = await get(targetId);
-                        if (!targetDocument.resource.relations[inverseRelationName]) targetDocument.resource.relations[inverseRelationName] = [];
-                        targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
-                        targetDocumentsForUpdate.push(targetDocument);
-
-                    } catch { throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId] }
                 }
             }
         }
-
-        return targetDocumentsForUpdate;
     }
 }

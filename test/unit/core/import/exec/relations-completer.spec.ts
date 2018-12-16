@@ -49,6 +49,7 @@ describe('RelationsCompleter', () => {
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
             if (resourceId === '3') return doc3;
+            throw "not found";
         };
         isRelationProperty = (_: any) => true;
         getInverseRelation = (_: string) => _ === 'includes' ? 'liesWithin' : 'includes';

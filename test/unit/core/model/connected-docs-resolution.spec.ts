@@ -1,4 +1,3 @@
-import {ProjectConfiguration} from 'idai-components-2';
 import {ConnectedDocsResolution} from "../../../../app/core/model/connected-docs-resolution";
 
 
@@ -9,31 +8,13 @@ import {ConnectedDocsResolution} from "../../../../app/core/model/connected-docs
 describe('ConnectedDocsResolution', () => {
 
 
-    const projectConfiguration = new ProjectConfiguration({
-        'types': [],
-        'relations': [
-            {
-                'name': 'BelongsTo',
-                'inverse': 'Contains',
-                'label': 'Enthalten in'
-            },
-            {
-                'name': 'Contains',
-                'inverse': 'BelongsTo',
-                'label': 'Enthält'
-            },
-            {
-                'name': 'isRecordedIn',
-                'label': 'Einweg'
-            }
-        ]
-    });
-
-
     let doc;
     let relatedDoc;
     let anotherRelatedDoc;
 
+    let isRelationProperty = (_: any) => true;
+
+    let getInverseRelation = (_: any) => _ === 'Contains' ? 'BelongsTo' : 'Contains';
 
     beforeEach(() => {
 
@@ -59,7 +40,8 @@ describe('ConnectedDocsResolution', () => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
     });
@@ -69,7 +51,8 @@ describe('ConnectedDocsResolution', () => {
 
         relatedDoc.resource.relations['Contains'] = ['1'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -82,7 +65,8 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1'];
 
         const docsToUpdate
-            = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc, anotherRelatedDoc]);
+            = ConnectedDocsResolution.determineDocsToUpdate(
+                doc, [relatedDoc, anotherRelatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([relatedDoc, anotherRelatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -95,7 +79,8 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         relatedDoc.resource.relations['Contains'] = ['4'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
@@ -108,7 +93,8 @@ describe('ConnectedDocsResolution', () => {
 
         relatedDoc.resource.relations['Contains'] = ['1','4'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
@@ -120,7 +106,8 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         relatedDoc.resource.relations['Contains'] = ['1','4'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
@@ -134,7 +121,8 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         relatedDoc.resource.relations['Contains'] = ['1'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['1']);
@@ -146,7 +134,8 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['Contains'] = ['2'];
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc], false);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
@@ -157,7 +146,8 @@ describe('ConnectedDocsResolution', () => {
 
         doc.resource.relations['Contains'] = ['2'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc], false);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation, false);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
@@ -168,7 +158,8 @@ describe('ConnectedDocsResolution', () => {
 
         relatedDoc.resource.relations['Contains'] = ['1', '4'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc], false);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
@@ -183,7 +174,8 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
@@ -197,7 +189,8 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc], false);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(undefined);
@@ -209,7 +202,8 @@ describe('ConnectedDocsResolution', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            doc, [relatedDoc], isRelationProperty, getInverseRelation);
         expect(docsToUpdate).toEqual([]);
         expect(Object.keys(relatedDoc.resource.relations).length).toEqual(0);
     });

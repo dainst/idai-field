@@ -77,16 +77,15 @@ export module RelationsCompleter {
             for (let targetId of targetIdsReferingToObjects(document, isRelationProperty, documentsLookup)) {
                 documentTargetDocs.push(await getTargetDocument(totalDocsToUpdate, targetId, get));
             }
-            const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-                document, documentTargetDocs, isRelationProperty, getInverseRelation);
-
-            addTheOnesNotAlreadyContainedIn(totalDocsToUpdate)(documentTargetDocsToUpdate);
-
-            // find and add the ids of all the db items pointing back to document,
-            // maybe an existing relation is to be removed.
-            // right now this poses a problem since there is no general indexing over all relations
+            // find and add also the ids of all the db items pointing back to document,
+            // since we are not generally indexing over all relations
             // we could see if we are in update mode. then we know there is a previous version
             // of the document from which we can determine the targets previously set
+
+            const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+                document, documentTargetDocs, isRelationProperty, getInverseRelation);
+            addTheOnesNotAlreadyContainedIn(totalDocsToUpdate)(documentTargetDocsToUpdate);
+
         }
 
         return totalDocsToUpdate;

@@ -98,10 +98,9 @@ export module DefaultImport {
             // BEGIN relations
             let relatedDocuments;
             try {
-                if (!mergeMode) {
-                    for (let document of documentsForUpdate) {
-                        await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
-                    }
+                for (let document of documentsForUpdate) {
+                    if (!mergeMode) await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
+                    // TODO throw if resource targets itself with relation
                 }
 
                 if (!mergeMode || allowOverwriteRelationsInMergeMode) {
@@ -111,7 +110,6 @@ export module DefaultImport {
                         mergeMode);
                 }
 
-                // TODO throw if resource targets itself with relation
 
                 for (let document of documentsForUpdate) {
                     if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;

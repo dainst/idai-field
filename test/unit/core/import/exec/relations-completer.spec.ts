@@ -12,7 +12,7 @@ describe('RelationsCompleter', () => {
     let doc1: any;
     let doc2: any;
     let doc3: any;
-
+    let doc4: any;
 
 
     beforeEach(() => {
@@ -44,11 +44,21 @@ describe('RelationsCompleter', () => {
             }
         };
 
+        doc4 = {
+            resource: {
+                id: '4',
+                identifier: 'four',
+                type: 'Object',
+                relations: {isRecordedIn: []}
+            }
+        };
+
         get = async (resourceId: string) => {
 
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
             if (resourceId === '3') return doc3;
+            if (resourceId === '4') return doc3;
             throw "not found";
         };
         isRelationProperty = (_: any) => true;
@@ -176,6 +186,23 @@ describe('RelationsCompleter', () => {
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations['includes'][0]).toBe('1');
         expect(documents[0].resource.relations['includes'][1]).toBe('2');
+        done();
+    });
+
+
+    it('add two to the same - which already has a relation', async done => {
+
+        doc4.resource.relations['liesWithin'] = ['3'];
+        doc3.resource.relations['includes'] = ['4'];
+
+        doc1.resource.relations['liesWithin'] = ['3'];
+        doc2.resource.relations['liesWithin'] = ['3'];
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, isRelationProperty, getInverseRelation);
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('3');
+        expect(documents[0].resource.relations['includes'][0]).toBe('4');
+        expect(documents[0].resource.relations['includes'][1]).toBe('1');
+        expect(documents[0].resource.relations['includes'][2]).toBe('2');
         done();
     });
 });

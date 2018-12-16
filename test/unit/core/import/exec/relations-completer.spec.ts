@@ -74,7 +74,7 @@ describe('RelationsCompleter', () => {
 
         doc2.resource.relations['includes'] =  ['1'];
         doc1.resource.relations['liesWithin'] = ['2'];
-        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
 
         expect(documents.length).toBe(0);
         done();
@@ -84,7 +84,7 @@ describe('RelationsCompleter', () => {
     it('set inverse relation within import itself - complement inverse', async done => {
 
         doc1.resource.relations['liesWithin'] = ['2'];
-        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(0);
         expect(doc2.resource.relations['includes']).not.toBeUndefined();
         expect(doc2.resource.relations['includes'].length).toBe(1);
@@ -98,7 +98,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations['includes'] = ['3'];
         doc1.resource.relations['liesWithin'] = ['2'];
 
-        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(1); // three
         expect(doc2.resource.relations['includes']).not.toBeUndefined();
         expect(doc2.resource.relations['includes'].length).toBe(2);
@@ -112,7 +112,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations['liesWithin'] = ['2'];
         doc1.resource.relations['includes'] = ['2'];
         try {
-            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(ImportErrors.BAD_INTERRELATION);
@@ -127,7 +127,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
         const documents = await RelationsCompleter
-            .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            .completeInverseRelations([doc1 as any], get, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -142,7 +142,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations['includes'] = ['3'];
         doc1.resource.relations['liesWithin'][0] = '2';
         const documents = await RelationsCompleter
-            .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            .completeInverseRelations([doc1 as any], get, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -158,7 +158,7 @@ describe('RelationsCompleter', () => {
         try {
 
             await RelationsCompleter
-                .completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+                .completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET)
@@ -171,7 +171,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations['liesWithin'] = [];
         try {
-            await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(ImportErrors.EMPTY_RELATION);
@@ -185,7 +185,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations['liesWithin'] = ['3'];
         doc2.resource.relations['liesWithin'] = ['3'];
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations['includes'][0]).toBe('1');
@@ -201,7 +201,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations['liesWithin'] = ['3'];
         doc2.resource.relations['liesWithin'] = ['3'];
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations['includes'][0]).toBe('4');
@@ -218,7 +218,8 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations['isBefore'] = ['1'];
         doc2.resource.relations['includes'] = ['1'];
 
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+        const documents = await RelationsCompleter.completeInverseRelations(
+            [doc1 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations['isBefore'][0]).toBe('1');
@@ -235,7 +236,8 @@ describe('RelationsCompleter', () => {
         const doc1New = clone(doc1);
         doc1New.resource.relations = { isRecordedIn: [] };
 
-        const documents = await RelationsCompleter.completeInverseRelations([doc1New as any], get, isRelationProperty, getInverseRelation, true);
+        const documents = await RelationsCompleter.completeInverseRelations(
+            [doc1New as any], get, getInverseRelation, true);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations['includes']).toBeUndefined();

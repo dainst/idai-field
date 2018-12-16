@@ -21,7 +21,8 @@ describe('DefaultImport', () => {
             'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory', 'isRelationProperty']);
+            ['getTypesList', 'getFieldDefinitions', 'getInverseRelations',
+                'getRelationDefinitions', 'isMandatory', 'isRelationProperty']);
         mockProjectConfiguration.getFieldDefinitions.and.returnValue([{name: 'id'}, {name: 'type'}, {name: 'identifier'}, {name: 'geometry'}, {name: 'shortDescription'}]);
         mockProjectConfiguration.getRelationDefinitions.and.returnValue([{name: 'isRecordedIn'}]);
 

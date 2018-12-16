@@ -1,5 +1,5 @@
 import {Document, relationsEquivalent} from 'idai-components-2';
-import {isNot, on, tripleEqual} from 'tsfun';
+import {isNot, on, tripleEqual, jsonClone} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -12,11 +12,10 @@ export module ConnectedDocsResolution {
      * on the relations seen in <i>document</i> alone. Relations in targetDocuments,
      * which correspond to other documents, are left as they are.
      *
-     * @param document
+     * @param document expected that relations is an object consisting only of proper relation names
      * @param targetDocuments
-     * @param isRelationProperty
      * @param getInverseRelation
-     * @param shouldSetInverseRelations if <b>false</b>, relations of <i>targetDocuments</i>
+     * @param setInverses if <b>false</b>, relations of <i>targetDocuments</i>
      *   which point to <i>document</i>, get only removed, but not (re-)created
      *
      * @returns a selection with of the targetDocuments which
@@ -26,23 +25,20 @@ export module ConnectedDocsResolution {
     export function determineDocsToUpdate(
         document: Document,
         targetDocuments: Array<Document>,
-        isRelationProperty: (_: string) => boolean,
         getInverseRelation: (_: string) => string|undefined,
-        shouldSetInverseRelations: boolean = true
+        setInverses: boolean = true
     ): Array<Document> {
 
-        const copyOfTargetDocuments = JSON.parse(JSON.stringify(targetDocuments));
+        const copyOfTargetDocuments = jsonClone(targetDocuments);
 
         for (let targetDocument of targetDocuments) {
 
             pruneInverseRelations(
                 document.resource.id,
                 targetDocument,
-                isRelationProperty,
-                shouldSetInverseRelations);
+                setInverses);
 
-            if (shouldSetInverseRelations) setInverseRelations(
-                document, targetDocument, isRelationProperty, getInverseRelation);
+            if (setInverses) setInverseRelations(document, targetDocument, getInverseRelation);
         }
 
         return compare(targetDocuments, copyOfTargetDocuments);
@@ -51,11 +47,9 @@ export module ConnectedDocsResolution {
 
     function pruneInverseRelations(resourceId: string,
                                    targetDocument: Document,
-                                   isRelationProperty: (_: string) => boolean,
                                    keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
-            .filter(relation => isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
             .forEach(removeRelation(resourceId, targetDocument.resource.relations));
     }
@@ -63,11 +57,9 @@ export module ConnectedDocsResolution {
 
     function setInverseRelations(document: Document,
                                  targetDocument: Document,
-                                 isRelationProperty: (_: string) => boolean,
                                  getInverseRelation: (_: string) => string|undefined) {
 
         Object.keys(document.resource.relations)
-            .filter(relation => isRelationProperty(relation))
             .filter(isNot(tripleEqual("isRecordedIn")) )
             .forEach(relation => setInverseRelation(document, targetDocument,
                     relation, getInverseRelation(relation)));
@@ -75,23 +67,18 @@ export module ConnectedDocsResolution {
 
 
     function setInverseRelation(document: Document,
-                                targetDocument: Document,
-                                relation: any,
-                                inverse: any) {
+                                targetDoc: Document,
+                                relation: string,
+                                inverse: string|undefined) {
 
+        if (!inverse) return;
         document.resource.relations[relation]
-            .filter(id => id === targetDocument.resource.id) // match only the one targetDocument
+            .filter(tripleEqual(targetDoc.resource.id)) // match only the one targetDocument
             .forEach(() => {
-
-                if (targetDocument.resource.relations[inverse] == undefined)
-                    targetDocument.resource.relations[inverse as any] = [];
-
-                const index = targetDocument.resource.relations[inverse].indexOf(document.resource.id as any);
-                if (index != -1) {
-                    targetDocument.resource.relations[inverse].splice(index, 1);
-                }
-
-                targetDocument.resource.relations[inverse].push(document.resource.id as any);
+                if (!targetDoc.resource.relations[inverse]) targetDoc.resource.relations[inverse] = [];
+                const index = targetDoc.resource.relations[inverse].indexOf(document.resource.id);
+                if (index !== -1) targetDoc.resource.relations[inverse].splice(index, 1);
+                targetDoc.resource.relations[inverse].push(document.resource.id);
             });
     }
 
@@ -116,10 +103,10 @@ export module ConnectedDocsResolution {
     const removeRelation = (resourceId: string, relations: any) => (relation: string): boolean => {
 
         const index = relations[relation].indexOf(resourceId);
-        if (index == -1) return false;
+        if (index === -1) return false;
 
         relations[relation].splice(index, 1);
-        if (relations[relation].length == 0) delete relations[relation];
+        if (relations[relation].length === 0) delete relations[relation];
 
         return true;
     }

@@ -19,7 +19,6 @@ export module RelationsCompleter {
      * @param documents If one of these references another from the import file, the validity of the relations gets checked
      *   for contradictory relations and missing inverses are added.
      * @param get
-     * @param isRelationProperty
      * @param getInverseRelation
      * @param mergeMode
      *
@@ -36,7 +35,6 @@ export module RelationsCompleter {
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
-                                                   isRelationProperty: (_: string) => boolean,
                                                    getInverseRelation: (_: string) => string|undefined,
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
 
@@ -53,14 +51,13 @@ export module RelationsCompleter {
                 document,
                 documentsLookup,
                 getInverseRelation,
-                relationNamesExceptRecordedIn(document, isRelationProperty));
+                relationNamesExceptRecordedIn(document));
         }
 
         return await setInverseRelationsForDbResources(
             documents,
             documentsLookup,
             get,
-            isRelationProperty,
             getInverseRelation,
             mergeMode);
     }
@@ -69,7 +66,6 @@ export module RelationsCompleter {
     async function setInverseRelationsForDbResources(documents: Array<Document>,
                                                      documentsLookup: {[id: string]: Document},
                                                      get: (_: string) => Promise<Document>,
-                                                     isRelationProperty: (_: string) => boolean,
                                                      getInverseRelation: (_: string) => string|undefined,
                                                      mergeMode: boolean): Promise<Array<Document>> {
 
@@ -79,19 +75,19 @@ export module RelationsCompleter {
 
             const documentTargetDocs: Array<Document> = [];
 
-            let targetIds = targetIdsReferingToObjects(document, documentsLookup, isRelationProperty);
+            let targetIds = targetIdsReferingToObjects(document, documentsLookup);
             if (mergeMode) {
                 let oldVersion;
                 try {
                     oldVersion = await get(document.resource.id);
                 } catch { throw "FATAL" } // TODO improve
-                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, documentsLookup, isRelationProperty)]);
+                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, documentsLookup)]);
             }
             for (let targetId of targetIds) documentTargetDocs.push(
                 await getTargetDocument(targetId, totalDocsToUpdate, get));
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-                document, documentTargetDocs, isRelationProperty, getInverseRelation);
+                document, documentTargetDocs, getInverseRelation);
 
             totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate)(documentTargetDocsToUpdate);
         }
@@ -124,18 +120,17 @@ export module RelationsCompleter {
     }
 
 
-    function relationNamesExceptRecordedIn(document: Document, isRelationProperty: Function) {
+    function relationNamesExceptRecordedIn(document: Document) {
 
         return Object
             .keys(document.resource.relations)
             .filter(relationName => relationName !== 'isRecordedIn')
-            .filter(relationName => isRelationProperty(relationName))
     }
 
 
-    function targetIdsReferingToObjects(document: Document, documentsLookup: any, isRelationProperty: Function, ) {
+    function targetIdsReferingToObjects(document: Document, documentsLookup: any) {
 
-        return flow(relationNamesExceptRecordedIn(document, isRelationProperty),
+        return flow(relationNamesExceptRecordedIn(document),
             flatMap(relationName => document.resource.relations[relationName]),
             filter((targetId: string) => !documentsLookup[targetId]));
     }

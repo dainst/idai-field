@@ -31,7 +31,6 @@ export class ConnectedDocsWriter {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             document,
             connectedDocs,
-            (propertyName: string) => this. projectConfiguration.isRelationProperty(propertyName),
             (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
             true);
 
@@ -46,7 +45,6 @@ export class ConnectedDocsWriter {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             document,
             connectedDocs,
-            (propertyName: string) => this.projectConfiguration.isRelationProperty(propertyName),
             (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
             false);
 

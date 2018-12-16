@@ -44,15 +44,15 @@ export module DefaultImport {
                       datastore: DocumentDatastore,
                       username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
-            const {get, find, update, create, isRelationProperty, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
+            const {get, find, update, create, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
 
             let documentsForUpdate: Array<Document> = [];
             let relatedDocuments: Array<Document> = [];
             try {
 
-                documentsForUpdate =
-                    await prepareIdsAndIdentifiersValidateAndMerge(
-                        documents, validator,
+                documentsForUpdate = await makeDocsForUpdate(
+                        documents,
+                        validator,
                         mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
                         find, generateId);
 
@@ -60,7 +60,7 @@ export module DefaultImport {
                     documentsForUpdate,
                     validator,
                     mergeMode, allowOverwriteRelationsInMergeMode,
-                    isRelationProperty, getInverseRelation, get,
+                    getInverseRelation, get,
                     mainTypeDocumentId)
 
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
@@ -83,7 +83,6 @@ export module DefaultImport {
                                     validator: ImportValidator,
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
-                                    isRelationProperty: (_: string) => boolean,
                                     getInverseRelation: (_: string) => string|undefined,
                                     get: (_: string) => Promise<Document>,
                                     mainTypeDocumentId: string) {
@@ -92,11 +91,10 @@ export module DefaultImport {
         if (!mergeMode) for (let document of documentsForUpdate) {
             await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
         }
-
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
                 documentsForUpdate as any,
-                get, isRelationProperty, getInverseRelation,
+                get, getInverseRelation,
                 mergeMode);
         }
 
@@ -120,13 +118,13 @@ export module DefaultImport {
      * Does validations, mostly of structural nature, most of relation validation is done later.
      * Merges with existing documents from db if necessary.
      */
-    async function prepareIdsAndIdentifiersValidateAndMerge(documents: Array<Document>,
-                                            validator: ImportValidator,
-                                            mergeMode: boolean,
-                                            allowOverwriteRelationsInMergeMode: boolean,
-                                            useIdentifiersInRelations: boolean,
-                                            find: (identifier: string) => Promise<Document|undefined>,
-                                            generateId: () => string): Promise<Array<Document>> {
+    async function makeDocsForUpdate(documents: Array<Document>,
+                                     validator: ImportValidator,
+                                     mergeMode: boolean,
+                                     allowOverwriteRelationsInMergeMode: boolean,
+                                     useIdentifiersInRelations: boolean,
+                                     find: (identifier: string) => Promise<Document|undefined>,
+                                     generateId: () => string): Promise<Array<Document>> {
 
         if (!mergeMode) { // TODO only in non merge mode?
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
@@ -263,7 +261,6 @@ export module DefaultImport {
             find: findByIdentifier(datastore),
             update: (d: Document, u: string) => datastore.update(d, u),
             create: (d: Document, u: string) => datastore.create(d, u),
-            isRelationProperty: (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
             getInverseRelation: (propertyName: string) => projectConfiguration.getInverseRelations(propertyName)
         }
     }

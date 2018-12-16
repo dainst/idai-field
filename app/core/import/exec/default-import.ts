@@ -5,7 +5,7 @@ import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {ProjectConfiguration} from 'idai-components-2';
-import {duplicates, to} from 'tsfun';
+import {duplicates, to, arrayEqual} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
@@ -88,7 +88,6 @@ export module DefaultImport {
                 try {
                     const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
                     await doValidations(documentForUpdate, validator, mergeMode);
-
                     documentsForUpdate.push(documentForUpdate);
                 } catch (errWithParams) {
                     errors.push(errWithParams);
@@ -100,7 +99,7 @@ export module DefaultImport {
             let relatedDocuments;
             try {
                 if (!mergeMode) {
-                    for (let document of documents) {
+                    for (let document of documentsForUpdate) {
                         await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
                     }
                 }
@@ -111,6 +110,18 @@ export module DefaultImport {
                         get, isRelationProperty, getInverseRelation,
                         mergeMode);
                 }
+
+                for (let document of documentsForUpdate) {
+                    if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+
+                    for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
+                        const liesWithinTarget = await get(liesWithinTargeId);
+                        if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
+                            throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier]; // TODO convert to M and add msg in M
+                        }
+                    }
+                }
+
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
             // END relations
 
@@ -203,8 +214,8 @@ export module DefaultImport {
 
 
     async function doValidations(document: NewDocument,
-                                            validator: ImportValidator,
-                                            mergeIfExists: boolean): Promise<Document|NewDocument> {
+                                 validator: ImportValidator,
+                                 mergeIfExists: boolean): Promise<Document|NewDocument> {
 
         if (!mergeIfExists) {
             validator.assertIsKnownType(document);

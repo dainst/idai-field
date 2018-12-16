@@ -25,7 +25,9 @@ export module DocumentMerge {
 
         if (allowOverwriteRelationsOnMerge) {
             clonedTarget.resource.relations = clone(additional.resource.relations);
-            clonedTarget.resource.relations['isRecordedIn'] = clone(into.resource.relations['isRecordedIn']);
+            if (clonedTarget.resource.relations && into.resource.relations) {
+                clonedTarget.resource.relations['isRecordedIn'] = clone(into.resource.relations['isRecordedIn']);
+            }
         }
         return clonedTarget;
     }

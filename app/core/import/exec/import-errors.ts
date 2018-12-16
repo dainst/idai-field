@@ -22,4 +22,5 @@ export module ImportErrors {
     export const EMPTY_RELATION = 'importerrors/exec/emptyrelation';
     export const INVALID_RELATIONS = 'validationerror/invalidrelations';
     export const INVALID_FIELDS = 'validationerror/invalidfields';
+    export const LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'importerrors/lieswithintargetnotmatchesisrecordedin';
 }

@@ -1,2 +1,2 @@
-{ "type": "Feature", "identifier" : "feat1", "shortDescription" : "Feature1"   }
-{ "type": "Feature", "identifier" : "feat2", "shortDescription" : "Feature2" }
+{ "type": "Feature", "identifier" : "feat1", "shortDescription" : "Feature1", "relations": {"liesWithin": ["SE0"]}}
+

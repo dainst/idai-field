@@ -21,7 +21,7 @@ describe('DefaultImport', () => {
             'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory']);
+            ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory', 'isRelationProperty']);
         mockProjectConfiguration.getFieldDefinitions.and.returnValue([{name: 'id'}, {name: 'type'}, {name: 'identifier'}, {name: 'geometry'}, {name: 'shortDescription'}]);
         mockProjectConfiguration.getRelationDefinitions.and.returnValue([{name: 'isRecordedIn'}]);
 
@@ -32,12 +32,12 @@ describe('DefaultImport', () => {
         mockDatastore.update.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
         mockProjectConfiguration.getTypesList.and.returnValue(
-            [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}]);
+            [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}, {name: 'Feature'}]);
 
         importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-            () => '101', false);
+            () => '101');
     });
 
 
@@ -216,6 +216,55 @@ describe('DefaultImport', () => {
         expect(errors.length).toBe(1);
         expect(errors[0][0]).toEqual(ImportErrors.RESOURCE_EXISTS);
         expect(errors[0][1]).toEqual('1a');
+        done();
+    });
+
+
+    it('set liesWithin which clashes with isRecordedIn', async done => {
+
+        // TR1 trench1
+        // - FE1 feature1
+        // TR2 trench2
+        // - FE2 feature2
+
+        mockDatastore.get.and.returnValue(Promise.resolve(
+            { resource: { type: 'FE1', identifier: 'feature1', relations: { isRecordedIn: ['TR1']}} } as any));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Find', identifier: 'find1', relations: { isRecordedIn: ['TR2'], liesWithin: ['FE1']}} } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors.length).toBe(1);
+        expect(errors[0][0]).toEqual(ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
+        expect(errors[0][1]).toEqual('find1');
+        done();
+    });
+
+
+    it('set liesWithin which clashes with isRecordedIn in merge mode with overwrite relations', async done => {
+
+        // TR1 trench1
+        // - FE1 feature1
+        // TR2 trench2
+        // - FE2 feature2
+
+        importFunction = DefaultImport.build(
+            mockValidator,
+            mockProjectConfiguration,
+            () => '101', true, true);
+
+        mockDatastore.find.and.returnValues(Promise.resolve( // update target
+            { documents: [{ resource: { type: 'Find', identifier: 'find1', relations: {isRecordedIn: ['TR2']} }}], totalCount: 1 }));
+        mockDatastore.get.and.returnValue(Promise.resolve(
+            { resource: { type: 'FE1', identifier: 'feature1', relations: { isRecordedIn: ['TR1']}} } as any));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Find', identifier: 'find1', relations: { liesWithin: ['FE1']}} } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors.length).toBe(1);
+        expect(errors[0][0]).toEqual(ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
+        expect(errors[0][1]).toEqual('find1');
         done();
     });
 });

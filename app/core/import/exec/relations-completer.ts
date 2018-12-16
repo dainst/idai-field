@@ -74,8 +74,8 @@ export module RelationsCompleter {
         for (let document of documents) {
 
             const documentTargetDocs: Array<Document> = [];
-            for (let targetId of targetIdsReferingToObjects(document, isRelationProperty, documentsLookup)) {
-                documentTargetDocs.push(await getTargetDocument(totalDocsToUpdate, targetId, get));
+            for (let targetId of targetIdsReferingToObjects(document, documentsLookup, isRelationProperty)) {
+                documentTargetDocs.push(await getTargetDocument(targetId, totalDocsToUpdate, get));
             }
             // find and add also the ids of all the db items pointing back to document,
             // since we are not generally indexing over all relations
@@ -102,7 +102,7 @@ export module RelationsCompleter {
     }
 
 
-    async function getTargetDocument(totalDocsToUpdate: Array<Document>, targetId: string, get: Function): Promise<Document> {
+    async function getTargetDocument(targetId: string, totalDocsToUpdate: Array<Document>, get: Function): Promise<Document> {
 
         let targetDocument = totalDocsToUpdate
             .find(document => document.resource.id === targetId);
@@ -124,7 +124,7 @@ export module RelationsCompleter {
     }
 
 
-    function targetIdsReferingToObjects(document: Document, isRelationProperty: Function, documentsLookup: any) {
+    function targetIdsReferingToObjects(document: Document, documentsLookup: any, isRelationProperty: Function, ) {
 
         return flow(relationNamesExceptRecordedIn(document, isRelationProperty),
             flatMap(relationName => document.resource.relations[relationName]),

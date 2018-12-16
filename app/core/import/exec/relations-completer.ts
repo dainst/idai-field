@@ -78,12 +78,12 @@ export module RelationsCompleter {
             for (let targetId of targetIdsReferingToObjects(document, isRelationProperty, documentsLookup)) {
                 documentTargetDocs.push(await getTargetDocument(totalDocsToUpdate, targetId, get));
             }
-            const targetDocsToUpdateForCurrentDocument = ConnectedDocsResolution.determineDocsToUpdate(
+            const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocs, isRelationProperty, getInverseRelation);
 
-            for (let one of targetDocsToUpdateForCurrentDocument) {
-                if (!totalDocsToUpdate.find(on('resource.id')(one))) totalDocsToUpdate.push(one);
-            }
+            documentTargetDocsToUpdate
+                .filter(doc => !totalDocsToUpdate.find(on('resource.id')(doc)))
+                .forEach(doc => totalDocsToUpdate.push(doc));
         }
 
         return totalDocsToUpdate;

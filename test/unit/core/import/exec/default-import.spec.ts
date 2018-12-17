@@ -174,7 +174,34 @@ describe('DefaultImport', () => {
     });
 
 
-    it('preValidate - not well formed ', async done => {
+    it('remove self referencing relation target', async done => {
+
+        importFunction = DefaultImport.build(
+            mockValidator,
+            mockProjectConfiguration,
+
+            () => '101', false,  false, '', true);
+
+        const docToImport = { resource: { type: 'Find', identifier: '1a',
+                relations: { isRecordedIn: ['three', '1a'], liesWithin: ['1a'] } } };
+
+        mockDatastore.find.and.returnValues(
+            Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }), // relation target
+            Promise.resolve({ documents: [], totalCount: 0 })); // looking if already exists
+
+        const {errors} = await importFunction([ docToImport as any ],
+            mockDatastore,'user1');
+
+        expect(errors.length).toBe(0);
+        expect(Object.keys(docToImport.resource.relations).length).toBe(1);
+        expect(Object.keys(docToImport.resource.relations)[0]).toBe('isRecordedIn');
+        expect(docToImport.resource.relations['isRecordedIn'].length).toBe(1);
+        expect(docToImport.resource.relations['isRecordedIn'][0]).toBe('3');
+        done();
+    });
+
+
+    it('not well formed ', async done => {
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
@@ -189,7 +216,7 @@ describe('DefaultImport', () => {
 
 
 
-    it('preValidate - duplicate identifiers in import file', async done => {
+    it('duplicate identifiers in import file', async done => {
 
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
 
@@ -205,7 +232,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('preValidate - existing identifier', async done => {
+    it('resource with such identifier already exists in non merge mode', async done => {
 
         mockDatastore.find.and.returnValues(Promise.resolve(
             { documents: [{ resource: { type: 'Place', identifier: '1a'} }], totalCount: 1 }));

@@ -1,11 +1,9 @@
-import {Document} from 'idai-components-2/src/model/core/document';
-import {NewDocument} from 'idai-components-2/src/model/core/new-document';
+import {Document, NewDocument, ProjectConfiguration, Relations} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
 import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ProjectConfiguration} from 'idai-components-2';
-import {duplicates, to, arrayEqual} from 'tsfun';
+import {arrayEqual, duplicates, to, isUndefinedOrEmpty} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
@@ -136,9 +134,9 @@ export module DefaultImport {
         for (let document of documents) {
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                await rewriteRelations(document, find, identifierMap);
+                removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(document, find, identifierMap);
             }
-            // TODO erase self referencing target ids in relations
 
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             if (!mergeMode) {
@@ -149,6 +147,17 @@ export module DefaultImport {
             documentsForUpdate.push(documentForUpdate);
         }
         return documentsForUpdate;
+    }
+
+
+    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: string) {
+
+        if (!relations) return;
+        for (let relName of Object.keys(relations)) {
+            relations[relName] = relations[relName]
+                .filter(relTarget => relTarget !== resourceIdentifier);
+            if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
+        }
     }
 
 
@@ -200,7 +209,7 @@ export module DefaultImport {
     /**
      * Rewrites the relations of document in place
      */
-    async function rewriteRelations(document: NewDocument,
+    async function rewriteIdentifiersInRelations(document: NewDocument,
                                     find: (identifier: string) => Promise<Document|undefined>,
                                     identifierMap: { [identifier: string]: string }) {
 

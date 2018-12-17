@@ -5,6 +5,7 @@ import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ImportErrors} from './import-errors';
 import {clone} from '../../util/object-util';
 import {ImportFunction} from './import-function';
+import {isNot, undefinedOrEmpty} from 'tsfun';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -141,13 +142,13 @@ export module MeninxFindImport {
 
         const mergedDoc = clone(mergeTarget);
 
-        if (mergeSource.resource.shortDescription.length > 0) mergedDoc.resource.shortDescription = mergeSource.resource.shortDescription;
-        if (mergeSource.resource.vesselForm.length > 0) mergedDoc.resource.vesselForm = mergeSource.resource.vesselForm;
-        if (mergeSource.resource.typeNumber.length > 0) mergedDoc.resource.typeNumber = mergeSource.resource.typeNumber;
-        if (mergeSource.resource.type.length > 0) mergedDoc.resource.type = mergeSource.resource.type;
-        if (mergeSource.resource.decorationTechnique.length > 0) mergedDoc.resource.decorationTechnique = mergeSource.resource.decorationTechnique;
-        if (mergeSource.resource.comment.length > 0) mergedDoc.resource.comment = mergeSource.resource.comment;
-        if (mergeSource.resource.provenance.length > 0) mergedDoc.resource.provenance = mergeSource.resource.provenance;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.shortDescription)) mergedDoc.resource.shortDescription = mergeSource.resource.shortDescription;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.vesselForm)) mergedDoc.resource.vesselForm = mergeSource.resource.vesselForm;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.typeNumber)) mergedDoc.resource.typeNumber = mergeSource.resource.typeNumber;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.type)) mergedDoc.resource.type = mergeSource.resource.type;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.decorationTechnique)) mergedDoc.resource.decorationTechnique = mergeSource.resource.decorationTechnique;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.comment)) mergedDoc.resource.comment = mergeSource.resource.comment;
+        if (isNot(undefinedOrEmpty)(mergeSource.resource.provenance)) mergedDoc.resource.provenance = mergeSource.resource.provenance;
 
         return mergedDoc;
     }

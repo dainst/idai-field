@@ -89,7 +89,7 @@ export module DefaultImport {
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
-                documents as any,
+                documents,
                 get, getInverseRelation,
                 mergeMode);
         }

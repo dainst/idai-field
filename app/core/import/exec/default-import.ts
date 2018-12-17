@@ -236,11 +236,8 @@ export module DefaultImport {
                                                validator: ImportValidator) {
 
         if (!mainTypeDocumentId) {
-            try {
-                validator.assertHasIsRecordedIn(document);
-            } catch {
-                throw [ImportErrors.NO_OPERATION_ASSIGNED];
-            }
+            try { validator.assertHasIsRecordedIn(document) }
+            catch { throw [ImportErrors.NO_OPERATION_ASSIGNED] }
         } else {
             await validator.assertIsNotOverviewType(document);
             await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);

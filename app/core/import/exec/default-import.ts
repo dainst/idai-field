@@ -77,7 +77,7 @@ export module DefaultImport {
     }
 
 
-    async function prepareRelations(documentsForUpdate: Array<Document>,
+    async function prepareRelations(documents: Array<Document>,
                                     validator: ImportValidator,
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
@@ -86,17 +86,15 @@ export module DefaultImport {
                                     mainTypeDocumentId: string) {
 
         let relatedDocuments: Array<Document> = [];
-        if (!mergeMode) for (let document of documentsForUpdate) {
-            await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
-        }
+        if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
-                documentsForUpdate as any,
+                documents as any,
                 get, getInverseRelation,
                 mergeMode);
         }
 
-        for (let document of documentsForUpdate) {
+        for (let document of documents) {
             if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
 
             for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
@@ -231,17 +229,19 @@ export module DefaultImport {
     }
 
 
-    async function prepareIsRecordedInRelation(document: NewDocument,
-                                               mainTypeDocumentId: string,
-                                               validator: ImportValidator) {
+    async function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
+                                               validator: ImportValidator,
+                                               mainTypeDocumentId: string) {
 
-        if (!mainTypeDocumentId) {
-            try { validator.assertHasIsRecordedIn(document) }
-            catch { throw [ImportErrors.NO_OPERATION_ASSIGNED] }
-        } else {
-            await validator.assertIsNotOverviewType(document);
-            await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
-            initRecordedIn(document, mainTypeDocumentId);
+        for (let document of documentsForUpdate) {
+            if (!mainTypeDocumentId) {
+                try { validator.assertHasIsRecordedIn(document) }
+                catch { throw [ImportErrors.NO_OPERATION_ASSIGNED] }
+            } else {
+                await validator.assertIsNotOverviewType(document);
+                await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
+                initRecordedIn(document, mainTypeDocumentId);
+            }
         }
     }
 

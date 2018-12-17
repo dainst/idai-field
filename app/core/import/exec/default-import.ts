@@ -246,9 +246,6 @@ export module DefaultImport {
     }
 
 
-    /**
-     * Sets the isRecordedIn to mainTypeDocumentId, operates in place
-     */
     function initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
 
         const relations = document.resource.relations;

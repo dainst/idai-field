@@ -1,5 +1,4 @@
-import {NewDocument} from 'idai-components-2/src/model/core/new-document';
-import {Document} from 'idai-components-2/src/model/core/document';
+import {NewDocument, Document} from 'idai-components-2';
 
 
 /**

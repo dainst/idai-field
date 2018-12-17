@@ -18,7 +18,7 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     }
 
 
-    public validateTypeToBeOfClass(type: string, typeClass: string): void {
+    public assertTypeToBeOfClass(type: string, typeClass: string): void {
 
         if (typeClass === 'IdaiFieldImageDocument') {
 

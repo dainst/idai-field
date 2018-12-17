@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
  */
 export abstract class TypeConverter<T> {
 
-    public abstract validateTypeToBeOfClass(types: string, typeClass: string): void;
+    public abstract assertTypeToBeOfClass(types: string, typeClass: string): void;
 
     public abstract convert(doc: Document): T;
 

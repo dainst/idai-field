@@ -499,7 +499,7 @@
         <source>
                             Relationen überschreiben
                         </source>
-        <target state="translated">
+        <target state="final">
             Overwrite relations
         </target>
         <context-group purpose="location">
@@ -509,11 +509,11 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
-                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </source>
         <target state="final">
-                        If this option is active, relations also can get updated. Relations not set get treated by removing possibly existing inverse relations from the database.
+                        If this option is active, relations also can get updated. Relations not set in the import record are removed.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>

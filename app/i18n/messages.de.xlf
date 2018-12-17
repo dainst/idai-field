@@ -510,12 +510,12 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
-                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </source>
         <target state="final">
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
-                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>

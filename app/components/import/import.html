@@ -95,8 +95,8 @@
                     </div>
 
                     <div *ngIf="format === 'native' && allowMergingExistingResources" class="import-info" i18n="@@import.mergeOption.relationsInfo">
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden. Nicht gesetzte Relationen werden dann entsprechend umgesetzt,
-                        indem eventuell vorhandene Gegenrelationen aus der Datenbank entfernt werden.
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </div>
 
                     <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">

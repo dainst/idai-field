@@ -124,10 +124,9 @@ export module DefaultImport {
                                      find: (identifier: string) => Promise<Document|undefined>,
                                      generateId: () => string): Promise<Array<Document>> {
 
-        if (!mergeMode) { // TODO only in non merge mode?
-            const duplicates_ = duplicates(documents.map(to('resource.identifier')));
-            if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
-        }
+        const duplicates_ = duplicates(documents.map(to('resource.identifier')));
+        if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
+
         const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
         const documentsForUpdate: Array<Document> = [];
@@ -253,7 +252,7 @@ export module DefaultImport {
     /**
      * Sets the isRecordedIn to mainTypeDocumentId, operates in place
      */
-    async function initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
+    function initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
 
         const relations = document.resource.relations;
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];

@@ -53,7 +53,7 @@ export class PouchdbDatastore {
 
         try {
             return await this.performPut(
-                PouchdbDatastore.initalizeDocument(document, username, this.idGenerator.generateId()));
+                PouchdbDatastore.initializeDocument(document, username, this.idGenerator.generateId()));
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
@@ -269,7 +269,7 @@ export class PouchdbDatastore {
     }
 
 
-    private static initalizeDocument(document: NewDocument, username: string, generatedId: string) {
+    private static initializeDocument(document: NewDocument, username: string, generatedId: string) {
 
         const clonedDocument = clone(document);
         if (!clonedDocument.resource.id) clonedDocument.resource.id = generatedId;

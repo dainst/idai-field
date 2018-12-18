@@ -110,15 +110,15 @@ export class PouchdbDatastore {
     }
 
 
-    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<Document>> {
+    public bulkUpdate(documents: Array<Document>, username: string): Promise<Array<Document>> {
 
-        documents.forEach(async document => {
+        for (let document of documents) {
             if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
             if (!Document.isValid(document as Document, true)) {
                 throw [DatastoreErrors.INVALID_DOCUMENT];
             }
             document.modified.push({ user: username, date: new Date() });
-        });
+        }
 
         return this.performBulkDocs(documents);
     }

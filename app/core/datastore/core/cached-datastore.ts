@@ -44,9 +44,9 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
     public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
 
-        documents.forEach(document => {
+        for (let document of documents) {
             this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
-        });
+        }
 
         return (await this.datastore.bulkCreate(documents, username)).map(document => {
             return this.updateIndex(document);
@@ -67,9 +67,9 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
     public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
 
-        documents.forEach(document => {
+        for (let document of documents) {
             this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
-        });
+        }
 
         return (await this.datastore.bulkUpdate(documents, username)).map(document => {
             return this.updateIndex(document);

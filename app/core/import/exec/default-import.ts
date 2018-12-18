@@ -42,7 +42,7 @@ export module DefaultImport {
                       datastore: DocumentDatastore,
                       username: string): Promise<{ errors: string[][], successfulImports: number }> => {
 
-            const {get, find, update, create, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
+            const {get, find, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
 
             let documentsForUpdate: Array<Document> = [];
             let relatedDocuments: Array<Document> = [];
@@ -65,12 +65,7 @@ export module DefaultImport {
 
             const updateErrors = [];
             try {
-                await ImportUpdater.go(
-                    documentsForUpdate,
-                    relatedDocuments,
-                    update, create, username,
-                    mergeMode);
-
+                await ImportUpdater.go(documentsForUpdate, relatedDocuments, datastore, username, mergeMode);
             } catch (errWithParams) { updateErrors.push(errWithParams)}
             return { errors: updateErrors, successfulImports: documents.length };
         }
@@ -261,9 +256,7 @@ export module DefaultImport {
         return {
             get: (resourceId: string) => datastore.get(resourceId),
             find: findByIdentifier(datastore),
-            update: (d: Document, u: string) => datastore.update(d, u),
-            create: (d: Document, u: string) => datastore.create(d, u),
             getInverseRelation: (propertyName: string) => projectConfiguration.getInverseRelations(propertyName)
-        }
+        };
     }
 }

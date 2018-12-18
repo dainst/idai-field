@@ -1,4 +1,5 @@
 import {NewDocument, Document} from 'idai-components-2';
+import {DocumentDatastore} from '../../datastore/document-datastore';
 
 
 /**
@@ -15,38 +16,31 @@ import {NewDocument, Document} from 'idai-components-2';
 export module ImportUpdater {
 
 
-    export async function go(documents: Array<Document>,
-                             targetDocuments: Array<Document>|undefined,
-                             update: (document: Document, username: string) => Promise<Document>,
-                             create: (document: Document, username: string) => Promise<Document>,
-                             /* bulkUpdate: (documents: Array<Document>, username: string) =>  */
-                             /* bulkCreate: (documents: Array<Document>, username: string) =>  */
-                             username: string,
+    export async function go(documents: Array<Document>, targetDocuments: Array<Document>|undefined,
+                             datastore: DocumentDatastore, username: string,
                              useUpdateMethod: boolean /* else new doc, then use create */) {
 
-        await performDocumentsUpdates(documents, update, create, username, useUpdateMethod);
-        if (targetDocuments) await performRelationsUpdates(targetDocuments, update, username);
+        // TODO Check for conflicts
+
+        await performDocumentsUpdates(documents, datastore, username, useUpdateMethod);
+        if (targetDocuments) await performRelationsUpdates(targetDocuments, datastore, username);
     }
 
 
-    async function performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,
-                                           update: (document: Document, username: string) => Promise<Document>,
-                                           create: (document: Document, username: string) => Promise<Document>,
-                                           username: string,
-                                           updateMode: boolean): Promise<void> {
+    async function performDocumentsUpdates(documents: Array<NewDocument>, datastore: DocumentDatastore,
+                                           username: string, updateMode: boolean): Promise<void> {
 
-        for (let documentForUpdate of documentsForUpdate) {
-            updateMode
-                ? await update(documentForUpdate as Document, username)
-                : await create(documentForUpdate as Document, username); // throws if exists
+        if (updateMode) {
+            await datastore.bulkUpdate(documents as Array<Document>, username);
+        } else {
+            await datastore.bulkCreate(documents, username);    // throws exception if an id already exists
         }
     }
 
 
-    async function performRelationsUpdates(targetDocuments: Array<Document>,
-                                           update: (document: Document, username: string) => Promise<Document>,
+    async function performRelationsUpdates(targetDocuments: Array<Document>, datastore: DocumentDatastore,
                                            username: string): Promise<void> {
 
-        for (let targetDocument of targetDocuments) await update(targetDocument, username);
+        if (targetDocuments.length > 0) await datastore.bulkUpdate(targetDocuments, username);
     }
 }

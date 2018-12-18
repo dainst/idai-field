@@ -42,6 +42,18 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
     }
 
 
+    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
+
+        documents.forEach(document => {
+            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        });
+
+        return (await this.datastore.bulkCreate(documents, username)).map(document => {
+            return this.updateIndex(document);
+        });
+    }
+
+
     /**
      * Implements {@link Datastore#update}
      * @throws if document is not of type T, determined by resource.type
@@ -50,6 +62,18 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
         this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
+    }
+
+
+    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
+
+        documents.forEach(document => {
+            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        });
+
+        return (await this.datastore.bulkUpdate(documents, username)).map(document => {
+            return this.updateIndex(document);
+        });
     }
 
 

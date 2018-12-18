@@ -14,7 +14,8 @@ describe('DefaultImport', () => {
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
+        mockDatastore = jasmine.createSpyObj('datastore',
+            ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasIsRecordedIn', 'assertIsAllowedType',
@@ -29,8 +30,8 @@ describe('DefaultImport', () => {
         mockValidator.assertHasIsRecordedIn.and.returnValue();
 
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
-        mockDatastore.create.and.callFake((a) => Promise.resolve(a));
-        mockDatastore.update.and.callFake((a) => Promise.resolve(a));
+        mockDatastore.bulkCreate.and.callFake((a) => Promise.resolve(a));
+        mockDatastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
         mockProjectConfiguration.getTypesList.and.returnValue(
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}, {name: 'Feature'}]);
@@ -48,7 +49,7 @@ describe('DefaultImport', () => {
             { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
             mockDatastore, 'user1');
 
-        expect(mockDatastore.create).toHaveBeenCalled();
+        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         done();
     });
 
@@ -67,14 +68,15 @@ describe('DefaultImport', () => {
              () => '101', true) as any)(
             [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
 
-        expect(mockDatastore.create).not.toHaveBeenCalled();
-        expect(mockDatastore.update).toHaveBeenCalled();
+        expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
+        expect(mockDatastore.bulkUpdate).toHaveBeenCalled();
         done();
     });
 
 
     it('does not overwrite if exists', async done => {
 
+        // TODO The test runs without this. Check again how the test works.
         mockDatastore.get.and.returnValue(Promise.resolve({}));
 
         await (DefaultImport.build(
@@ -84,15 +86,15 @@ describe('DefaultImport', () => {
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
                 mockDatastore,'user1');
 
-        expect(mockDatastore.create).toHaveBeenCalled();
-        expect(mockDatastore.update).not.toHaveBeenCalled();
+        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
+        expect(mockDatastore.bulkUpdate).not.toHaveBeenCalled();
         done();
     });
 
 
     it('should reject on err in datastore', async done => {
 
-        mockDatastore.create.and.returnValue(Promise.reject(['abc']));
+        mockDatastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
         const {errors} = await importFunction(
             [{resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any],
@@ -108,12 +110,11 @@ describe('DefaultImport', () => {
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}}};
 
-
         mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
+        mockDatastore = jasmine.createSpyObj('datastore', ['find', 'bulkUpdate']);
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
-        mockDatastore.update.and.returnValues(Promise.resolve());
+        mockDatastore.bulkUpdate.and.returnValues(Promise.resolve());
 
         importFunction = DefaultImport.build(
             mockValidator,
@@ -122,8 +123,8 @@ describe('DefaultImport', () => {
 
         await importFunction([docToMerge as any], mockDatastore, 'user1');
 
-        const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
-        expect(importedDoc.resource).toEqual({
+        const importedDocument = mockDatastore.bulkUpdate.calls.mostRecent().args[0][0];
+        expect(importedDocument.resource).toEqual({
             id: '1',
             identifier: 'i1',
             shortDescription: 'sd1',

@@ -60,16 +60,30 @@ export class PouchdbDatastore {
     }
 
 
+    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<Document>> {
+
+        const initializedDocuments: Array<Document> = await Promise.all(
+            documents.map(async document => {
+                if (!Document.isValid(document as Document, true)) {
+                    throw [DatastoreErrors.INVALID_DOCUMENT];
+                }
+                if (document.resource.id) await this.assertNotExists(document.resource.id);
+                return PouchdbDatastore.initializeDocument(document, username, this.idGenerator.generateId());
+            })
+        );
+
+        return this.performBulkDocs(initializedDocuments);
+    }
+
+
     /**
      * @returns newest revision of the document fetched from db
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async update(
-        document: Document,
-        username: string,
-        squashRevisionsIds?: string[]): Promise<Document> {
+    public async update(document: Document, username: string,
+                        squashRevisionsIds?: string[]): Promise<Document> {
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
@@ -93,6 +107,20 @@ export class PouchdbDatastore {
                 ? [DatastoreErrors.SAVE_CONFLICT]
                 : [DatastoreErrors.GENERIC_ERROR, err];
         }
+    }
+
+
+    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<Document>> {
+
+        documents.forEach(async document => {
+            if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+            if (!Document.isValid(document as Document, true)) {
+                throw [DatastoreErrors.INVALID_DOCUMENT];
+            }
+            document.modified.push({ user: username, date: new Date() });
+        });
+
+        return this.performBulkDocs(documents);
     }
 
 
@@ -183,6 +211,13 @@ export class PouchdbDatastore {
     }
 
 
+    private async performBulkDocs(documents: Array<Document>): Promise<Array<Document>> {
+
+        await this.db.bulkDocs(documents);
+        return this.bulkFetch(documents.map(document => document.resource.id));
+    }
+
+
     private async mergeModifiedDates(document: Document, squashRevisionsIds: string[]) {
 
         for (let revisionId of squashRevisionsIds) {
@@ -269,13 +304,15 @@ export class PouchdbDatastore {
     }
 
 
-    private static initializeDocument(document: NewDocument, username: string, generatedId: string) {
+    private static initializeDocument(document: NewDocument, username: string,
+                                      generatedId: string): Document {
 
-        const clonedDocument = clone(document);
+        const clonedDocument: Document = clone(document) as Document;
         if (!clonedDocument.resource.id) clonedDocument.resource.id = generatedId;
         (clonedDocument as any)['_id'] = clonedDocument.resource.id;
         (clonedDocument as any)['created'] = { user: username, date: new Date() };
         (clonedDocument as any)['modified'] = [];
+
         return clonedDocument;
     }
 }

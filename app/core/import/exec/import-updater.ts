@@ -19,8 +19,8 @@ export module ImportUpdater {
         const documentsWithoutConflicts = documents.filter(not(hasConflict)); // TODO write unzip for tsfun
         const documentsWithConflicts = documents.filter(hasConflict);
 
-        await performBulkUpdatesOrCreates(documentsWithoutConflicts, datastore, username, useUpdateMethod);
-        await performRegularUpdatesOrCreates(documentsWithConflicts, datastore, username, useUpdateMethod);
+        await performBulk(documentsWithoutConflicts, datastore, username, useUpdateMethod);
+        await performRegular(documentsWithConflicts, datastore, username, useUpdateMethod);
 
 
         if (targetDocuments) {
@@ -28,13 +28,13 @@ export module ImportUpdater {
             const targetDocumentsWithoutConflicts = targetDocuments.filter(not(hasConflict));
             const targetDocumentsWithConflicts = targetDocuments.filter(hasConflict);
 
-            await performBulkUpdatesOrCreates(targetDocumentsWithoutConflicts, datastore, username, true);
-            await performRegularUpdatesOrCreates(targetDocumentsWithConflicts, datastore, username, true);
+            await performBulk(targetDocumentsWithoutConflicts, datastore, username, true);
+            await performRegular(targetDocumentsWithConflicts, datastore, username, true);
         }
     }
 
 
-    async function performRegularUpdatesOrCreates(documents: Array<NewDocument>, datastore: DocumentDatastore,
+    async function performRegular(documents: Array<NewDocument>, datastore: DocumentDatastore,
                                                            username: string, updateMode: boolean): Promise<void> {
 
         for (let document of documents) {
@@ -44,7 +44,7 @@ export module ImportUpdater {
     }
 
 
-    async function performBulkUpdatesOrCreates(documents: Array<NewDocument>, datastore: DocumentDatastore,
+    async function performBulk(documents: Array<NewDocument>, datastore: DocumentDatastore,
                                            username: string, updateMode: boolean): Promise<void> {
 
         if (documents.length === 0) return;

@@ -1,15 +1,9 @@
 import {NewDocument, Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
+import {not} from 'tsfun';
 
 
 /**
- * TODO change to batch updates and rename to BatchUpdater
- * for a first version implement it like this:
- *   check if the project contains conflicts. if yes. display a msg to the user, that import will run slow if conflicts not solved first.
- *   then:
- *     if contains conflicts: update or create everything like before. iterate over all docs separately
- *     if not contains conflicts: do batch create or update for documents, batch update for relation documents.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -18,29 +12,43 @@ export module ImportUpdater {
 
     export async function go(documents: Array<Document>, targetDocuments: Array<Document>|undefined,
                              datastore: DocumentDatastore, username: string,
-                             useUpdateMethod: boolean /* else new doc, then use create */) {
+                             useUpdateMethod: boolean /* else new docs, then use create */) {
 
-        // TODO Check for conflicts
+        const hasConflict = (_: any): boolean => (_['_conflicts']);
 
-        await performDocumentsUpdates(documents, datastore, username, useUpdateMethod);
-        if (targetDocuments) await performRelationsUpdates(targetDocuments, datastore, username);
-    }
+        const documentsWithoutConflicts = documents.filter(not(hasConflict)); // TODO write unzip for tsfun
+        const documentsWithConflicts = documents.filter(hasConflict);
+
+        await performBulkUpdatesOrCreates(documentsWithoutConflicts, datastore, username, useUpdateMethod);
+        await performRegularUpdatesOrCreates(documentsWithConflicts, datastore, username, useUpdateMethod);
 
 
-    async function performDocumentsUpdates(documents: Array<NewDocument>, datastore: DocumentDatastore,
-                                           username: string, updateMode: boolean): Promise<void> {
+        if (targetDocuments) {
 
-        if (updateMode) {
-            await datastore.bulkUpdate(documents as Array<Document>, username);
-        } else {
-            await datastore.bulkCreate(documents, username);    // throws exception if an id already exists
+            const targetDocumentsWithoutConflicts = targetDocuments.filter(not(hasConflict));
+            const targetDocumentsWithConflicts = targetDocuments.filter(hasConflict);
+
+            await performBulkUpdatesOrCreates(targetDocumentsWithoutConflicts, datastore, username, true);
+            await performRegularUpdatesOrCreates(targetDocumentsWithConflicts, datastore, username, true);
         }
     }
 
 
-    async function performRelationsUpdates(targetDocuments: Array<Document>, datastore: DocumentDatastore,
-                                           username: string): Promise<void> {
+    async function performRegularUpdatesOrCreates(documents: Array<NewDocument>, datastore: DocumentDatastore,
+                                                           username: string, updateMode: boolean): Promise<void> {
 
-        if (targetDocuments.length > 0) await datastore.bulkUpdate(targetDocuments, username);
+        for (let document of documents) {
+            if (updateMode) await datastore.update(document as Document, username);
+            else await datastore.create(document, username);    // throws exception if an id already exists
+        }
+    }
+
+
+    async function performBulkUpdatesOrCreates(documents: Array<NewDocument>, datastore: DocumentDatastore,
+                                           username: string, updateMode: boolean): Promise<void> {
+
+        if (documents.length === 0) return;
+        if (updateMode) await datastore.bulkUpdate(documents as Array<Document>, username);
+        else await datastore.bulkCreate(documents, username);    // throws exception if an id already exists
     }
 }

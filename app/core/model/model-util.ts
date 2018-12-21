@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {getAtIndex} from 'tsfun';
+import {getIth} from 'tsfun';
 
 /**
  * @author: Thomas Kleinke
@@ -19,7 +19,7 @@ export class ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return getAtIndex(targetIds)(index);
+        return getIth(targetIds)(index);
     }
 }
 

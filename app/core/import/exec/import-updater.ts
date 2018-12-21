@@ -1,6 +1,6 @@
 import {NewDocument, Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {not} from 'tsfun';
+import {separate} from 'tsfun';
 
 
 /**
@@ -16,18 +16,14 @@ export module ImportUpdater {
 
         const hasConflict = (_: any): boolean => (_['_conflicts']);
 
-        const documentsWithoutConflicts = documents.filter(not(hasConflict)); // TODO write unzip for tsfun
-        const documentsWithConflicts = documents.filter(hasConflict);
-
+        const [documentsWithConflicts, documentsWithoutConflicts] = separate(hasConflict)(documents);
         await performBulk(documentsWithoutConflicts, datastore, username, useUpdateMethod);
         await performRegular(documentsWithConflicts, datastore, username, useUpdateMethod);
 
 
         if (targetDocuments) {
 
-            const targetDocumentsWithoutConflicts = targetDocuments.filter(not(hasConflict));
-            const targetDocumentsWithConflicts = targetDocuments.filter(hasConflict);
-
+            const [targetDocumentsWithConflicts, targetDocumentsWithoutConflicts] = separate(hasConflict)(targetDocuments);
             await performBulk(targetDocumentsWithoutConflicts, datastore, username, true);
             await performRegular(targetDocumentsWithConflicts, datastore, username, true);
         }

@@ -90,7 +90,7 @@
     "showdown": "1.8.7",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
-    "tsfun": "1.16.12",
+    "tsfun": "1.16.13",
     "viz.js": "1.8.1",
     "zone.js": "0.8.26"
   },

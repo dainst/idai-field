@@ -3,7 +3,7 @@ import {ImportErrors} from './import-errors';
 import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {arrayEqual, duplicates, to, isUndefinedOrEmpty} from 'tsfun';
+import {arrayEqual, duplicates, to, isUndefinedOrEmpty, hasNot} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
@@ -170,14 +170,14 @@ export module DefaultImport {
      */
     function assignIds(documents: Array<Document>, generateId: Function) {
 
-        const identifierMap: { [identifier: string]: string } = {};
-        for (let document of documents) {
-            if (document.resource.id) continue;
-            const uuid = generateId();
-            document.resource.id = uuid;
-            identifierMap[document.resource.identifier] = uuid;
-        }
-        return identifierMap;
+        return documents
+            .filter(hasNot('resource.id'))
+            .reduce((identifierMap: { [identifier: string]: string }, document)  => {
+                const uuid = generateId();
+                document.resource.id = uuid;
+                identifierMap[document.resource.identifier] = uuid;
+                return identifierMap;
+            }, {});
     }
 
 

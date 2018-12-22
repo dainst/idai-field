@@ -36,7 +36,7 @@ export class ResultSets {
         if (this.addSets.length === 0) return false;
 
         for (let addSet of this.addSets) {
-            if (addSet.length > 0) return false;
+            if (addSet.length > 0) return false; // TODO do with some
         }
 
         return true;

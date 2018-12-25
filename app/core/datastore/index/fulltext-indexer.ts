@@ -89,7 +89,7 @@ export class FulltextIndexer {
         if (Object.keys(this.index).length === 0) return [];
 
         function getFromIndex(resultSets: ResultSets, token: string) {
-            resultSets.combine(
+            ResultSets.combine(resultSets,
                 FulltextIndexer.getForToken(
                     this.index, token, types ? types : Object.keys(this.index)
                 )
@@ -97,11 +97,11 @@ export class FulltextIndexer {
             return resultSets;
         }
 
-        return s
+        return ResultSets.collapse(s
             .split(FulltextIndexer.tokenizationPattern)
             .filter(token => token.length > 0)
             .reduce(getFromIndex.bind(this), ResultSets.make())
-            .collapse() as Array<IndexItem>;
+            ) as Array<IndexItem>;
     }
 
 
@@ -144,7 +144,7 @@ export class FulltextIndexer {
                 : this.addKeyToResultSets(index, resultSets, type, s);
         }
 
-        return types.reduce(get.bind(this), ResultSets.make()).unify();
+        return ResultSets.unify(types.reduce(get.bind(this), ResultSets.make()));
     }
 
 
@@ -158,11 +158,12 @@ export class FulltextIndexer {
     }
 
 
-    private static addKeyToResultSets(index: any, resultSets: ResultSets, type: string, s: string): ResultSets {
+    private static addKeyToResultSets(index: any, resultSets: ResultSets,
+                                      type: string, s: string): ResultSets {
 
         if (!index[type] || !index[type][s]) return resultSets;
 
-        resultSets.combine(Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
+        ResultSets.combine(resultSets, Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
         return resultSets;
     }
 }

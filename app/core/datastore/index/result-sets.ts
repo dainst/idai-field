@@ -5,37 +5,39 @@ import {SimpleIndexItem} from './index-item';
 type IndexItemMap = {[id: string]: SimpleIndexItem};
 
 
+export interface ResultSets {
+
+    addSets: NestedArray<string>,
+    subtractSets: NestedArray<string>,
+    map: IndexItemMap
+}
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ResultSets {
-
-    // Hide constructor on purpose to force usage of make.
-    // This way one can not modify the sets directly. One can
-    // only start with make or copy and then modify via combine.
-    private constructor(private addSets: NestedArray<string>,
-                        private subtractSets: NestedArray<string>,
-                        private map: IndexItemMap) {}
+export module ResultSets {
 
 
-    public static make(): ResultSets {
+    export function make(): ResultSets {
 
-        return new ResultSets ([], [], {})
+        return { addSets: [], subtractSets: [], map: {} };
     }
 
 
-    public isEmpty(): boolean {
+    export function isEmpty(resultSets: ResultSets): boolean {
 
-        return this.addSets.length === 0 && this.subtractSets.length === 0;
+        return resultSets.addSets.length === 0 &&
+            resultSets.subtractSets.length === 0;
     }
 
 
-    public containsOnlyEmptyAddSets(): boolean {
+    export function containsOnlyEmptyAddSets(resultSets: ResultSets): boolean {
 
-        if (this.addSets.length === 0) return false;
+        if (resultSets.addSets.length === 0) return false;
 
-        for (let addSet of this.addSets) {
+        for (let addSet of resultSets.addSets) {
             if (addSet.length > 0) return false; // TODO do with some
         }
 
@@ -43,59 +45,58 @@ export class ResultSets {
     }
 
 
-    public combine(indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
+    export function combine(resultSets: ResultSets,
+                            indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
 
-        const indexItemsMap = ResultSets.intoObject(indexItems);
-        this.map = uniteObject(indexItemsMap)(this.map);
+        const indexItemsMap = intoObject(indexItems);
+        resultSets.map = uniteObject(indexItemsMap)(resultSets.map);
 
         if (mode !== 'subtract') {
-            this.addSets.push(Object.keys(indexItemsMap));
+            resultSets.addSets.push(Object.keys(indexItemsMap));
         }  else {
-            this.subtractSets.push(Object.keys(indexItemsMap));
+            resultSets.subtractSets.push(Object.keys(indexItemsMap));
         }
     }
 
 
-    public collapse(): Array<SimpleIndexItem> {
+    export function collapse(resultSets: ResultSets): Array<SimpleIndexItem> {
 
-        const addSetIds: string[] = ResultSets.getIntersecting(this.addSets);
+        const addSetIds: string[] = getIntersecting(resultSets.addSets);
 
-        return this.pickFromMap(
-            this.subtractSets.length === 0
+        return pickFromMap(resultSets,
+            resultSets.subtractSets.length === 0
                 ? addSetIds
-                : ResultSets.subtract(addSetIds, union(this.subtractSets))
+                : subtract(addSetIds, union(resultSets.subtractSets))
         );
     }
 
 
-    public unify(): Array<SimpleIndexItem> {
+    export function unify(resultSets: ResultSets): Array<SimpleIndexItem> {
 
-        return this.pickFromMap(
-            union(this.addSets)
-        );
+        return pickFromMap(resultSets, union(resultSets.addSets));
     }
 
 
-    private pickFromMap(ids: string[]) {
+    function pickFromMap(resultSets: ResultSets, ids: string[]) {
 
-        return ids.map(id => this.map[id]);
+        return ids.map(id => resultSets.map[id]);
     }
 
 
-    private static intoObject(indexItems: Array<SimpleIndexItem>) {
+    function intoObject(indexItems: Array<SimpleIndexItem>) {
 
         return indexItems
             .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
     }
 
 
-    private static subtract(ids: string[], idsToSubtract: string[]) {
+    function subtract(ids: string[], idsToSubtract: string[]) {
 
         return ids.filter(id => !idsToSubtract.includes(id));
     }
 
 
-    private static getIntersecting(idSets: string[][]) {
+    function getIntersecting(idSets: string[][]) {
 
         let result: string[] = idSets[0];
 

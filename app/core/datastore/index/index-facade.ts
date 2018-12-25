@@ -33,11 +33,12 @@ export class IndexFacade {
             this.performConstraints(query.constraints) :
             ResultSets.make();
 
-        resultSets = resultSets.containsOnlyEmptyAddSets() || (Query.isEmpty(query) && !resultSets.isEmpty())
+        resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
+                || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))
             ? resultSets
             : this.performFulltext(query, resultSets);
 
-        return IndexItem.generateOrderedResultList(resultSets.collapse());
+        return IndexItem.generateOrderedResultList(ResultSets.collapse(resultSets));
     }
 
 
@@ -69,7 +70,7 @@ export class IndexFacade {
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
         const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-        resultSets.combine(this.fulltextIndexer.get(q, query.types));
+        ResultSets.combine(resultSets, this.fulltextIndexer.get(q, query.types));
 
         return resultSets;
     }
@@ -80,7 +81,7 @@ export class IndexFacade {
         return Object.keys(constraints)
             .reduce((resultSets: ResultSets, name: string) => {
                 const {type, value} = Constraint.convertTo(constraints[name]);
-                resultSets.combine(this.constraintIndexer.get(name, value), type);
+                ResultSets.combine(resultSets, this.constraintIndexer.get(name, value), type);
                 return resultSets;
             }, ResultSets.make());
     }

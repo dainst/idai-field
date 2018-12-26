@@ -2,7 +2,7 @@ import {flatMap, flow as _} from 'tsfun';
 import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
-import {clone} from '../../../core/util/object-util';
+import {clone} from '../../util/object-util';
 
 
 export interface FulltextIndex {
@@ -87,7 +87,6 @@ export module FulltextIndex {
      *   result will be a set in the sense that it will include each item only once.
      * @param types if undefined, searches in all types. If defined, only search hits
      *   indexed under the specified types will be included in the results.
-     * @returns {any} array of items
      */
     export function get(fulltextIndex: FulltextIndex,
                         s: string, types: string[]|undefined): Array<IndexItem> {

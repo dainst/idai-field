@@ -166,7 +166,8 @@ export class PouchdbManager {
         await indexFacade.clear();
         await this.fetchAll(
         (doc: any) => {
-            (indexFacade as IndexFacade).put(FieldNameMigrator.migrate(doc), true, false);
+            (indexFacade as IndexFacade)
+                .put(FieldNameMigrator.migrate(doc), true, false);
         });
     }
 

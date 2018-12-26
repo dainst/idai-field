@@ -23,8 +23,13 @@ export module IndexerConfiguration {
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration, true);
-        const createdFulltextIndexer = new FulltextIndexer(projectConfiguration, true);
-        const createdIndexFacade = new IndexFacade(createdConstraintIndexer, createdFulltextIndexer);
-        return {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade};
+
+
+        const createdFulltextIndex = FulltextIndexer.setUp({index: {}, showWarnings: true} as any);
+
+
+        const createdIndexFacade = new IndexFacade(createdConstraintIndexer,
+            createdFulltextIndex, projectConfiguration);
+        return {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade};
     }
 }

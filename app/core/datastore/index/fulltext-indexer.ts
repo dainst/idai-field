@@ -4,74 +4,85 @@ import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {clone} from '../../../core/util/object-util';
 
-/**
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
-export class FulltextIndexer {
 
-    private defaultFieldsToIndex = ['identifier', 'shortDescription'];
+export interface FulltextIndex {
 
-    private index: {
+    showWarnings: boolean,
+
+    index: {
         [resourceType: string]: {
             [term: string]: {
                 [resourceId: string]: IndexItem
             }
         }
     };
-
-    private static tokenizationPattern: RegExp = /[ -]/;
-
-
-    constructor(private projectConfiguration: ProjectConfiguration,
-                private showWarnings = true) {
-
-        this.setUp();
-    }
+}
 
 
-    public clear = () => this.setUp();
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
+export module FulltextIndexer {
+
+    const defaultFieldsToIndex = ['identifier', 'shortDescription'];
+
+    const tokenizationPattern: RegExp = /[ -]/;
 
 
-    public put(document: Document, skipRemoval: boolean = false) {
+    // constructor(private projectConfiguration: ProjectConfiguration,
+    //             private showWarnings = true) {
+    //
+    //     this.setUp();
+    // }
+
+
+    export const clear = (fulltextIndex: FulltextIndex) =>
+        setUp(fulltextIndex);
+
+
+    export function put(projectConfiguration: ProjectConfiguration,
+                        fulltextIndex: FulltextIndex,
+                        document: Document,
+                        skipRemoval: boolean = false) {
 
         function indexToken(tokenAsCharArray: string[]) {
 
-            const typeIndex = this.index[document.resource.type];
+            const typeIndex = fulltextIndex.index[document.resource.type];
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
                 if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
-                typeIndex[accumulator][document.resource.id as any] = indexItem;
+                typeIndex[accumulator][document.resource.id as any] = indexItem as any;
                 return accumulator;
             }, '');
         }
 
 
-        const indexItem = IndexItem.from(document, this.showWarnings);
+        const indexItem = IndexItem.from(document, fulltextIndex.showWarnings);
         if (!indexItem) return;
 
-        if (!skipRemoval) this.remove(document);
-        if (!this.index[document.resource.type]) this.index[document.resource.type] = {'*' : { } };
-        this.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
+        if (!skipRemoval) remove(fulltextIndex, document);
+        if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
+        fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
 
-        _(this.getFieldsToIndex(document.resource.type)
+        _(getFieldsToIndex(projectConfiguration, document.resource.type)
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
-            flatMap((content: string) => content.split(FulltextIndexer.tokenizationPattern)))
+            flatMap((content: string) => content.split(tokenizationPattern)))
             .map(token => token.toLowerCase())
             .map(token => Array.from(token))
-            .forEach(indexToken.bind(this));
+            .forEach(indexToken);
     }
 
 
-    public remove(doc: any) {
+    export function remove(fulltextIndex: FulltextIndex, doc: any) {
 
-        Object.keys(this.index).forEach(type =>
-            Object.keys(this.index[type])
-                .filter(term => this.index[type][term][doc.resource.id])
-                .forEach(term => delete this.index[type][term][doc.resource.id]))
+        Object.keys(fulltextIndex.index).forEach(type =>
+            Object.keys(fulltextIndex.index[type])
+                .filter(term => fulltextIndex.index[type][term][doc.resource.id])
+                .forEach(term => delete fulltextIndex.index[type][term][doc.resource.id]))
     }
 
 
@@ -84,45 +95,48 @@ export class FulltextIndexer {
      *   indexed under the specified types will be included in the results.
      * @returns {any} array of items
      */
-    public get(s: string, types: string[]|undefined): Array<IndexItem> {
+    export function get(fulltextIndex: FulltextIndex,
+                        s: string, types: string[]|undefined): Array<IndexItem> {
 
-        if (Object.keys(this.index).length === 0) return [];
+        if (Object.keys(fulltextIndex.index).length === 0) return [];
 
         function getFromIndex(resultSets: ResultSets, token: string) {
             ResultSets.combine(resultSets,
-                FulltextIndexer.getForToken(
-                    this.index, token, types ? types : Object.keys(this.index)
+                getForToken(
+                    fulltextIndex.index, token, types ? types : Object.keys(fulltextIndex.index)
                 )
             );
             return resultSets;
         }
 
         return ResultSets.collapse(s
-            .split(FulltextIndexer.tokenizationPattern)
+            .split(tokenizationPattern)
             .filter(token => token.length > 0)
-            .reduce(getFromIndex.bind(this), ResultSets.make())
+            .reduce(getFromIndex, ResultSets.make())
             ) as Array<IndexItem>;
     }
 
 
-    private setUp() {
+    export function setUp(fulltextIndex: FulltextIndex) {
 
-        this.index = {};
+        fulltextIndex.index = {};
+        return fulltextIndex;
     }
 
 
-    private getFieldsToIndex(typeName: string): string[] {
+    function getFieldsToIndex(projectConfiguration: ProjectConfiguration,
+                              typeName: string): string[] {
 
-        return !this.projectConfiguration.getTypesMap()[typeName]
+        return !projectConfiguration.getTypesMap()[typeName]
             ? []
-            : Object.values(this.projectConfiguration.getTypesMap()[typeName].fields)
+            : Object.values(projectConfiguration.getTypesMap()[typeName].fields)
                 .filter((field: FieldDefinition) => field.fulltextIndexed)
                 .map((field: FieldDefinition) => field.name)
-                .concat(this.defaultFieldsToIndex);
+                .concat(defaultFieldsToIndex);
     }
 
 
-    private static extractReplacementTokens(s: string) {
+    function extractReplacementTokens(s: string) {
 
         const positionOpen = s.indexOf('[');
         const positionClose = s.indexOf(']');
@@ -132,33 +146,34 @@ export class FulltextIndexer {
     }
 
 
-    private static getForToken(index: any, token: string, types: string[]): Array<any> {
+    function getForToken(index: any, token: string, types: string[]): Array<any> {
 
         const s = token.toLowerCase();
 
         function get(resultSets: ResultSets, type: string): ResultSets {
 
-            const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
+            const {hasPlaceholder, tokens} = extractReplacementTokens(s);
             return hasPlaceholder
-                ? this.getWithPlaceholder(index, resultSets, s, type, tokens)
-                : this.addKeyToResultSets(index, resultSets, type, s);
+                ? getWithPlaceholder(index, resultSets, s, type, tokens)
+                : addKeyToResultSets(index, resultSets, type, s);
         }
 
-        return ResultSets.unify(types.reduce(get.bind(this), ResultSets.make()));
+        return ResultSets.unify(types.reduce(get, ResultSets.make()));
     }
 
 
-    private static getWithPlaceholder(index: any, resultSets: ResultSets, s: string, type: string, tokens: string): ResultSets {
+    function getWithPlaceholder(index: any, resultSets: ResultSets,
+                                s: string, type: string, tokens: string): ResultSets {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
-                FulltextIndexer.addKeyToResultSets(
+                addKeyToResultSets(
                     index, _resultSets, type, s.replace('[' + tokens + ']', nextChar)
                 )
             , resultSets);
     }
 
 
-    private static addKeyToResultSets(index: any, resultSets: ResultSets,
+    function addKeyToResultSets(index: any, resultSets: ResultSets,
                                       type: string, s: string): ResultSets {
 
         if (!index[type] || !index[type][s]) return resultSets;

@@ -38,7 +38,7 @@ import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.c
 import {TypeUtility} from './core/model/type-utility';
 import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
-import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
+import {FulltextIndex, FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
@@ -53,7 +53,7 @@ import {ExportModule} from './components/export/export.module';
 const remote = require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
-let fulltextIndexer: FulltextIndexer|undefined = undefined;
+let fulltextIndexer: FulltextIndex|undefined = undefined;
 let constraintIndexer: ConstraintIndexer|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
 
@@ -112,10 +112,10 @@ registerLocaleData(localeDe, 'de');
                     .then(configuration => {
                         projectConfiguration = configuration;
 
-                        const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+                        const {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade} =
                             IndexerConfiguration.configureIndexers(projectConfiguration);
                         constraintIndexer = createdConstraintIndexer;
-                        fulltextIndexer = createdFulltextIndexer;
+                        fulltextIndexer = createdFulltextIndex;
                         return createdIndexFacade;
                      }).then(facade => {
                          indexFacade = facade;

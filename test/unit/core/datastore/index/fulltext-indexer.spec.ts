@@ -41,7 +41,7 @@ describe('FulltextIndexer', () => {
 
     beforeEach(() => {
 
-        fi = new FulltextIndexer(projectConfiguration, false);
+        fi = FulltextIndexer.setUp({showWarnings: false, index: {}});
 
         const defaultTypeConfiguration = {
             fields: [
@@ -61,24 +61,24 @@ describe('FulltextIndexer', () => {
 
     it('match one with different search terms', () => {
 
-        fi.put(doc('1', 'identifier1', 'type'));
-        expect(fi.get('identifier1', ['type'])).toEqual([indexItem('1')]);
-        expect(fi.get('ide', ['type'])).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        expect(FulltextIndexer.get(fi, 'identifier1', ['type'])).toEqual([indexItem('1')]);
+        expect(FulltextIndexer.get(fi,'ide', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('match two with the same search term', () => {
 
-        fi.put(doc('1', 'identifier1', 'type'));
-        fi.put(doc('2', 'identifier2', 'type'));
-        expect(fi.get('identifier', ['type'])).toEqual([indexItem('1'), indexItem('2')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'identifier2', 'type'));
+        expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([indexItem('1'), indexItem('2')]);
     });
 
 
     it('match in all types', () => {
 
-        fi.put(doc('1', 'identifier1', 'type'));
-        expect(fi.get('identifier', undefined)).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        expect(FulltextIndexer.get(fi, 'identifier', undefined)).toEqual([indexItem('1')]);
     });
 
 
@@ -86,8 +86,8 @@ describe('FulltextIndexer', () => {
 
         const d = doc('1', 'identifier1', 'type', 'short');
 
-        fi.put(d);
-        expect(fi.get('short', undefined)).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([indexItem('1')]);
     });
 
 
@@ -96,8 +96,8 @@ describe('FulltextIndexer', () => {
         const d = doc('1', 'identifier1', 'type', 'short');
         delete d.resource.identifier;
 
-        fi.put(d);
-        expect(fi.get('short', undefined)).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([]);
     });
 
 
@@ -107,116 +107,116 @@ describe('FulltextIndexer', () => {
         delete d.modified;
         delete d.created;
 
-        fi.put(d);
-        expect(fi.get('short', undefined)).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([]);
     });
 
 
     it('match in multiple selected types', () => {
 
-        fi.put(doc('1', 'identifier1', 'type1'));
-        fi.put(doc('2', 'identifier2', 'type2'));
-        fi.put(doc('3', 'identifier3', 'type3'));
-        expect(fi.get('identifier', ['type1', 'type2'])).toEqual([indexItem('1'), indexItem('2')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type1'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'identifier2', 'type2'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('3', 'identifier3', 'type3'));
+        expect(FulltextIndexer.get(fi, 'identifier', ['type1', 'type2'])).toEqual([indexItem('1'), indexItem('2')]);
     });
 
 
     it('do not match search term', () => {
 
-        fi.put(doc('1', 'iden', 'type'));
-        expect(fi.get('identifier', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'iden', 'type'));
+        expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('do not match search in type', () => {
 
-        fi.put(doc('1', 'iden', 'type1'));
-        expect(fi.get('identifier', ['type2'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'iden', 'type1'));
+        expect(FulltextIndexer.get(fi, 'identifier', ['type2'])).toEqual([]);
     });
 
 
     it('match one with two search terms', () => {
 
-        fi.put(doc('1', 'identifier1', 'type', 'a short description'));
-        expect(fi.get('short description', ['type'])).toEqual([indexItem('1')]);
-        expect(fi.get('a description', ['type'])).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type', 'a short description'));
+        expect(FulltextIndexer.get(fi,'short description', ['type'])).toEqual([indexItem('1')]);
+        expect(FulltextIndexer.get(fi, 'a description', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('ignore additional spaces and hyphens', () => {
 
-        fi.put(doc('1', 'identifier1', 'type', 'a short description'));
-        expect(fi.get(' a    short  description  ', ['type'])).toEqual([indexItem('1')]);
-        expect(fi.get('-a----short--description--', ['type'])).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type', 'a short description'));
+        expect(FulltextIndexer.get(fi, ' a    short  description  ', ['type'])).toEqual([indexItem('1')]);
+        expect(FulltextIndexer.get(fi,'-a----short--description--', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('no types present', () => {
 
-        expect(fi.get('identifier', ['type'])).toEqual([]);
+        expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('clear', () => {
 
-        fi.put(doc('1', 'identifier1', 'type'));
-        fi.clear();
-        expect(fi.get('identifier', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.clear(fi);
+        expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('remove', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        fi.put(d);
-        fi.remove(d);
-        expect(fi.get('identifier', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.remove(fi, d);
+        expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('search *', () => {
 
-        fi.put(doc('1', 'identifier1', 'type'));
-        expect(fi.get('*', ['type'])).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        expect(FulltextIndexer.get(fi, '*', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('index other field', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        fi.put(d);
-        expect(fi.get('short', ['type'])).toEqual([indexItem('1')]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('tokenize fields', () => {
 
-        fi.put(doc('1', 'hello token', 'type'));
-        fi.put(doc('2', 'another-one', 'type'));
-        expect(fi.get('hello', ['type'])).toEqual([indexItem('1','hello token')]);
-        expect(fi.get('token', ['type'])).toEqual([indexItem('1','hello token')]);
-        expect(fi.get('another', ['type'])).toEqual([indexItem('2','another-one')]);
-        expect(fi.get('one', ['type'])).toEqual([indexItem('2','another-one')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'hello token', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'another-one', 'type'));
+        expect(FulltextIndexer.get(fi, 'hello', ['type'])).toEqual([indexItem('1','hello token')]);
+        expect(FulltextIndexer.get(fi, 'token', ['type'])).toEqual([indexItem('1','hello token')]);
+        expect(FulltextIndexer.get(fi,'another', ['type'])).toEqual([indexItem('2','another-one')]);
+        expect(FulltextIndexer.get(fi,'one', ['type'])).toEqual([indexItem('2','another-one')]);
     });
 
 
     it('find case insensitive', () => {
 
-        fi.put(doc('1', 'Hello', 'type'));
-        fi.put(doc('2', 'something', 'type'));
-        expect(fi.get('hello', ['type'])).toEqual([indexItem('1','Hello')]);
-        expect(fi.get('Something', ['type'])).toEqual([indexItem('2','something')]);
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'Hello', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'something', 'type'));
+        expect(FulltextIndexer.get(fi, 'hello', ['type'])).toEqual([indexItem('1','Hello')]);
+        expect(FulltextIndexer.get(fi,'Something', ['type'])).toEqual([indexItem('2','something')]);
     });
 
 
     it('put overwrite', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        fi.put(d);
+        FulltextIndexer.put(projectConfiguration, fi, d);
         d['resource']['identifier'] = 'identifier2';
-        fi.put(d);
-        expect(fi.get('identifier1', ['type'])).toEqual([]);
-        expect(fi.get('identifier2', ['type'])).toEqual([indexItem('1','identifier2')]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'identifier1', ['type'])).toEqual([]);
+        expect(FulltextIndexer.get(fi, 'identifier2', ['type'])).toEqual([indexItem('1','identifier2')]);
     });
 
 
@@ -224,24 +224,24 @@ describe('FulltextIndexer', () => {
 
         const d = doc('1', 'identifier1', 'type');
         d['resource']['shortDescription'] = '';
-        expect(fi.get('short', ['type'])).toEqual([]);
-        fi.put(d);
+        expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
         d['resource']['shortDescription'] = undefined;
-        fi.put(d);
-        expect(fi.get('short', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
         delete d['resource']['shortDescription'];
-        fi.put(d);
-        expect(fi.get('short', ['type'])).toEqual([]);
+        FulltextIndexer.put(projectConfiguration, fi, d);
+        expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
     });
 
 
     it('do a placeholder search', () => {
 
-        fi.put(doc('1', 'Hello-A-0033', 'type'));
-        fi.put(doc('2', 'Hello-A-0021', 'type'));
-        fi.put(doc('3', 'Hello-A-0059', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'Hello-A-0033', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'Hello-A-0021', 'type'));
+        FulltextIndexer.put(projectConfiguration, fi, doc('3', 'Hello-A-0059', 'type'));
 
-        const results = fi.get('Hello-A-00[23]', ['type']).map(result => result.identifier);
+        const results = FulltextIndexer.get(fi, 'Hello-A-00[23]', ['type']).map(result => result.identifier);
         expect(results.length).toBe(2);
 
         expect(results).toContain('Hello-A-0033');
@@ -263,9 +263,9 @@ describe('FulltextIndexer', () => {
 
         const document = doc('1', 'identifier1', 'type');
         document.resource.customField = 'testValue';
-        fi.put(document);
+        FulltextIndexer.put(projectConfiguration, fi, document);
 
-        const results = fi.get('testValue', ['type']).map(result => result.identifier);
+        const results = FulltextIndexer.get(fi, 'testValue', ['type']).map(result => result.identifier);
         expect(results.length).toBe(1);
         expect(results[0]).toEqual('identifier1');
     });

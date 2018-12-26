@@ -74,7 +74,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const {settingsService, projectConfiguration} = await setupSettingsService(
         pouchdbmanager, projectName, startSync);
 
-    const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+    const {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade} =
         IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(

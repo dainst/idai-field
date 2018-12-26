@@ -36,12 +36,8 @@ export module ResultSets {
     export function containsOnlyEmptyAddSets(resultSets: ResultSets): boolean {
 
         if (resultSets.addSets.length === 0) return false;
-
-        for (let addSet of resultSets.addSets) {
-            if (addSet.length > 0) return false; // TODO do with some
-        }
-
-        return true;
+        return !resultSets.addSets
+            .some(addSet => addSet.length > 0);
     }
 
 

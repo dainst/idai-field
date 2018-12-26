@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Observer} from 'rxjs';
-import {Observable} from 'rxjs';
-import {Document} from 'idai-components-2';
-import {Constraint, Query} from 'idai-components-2';
+import {Observable, Observer} from 'rxjs';
+import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndex, FulltextIndexer} from './fulltext-indexer';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
-import {ProjectConfiguration} from 'idai-components-2';
 
 
 @Injectable()
@@ -22,7 +19,7 @@ export class IndexFacade {
     constructor(
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndex: FulltextIndex,
-        private projectConfiguration: ProjectConfiguration
+        private typesMap: { [typeName: string]: IdaiType }
     ) {}
 
 
@@ -38,7 +35,7 @@ export class IndexFacade {
         resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
                 || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))
             ? resultSets
-            : this.performFulltext(query, resultSets);
+            : IndexFacade.performFulltext(this.fulltextIndex, query, resultSets);
 
         return IndexItem.generateOrderedResultList(ResultSets.collapse(resultSets));
     }
@@ -48,7 +45,7 @@ export class IndexFacade {
 
         this.constraintIndexer.put(document, skipRemoval);
         FulltextIndexer.put(this.fulltextIndex, document,
-            this.projectConfiguration.getTypesMap(), skipRemoval);
+            this.typesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }
@@ -70,15 +67,6 @@ export class IndexFacade {
     }
 
 
-    private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
-
-        const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-        ResultSets.combine(resultSets, FulltextIndexer.get(this.fulltextIndex, q, query.types));
-
-        return resultSets;
-    }
-
-
     private performConstraints(constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
 
         return Object.keys(constraints)
@@ -87,5 +75,14 @@ export class IndexFacade {
                 ResultSets.combine(resultSets, this.constraintIndexer.get(name, value), type);
                 return resultSets;
             }, ResultSets.make());
+    }
+
+
+    private static performFulltext(fulltextIndex: FulltextIndex, query: Query, resultSets: ResultSets): ResultSets {
+
+        const q = !query.q || query.q.trim() === '' ? '*' : query.q;
+        ResultSets.combine(resultSets, FulltextIndexer.get(fulltextIndex, q, query.types));
+
+        return resultSets;
     }
 }

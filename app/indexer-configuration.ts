@@ -24,12 +24,9 @@ export module IndexerConfiguration {
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration, true);
 
-
         const createdFulltextIndex = FulltextIndexer.setUp({index: {}, showWarnings: true} as any);
-
-
         const createdIndexFacade = new IndexFacade(createdConstraintIndexer,
-            createdFulltextIndex, projectConfiguration);
+            createdFulltextIndex, projectConfiguration.getTypesMap());
         return {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade};
     }
 }

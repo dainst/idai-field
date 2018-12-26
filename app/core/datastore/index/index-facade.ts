@@ -41,7 +41,9 @@ export class IndexFacade {
     }
 
 
-    public put(document: Document, skipRemoval: boolean = false, notify: boolean = true) {
+    public put(document: Document,
+               skipRemoval: boolean = false,
+               notify: boolean = true) {
 
         ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
         FulltextIndex.put(this.fulltextIndex, document,
@@ -78,7 +80,9 @@ export class IndexFacade {
     }
 
 
-    private static performFulltext(fulltextIndex: FulltextIndex, query: Query, resultSets: ResultSets): ResultSets {
+    private static performFulltext(fulltextIndex: FulltextIndex,
+                                   query: Query,
+                                   resultSets: ResultSets): ResultSets {
 
         const q = !query.q || query.q.trim() === '' ? '*' : query.q;
         ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));

@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
 import {jsonClone} from 'tsfun';
 import {IdaiFieldDocument, IdaiFieldGeometry, Query} from 'idai-components-2';
-import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
-import {M} from '../m';
+import {IdaiFieldDocumentReadDatastore} from '../datastore/field/idai-field-document-read-datastore';
+import {M} from '../../components/m';
 
 const geojsonRewind = require('geojson-rewind');
 

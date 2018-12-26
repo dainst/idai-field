@@ -1,5 +1,5 @@
 import {Static} from '../../static';
-import {GeoJsonExporter} from '../../../../app/components/export/geojson-exporter';
+import {GeoJsonExporter} from '../../../../app/core/export/geojson-exporter';
 
 const fs = require('fs');
 const rimraf = require('rimraf');

@@ -1,4 +1,4 @@
-import {NestedArray, union, uniteObject} from 'tsfun';
+import {NestedArray, union, uniteObject, includedIn, isNot} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
 
@@ -88,7 +88,7 @@ export module ResultSets {
 
     function subtract(ids: string[], idsToSubtract: string[]) {
 
-        return ids.filter(id => !idsToSubtract.includes(id));
+        return ids.filter(isNot(includedIn(idsToSubtract)));
     }
 
 

@@ -1,5 +1,5 @@
 import {flatMap, flow as _} from 'tsfun';
-import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
+import {Document, IdaiType} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {clone} from '../../util/object-util';

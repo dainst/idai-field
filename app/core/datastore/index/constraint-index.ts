@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
+import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {getOrElse} from 'tsfun';
 
@@ -10,15 +10,13 @@ export interface IndexDefinition {
 }
 
 
-/**
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
-export class ConstraintIndex {
+export interface ConstraintIndex {
 
-    private indexDefinitions: { [name: string]: IndexDefinition };
+    showWarnings: boolean;
 
-    private containIndex: {
+    indexDefinitions: { [name: string]: IndexDefinition };
+
+    containIndex: {
         [path: string]: {
             [resourceId: string]: {
                 [resourceId: string]: IndexItem
@@ -26,7 +24,7 @@ export class ConstraintIndex {
         }
     };
 
-    private matchIndex: {
+    matchIndex: {
         [path: string]: {
             [searchTerm: string]: {
                 [resourceId: string]: IndexItem
@@ -34,48 +32,64 @@ export class ConstraintIndex {
         }
     };
 
-    private existIndex: {
+    existIndex: {
         [path: string]: {
             [existence: string]: { // KNOWN | UNKNOWN
                 [resourceId: string]: IndexItem
             }
         }
     };
+}
 
 
-    constructor(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                private projectConfiguration: ProjectConfiguration,
-                private showWarnings = true) {
 
-        this.indexDefinitions = ConstraintIndex.getIndexDefinitions(
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
+export module ConstraintIndex {
+
+    export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
+                         typesMap: { [typeName: string]: IdaiType },
+                         showWarnings = true) {
+
+        const constraintIndex: ConstraintIndex = {
+            showWarnings: true,
+            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}};
+
+        constraintIndex.indexDefinitions = getIndexDefinitions(
             defaultIndexDefinitions,
-            Object.values(this.projectConfiguration.getTypesMap())
+            Object.values(typesMap)
         );
 
-        const validationError
-            = ConstraintIndex.validateIndexDefinitions(Object.values(this.indexDefinitions));
+        const validationError = validateIndexDefinitions(Object.values(constraintIndex.indexDefinitions));
         if (validationError) throw validationError;
 
-        this.setUp();
+        setUp(constraintIndex);
+        constraintIndex.showWarnings = showWarnings;
+        return constraintIndex;
     }
 
 
-    public clear = () => this.setUp();
+    export const clear = (constraintIndex: ConstraintIndex) => setUp(constraintIndex);
 
 
-    public put(doc: Document, skipRemoval: boolean = false) {
+    export function put(constraintIndex: ConstraintIndex,
+                        doc: Document,
+                        skipRemoval: boolean = false) {
 
-        if (!skipRemoval) this.remove(doc);
-        for (let indexDefinition of Object.values(this.indexDefinitions)) {
-            this.putFor(indexDefinition, doc);
+        if (!skipRemoval) remove(constraintIndex, doc);
+        for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
+            putFor(constraintIndex, indexDefinition, doc);
         }
     }
 
 
-    public remove(doc: Document) {
+    export function remove(constraintIndex: ConstraintIndex,
+                           doc: Document) {
 
-        Object.values(this.indexDefinitions)
-            .map(definition => (this.getIndex(definition))[definition.path])
+        Object.values(constraintIndex.indexDefinitions)
+            .map(definition => (getIndex(constraintIndex, definition))[definition.path])
             .forEach(path =>
                 Object.keys(path)
                     .filter(key => path[key][doc.resource.id as any])
@@ -84,12 +98,14 @@ export class ConstraintIndex {
     }
 
 
-    public get(indexName: string, matchTerms: string|string[]): Array<IndexItem> {
+    export function get(constraintIndex: ConstraintIndex,
+                        indexName: string,
+                        matchTerms: string|string[]): Array<IndexItem> {
 
-        const indexDefinition: IndexDefinition = this.indexDefinitions[indexName];
+        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        const matchedDocuments = this.getIndexItems(indexDefinition, matchTerms);
+        const matchedDocuments = getIndexItems(constraintIndex, indexDefinition, matchTerms);
         if (!matchedDocuments) return [];
 
         return Object.keys(matchedDocuments).map(id => { return {
@@ -100,7 +116,9 @@ export class ConstraintIndex {
     }
 
 
-    private putFor(indexDefinition: IndexDefinition, doc: Document) {
+    function putFor(constraintIndex: ConstraintIndex,
+                    indexDefinition: IndexDefinition,
+                    doc: Document) {
 
         const elForPath = getOrElse(doc, undefined)(indexDefinition.path);
 
@@ -108,73 +126,73 @@ export class ConstraintIndex {
             case 'exist':
                 if ((!elForPath && elForPath !== false)
                         || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return ConstraintIndex.addToIndex(
-                        this.existIndex,
+                    return addToIndex(
+                        constraintIndex.existIndex,
                         doc,
                         indexDefinition.path, 'UNKNOWN',
-                        this.showWarnings);
+                        constraintIndex.showWarnings);
                 }
                 // this is a hack to make sure the project document is never listed as conflicted and can be removed when auto conflict resolving gets implemented.
-                ConstraintIndex.addToIndex(
-                    this.existIndex,
+                addToIndex(
+                    constraintIndex.existIndex,
                     doc,
                     indexDefinition.path,
                     doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN',
-                    this.showWarnings);
+                    constraintIndex.showWarnings);
                 break;
 
             case 'match':
                 if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
-                ConstraintIndex.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath.toString(),
-                    this.showWarnings);
+                addToIndex(constraintIndex.matchIndex, doc, indexDefinition.path, elForPath.toString(),
+                    constraintIndex.showWarnings);
                 break;
 
             case 'contain':
                 if (!elForPath || !Array.isArray(elForPath)) break;
                 for (let target of elForPath) {
-                    ConstraintIndex.addToIndex(this.containIndex, doc, indexDefinition.path, target, this.showWarnings);
+                    addToIndex(constraintIndex.containIndex, doc, indexDefinition.path, target, constraintIndex.showWarnings);
                 }
                 break;
         }
     }
 
 
-    private setUp() {
+    function setUp(constraintIndex: ConstraintIndex) {
 
-        this.containIndex = {};
-        this.matchIndex = {};
-        this.existIndex = {};
+        constraintIndex.containIndex = {};
+        constraintIndex.matchIndex = {};
+        constraintIndex.existIndex = {};
 
-        for (let indexDefinition of Object.values(this.indexDefinitions)) {
-            this.getIndex(indexDefinition)[indexDefinition.path] = {};
+        for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
+            getIndex(constraintIndex, indexDefinition)[indexDefinition.path] = {};
         }
     }
 
 
-    private getIndex(indexDefinition: IndexDefinition): any {
+    function getIndex(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition): any {
 
         switch (indexDefinition.type) {
-            case 'contain': return this.containIndex;
-            case 'match':   return this.matchIndex;
-            case 'exist':   return this.existIndex;
+            case 'contain': return constraintIndex.containIndex;
+            case 'match':   return constraintIndex.matchIndex;
+            case 'exist':   return constraintIndex.existIndex;
         }
     }
 
 
-    private getIndexItems(indexDefinition: IndexDefinition,
-                          matchTerms: string|string[]): { [id: string]: IndexItem }|undefined {
+    function getIndexItems(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+                           matchTerms: string|string[]): { [id: string]: IndexItem }|undefined {
 
         return Array.isArray(matchTerms)
-            ? this.getIndexItemsForMultipleMatchTerms(indexDefinition, matchTerms)
-            : this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerms);
+            ? getIndexItemsForMultipleMatchTerms(constraintIndex, indexDefinition, matchTerms)
+            : getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerms);
     }
 
 
-    private getIndexItemsForMultipleMatchTerms(indexDefinition: IndexDefinition,
-                                               matchTerms: string[]): { [id: string]: IndexItem }|undefined {
+    function getIndexItemsForMultipleMatchTerms(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+                                                matchTerms: string[]): { [id: string]: IndexItem }|undefined {
 
         const result = matchTerms.map(matchTerm => {
-            return this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerm);
+            return getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
         }).reduce((result: any, indexItems) => {
             if (!indexItems) return result;
             Object.keys(indexItems).forEach(id => result[id] = indexItems[id]);
@@ -185,14 +203,14 @@ export class ConstraintIndex {
     }
 
 
-    private getIndexItemsForSingleMatchTerm(indexDefinition: IndexDefinition,
-                                            matchTerm: string): { [id: string]: IndexItem }|undefined {
+    function getIndexItemsForSingleMatchTerm(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+                                             matchTerm: string): { [id: string]: IndexItem }|undefined {
 
-        return this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
+        return getIndex(constraintIndex, indexDefinition)[indexDefinition.path][matchTerm];
     }
 
 
-    public static getIndexType(field: FieldDefinition): string {
+    export function getIndexType(field: FieldDefinition): string {
 
         switch (field.inputType) {
             case 'checkboxes':
@@ -203,63 +221,63 @@ export class ConstraintIndex {
     }
 
 
-    private static getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                                       types: Array<IdaiType>): { [name: string]: IndexDefinition } {
+    function getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
+                                 types: Array<IdaiType>): { [name: string]: IndexDefinition } {
 
         const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
-            this.getFieldsToIndex(types)
-                .map((field: FieldDefinition) => ConstraintIndex.makeIndexDefinitions(field))
+            getFieldsToIndex(types)
+                .map((field: FieldDefinition) => makeIndexDefinitions(field))
                 .reduce((result: any, definitions) => {
                     definitions.forEach(definition => result.push(definition));
                     return result;
                 }, []);
 
-        return this.combine(definitionsFromConfiguration, defaultIndexDefinitions);
+        return combine(definitionsFromConfiguration, defaultIndexDefinitions);
     }
 
 
-    private static getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
+    function getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
 
         const fields: Array<FieldDefinition> =
             (types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
                 return result.concat(type.fields);
             }, []) as any).filter((field: FieldDefinition) => field.constraintIndexed);
 
-        return this.getUniqueFields(fields);
+        return getUniqueFields(fields);
     }
 
 
-    private static getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+    function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
         return fields
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {
-                        return this.resultsInSameIndexDefinition(f, field);
+                        return resultsInSameIndexDefinition(f, field);
                     }) as FieldDefinition
                 ) === index;
             });
     }
 
 
-    private static resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
+    function resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
 
         return field1.name === field2.name
             && ConstraintIndex.getIndexType(field1) === ConstraintIndex.getIndexType(field2);
     }
 
 
-    private static makeIndexDefinitions(field: FieldDefinition)
+    function makeIndexDefinitions(field: FieldDefinition)
             : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
         return [
-            this.makeIndexDefinition(field, this.getIndexType(field)),
-            this.makeIndexDefinition(field, 'exist')
+            makeIndexDefinition(field, getIndexType(field)),
+            makeIndexDefinition(field, 'exist')
         ];
     }
 
 
-    private static makeIndexDefinition(field: FieldDefinition, indexType: string)
+    function makeIndexDefinition(field: FieldDefinition, indexType: string)
             : { name: string, indexDefinition: IndexDefinition } {
 
         return {
@@ -272,7 +290,7 @@ export class ConstraintIndex {
     }
 
 
-    private static combine(indexDefinitionsFromConfiguration
+    function combine(indexDefinitionsFromConfiguration
                                : Array<{ name: string, indexDefinition: IndexDefinition }>,
                            defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
 
@@ -283,7 +301,7 @@ export class ConstraintIndex {
     }
 
 
-    private static validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
+    function validateIndexDefinitions(indexDefinitions: Array<IndexDefinition>): string|undefined {
 
         const types = ['match', 'contain', 'exist'];
 
@@ -296,7 +314,7 @@ export class ConstraintIndex {
     }
 
 
-    private static addToIndex(index: any, doc: Document, path: string, target: string,
+    function addToIndex(index: any, doc: Document, path: string, target: string,
                               showWarnings: boolean) {
 
         const indexItem = IndexItem.from(doc, showWarnings);

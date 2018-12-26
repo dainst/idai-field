@@ -17,7 +17,7 @@ export class IndexFacade {
     private observers: Array<Observer<Document>> = [];
 
     constructor(
-        private constraintIndexer: ConstraintIndex,
+        private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
         private typesMap: { [typeName: string]: IdaiType }
     ) {}
@@ -43,7 +43,7 @@ export class IndexFacade {
 
     public put(document: Document, skipRemoval: boolean = false, notify: boolean = true) {
 
-        this.constraintIndexer.put(document, skipRemoval);
+        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
         FulltextIndex.put(this.fulltextIndex, document,
             this.typesMap, skipRemoval);
 
@@ -53,7 +53,7 @@ export class IndexFacade {
 
     public remove(document: Document) {
 
-        this.constraintIndexer.remove(document);
+        ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
 
         ObserverUtil.notify(this.observers, document);
@@ -62,7 +62,7 @@ export class IndexFacade {
 
     public clear() {
 
-        this.constraintIndexer.clear();
+        ConstraintIndex.clear(this.constraintIndex);
         FulltextIndex.clear(this.fulltextIndex);
     }
 
@@ -72,7 +72,7 @@ export class IndexFacade {
         return Object.keys(constraints)
             .reduce((resultSets: ResultSets, name: string) => {
                 const {type, value} = Constraint.convertTo(constraints[name]);
-                ResultSets.combine(resultSets, this.constraintIndexer.get(name, value), type);
+                ResultSets.combine(resultSets, ConstraintIndex.get(this.constraintIndex, name, value), type);
                 return resultSets;
             }, ResultSets.make());
     }

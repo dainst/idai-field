@@ -11,7 +11,7 @@ export module IndexerConfiguration {
 
     export function configureIndexers(projectConfiguration: ProjectConfiguration) {
 
-        const createdConstraintIndexer = new ConstraintIndex({
+        const createdConstraintIndex = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
@@ -22,11 +22,11 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
-        }, projectConfiguration, true);
+        }, projectConfiguration.getTypesMap(), true);
 
         const createdFulltextIndex = FulltextIndex.setUp({index: {}, showWarnings: true} as any);
-        const createdIndexFacade = new IndexFacade(createdConstraintIndexer,
+        const createdIndexFacade = new IndexFacade(createdConstraintIndex,
             createdFulltextIndex, projectConfiguration.getTypesMap());
-        return {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade};
+        return {createdConstraintIndex, createdFulltextIndex, createdIndexFacade};
     }
 }

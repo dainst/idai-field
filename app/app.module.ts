@@ -53,8 +53,8 @@ import {ExportModule} from './components/export/export.module';
 const remote = require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
-let fulltextIndexer: FulltextIndex|undefined = undefined;
-let constraintIndexer: ConstraintIndex|undefined = undefined;
+let fulltextIndex: FulltextIndex|undefined = undefined;
+let constraintIndex: ConstraintIndex|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
 
 
@@ -112,10 +112,10 @@ registerLocaleData(localeDe, 'de');
                     .then(configuration => {
                         projectConfiguration = configuration;
 
-                        const {createdConstraintIndexer, createdFulltextIndex, createdIndexFacade} =
+                        const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
                             IndexerConfiguration.configureIndexers(projectConfiguration);
-                        constraintIndexer = createdConstraintIndexer;
-                        fulltextIndexer = createdFulltextIndex;
+                        constraintIndex = createdConstraintIndex;
+                        fulltextIndex = createdFulltextIndex;
                         return createdIndexFacade;
                      }).then(facade => {
                          indexFacade = facade;
@@ -158,22 +158,22 @@ registerLocaleData(localeDe, 'de');
         {
             provide: FulltextIndex,
             useFactory: () => {
-                if (!fulltextIndexer) {
+                if (!fulltextIndex) {
                     console.error('fulltext indexer has not yet been provided');
                     throw 'fulltext indexer has not yet been provided';
                 }
-                return fulltextIndexer;
+                return fulltextIndex;
             },
             deps: []
         },
         {
             provide: ConstraintIndex,
             useFactory: () => {
-                if (!constraintIndexer) {
+                if (!constraintIndex) {
                     console.error('constraint indexer has not yet been provided');
                     throw 'constraint indexer has not yet been provided';
                 }
-                return constraintIndexer;
+                return constraintIndex;
             },
             deps: []
         },

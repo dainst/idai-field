@@ -38,7 +38,7 @@ import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.c
 import {TypeUtility} from './core/model/type-utility';
 import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
-import {FulltextIndex, FulltextIndexer} from './core/datastore/index/fulltext-indexer';
+import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
@@ -156,7 +156,7 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         {
-            provide: FulltextIndexer,
+            provide: FulltextIndex,
             useFactory: () => {
                 if (!fulltextIndexer) {
                     console.error('fulltext indexer has not yet been provided');

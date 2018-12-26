@@ -23,7 +23,7 @@ export interface FulltextIndex {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module FulltextIndexer {
+export module FulltextIndex {
 
     const defaultFieldsToIndex = ['identifier', 'shortDescription'];
 
@@ -80,6 +80,7 @@ export module FulltextIndexer {
 
 
     /**
+     * @param fulltextIndex
      * @param s search string, which gets tokenized, so that the result will include
      *   search hits for any of the tokens. If s is "hello world", all items which are
      *   indexed under either "hello" or "world" will be included in the result. The

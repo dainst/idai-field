@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
 import {ConstraintIndexer} from './constraint-indexer';
-import {FulltextIndex, FulltextIndexer} from './fulltext-indexer';
+import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
@@ -44,7 +44,7 @@ export class IndexFacade {
     public put(document: Document, skipRemoval: boolean = false, notify: boolean = true) {
 
         this.constraintIndexer.put(document, skipRemoval);
-        FulltextIndexer.put(this.fulltextIndex, document,
+        FulltextIndex.put(this.fulltextIndex, document,
             this.typesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
@@ -54,7 +54,7 @@ export class IndexFacade {
     public remove(document: Document) {
 
         this.constraintIndexer.remove(document);
-        FulltextIndexer.remove(this.fulltextIndex, document);
+        FulltextIndex.remove(this.fulltextIndex, document);
 
         ObserverUtil.notify(this.observers, document);
     }
@@ -63,7 +63,7 @@ export class IndexFacade {
     public clear() {
 
         this.constraintIndexer.clear();
-        FulltextIndexer.clear(this.fulltextIndex);
+        FulltextIndex.clear(this.fulltextIndex);
     }
 
 
@@ -81,7 +81,7 @@ export class IndexFacade {
     private static performFulltext(fulltextIndex: FulltextIndex, query: Query, resultSets: ResultSets): ResultSets {
 
         const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-        ResultSets.combine(resultSets, FulltextIndexer.get(fulltextIndex, q, query.types));
+        ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));
 
         return resultSets;
     }

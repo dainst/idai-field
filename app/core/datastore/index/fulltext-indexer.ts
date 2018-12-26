@@ -1,5 +1,5 @@
 import {flatMap, flow as _} from 'tsfun';
-import {Document, FieldDefinition, ProjectConfiguration} from 'idai-components-2';
+import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {clone} from '../../../core/util/object-util';
@@ -30,20 +30,13 @@ export module FulltextIndexer {
     const tokenizationPattern: RegExp = /[ -]/;
 
 
-    // constructor(private projectConfiguration: ProjectConfiguration,
-    //             private showWarnings = true) {
-    //
-    //     this.setUp();
-    // }
-
-
     export const clear = (fulltextIndex: FulltextIndex) =>
         setUp(fulltextIndex);
 
 
-    export function put(projectConfiguration: ProjectConfiguration,
-                        fulltextIndex: FulltextIndex,
+    export function put(fulltextIndex: FulltextIndex,
                         document: Document,
+                        typesMap: { [typeName: string]: IdaiType },
                         skipRemoval: boolean = false) {
 
         function indexToken(tokenAsCharArray: string[]) {
@@ -66,7 +59,7 @@ export module FulltextIndexer {
         if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
         fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
 
-        _(getFieldsToIndex(projectConfiguration, document.resource.type)
+        _(getFieldsToIndex(typesMap, document.resource.type)
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
@@ -124,12 +117,12 @@ export module FulltextIndexer {
     }
 
 
-    function getFieldsToIndex(projectConfiguration: ProjectConfiguration,
+    function getFieldsToIndex(typesMap: { [typeName: string]: IdaiType },
                               typeName: string): string[] {
 
-        return !projectConfiguration.getTypesMap()[typeName]
+        return !typesMap[typeName]
             ? []
-            : Object.values(projectConfiguration.getTypesMap()[typeName].fields)
+            : Object.values(typesMap[typeName].fields)
                 .filter((field: FieldDefinition) => field.fulltextIndexed)
                 .map((field: FieldDefinition) => field.name)
                 .concat(defaultFieldsToIndex);

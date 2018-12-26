@@ -23,9 +23,7 @@ export class IndexFacade {
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndex: FulltextIndex,
         private projectConfiguration: ProjectConfiguration
-    ) {
-        // FulltextIndexer.setUp(fulltextIndex);
-    }
+    ) {}
 
 
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
@@ -49,8 +47,8 @@ export class IndexFacade {
     public put(document: Document, skipRemoval: boolean = false, notify: boolean = true) {
 
         this.constraintIndexer.put(document, skipRemoval);
-        FulltextIndexer.put(this.projectConfiguration,
-            this.fulltextIndex, document, skipRemoval);
+        FulltextIndexer.put(this.fulltextIndex, document,
+            this.projectConfiguration.getTypesMap(), skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }

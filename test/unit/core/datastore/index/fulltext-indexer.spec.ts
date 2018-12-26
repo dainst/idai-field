@@ -9,7 +9,7 @@ import {Static} from '../../../static';
 describe('FulltextIndexer', () => {
 
     let fi;
-    let projectConfiguration;
+    let typesMap;
 
 
     function doc(id, identifier, type, shortDescription = 'short') {
@@ -32,13 +32,6 @@ describe('FulltextIndexer', () => {
     }
 
 
-    beforeAll(() => {
-
-        projectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getTypesMap']);
-    });
-
-
     beforeEach(() => {
 
         fi = FulltextIndexer.setUp({showWarnings: false, index: {}});
@@ -50,18 +43,18 @@ describe('FulltextIndexer', () => {
             ]
         };
 
-        projectConfiguration.getTypesMap.and.returnValue({
+        typesMap = {
             type: defaultTypeConfiguration,
             type1: defaultTypeConfiguration,
             type2: defaultTypeConfiguration,
             type3: defaultTypeConfiguration
-        });
+        };
     });
 
 
     it('match one with different search terms', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier1', ['type'])).toEqual([indexItem('1')]);
         expect(FulltextIndexer.get(fi,'ide', ['type'])).toEqual([indexItem('1')]);
     });
@@ -69,15 +62,15 @@ describe('FulltextIndexer', () => {
 
     it('match two with the same search term', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'identifier2', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type'), typesMap);
+        FulltextIndexer.put(fi, doc('2', 'identifier2', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([indexItem('1'), indexItem('2')]);
     });
 
 
     it('match in all types', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier', undefined)).toEqual([indexItem('1')]);
     });
 
@@ -86,7 +79,7 @@ describe('FulltextIndexer', () => {
 
         const d = doc('1', 'identifier1', 'type', 'short');
 
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([indexItem('1')]);
     });
 
@@ -96,7 +89,7 @@ describe('FulltextIndexer', () => {
         const d = doc('1', 'identifier1', 'type', 'short');
         delete d.resource.identifier;
 
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([]);
     });
 
@@ -107,37 +100,37 @@ describe('FulltextIndexer', () => {
         delete d.modified;
         delete d.created;
 
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', undefined)).toEqual([]);
     });
 
 
     it('match in multiple selected types', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type1'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'identifier2', 'type2'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('3', 'identifier3', 'type3'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type1'), typesMap);
+        FulltextIndexer.put(fi, doc('2', 'identifier2', 'type2'), typesMap);
+        FulltextIndexer.put(fi, doc('3', 'identifier3', 'type3'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier', ['type1', 'type2'])).toEqual([indexItem('1'), indexItem('2')]);
     });
 
 
     it('do not match search term', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'iden', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'iden', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('do not match search in type', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'iden', 'type1'));
+        FulltextIndexer.put(fi, doc('1', 'iden', 'type1'), typesMap);
         expect(FulltextIndexer.get(fi, 'identifier', ['type2'])).toEqual([]);
     });
 
 
     it('match one with two search terms', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type', 'a short description'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type', 'a short description'), typesMap);
         expect(FulltextIndexer.get(fi,'short description', ['type'])).toEqual([indexItem('1')]);
         expect(FulltextIndexer.get(fi, 'a description', ['type'])).toEqual([indexItem('1')]);
     });
@@ -145,7 +138,7 @@ describe('FulltextIndexer', () => {
 
     it('ignore additional spaces and hyphens', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type', 'a short description'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type', 'a short description'), typesMap);
         expect(FulltextIndexer.get(fi, ' a    short  description  ', ['type'])).toEqual([indexItem('1')]);
         expect(FulltextIndexer.get(fi,'-a----short--description--', ['type'])).toEqual([indexItem('1')]);
     });
@@ -159,7 +152,7 @@ describe('FulltextIndexer', () => {
 
     it('clear', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type'), typesMap);
         FulltextIndexer.clear(fi);
         expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
@@ -168,7 +161,7 @@ describe('FulltextIndexer', () => {
     it('remove', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         FulltextIndexer.remove(fi, d);
         expect(FulltextIndexer.get(fi, 'identifier', ['type'])).toEqual([]);
     });
@@ -176,7 +169,7 @@ describe('FulltextIndexer', () => {
 
     it('search *', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'identifier1', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'identifier1', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, '*', ['type'])).toEqual([indexItem('1')]);
     });
 
@@ -184,15 +177,15 @@ describe('FulltextIndexer', () => {
     it('index other field', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([indexItem('1')]);
     });
 
 
     it('tokenize fields', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'hello token', 'type'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'another-one', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'hello token', 'type'), typesMap);
+        FulltextIndexer.put(fi, doc('2', 'another-one', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'hello', ['type'])).toEqual([indexItem('1','hello token')]);
         expect(FulltextIndexer.get(fi, 'token', ['type'])).toEqual([indexItem('1','hello token')]);
         expect(FulltextIndexer.get(fi,'another', ['type'])).toEqual([indexItem('2','another-one')]);
@@ -202,8 +195,8 @@ describe('FulltextIndexer', () => {
 
     it('find case insensitive', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'Hello', 'type'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'something', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'Hello', 'type'), typesMap);
+        FulltextIndexer.put(fi, doc('2', 'something', 'type'), typesMap);
         expect(FulltextIndexer.get(fi, 'hello', ['type'])).toEqual([indexItem('1','Hello')]);
         expect(FulltextIndexer.get(fi,'Something', ['type'])).toEqual([indexItem('2','something')]);
     });
@@ -212,9 +205,9 @@ describe('FulltextIndexer', () => {
     it('put overwrite', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         d['resource']['identifier'] = 'identifier2';
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'identifier1', ['type'])).toEqual([]);
         expect(FulltextIndexer.get(fi, 'identifier2', ['type'])).toEqual([indexItem('1','identifier2')]);
     });
@@ -225,21 +218,21 @@ describe('FulltextIndexer', () => {
         const d = doc('1', 'identifier1', 'type');
         d['resource']['shortDescription'] = '';
         expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         d['resource']['shortDescription'] = undefined;
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
         delete d['resource']['shortDescription'];
-        FulltextIndexer.put(projectConfiguration, fi, d);
+        FulltextIndexer.put(fi, d, typesMap);
         expect(FulltextIndexer.get(fi, 'short', ['type'])).toEqual([]);
     });
 
 
     it('do a placeholder search', () => {
 
-        FulltextIndexer.put(projectConfiguration, fi, doc('1', 'Hello-A-0033', 'type'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('2', 'Hello-A-0021', 'type'));
-        FulltextIndexer.put(projectConfiguration, fi, doc('3', 'Hello-A-0059', 'type'));
+        FulltextIndexer.put(fi, doc('1', 'Hello-A-0033', 'type'), typesMap);
+        FulltextIndexer.put(fi, doc('2', 'Hello-A-0021', 'type'), typesMap);
+        FulltextIndexer.put(fi, doc('3', 'Hello-A-0059', 'type'), typesMap);
 
         const results = FulltextIndexer.get(fi, 'Hello-A-00[23]', ['type']).map(result => result.identifier);
         expect(results.length).toBe(2);
@@ -251,7 +244,7 @@ describe('FulltextIndexer', () => {
 
     it('index field specified in search configuration', () => {
 
-       projectConfiguration.getTypesMap.and.returnValue({
+       typesMap = {
             type: {
                 fields: [
                     { name: 'identifier' },
@@ -259,11 +252,11 @@ describe('FulltextIndexer', () => {
                     { name: 'customField', fulltextIndexed: true }
                 ]
             }
-        });
+        };
 
         const document = doc('1', 'identifier1', 'type');
         document.resource.customField = 'testValue';
-        FulltextIndexer.put(projectConfiguration, fi, document);
+        FulltextIndexer.put(fi, document, typesMap);
 
         const results = FulltextIndexer.get(fi, 'testValue', ['type']).map(result => result.identifier);
         expect(results.length).toBe(1);

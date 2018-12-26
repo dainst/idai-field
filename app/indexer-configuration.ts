@@ -1,4 +1,4 @@
-import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
+import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {ProjectConfiguration} from 'idai-components-2';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {IndexFacade} from './core/datastore/index/index-facade';
@@ -11,7 +11,7 @@ export module IndexerConfiguration {
 
     export function configureIndexers(projectConfiguration: ProjectConfiguration) {
 
-        const createdConstraintIndexer = new ConstraintIndexer({
+        const createdConstraintIndexer = new ConstraintIndex({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },

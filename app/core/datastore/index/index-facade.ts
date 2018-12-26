@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
-import {ConstraintIndexer} from './constraint-indexer';
+import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
@@ -17,7 +17,7 @@ export class IndexFacade {
     private observers: Array<Observer<Document>> = [];
 
     constructor(
-        private constraintIndexer: ConstraintIndexer,
+        private constraintIndexer: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
         private typesMap: { [typeName: string]: IdaiType }
     ) {}

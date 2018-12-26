@@ -39,7 +39,7 @@ import {TypeUtility} from './core/model/type-utility';
 import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
-import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
+import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
 import {M} from './components/m';
@@ -54,7 +54,7 @@ const remote = require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
 let fulltextIndexer: FulltextIndex|undefined = undefined;
-let constraintIndexer: ConstraintIndexer|undefined = undefined;
+let constraintIndexer: ConstraintIndex|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
 
 
@@ -167,7 +167,7 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         {
-            provide: ConstraintIndexer,
+            provide: ConstraintIndex,
             useFactory: () => {
                 if (!constraintIndexer) {
                     console.error('constraint indexer has not yet been provided');

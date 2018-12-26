@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {ConstraintIndexer} from '../../../../../app/core/datastore/index/constraint-indexer';
+import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 
 /**
@@ -72,7 +72,7 @@ describe('ConstraintIndexer', () => {
         docs[0].resource.relations['isRecordedIn'] = ['1'];
         docs[1].resource.relations['isRecordedIn'] = ['1'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
         }, projectConfiguration, false);
 
@@ -90,7 +90,7 @@ describe('ConstraintIndexer', () => {
         ];
         docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
         }, projectConfiguration);
 
@@ -116,7 +116,7 @@ describe('ConstraintIndexer', () => {
         docs[0].resource.relations['isRecordedIn'] = ['2'];
         docs[0].resource.relations['liesWithin'] = ['3'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'identifier:match': { path: 'resource.identifier', type: 'match' }
@@ -142,7 +142,7 @@ describe('ConstraintIndexer', () => {
             doc('1')
         ];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
         }, projectConfiguration, false);
 
@@ -154,7 +154,7 @@ describe('ConstraintIndexer', () => {
 
     it('work with non arrays', () => {
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         }, projectConfiguration, false);
         ci.put(doc('1'));
@@ -164,7 +164,7 @@ describe('ConstraintIndexer', () => {
 
     it('do not index if no identifier', () => { // tests interaction with IndexItem
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         }, projectConfiguration, false);
         const doc0 = doc('1');
@@ -176,7 +176,7 @@ describe('ConstraintIndexer', () => {
 
     it('do not index if no created and modified', () => { // tests interaction with IndexItem
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         }, projectConfiguration, false);
         const doc0 = doc('1');
@@ -189,7 +189,7 @@ describe('ConstraintIndexer', () => {
 
     it('clear index', () => {
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         }, projectConfiguration, false);
         ci.put(doc('1'));
@@ -200,7 +200,7 @@ describe('ConstraintIndexer', () => {
 
     it('ask for one existing index and one nonexisting index', () => {
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'identifier:contain': { path: 'resource.identifier', type: 'contain' }
         }, projectConfiguration, false);
 
@@ -261,7 +261,7 @@ describe('ConstraintIndexer', () => {
         ];
         docs[0]['_conflicts'] = ['1-other'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration, false);
 
@@ -276,7 +276,7 @@ describe('ConstraintIndexer', () => {
     it('throw error if type is unknown', () => {
 
         expect(() => {
-            new ConstraintIndexer({
+            new ConstraintIndex({
                 'name': { path: 'testpath', type: 'unknown' }
             }, projectConfiguration, false)
         }).toThrow();
@@ -292,7 +292,7 @@ describe('ConstraintIndexer', () => {
         docs[0].resource.relations['depicts'] = [];
         docs[1].resource.relations['depicts'] = ['1'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
         }, projectConfiguration, false);
 
@@ -317,7 +317,7 @@ describe('ConstraintIndexer', () => {
         docs[2].resource.relations['depicts'] = ['1'];
         docs[3].resource.relations['depicts'] = ['2'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
         }, projectConfiguration, false);
@@ -347,7 +347,7 @@ describe('ConstraintIndexer', () => {
         docs[2].resource.relations['depicts'] = ['1'];
         docs[3].resource.relations['depicts'] = ['2'];
 
-        ci = new ConstraintIndexer({
+        ci = new ConstraintIndex({
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
         }, projectConfiguration, false);
 
@@ -379,7 +379,7 @@ describe('ConstraintIndexer', () => {
         docs[0].resource.customField2 = false;
         docs[0].resource.customField3 = ['testValue1', 'testValue2'];
 
-        ci = new ConstraintIndexer({}, projectConfiguration, false);
+        ci = new ConstraintIndex({}, projectConfiguration, false);
 
         ci.put(docs[0]);
 
@@ -411,7 +411,7 @@ describe('ConstraintIndexer', () => {
         docs[0].resource.field = 'value';
         docs[1].resource.field = ['value'];
 
-        ci = new ConstraintIndexer({}, projectConfiguration, false);
+        ci = new ConstraintIndex({}, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);

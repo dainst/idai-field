@@ -14,7 +14,7 @@ export interface IndexDefinition {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ConstraintIndexer {
+export class ConstraintIndex {
 
     private indexDefinitions: { [name: string]: IndexDefinition };
 
@@ -47,13 +47,13 @@ export class ConstraintIndexer {
                 private projectConfiguration: ProjectConfiguration,
                 private showWarnings = true) {
 
-        this.indexDefinitions = ConstraintIndexer.getIndexDefinitions(
+        this.indexDefinitions = ConstraintIndex.getIndexDefinitions(
             defaultIndexDefinitions,
             Object.values(this.projectConfiguration.getTypesMap())
         );
 
         const validationError
-            = ConstraintIndexer.validateIndexDefinitions(Object.values(this.indexDefinitions));
+            = ConstraintIndex.validateIndexDefinitions(Object.values(this.indexDefinitions));
         if (validationError) throw validationError;
 
         this.setUp();
@@ -108,14 +108,14 @@ export class ConstraintIndexer {
             case 'exist':
                 if ((!elForPath && elForPath !== false)
                         || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return ConstraintIndexer.addToIndex(
+                    return ConstraintIndex.addToIndex(
                         this.existIndex,
                         doc,
                         indexDefinition.path, 'UNKNOWN',
                         this.showWarnings);
                 }
                 // this is a hack to make sure the project document is never listed as conflicted and can be removed when auto conflict resolving gets implemented.
-                ConstraintIndexer.addToIndex(
+                ConstraintIndex.addToIndex(
                     this.existIndex,
                     doc,
                     indexDefinition.path,
@@ -125,14 +125,14 @@ export class ConstraintIndexer {
 
             case 'match':
                 if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
-                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath.toString(),
+                ConstraintIndex.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath.toString(),
                     this.showWarnings);
                 break;
 
             case 'contain':
                 if (!elForPath || !Array.isArray(elForPath)) break;
                 for (let target of elForPath) {
-                    ConstraintIndexer.addToIndex(this.containIndex, doc, indexDefinition.path, target, this.showWarnings);
+                    ConstraintIndex.addToIndex(this.containIndex, doc, indexDefinition.path, target, this.showWarnings);
                 }
                 break;
         }
@@ -208,7 +208,7 @@ export class ConstraintIndexer {
 
         const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
             this.getFieldsToIndex(types)
-                .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinitions(field))
+                .map((field: FieldDefinition) => ConstraintIndex.makeIndexDefinitions(field))
                 .reduce((result: any, definitions) => {
                     definitions.forEach(definition => result.push(definition));
                     return result;
@@ -245,7 +245,7 @@ export class ConstraintIndexer {
     private static resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
 
         return field1.name === field2.name
-            && ConstraintIndexer.getIndexType(field1) === ConstraintIndexer.getIndexType(field2);
+            && ConstraintIndex.getIndexType(field1) === ConstraintIndex.getIndexType(field2);
     }
 
 

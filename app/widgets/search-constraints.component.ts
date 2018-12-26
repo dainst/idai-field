@@ -1,7 +1,7 @@
 import {Input, OnChanges, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
-import {ConstraintIndexer} from '../core/datastore/index/constraint-indexer';
+import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 
 
@@ -254,7 +254,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
             ? 'exist'
-            : ConstraintIndexer.getIndexType(field);
+            : ConstraintIndex.getIndexType(field);
     }
 
 

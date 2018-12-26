@@ -63,7 +63,7 @@ export module FulltextIndex {
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
-            flatMap((content: string) => content.split(tokenizationPattern)))
+            flatMap(content => content.split(tokenizationPattern)))
             .map(token => token.toLowerCase())
             .map(token => Array.from(token))
             .forEach(indexToken);
@@ -123,8 +123,8 @@ export module FulltextIndex {
         return !typesMap[typeName]
             ? []
             : Object.values(typesMap[typeName].fields)
-                .filter((field: FieldDefinition) => field.fulltextIndexed)
-                .map((field: FieldDefinition) => field.name)
+                .filter(field => field.fulltextIndexed)
+                .map(field => field.name)
                 .concat(defaultFieldsToIndex);
     }
 
@@ -134,8 +134,8 @@ export module FulltextIndex {
         const positionOpen = s.indexOf('[');
         const positionClose = s.indexOf(']');
         return positionOpen !== -1 && positionClose !== -1 && positionOpen < positionClose ?
-            {hasPlaceholder: true, tokens: s.substr(positionOpen+1, positionClose-positionOpen-1)} :
-            {hasPlaceholder: false, tokens: ''};
+            { hasPlaceholder: true, tokens: s.substr(positionOpen+1, positionClose-positionOpen-1)} :
+            { hasPlaceholder: false, tokens: ''};
     }
 
 

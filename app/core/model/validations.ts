@@ -238,7 +238,7 @@ export module Validations {
 
     function validateNumber(value: string|number, inputType: string): boolean {
 
-        if (typeof value === 'number') return true;
+        if (typeof value === 'number') value = value.toString();
 
         switch(inputType) {
             case 'unsignedInt':

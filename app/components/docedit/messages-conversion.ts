@@ -40,6 +40,18 @@ export module MessagesConversion {
             }
         }
 
+        if (msg === ValidationErrors.INVALID_DECIMAL_SEPARATORS) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR;
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            }
+        }
+
         return msgWithParams;
     }
 

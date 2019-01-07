@@ -111,6 +111,7 @@ export class DocumentHolder {
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
+        Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
         await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
     }
 

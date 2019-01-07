@@ -9,6 +9,6 @@ export module ValidationErrors {
     export const INVALID_COORDINATES = 'validationerror/invalidcoordinates';
     export const UNSUPPORTED_GEOMETRY_TYPE = 'validationerror/unsupportedgeometrytype';
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
+    export const INVALID_DECIMAL_SEPARATORS = 'validationerror/invaliddecimalseparators';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
-
 }

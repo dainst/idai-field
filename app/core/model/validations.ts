@@ -7,18 +7,45 @@ import {ValidationErrors} from './validation-errors';
 
 export module Validations {
 
-
     /**
-     * @throws [INVALID_NUMERICAL_VALUE]
+     * @throws [INVALID_NUMERICAL_VALUES]
      */
-    export function assertCorrectnessOfNumericalValues(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
+    export function assertCorrectnessOfNumericalValues(document: Document|NewDocument,
+                                                       projectConfiguration: ProjectConfiguration) {
 
-        const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
-        if (invalidNumericValues.length > 0) {
+        const invalidFields: string[] = Validations.validateNumericValues(
+            document.resource,
+            projectConfiguration,
+            validateNumber,
+            ['unsignedInt', 'float', 'unsignedFloat']
+        );
+        if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
                 document.resource.type,
-                invalidNumericValues.join(', ')
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
+     * @throws [INVALID_DECIMAL_SEPARATORS]
+     */
+    export function assertUsageOfDotAsDecimalSeparator(document: Document|NewDocument,
+                                                       projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateNumericValues(
+            document.resource,
+            projectConfiguration,
+            validateDecimalSeparator,
+            ['float', 'unsignedFloat']
+        );
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_DECIMAL_SEPARATORS,
+                document.resource.type,
+                invalidFields.join(', ')
             ];
         }
     }
@@ -27,7 +54,8 @@ export module Validations {
     /**
      * @throws [MISSING_PROPERTY]
      */
-    export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration): void {
+    export function assertNoFieldsMissing(document: Document|NewDocument,
+                                          projectConfiguration: ProjectConfiguration): void {
 
             const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
         if (missingProperties.length > 0) {
@@ -86,10 +114,12 @@ export module Validations {
     }
 
 
-    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource,
+                                         projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
-        const fieldDefinitions: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
+        const fieldDefinitions: Array<FieldDefinition>
+            = projectConfiguration.getFieldDefinitions(resource.type);
 
         for (let fieldDefinition of fieldDefinitions) {
             if (projectConfiguration.isMandatory(resource.type, fieldDefinition.name)) {
@@ -108,7 +138,8 @@ export module Validations {
      * @param projectConfiguration
      * @returns {boolean} true if the type of the resource is valid, otherwise false
      */
-    export function validateType(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): boolean {
+    export function validateType(resource: Resource|NewResource,
+                                 projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.type) return false;
         return projectConfiguration
@@ -120,7 +151,8 @@ export module Validations {
     /**
      * @returns the names of invalid fields if one or more of the fields are invalid
      */
-    export function validateDefinedFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateDefinedFields(resource: Resource|NewResource,
+                                          projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
@@ -156,7 +188,8 @@ export module Validations {
     /**
      * @returns the names of invalid relation fields if one or more of the fields are invalid
      */
-    export function validateDefinedRelations(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateDefinedRelations(resource: Resource|NewResource,
+                                             projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
         const invalidFields: Array<any> = [];
@@ -180,10 +213,12 @@ export module Validations {
     }
 
 
-    export function validateNumericValues(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateNumericValues(resource: Resource|NewResource,
+                                          projectConfiguration: ProjectConfiguration,
+                                          validationFunction: (value: string, inputType: string) => boolean,
+                                          numericInputTypes: string[]): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
@@ -192,7 +227,7 @@ export module Validations {
             let value = resource[fieldDefinition.name];
 
             if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
-                    && !validateNumber(value, fieldDefinition.inputType as string)) {
+                    && !validationFunction(value, fieldDefinition.inputType as string)) {
                 invalidFields.push(fieldDefinition.name);
             }
         });
@@ -201,7 +236,9 @@ export module Validations {
     }
 
 
-    function validateNumber(value: string, inputType: string): boolean {
+    function validateNumber(value: string|number, inputType: string): boolean {
+
+        if (typeof value === 'number') return true;
 
         switch(inputType) {
             case 'unsignedInt':
@@ -213,6 +250,12 @@ export module Validations {
             default:
                 return false;
         }
+    }
+
+
+    function validateDecimalSeparator(value: string|number): boolean {
+
+        return typeof value === 'number' || !value.includes(',');
     }
 
 

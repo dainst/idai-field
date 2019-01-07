@@ -3438,6 +3438,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparator" datatype="html">
+        <source>Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</source>
+        <target state="final">Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparators" datatype="html">
+        <source>Bitte verwenden Sie in den Feldern '[1]' den Punkt als Dezimaltrennzeichen.</source>
+        <target state="final">Bitte verwenden Sie in den Feldern '[1]' den Punkt als Dezimaltrennzeichen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperty" datatype="html">
         <source>Bitte füllen Sie das Feld '[1]' aus.</source>
         <target state="final">Bitte füllen Sie das Feld '[1]' aus.</target>

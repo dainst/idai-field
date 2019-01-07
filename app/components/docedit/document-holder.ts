@@ -75,12 +75,7 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        await this.validator.assertIdentifierIsUnique(this.clonedDocument);
-        this.validator.assertHasIsRecordedIn(this.clonedDocument);
-        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
-        Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
-        await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
-
+        await this.performAssertions();
         this.convertStringsToNumbers();
 
         const savedDocument: Document = await this.persistenceManager.persist(
@@ -107,6 +102,16 @@ export class DocumentHolder {
 
         await this.removeImageWithImageStore();
         await this.removeWithPersistenceManager();
+    }
+
+
+    private async performAssertions() {
+
+        await this.validator.assertIdentifierIsUnique(this.clonedDocument);
+        this.validator.assertHasIsRecordedIn(this.clonedDocument);
+        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
+        await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
     }
 
 

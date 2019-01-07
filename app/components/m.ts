@@ -877,7 +877,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidNumericValues',
-                value: 'Bitte tragen Sie in den Feldern \'[1]\' gültige Zahlenwerte ein.'
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].'
             }),
             level: 'danger',
             params: [],
@@ -895,7 +895,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS] = {
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidDecimalSeparators',
-                value: 'Bitte verwenden Sie in den Feldern \'[1]\' den Punkt als Dezimaltrennzeichen.'
+                value: 'Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].'
             }),
             level: 'danger',
             params: [],

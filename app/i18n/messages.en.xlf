@@ -3420,8 +3420,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
-        <source>Bitte tragen Sie in den Feldern '[1]' gültige Zahlenwerte ein.</source>
-        <target state="final">Please enter valid numbers in the fields '[1]'.</target>
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</source>
+        <target state="final">Please enter valid numbers in the following fields: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3429,15 +3429,15 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparator" datatype="html">
         <source>Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</source>
-        <target state="final">Please use the dot as decimal separator for the field '[1]'.</target>
+        <target state="final">Please use the dot as decimal separator in the field '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparators" datatype="html">
-        <source>Bitte verwenden Sie in den Feldern '[1]' den Punkt als Dezimaltrennzeichen.</source>
-        <target state="final">Please use the dot as decimal separator for the fields '[1]'.</target>
+        <source>Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</source>
+        <target state="final">Please use the dot as decimal separator in the following fields: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

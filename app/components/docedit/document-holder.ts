@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
+import {DatastoreErrors, Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -81,6 +81,8 @@ export class DocumentHolder {
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
         await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
 
+        this.convertStringsToNumbers();
+
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),
             this.usernameProvider.getUsername(),
@@ -105,6 +107,24 @@ export class DocumentHolder {
 
         await this.removeImageWithImageStore();
         await this.removeWithPersistenceManager();
+    }
+
+
+    private convertStringsToNumbers() {
+
+        const type: IdaiType = this.projectConfiguration.getTypesMap()[this.clonedDocument.resource.type];
+
+        for (let fieldName in this.clonedDocument.resource) {
+            const field: FieldDefinition|undefined
+                = type.fields.find(field => field.name === fieldName);
+            if (!field) continue;
+
+            if (field.inputType === 'unsignedInt') {
+                this.clonedDocument.resource[fieldName] = parseInt(this.clonedDocument.resource[fieldName]);
+            } else if (field.inputType === 'float' || field.inputType === 'unsignedFloat') {
+                this.clonedDocument.resource[fieldName] = parseFloat(this.clonedDocument.resource[fieldName]);
+            }
+        }
     }
 
 

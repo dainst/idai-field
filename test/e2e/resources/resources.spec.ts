@@ -183,7 +183,7 @@ describe('resources --', () => {
             'shortDescription', 'Text', undefined,
             false, false);
 
-        NavbarPage.awaitAlert('Bezeichner', false);
+        NavbarPage.awaitAlert('Bitte füllen Sie das Feld \'Bezeichner\' aus.');
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();

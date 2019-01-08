@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, HostListener} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -9,4 +9,11 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class EditSaveDialogComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
+
+
+    @HostListener('window:keydown', ['$event'])
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.close('cancel');
+    }
 }

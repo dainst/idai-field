@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
@@ -36,6 +36,7 @@ export class DoceditComponent {
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
     private operationInProgress: 'save'|'delete'|'none' = 'none';
+    private modalShown: boolean = false;
 
 
     constructor(
@@ -60,6 +61,22 @@ export class DoceditComponent {
 
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
         this.documentHolder.clonedDocument.resource.type, false, 'editable');
+
+
+    @HostListener('window:keydown', ['$event'])
+    public async onKeyDown(event: KeyboardEvent) {
+
+        switch(event.key) {
+            case 'Escape':
+                if (!this.modalShown) await this.cancel();
+                break;
+            case 's':
+                if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
+                    await this.save(true);
+                }
+                break;
+        }
+    }
 
 
     public getActiveTab() {
@@ -190,10 +207,16 @@ export class DoceditComponent {
 
     private async showModal() {
 
+        this.modalShown = true;
+
         try {
-            if ((await this.modalService.open(EditSaveDialogComponent).result) === 'save') this.save(false);
+            if ((await this.modalService.open(EditSaveDialogComponent, { keyboard: false }).result) === 'save') {
+                await this.save(false);
+            }
         } catch (_) {
             this.activeModal.dismiss('discard');
+        } finally {
+            this.modalShown = false;
         }
     }
 

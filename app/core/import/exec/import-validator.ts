@@ -113,7 +113,7 @@ export class ImportValidator extends Validator {
         }
 
         Validations.assertNoFieldsMissing(document, this.projectConfiguration);
-        Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;

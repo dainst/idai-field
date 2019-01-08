@@ -11,12 +11,13 @@ export module Validations {
      * @throws [INVALID_NUMERICAL_VALUES]
      */
     export function assertCorrectnessOfNumericalValues(document: Document|NewDocument,
-                                                       projectConfiguration: ProjectConfiguration) {
+                                                       projectConfiguration: ProjectConfiguration,
+                                                       allowStrings: boolean = true) {
 
         const invalidFields: string[] = Validations.validateNumericValues(
             document.resource,
             projectConfiguration,
-            validateNumber,
+            allowStrings ? validateNumberAsString : validateNumber,
             ['unsignedInt', 'float', 'unsignedFloat']
         );
         if (invalidFields.length > 0) {
@@ -236,7 +237,7 @@ export module Validations {
     }
 
 
-    function validateNumber(value: string|number, inputType: string): boolean {
+    function validateNumberAsString(value: string|number, inputType: string): boolean {
 
         if (typeof value === 'number') value = value.toString();
 
@@ -250,6 +251,14 @@ export module Validations {
             default:
                 return false;
         }
+    }
+
+
+    function validateNumber(value: string|number, inputType: string): boolean {
+
+        if (typeof value !== 'number') return false;
+
+        return validateNumberAsString(value, inputType);
     }
 
 

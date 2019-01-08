@@ -195,15 +195,10 @@ html [type='button'],
 
 .popover-custom-title {
   background-color: #eee;
-  padding: 10px;
-  font-size: 1.1em !important;
+  padding: 10px 10px 8px 10px;
+  font-size: 1.1em;
   user-select: none;
   cursor: default;
-}
-
-.popover-custom-title {
-  font-size: 1.2em;
-  padding-bottom: 10px;
 }
 
 .popover-body .list-group {

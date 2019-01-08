@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
@@ -20,7 +20,10 @@ import {Loading} from '../../widgets/loading';
 @Component({
     selector: 'detail-modal',
     moduleId: module.id,
-    templateUrl: './docedit.html'
+    templateUrl: './docedit.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 /**
  * Uses the document edit forms of idai-components-2 and adds styling
@@ -63,7 +66,6 @@ export class DoceditComponent {
         this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
-    @HostListener('window:keydown', ['$event'])
     public async onKeyDown(event: KeyboardEvent) {
 
         switch(event.key) {

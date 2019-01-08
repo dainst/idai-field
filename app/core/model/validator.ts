@@ -42,6 +42,8 @@ export class Validator {
      */
     public async assertIdentifierIsUnique(document: Document|NewDocument): Promise<void> {
 
+        if (!document.resource.identifier) return;
+
         let result;
 
         try {

@@ -58,7 +58,8 @@ export module Validations {
     export function assertNoFieldsMissing(document: Document|NewDocument,
                                           projectConfiguration: ProjectConfiguration): void {
 
-            const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+
         if (missingProperties.length > 0) {
             throw [
                 ValidationErrors.MISSING_PROPERTY,

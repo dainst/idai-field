@@ -1,5 +1,5 @@
-import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {ProjectConfiguration} from 'idai-components-2';
+import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {IndexFacade} from './core/datastore/index/index-facade';
 
@@ -24,9 +24,13 @@ export module IndexerConfiguration {
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration.getTypesMap(), true);
 
-        const createdFulltextIndex = FulltextIndex.setUp({index: {}, showWarnings: true} as any);
-        const createdIndexFacade = new IndexFacade(createdConstraintIndex,
-            createdFulltextIndex, projectConfiguration.getTypesMap());
-        return {createdConstraintIndex, createdFulltextIndex, createdIndexFacade};
+        const createdFulltextIndex = FulltextIndex.setUp({ index: {}, showWarnings: true } as any);
+        const createdIndexFacade = new IndexFacade(
+            createdConstraintIndex,
+            createdFulltextIndex,
+            projectConfiguration.getTypesMap()
+        );
+
+        return { createdConstraintIndex, createdFulltextIndex, createdIndexFacade };
     }
 }

@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
@@ -8,7 +7,6 @@ import {IndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */

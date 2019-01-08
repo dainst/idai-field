@@ -670,7 +670,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValue',
-                value: 'Falsche Zahlenwerte für das Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültiger Zahlenwert im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -679,7 +679,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValues',
-                value: 'Falsche Zahlenwerte für die Felder \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],

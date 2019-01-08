@@ -3244,16 +3244,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
-        <source>Falsche Zahlenwerte für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Invalid number values for the field '[1]' of the resource of type '[0]'.</target>
+        <source>Ungültiger Zahlenwert im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Invalid numeric value in the field '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
-        <source>Falsche Zahlenwerte für die Felder '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Invalid number values for the fields '[1]' of the resource of type '[0]'.</target>
+        <source>Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Invalid numeric values in the following fields of the resource of type '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

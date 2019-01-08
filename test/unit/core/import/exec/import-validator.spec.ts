@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-components-2';
 import {ImportValidator} from '../../../../../app/core/import/exec/import-validator';
 import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';

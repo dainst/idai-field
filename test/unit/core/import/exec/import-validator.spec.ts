@@ -203,7 +203,7 @@ describe('ImportValidation', () => {
                 type: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
-                number2: 'DEF',
+                number2: '123',
                 relations: {isRecordedIn: ['0']}
             }
         };

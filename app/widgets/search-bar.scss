@@ -32,8 +32,13 @@
   }
 }
 
-.popover-content .filtermenu .list-group {
-  max-height: calc(100vh - 350px) !important;
-  width: 270px;
-  overflow: auto;
+.popover-body {
+
+  .filtermenu {
+    min-width: 210px;
+
+    .list-group {
+      max-height: calc(100vh - 350px) !important;
+    }
+  }
 }

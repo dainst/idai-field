@@ -72,7 +72,7 @@ export class DoceditComponent {
                 break;
             case 's':
                 if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
-                    await this.save(true);
+                    await this.save();
                 }
                 break;
         }
@@ -136,11 +136,7 @@ export class DoceditComponent {
     }
 
 
-    /**
-     * @param viaSaveButton if true, it is assumed the call for save came directly
-     *   via a user interaction.
-     */
-    public async save(viaSaveButton: boolean) {
+    public async save() {
 
         this.operationInProgress = 'save';
         this.loading.start('docedit');
@@ -149,7 +145,7 @@ export class DoceditComponent {
 
         try {
             const documentAfterSave: Document = await this.documentHolder.save();
-            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
+            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave);
         } catch (errorWithParams) {
             await this.handleSaveError(errorWithParams);
         } finally {
@@ -159,14 +155,13 @@ export class DoceditComponent {
     }
 
 
-    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document,
-                                    viaSaveButton: boolean) {
+    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document) {
 
         try {
             if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
-                await this.closeModalAfterSave(documentAfterSave.resource.id, viaSaveButton);
+                await this.closeModalAfterSave(documentAfterSave.resource.id);
             }
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -211,7 +206,7 @@ export class DoceditComponent {
 
         try {
             if ((await this.modalService.open(EditSaveDialogComponent, { keyboard: false }).result) === 'save') {
-                await this.save(false);
+                await this.save();
             }
         } catch (_) {
             this.activeModal.dismiss('discard');
@@ -257,11 +252,10 @@ export class DoceditComponent {
     }
 
 
-    private async closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
+    private async closeModalAfterSave(resourceId: string): Promise<any> {
 
         this.activeModal.close({
-            document: (await this.datastore.get(resourceId)),
-            viaSaveButton: viaSaveButton
+            document: (await this.datastore.get(resourceId))
         });
         this.messages.add([M.DOCEDIT_SUCCESS_SAVE]);
     }

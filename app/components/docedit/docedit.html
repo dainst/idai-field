@@ -34,7 +34,7 @@
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
                         [class.disabled]="!isChanged() || isLoading()"
-                        (click)="!isChanged() || isLoading() || save(true)">
+                        (click)="!isChanged() || isLoading() || save()">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label" i18n="@@buttons.save">Speichern</span>
                 </button>

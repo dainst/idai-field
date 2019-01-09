@@ -207,11 +207,15 @@ export class DoceditComponent {
         this.modalShown = true;
 
         try {
-            if ((await this.modalService.open(EditSaveDialogComponent, { keyboard: false }).result) === 'save') {
+            const result: string = await this.modalService.open(
+                EditSaveDialogComponent, { keyboard: false }
+            ).result;
+
+            if (result === 'save') {
                 await this.save();
+            } else if (result === 'discard') {
+                this.activeModal.dismiss('discard');
             }
-        } catch (_) {
-            this.activeModal.dismiss('discard');
         } finally {
             this.modalShown = false;
         }

@@ -16,6 +16,6 @@ export class EditSaveDialogComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.close('cancel');
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 }

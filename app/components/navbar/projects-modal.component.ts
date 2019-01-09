@@ -28,6 +28,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
     public projectToDelete: string = '';
 
     private focusInput: boolean = false;
+    private subModalOpened: boolean = false;
 
     @ViewChild('createPopover') private createPopover: NgbPopover;
     @ViewChild('deletePopover') private deletePopover: NgbPopover;
@@ -57,7 +58,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') {
+        if (!this.subModalOpened && event.key === 'Escape') {
             if (this.createPopover.isOpen()) {
                 this.createPopover.close();
             } else if (this.deletePopover.isOpen()) {
@@ -125,15 +126,23 @@ export class ProjectsModalComponent implements AfterViewChecked {
 
     public async editProject() {
 
+        this.subModalOpened = true;
+
         const document = this.settingsService.getProjectDocument();
 
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
         doceditRef.componentInstance.setDocument(document);
 
-        await doceditRef.result.then(
-            () => this.settingsService.loadProjectDocument(),
-            closeReason => {}
-        );
+        try {
+            await doceditRef.result;
+            await this.settingsService.loadProjectDocument();
+        } catch(err) {
+            // Docedit modal has been canceled
+        } finally {
+            this.subModalOpened = false;
+        }
     }
 
 

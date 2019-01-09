@@ -139,6 +139,8 @@ export class DoceditImageTabComponent {
 
         this.doceditComponent.subModalOpened = true;
 
+        if (document.activeElement) (document.activeElement as HTMLElement).blur();
+
         let imagePickerModal = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );

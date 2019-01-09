@@ -24,7 +24,7 @@ export class ImagePickerComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public documents: IdaiFieldImageDocument[];
+    public documents: Array<IdaiFieldImageDocument>;
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
 
@@ -56,7 +56,11 @@ export class ImagePickerComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape') {
+            this.activeModal.dismiss('cancel');
+        } else if (event.key === 'Enter') {
+            this.applySelection();
+        }
     }
 
 
@@ -90,6 +94,12 @@ export class ImagePickerComponent implements OnInit {
         } else {
             this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
         }
+    }
+
+
+    public applySelection() {
+
+        if (this.selectedDocuments.length > 0) this.activeModal.close(this.selectedDocuments);
     }
 
 

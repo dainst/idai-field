@@ -1,24 +1,24 @@
 <div class="image-picker">
     <div class="modal-header" id="image-picker-modal-header">
-        <button id="add-image" *ngIf="selectedDocuments.length == 0"
+        <button id="add-image" *ngIf="selectedDocuments.length === 0"
                 class="btn btn-primary disabled" disabled>
             <span class="mdi mdi-link"></span>
             <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
         </button>
-        <button id="add-image" *ngIf="selectedDocuments.length == 1"
-                (click)="activeModal.close(selectedDocuments)"
+        <button id="add-image" *ngIf="selectedDocuments.length === 1"
+                (click)="applySelection()"
                 class="btn btn-primary">
             <span class="mdi mdi-link"></span>
             <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
         </button>
         <button id="add-images" *ngIf="selectedDocuments.length > 1"
-                (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
+                (click)="applySelection()" class="btn btn-primary">
             <span class="mdi mdi-link"></span>
             <span class="button-label"
                   i18n="@@docedit.imagePicker.linkImages">{{selectedDocuments.length}} Bilder verknüpfen</span>
         </button>
         <button type="button" class="btn btn-secondary"
-                (click)="activeModal.dismiss('dismissedByCancel')">
+                (click)="activeModal.dismiss('cancel')">
             <span class="mdi mdi-close"></span>
         </button>
     </div>

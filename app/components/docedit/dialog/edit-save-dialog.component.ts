@@ -7,15 +7,27 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './edit-save-dialog.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
     }
 })
 export class EditSaveDialogComponent {
+
+    public escapeKeyPressed: boolean;
+
 
     constructor(public activeModal: NgbActiveModal) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.escapeKeyPressed) {
+            this.activeModal.dismiss('cancel');
+        }
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 }

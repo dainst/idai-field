@@ -72,8 +72,12 @@ export class DoceditComponent {
 
         switch(event.key) {
             case 'Escape':
-                if (!this.subModalOpened && !this.escapeKeyPressed) await this.cancel();
-                this.escapeKeyPressed = true;
+                if (!this.subModalOpened && !this.escapeKeyPressed) {
+                    this.escapeKeyPressed = true;
+                    await this.cancel();
+                } else {
+                    this.escapeKeyPressed = true;
+                }
                 break;
             case 's':
                 if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
@@ -223,9 +227,12 @@ export class DoceditComponent {
         this.subModalOpened = true;
 
         try {
-            const result: string = await this.modalService.open(
+            const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false }
-            ).result;
+            );
+            modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+
+            const result: string = await modalRef.result;
 
             if (result === 'save') {
                 await this.save();

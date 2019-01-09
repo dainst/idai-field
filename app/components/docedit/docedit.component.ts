@@ -37,10 +37,11 @@ import {Loading} from '../../widgets/loading';
  */
 export class DoceditComponent {
 
+    public subModalOpened: boolean = false;
+
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
     private operationInProgress: 'save'|'delete'|'none' = 'none';
-    private subModalOpened: boolean = false;
     private escapeKeyPressed: boolean = false;
 
 

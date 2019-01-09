@@ -11,7 +11,10 @@ import {clone} from '../../../core/util/object-util';
 @Component({
     selector: 'image-picker',
     moduleId: module.id,
-    templateUrl: './image-picker.html'
+    templateUrl: './image-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Fabian Z.
@@ -48,6 +51,12 @@ export class ImagePickerComponent implements OnInit {
         modalEl.addEventListener('transitionend', (event: any) => {
             if (event.propertyName === 'transform') this.onResize();
         });
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 

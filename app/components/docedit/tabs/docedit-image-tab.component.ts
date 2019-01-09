@@ -6,6 +6,7 @@ import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {SortUtil} from '../../../core/util/sort-util';
+import {DoceditComponent} from '../docedit.component';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -28,6 +29,7 @@ export class DoceditImageTabComponent {
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
                 private modalService: NgbModal,
+                private doceditComponent: DoceditComponent,
                 private i18n: I18n) {}
 
 
@@ -133,17 +135,22 @@ export class DoceditImageTabComponent {
     }
 
 
-    public openImagePicker() {
+    public async openImagePicker() {
 
-        let imagePickerModal = this.modalService.open(ImagePickerComponent, { size: 'lg' });
+        this.doceditComponent.subModalOpened = true;
+
+        let imagePickerModal = this.modalService.open(
+            ImagePickerComponent, { size: 'lg', keyboard: false }
+        );
         imagePickerModal.componentInstance.setDocument(this.document);
 
-        imagePickerModal.result.then(
-            (selectedImages: Array<IdaiFieldImageDocument>) => {
-                this.addIsDepictedInRelations(selectedImages);
-            }
-        ).catch(() => {
-            // Cancel
-        });
+        try {
+            const selectedImages: Array<IdaiFieldImageDocument> = await imagePickerModal.result;
+            this.addIsDepictedInRelations(selectedImages);
+        } catch(err) {
+            // Image picker modal has been canceled
+        } finally {
+            this.doceditComponent.subModalOpened = false;
+        }
     }
 }

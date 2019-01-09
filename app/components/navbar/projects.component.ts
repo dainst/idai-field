@@ -2,7 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {DoceditComponent} from "../docedit/docedit.component";
+import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
 
@@ -76,7 +76,8 @@ export class ProjectsComponent implements OnInit {
 
         await this.settingsService.createProject(
             this.newProject,
-            remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
+            remote.getGlobal('switches')
+                && remote.getGlobal('switches').destroy_before_create
         );
         ProjectsComponent.reload();
     }
@@ -125,7 +126,8 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
+    // We have to reload manually since protractor's selectors apparently aren't reliably working as they
+    // should after a reload. So we will do this by hand in the E2Es.
     private static reload() {
 
         if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {

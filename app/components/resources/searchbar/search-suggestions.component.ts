@@ -48,7 +48,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (!this.visible) return;
+        if (!this.visible || this.suggestedDocuments.length === 0) return;
 
         switch (event.key) {
             case 'ArrowDown':
@@ -103,34 +103,28 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private selectNextSuggestion() {
 
-        if (this.suggestedDocuments.length === 0) return;
         if (!this.selectedSuggestion) {
             this.selectedSuggestion = this.suggestedDocuments[0];
             return;
         }
 
         const index: number = this.suggestedDocuments.indexOf(this.selectedSuggestion) + 1;
-        if (index < this.suggestedDocuments.length) {
-            this.selectedSuggestion = this.suggestedDocuments[index];
-        } else {
-            this.selectedSuggestion = this.suggestedDocuments[0];
-        }
+        this.selectedSuggestion = index < this.suggestedDocuments.length
+            ? this.suggestedDocuments[index]
+            : this.suggestedDocuments[0];
     }
 
 
     private selectPreviousSuggestion() {
 
-        if (this.suggestedDocuments.length === 0) return;
         if (!this.selectedSuggestion) {
             this.selectedSuggestion = this.suggestedDocuments[this.suggestedDocuments.length - 1];
             return;
         }
 
         const index: number = this.suggestedDocuments.indexOf(this.selectedSuggestion) - 1;
-        if (index >= 0) {
-            this.selectedSuggestion = this.suggestedDocuments[index];
-        } else {
-            this.selectedSuggestion = this.suggestedDocuments[this.suggestedDocuments.length - 1];
-        }
+        this.selectedSuggestion = index >= 0
+            ? this.suggestedDocuments[index]
+            : this.suggestedDocuments[this.suggestedDocuments.length - 1];
     }
 }

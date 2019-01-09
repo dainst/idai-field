@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration} from 'idai-components-2';
 import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
@@ -21,10 +21,11 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
+                renderer: Renderer2,
                 i18n: I18n,
                 private imageOverviewFacade: ImageOverviewFacade) {
 
-        super(imageOverviewSearchBarComponent, projectConfiguration, i18n);
+        super(imageOverviewSearchBarComponent, projectConfiguration, renderer, i18n);
     }
 
 

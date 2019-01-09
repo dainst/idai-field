@@ -1,4 +1,4 @@
-import {Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
@@ -28,13 +28,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public showConstraintsMenu: boolean = false;
     public existIndexForTextField: boolean = false;
 
+    private stopListeningToKeyDownEvents: Function|undefined;
+
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
     private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
 
 
-    constructor(public searchBarComponent: SearchBarComponent,
-                private projectConfiguration: ProjectConfiguration,
-                private i18n: I18n) {}
+    protected constructor(public searchBarComponent: SearchBarComponent,
+                          private projectConfiguration: ProjectConfiguration,
+                          private renderer: Renderer2,
+                          private i18n: I18n) {}
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -142,7 +145,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             target = target.parentNode;
         } while (target);
 
-        this.showConstraintsMenu = false;
+        this.closeConstraintsMenu();
         this.reset();
     }
 
@@ -161,6 +164,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public toggleConstraintsMenu() {
+
+        this.showConstraintsMenu = !this.showConstraintsMenu;
+        this.updateEventListener();
+    }
+
+
     protected abstract getCustomConstraints(): { [name: string]: string };
 
 
@@ -172,6 +182,36 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         this.updateConstraintListItems();
         this.updateFields();
         this.removeUserEntries();
+    }
+
+
+    private closeConstraintsMenu() {
+
+        this.showConstraintsMenu = false;
+        this.updateEventListener();
+    }
+
+
+    private updateEventListener() {
+
+        if (this.showConstraintsMenu && !this.stopListeningToKeyDownEvents) {
+            this.stopListeningToKeyDownEvents = this.renderer.listen(
+                'window', 'keydown', this.onKeyDown.bind(this)
+            );
+        } else if (this.stopListeningToKeyDownEvents) {
+            this.stopListeningToKeyDownEvents();
+            this.stopListeningToKeyDownEvents = undefined;
+        }
+    }
+
+
+    private async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Enter') {
+            await this.addConstraint();
+        } else if (event.key === 'Escape') {
+            this.closeConstraintsMenu();
+        }
     }
 
 

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration} from 'idai-components-2';
 import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
@@ -21,10 +21,11 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     constructor(resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
+                renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, i18n);
+        super(resourcesSearchBarComponent, projectConfiguration, renderer, i18n);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (this.type) this.reset();

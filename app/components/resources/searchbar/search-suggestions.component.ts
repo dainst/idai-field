@@ -86,7 +86,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private toggleEventListener() {
 
-        if (this.visible) {
+        if (this.visible && !this.stopListeningToKeyDownEvents) {
             this.stopListeningToKeyDownEvents = this.renderer.listen(
                 'window', 'keydown', this.onKeyDown.bind(this)
             );

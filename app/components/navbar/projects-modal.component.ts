@@ -13,7 +13,8 @@ const remote = require('electron').remote;
     moduleId: module.id,
     templateUrl: './projects-modal.html',
     host: {
-        '(document:click)': 'handleClick($event)'
+        '(document:click)': 'handleClick($event)',
+        '(window:keydown)': 'onKeyDown($event)'
     }
 })
 /**
@@ -38,6 +39,20 @@ export class ProjectsModalComponent {
 
 
     public getProjects = () => this.settingsService.getDbs();
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') {
+            if (this.createPopover.isOpen()) {
+                this.createPopover.close();
+            } else if (this.deletePopover.isOpen()) {
+                this.deletePopover.close();
+            } else {
+                this.activeModal.close();
+            }
+        }
+    }
 
 
     public reset() {

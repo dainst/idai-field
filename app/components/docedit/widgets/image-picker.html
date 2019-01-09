@@ -1,13 +1,10 @@
 <div class="image-picker">
     <div class="modal-header" id="image-picker-modal-header">
-        <button id="add-image" *ngIf="selectedDocuments.length === 0"
-                class="btn btn-primary disabled" disabled>
-            <span class="mdi mdi-link"></span>
-            <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
-        </button>
-        <button id="add-image" *ngIf="selectedDocuments.length === 1"
+        <button id="add-image" *ngIf="selectedDocuments.length <= 1"
                 (click)="applySelection()"
-                class="btn btn-primary">
+                class="btn btn-primary"
+                [disabled]="selectedDocuments.length === 0"
+                [class.disabled] ="selectedDocuments.length === 0">
             <span class="mdi mdi-link"></span>
             <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
         </button>

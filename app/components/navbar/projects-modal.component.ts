@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -21,20 +21,34 @@ const remote = require('electron').remote;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent {
+export class ProjectsModalComponent implements AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
 
+    private focusInput: boolean = false;
+
     @ViewChild('createPopover') private createPopover: NgbPopover;
     @ViewChild('deletePopover') private deletePopover: NgbPopover;
+    @ViewChild('newProjectInput') private newProjectInput: ElementRef;
+    @ViewChild('deleteProjectInput') private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private messages: Messages) {
+    }
+
+
+    ngAfterViewChecked() {
+
+        if (this.focusInput) {
+            if (this.newProjectInput) this.newProjectInput.nativeElement.focus();
+            if (this.deleteProjectInput) this.deleteProjectInput.nativeElement.focus();
+            this.focusInput = false;
+        }
     }
 
 
@@ -59,6 +73,14 @@ export class ProjectsModalComponent {
 
         this.projectToDelete = '';
         this.newProject = '';
+    }
+
+
+    public openMenu(popover: any) {
+
+        this.reset();
+        popover.toggle();
+        this.focusInput = true;
     }
 
 

@@ -22,13 +22,13 @@
             <div id="delete-project-button" class="circular-button red-button"
                  [ngbPopover]="deleteProjectMenu" #deletePopover="ngbPopover"
                  [triggers]="'manual'" [placement]="'bottom'" [autoClose]="false"
-                 (click)="reset(); deletePopover.toggle();">
+                 (click)="openMenu(deletePopover)">
                 <span class="delete-sign mdi mdi-delete mdi-18px"></span>
             </div>
 
             <div id="new-project-button" class="circular-button type-button" [ngbPopover]="newProjectMenu"
                  #createPopover="ngbPopover" [triggers]="'manual'" [placement]="'bottom'"
-                 [autoClose]="false" (click)="reset(); createPopover.toggle();">
+                 [autoClose]="false" (click)="openMenu(createPopover)">
                 <type-icon [type]="'Project'" size="41"></type-icon>
                 <div class="plus-sign-circle">
                     <span class="plus-sign mdi mdi-plus mdi-18px"></span>
@@ -43,8 +43,8 @@
                 Bitte geben Sie den Namen des neuen Projekts ein.
             </div>
             <div class="input-group">
-                <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"
-                       (keydown)="$event.key !== 'Enter' || createProject()"/>
+                <input #newProjectInput type="text" class="project-name-input form-control"
+                       [(ngModel)]="newProject" (keydown)="$event.key !== 'Enter' || createProject()"/>
                 <button class="project-option-ok btn btn-primary" (click)="createProject()">
                     <span i18n="@@buttons.ok">OK</span>
                 </button>
@@ -58,8 +58,8 @@
                 Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
             </div>
             <div class="input-group">
-                <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"
-                       (keydown)="$event.key !== 'Enter' || deleteProject()"/>
+                <input #deleteProjectInput type="text" class="project-name-input form-control"
+                       [(ngModel)]="projectToDelete" (keydown)="$event.key !== 'Enter' || deleteProject()"/>
                 <button class="project-option-ok btn btn-primary" (click)="deleteProject()">
                     <span i18n="@@buttons.ok">OK</span>
                 </button>

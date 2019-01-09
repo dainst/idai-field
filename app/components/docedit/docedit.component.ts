@@ -39,7 +39,7 @@ export class DoceditComponent {
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
     private operationInProgress: 'save'|'delete'|'none' = 'none';
-    private modalShown: boolean = false;
+    private editSaveDialogModalOpened: boolean = false;
 
 
     constructor(
@@ -70,7 +70,7 @@ export class DoceditComponent {
 
         switch(event.key) {
             case 'Escape':
-                if (!this.modalShown) await this.cancel();
+                if (!this.editSaveDialogModalOpened) await this.cancel();
                 break;
             case 's':
                 if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
@@ -121,7 +121,7 @@ export class DoceditComponent {
     public async cancel() {
 
         if (this.documentHolder.isChanged()) {
-            await this.showModal();
+            await this.openEditSaveDialogModal();
         } else {
             this.activeModal.dismiss('cancel');
         }
@@ -202,9 +202,9 @@ export class DoceditComponent {
     }
 
 
-    private async showModal() {
+    private async openEditSaveDialogModal() {
 
-        this.modalShown = true;
+        this.editSaveDialogModalOpened = true;
 
         try {
             const result: string = await this.modalService.open(
@@ -217,7 +217,7 @@ export class DoceditComponent {
                 this.activeModal.dismiss('discard');
             }
         } finally {
-            this.modalShown = false;
+            this.editSaveDialogModalOpened = false;
         }
     }
 

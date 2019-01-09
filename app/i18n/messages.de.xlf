@@ -1212,20 +1212,20 @@
         <source>Projekte verwalten</source>
         <target state="final">Projekte verwalten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.newProject.enterName" datatype="html">
         <source>
-                    Bitte geben Sie den Namen des neuen Projekts ein.
-                </source>
+                Bitte geben Sie den Namen des neuen Projekts ein.
+            </source>
         <target state="final">
-                    Bitte geben Sie den Namen des neuen Projekts ein.
-                </target>
+                Bitte geben Sie den Namen des neuen Projekts ein.
+            </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
@@ -1787,11 +1787,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
@@ -1799,11 +1799,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
@@ -1811,11 +1811,11 @@
         <target state="final">Beliebiger Wert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
@@ -1823,11 +1823,11 @@
         <target state="final">Kein Wert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
@@ -1835,11 +1835,11 @@
         <target state="final">Suchbegriff eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.anyValue" datatype="html">
@@ -1847,19 +1847,19 @@
         <target state="final">- Beliebiger Wert -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
@@ -1867,19 +1867,19 @@
         <target state="final">- Kein Wert -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="boolean.yes" datatype="html">
@@ -1891,11 +1891,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -1911,11 +1911,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -2304,12 +2304,12 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
@@ -2330,22 +2330,22 @@
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
         <source>
-                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
-                </source>
+                Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+            </source>
         <target state="final">
-                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
-                </target>
+                Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+            </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.close" datatype="html">
         <source>Schließen</source>
         <target state="final">Schließen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

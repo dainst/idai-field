@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
@@ -23,6 +23,7 @@ import {Loading} from '../../widgets/loading';
     templateUrl: './docedit.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
     }
 })
 /**
@@ -39,7 +40,8 @@ export class DoceditComponent {
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
     private operationInProgress: 'save'|'delete'|'none' = 'none';
-    private editSaveDialogModalOpened: boolean = false;
+    private subModalOpened: boolean = false;
+    private escapeKeyPressed: boolean = false;
 
 
     constructor(
@@ -70,7 +72,8 @@ export class DoceditComponent {
 
         switch(event.key) {
             case 'Escape':
-                if (!this.editSaveDialogModalOpened) await this.cancel();
+                if (!this.subModalOpened && !this.escapeKeyPressed) await this.cancel();
+                this.escapeKeyPressed = true;
                 break;
             case 's':
                 if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
@@ -78,6 +81,12 @@ export class DoceditComponent {
                 }
                 break;
         }
+    }
+
+
+    public onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
 
@@ -130,11 +139,18 @@ export class DoceditComponent {
 
     public async openDeleteModal() {
 
-        const ref = this.modalService.open(DeleteModalComponent);
+        this.subModalOpened = true;
+
+        const ref: NgbModalRef = this.modalService.open(DeleteModalComponent, { keyboard: false });
         ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
         ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
-        const decision = await ref.result;
-        if (decision === 'delete') await this.deleteDocument();
+
+        try {
+            const decision: string = await ref.result;
+            if (decision === 'delete') await this.deleteDocument();
+        } finally {
+            this.subModalOpened = false;
+        }
     }
 
 
@@ -204,7 +220,7 @@ export class DoceditComponent {
 
     private async openEditSaveDialogModal() {
 
-        this.editSaveDialogModalOpened = true;
+        this.subModalOpened = true;
 
         try {
             const result: string = await this.modalService.open(
@@ -217,7 +233,7 @@ export class DoceditComponent {
                 this.activeModal.dismiss('discard');
             }
         } finally {
-            this.editSaveDialogModalOpened = false;
+            this.subModalOpened = false;
         }
     }
 

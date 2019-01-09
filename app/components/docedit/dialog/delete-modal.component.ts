@@ -11,6 +11,10 @@ import {Document} from 'idai-components-2';
         '(window:keydown)': 'onKeyDown($event)',
     }
 })
+
+/**
+ * @author Thomas Kleinke
+ */
 export class DeleteModalComponent {
 
     public document: any;
@@ -29,5 +33,13 @@ export class DeleteModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public confirmDeletion() {
+
+        if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
+
+        this.activeModal.close('delete');
     }
 }

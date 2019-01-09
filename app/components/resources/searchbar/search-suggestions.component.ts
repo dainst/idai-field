@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {Query, IdaiFieldDocument} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
@@ -9,10 +9,7 @@ import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 @Component({
     moduleId: module.id,
     selector: 'search-suggestions',
-    templateUrl: './search-suggestions.html',
-    host: {
-        '(window:keydown)': 'onKeyDown($event)',
-    }
+    templateUrl: './search-suggestions.html'
 })
 
 /**
@@ -27,13 +24,15 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private suggestedDocuments: Array<IdaiFieldDocument> = [];
     private documentsFound: boolean;
+    private stopListeningToKeyDownEvents: Function|undefined;
 
 
     constructor(private routingService: RoutingService,
                 private datastore: IdaiFieldDocumentReadDatastore,
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
-                private resourcesComponent: ResourcesComponent) {
+                private resourcesComponent: ResourcesComponent,
+                private renderer: Renderer2) {
 
         this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -44,7 +43,10 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['visible']) await this.updateSuggestions();
+        if (changes['visible']) {
+            this.toggleEventListener();
+            await this.updateSuggestions();
+        }
     }
 
 
@@ -79,6 +81,19 @@ export class SearchSuggestionsComponent implements OnChanges {
 
         return this.visible && !this.documentsFound
             && (this.viewFacade.getSearchString().length > 0 || this.viewFacade.getFilterTypes().length > 0);
+    }
+
+
+    private toggleEventListener() {
+
+        if (this.visible) {
+            this.stopListeningToKeyDownEvents = this.renderer.listen(
+                'window', 'keydown', this.onKeyDown.bind(this)
+            );
+        } else if (this.stopListeningToKeyDownEvents) {
+            this.stopListeningToKeyDownEvents();
+            this.stopListeningToKeyDownEvents = undefined;
+        }
     }
 
 

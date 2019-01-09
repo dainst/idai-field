@@ -74,6 +74,7 @@ export class DoceditComponent {
             case 'Escape':
                 if (!this.subModalOpened && !this.escapeKeyPressed) {
                     this.escapeKeyPressed = true;
+                    if (event.srcElement) (event.srcElement as HTMLElement).blur();
                     await this.cancel();
                 } else {
                     this.escapeKeyPressed = true;

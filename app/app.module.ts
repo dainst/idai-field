@@ -48,6 +48,7 @@ import {IndexerConfiguration} from './indexer-configuration';
 import {SynchronizationStatus} from './core/settings/synchronization-status';
 import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
+import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
 
 
 const remote = require('electron').remote;
@@ -89,6 +90,7 @@ registerLocaleData(localeDe, 'de');
         TaskbarConflictsComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
+        ProjectsModalComponent,
         HelpComponent
     ],
     providers: [
@@ -194,6 +196,9 @@ registerLocaleData(localeDe, 'de');
         { provide: MD, useClass: M},
         DoceditActiveTabService,
         SynchronizationStatus
+    ],
+    entryComponents: [
+        ProjectsModalComponent
     ],
     bootstrap: [ AppComponent ]
 })

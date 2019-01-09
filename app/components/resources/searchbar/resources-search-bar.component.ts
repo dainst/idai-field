@@ -9,7 +9,7 @@ import {ViewFacade} from '../view/view-facade';
     selector: 'resources-search-bar',
     templateUrl: './resources-search-bar.html',
     host: {
-        '(document:click)': 'handleClick($event)',
+        '(document:click)': 'handleClick($event)'
     }
 })
 /**

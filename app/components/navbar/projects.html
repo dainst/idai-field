@@ -48,7 +48,8 @@
                     Bitte geben Sie den Namen des neuen Projekts ein.
                 </div>
                 <div class="input-group">
-                    <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
+                    <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"
+                           (keydown)="$event.key !== 'Enter' || createProject()"/>
                     <button class="project-option-ok btn btn-primary" (click)="createProject()">
                         <span i18n="@@buttons.ok">OK</span>
                     </button>
@@ -62,7 +63,8 @@
                     Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
                 </div>
                 <div class="input-group">
-                    <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
+                    <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"
+                           (keydown)="$event.key !== 'Enter' || deleteProject()"/>
                     <button class="project-option-ok btn btn-primary" (click)="deleteProject()">
                         <span i18n="@@buttons.ok">OK</span>
                     </button>

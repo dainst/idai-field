@@ -5,7 +5,7 @@
                class="form-control"
                [class.small-search-input]="extendedSearch"
                [(ngModel)]="q"
-               (keyup)="onKeyUp()"
+               (keyup)="onKeyUp($event)"
                (focus)="focused = true; showSuggestions();"
                (blur)="focused = false"
                name="searchInput"

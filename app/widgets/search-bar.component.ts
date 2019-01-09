@@ -76,7 +76,11 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public onKeyUp() {
+    public onKeyUp(event: KeyboardEvent) {
+
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Escape'].includes(event.key)) {
+            return;
+        }
 
         if (this.emitQueryTimeout) clearTimeout(this.emitQueryTimeout);
 

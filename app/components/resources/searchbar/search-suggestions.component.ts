@@ -90,6 +90,7 @@ export class SearchSuggestionsComponent implements OnChanges {
         }
 
         this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
+        this.selectedSuggestion = undefined;
     }
 
 

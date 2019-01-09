@@ -4,6 +4,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
+import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 
 @Component({
     moduleId: module.id,
@@ -31,6 +32,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     constructor(private routingService: RoutingService,
                 private datastore: IdaiFieldDocumentReadDatastore,
                 private viewFacade: ViewFacade,
+                private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent) {
 
         this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
@@ -48,6 +50,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public async onKeyDown(event: KeyboardEvent) {
 
+        if (event.key === 'Escape') return this.close();
         if (!this.visible || this.suggestedDocuments.length === 0) return;
 
         switch (event.key) {
@@ -126,5 +129,12 @@ export class SearchSuggestionsComponent implements OnChanges {
         this.selectedSuggestion = index >= 0
             ? this.suggestedDocuments[index]
             : this.suggestedDocuments[this.suggestedDocuments.length - 1];
+    }
+
+
+    private close() {
+
+        this.resourcesSearchBarComponent.suggestionsVisible = false;
+        this.resourcesSearchBarComponent.blur();
     }
 }

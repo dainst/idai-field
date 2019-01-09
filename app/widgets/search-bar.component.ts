@@ -87,6 +87,12 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
+    public blur() {
+
+        this.fulltextSearchInput.nativeElement.blur();
+    }
+
+
     protected initializeFilterOptions() {
 
         this.filterOptions = [];

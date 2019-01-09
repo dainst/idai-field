@@ -72,13 +72,7 @@ export class DoceditComponent {
 
         switch(event.key) {
             case 'Escape':
-                if (!this.subModalOpened && !this.escapeKeyPressed) {
-                    this.escapeKeyPressed = true;
-                    if (event.srcElement) (event.srcElement as HTMLElement).blur();
-                    await this.cancel();
-                } else {
-                    this.escapeKeyPressed = true;
-                }
+                await this.onEscapeKeyDown(event);
                 break;
             case 's':
                 if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
@@ -205,6 +199,18 @@ export class DoceditComponent {
             this.messages.add(MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration));
         } else {
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
+    }
+
+
+    private async onEscapeKeyDown(event: KeyboardEvent) {
+
+        if (!this.subModalOpened && !this.escapeKeyPressed) {
+            this.escapeKeyPressed = true;
+            if (event.srcElement) (event.srcElement as HTMLElement).blur();
+            await this.cancel();
+        } else {
+            this.escapeKeyPressed = true;
         }
     }
 

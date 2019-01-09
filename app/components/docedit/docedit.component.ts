@@ -152,6 +152,8 @@ export class DoceditComponent {
         try {
             const decision: string = await ref.result;
             if (decision === 'delete') await this.deleteDocument();
+        } catch(err) {
+            // DeleteModal has been canceled
         } finally {
             this.subModalOpened = false;
         }
@@ -239,6 +241,8 @@ export class DoceditComponent {
             } else if (result === 'discard') {
                 this.activeModal.dismiss('discard');
             }
+        } catch(err) {
+            // EditSaveDialogModal has been canceled
         } finally {
             this.subModalOpened = false;
         }

@@ -8,7 +8,10 @@ import {ResourcesComponent} from '../resources.component';
 @Component({
     moduleId: module.id,
     selector: 'search-suggestions',
-    templateUrl: './search-suggestions.html'
+    templateUrl: './search-suggestions.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 
 /**
@@ -18,6 +21,8 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     @Input() maxSuggestions: number;
     @Input() visible: boolean;
+
+    public selectedSuggestion: IdaiFieldDocument|undefined;
 
     private suggestedDocuments: Array<IdaiFieldDocument> = [];
     private documentsFound: boolean;
@@ -38,6 +43,24 @@ export class SearchSuggestionsComponent implements OnChanges {
     async ngOnChanges(changes: SimpleChanges) {
 
         if (changes['visible']) await this.updateSuggestions();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (!this.visible) return;
+
+        switch (event.key) {
+            case 'ArrowDown':
+                this.selectNextSuggestion();
+                break;
+            case 'ArrowUp':
+                this.selectPreviousSuggestion();
+                break;
+            case 'Enter':
+                if (this.selectedSuggestion) await this.jumpToDocument(this.selectedSuggestion);
+                break;
+        }
     }
 
 
@@ -75,5 +98,39 @@ export class SearchSuggestionsComponent implements OnChanges {
             constraints: this.viewFacade.getCustomConstraints(),
             limit: this.maxSuggestions
         };
+    }
+
+
+    private selectNextSuggestion() {
+
+        if (this.suggestedDocuments.length === 0) return;
+        if (!this.selectedSuggestion) {
+            this.selectedSuggestion = this.suggestedDocuments[0];
+            return;
+        }
+
+        const index: number = this.suggestedDocuments.indexOf(this.selectedSuggestion) + 1;
+        if (index < this.suggestedDocuments.length) {
+            this.selectedSuggestion = this.suggestedDocuments[index];
+        } else {
+            this.selectedSuggestion = this.suggestedDocuments[0];
+        }
+    }
+
+
+    private selectPreviousSuggestion() {
+
+        if (this.suggestedDocuments.length === 0) return;
+        if (!this.selectedSuggestion) {
+            this.selectedSuggestion = this.suggestedDocuments[this.suggestedDocuments.length - 1];
+            return;
+        }
+
+        const index: number = this.suggestedDocuments.indexOf(this.selectedSuggestion) - 1;
+        if (index >= 0) {
+            this.selectedSuggestion = this.suggestedDocuments[index];
+        } else {
+            this.selectedSuggestion = this.suggestedDocuments[this.suggestedDocuments.length - 1];
+        }
     }
 }

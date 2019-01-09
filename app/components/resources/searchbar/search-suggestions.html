@@ -4,7 +4,9 @@
     <div *ngIf="suggestedDocuments.length === 0" id="no-results-info">
         <span i18n="@@resources.searchBar.suggestions.noResourcesFound">Keine Ressourcen gefunden.</span>
     </div>
-    <div *ngFor="let document of suggestedDocuments" class="suggestion-container"
+    <div *ngFor="let document of suggestedDocuments"
+         class="suggestion-container" [class.selected-suggestion]="document === selectedSuggestion"
+         (mouseenter)="selectedSuggestion = document" (mouseleave)="selectedSuggestion = undefined"
          (click)="jumpToDocument(document)">
         <document-teaser [document]="document"></document-teaser>
     </div>

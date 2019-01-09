@@ -21,11 +21,11 @@
     background-color: white;
     margin-bottom: 1px;
     cursor: pointer;
-  }
 
-  .suggestion-container:hover {
-    background-color: darken($list-item-hover-color, 5%);
-    transition: background-color .65s ease;
+    &.selected-suggestion {
+      background-color: darken($list-item-hover-color, 5%);
+      transition: background-color .65s ease;
+    }
   }
 
   #no-results-info {

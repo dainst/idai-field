@@ -76,9 +76,7 @@ export class DoceditComponent {
                 await this.onEscapeKeyDown(event);
                 break;
             case 's':
-                if ((event.ctrlKey || event.metaKey) && this.isChanged() && !this.isLoading()) {
-                    await this.save();
-                }
+                if (event.ctrlKey || event.metaKey) await this.performQuickSave();
                 break;
         }
     }
@@ -212,6 +210,14 @@ export class DoceditComponent {
             await this.cancel();
         } else {
             this.escapeKeyPressed = true;
+        }
+    }
+
+
+    private async performQuickSave() {
+
+        if (this.isChanged() && !this.isLoading() && !this.subModalOpened) {
+            await this.save();
         }
     }
 

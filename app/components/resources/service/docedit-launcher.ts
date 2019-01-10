@@ -13,6 +13,9 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class DoceditLauncher {
 
+    public isDoceditModalOpened: boolean = false;
+
+
     constructor(
             private modalService: NgbModal,
             private doceditActiveTabService: DoceditActiveTabService,
@@ -22,6 +25,8 @@ export class DoceditLauncher {
 
     public async editDocument(document: Document|NewDocument, activeTabName?: string): Promise<any> {
 
+        this.isDoceditModalOpened = true;
+
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
         const doceditRef = this.modalService.open(DoceditComponent,
@@ -30,10 +35,13 @@ export class DoceditLauncher {
 
         const result: any = {};
 
-        await doceditRef.result.then(
-            res => this.handleSaveResult(result, res),
-            closeReason => this.handleClosed(closeReason)
-        );
+        try {
+            await this.handleSaveResult(result, await doceditRef.result);
+        } catch(closeReason) {
+            await this.handleClosed(closeReason);
+        } finally {
+            this.isDoceditModalOpened = false;
+        }
 
         return result;
     }

@@ -7,6 +7,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
+import {DoceditLauncher} from '../service/docedit-launcher';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class ResourcesMapComponent {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private settingsService: SettingsService,
-        private messages: Messages
+        private messages: Messages,
+        private doceditLauncher: DoceditLauncher
     ) {
         this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
 
@@ -57,7 +59,7 @@ export class ResourcesMapComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape' && !this.doceditLauncher.isDoceditModalOpened) {
             if (this.resourcesComponent.isEditingGeometry) {
                 await this.quitEditing(undefined);
             } else {

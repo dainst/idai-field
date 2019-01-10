@@ -78,7 +78,7 @@ export class ImageOverviewTaskbarComponent {
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
         );
-        modalRef.componentInstance.numberOfSelectedImages = this.imageOverviewFacade.getSelected();
+        modalRef.componentInstance.numberOfSelectedImages = this.imageOverviewFacade.getSelected().length;
 
         try {
             if ((await modalRef.result) === 'delete') await this.deleteSelected();

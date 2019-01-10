@@ -1,8 +1,8 @@
 <div class="modal-body">
     <p *ngIf="numberOfSelectedImages > 1" i18n="@@imageOverview.taskbar.deleteModal.question.multiple">
-        Möchten Sie die {{numberOfSelectedImages.length}} markierten Bilder wirklich löschen?
+        Möchten Sie die {{numberOfSelectedImages}} markierten Bilder wirklich löschen?
     </p>
-    <p *ngIf="numberOfSelectedImages.length === 1" i18n="@@imageOverview.taskbar.deleteModal.question.single">
+    <p *ngIf="numberOfSelectedImages === 1" i18n="@@imageOverview.taskbar.deleteModal.question.single">
         Möchten Sie das markierte Bild wirklich löschen?
     </p>
 </div>

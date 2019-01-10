@@ -334,13 +334,18 @@ export class DoceditComponent {
     }
 
 
-    private handleDeletedConflict() {
+    private async handleDeletedConflict() {
 
-        this.modalService.open(
-            ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
-        ).result.then(() => {
+        try {
+            await this.modalService.open(
+                ConflictDeletedModalComponent,
+                { size: 'lg', windowClass: 'conflict-deleted-modal', keyboard: false }
+            ).result;
+        } catch(err) {
+            // ConflictDeletedModal has been canceled
+        } finally {
             this.documentHolder.makeClonedDocAppearNew();
-        }).catch(doNothing);
+        }
     }
 
 

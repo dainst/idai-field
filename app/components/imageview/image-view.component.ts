@@ -15,7 +15,10 @@ import {M} from '../m';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-view.html'
+    templateUrl: './image-view.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -53,6 +56,12 @@ export class ImageViewComponent implements OnInit {
 
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.deselect();
     }
 
 

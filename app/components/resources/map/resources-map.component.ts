@@ -12,7 +12,10 @@ import {NavigationPath} from '../view/state/navigation-path';
 @Component({
     selector: 'resources-map',
     moduleId: module.id,
-    templateUrl: './resources-map.html'
+    templateUrl: './resources-map.html',
+    host: {
+        '(window:keydown)': '(onKeyDown($event))'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -50,6 +53,12 @@ export class ResourcesMapComponent {
     // this is ok because we do not offer the 'all'-selection if only one operation is available.
     public mainTypeIds = () => this.viewFacade.getSelectedOperations()
         .map(_ => _.resource.id).join(',');
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.viewFacade.deselect();
+    }
 
 
     public async select(document: IdaiFieldDocument|undefined) {

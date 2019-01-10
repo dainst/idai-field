@@ -1038,8 +1038,8 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/georeference-view.html</context>
@@ -1067,11 +1067,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/georeference-view.html</context>
@@ -1349,31 +1349,31 @@
         <target state="final">Verknüpfungen löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source>
-            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Bilder wirklich löschen?
-        </source>
+        Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen?
+    </source>
         <target state="final">
-            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Bilder wirklich löschen?
-        </target>
+        Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen?
+    </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source>
-            Möchten Sie das markierte Bild wirklich löschen?
-        </source>
+        Möchten Sie das markierte Bild wirklich löschen?
+    </source>
         <target state="final">
-            Möchten Sie das markierte Bild wirklich löschen?
-        </target>
+        Möchten Sie das markierte Bild wirklich löschen?
+    </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -1381,7 +1381,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
@@ -1389,7 +1389,7 @@
         <target state="final">Verknüpfungen entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
@@ -1397,7 +1397,7 @@
         <target state="final">Verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
@@ -1405,7 +1405,7 @@
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.imageTypeFilter" datatype="html">

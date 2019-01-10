@@ -341,7 +341,7 @@ export class DoceditComponent {
         try {
             await this.modalService.open(
                 ConflictDeletedModalComponent,
-                { size: 'lg', windowClass: 'conflict-deleted-modal', keyboard: false }
+                { windowClass: 'conflict-deleted-modal', keyboard: false }
             ).result;
         } catch(err) {
             // ConflictDeletedModal has been canceled

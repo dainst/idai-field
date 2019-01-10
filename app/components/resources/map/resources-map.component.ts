@@ -57,7 +57,13 @@ export class ResourcesMapComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.viewFacade.deselect();
+        if (event.key === 'Escape') {
+            if (this.resourcesComponent.isEditingGeometry) {
+                await this.quitEditing(undefined);
+            } else {
+                this.viewFacade.deselect();
+            }
+        }
     }
 
 
@@ -78,7 +84,7 @@ export class ResourcesMapComponent {
      *   <code>null</code> indicates geometry should get deleted.
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: IdaiFieldGeometry) {
+    public async quitEditing(geometry: IdaiFieldGeometry|undefined) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;

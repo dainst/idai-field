@@ -2,14 +2,21 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'link-modal',
+    selector: 'delete-modal',
     moduleId: module.id,
-    templateUrl: './link-modal.html',
+    templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
 })
-export class LinkModalComponent {
+
+/**
+ * @author Thomas Kleinke
+ */
+export class DeleteModalComponent {
+
+    public numberOfSelectedImages: number;
+
 
     constructor(public activeModal: NgbActiveModal) {}
 

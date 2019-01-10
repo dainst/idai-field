@@ -1,0 +1,18 @@
+<div class="modal-body">
+    <p *ngIf="numberOfSelectedImages > 1" i18n="@@imageOverview.taskbar.deleteModal.question.multiple">
+        Möchten Sie die {{numberOfSelectedImages.length}} markierten Bilder wirklich löschen?
+    </p>
+    <p *ngIf="numberOfSelectedImages.length === 1" i18n="@@imageOverview.taskbar.deleteModal.question.single">
+        Möchten Sie das markierte Bild wirklich löschen?
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" id="delete-images-confirm" class="btn btn-danger"
+            (click)="activeModal.close('delete')" i18n="@@buttons.delete">
+        Löschen
+    </button>
+    <button type="button" id="delete-images-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">
+        Abbrechen
+    </button>
+</div>

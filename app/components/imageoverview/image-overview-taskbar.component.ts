@@ -1,11 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument, Messages} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
+import {DeleteModalComponent} from './delete-modal.component';
 
 @Component({
     selector: 'image-overview-taskbar',
@@ -24,9 +25,10 @@ export class ImageOverviewTaskbarComponent {
 
     @Input() imageGrid: any;
 
-    public getSelected = () => this.imageOverviewFacade.getSelected();
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
+
+    private modalOpenend: boolean = false;
 
     constructor(
         public viewFacade: ViewFacade,
@@ -41,14 +43,18 @@ export class ImageOverviewTaskbarComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.clearSelection();
+        if (event.key === 'Escape' && !this.modalOpenend) this.clearSelection();
     }
 
 
     public async openLinkModal() {
 
+        this.modalOpenend = true;
+
         try {
-            const targetDoc: IdaiFieldDocument = await this.modalService.open(LinkModalComponent).result;
+            const targetDoc: IdaiFieldDocument = await this.modalService.open(
+                LinkModalComponent, { keyboard: false }
+            ).result;
             if (!targetDoc) return;
 
             try {
@@ -57,28 +63,47 @@ export class ImageOverviewTaskbarComponent {
             } catch(msgWithParams) {
                 this.messages.add(msgWithParams);
             }
-        } catch (e) {
-            // do nothing on dismiss
+        } catch(err) {
+            // LinkModal has been canceled
+        } finally {
+            this.modalOpenend = false;
         }
     }
 
 
-    public async openDeleteModal(modal: any) {
+    public async openDeleteModal() {
 
-        if (await this.modalService.open(modal).result == 'delete') this.deleteSelected();
+        this.modalOpenend = true;
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            DeleteModalComponent, { keyboard: false }
+        );
+        modalRef.componentInstance.numberOfSelectedImages = this.imageOverviewFacade.getSelected();
+
+        try {
+            if ((await modalRef.result) === 'delete') await this.deleteSelected();
+        } catch(err) {
+            // DeleteModal has been canceled
+        } finally {
+            this.modalOpenend = false;
+        }
     }
 
 
     public async openRemoveLinkModal() {
 
+        this.modalOpenend = true;
+
         try {
-            await this.modalService.open(RemoveLinkModalComponent).result;
+            await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
             await this.persistenceHelper.removeRelationsOnSelectedDocuments();
             this.imageOverviewFacade.clearSelection();
             await this.imageOverviewFacade.fetchDocuments();
             this.imageGrid.calcGrid();
-        } catch (e) {
-            // do nothing on dismiss
+        } catch(err) {
+            // RemoveLinkModal has been canceled
+        } finally {
+            this.modalOpenend = false;
         }
     }
 
@@ -88,6 +113,6 @@ export class ImageOverviewTaskbarComponent {
         await this.persistenceHelper.deleteSelectedImageDocuments();
 
         this.imageOverviewFacade.clearSelection();
-        this.imageOverviewFacade.fetchDocuments();
+        await this.imageOverviewFacade.fetchDocuments();
     }
 }

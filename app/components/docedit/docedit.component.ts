@@ -190,7 +190,7 @@ export class DoceditComponent {
     private async handleSaveError(errorWithParams: any) {
 
         if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
-            this.handleDeletedConflict();
+            await this.handleDeletedConflict();
             return undefined;
         }
 
@@ -336,6 +336,8 @@ export class DoceditComponent {
 
     private async handleDeletedConflict() {
 
+        this.subModalOpened = true;
+
         try {
             await this.modalService.open(
                 ConflictDeletedModalComponent,
@@ -345,6 +347,7 @@ export class DoceditComponent {
             // ConflictDeletedModal has been canceled
         } finally {
             this.documentHolder.makeClonedDocAppearNew();
+            this.subModalOpened = false;
         }
     }
 

@@ -10,7 +10,10 @@ import {PersistenceHelper} from './service/persistence-helper';
 @Component({
     selector: 'image-overview-taskbar',
     moduleId: module.id,
-    templateUrl: './image-overview-taskbar.html'
+    templateUrl: './image-overview-taskbar.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -33,6 +36,12 @@ export class ImageOverviewTaskbarComponent {
         private persistenceHelper: PersistenceHelper
     ) {
         this.imageOverviewFacade.initialize();
+    }
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.clearSelection();
     }
 
 

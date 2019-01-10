@@ -60,7 +60,7 @@ export class ImageOverviewComponent implements OnInit {
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
 
-    public ngOnInit() {
+    ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
     }

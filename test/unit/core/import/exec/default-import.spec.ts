@@ -58,7 +58,7 @@ describe('DefaultImport', () => {
 
 
     // TODO
-    fit('recorded in document from import', async done => {
+    it('recorded in document from import', async done => {
 
         await importFunction([
                 { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['0']} } },

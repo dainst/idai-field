@@ -5,6 +5,7 @@ import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
 import {ImportErrors} from './import-errors';
+import {ValidationErrors} from '../../model/validation-errors';
 
 
 @Injectable()
@@ -117,6 +118,17 @@ export class ImportValidator extends Validator {
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
+    }
+
+
+    // TODO throw no lies within in stead no_isrecordedin
+    public assertHasLiesWithin(document: Document|NewDocument) {
+
+        if (this.isExpectedToHaveIsRecordedInRelation(document)
+            && !Document.hasRelations(document as Document, 'liesWithin')) {
+
+            throw [ValidationErrors.NO_ISRECORDEDIN];
+        }
     }
 
 

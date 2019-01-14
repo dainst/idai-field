@@ -79,7 +79,7 @@ export class Validator {
     }
 
 
-    private isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
+    protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
         return !this.typeUtility
             ? false

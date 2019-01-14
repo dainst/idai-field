@@ -10,7 +10,6 @@ import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -20,6 +19,8 @@ import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-file
 import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {ImportValidator} from '../../core/import/exec/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
+import {TypeUtility} from '../../core/model/type-utility';
+import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class ImportComponent implements OnInit {
 
     constructor(
         private messages: Messages,
-        private datastore: DocumentDatastore,
+        private datastore: IdaiFieldDocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private importValidator: ImportValidator,
         private http: HttpClient,
@@ -59,7 +60,8 @@ export class ImportComponent implements OnInit {
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
         private settingsService: SettingsService,
-        private idGenerator: IdGenerator
+        private idGenerator: IdGenerator,
+        private typeUtility: TypeUtility,
     ) {
         this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
@@ -103,7 +105,7 @@ export class ImportComponent implements OnInit {
         this.remoteChangesStream.setAutoCacheUpdate(false);
         const importReport = await Importer.doImport(
             this.format,
-            this.importValidator,
+            this.typeUtility,
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,

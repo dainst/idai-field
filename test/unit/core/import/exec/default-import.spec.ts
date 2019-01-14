@@ -10,15 +10,15 @@ describe('DefaultImport', () => {
     let mockValidator;
     let mockProjectConfiguration;
     let importFunction;
+    let operationTypeNames = ['Trench'];
 
 
     beforeEach(() => {
-
         mockDatastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
-            'assertIsKnownType', 'assertHasIsRecordedIn', 'assertIsAllowedType',
+            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
@@ -27,17 +27,20 @@ describe('DefaultImport', () => {
         mockProjectConfiguration.getFieldDefinitions.and.returnValue([{name: 'id'}, {name: 'type'}, {name: 'identifier'}, {name: 'geometry'}, {name: 'shortDescription'}]);
         mockProjectConfiguration.getRelationDefinitions.and.returnValue([{name: 'isRecordedIn'}]);
 
-        mockValidator.assertHasIsRecordedIn.and.returnValue();
+        mockValidator.assertHasLiesWithin.and.returnValue();
 
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
         mockDatastore.bulkCreate.and.callFake((a) => Promise.resolve(a));
         mockDatastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+
+        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: '0', identifier: '0', type: 'Trench' }}));
+
         mockProjectConfiguration.getTypesList.and.returnValue(
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}, {name: 'Feature'}]);
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
             () => '101');
     });
@@ -46,12 +49,29 @@ describe('DefaultImport', () => {
     it('should resolve on success', async done => {
 
         await importFunction([
-            { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
+            { resource: {type: 'Find', identifier: 'one', relations: { liesWithin: ['0']} } } as any],
             mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         done();
     });
+
+
+    // TODO
+    fit('recorded in document from import', async done => {
+
+        await importFunction([
+                { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['0']} } },
+                { resource: {type: 'Find', identifier: 'two', relations: { liesWithin: ['one']} } } as any],
+            mockDatastore, 'user1');
+
+        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
+        done();
+    });
+
+
+
+    // TODO recorded in existing document
 
 
     it('merge if exists', async done => {
@@ -63,7 +83,7 @@ describe('DefaultImport', () => {
         }));
 
         await (DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
              () => '101', true) as any)(
             [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
@@ -80,7 +100,7 @@ describe('DefaultImport', () => {
         mockDatastore.get.and.returnValue(Promise.resolve({}));
 
         await (DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
             () => '101', false) as any)([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
@@ -117,7 +137,7 @@ describe('DefaultImport', () => {
         mockDatastore.bulkUpdate.and.returnValues(Promise.resolve());
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
             () => '101', true);
 
@@ -138,7 +158,7 @@ describe('DefaultImport', () => {
     it('rewrite identifiers to ids in relations', async done => {
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
 
              () => '101', false,  false, '', true);
@@ -159,7 +179,7 @@ describe('DefaultImport', () => {
     it('rewrite identifiers to ids in relations - relation target not found', async done => {
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
              () => '101', false, false, '', true);
 
@@ -178,7 +198,7 @@ describe('DefaultImport', () => {
     it('remove self referencing relation target', async done => {
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
 
             () => '101', false,  false, '', true);
@@ -216,7 +236,6 @@ describe('DefaultImport', () => {
     });
 
 
-
     it('duplicate identifiers in import file', async done => {
 
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
@@ -249,7 +268,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('set liesWithin which clashes with isRecordedIn', async done => {
+    xit('set liesWithin which clashes with isRecordedIn', async done => {
 
         // TR1 trench1
         // - FE1 feature1
@@ -270,7 +289,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('set liesWithin which clashes with isRecordedIn in merge mode with overwrite relations', async done => {
+    xit('set liesWithin which clashes with isRecordedIn in merge mode with overwrite relations', async done => {
 
         // TR1 trench1
         // - FE1 feature1
@@ -278,7 +297,7 @@ describe('DefaultImport', () => {
         // - FE2 feature2
 
         importFunction = DefaultImport.build(
-            mockValidator,
+            mockValidator, operationTypeNames,
             mockProjectConfiguration,
             () => '101', true, true);
 

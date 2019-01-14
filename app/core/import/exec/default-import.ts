@@ -3,7 +3,7 @@ import {ImportErrors} from './import-errors';
 import {ImportValidator} from './import-validator';
 import {DocumentMerge} from './document-merge';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {arrayEqual, duplicates, to, isUndefinedOrEmpty, hasNot} from 'tsfun';
+import {duplicates, hasNot, isUndefinedOrEmpty, to} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
@@ -17,7 +17,8 @@ export module DefaultImport {
 
 
     export function build(validator: ImportValidator,
-                          projectConfiguration: ProjectConfiguration,
+                          operationTypeNames: string[],
+                          projectConfiguration: ProjectConfiguration, // TODO give getInverseRelations as a param
                           generateId: () => string,
                           mergeMode: boolean = false,
                           allowOverwriteRelationsInMergeMode = false,
@@ -56,7 +57,7 @@ export module DefaultImport {
 
                 relatedDocuments = await prepareRelations(
                     documentsForUpdate,
-                    validator,
+                    validator, operationTypeNames,
                     mergeMode, allowOverwriteRelationsInMergeMode,
                     getInverseRelation, get,
                     mainTypeDocumentId)
@@ -74,6 +75,7 @@ export module DefaultImport {
 
     async function prepareRelations(documents: Array<Document>,
                                     validator: ImportValidator,
+                                    operationTypeNames: string[],
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
                                     getInverseRelation: (_: string) => string|undefined,
@@ -82,6 +84,24 @@ export module DefaultImport {
 
         let relatedDocuments: Array<Document> = [];
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
+
+        // Replace top level includedIns with isRecordedIns
+        for (let document of documents) { // TODO refactor
+            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+            if (document.resource.relations['liesWithin'].length > 1) {
+                throw "only one lies within target allowed"; // TODO throw errWithParams
+            }
+            const liesWithinTarget = await get(document.resource.relations['liesWithin'][0]);
+            if (operationTypeNames.includes(liesWithinTarget.resource.type)) {
+                document.resource.relations['isRecordedIn'] = document.resource.relations['liesWithin'];
+                delete document.resource.relations['liesWithin'];
+            }
+        }
+        // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
+        //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+        // }
+        // TODO Add isRecordedIns to other includedIns
+
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
                 documents,
@@ -89,16 +109,11 @@ export module DefaultImport {
                 mergeMode);
         }
 
-        for (let document of documents) {
-            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+        // TODO every resource has to have a lies within relation
+        // furthermore, every lieswithin path between resources has to end in an operation resource
+        // TODO if lies within points to main type document, then replace it with is recorded in
+        // TODO if lies within points to other document, add is recorded in
 
-            for (let liesWithinTargeId of document.resource.relations['liesWithin']) {
-                const liesWithinTarget = await get(liesWithinTargeId);
-                if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
-                    throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
-                }
-            }
-        }
         return relatedDocuments;
     }
 
@@ -230,14 +245,16 @@ export module DefaultImport {
 
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
-                try { validator.assertHasIsRecordedIn(document) }
-                catch { throw [ImportErrors.NO_OPERATION_ASSIGNED] }
+                try { validator.assertHasLiesWithin(document) }
+                catch { console.log("so bad"); throw [ImportErrors.NO_OPERATION_ASSIGNED] }
             } else {
                 await validator.assertIsNotOverviewType(document);
                 await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
                 initRecordedIn(document, mainTypeDocumentId);
             }
         }
+
+
     }
 
 

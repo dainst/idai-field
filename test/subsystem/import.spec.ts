@@ -30,7 +30,7 @@ describe('Import/Subsystem', () => {
 
        await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -52,7 +52,7 @@ describe('Import/Subsystem', () => {
 
         const report = await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -72,7 +72,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -97,7 +97,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -120,7 +120,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -141,7 +141,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -166,7 +166,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,

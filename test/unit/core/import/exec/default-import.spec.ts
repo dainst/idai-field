@@ -34,7 +34,11 @@ describe('DefaultImport', () => {
         mockDatastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: '0', identifier: '0', type: 'Trench' }}));
+        mockDatastore.get.and.callFake(async resourceId => {
+
+            if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }};
+            else return undefined;
+        });
 
         mockProjectConfiguration.getTypesList.and.returnValue(
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}, {name: 'Feature'}]);
@@ -60,15 +64,34 @@ describe('DefaultImport', () => {
     // TODO
     it('recorded in document from import', async done => {
 
-        await importFunction([
-                { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['0']} } },
-                { resource: {type: 'Find', identifier: 'two', relations: { liesWithin: ['one']} } } as any],
-            mockDatastore, 'user1');
+        let i = 0;
+        importFunction = DefaultImport.build(
+            mockValidator, operationTypeNames,
+            mockProjectConfiguration,
+            () => { i++; return '10' + i.toString() },
+            false, false, '', true);
+
+        mockDatastore.find.and.returnValues(Promise.resolve({
+            totalCount: 1,
+            documents: [{resource: {type: 'Trench', identifier: 'zero', id: '0'}}]
+        }), Promise.resolve({totalCount: 0}), Promise.resolve({totalCount: 0}), Promise.resolve({totalCount: 0}));
+
+        console.log(await importFunction([
+                { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},
+                { resource: {type: 'Find', identifier: 'two', relations: { liesWithin: ['one'] }}} as any],
+            mockDatastore, 'user1'));
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
+        const createdDocs = mockDatastore.bulkCreate.calls.mostRecent().args[0];
+        expect(createdDocs[0].resource.id).toBe('101');
+        expect(createdDocs[0].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(createdDocs[0].resource.relations['liesWithin']).toBeUndefined();
+        expect(createdDocs[1].resource.id).toBe('102');
+        expect(createdDocs[1].resource.relations['liesWithin'][0]).toBe('101');
+        expect(createdDocs[1].resource.relations['isRecordedIn'][0]).toBe('0');
+
         done();
     });
-
 
 
     // TODO recorded in existing document

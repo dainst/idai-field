@@ -1075,7 +1075,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS] = {
             content: i18n({
                 id: 'messages.imagestore.dropArea.error.unsupportedExtensions',
-                value: 'Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.'
+                value: 'Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]'
             }),
             level: 'danger',
             params: [],

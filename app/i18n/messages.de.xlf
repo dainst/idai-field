@@ -1079,7 +1079,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -1421,7 +1421,7 @@
         <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
@@ -2317,7 +2317,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -3611,8 +3611,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
-        <source>Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</source>
-        <target state="final">Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</target>
+        <source>Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</source>
+        <target state="final">Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

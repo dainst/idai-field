@@ -1074,7 +1074,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -1414,7 +1414,7 @@
         <target state="final">Drag images to the marked area to import them, or click to open a file selection dialog.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
@@ -2287,7 +2287,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -3600,8 +3600,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
-        <source>Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</source>
-        <target state="final">This selection of one or more files contains invalid file formats ([0]). The corresponding files are ignored.</target>
+        <source>Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</source>
+        <target state="final">Files with unsupported formats ([0]) are ignored. The following file extensions are valid: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

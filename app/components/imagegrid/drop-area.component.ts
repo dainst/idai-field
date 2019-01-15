@@ -64,6 +64,14 @@ export class DropAreaComponent {
     }
 
 
+    public getSupportedFileExtensions(): string {
+
+        return ImageUploader.supportedFileTypes
+            .map(extension => '.' + extension)
+            .join(',');
+    }
+
+
     private handleUploadResult(uploadResult: ImageUploadResult) {
 
         if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit(uploadResult);

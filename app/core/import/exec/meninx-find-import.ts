@@ -22,9 +22,9 @@ export module MeninxFindImport {
 
     export function build(): ImportFunction {
 
-        return async (documents: Array<Document>,
-                      datastore: DocumentDatastore,
-                      username: string): Promise<{ errors: string[][], successfulImports: number }> => {
+        return async function importFunction(documents: Array<Document>,
+                                             datastore: DocumentDatastore,
+                                             username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
             let successfulImports = 0;
             for (let docToUpdate of documents) {

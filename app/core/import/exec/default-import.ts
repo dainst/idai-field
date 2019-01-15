@@ -39,9 +39,9 @@ export module DefaultImport {
          * @param importReport
          *   .errors of ImportError or Validation Error
          */
-        return async (documents: Array<Document>,
-                      datastore: DocumentDatastore,
-                      username: string): Promise<{ errors: string[][], successfulImports: number }> => {
+        return async function importFunction(documents: Array<Document>,
+                                             datastore: DocumentDatastore,
+                                             username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
             const {get, find, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
 

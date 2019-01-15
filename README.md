@@ -38,7 +38,7 @@ $ npm start
  
 Shapefile import/export is handled by a Java tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```
-$npm run build-java
+$ npm run build-java
 ```
 You can also call `npm run build-all` to build everything in one step. 
 

@@ -85,28 +85,17 @@ export module DefaultImport {
         let relatedDocuments: Array<Document> = [];
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
 
-        // Replace top level includedIns with isRecordedIns
-        for (let document of documents) { // TODO refactor
-            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
-            if (document.resource.relations['liesWithin'].length > 1) {
-                throw "only one lies within target allowed"; // TODO throw errWithParams
-            }
-            const liesWithinTarget = await get(document.resource.relations['liesWithin'][0]);
-            if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
-                document.resource.relations['isRecordedIn'] = document.resource.relations['liesWithin'];
-                delete document.resource.relations['liesWithin'];
-            }
-        }
+        replaceTopLevelLiesWithins(documents, operationTypeNames, get);
         // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
         //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
         // }
+
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
                 documents,
                 get, getInverseRelation,
                 mergeMode);
         }
-
 
         // Add isRecordedIns to other includedIns,
         // TODO make recursive and test it
@@ -123,13 +112,32 @@ export module DefaultImport {
             }
         }
 
-
         // TODO every resource has to have a lies within relation
         // furthermore, every lieswithin path between resources has to end in an operation resource
         // TODO if lies within points to main type document, then replace it with is recorded in
         // TODO if lies within points to other document, add is recorded in
-
         return relatedDocuments;
+    }
+
+
+    async function replaceTopLevelLiesWithins(documents: Array<Document>,
+                                              operationTypeNames: string[],
+                                              get: (_: string) => Promise<Document>) {
+
+        for (let document of documents) { // TODO refactor
+
+            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+            if (document.resource.relations['liesWithin'].length > 1) {
+                throw "only one lies within target allowed"; // TODO throw errWithParams
+            }
+
+            let liesWithinTarget = undefined;
+            try { liesWithinTarget = await get(document.resource.relations['liesWithin'][0]) } catch {}
+            if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
+                document.resource.relations['isRecordedIn'] = document.resource.relations['liesWithin'];
+                delete document.resource.relations['liesWithin'];
+            }
+        }
     }
 
 

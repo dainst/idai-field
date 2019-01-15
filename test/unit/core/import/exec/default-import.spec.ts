@@ -37,7 +37,7 @@ describe('DefaultImport', () => {
         mockDatastore.get.and.callFake(async resourceId => {
 
             if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }};
-            else return undefined;
+            else throw 'missing';
         });
 
         mockProjectConfiguration.getTypesList.and.returnValue(
@@ -80,10 +80,10 @@ describe('DefaultImport', () => {
             Promise.resolve({totalCount: 0}),
             Promise.resolve({totalCount: 0}));
 
-        console.log(await importFunction([
+        await importFunction([
                 { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},
                 { resource: {type: 'Find', identifier: 'two', relations: { liesWithin: ['one'] }}} as any],
-            mockDatastore, 'user1'));
+            mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         const createdDocs = mockDatastore.bulkCreate.calls.mostRecent().args[0];

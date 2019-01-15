@@ -50,7 +50,7 @@ export module MeninxFindImport {
             datastore: DocumentDatastore,
             username: string): Promise<Document> {
 
-            const existingDoc: Document|undefined = await getExistingDoc(importDoc.resource.identifier, datastore);
+        const existingDoc: Document|undefined = await getExistingDoc(importDoc.resource.identifier, datastore);
 
         const updateDoc: NewDocument|Document = existingDoc
             ? mergeInto(existingDoc, importDoc)

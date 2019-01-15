@@ -97,19 +97,9 @@ export module DefaultImport {
                 mergeMode);
         }
 
-        // Add isRecordedIns to other includedIns,
-        // TODO make recursive and test it
         for (let document of documents) {
-            if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
-            if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) continue;
-
-            for (let targetInImport of documents) { // TODO replace with hash based access and also look for existing docs if not found in import
-                if (targetInImport.resource.id === document.resource.relations['liesWithin'][0]) {
-                    if (targetInImport.resource.relations.isRecordedIn && targetInImport.resource.relations.isRecordedIn.length > 0) {
-                        document.resource.relations.isRecordedIn = targetInImport.resource.relations.isRecordedIn;
-                    }
-                }
-            }
+            const result = setRecordedIns(document, documents);
+            if (result) document.resource.relations['isRecordedIn'] = [result];
         }
 
         // TODO every resource has to have a lies within relation
@@ -117,6 +107,33 @@ export module DefaultImport {
         // TODO if lies within points to main type document, then replace it with is recorded in
         // TODO if lies within points to other document, add is recorded in
         return relatedDocuments;
+    }
+
+
+    // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
+    function setRecordedIns(document: Document, documents: Array<Document>): string|undefined {
+
+        if (!document.resource.relations
+            || !document.resource.relations['liesWithin']
+            || document.resource.relations['liesWithin'].length === 0) return;
+        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) return;
+
+        let liesWithinTargetInImport = undefined;
+        for (let targetInImport of documents) {
+            if (targetInImport.resource.id === document.resource.relations['liesWithin'][0]) {
+                liesWithinTargetInImport = targetInImport;
+                if (targetInImport.resource.relations.isRecordedIn && targetInImport.resource.relations.isRecordedIn.length > 0) {
+                    return targetInImport.resource.relations.isRecordedIn[0];
+                }
+            }
+        }
+
+        if (document.resource.relations['liesWithin']
+            && document.resource.relations['liesWithin'].length > 0
+            && liesWithinTargetInImport) {
+
+            return setRecordedIns(liesWithinTargetInImport, documents);
+        }
     }
 
 
@@ -249,7 +266,6 @@ export module DefaultImport {
             for (let identifier of document.resource.relations[relation]) {
 
                 const targetDocFromDB = await find(identifier);
-
                 if (!targetDocFromDB && !identifierMap[identifier]) {
                     throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
                 }

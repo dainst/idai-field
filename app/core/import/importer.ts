@@ -1,5 +1,4 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
-import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
 import {Parser} from './parser/parser';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
@@ -14,6 +13,7 @@ import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {isnt} from 'tsfun';
+import {ImportFunction} from "./exec/import-function";
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -126,7 +126,7 @@ export module Importer {
                                  mainTypeDocumentId: string,
                                  mergeMode = false,
                                  updateRelationsOnMergeMode = false,
-                                 generateId: () => string) {
+                                 generateId: () => string): ImportFunction {
 
         switch (format) {
             case 'meninxfind':

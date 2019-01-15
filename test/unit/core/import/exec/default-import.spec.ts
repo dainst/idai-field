@@ -71,10 +71,14 @@ describe('DefaultImport', () => {
             () => { i++; return '10' + i.toString() },
             false, false, '', true);
 
-        mockDatastore.find.and.returnValues(Promise.resolve({
-            totalCount: 1,
-            documents: [{resource: {type: 'Trench', identifier: 'zero', id: '0'}}]
-        }), Promise.resolve({totalCount: 0}), Promise.resolve({totalCount: 0}), Promise.resolve({totalCount: 0}));
+        mockDatastore.find.and.returnValues(
+            Promise.resolve({
+                totalCount: 1,
+                documents: [{resource: {type: 'Trench', identifier: 'zero', id: '0'}}]
+            }),
+            Promise.resolve({totalCount: 0}),
+            Promise.resolve({totalCount: 0}),
+            Promise.resolve({totalCount: 0}));
 
         console.log(await importFunction([
                 { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},

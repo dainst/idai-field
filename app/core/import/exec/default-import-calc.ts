@@ -16,25 +16,25 @@ export module DefaultImportCalc {
 
 
     export function build(validator: ImportValidator,
-                                  operationTypeNames: string[],
-                                  generateId: () => string,
-                                  find: (identifier: string) => Promise<Document|undefined>,
-                                  get: (resourceId: string) => Promise<Document>,
-                                  getInverseRelation: (propertyName: string) => string|undefined,
-                                  mergeMode: boolean = false,
-                                  allowOverwriteRelationsInMergeMode = false,
-                                  mainTypeDocumentId: string = '',
-                                  useIdentifiersInRelations: boolean) {
+                          operationTypeNames: string[],
+                          generateId: () => string,
+                          find: (identifier: string) => Promise<Document|undefined>,
+                          get: (resourceId: string) => Promise<Document>,
+                          getInverseRelation: (propertyName: string) => string|undefined,
+                          mergeMode: boolean,
+                          allowOverwriteRelationsInMergeMode: boolean,
+                          mainTypeDocumentId: string,
+                          useIdentifiersInRelations: boolean) {
 
         return async function process(documents: Array<Document>) {
 
-            const documentsForUpdate = await makeDocsForUpdate(
+            const documentsForUpdate = await processDocuments(
                 documents,
                 validator,
                 mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
                 find, generateId);
 
-            const relatedDocuments = await prepareRelations(
+            const relatedDocuments = await processRelations(
                 documentsForUpdate,
                 validator, operationTypeNames,
                 mergeMode, allowOverwriteRelationsInMergeMode,
@@ -52,13 +52,13 @@ export module DefaultImportCalc {
      * Does validations, mostly of structural nature, most of relation validation is done later.
      * Merges with existing documents from db if necessary.
      */
-    async function makeDocsForUpdate(documents: Array<Document>,
-                                     validator: ImportValidator,
-                                     mergeMode: boolean,
-                                     allowOverwriteRelationsInMergeMode: boolean,
-                                     useIdentifiersInRelations: boolean,
-                                     find: (identifier: string) => Promise<Document|undefined>,
-                                     generateId: () => string): Promise<Array<Document>> {
+    async function processDocuments(documents: Array<Document>,
+                                    validator: ImportValidator,
+                                    mergeMode: boolean,
+                                    allowOverwriteRelationsInMergeMode: boolean,
+                                    useIdentifiersInRelations: boolean,
+                                    find: (identifier: string) => Promise<Document|undefined>,
+                                    generateId: () => string): Promise<Array<Document>> {
 
         const duplicates_ = duplicates(documents.map(to('resource.identifier')));
         if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
@@ -73,11 +73,13 @@ export module DefaultImportCalc {
                 await rewriteIdentifiersInRelations(document, find, identifierMap);
             }
 
+
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             if (!mergeMode) {
                 validator.assertIsKnownType(document);
                 validator.assertIsAllowedType(document, mergeMode);
             }
+
             validator.assertIsWellformed(document);
             documentsForUpdate.push(documentForUpdate);
         }
@@ -96,7 +98,7 @@ export module DefaultImportCalc {
     }
 
 
-    async function prepareRelations(documents: Array<Document>,
+    async function processRelations(documents: Array<Document>,
                                     validator: ImportValidator,
                                     operationTypeNames: string[],
                                     mergeMode: boolean,
@@ -108,10 +110,11 @@ export module DefaultImportCalc {
         let relatedDocuments: Array<Document> = [];
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
 
-        await replaceTopLevelLiesWithins(documents, operationTypeNames, get);
+        if (!mainTypeDocumentId) await replaceTopLevelLiesWithins(documents, operationTypeNames, get); // TODO throw an error if top level lies within found and maintypedocumentid is set
         // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
         //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
         // }
+
 
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
@@ -119,8 +122,7 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode);
         }
-
-        for (let document of documents) {
+        if (!mainTypeDocumentId) for (let document of documents) {
             const result = setRecordedIns(document, documents);
             if (result) document.resource.relations['isRecordedIn'] = [result];
         }

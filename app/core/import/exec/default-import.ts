@@ -41,10 +41,8 @@ export module DefaultImport {
                                              username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
             const {get, find, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
-
-            let documentsForUpdateAndRelatedDocuments;
             try {
-                documentsForUpdateAndRelatedDocuments = await DefaultImportCalc.perform(
+                const process = DefaultImportCalc.build(
                     validator,
                     operationTypeNames,
                     generateId,
@@ -54,19 +52,19 @@ export module DefaultImport {
                     mergeMode,
                     allowOverwriteRelationsInMergeMode,
                     mainTypeDocumentId,
-                    useIdentifiersInRelations,
-                    documents);
+                    useIdentifiersInRelations);
+
+                const documentsForUpdateAndRelatedDocuments = await process(documents);
+
+                const updateErrors = [];
+                try {
+                    await ImportUpdater.go(
+                        documentsForUpdateAndRelatedDocuments[0],
+                        documentsForUpdateAndRelatedDocuments[1], datastore, username, mergeMode);
+                } catch (errWithParams) { updateErrors.push(errWithParams)}
+                return { errors: updateErrors, successfulImports: documents.length };
 
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
-
-
-            const updateErrors = [];
-            try {
-                await ImportUpdater.go(
-                    documentsForUpdateAndRelatedDocuments[0],
-                    documentsForUpdateAndRelatedDocuments[1], datastore, username, mergeMode);
-            } catch (errWithParams) { updateErrors.push(errWithParams)}
-            return { errors: updateErrors, successfulImports: documents.length };
         }
     }
 

@@ -61,50 +61,6 @@ describe('DefaultImport', () => {
     });
 
 
-    // TODO implement if resources are not in the right order
-    it('recorded in document from import', async done => {
-
-        let i = 0;
-        importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
-            mockProjectConfiguration,
-            () => { i++; return '10' + i.toString() },
-            false, false, '', true);
-
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({
-                totalCount: 1,
-                documents: [{resource: {type: 'Trench', identifier: 'zero', id: '0'}}]
-            }),
-            Promise.resolve({totalCount: 0}),
-            Promise.resolve({totalCount: 0}),
-            Promise.resolve({totalCount: 0}),
-            Promise.resolve({totalCount: 0}),
-            Promise.resolve({totalCount: 0}));
-
-        await importFunction([
-                { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},
-                { resource: {type: 'Find', identifier: 'three', relations: { liesWithin: ['two'] }}},
-                // crucially, allow to define things in an arbitrary order (three forward references two)
-                { resource: {type: 'Feature', identifier: 'two', relations: { liesWithin: ['one'] }}} as any],
-            mockDatastore, 'user1');
-
-        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
-        const createdDocs = mockDatastore.bulkCreate.calls.mostRecent().args[0];
-        expect(createdDocs[0].resource.id).toBe('101');
-        expect(createdDocs[0].resource.relations['isRecordedIn'][0]).toBe('0');
-        expect(createdDocs[0].resource.relations['liesWithin']).toBeUndefined();
-        expect(createdDocs[1].resource.id).toBe('102');
-        expect(createdDocs[1].resource.relations['liesWithin'][0]).toBe('103');
-        expect(createdDocs[1].resource.relations['isRecordedIn'][0]).toBe('0');
-        expect(createdDocs[2].resource.id).toBe('103');
-        expect(createdDocs[2].resource.relations['liesWithin'][0]).toBe('101');
-        expect(createdDocs[2].resource.relations['isRecordedIn'][0]).toBe('0');
-
-        done();
-    });
-
-
     // TODO recorded in existing document
 
 

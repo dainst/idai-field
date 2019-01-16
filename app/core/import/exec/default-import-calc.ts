@@ -15,7 +15,7 @@ import {DocumentMerge} from "./document-merge";
 export module DefaultImportCalc {
 
 
-    export async function perform(validator: ImportValidator,
+    export function build(validator: ImportValidator,
                                   operationTypeNames: string[],
                                   generateId: () => string,
                                   find: (identifier: string) => Promise<Document|undefined>,
@@ -24,23 +24,25 @@ export module DefaultImportCalc {
                                   mergeMode: boolean = false,
                                   allowOverwriteRelationsInMergeMode = false,
                                   mainTypeDocumentId: string = '',
-                                  useIdentifiersInRelations: boolean,
-                                  documents: Array<Document>) {
+                                  useIdentifiersInRelations: boolean) {
 
-        const documentsForUpdate = await makeDocsForUpdate(
-            documents,
-            validator,
-            mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
-            find, generateId);
+        return async function process(documents: Array<Document>) {
 
-        const relatedDocuments = await prepareRelations(
-            documentsForUpdate,
-            validator, operationTypeNames,
-            mergeMode, allowOverwriteRelationsInMergeMode,
-            getInverseRelation, get,
-            mainTypeDocumentId);
+            const documentsForUpdate = await makeDocsForUpdate(
+                documents,
+                validator,
+                mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
+                find, generateId);
 
-        return [documentsForUpdate, relatedDocuments];
+            const relatedDocuments = await prepareRelations(
+                documentsForUpdate,
+                validator, operationTypeNames,
+                mergeMode, allowOverwriteRelationsInMergeMode,
+                getInverseRelation, get,
+                mainTypeDocumentId);
+
+            return [documentsForUpdate, relatedDocuments];
+        }
     }
 
 
@@ -228,7 +230,6 @@ export module DefaultImportCalc {
                 if (!targetDocFromDB && !identifierMap[identifier]) {
                     throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
                 }
-
                 document.resource.relations[relation][i] = targetDocFromDB
                     ? targetDocFromDB.resource.id
                     : identifierMap[identifier];

@@ -60,13 +60,35 @@ export module DefaultImportCalc {
                                     find: (identifier: string) => Promise<Document|undefined>,
                                     generateId: () => string): Promise<Array<Document>> {
 
+        /**
+         * Rewrites the relations of document in place
+         */
+        async function rewriteIdentifiersInRelations(document: NewDocument /* TODO make relations the param */) {
+
+            for (let relation of Object.keys(document.resource.relations)) {
+
+                let i = 0;
+                for (let identifier of document.resource.relations[relation]) {
+
+                    const targetDocFromDB = await find(identifier);
+                    if (!targetDocFromDB && !identifierMap[identifier]) {
+                        throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
+                    }
+                    document.resource.relations[relation][i] = targetDocFromDB
+                        ? targetDocFromDB.resource.id
+                        : identifierMap[identifier];
+                    i++;
+                }
+            }
+        }
+
         async function preprocessAndValidateRelations(document: Document) {
 
             validator.assertNoForbiddenRelations(document);
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
-                await rewriteIdentifiersInRelations(document, find, identifierMap);
+                await rewriteIdentifiersInRelations(document);
             }
         }
 
@@ -84,7 +106,7 @@ export module DefaultImportCalc {
         const duplicates_ = duplicates(documents.map(to('resource.identifier')));
 
         if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
-        const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
+        const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         const documentsForUpdate: Array<Document> = []; // TODO this should not be necessary
         for (let document of documents) {
@@ -223,31 +245,6 @@ export module DefaultImportCalc {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
         return documentForUpdate;
-    }
-
-
-    /**
-     * Rewrites the relations of document in place
-     */
-    async function rewriteIdentifiersInRelations(document: NewDocument,
-                                                 find: (identifier: string) => Promise<Document|undefined>,
-                                                 identifierMap: { [identifier: string]: string }) {
-
-        for (let relation of Object.keys(document.resource.relations)) {
-
-            let i = 0;
-            for (let identifier of document.resource.relations[relation]) {
-
-                const targetDocFromDB = await find(identifier);
-                if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
-                }
-                document.resource.relations[relation][i] = targetDocFromDB
-                    ? targetDocFromDB.resource.id
-                    : identifierMap[identifier];
-                i++;
-            }
-        }
     }
 
 

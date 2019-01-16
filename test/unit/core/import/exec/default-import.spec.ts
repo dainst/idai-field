@@ -19,7 +19,7 @@ describe('DefaultImport', () => {
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
-            'assertSettingIsRecordedInIsPermissibleForType']);
+            'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
             ['getTypesList', 'getFieldDefinitions', 'getInverseRelations',
@@ -120,7 +120,7 @@ describe('DefaultImport', () => {
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}}};
 
-        mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);
+        mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed', 'assertNoForbiddenRelations']);
 
         mockDatastore = jasmine.createSpyObj('datastore', ['find', 'bulkUpdate']);
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));

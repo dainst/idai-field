@@ -36,7 +36,8 @@ describe('ImportValidation', () => {
             relations: [
                 {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
                 {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}
+                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
+                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'} // defined but not allowed
             ]
         }
     );
@@ -145,6 +146,54 @@ describe('ImportValidation', () => {
 
             expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
                 'isRelatedTo']);
+        }
+    });
+
+
+    it('should report a forbidden includes relation field definition', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                relations: {
+                    includes: ['2']
+                }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined)
+                .assertNoForbiddenRelations(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'includes']);
+        }
+    });
+
+
+    it('should report a forbidden isRecordedIn relation field definition', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                relations: {
+                    isRecordedIn: ['2']
+                }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined)
+                .assertNoForbiddenRelations(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'isRecordedIn']);
         }
     });
 

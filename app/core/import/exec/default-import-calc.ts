@@ -68,11 +68,12 @@ export module DefaultImportCalc {
         const documentsForUpdate: Array<Document> = [];
         for (let document of documents) {
 
+            validator.assertNoForbiddenRelations(document);
+
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(document, find, identifierMap);
             }
-
 
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             if (!mergeMode) {

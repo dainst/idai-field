@@ -30,7 +30,7 @@ describe('DefaultImportCalc', () => {
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType',
-            'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType']);
+            'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
 
     });
 
@@ -165,6 +165,32 @@ describe('DefaultImportCalc', () => {
             fail();
         } catch (e) {
             expect(e[0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
+        }
+        done();
+    });
+
+
+    it('forbidden relation', async done => {
+
+        mockValidator.assertNoForbiddenRelations.and.throwError('E');
+
+        const process = DefaultImportCalc.build(
+            mockValidator,
+            operationTypeNames,
+            generateId,
+            asyncReturnUndefined,
+            get,
+            returnUndefined,
+            false,
+            false,
+            '',
+            true);
+
+        try {
+            await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
+            fail();
+        } catch (e) {
+            expect(e).toEqual(Error('E'));
         }
         done();
     });

@@ -65,6 +65,19 @@ export class ImportValidator extends Validator {
     }
 
 
+    public assertNoForbiddenRelations(document: Document|NewDocument) {
+
+        const forbidden = [];
+        if (document.resource.relations['includes'] !== undefined) forbidden.push('includes');
+        if (document.resource.relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
+        if (forbidden.length > 0) throw [
+            ImportErrors.INVALID_RELATIONS,
+            document.resource.type,
+            forbidden.join(', ')
+        ];
+    }
+
+
     /**
      * Wellformedness test specifically written for use in import package.
      *
@@ -105,6 +118,7 @@ export class ImportValidator extends Validator {
             .validateDefinedRelations(document.resource, this.projectConfiguration)
             // operations have empty isRecordedIn which however is not defined. image types must not be imported. regular types all have isRecordedIn
             .filter(item => item !== 'isRecordedIn');
+
         if (invalidRelationFields.length > 0) {
             throw [
                 ImportErrors.INVALID_RELATIONS,

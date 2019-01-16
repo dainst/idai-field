@@ -77,7 +77,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
-    public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
+    public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
     public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
     public static IMPORT_VALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
     public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.error.prevalidation.duplicateidentifier';
@@ -478,10 +478,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED] = {
+        this.msgs[M.IMPORT_EXEC_NO_LIES_WITHIN_SET] = {
             content: i18n({
                 id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
-                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isRecordedIn\'-Zuordnungen haben.'
+                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'liesWithin\'-Zuordnungen haben.'
             }),
             level: 'danger',
             params: [],

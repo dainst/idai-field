@@ -1,4 +1,5 @@
 import {DefaultImportCalc} from "../../../../../app/core/import/exec/default-import-calc";
+import {ImportErrors} from "../../../../../app/core/import/exec/import-errors";
 
 /**
  * @author Daniel de Oliveira
@@ -10,6 +11,8 @@ describe('DefaultImportCalc', () => {
 
     let operationTypeNames = ['Trench'];
 
+    let returnUndefined = () => undefined;
+    let asyncReturnUndefined = async (_: any) => undefined;
     let generateId = () => { i++; return '10' + i.toString() };
     let get = async resourceId => {
 
@@ -44,7 +47,7 @@ describe('DefaultImportCalc', () => {
                     ? {resource: {type: 'Trench', identifier: 'zero', id: '0'}} as any
                     : undefined),
             get,
-            () => undefined,
+            returnUndefined,
             false,
             false,
             '',
@@ -70,7 +73,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('assignment to existing operation via paramter, nested resources from import', async done => {
+    it('assignment to existing operation via parameter, nested resources from import', async done => {
 
         let findCall = 0;
         const process = DefaultImportCalc.build(
@@ -82,7 +85,7 @@ describe('DefaultImportCalc', () => {
                 return undefined;
             },
             get,
-            () => undefined,
+            returnUndefined,
             false,
             false,
             '0',
@@ -103,6 +106,32 @@ describe('DefaultImportCalc', () => {
         expect(result[0][2].resource.id).toBe('103');
         expect(result[0][2].resource.relations['liesWithin'][0]).toBe('101');
         expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('0');
+        done();
+    });
+
+
+    it('missing liesWithin and no operation assigned', async done => {
+
+        mockValidator.assertHasLiesWithin.and.throwError('E');
+
+        const process = DefaultImportCalc.build(
+            mockValidator,
+            operationTypeNames,
+            generateId,
+            asyncReturnUndefined,
+            get,
+            returnUndefined,
+            false,
+            false,
+            '',
+            true);
+
+        try {
+            await process([{ resource: {type: 'Feature', identifier: 'one', relations: {}}} as any]);
+            fail();
+        } catch (e) {
+            expect(e[0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
+        }
         done();
     });
 });

@@ -248,7 +248,7 @@ export module DefaultImportCalc {
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
                 try { validator.assertHasLiesWithin(document) }
-                catch { throw [ImportErrors.NO_OPERATION_ASSIGNED] }
+                catch { throw [ImportErrors.NO_LIES_WITHIN_SET] }
             } else {
                 await validator.assertIsNotOverviewType(document);
                 await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);

@@ -3072,8 +3072,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
-        <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isRecordedIn'-Zuordnungen haben.</source>
-        <target state="final">If 'No assignment' is selected, all resources except places and operations have to have 'isRecordedIn'-assignments.</target>
+        <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</source>
+        <target state="final">If 'No assignment' is selected, all resources except places and operations have to have 'liesWithin'-assignments.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

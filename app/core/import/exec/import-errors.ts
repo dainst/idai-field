@@ -6,7 +6,7 @@ export module ImportErrors {
 
     export const INVALID_TYPE = 'validationerror/invalidtype';
     export const OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
-    export const NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
+    export const NO_LIES_WITHIN_SET = 'importerrors/prevalidation/nooperationassigned';
     export const DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicateidentifier';
     export const MISSING_RELATION_TARGET = 'importerrors/prevalidation/missingrelationtarget'; // by identifier
     export const TYPE_NOT_ALLOWED = 'importerrors/prevalidation/typenotallowed';

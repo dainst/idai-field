@@ -55,10 +55,10 @@ describe('DefaultImportCalc', () => {
             true);
 
         const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},
-            { resource: {type: 'Find', identifier: 'three', relations: { liesWithin: ['two'] }}},
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
+            { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
             // crucially, allow to define things in an arbitrary order (three forward references two) TODO make separate test for this, the first and the second test then can work with only two resources each
-            { resource: {type: 'Feature', identifier: 'two', relations: { liesWithin: ['one'] }}} as any]);
+            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
         
         expect(result[0][0].resource.id).toBe('101');
@@ -94,9 +94,9 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             { resource: {type: 'Feature', identifier: 'one', relations: {}}},
-            { resource: {type: 'Find', identifier: 'three', relations: { liesWithin: ['two'] }}},
+            { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
             // crucially, allow to define things in an arbitrary order (three forward references two)
-            { resource: {type: 'Feature', identifier: 'two', relations: { liesWithin: ['one'] }}} as any]);
+            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
         expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');
@@ -132,7 +132,7 @@ describe('DefaultImportCalc', () => {
             true);
 
         const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['1'] }}} as any]);
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: '1' }}} as any]);
 
         expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');

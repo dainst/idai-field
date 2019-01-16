@@ -86,14 +86,15 @@ export module DefaultImportCalc {
 
             validator.assertNoForbiddenRelations(document);
 
+            if (document.resource.relations && document.resource.relations['parent']) {
+                // TODO validate that parent value is not an array
+                document.resource.relations['liesWithin'] = [document.resource.relations['parent'] as any];
+                delete document.resource.relations['parent'];
+            }
+
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(document);
-            }
-
-            if (document.resource.relations && document.resource.relations['parent']) {
-                document.resource.relations['liesWithin'] = document.resource.relations['parent'];
-                delete document.resource.relations['parent'];
             }
         }
 

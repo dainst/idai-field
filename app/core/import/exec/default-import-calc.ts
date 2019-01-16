@@ -1,6 +1,6 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to} from "tsfun";
+import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual} from "tsfun";
 import {ImportErrors} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
@@ -74,6 +74,7 @@ export module DefaultImportCalc {
                     if (!targetDocFromDB && !identifierMap[identifier]) {
                         throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
                     }
+                    // TODO it would make tests easier if done in two separate steps. first check if in import, then if in db
                     document.resource.relations[relation][i] = targetDocFromDB
                         ? targetDocFromDB.resource.id
                         : identifierMap[identifier];
@@ -84,7 +85,19 @@ export module DefaultImportCalc {
 
         async function preprocessAndValidateRelations(document: Document /* new document possibly without relations */) {
 
-            validator.assertNoForbiddenRelations(document);
+            // assertNoForbiddenRelations
+            const forbidden = [];
+            if (document.resource.relations) {
+                if (document.resource.relations['liesWithin'] !== undefined) forbidden.push('liesWithin');
+                if (document.resource.relations['includes'] !== undefined) forbidden.push('includes');
+                if (document.resource.relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
+            }
+            if (forbidden.length > 0) throw [
+                ImportErrors.INVALID_RELATIONS,
+                document.resource.type,
+                forbidden.join(', ')
+            ];
+            // -
 
             if (document.resource.relations && document.resource.relations['parent']) {
                 // TODO validate that parent value is not an array
@@ -145,6 +158,37 @@ export module DefaultImportCalc {
                                     get: (_: string) => Promise<Document>,
                                     mainTypeDocumentId: string) {
 
+        // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
+        function setRecordedIns(document: Document): string|undefined {
+
+            if (!document.resource.relations
+                || !document.resource.relations['liesWithin']
+                || document.resource.relations['liesWithin'].length === 0) return;
+            if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) return;
+
+            let liesWithinTargetInImport = undefined;
+            for (let targetInImport of documents) {
+                if (targetInImport.resource.id === document.resource.relations['liesWithin'][0]) {
+                    liesWithinTargetInImport = targetInImport;
+                    if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
+                        // TODO delete liesWithin in this case
+                        return liesWithinTargetInImport.resource.id;
+                    }
+                    if (targetInImport.resource.relations.isRecordedIn
+                        && targetInImport.resource.relations.isRecordedIn.length > 0) {
+                        return targetInImport.resource.relations.isRecordedIn[0];
+                    }
+                }
+            }
+
+            if (document.resource.relations['liesWithin']
+                && document.resource.relations['liesWithin'].length > 0
+                && liesWithinTargetInImport) {
+
+                return setRecordedIns(liesWithinTargetInImport);
+            }
+        }
+
         let relatedDocuments: Array<Document> = [];
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
 
@@ -161,8 +205,14 @@ export module DefaultImportCalc {
                 mergeMode);
         }
         if (!mainTypeDocumentId) for (let document of documents) {
-            const result = setRecordedIns(document, documents);
+            const result = setRecordedIns(document);
             if (result) document.resource.relations['isRecordedIn'] = [result];
+
+            if (document.resource.relations && document.resource.relations['liesWithin'] && document.resource.relations['isRecordedIn'] &&
+
+                arrayEqual(document.resource.relations['isRecordedIn'])(document.resource.relations['liesWithin'])) {
+                delete document.resource.relations['liesWithin'];
+            }
         }
 
         // TODO every resource has to have a lies within relation
@@ -170,33 +220,6 @@ export module DefaultImportCalc {
         // TODO if lies within points to main type document, then replace it with is recorded in
         // TODO if lies within points to other document, add is recorded in
         return relatedDocuments;
-    }
-
-
-    // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
-    function setRecordedIns(document: Document, documents: Array<Document>): string|undefined {
-
-        if (!document.resource.relations
-            || !document.resource.relations['liesWithin']
-            || document.resource.relations['liesWithin'].length === 0) return;
-        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) return;
-
-        let liesWithinTargetInImport = undefined;
-        for (let targetInImport of documents) {
-            if (targetInImport.resource.id === document.resource.relations['liesWithin'][0]) {
-                liesWithinTargetInImport = targetInImport;
-                if (targetInImport.resource.relations.isRecordedIn && targetInImport.resource.relations.isRecordedIn.length > 0) {
-                    return targetInImport.resource.relations.isRecordedIn[0];
-                }
-            }
-        }
-
-        if (document.resource.relations['liesWithin']
-            && document.resource.relations['liesWithin'].length > 0
-            && liesWithinTargetInImport) {
-
-            return setRecordedIns(liesWithinTargetInImport, documents);
-        }
     }
 
 

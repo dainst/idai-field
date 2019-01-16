@@ -150,52 +150,52 @@ describe('ImportValidation', () => {
     });
 
 
-    it('should report a forbidden includes relation field definition', () => {
+    // it('should report a forbidden includes relation field definition', () => {
+    //
+    //     const doc = {
+    //         resource: {
+    //             id: '1',
+    //             type: 'T',
+    //             mandatory: 'm',
+    //             relations: {
+    //                 includes: ['2']
+    //             }
+    //         }
+    //     };
+    //
+    //     try {
+    //         new ImportValidator(projectConfiguration, undefined, undefined)
+    //             .assertNoForbiddenRelations(doc);
+    //         fail();
+    //     } catch (errWithParams) {
+    //
+    //         expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'includes']);
+    //     }
+    // });
 
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: 'm',
-                relations: {
-                    includes: ['2']
-                }
-            }
-        };
 
-        try {
-            new ImportValidator(projectConfiguration, undefined, undefined)
-                .assertNoForbiddenRelations(doc);
-            fail();
-        } catch (errWithParams) {
-
-            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'includes']);
-        }
-    });
-
-
-    it('should report a forbidden isRecordedIn relation field definition', () => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: 'm',
-                relations: {
-                    isRecordedIn: ['2']
-                }
-            }
-        };
-
-        try {
-            new ImportValidator(projectConfiguration, undefined, undefined)
-                .assertNoForbiddenRelations(doc);
-            fail();
-        } catch (errWithParams) {
-
-            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'isRecordedIn']);
-        }
-    });
+    // it('should report a forbidden isRecordedIn relation field definition', () => {
+    //
+    //     const doc = {
+    //         resource: {
+    //             id: '1',
+    //             type: 'T',
+    //             mandatory: 'm',
+    //             relations: {
+    //                 isRecordedIn: ['2']
+    //             }
+    //         }
+    //     };
+    //
+    //     try {
+    //         new ImportValidator(projectConfiguration, undefined, undefined)
+    //             .assertNoForbiddenRelations(doc);
+    //         fail();
+    //     } catch (errWithParams) {
+    //
+    //         expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T', 'isRecordedIn']);
+    //     }
+    // });
 
 
     it('should report missing relation field definitions', () => {

@@ -65,20 +65,6 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertNoForbiddenRelations(document: Document|NewDocument) {
-
-        const forbidden = [];
-        if (document.resource.relations['liesWithin'] !== undefined) forbidden.push('liesWithin');
-        if (document.resource.relations['includes'] !== undefined) forbidden.push('includes');
-        if (document.resource.relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
-        if (forbidden.length > 0) throw [
-            ImportErrors.INVALID_RELATIONS,
-            document.resource.type,
-            forbidden.join(', ')
-        ];
-    }
-
-
     /**
      * Wellformedness test specifically written for use in import package.
      *

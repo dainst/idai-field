@@ -38,9 +38,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via lies within, nested resources from import', async done => {
 
         let findCall = 0;
-        const process = DefaultImportCalc.build(
-            mockValidator,
-            operationTypeNames,
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
             async (_: any) => (
                 findCall++,
@@ -77,9 +75,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via parameter, nested resources from import', async done => {
 
         let findCall = 0;
-        const process = DefaultImportCalc.build(
-            mockValidator,
-            operationTypeNames,
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
             async (_: any) => {
                 findCall++;
@@ -115,9 +111,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via parameter, nested resources from import', async done => {
 
         let findCall = 0;
-        const process = DefaultImportCalc.build(
-            mockValidator,
-            operationTypeNames,
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
                 async (_: any) => (
                     findCall++,
@@ -144,17 +138,39 @@ describe('DefaultImportCalc', () => {
     // TODO assignment to existing feature, recorded in mismatch because of assignment via parameter
 
 
-    it('missing liesWithin and no operation assigned', async done => {
+    it('import operation including feature', async done => {
 
-        mockValidator.assertHasLiesWithin.and.throwError('E');
-
-        const process = DefaultImportCalc.build(
-            mockValidator,
-            operationTypeNames,
+        let findCall = 0;
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
             asyncReturnUndefined,
             get,
             returnUndefined,
+            false,
+            false,
+            '',
+            true);
+
+        const result = await process([
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
+            { resource: {type: 'Trench', identifier: 'zero', relations: {}}} as any]);
+
+        expect(result[0][0].resource.identifier).toBe('one');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('102');
+        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
+        expect(result[0][1].resource.identifier).toBe('zero');
+        expect(result[0][1].resource.relations['isRecordedIn']).toBeUndefined();
+        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    it('missing liesWithin and no operation assigned', async done => {
+
+        mockValidator.assertHasLiesWithin.and.throwError('E');
+
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+            generateId, asyncReturnUndefined, get, returnUndefined,
             false,
             false,
             '',
@@ -172,15 +188,8 @@ describe('DefaultImportCalc', () => {
 
     it('forbidden relation', async done => {
 
-        mockValidator.assertNoForbiddenRelations.and.throwError('E');
-
-        const process = DefaultImportCalc.build(
-            mockValidator,
-            operationTypeNames,
-            generateId,
-            asyncReturnUndefined,
-            get,
-            returnUndefined,
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+            generateId, asyncReturnUndefined, get, returnUndefined,
             false,
             false,
             '',
@@ -190,7 +199,8 @@ describe('DefaultImportCalc', () => {
             await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
             fail();
         } catch (e) {
-            expect(e).toEqual(Error('E'));
+            expect(e[0]).toEqual(ImportErrors.INVALID_RELATIONS);
+            expect(e[2]).toEqual('includes');
         }
         done();
     });

@@ -5,10 +5,20 @@ import {DefaultImportCalc} from "../../../../../app/core/import/exec/default-imp
  */
 describe('DefaultImportCalc', () => {
 
+
     let mockValidator;
-    let i;
-    let generateId = () => { i++; return '10' + i.toString() };
+
     let operationTypeNames = ['Trench'];
+
+    let generateId = () => { i++; return '10' + i.toString() };
+    let get = async resourceId => {
+
+        if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }} as any;
+        else throw 'missing';
+    };
+
+    let i;
+
 
     beforeEach(() => {
         i = 0;
@@ -33,11 +43,7 @@ describe('DefaultImportCalc', () => {
                 findCall === 1
                     ? {resource: {type: 'Trench', identifier: 'zero', id: '0'}} as any
                     : undefined),
-            async resourceId => {
-
-                    if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }} as any;
-                    else throw 'missing';
-                },
+            get,
             () => undefined,
             false,
             false,
@@ -75,11 +81,7 @@ describe('DefaultImportCalc', () => {
                 findCall++;
                 return undefined;
             },
-            async resourceId => {
-                if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }} as any;
-                else throw 'missing';
-                // throw 'missing';
-            },
+            get,
             () => undefined,
             false,
             false,

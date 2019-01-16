@@ -60,22 +60,25 @@ export module DefaultImportCalc {
                                     find: (identifier: string) => Promise<Document|undefined>,
                                     generateId: () => string): Promise<Array<Document>> {
 
-        const duplicates_ = duplicates(documents.map(to('resource.identifier')));
-        if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
+        async function preprocessAndValidateRelations(document: Document) {
 
-        const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
-
-        const documentsForUpdate: Array<Document> = [];
-        for (let document of documents) {
-
-            // pre-process and validate relations
             validator.assertNoForbiddenRelations(document);
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(document, find, identifierMap);
             }
-            // -
+        }
+
+        const duplicates_ = duplicates(documents.map(to('resource.identifier')));
+
+        if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
+        const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
+
+        const documentsForUpdate: Array<Document> = [];
+        for (let document of documents) {
+
+            await preprocessAndValidateRelations(document);
 
             const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
             if (!mergeMode) {

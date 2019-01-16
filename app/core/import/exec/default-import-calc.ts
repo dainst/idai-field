@@ -70,24 +70,28 @@ export module DefaultImportCalc {
             }
         }
 
+        function validate(document: Document) {
+
+            if (!mergeMode) {
+                validator.assertIsKnownType(document);
+                validator.assertIsAllowedType(document, mergeMode);
+            }
+            validator.assertIsWellformed(document);
+            return document;
+        }
+
+
         const duplicates_ = duplicates(documents.map(to('resource.identifier')));
 
         if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
         const identifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
-        const documentsForUpdate: Array<Document> = [];
+        const documentsForUpdate: Array<Document> = []; // TODO this should not be necessary
         for (let document of documents) {
 
             await preprocessAndValidateRelations(document);
-
-            const documentForUpdate = await mergeOrUseAsIs(document, find, mergeMode, allowOverwriteRelationsInMergeMode);
-            if (!mergeMode) {
-                validator.assertIsKnownType(document);
-                validator.assertIsAllowedType(document, mergeMode);
-            }
-
-            validator.assertIsWellformed(document);
-            documentsForUpdate.push(documentForUpdate);
+            documentsForUpdate.push(validate(await mergeOrUseAsIs(
+                document, find, mergeMode, allowOverwriteRelationsInMergeMode)));
         }
         return documentsForUpdate;
     }

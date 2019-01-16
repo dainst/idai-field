@@ -171,7 +171,7 @@ export module DefaultImportCalc {
 
             if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
             if (document.resource.relations['liesWithin'].length > 1) {
-                throw "only one lies within target allowed"; // TODO throw errWithParams
+                throw "only one lies within target allowed"; // TODO throw errWithParams, do it in assertNoForbiddenRelations and rename that to assertRelationsLegal
             }
 
             let liesWithinTarget = undefined;

@@ -82,13 +82,18 @@ export module DefaultImportCalc {
             }
         }
 
-        async function preprocessAndValidateRelations(document: Document) {
+        async function preprocessAndValidateRelations(document: Document /* new document possibly without relations */) {
 
             validator.assertNoForbiddenRelations(document);
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(document);
+            }
+
+            if (document.resource.relations && document.resource.relations['parent']) {
+                document.resource.relations['liesWithin'] = document.resource.relations['parent'];
+                delete document.resource.relations['parent'];
             }
         }
 

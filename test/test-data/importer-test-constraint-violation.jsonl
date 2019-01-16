@@ -1,1 +1,1 @@
-{ "type": "Find", "identifier" : "testf1", "shortDescription" : "O.B. Two",   "relations": { "isRecordedIn": ["S1"] }}
+{ "type": "Find", "identifier" : "testf1", "shortDescription" : "O.B. Two",   "relations": { "parent": ["S1"] }}

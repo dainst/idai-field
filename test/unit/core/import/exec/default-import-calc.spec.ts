@@ -17,6 +17,7 @@ describe('DefaultImportCalc', () => {
     let get = async resourceId => {
 
         if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }} as any;
+        if (resourceId === '1') return { resource: { id: '1', identifier: '1', type: 'Feature', relations: { isRecordedIn: ['0']} }} as any;
         else throw 'missing';
     };
 
@@ -108,6 +109,39 @@ describe('DefaultImportCalc', () => {
         expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('0');
         done();
     });
+
+
+    // TODO add testfile for manual tests
+    it('assignment to existing operation via parameter, nested resources from import', async done => {
+
+        let findCall = 0;
+        const process = DefaultImportCalc.build(
+            mockValidator,
+            operationTypeNames,
+            generateId,
+                async (_: any) => (
+                    findCall++,
+                        findCall === 1
+                            ? {resource: {type: 'Feature', identifier: '1', id: '1', relations:{}}} as any
+                            : undefined),
+            get,
+            returnUndefined,
+            false,
+            false,
+            '0',
+            true);
+
+        const result = await process([
+            { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['1'] }}} as any]);
+
+        expect(result[0][0].resource.id).toBe('101');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('1');
+        done();
+    });
+
+
+    // TODO assignment to existing feature, recorded in mismatch because of assignment via parameter
 
 
     it('missing liesWithin and no operation assigned', async done => {

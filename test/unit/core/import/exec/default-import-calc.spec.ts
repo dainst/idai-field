@@ -56,7 +56,7 @@ describe('DefaultImportCalc', () => {
         const result = await process([
             { resource: {type: 'Feature', identifier: 'one', relations: { liesWithin: ['zero'] }}},
             { resource: {type: 'Find', identifier: 'three', relations: { liesWithin: ['two'] }}},
-            // crucially, allow to define things in an arbitrary order (three forward references two)
+            // crucially, allow to define things in an arbitrary order (three forward references two) TODO make separate test for this, the first and the second test then can work with only two resources each
             { resource: {type: 'Feature', identifier: 'two', relations: { liesWithin: ['one'] }}} as any]);
 
         

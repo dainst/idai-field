@@ -63,21 +63,20 @@ export module DefaultImportCalc {
         /**
          * Rewrites the relations of document in place
          */
-        async function rewriteIdentifiersInRelations(document: NewDocument /* TODO make relations the param */) {
+        async function rewriteIdentifiersInRelations(relations: Relations) {
 
-            for (let relation of Object.keys(document.resource.relations)) {
+            for (let relation of Object.keys(relations)) {
 
                 let i = 0;
-                for (let identifier of document.resource.relations[relation]) {
+                for (let identifier of relations[relation]) {
 
-                    const targetDocFromDB = await find(identifier);
-                    if (!targetDocFromDB && !identifierMap[identifier]) {
-                        throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
+                    if (identifierMap[identifier]) {
+                        relations[relation][i] = identifierMap[identifier];
+                    } else {
+                        const targetDocFromDB = await find(identifier);
+                        if (!targetDocFromDB) throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
+                        relations[relation][i] = targetDocFromDB.resource.id;
                     }
-                    // TODO it would make tests easier if done in two separate steps. first check if in import, then if in db
-                    document.resource.relations[relation][i] = targetDocFromDB
-                        ? targetDocFromDB.resource.id
-                        : identifierMap[identifier];
                     i++;
                 }
             }
@@ -85,13 +84,15 @@ export module DefaultImportCalc {
 
         async function preprocessAndValidateRelations(document: Document /* new document possibly without relations */) {
 
+            if (!document.resource.relations) return;
+            const relations = document.resource.relations;
+            
             // assertNoForbiddenRelations
             const forbidden = [];
-            if (document.resource.relations) {
-                if (document.resource.relations['liesWithin'] !== undefined) forbidden.push('liesWithin');
-                if (document.resource.relations['includes'] !== undefined) forbidden.push('includes');
-                if (document.resource.relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
-            }
+            if (relations['liesWithin'] !== undefined) forbidden.push('liesWithin');
+            if (relations['includes'] !== undefined) forbidden.push('includes');
+            if (relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
+            
             if (forbidden.length > 0) throw [
                 ImportErrors.INVALID_RELATIONS,
                 document.resource.type,
@@ -99,15 +100,15 @@ export module DefaultImportCalc {
             ];
             // -
 
-            if (document.resource.relations && document.resource.relations['parent']) {
+            if (relations && relations['parent']) {
                 // TODO validate that parent value is not an array
-                document.resource.relations['liesWithin'] = [document.resource.relations['parent'] as any];
-                delete document.resource.relations['parent'];
+                relations['liesWithin'] = [relations['parent'] as any];
+                delete relations['parent'];
             }
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                removeSelfReferencingIdentifiers(document.resource.relations, document.resource.identifier);
-                await rewriteIdentifiersInRelations(document);
+                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(relations);
             }
         }
 
@@ -127,7 +128,7 @@ export module DefaultImportCalc {
         if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
-        const documentsForUpdate: Array<Document> = []; // TODO this should not be necessary
+        const documentsForUpdate: Array<Document> = [];
         for (let document of documents) {
 
             await preprocessAndValidateRelations(document);
@@ -227,7 +228,7 @@ export module DefaultImportCalc {
                                               operationTypeNames: string[],
                                               get: (_: string) => Promise<Document>) {
 
-        for (let document of documents) { // TODO refactor
+        for (let document of documents) {
 
             if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
             if (document.resource.relations['liesWithin'].length > 1) {

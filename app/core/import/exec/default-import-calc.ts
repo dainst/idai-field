@@ -218,8 +218,6 @@ export module DefaultImportCalc {
 
         // TODO every resource has to have a lies within relation
         // furthermore, every lieswithin path between resources has to end in an operation resource
-        // TODO if lies within points to main type document, then replace it with is recorded in
-        // TODO if lies within points to other document, add is recorded in
         return relatedDocuments;
     }
 

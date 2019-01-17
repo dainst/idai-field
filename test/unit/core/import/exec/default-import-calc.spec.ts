@@ -32,26 +32,28 @@ describe('DefaultImportCalc', () => {
 
 
     let resourceIdCounter;
+    let process;
 
 
     beforeEach(() => {
+
         resourceIdCounter = 0;
+
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
 
-    });
-
-
-    it('child of existing operation', async done => {
-
-        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
             false,
             false,
             '',
             true);
+    });
+
+
+    it('child of existing operation', async done => {
 
         const result = await process(<any>[
             { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingTrench' }}}
@@ -66,12 +68,6 @@ describe('DefaultImportCalc', () => {
 
 
     it('child of existing feature', async done => {
-
-        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
-            false,
-            false,
-            '',
-            true);
 
         const result = await process(<any>[
             { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingFeature' }}}
@@ -89,12 +85,6 @@ describe('DefaultImportCalc', () => {
 
 
     it('assignment to existing operation via lies within, nested resources from import', async done => {
-
-        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
-            false,
-            false,
-            '',
-            true);
 
         const result = await process([
             { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}},
@@ -173,16 +163,6 @@ describe('DefaultImportCalc', () => {
 
     it('import operation including feature', async done => {
 
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId,
-            asyncReturnUndefined,
-            get,
-            returnUndefined,
-            false,
-            false,
-            '',
-            true);
-
         const result = await process([
             { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
             { resource: {type: 'Trench', identifier: 'zero', relations: {}}} as any]);
@@ -240,13 +220,6 @@ describe('DefaultImportCalc', () => {
 
         validator.assertHasLiesWithin.and.throwError('E');
 
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId, asyncReturnUndefined, get, returnUndefined,
-            false,
-            false,
-            '',
-            true);
-
         const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: {}}} as any]);
         expect(result[2][0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
         done();
@@ -254,13 +227,6 @@ describe('DefaultImportCalc', () => {
 
 
     it('forbidden relation', async done => {
-
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId, asyncReturnUndefined, get, returnUndefined,
-            false,
-            false,
-            '',
-            true);
 
         const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
         expect(result[2][0]).toEqual(ImportErrors.INVALID_RELATIONS);

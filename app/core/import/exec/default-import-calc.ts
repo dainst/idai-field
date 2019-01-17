@@ -123,7 +123,7 @@ export module DefaultImportCalc {
         if (duplicates_.length > 0) throw [E.DUPLICATE_IDENTIFIER, duplicates_[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
-        const documentsForUpdate: Array<Document> = [];
+        const documentsForUpdate: Array<Document> = []; // TODO remove and simplify
         for (let document of documents) {
 
             await preprocessAndValidateRelations(document);

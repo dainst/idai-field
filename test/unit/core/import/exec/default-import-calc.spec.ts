@@ -11,15 +11,25 @@ describe('DefaultImportCalc', () => {
 
     let operationTypeNames = ['Trench'];
 
+    const existingTrench = {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
+    const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
+
     let returnUndefined = () => undefined;
     let asyncReturnUndefined = async (_: any) => undefined;
     let generateId = () => { i++; return '10' + i.toString() };
-    let get = async resourceId => {
+    let get = async (resourceId): Promise<any> => {
 
-        if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }} as any;
-        if (resourceId === '1') return { resource: { id: '1', identifier: '1', type: 'Feature', relations: { isRecordedIn: ['0']} }} as any;
+        if (resourceId === 'ef1') return existingFeature;
+        if (resourceId === 'et1') return existingTrench;
         else throw 'missing';
     };
+    let find = async (_: any): Promise<any> => {
+
+        if (_ === 'existingTrench') return existingTrench;
+        if (_ === 'existingFeature') return existingFeature;
+        return undefined;
+    };
+
 
     let i;
 
@@ -37,14 +47,9 @@ describe('DefaultImportCalc', () => {
 
     it('assignment to existing operation via lies within, nested resources from import', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
-            async (_: any) => (
-                findCall++,
-                findCall === 1
-                    ? {resource: {type: 'Trench', identifier: 'zero', id: '0'}} as any
-                    : undefined),
+            find,
             get,
             returnUndefined,
             false,
@@ -53,21 +58,21 @@ describe('DefaultImportCalc', () => {
             true);
 
         const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}},
             { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
             // crucially, allow to define things in an arbitrary order (three forward references two) TODO make separate test for this, the first and the second test then can work with only two resources each
             { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
         
         expect(result[0][0].resource.id).toBe('101');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
         expect(result[0][1].resource.id).toBe('102');
         expect(result[0][1].resource.relations['liesWithin'][0]).toBe('103');
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][2].resource.id).toBe('103');
         expect(result[0][2].resource.relations['liesWithin'][0]).toBe('101');
-        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('et1');
         done();
     });
 
@@ -77,10 +82,7 @@ describe('DefaultImportCalc', () => {
         let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
-            async (_: any) => {
-                findCall++;
-                return undefined;
-            },
+            asyncReturnUndefined,
             get,
             returnUndefined,
             false,
@@ -107,30 +109,24 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    // TODO add testfile for manual tests
-    it('assignment to existing operation via parameter, nested resources from import', async done => {
+    it('assignment to existing operation via parameter, also nested in existing', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
-                async (_: any) => (
-                    findCall++,
-                        findCall === 1
-                            ? {resource: {type: 'Feature', identifier: '1', id: '1', relations:{}}} as any
-                            : undefined),
+            find,
             get,
             returnUndefined,
             false,
             false,
-            '0',
+            'et1',
             true);
 
         const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { parent: '1' }}} as any]);
+            {resource: {type: 'Feature', identifier: 'one', relations: {parent: 'existingFeature'}}} as any]);
 
         expect(result[0][0].resource.id).toBe('101');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');
-        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('1');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('ef1');
         done();
     });
 
@@ -140,7 +136,6 @@ describe('DefaultImportCalc', () => {
 
     it('import operation including feature', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
             asyncReturnUndefined,
@@ -167,24 +162,19 @@ describe('DefaultImportCalc', () => {
 
     it('clash of assigned main type id with use of parent', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
-            async (_: any) => ( // TODO extract, used multiple times
-                findCall++,
-                findCall === 1
-                ? {resource: {type: 'Trench', identifier: '0', id: '0', relations: {}}} as any
-                    : undefined),
+            find,
             get,
             returnUndefined,
             false,
             false,
-            '0',
+            'et1',
             true);
 
         try {
             await process([{ resource:
-                    {type: 'Feature', identifier: 'one', relations: { parent: '0' }}} as any]);
+                    {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}} as any]);
             fail();
         } catch (e) {
             expect(e[0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
@@ -195,7 +185,6 @@ describe('DefaultImportCalc', () => {
 
     it('parent is an array', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
             asyncReturnUndefined,

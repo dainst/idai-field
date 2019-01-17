@@ -223,7 +223,6 @@ export module DefaultImportCalc {
         //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
         // }
 
-
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
             relatedDocuments = await RelationsCompleter.completeInverseRelations(
                 documents,

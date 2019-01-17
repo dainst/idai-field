@@ -93,7 +93,7 @@ export class ImportComponent implements OnInit {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
             this.file as any, this.url as any, this.http);
-        if (!reader) return this.messages.add([M.IMPORT_ERROR_GENERIC_START_ERROR]);
+        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
         let uploadReady = false;

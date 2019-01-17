@@ -263,7 +263,7 @@ export class IdigCsvParser extends AbstractParser {
         point[0] = parseFloat(coordinates[0].replace(',', '.'));
         point[1] = parseFloat(coordinates[1].replace(',', '.'));
         if (isNaN(point[0]) || isNaN(point[1])) {
-            throw [M.IMPORT_INVALID_GEOMETRY, lineNumber];
+            throw [M.IMPORT_PARSER_INVALID_GEOMETRY, lineNumber];
         }
 
         return point;

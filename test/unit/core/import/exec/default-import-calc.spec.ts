@@ -57,7 +57,7 @@ describe('DefaultImportCalc', () => {
             { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingTrench' }}}
             ]);
 
-        const resource = result[0][0];
+        const resource = result[0][0].resource;
         expect(resource.id).toBe('101');
         expect(resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(resource.relations['liesWithin']).toBeUndefined();
@@ -65,7 +65,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    fit('child of existing feature', async done => {
+    xit('child of existing feature', async done => {
 
         const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
             false,

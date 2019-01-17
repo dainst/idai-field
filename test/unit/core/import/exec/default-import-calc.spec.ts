@@ -65,7 +65,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    xit('child of existing feature', async done => {
+    it('child of existing feature', async done => {
 
         const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
             false,
@@ -77,8 +77,7 @@ describe('DefaultImportCalc', () => {
             { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingFeature' }}}
         ]);
 
-        console.log(JSON.stringify(result))
-        const resource = result[0][0];
+        const resource = result[0][0].resource;
         expect(resource.id).toBe('101'); // // includes must also be set
         expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
         expect(resource.relations['liesWithin'][0]).toEqual('ef1');
@@ -100,7 +99,6 @@ describe('DefaultImportCalc', () => {
             // crucially, allow to define things in an arbitrary order (three forward references two) TODO make separate test for this, the first and the second test then can work with only two resources each
             { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
-        
         expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
@@ -116,7 +114,6 @@ describe('DefaultImportCalc', () => {
 
     it('assignment to existing operation via parameter, nested resources from import', async done => {
 
-        let findCall = 0;
         const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             asyncReturnUndefined,

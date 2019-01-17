@@ -162,40 +162,60 @@ export module DefaultImportCalc {
                                     mainTypeDocumentId: string) {
 
 
+        function searchInImport(target: string) {
+
+            let liesWithinTargetInImport = undefined;
+            for (let targetInImport of documents) {
+                if (targetInImport.resource.id === target) {
+                    liesWithinTargetInImport = targetInImport;
+                    if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
+                        // TODO delete liesWithin in this case
+                        return [liesWithinTargetInImport.resource.id, undefined];
+                    }
+                    if (targetInImport.resource.relations.isRecordedIn
+                        && targetInImport.resource.relations.isRecordedIn.length > 0) {
+                        return [targetInImport.resource.relations.isRecordedIn[0], undefined];
+                    }
+                    return [undefined, targetInImport];
+                }
+            }
+        }
+
+
         async function setRecordedIns() {
 
             // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
-            function setRecordedInsFor(document: Document): string|undefined {
+            async function setRecordedInsFor(document: Document): Promise<string|undefined> {
 
                 const relations = document.resource.relations;
                 if (!relations
                     || isUndefinedOrEmpty(relations[LIES_WITHIN])
                     || isNot(undefinedOrEmpty)(relations[RECORDED_IN])) return;
 
-                let liesWithinTargetInImport = undefined;
-                for (let targetInImport of documents) {
-                    if (targetInImport.resource.id === relations[LIES_WITHIN][0]) {
-                        liesWithinTargetInImport = targetInImport;
-                        if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
-                            // TODO delete liesWithin in this case
-                            return liesWithinTargetInImport.resource.id;
-                        }
-                        if (targetInImport.resource.relations.isRecordedIn
-                            && targetInImport.resource.relations.isRecordedIn.length > 0) {
-                            return targetInImport.resource.relations.isRecordedIn[0];
-                        }
+                const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0]);
+                if (liesWithinTargetInImport) {
+                    if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0] as any;
+                    else if (isNot(undefinedOrEmpty)((liesWithinTargetInImport as any)[1].resource.relations[LIES_WITHIN])) {
+                        return await setRecordedInsFor((liesWithinTargetInImport[1] as any));
                     }
                 }
+                try {
+                    const got = await get(relations[LIES_WITHIN][0]);
+                    return  operationTypeNames.includes(got.resource.type)
+                        ? got.resource.id
+                        : got.resource.relations['isRecordedIn'][0];
+                } catch { console.log("err") /* TODO */}
 
-                if (isNot(undefinedOrEmpty)(relations[LIES_WITHIN]) && liesWithinTargetInImport) {
-                    return setRecordedInsFor(liesWithinTargetInImport);
-                }
+
+                // if (isNot(undefinedOrEmpty)(relations[LIES_WITHIN]) && liesWithinTargetInImport) {
+                //     return setRecordedInsFor(liesWithinTargetInImport);
+                // }
             }
 
             for (let document of documents) {
 
                 const relations = document.resource.relations;
-                const result = setRecordedInsFor(document);
+                const result = await setRecordedInsFor(document);
 
                 if (result) relations[RECORDED_IN] = [result];
                 if (relations && relations[LIES_WITHIN] && relations[RECORDED_IN] &&

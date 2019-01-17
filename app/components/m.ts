@@ -77,23 +77,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
 
     // Import Package - ImportErrors
-    public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.ImportErrors.noOperationAssignable';
-    public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.ImportErrors.noFeatureAssignable';
-    public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.ImportErrors.onlyplaceandoperationwithoutrecordedinallowed';
-    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.ImportErrors.operationsNotAllowed';
-    public static IMPORT_VALIDATION_INVALID_TYPE = 'M.ImportErrors.invalidType';
-    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.ImportErrors.duplicateidentifier';
-    public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.ImportErrors.prevalidation.missingRelationTarget';
-    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.ImportErrors.typeNotAllowed';
-    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.ImportErrors.typeOnlyAllowedOnUpdate';
-    public static IMPORT_ERROR_NOT_UPDATED = 'M.ImportErrors.notupdated';
+    public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
+    public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
+    public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
+    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.operationsNotAllowed';
+    public static IMPORT_VALIDATION_INVALID_TYPE = 'M.Import.ImportErrors.invalidType';
+    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.Import.ImportErrors.duplicateIdentifier';
+    public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
+    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
+    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.typeOnlyAllowedOnUpdate';
+    public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
     public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'M.Import.success.multiple';
-    public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.ImportErrors.missingRelationTarget';
-    public static IMPORT_EXEC_NOT_INTERRELATED = 'M.ImportErrors.notInterrelated';
-    public static IMPORT_EXEC_EMPTY_RELATION = 'M.ImportErrors.emptyRelation';
-    public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.ImportErrors.liesWithinRecordedInMismatch';
-    public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.ImportErrors.parentassignmenttooperationnotallowed';
+    public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
+    public static IMPORT_EXEC_NOT_INTERRELATED = 'M.Import.ImportErrors.notInterrelated';
+    public static IMPORT_EXEC_EMPTY_RELATION = 'M.Import.ImportErrors.emptyRelation';
+    public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.Import.ImportErrors.liesWithinRecordedInMismatch';
+    public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
+    public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -566,6 +567,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.importerrors.parentassignmenttooperationnotallowed',
                 value: 'Wenn der Modus \'Daten einer Maßnahme zuordnen gewählt ist\', dürfen keine Zuordnungen zu Maßnahmen per \'parent\' vorgenommen werden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARENT_MUST_NOT_BE_ARRAY] = {
+            content: i18n({
+                id: 'messages.Import.ImportErrors.parentMustNotBeArray',
+                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Die \'parent\'-Relation darf kein Array sein.'
             }),
             level: 'danger',
             params: ['?'],

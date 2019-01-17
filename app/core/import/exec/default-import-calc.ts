@@ -1,6 +1,6 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual} from "tsfun";
+import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual, isArray, includedIn} from "tsfun";
 import {ImportErrors} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
@@ -84,27 +84,17 @@ export module DefaultImportCalc {
 
         async function preprocessAndValidateRelations(document: Document /* new document possibly without relations */) {
 
-            if (!document.resource.relations) return;
             const relations = document.resource.relations;
-            
-            // assertNoForbiddenRelations
-            const forbidden = [];
-            if (relations['liesWithin'] !== undefined) forbidden.push('liesWithin');
-            if (relations['includes'] !== undefined) forbidden.push('includes');
-            if (relations['isRecordedIn'] !== undefined) forbidden.push('isRecordedIn');
-            
-            if (forbidden.length > 0) throw [
-                ImportErrors.INVALID_RELATIONS,
-                document.resource.type,
-                forbidden.join(', ')
-            ];
-            // -
+            if (!relations) return;
 
-            if (relations && relations['parent']) {
-                // TODO validate that parent value is not an array
-                relations['liesWithin'] = [relations['parent'] as any];
-                delete relations['parent'];
-            }
+            const forbidden = Object.keys(document.resource.relations)
+                .filter(includedIn(['liesWithin', 'includes', 'isRecordedIn']))
+                .join(', ');
+            if (forbidden) throw [ImportErrors.INVALID_RELATIONS, document.resource.type, forbidden];
+            // TODO make forbidden relations
+
+            if (isArray(relations['parent'])) throw [ImportErrors.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+            if (relations['parent']) (relations['liesWithin'] = [relations['parent'] as any]) && delete relations['parent'];
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(relations, document.resource.identifier);
@@ -194,11 +184,7 @@ export module DefaultImportCalc {
         async function replaceTopLevelLiesWithins() {
 
             for (let document of documents) {
-
                 if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
-                if (document.resource.relations['liesWithin'].length > 1) {
-                    throw "only one lies within target allowed"; // TODO throw errWithParams, do it in assertNoForbiddenRelations and rename that to assertRelationsLegal
-                }
 
                 let liesWithinTarget = undefined;
                 try { liesWithinTarget = await get(document.resource.relations['liesWithin'][0]) } catch {}

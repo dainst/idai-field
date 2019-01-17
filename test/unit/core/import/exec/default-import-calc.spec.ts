@@ -170,7 +170,7 @@ describe('DefaultImportCalc', () => {
         let findCall = 0;
         const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
             generateId,
-            async (_: any) => (
+            async (_: any) => ( // TODO extract, used multiple times
                 findCall++,
                 findCall === 1
                 ? {resource: {type: 'Trench', identifier: '0', id: '0', relations: {}}} as any
@@ -188,6 +188,31 @@ describe('DefaultImportCalc', () => {
             fail();
         } catch (e) {
             expect(e[0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
+        }
+        done();
+    });
+
+
+    it('parent is an array', async done => {
+
+        let findCall = 0;
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+            generateId,
+            asyncReturnUndefined,
+            get,
+            returnUndefined,
+            false,
+            false,
+            '0',
+            true);
+
+        try {
+            await process([{ resource:
+                    {type: 'Feature', identifier: 'one', relations: { parent: [] }}} as any]);
+            fail();
+        } catch (e) {
+            expect(e[0]).toEqual(ImportErrors.PARENT_MUST_NOT_BE_ARRAY);
+            expect(e[1]).toEqual('one');
         }
         done();
     });

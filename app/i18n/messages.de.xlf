@@ -3122,6 +3122,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
+        <source>Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</source>
+        <target state="final">Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.typeNotAllowed" datatype="html">
         <source>Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</source>
         <target state="final">Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</target>

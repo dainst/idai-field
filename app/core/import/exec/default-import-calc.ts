@@ -14,7 +14,11 @@ import {DocumentMerge} from "./document-merge";
  */
 export module DefaultImportCalc {
 
-    const forbiddenRelations = ['liesWithin', 'includes', 'isRecordedIn'];
+    const RECORDED_IN = 'isRecordedIn';
+    const LIES_WITHIN = 'liesWithin';
+    const INCLUDES = 'includes';
+    const PARENT = 'parent';
+    const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
 
 
     export function build(validator: ImportValidator,
@@ -94,8 +98,8 @@ export module DefaultImportCalc {
                 .join(', ');
             if (foundForbiddenRelations) throw [ImportErrors.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
-            if (isArray(relations['parent'])) throw [ImportErrors.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-            if (relations['parent']) (relations['liesWithin'] = [relations['parent'] as any]) && delete relations['parent'];
+            if (isArray(relations[PARENT])) throw [ImportErrors.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+            if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(relations, document.resource.identifier);
@@ -158,12 +162,12 @@ export module DefaultImportCalc {
 
                 const relations = document.resource.relations;
                 if (!relations
-                    || isUndefinedOrEmpty(relations['liesWithin'])
-                    || isNot(undefinedOrEmpty)(relations['isRecordedIn'])) return;
+                    || isUndefinedOrEmpty(relations[LIES_WITHIN])
+                    || isNot(undefinedOrEmpty)(relations[RECORDED_IN])) return;
 
                 let liesWithinTargetInImport = undefined;
                 for (let targetInImport of documents) {
-                    if (targetInImport.resource.id === relations['liesWithin'][0]) {
+                    if (targetInImport.resource.id === relations[LIES_WITHIN][0]) {
                         liesWithinTargetInImport = targetInImport;
                         if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
                             // TODO delete liesWithin in this case
@@ -176,7 +180,7 @@ export module DefaultImportCalc {
                     }
                 }
 
-                if (isNot(undefinedOrEmpty)(relations['liesWithin']) && liesWithinTargetInImport) {
+                if (isNot(undefinedOrEmpty)(relations[LIES_WITHIN]) && liesWithinTargetInImport) {
                     return setRecordedInsFor(liesWithinTargetInImport);
                 }
             }
@@ -186,10 +190,10 @@ export module DefaultImportCalc {
                 const relations = document.resource.relations;
                 const result = setRecordedInsFor(document);
 
-                if (result) relations['isRecordedIn'] = [result];
-                if (relations && relations['liesWithin'] && relations['isRecordedIn'] &&
-                    arrayEqual(relations['isRecordedIn'])(relations['liesWithin'])) {
-                    delete relations['liesWithin'];
+                if (result) relations[RECORDED_IN] = [result];
+                if (relations && relations[LIES_WITHIN] && relations[RECORDED_IN] &&
+                    arrayEqual(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
+                    delete relations[LIES_WITHIN];
                 }
             }
         }
@@ -199,15 +203,15 @@ export module DefaultImportCalc {
 
             for (let document of documents) {
                 const relations = document.resource.relations;
-                if (!relations || !relations['liesWithin']) continue;
+                if (!relations || !relations[LIES_WITHIN]) continue;
 
                 let liesWithinTarget = undefined;
-                try { liesWithinTarget = await get(relations['liesWithin'][0]) } catch {}
+                try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
                 if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
 
                     if (!mainTypeDocumentId) {
-                        relations['isRecordedIn'] = relations['liesWithin'];
-                        delete relations['liesWithin'];
+                        relations[RECORDED_IN] = relations[LIES_WITHIN];
+                        delete relations[LIES_WITHIN];
                     } else {
                         throw [ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
                     }
@@ -227,7 +231,7 @@ export module DefaultImportCalc {
                 mergeMode)
             : [];
     }
-    // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
+    // if (!arrayEqual(liesWithinTarget.resource.relations[RECORDED_IN])(document.resource.relations[RECORDED_IN])) {
     //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
     // }
     // TODO every resource has to have a lies within relation
@@ -287,9 +291,9 @@ export module DefaultImportCalc {
     function initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
 
         const relations = document.resource.relations;
-        if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
-        if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
-            relations['isRecordedIn'].push(mainTypeDocumentId);
+        if (!relations[RECORDED_IN]) relations[RECORDED_IN] = [];
+        if (!relations[RECORDED_IN].includes(mainTypeDocumentId)) {
+            relations[RECORDED_IN].push(mainTypeDocumentId);
         }
     }
 }

@@ -41,30 +41,28 @@ export module DefaultImport {
                                              username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
             const {get, find, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
+            const process = DefaultImportCalc.build(
+                validator,
+                operationTypeNames,
+                generateId,
+                find,
+                get,
+                getInverseRelation,
+                mergeMode,
+                allowOverwriteRelationsInMergeMode,
+                mainTypeDocumentId,
+                useIdentifiersInRelations);
+
+            const result = await process(documents);
+            if (result[2]) return {errors: [result[2]], successfulImports: 0};
+
+            const updateErrors = [];
             try {
-                const process = DefaultImportCalc.build(
-                    validator,
-                    operationTypeNames,
-                    generateId,
-                    find,
-                    get,
-                    getInverseRelation,
-                    mergeMode,
-                    allowOverwriteRelationsInMergeMode,
-                    mainTypeDocumentId,
-                    useIdentifiersInRelations);
-
-                const documentsForUpdateAndRelatedDocuments = await process(documents);
-
-                const updateErrors = [];
-                try {
-                    await ImportUpdater.go(
-                        documentsForUpdateAndRelatedDocuments[0],
-                        documentsForUpdateAndRelatedDocuments[1], datastore, username, mergeMode);
-                } catch (errWithParams) { updateErrors.push(errWithParams)}
-                return { errors: updateErrors, successfulImports: documents.length };
-
-            } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
+                await ImportUpdater.go(
+                    result[0],
+                    result[1], datastore, username, mergeMode);
+            } catch (errWithParams) { updateErrors.push(errWithParams)}
+            return { errors: updateErrors, successfulImports: documents.length };
         }
     }
 

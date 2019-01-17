@@ -32,22 +32,28 @@ export module DefaultImportCalc {
                           mainTypeDocumentId: string,
                           useIdentifiersInRelations: boolean) {
 
+        // TODO check param compatibilty
+
         return async function process(documents: Array<Document>) {
 
-            const documentsForUpdate = await processDocuments(
-                documents,
-                validator,
-                mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
-                find, generateId);
+            try {
+                const documentsForUpdate = await processDocuments(
+                    documents,
+                    validator,
+                    mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
+                    find, generateId);
 
-            const relatedDocuments = await processRelations(
-                documentsForUpdate,
-                validator, operationTypeNames,
-                mergeMode, allowOverwriteRelationsInMergeMode,
-                getInverseRelation, get,
-                mainTypeDocumentId);
+                const relatedDocuments = await processRelations(
+                    documentsForUpdate,
+                    validator, operationTypeNames,
+                    mergeMode, allowOverwriteRelationsInMergeMode,
+                    getInverseRelation, get,
+                    mainTypeDocumentId);
 
-            return [documentsForUpdate, relatedDocuments];
+                return [documentsForUpdate, relatedDocuments, undefined];
+            } catch (errWithParams) {
+                return [[],[], errWithParams];
+            }
         }
     }
 

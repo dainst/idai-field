@@ -45,13 +45,28 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('child of existing operation', async done => {
+
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames, generateId, find, get, returnUndefined,
+            false,
+            false,
+            '',
+            true);
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingTrench' }}}
+            ]);
+
+        expect(result[0][0].resource.id).toBe('101');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
     it('assignment to existing operation via lies within, nested resources from import', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
-            generateId,
-            find,
-            get,
-            returnUndefined,
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames, generateId, find, get, returnUndefined,
             false,
             false,
             '',
@@ -172,13 +187,9 @@ describe('DefaultImportCalc', () => {
             'et1',
             true);
 
-        try {
-            await process([{ resource:
-                    {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}} as any]);
-            fail();
-        } catch (e) {
-            expect(e[0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
-        }
+        const result = await process([{ resource:
+            {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}} as any]);
+        expect(result[2][0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
     });
 
@@ -195,14 +206,10 @@ describe('DefaultImportCalc', () => {
             '0',
             true);
 
-        try {
-            await process([{ resource:
-                    {type: 'Feature', identifier: 'one', relations: { parent: [] }}} as any]);
-            fail();
-        } catch (e) {
-            expect(e[0]).toEqual(ImportErrors.PARENT_MUST_NOT_BE_ARRAY);
-            expect(e[1]).toEqual('one');
-        }
+        const result = await process([{ resource:
+            {type: 'Feature', identifier: 'one', relations: { parent: [] }}} as any]);
+        expect(result[2][0]).toEqual(ImportErrors.PARENT_MUST_NOT_BE_ARRAY);
+        expect(result[2][1]).toEqual('one');
         done();
     });
 
@@ -218,12 +225,8 @@ describe('DefaultImportCalc', () => {
             '',
             true);
 
-        try {
-            await process([{ resource: {type: 'Feature', identifier: 'one', relations: {}}} as any]);
-            fail();
-        } catch (e) {
-            expect(e[0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
-        }
+        const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: {}}} as any]);
+        expect(result[2][0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
         done();
     });
 
@@ -237,13 +240,9 @@ describe('DefaultImportCalc', () => {
             '',
             true);
 
-        try {
-            await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
-            fail();
-        } catch (e) {
-            expect(e[0]).toEqual(ImportErrors.INVALID_RELATIONS);
-            expect(e[2]).toEqual('includes');
-        }
+        const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
+        expect(result[2][0]).toEqual(ImportErrors.INVALID_RELATIONS);
+        expect(result[2][2]).toEqual('includes');
         done();
     });
 });

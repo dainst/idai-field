@@ -7,9 +7,9 @@ import {ImportErrors} from "../../../../../app/core/import/exec/import-errors";
 describe('DefaultImportCalc', () => {
 
 
-    let mockValidator;
+    let validator;
 
-    let operationTypeNames = ['Trench'];
+    let opTypeNames = ['Trench'];
 
     const existingTrench = {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
@@ -36,7 +36,7 @@ describe('DefaultImportCalc', () => {
 
     beforeEach(() => {
         i = 0;
-        mockValidator = jasmine.createSpyObj('validator', [
+        validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType',
@@ -47,7 +47,7 @@ describe('DefaultImportCalc', () => {
 
     it('child of existing operation', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames, generateId, find, get, returnUndefined,
+        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
             false,
             false,
             '',
@@ -57,16 +57,38 @@ describe('DefaultImportCalc', () => {
             { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingTrench' }}}
             ]);
 
-        expect(result[0][0].resource.id).toBe('101');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
+        const resource = result[0][0];
+        expect(resource.id).toBe('101');
+        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    fit('child of existing feature', async done => {
+
+        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+            false,
+            false,
+            '',
+            true);
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'newFeature', relations: { parent: 'existingFeature' }}}
+        ]);
+
+        console.log(JSON.stringify(result))
+        const resource = result[0][0];
+        expect(resource.id).toBe('101'); // // includes must also be set
+        expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
+        expect(resource.relations['liesWithin'][0]).toEqual('ef1');
         done();
     });
 
 
     it('assignment to existing operation via lies within, nested resources from import', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames, generateId, find, get, returnUndefined,
+        const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
             false,
             false,
             '',
@@ -95,7 +117,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via parameter, nested resources from import', async done => {
 
         let findCall = 0;
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             asyncReturnUndefined,
             get,
@@ -126,7 +148,7 @@ describe('DefaultImportCalc', () => {
 
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             find,
             get,
@@ -151,7 +173,7 @@ describe('DefaultImportCalc', () => {
 
     it('import operation including feature', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             asyncReturnUndefined,
             get,
@@ -177,7 +199,7 @@ describe('DefaultImportCalc', () => {
 
     it('clash of assigned main type id with use of parent', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             find,
             get,
@@ -196,7 +218,7 @@ describe('DefaultImportCalc', () => {
 
     it('parent is an array', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId,
             asyncReturnUndefined,
             get,
@@ -216,9 +238,9 @@ describe('DefaultImportCalc', () => {
 
     it('missing liesWithin and no operation assigned', async done => {
 
-        mockValidator.assertHasLiesWithin.and.throwError('E');
+        validator.assertHasLiesWithin.and.throwError('E');
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId, asyncReturnUndefined, get, returnUndefined,
             false,
             false,
@@ -233,7 +255,7 @@ describe('DefaultImportCalc', () => {
 
     it('forbidden relation', async done => {
 
-        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+        const process = DefaultImportCalc.build(validator, opTypeNames,
             generateId, asyncReturnUndefined, get, returnUndefined,
             false,
             false,

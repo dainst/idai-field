@@ -32,6 +32,7 @@ export module DefaultImportCalc {
                           mainTypeDocumentId: string,
                           useIdentifiersInRelations: boolean) {
 
+        // TODO set includes relations and adjust tests to check the results, or decide to not set includes at all
         // TODO check param compatibilty
 
         return async function process(documents: Array<Document>) {

@@ -245,12 +245,9 @@ export module DefaultImportCalc {
 
         return documents
             .filter(hasNot('resource.id'))
-            .reduce((identifierMap: { [identifier: string]: string }, document)  => {
-                const uuid = generateId();
-                document.resource.id = uuid;
-                identifierMap[document.resource.identifier] = uuid;
-                return identifierMap;
-            }, {});
+            .reduce((identifierMap: { [identifier: string]: string }, document)  =>
+                (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
+            , {});
     }
 
 

@@ -201,7 +201,7 @@ export module DefaultImportCalc {
         }
 
 
-        async function replaceTopLevelLiesWithins() {
+        async function replaceTopLevelLiesWithins() { // TODO what about top level lies within from import?
 
             for (let document of documents) {
                 const relations = document.resource.relations;

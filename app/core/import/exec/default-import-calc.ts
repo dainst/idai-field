@@ -14,6 +14,8 @@ import {DocumentMerge} from "./document-merge";
  */
 export module DefaultImportCalc {
 
+    const forbiddenRelations = ['liesWithin', 'includes', 'isRecordedIn'];
+
 
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
@@ -87,11 +89,10 @@ export module DefaultImportCalc {
             const relations = document.resource.relations;
             if (!relations) return;
 
-            const forbidden = Object.keys(document.resource.relations)
-                .filter(includedIn(['liesWithin', 'includes', 'isRecordedIn']))
+            const foundForbiddenRelations = Object.keys(document.resource.relations)
+                .filter(includedIn(forbiddenRelations))
                 .join(', ');
-            if (forbidden) throw [ImportErrors.INVALID_RELATIONS, document.resource.type, forbidden];
-            // TODO make forbidden relations
+            if (foundForbiddenRelations) throw [ImportErrors.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
             if (isArray(relations['parent'])) throw [ImportErrors.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
             if (relations['parent']) (relations['liesWithin'] = [relations['parent'] as any]) && delete relations['parent'];

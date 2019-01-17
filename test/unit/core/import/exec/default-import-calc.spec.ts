@@ -88,6 +88,62 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('import operation', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Trench', identifier: 'zero', relations: {}}}
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.identifier).toBe('zero');
+        expect(resource.relations['isRecordedIn']).toBeUndefined();
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    it('import operation including feature', async done => {
+
+        const result = await process([
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
+            { resource: {type: 'Trench', identifier: 'zero', relations: {}}} as any]);
+
+        const resource = result[0][0].resource;
+        expect(resource.identifier).toBe('one');
+        expect(resource.relations['isRecordedIn'][0]).toBe('102');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    it('import feature as child of existing operation', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}}
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('101');
+        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    it('import feature as child of existing operation, via parameter', async done => {
+
+        const result = await processWithMainType(<any>[
+            { resource: {type: 'Feature', identifier: 'one', relations: {}}}
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('101');
+        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
     // TODO import operation and feature, all from import
 
 
@@ -146,22 +202,6 @@ describe('DefaultImportCalc', () => {
 
 
     // TODO assignment to existing feature, recorded in mismatch because of assignment via parameter
-
-
-    it('import operation including feature', async done => {
-
-        const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
-            { resource: {type: 'Trench', identifier: 'zero', relations: {}}} as any]);
-
-        expect(result[0][0].resource.identifier).toBe('one');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('102');
-        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
-        expect(result[0][1].resource.identifier).toBe('zero');
-        expect(result[0][1].resource.relations['isRecordedIn']).toBeUndefined();
-        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
-        done();
-    });
 
 
     it('clash of assigned main type id with use of parent', async done => {

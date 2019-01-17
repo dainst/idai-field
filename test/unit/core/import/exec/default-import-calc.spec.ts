@@ -33,6 +33,7 @@ describe('DefaultImportCalc', () => {
 
     let resourceIdCounter;
     let process;
+    let processWithMainType;
 
 
     beforeEach(() => {
@@ -49,6 +50,12 @@ describe('DefaultImportCalc', () => {
             false,
             false,
             '',
+            true);
+
+        processWithMainType = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+            false,
+            false,
+            'et1',
             true);
     });
 
@@ -107,48 +114,28 @@ describe('DefaultImportCalc', () => {
 
     it('assignment to existing operation via parameter, nested resources from import', async done => {
 
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId,
-            asyncReturnUndefined,
-            get,
-            returnUndefined,
-            false,
-            false,
-            '0',
-            true);
-
-        const result = await process([
+        const result = await processWithMainType([
             { resource: {type: 'Feature', identifier: 'one', relations: {}}},
             { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
             // crucially, allow to define things in an arbitrary order (three forward references two)
             { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
         expect(result[0][0].resource.id).toBe('101');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
         expect(result[0][1].resource.id).toBe('102');
         expect(result[0][1].resource.relations['liesWithin'][0]).toBe('103');
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][2].resource.id).toBe('103');
         expect(result[0][2].resource.relations['liesWithin'][0]).toBe('101');
-        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('0');
+        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('et1');
         done();
     });
 
 
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId,
-            find,
-            get,
-            returnUndefined,
-            false,
-            false,
-            'et1',
-            true);
-
-        const result = await process([
+        const result = await processWithMainType([
             {resource: {type: 'Feature', identifier: 'one', relations: {parent: 'existingFeature'}}} as any]);
 
         expect(result[0][0].resource.id).toBe('101');
@@ -179,17 +166,7 @@ describe('DefaultImportCalc', () => {
 
     it('clash of assigned main type id with use of parent', async done => {
 
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId,
-            find,
-            get,
-            returnUndefined,
-            false,
-            false,
-            'et1',
-            true);
-
-        const result = await process([{ resource:
+        const result = await processWithMainType([{ resource:
             {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}} as any]);
         expect(result[2][0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
@@ -197,16 +174,6 @@ describe('DefaultImportCalc', () => {
 
 
     it('parent is an array', async done => {
-
-        const process = DefaultImportCalc.build(validator, opTypeNames,
-            generateId,
-            asyncReturnUndefined,
-            get,
-            returnUndefined,
-            false,
-            false,
-            '0',
-            true);
 
         const result = await process([{ resource:
             {type: 'Feature', identifier: 'one', relations: { parent: [] }}} as any]);

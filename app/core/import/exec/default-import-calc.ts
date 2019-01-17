@@ -88,7 +88,7 @@ export module DefaultImportCalc {
             }
         }
 
-        async function preprocessAndValidateRelations(document: Document /* new document possibly without relations */) {
+        async function preprocessAndValidateRelations(document: Document) {
 
             const relations = document.resource.relations;
             if (!relations) return;

@@ -16,7 +16,7 @@ describe('DefaultImportCalc', () => {
 
     let returnUndefined = () => undefined;
     let asyncReturnUndefined = async (_: any) => undefined;
-    let generateId = () => { i++; return '10' + i.toString() };
+    let generateId = () => { resourceIdCounter++; return '10' + resourceIdCounter.toString() };
     let get = async (resourceId): Promise<any> => {
 
         if (resourceId === 'ef1') return existingFeature;
@@ -31,11 +31,11 @@ describe('DefaultImportCalc', () => {
     };
 
 
-    let i;
+    let resourceIdCounter;
 
 
     beforeEach(() => {
-        i = 0;
+        resourceIdCounter = 0;
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',

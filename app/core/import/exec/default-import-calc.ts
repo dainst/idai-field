@@ -205,11 +205,6 @@ export module DefaultImportCalc {
                         ? got.resource.id
                         : got.resource.relations['isRecordedIn'][0];
                 } catch { console.log("err") /* TODO */}
-
-
-                // if (isNot(undefinedOrEmpty)(relations[LIES_WITHIN]) && liesWithinTargetInImport) {
-                //     return setRecordedInsFor(liesWithinTargetInImport);
-                // }
             }
 
             for (let document of documents) {

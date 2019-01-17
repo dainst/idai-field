@@ -1,5 +1,5 @@
 import {DefaultImportCalc} from "../../../../../app/core/import/exec/default-import-calc";
-import {ImportErrors} from "../../../../../app/core/import/exec/import-errors";
+import {ImportErrors as E} from "../../../../../app/core/import/exec/import-errors";
 
 /**
  * @author Daniel de Oliveira
@@ -15,7 +15,7 @@ describe('DefaultImportCalc', () => {
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
 
     let returnUndefined = () => undefined;
-    let asyncReturnUndefined = async (_: any) => undefined;
+
     let generateId = () => { resourceIdCounter++; return '10' + resourceIdCounter.toString() };
     let get = async (resourceId): Promise<any> => {
 
@@ -208,7 +208,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await processWithMainType([{ resource:
             {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}} as any]);
-        expect(result[2][0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
+        expect(result[2][0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
     });
 
@@ -217,7 +217,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([{ resource:
             {type: 'Feature', identifier: 'one', relations: { parent: [] }}} as any]);
-        expect(result[2][0]).toEqual(ImportErrors.PARENT_MUST_NOT_BE_ARRAY);
+        expect(result[2][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
         expect(result[2][1]).toEqual('one');
         done();
     });
@@ -228,7 +228,7 @@ describe('DefaultImportCalc', () => {
         validator.assertHasLiesWithin.and.throwError('E');
 
         const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: {}}} as any]);
-        expect(result[2][0]).toEqual(ImportErrors.NO_LIES_WITHIN_SET);
+        expect(result[2][0]).toEqual(E.NO_LIES_WITHIN_SET);
         done();
     });
 
@@ -236,7 +236,7 @@ describe('DefaultImportCalc', () => {
     it('forbidden relation', async done => {
 
         const result = await process([{ resource: {type: 'Feature', identifier: 'one', relations: { includes: [] }}} as any]);
-        expect(result[2][0]).toEqual(ImportErrors.INVALID_RELATIONS);
+        expect(result[2][0]).toEqual(E.INVALID_RELATIONS);
         expect(result[2][2]).toEqual('includes');
         done();
     });

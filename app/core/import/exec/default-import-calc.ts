@@ -198,15 +198,16 @@ export module DefaultImportCalc {
         async function replaceTopLevelLiesWithins() {
 
             for (let document of documents) {
-                if (!document.resource.relations || !document.resource.relations['liesWithin']) continue;
+                const relations = document.resource.relations;
+                if (!relations || !relations['liesWithin']) continue;
 
                 let liesWithinTarget = undefined;
-                try { liesWithinTarget = await get(document.resource.relations['liesWithin'][0]) } catch {}
+                try { liesWithinTarget = await get(relations['liesWithin'][0]) } catch {}
                 if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
 
                     if (!mainTypeDocumentId) {
-                        document.resource.relations['isRecordedIn'] = document.resource.relations['liesWithin'];
-                        delete document.resource.relations['liesWithin'];
+                        relations['isRecordedIn'] = relations['liesWithin'];
+                        delete relations['liesWithin'];
                     } else {
                         throw [ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
                     }

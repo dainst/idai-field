@@ -66,10 +66,8 @@ export module DefaultImportCalc {
                                     find: (identifier: string) => Promise<Document|undefined>,
                                     generateId: () => string): Promise<Array<Document>> {
 
-        /**
-         * Rewrites the relations of document in place
-         */
-        async function rewriteIdentifiersInRelations(relations: Relations) {
+
+        async function rewriteIdentifiersInRelations(relations: Relations): Promise<void> {
 
             for (let relation of Object.keys(relations)) {
 
@@ -88,7 +86,8 @@ export module DefaultImportCalc {
             }
         }
 
-        async function preprocessAndValidateRelations(document: Document) {
+
+        async function preprocessAndValidateRelations(document: Document): Promise<void> {
 
             const relations = document.resource.relations;
             if (!relations) return;
@@ -107,7 +106,8 @@ export module DefaultImportCalc {
             }
         }
 
-        function validate(document: Document) {
+
+        function validate(document: Document): Document {
 
             if (!mergeMode) {
                 validator.assertIsKnownType(document);

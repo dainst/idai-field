@@ -165,6 +165,34 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('clash of assigned main type id with use of parent', async done => {
+
+        let findCall = 0;
+        const process = DefaultImportCalc.build(mockValidator, operationTypeNames,
+            generateId,
+            async (_: any) => (
+                findCall++,
+                findCall === 1
+                ? {resource: {type: 'Trench', identifier: '0', id: '0', relations: {}}} as any
+                    : undefined),
+            get,
+            returnUndefined,
+            false,
+            false,
+            '0',
+            true);
+
+        try {
+            await process([{ resource:
+                    {type: 'Feature', identifier: 'one', relations: { parent: '0' }}} as any]);
+            fail();
+        } catch (e) {
+            expect(e[0]).toEqual(ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
+        }
+        done();
+    });
+
+
     it('missing liesWithin and no operation assigned', async done => {
 
         mockValidator.assertHasLiesWithin.and.throwError('E');

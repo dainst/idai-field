@@ -1079,7 +1079,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -2317,7 +2317,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -3109,6 +3109,14 @@
       <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
         <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</source>
         <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.importerrors.parentassignmenttooperationnotallowed" datatype="html">
+        <source>Wenn der Modus 'Daten einer Maßnahme zuordnen gewählt ist', dürfen keine Zuordnungen zu Maßnahmen per 'parent' vorgenommen werden.</source>
+        <target state="final">Wenn der Modus 'Daten einer Maßnahme zuordnen gewählt ist', dürfen keine Zuordnungen zu Maßnahmen per 'parent' vorgenommen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

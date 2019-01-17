@@ -91,6 +91,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_EXEC_NOT_INTERRELATED = 'importer.error.notInterrelated';
     public static IMPORT_EXEC_EMPTY_RELATION = 'importer.error.emptyRelation';
     public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'importer.error.liesWithinRecordedInMismatch';
+    public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'importerror.parentassignmenttooperationnotallowed';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -554,6 +555,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.liesWithinRecordedInMismatch',
                 value: 'Beim Import ist ein Fehler aufgetreten: Liegt in Beziehung zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] = {
+            content: i18n({
+                id: 'messages.importerrors.parentassignmenttooperationnotallowed',
+                value: 'Wenn der Modus \'Daten einer Maßnahme zuordnen gewählt ist\', dürfen keine Zuordnungen zu Maßnahmen per \'parent\' vorgenommen werden.'
             }),
             level: 'danger',
             params: ['?'],

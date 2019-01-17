@@ -150,31 +150,47 @@ export module DefaultImportCalc {
                                     get: (_: string) => Promise<Document>,
                                     mainTypeDocumentId: string) {
 
-        // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
-        function setRecordedIns(document: Document): string|undefined {
 
-            const relations = document.resource.relations;
-            if (!relations
-                || isUndefinedOrEmpty(relations['liesWithin'])
-                || isNot(undefinedOrEmpty)(relations['isRecordedIn'])) return;
+        async function setRecordedIns() {
 
-            let liesWithinTargetInImport = undefined;
-            for (let targetInImport of documents) {
-                if (targetInImport.resource.id === relations['liesWithin'][0]) {
-                    liesWithinTargetInImport = targetInImport;
-                    if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
-                        // TODO delete liesWithin in this case
-                        return liesWithinTargetInImport.resource.id;
+            // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
+            function setRecordedInsFor(document: Document): string|undefined {
+
+                const relations = document.resource.relations;
+                if (!relations
+                    || isUndefinedOrEmpty(relations['liesWithin'])
+                    || isNot(undefinedOrEmpty)(relations['isRecordedIn'])) return;
+
+                let liesWithinTargetInImport = undefined;
+                for (let targetInImport of documents) {
+                    if (targetInImport.resource.id === relations['liesWithin'][0]) {
+                        liesWithinTargetInImport = targetInImport;
+                        if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
+                            // TODO delete liesWithin in this case
+                            return liesWithinTargetInImport.resource.id;
+                        }
+                        if (targetInImport.resource.relations.isRecordedIn
+                            && targetInImport.resource.relations.isRecordedIn.length > 0) {
+                            return targetInImport.resource.relations.isRecordedIn[0];
+                        }
                     }
-                    if (targetInImport.resource.relations.isRecordedIn
-                        && targetInImport.resource.relations.isRecordedIn.length > 0) {
-                        return targetInImport.resource.relations.isRecordedIn[0];
-                    }
+                }
+
+                if (isNot(undefinedOrEmpty)(relations['liesWithin']) && liesWithinTargetInImport) {
+                    return setRecordedInsFor(liesWithinTargetInImport);
                 }
             }
 
-            if (isNot(undefinedOrEmpty)(relations['liesWithin']) && liesWithinTargetInImport) {
-                return setRecordedIns(liesWithinTargetInImport);
+            for (let document of documents) {
+
+                const relations = document.resource.relations;
+                const result = setRecordedInsFor(document);
+
+                if (result) relations['isRecordedIn'] = [result];
+                if (relations && relations['liesWithin'] && relations['isRecordedIn'] &&
+                    arrayEqual(relations['isRecordedIn'])(relations['liesWithin'])) {
+                    delete relations['liesWithin'];
+                }
             }
         }
 
@@ -213,18 +229,7 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode);
         }
-        if (!mainTypeDocumentId) {
-            for (let document of documents) {
-                const result = setRecordedIns(document);
-                if (result) document.resource.relations['isRecordedIn'] = [result];
-
-                if (document.resource.relations && document.resource.relations['liesWithin'] && document.resource.relations['isRecordedIn'] &&
-
-                    arrayEqual(document.resource.relations['isRecordedIn'])(document.resource.relations['liesWithin'])) {
-                    delete document.resource.relations['liesWithin'];
-                }
-            }
-        }
+        if (!mainTypeDocumentId) await setRecordedIns();
 
         // TODO every resource has to have a lies within relation
         // furthermore, every lieswithin path between resources has to end in an operation resource

@@ -1,7 +1,7 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
 import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual, isArray, includedIn, isNot, undefinedOrEmpty} from "tsfun";
-import {ImportErrors} from "./import-errors";
+import {ImportErrors as E} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
 import {NewDocument} from "idai-components-2/src/model/core/new-document";
@@ -80,7 +80,7 @@ export module DefaultImportCalc {
                         relations[relation][i] = identifierMap[identifier];
                     } else {
                         const targetDocFromDB = await find(identifier);
-                        if (!targetDocFromDB) throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
+                        if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
                         relations[relation][i] = targetDocFromDB.resource.id;
                     }
                     i++;
@@ -96,9 +96,9 @@ export module DefaultImportCalc {
             const foundForbiddenRelations = Object.keys(document.resource.relations)
                 .filter(includedIn(forbiddenRelations))
                 .join(', ');
-            if (foundForbiddenRelations) throw [ImportErrors.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
-            if (isArray(relations[PARENT])) throw [ImportErrors.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
             if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
@@ -120,7 +120,7 @@ export module DefaultImportCalc {
 
         const duplicates_ = duplicates(documents.map(to('resource.identifier')));
 
-        if (duplicates_.length > 0) throw [ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]];
+        if (duplicates_.length > 0) throw [E.DUPLICATE_IDENTIFIER, duplicates_[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         const documentsForUpdate: Array<Document> = [];
@@ -213,7 +213,7 @@ export module DefaultImportCalc {
                         relations[RECORDED_IN] = relations[LIES_WITHIN];
                         delete relations[LIES_WITHIN];
                     } else {
-                        throw [ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
+                        throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
                     }
                 }
             }
@@ -263,9 +263,9 @@ export module DefaultImportCalc {
         const existingDocument = await find(document.resource.identifier);
         if (mergeIfExists) {
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate, allowOverwriteRelationsOnMerge);
-            else throw [ImportErrors.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
+            else throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
         } else {
-            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
+            if (existingDocument) throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
         return documentForUpdate;
     }
@@ -278,7 +278,7 @@ export module DefaultImportCalc {
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
                 try { validator.assertHasLiesWithin(document) }
-                catch { throw [ImportErrors.NO_LIES_WITHIN_SET] }
+                catch { throw [E.NO_LIES_WITHIN_SET] }
             } else {
                 await validator.assertIsNotOverviewType(document);
                 await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);

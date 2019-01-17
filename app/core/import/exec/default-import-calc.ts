@@ -213,14 +213,16 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode);
         }
-        if (!mainTypeDocumentId) for (let document of documents) {
-            const result = setRecordedIns(document);
-            if (result) document.resource.relations['isRecordedIn'] = [result];
+        if (!mainTypeDocumentId) {
+            for (let document of documents) {
+                const result = setRecordedIns(document);
+                if (result) document.resource.relations['isRecordedIn'] = [result];
 
-            if (document.resource.relations && document.resource.relations['liesWithin'] && document.resource.relations['isRecordedIn'] &&
+                if (document.resource.relations && document.resource.relations['liesWithin'] && document.resource.relations['isRecordedIn'] &&
 
-                arrayEqual(document.resource.relations['isRecordedIn'])(document.resource.relations['liesWithin'])) {
-                delete document.resource.relations['liesWithin'];
+                    arrayEqual(document.resource.relations['isRecordedIn'])(document.resource.relations['liesWithin'])) {
+                    delete document.resource.relations['liesWithin'];
+                }
             }
         }
 

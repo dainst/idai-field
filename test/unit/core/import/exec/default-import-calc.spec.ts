@@ -85,6 +85,9 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    // TODO import operation and feature, all from import
+
+
     it('assignment to existing operation via lies within, nested resources from import', async done => {
 
         const process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,

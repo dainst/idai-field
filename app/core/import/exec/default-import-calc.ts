@@ -215,26 +215,22 @@ export module DefaultImportCalc {
         }
 
 
-        let relatedDocuments: Array<Document> = [];
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins();
-
-        // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
-        //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
-        // }
-
-        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-            relatedDocuments = await RelationsCompleter.completeInverseRelations(
-                documents,
-                get, getInverseRelation,
-                mergeMode);
-        }
         if (!mainTypeDocumentId) await setRecordedIns();
 
-        // TODO every resource has to have a lies within relation
-        // furthermore, every lieswithin path between resources has to end in an operation resource
-        return relatedDocuments;
+        return !mergeMode || allowOverwriteRelationsInMergeMode
+            ? await RelationsCompleter.completeInverseRelations(
+                documents,
+                get, getInverseRelation,
+                mergeMode)
+            : [];
     }
+    // if (!arrayEqual(liesWithinTarget.resource.relations['isRecordedIn'])(document.resource.relations['isRecordedIn'])) {
+    //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+    // }
+    // TODO every resource has to have a lies within relation
+    // furthermore, every lieswithin path between resources has to end in an operation resource
 
 
     /**

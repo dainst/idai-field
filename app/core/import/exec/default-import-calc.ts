@@ -1,6 +1,6 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual, isArray, includedIn} from "tsfun";
+import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual, isArray, includedIn, isNot, undefinedOrEmpty} from "tsfun";
 import {ImportErrors} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
@@ -153,14 +153,14 @@ export module DefaultImportCalc {
         // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
         function setRecordedIns(document: Document): string|undefined {
 
-            if (!document.resource.relations
-                || !document.resource.relations['liesWithin']
-                || document.resource.relations['liesWithin'].length === 0) return;
-            if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) return;
+            const relations = document.resource.relations;
+            if (!relations
+                || isUndefinedOrEmpty(relations['liesWithin'])
+                || isNot(undefinedOrEmpty)(relations['isRecordedIn'])) return;
 
             let liesWithinTargetInImport = undefined;
             for (let targetInImport of documents) {
-                if (targetInImport.resource.id === document.resource.relations['liesWithin'][0]) {
+                if (targetInImport.resource.id === relations['liesWithin'][0]) {
                     liesWithinTargetInImport = targetInImport;
                     if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
                         // TODO delete liesWithin in this case
@@ -173,10 +173,7 @@ export module DefaultImportCalc {
                 }
             }
 
-            if (document.resource.relations['liesWithin']
-                && document.resource.relations['liesWithin'].length > 0
-                && liesWithinTargetInImport) {
-
+            if (isNot(undefinedOrEmpty)(relations['liesWithin']) && liesWithinTargetInImport) {
                 return setRecordedIns(liesWithinTargetInImport);
             }
         }

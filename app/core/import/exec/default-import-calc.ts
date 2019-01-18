@@ -78,31 +78,29 @@ export module DefaultImportCalc {
                                     generateId: () => string): Promise<Array<Document>> {
 
 
-        async function rewriteIdentifiersInRelations(relations: Relations): Promise<void> {
-
-            for (let relation of Object.keys(relations)) {
-
-                let i = 0;
-                for (let identifier of relations[relation]) {
-
-                    if (identifierMap[identifier]) {
-                        relations[relation][i] = identifierMap[identifier];
-                    } else {
-                        const targetDocFromDB = await find(identifier);
-                        if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
-                        relations[relation][i] = targetDocFromDB.resource.id;
-                    }
-                    i++;
-                }
-            }
-        }
-
-
         async function preprocessAndValidateRelations(document: Document): Promise<Document> {
 
             const clonedDoc = clone(document);
             const relations = clonedDoc.resource.relations;
             if (!relations) return clonedDoc;
+
+
+            async function rewriteIdentifiersInRelations(): Promise<void> {
+
+                for (let relation of Object.keys(clonedDoc.resource.relations)) {
+                    let i = 0; for (let identifier of relations[relation]) {
+
+                        if (identifierMap[identifier]) {
+                            relations[relation][i] = identifierMap[identifier];
+                        } else {
+                            const targetDocFromDB = await find(identifier);
+                            if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
+                            relations[relation][i] = targetDocFromDB.resource.id;
+                        }
+                        i++;
+                    }
+                }
+            }
 
             const foundForbiddenRelations = Object.keys(clonedDoc.resource.relations)
                 .filter(includedIn(forbiddenRelations))
@@ -114,33 +112,32 @@ export module DefaultImportCalc {
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(relations, clonedDoc.resource.identifier);
-                await rewriteIdentifiersInRelations(relations);
+                await rewriteIdentifiersInRelations();
             }
             return clonedDoc;
         }
 
 
-        function validate(document: Document): Document {
-
-            if (!mergeMode) {
-                validator.assertIsKnownType(document);
-                validator.assertIsAllowedType(document, mergeMode);
-            }
-            validator.assertIsWellformed(document);
-            return document;
-        }
-
-
         const dups = duplicates(documents.map(to('resource.identifier')));
-
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
             let _ = await preprocessAndValidateRelations(document);
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
-            return validate(_);
+            return validate(_, validator, mergeMode);
         })(documents);
+    }
+
+
+    function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
+
+        if (!mergeMode) {
+            validator.assertIsKnownType(document);
+            validator.assertIsAllowedType(document, mergeMode);
+        }
+        validator.assertIsWellformed(document);
+        return document;
     }
 
 

@@ -94,7 +94,7 @@ export module DefaultImportCalc {
                 await rewriteIdentifiersInRelations(relations, find, identifierMap);
             } else {
                 await assertNoMissingRelationTargets(relations, get);
-            }
+            } // TODO if we test all relation targets, we could equally well fetch them already and build a map for later
             return document;
         }
 

@@ -122,11 +122,46 @@ export module DefaultImportCalc {
                                     mainTypeDocumentId: string) {
 
 
+        async function replaceTopLevelLiesWithins() {
+
+            for (let document of documents) {
+                const relations = document.resource.relations;
+                if (!relations || !relations[LIES_WITHIN]) continue;
+
+                let liesWithinTarget = undefined;
+                try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
+                if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
+
+                if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
+                relations[RECORDED_IN] = relations[LIES_WITHIN];
+                delete relations[LIES_WITHIN];
+            }
+        }
+
         async function setRecordedIns() {
 
             const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
                     (tmpMap[document.resource.id] = document, tmpMap),
                 {} as {[id: string]: Document});
+
+
+            async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
+                if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
+
+                const target = liesWithinTargetInImport[1] as Document;
+                if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return setRecordedInsFor(target);
+            }
+
+
+            async function getRecordedInFromExistingDocument(targetId: string) {
+
+                try {
+                    const got = await get(targetId);
+                    return  operationTypeNames.includes(got.resource.type)
+                        ? got.resource.id
+                        : got.resource.relations[RECORDED_IN][0];
+                } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
+            }
 
 
             async function setRecordedInsFor(document: Document): Promise<string|undefined> {
@@ -137,22 +172,9 @@ export module DefaultImportCalc {
                     || isNot(undefinedOrEmpty)(relations[RECORDED_IN])) return;
 
                 const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
-                if (liesWithinTargetInImport) {
-                    if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
-                    else {
-                        const target = liesWithinTargetInImport[1] as Document;
-                        if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) {
-                            return await setRecordedInsFor(target);
-                        }
-                    }
-                } else {
-                    try {
-                        const got = await get(relations[LIES_WITHIN][0]);
-                        return  operationTypeNames.includes(got.resource.type)
-                            ? got.resource.id
-                            : got.resource.relations[RECORDED_IN][0];
-                    } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
-                }
+                return liesWithinTargetInImport
+                    ? getRecordedInFromImportDocument(liesWithinTargetInImport)
+                    : getRecordedInFromExistingDocument(relations[LIES_WITHIN][0]);
             }
 
 
@@ -162,25 +184,6 @@ export module DefaultImportCalc {
                 const _ = await setRecordedInsFor(document);
                 if (_) relations[RECORDED_IN] = [_];
                 if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
-                    delete relations[LIES_WITHIN];
-                }
-            }
-        }
-
-
-        async function replaceTopLevelLiesWithins() {
-
-            for (let document of documents) {
-                const relations = document.resource.relations;
-                if (!relations || !relations[LIES_WITHIN]) continue;
-
-                let liesWithinTarget = undefined;
-                try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
-                if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
-
-                    if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
-
-                    relations[RECORDED_IN] = relations[LIES_WITHIN];
                     delete relations[LIES_WITHIN];
                 }
             }

@@ -1,6 +1,7 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual, isArray, includedIn, isNot, undefinedOrEmpty} from "tsfun";
+import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual,
+    isArray, includedIn, isNot, undefinedOrEmpty, asyncMap} from "tsfun";
 import {ImportErrors as E} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
@@ -132,14 +133,11 @@ export module DefaultImportCalc {
         if (duplicates_.length > 0) throw [E.DUPLICATE_IDENTIFIER, duplicates_[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
-        const documentsForUpdate: Array<Document> = []; // TODO remove and simplify
-        for (let document of documents) {
-
-            await preprocessAndValidateRelations(document);
-            documentsForUpdate.push(validate(await mergeOrUseAsIs(
-                document, find, mergeMode, allowOverwriteRelationsInMergeMode)));
-        }
-        return documentsForUpdate;
+        return await asyncMap(async (document: Document) => {
+            await preprocessAndValidateRelations(document); // TODO clone document, use flow
+            return validate(await mergeOrUseAsIs(
+                document, find, mergeMode, allowOverwriteRelationsInMergeMode));
+        })(documents);
     }
 
 

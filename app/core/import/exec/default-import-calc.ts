@@ -287,11 +287,16 @@ export module DefaultImportCalc {
     }
 
 
-    function searchInImport(target: string, documents: Array<Document>, operationTypeNames: string[]) {
+    function searchInImport(targetDocumentResourceId: string,
+                            documents: Array<Document>,
+                            operationTypeNames: string[]
+    ): [string|undefined,   // recordedInResourceId
+        Document|undefined] // targetDocument
+        |undefined {        // targetDocument not found
 
         let liesWithinTargetInImport = undefined;
         for (let targetInImport of documents) {
-            if (targetInImport.resource.id === target) {
+            if (targetInImport.resource.id === targetDocumentResourceId) {
                 liesWithinTargetInImport = targetInImport;
                 if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
                     // TODO delete liesWithin in this case

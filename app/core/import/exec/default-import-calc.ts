@@ -80,41 +80,22 @@ export module DefaultImportCalc {
 
         async function preprocessAndValidateRelations(document: Document): Promise<Document> {
 
-            const clonedDoc = clone(document);
-            const relations = clonedDoc.resource.relations;
-            if (!relations) return clonedDoc;
-
-
-            async function rewriteIdentifiersInRelations(): Promise<void> {
-
-                for (let relation of Object.keys(clonedDoc.resource.relations)) {
-                    let i = 0; for (let identifier of relations[relation]) {
-
-                        if (identifierMap[identifier]) {
-                            relations[relation][i] = identifierMap[identifier];
-                        } else {
-                            const targetDocFromDB = await find(identifier);
-                            if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
-                            relations[relation][i] = targetDocFromDB.resource.id;
-                        }
-                        i++;
-                    }
-                }
-            }
-
-            const foundForbiddenRelations = Object.keys(clonedDoc.resource.relations)
+            const relations = document.resource.relations;
+            if (!relations) return document;
+            
+            const foundForbiddenRelations = Object.keys(document.resource.relations)
                 .filter(includedIn(forbiddenRelations))
                 .join(', ');
-            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, clonedDoc.resource.type, foundForbiddenRelations];
+            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
-            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, clonedDoc.resource.identifier];
+            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
             if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                removeSelfReferencingIdentifiers(relations, clonedDoc.resource.identifier);
-                await rewriteIdentifiersInRelations();
+                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(relations, find, identifierMap);
             }
-            return clonedDoc;
+            return document;
         }
 
 
@@ -123,12 +104,34 @@ export module DefaultImportCalc {
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
-            let _ = await preprocessAndValidateRelations(document);
+            let _ = clone(document); 
+            _ = await preprocessAndValidateRelations(_);
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
             return validate(_, validator, mergeMode);
         })(documents);
     }
 
+
+    async function rewriteIdentifiersInRelations(relations: Relations,
+                                                 find: (identifier: string) => Promise<Document|undefined>,
+                                                 identifierMap: { [identifier: string]: string },
+                                                 ): Promise<void> {
+
+        for (let relation of Object.keys(relations)) {
+            let i = 0; for (let identifier of relations[relation]) {
+
+                if (identifierMap[identifier]) {
+                    relations[relation][i] = identifierMap[identifier];
+                } else {
+                    const targetDocFromDB = await find(identifier);
+                    if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
+                    relations[relation][i] = targetDocFromDB.resource.id;
+                }
+                i++;
+            }
+        }
+    }
+    
 
     function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
 

@@ -105,12 +105,12 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature', async done => {
 
         const result = await process([
-            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'zero' }}},
-            { resource: {type: 'Trench', identifier: 'zero', relations: {}}} as any]);
+            { resource: {type: 'Trench', identifier: 'one', relations: {}}},
+            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
-        const resource = result[0][0].resource;
-        expect(resource.identifier).toBe('one');
-        expect(resource.relations['isRecordedIn'][0]).toBe('102');
+        const resource = result[0][1].resource;
+        expect(resource.identifier).toBe('two');
+        expect(resource.relations['isRecordedIn'][0]).toBe('101');
         expect(resource.relations['liesWithin']).toBeUndefined();
         done();
     });

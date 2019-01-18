@@ -1,6 +1,6 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to, arrayEqual,
+import {duplicates, hasNot, isUndefinedOrEmpty, to, equal,
     isArray, includedIn, isNot, undefinedOrEmpty, asyncMap} from "tsfun";
 import {ImportErrors as E} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
@@ -192,20 +192,18 @@ export module DefaultImportCalc {
             }
 
             for (let document of documents) {
-
                 const relations = document.resource.relations;
-                const result = await setRecordedInsFor(document);
 
-                if (result) relations[RECORDED_IN] = [result];
-                if (relations && relations[LIES_WITHIN] && relations[RECORDED_IN] &&
-                    arrayEqual(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
+                const _ = await setRecordedInsFor(document);
+                if (_) relations[RECORDED_IN] = [_];
+                if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
                     delete relations[LIES_WITHIN];
                 }
             }
         }
 
 
-        async function replaceTopLevelLiesWithins() { // TODO what about top level lies within from import?
+        async function replaceTopLevelLiesWithins() {
 
             for (let document of documents) {
                 const relations = document.resource.relations;
@@ -215,12 +213,10 @@ export module DefaultImportCalc {
                 try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
                 if (liesWithinTarget && operationTypeNames.includes(liesWithinTarget.resource.type)) {
 
-                    if (!mainTypeDocumentId) {
-                        relations[RECORDED_IN] = relations[LIES_WITHIN];
-                        delete relations[LIES_WITHIN];
-                    } else {
-                        throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
-                    }
+                    if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
+
+                    relations[RECORDED_IN] = relations[LIES_WITHIN];
+                    delete relations[LIES_WITHIN];
                 }
             }
         }

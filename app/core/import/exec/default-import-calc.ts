@@ -210,7 +210,6 @@ export module DefaultImportCalc {
                 relations[relation][i] = identifierMap[identifier];
             } else {
                 const targetDocFromDB = await find(identifier);
-
                 if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
                 relations[relation][i] = targetDocFromDB.resource.id;
             }

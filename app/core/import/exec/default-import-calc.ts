@@ -183,7 +183,7 @@ export module DefaultImportCalc {
                     const got = await get(relations[LIES_WITHIN][0]);
                     return  operationTypeNames.includes(got.resource.type)
                         ? got.resource.id
-                        : got.resource.relations['isRecordedIn'][0];
+                        : got.resource.relations[RECORDED_IN][0];
                 } catch { console.log("err") /* TODO throw */}
             }
 

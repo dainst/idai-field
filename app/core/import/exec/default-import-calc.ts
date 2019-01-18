@@ -234,8 +234,9 @@ export module DefaultImportCalc {
     }
 
 
-    async function iterateRelationsInImport(relations: Relations,
-                                            asyncIterationFunction: Function): Promise<void> {
+    async function iterateRelationsInImport(
+        relations: Relations,
+        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: string) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
             let i = 0; for (let idOrIdentifier of relations[relation]) { // TODO write asyncForEach (with i)

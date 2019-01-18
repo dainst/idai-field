@@ -131,9 +131,9 @@ export module DefaultImportCalc {
         }
 
 
-        const duplicates_ = duplicates(documents.map(to('resource.identifier')));
+        const dups = duplicates(documents.map(to('resource.identifier')));
 
-        if (duplicates_.length > 0) throw [E.DUPLICATE_IDENTIFIER, duplicates_[0]];
+        if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {

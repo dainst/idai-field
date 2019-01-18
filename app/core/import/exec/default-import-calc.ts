@@ -68,6 +68,8 @@ export module DefaultImportCalc {
      * Rewrites relations in identifiers.
      * Does validations, mostly of structural nature, most of relation validation is done later.
      * Merges with existing documents from db if necessary.
+     *
+     * @returns clones of the documents with their properties adjusted
      */
     async function processDocuments(documents: Array<Document>,
                                     validator: ImportValidator,

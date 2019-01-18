@@ -124,7 +124,11 @@ export module DefaultImportCalc {
 
         async function setRecordedIns() {
 
-            // TODO replace traversal of documents with hash based access and also look for existing docs if not found in import
+            const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
+                    (tmpMap[document.resource.id] = document, tmpMap),
+                {} as {[id: string]: Document});
+
+
             async function setRecordedInsFor(document: Document): Promise<string|undefined> {
 
                 const relations = document.resource.relations;
@@ -147,9 +151,6 @@ export module DefaultImportCalc {
                 } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
             }
 
-            const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
-                (tmpMap[document.resource.id] = document, tmpMap),
-                {} as {[id: string]: Document});
 
             for (let document of documents) {
                 const relations = document.resource.relations;

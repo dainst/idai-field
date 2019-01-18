@@ -132,7 +132,7 @@ export module DefaultImportCalc {
                     || isUndefinedOrEmpty(relations[LIES_WITHIN])
                     || isNot(undefinedOrEmpty)(relations[RECORDED_IN])) return;
 
-                const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], documents, operationTypeNames);
+                const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
                 if (liesWithinTargetInImport) {
                     if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0] as any;
                     else if (isNot(undefinedOrEmpty)((liesWithinTargetInImport as any)[1].resource.relations[LIES_WITHIN])) {
@@ -146,6 +146,10 @@ export module DefaultImportCalc {
                         : got.resource.relations[RECORDED_IN][0];
                 } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
             }
+
+            const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
+                (tmpMap[document.resource.id] = document, tmpMap),
+                {} as {[id: string]: Document});
 
             for (let document of documents) {
                 const relations = document.resource.relations;
@@ -304,27 +308,24 @@ export module DefaultImportCalc {
 
 
     function searchInImport(targetDocumentResourceId: string,
-                            documents: Array<Document>,
+                            idMap: {[id: string]: Document},
                             operationTypeNames: string[]
     ): [string|undefined,   // recordedInResourceId
         Document|undefined] // targetDocument
         |undefined {        // targetDocument not found
 
-        let liesWithinTargetInImport = undefined;
-        for (let targetInImport of documents) {
-            if (targetInImport.resource.id === targetDocumentResourceId) {
-                liesWithinTargetInImport = targetInImport;
-                if (operationTypeNames.includes(liesWithinTargetInImport.resource.type)) {
-                    // TODO delete liesWithin in this case
-                    return [liesWithinTargetInImport.resource.id, undefined];
-                }
-                if (targetInImport.resource.relations.isRecordedIn
-                    && targetInImport.resource.relations.isRecordedIn.length > 0) {
-                    return [targetInImport.resource.relations.isRecordedIn[0], undefined];
-                }
-                return [undefined, targetInImport];
-            }
+        const targetInImport = idMap[targetDocumentResourceId];
+        if (!targetInImport) return undefined;
+
+        if (operationTypeNames.includes(targetInImport.resource.type)) {
+            // TODO delete liesWithin in this case
+            return [targetInImport.resource.id, undefined];
         }
+        if (targetInImport.resource.relations.isRecordedIn
+            && targetInImport.resource.relations.isRecordedIn.length > 0) {
+            return [targetInImport.resource.relations.isRecordedIn[0], undefined];
+        }
+        return [undefined, targetInImport];
     }
 
 

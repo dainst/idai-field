@@ -116,6 +116,20 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('import operation including feature, order reversed', async done => {
+
+        const result = await process([
+            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}},
+            { resource: {type: 'Trench', identifier: 'one', relations: {}}} as any]);
+
+        const resource = result[0][0].resource;
+        expect(resource.identifier).toBe('two');
+        expect(resource.relations['isRecordedIn'][0]).toBe('102');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
     it('import feature as child of existing operation', async done => {
 
         const result = await process(<any>[
@@ -144,51 +158,66 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    // TODO import operation and feature, all from import
+    it('nested resources, topmost child of existing operation', async done => {
 
-
-    it('assignment to existing operation via lies within, nested resources from import', async done => {
-
-        const result = await process([
+        const result = await process(<any>[
             { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}},
-            { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
-            // crucially, allow to define things in an arbitrary order (three forward references two) TODO make separate test for this, the first and the second test then can work with only two resources each
-            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
+            { resource: {type: 'Find', identifier: 'two', relations: { parent: 'one' }}}
+        ]);
 
-        expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
-        expect(result[0][1].resource.id).toBe('102');
-        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('103');
         expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][2].resource.id).toBe('103');
-        expect(result[0][2].resource.relations['liesWithin'][0]).toBe('101');
-        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('101');
         done();
     });
 
 
-    it('assignment to existing operation via parameter, nested resources from import', async done => {
+    it('nested resources, topmost child of existing operation, order reversed', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Find', identifier: 'two', relations: { parent: 'one' }}},
+            { resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingTrench' }}}
+        ]);
+
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('102');
+        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    it('nested resources, assignment to operation via parameter', async done => {
 
         const result = await processWithMainType([
             { resource: {type: 'Feature', identifier: 'one', relations: {}}},
-            { resource: {type: 'Find', identifier: 'three', relations: { parent: 'two' }}},
-            // crucially, allow to define things in an arbitrary order (three forward references two)
-            { resource: {type: 'Feature', identifier: 'two', relations: { parent: 'one' }}} as any]);
+            { resource: {type: 'Find', identifier: 'two', relations: { parent: 'one' }}} as any]);
 
-        expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
-        expect(result[0][1].resource.id).toBe('102');
-        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('103');
         expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][2].resource.id).toBe('103');
-        expect(result[0][2].resource.relations['liesWithin'][0]).toBe('101');
-        expect(result[0][2].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('101');
         done();
     });
 
 
+    it('nested resources, assignment to operation via parameter, order reversed', async done => {
+
+        const result = await processWithMainType(<any>[
+            { resource: {type: 'Find', identifier: 'two', relations: { parent: 'one' }}},
+            { resource: {type: 'Feature', identifier: 'one', relations: {}}}
+        ]);
+
+        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('102');
+        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
+    // TODO add test: assignment to existing feature, recorded in mismatch because of assignment via parameter
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
         const result = await processWithMainType([
@@ -199,9 +228,6 @@ describe('DefaultImportCalc', () => {
         expect(result[0][0].resource.relations['liesWithin'][0]).toBe('ef1');
         done();
     });
-
-
-    // TODO assignment to existing feature, recorded in mismatch because of assignment via parameter
 
 
     it('clash of assigned main type id with use of parent', async done => {

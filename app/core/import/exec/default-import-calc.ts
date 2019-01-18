@@ -138,7 +138,7 @@ export module DefaultImportCalc {
             }
         }
 
-        async function setRecordedIns() {
+        async function inferRecordedIns() {
 
             const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
                     (tmpMap[document.resource.id] = document, tmpMap),
@@ -192,7 +192,7 @@ export module DefaultImportCalc {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins();
-        if (!mainTypeDocumentId) await setRecordedIns();
+        if (!mainTypeDocumentId) await inferRecordedIns();
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter.completeInverseRelations(

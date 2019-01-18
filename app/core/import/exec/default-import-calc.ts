@@ -7,6 +7,7 @@ import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
 import {NewDocument} from "idai-components-2/src/model/core/new-document";
 import {DocumentMerge} from "./document-merge";
+import {clone} from "../../util/object-util";
 
 
 /**
@@ -97,23 +98,25 @@ export module DefaultImportCalc {
         }
 
 
-        async function preprocessAndValidateRelations(document: Document): Promise<void> {
+        async function preprocessAndValidateRelations(document: Document): Promise<Document> {
 
-            const relations = document.resource.relations;
-            if (!relations) return;
+            const clonedDoc = clone(document);
+            const relations = clonedDoc.resource.relations;
+            if (!relations) return clonedDoc;
 
-            const foundForbiddenRelations = Object.keys(document.resource.relations)
+            const foundForbiddenRelations = Object.keys(clonedDoc.resource.relations)
                 .filter(includedIn(forbiddenRelations))
                 .join(', ');
-            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, clonedDoc.resource.type, foundForbiddenRelations];
 
-            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, clonedDoc.resource.identifier];
             if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                removeSelfReferencingIdentifiers(relations, clonedDoc.resource.identifier);
                 await rewriteIdentifiersInRelations(relations);
             }
+            return clonedDoc;
         }
 
 
@@ -134,9 +137,9 @@ export module DefaultImportCalc {
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
-            await preprocessAndValidateRelations(document); // TODO clone document, use flow
-            return validate(await mergeOrUseAsIs(
-                document, find, mergeMode, allowOverwriteRelationsInMergeMode));
+            let _ = await preprocessAndValidateRelations(document);
+            _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
+            return validate(_);
         })(documents);
     }
 

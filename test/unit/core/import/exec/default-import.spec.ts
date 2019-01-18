@@ -165,11 +165,9 @@ describe('DefaultImport', () => {
             Promise.resolve({ documents: [{ resource: { type: 'Trench', id: '3' }}], totalCount: 1 }),
             Promise.resolve({totalCount: 0}));
 
-
-
         await importFunction([ docToImport as any ], mockDatastore,'user1');
-
-        expect(docToImport.resource.relations['isRecordedIn'][0]).toEqual('3');
+        const importedDocument = mockDatastore.bulkCreate.calls.mostRecent().args[0][0];
+        expect(importedDocument.resource.relations['isRecordedIn'][0]).toEqual('3');
         done();
     });
 

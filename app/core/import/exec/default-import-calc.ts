@@ -114,8 +114,7 @@ export module DefaultImportCalc {
 
     async function rewriteIdentifiersInRelations(relations: Relations,
                                                  find: (identifier: string) => Promise<Document|undefined>,
-                                                 identifierMap: { [identifier: string]: string },
-                                                 ): Promise<void> {
+                                                 identifierMap: { [identifier: string]: string }): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
             let i = 0; for (let identifier of relations[relation]) {

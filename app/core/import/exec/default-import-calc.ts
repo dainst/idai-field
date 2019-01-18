@@ -138,17 +138,21 @@ export module DefaultImportCalc {
 
                 const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
                 if (liesWithinTargetInImport) {
-                    if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0] as any;
-                    else if (isNot(undefinedOrEmpty)((liesWithinTargetInImport as any)[1].resource.relations[LIES_WITHIN])) {
-                        return await setRecordedInsFor((liesWithinTargetInImport[1] as any));
+                    if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
+                    else {
+                        const target = liesWithinTargetInImport[1] as Document;
+                        if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) {
+                            return await setRecordedInsFor(target);
+                        }
                     }
+                } else {
+                    try {
+                        const got = await get(relations[LIES_WITHIN][0]);
+                        return  operationTypeNames.includes(got.resource.type)
+                            ? got.resource.id
+                            : got.resource.relations[RECORDED_IN][0];
+                    } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
                 }
-                try {
-                    const got = await get(relations[LIES_WITHIN][0]);
-                    return  operationTypeNames.includes(got.resource.type)
-                        ? got.resource.id
-                        : got.resource.relations[RECORDED_IN][0];
-                } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
             }
 
 

@@ -260,6 +260,36 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('parent not found', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'zero', relations: { parent: 'notfound' }}}
+        ]);
+
+        expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(result[2][1]).toEqual('notfound');
+        done();
+    });
+
+
+    it('parent not found, when using plain ids', async done => {
+
+        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+            false,
+            false,
+            '',
+            false); // <-
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'zero', relations: { parent: 'notfound' }}},
+        ]);
+
+        expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(result[2][1]).toEqual('notfound');
+        done();
+    });
+
+
     it('clash of assigned main type id with use of parent', async done => {
 
         const result = await processWithMainType([{ resource:

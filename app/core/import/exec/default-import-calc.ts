@@ -46,7 +46,7 @@ export module DefaultImportCalc {
                     documents,
                     validator,
                     mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
-                    find, generateId);
+                    find, get, generateId);
 
                 const relatedDocuments = await processRelations(
                     documentsForUpdate,
@@ -64,11 +64,6 @@ export module DefaultImportCalc {
 
 
     /**
-     * Assigns ids if necessary.
-     * Rewrites relations in identifiers.
-     * Does validations, mostly of structural nature, most of relation validation is done later.
-     * Merges with existing documents from db if necessary.
-     *
      * @returns clones of the documents with their properties adjusted
      */
     async function processDocuments(documents: Array<Document>,
@@ -77,6 +72,7 @@ export module DefaultImportCalc {
                                     allowOverwriteRelationsInMergeMode: boolean,
                                     useIdentifiersInRelations: boolean,
                                     find: (identifier: string) => Promise<Document|undefined>,
+                                    get: (resourceId: string) => Promise<Document>,
                                     generateId: () => string): Promise<Array<Document>> {
 
 
@@ -96,6 +92,8 @@ export module DefaultImportCalc {
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(relations, find, identifierMap);
+            } else {
+                await assertNoMissingRelationTargets(relations, get);
             }
             return document;
         }
@@ -111,48 +109,6 @@ export module DefaultImportCalc {
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
             return validate(_, validator, mergeMode);
         })(documents);
-    }
-
-
-    async function rewriteIdentifiersInRelations(relations: Relations,
-                                                 find: (identifier: string) => Promise<Document|undefined>,
-                                                 identifierMap: { [identifier: string]: string }): Promise<void> {
-
-        for (let relation of Object.keys(relations)) {
-            let i = 0; for (let identifier of relations[relation]) {
-
-                if (identifierMap[identifier]) {
-                    relations[relation][i] = identifierMap[identifier];
-                } else {
-                    const targetDocFromDB = await find(identifier);
-                    if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
-                    relations[relation][i] = targetDocFromDB.resource.id;
-                }
-                i++;
-            }
-        }
-    }
-    
-
-    function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
-
-        if (!mergeMode) {
-            validator.assertIsKnownType(document);
-            validator.assertIsAllowedType(document, mergeMode);
-        }
-        validator.assertIsWellformed(document);
-        return document;
-    }
-
-
-    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: string) {
-
-        if (!relations) return;
-        for (let relName of Object.keys(relations)) {
-            relations[relName] = relations[relName]
-                .filter(relTarget => relTarget !== resourceIdentifier);
-            if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
-        }
     }
 
 
@@ -188,7 +144,7 @@ export module DefaultImportCalc {
                     return  operationTypeNames.includes(got.resource.type)
                         ? got.resource.id
                         : got.resource.relations[RECORDED_IN][0];
-                } catch { console.log("err") /* TODO throw */}
+                } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
             }
 
             for (let document of documents) {
@@ -238,6 +194,66 @@ export module DefaultImportCalc {
     // }
     // TODO every resource has to have a lies within relation
     // furthermore, every lieswithin path between resources has to end in an operation resource
+
+
+    async function rewriteIdentifiersInRelations(relations: Relations,
+                                                 find: (identifier: string) => Promise<Document|undefined>,
+                                                 identifierMap: { [identifier: string]: string }): Promise<void> {
+
+        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: string) => {
+            if (identifierMap[identifier]) {
+                relations[relation][i] = identifierMap[identifier];
+            } else {
+                const targetDocFromDB = await find(identifier);
+
+                if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
+                relations[relation][i] = targetDocFromDB.resource.id;
+            }
+        });
+    }
+
+
+    async function assertNoMissingRelationTargets(relations: Relations,
+                                                  get: (_: string) => Promise<Document>): Promise<void> {
+
+        return iterateRelationsInImport(relations, async (relation: string, i: number, id: string) => {
+            try { await get(id) }
+            catch { throw [E.MISSING_RELATION_TARGET, id] }
+        });
+    }
+
+
+    async function iterateRelationsInImport(relations: Relations,
+                                            asyncIterationFunction: Function): Promise<void> {
+
+        for (let relation of Object.keys(relations)) {
+            let i = 0; for (let idOrIdentifier of relations[relation]) {
+                await asyncIterationFunction(relation, i, idOrIdentifier); i++;
+            }
+        }
+    }
+    
+
+    function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
+
+        if (!mergeMode) {
+            validator.assertIsKnownType(document);
+            validator.assertIsAllowedType(document, mergeMode);
+        }
+        validator.assertIsWellformed(document);
+        return document;
+    }
+
+
+    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: string) {
+
+        if (!relations) return;
+        for (let relName of Object.keys(relations)) {
+            relations[relName] = relations[relName]
+                .filter(relTarget => relTarget !== resourceIdentifier);
+            if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
+        }
+    }
 
 
     /**

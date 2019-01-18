@@ -183,7 +183,7 @@ describe('DefaultImport', () => {
                 relations: { parent: 'three' } } };
 
         mockDatastore.find.and.returnValues(
-            Promise.resolve({ totalCount: 0 }));
+            Promise.resolve({ totalCount: 0 }), Promise.resolve({ totalCount: 0 }));
         const {errors} = await importFunction([ docToImport as any ], mockDatastore,'user1');
 
         expect(errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);

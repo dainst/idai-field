@@ -81,7 +81,7 @@ describe('DefaultImportCalc', () => {
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101'); // // includes must also be set
+        expect(resource.id).toBe('101');
         expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
         expect(resource.relations['liesWithin'][0]).toEqual('ef1');
         done();
@@ -169,7 +169,6 @@ describe('DefaultImportCalc', () => {
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
         expect(resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(resource.relations['liesWithin']).toBeUndefined();
         done();
@@ -183,7 +182,6 @@ describe('DefaultImportCalc', () => {
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
         expect(resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(resource.relations['liesWithin']).toBeUndefined();
         done();

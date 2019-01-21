@@ -105,7 +105,7 @@ export module DefaultImportCalc {
 
         return await asyncMap(async (document: Document) => {
             let _ = clone(document); 
-            _ = await preprocessAndValidateRelations(_); // TODO skip this if document has no relations
+            _ = await preprocessAndValidateRelations(_);
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
             return validate(_, validator, mergeMode);
         })(documents);

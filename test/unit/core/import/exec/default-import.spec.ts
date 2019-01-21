@@ -145,33 +145,6 @@ describe('DefaultImport', () => {
     });
 
 
-    it('rewrite identifiers to ids in relations', async done => {
-
-        importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
-            mockProjectConfiguration,
-             () => '101',
-            false,
-            false,
-            '',
-            true);
-
-        const docToImport = { resource: { type: 'Find', identifier: '1a',
-                relations: { parent: 'three' } } };
-
-        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { type: 'Trench', id: '3' }}));
-
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({ documents: [{ resource: { type: 'Trench', id: '3' }}], totalCount: 1 }),
-            Promise.resolve({totalCount: 0}));
-
-        await importFunction([ docToImport as any ], mockDatastore,'user1');
-        const importedDocument = mockDatastore.bulkCreate.calls.mostRecent().args[0][0];
-        expect(importedDocument.resource.relations['isRecordedIn'][0]).toEqual('3');
-        done();
-    });
-
-
     it('rewrite identifiers to ids in relations - relation target not found', async done => {
 
         importFunction = DefaultImport.build(

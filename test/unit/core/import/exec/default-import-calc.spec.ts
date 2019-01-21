@@ -1,7 +1,6 @@
 import {DefaultImportCalc} from "../../../../../app/core/import/exec/default-import-calc";
 import {ImportErrors as E} from "../../../../../app/core/import/exec/import-errors";
-import {Document, Relations} from 'idai-components-2';
-import {DefaultImport} from "../../../../../app/core/import/exec/default-import";
+import {Document} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira

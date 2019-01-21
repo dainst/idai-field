@@ -94,7 +94,7 @@ export module DefaultImportCalc {
                 await rewriteIdentifiersInRelations(relations, find, identifierMap);
             } else {
                 await assertNoMissingRelationTargets(relations, get);
-            } // TODO if we test all relation targets, we could equally well fetch them already and build a map for later
+            }
             return document;
         }
 
@@ -231,14 +231,25 @@ export module DefaultImportCalc {
     }
 
 
+    function asyncForEach<T>(f: ((_: T, i: number) => Promise<void>)|((_: T) => Promise<void>)) { // TODO move to tsfun
+
+        return async (c: Array<T>) => {
+
+            let i = 0;
+            for (let item of c) {
+                await (f as any)(item, i);
+            }
+        }
+    }
+
+
     async function iterateRelationsInImport(
         relations: Relations,
         asyncIterationFunction: (relation: string, i: number, idOrIdentifier: string) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
-            let i = 0; for (let idOrIdentifier of relations[relation]) { // TODO write asyncForEach (with i)
-                await asyncIterationFunction(relation, i, idOrIdentifier); i++;
-            }
+            await asyncForEach((idOrIdentifier: string, i) =>
+                asyncIterationFunction(relation, i, idOrIdentifier))(relations[relation]);
         }
     }
     

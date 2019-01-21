@@ -204,8 +204,6 @@ export module DefaultImportCalc {
     // if (!arrayEqual(liesWithinTarget.resource.relations[RECORDED_IN])(document.resource.relations[RECORDED_IN])) {
     //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
     // }
-    // TODO furthermore, every lieswithin path between resources has to end in an operation resource
-
 
     async function rewriteIdentifiersInRelations(relations: Relations,
                                                  find: (identifier: string) => Promise<Document|undefined>,

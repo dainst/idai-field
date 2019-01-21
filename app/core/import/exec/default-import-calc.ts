@@ -20,6 +20,7 @@ export module DefaultImportCalc {
     const LIES_WITHIN = 'liesWithin';
     const INCLUDES = 'includes';
     const PARENT = 'parent';
+    const RESOURCE_IDENTIFIER = 'resource.identifier';
     const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
 
 
@@ -79,7 +80,7 @@ export module DefaultImportCalc {
 
             const relations = document.resource.relations;
             if (!relations) return document;
-            
+
             const foundForbiddenRelations = Object.keys(document.resource.relations)
                 .filter(includedIn(forbiddenRelations))
                 .join(', ');
@@ -98,7 +99,7 @@ export module DefaultImportCalc {
         }
 
 
-        const dups = duplicates(documents.map(to('resource.identifier')));
+        const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
 
@@ -120,78 +121,9 @@ export module DefaultImportCalc {
                                     get: (_: string) => Promise<Document>,
                                     mainTypeDocumentId: string) {
 
-
-        async function replaceTopLevelLiesWithins() {
-
-            for (let document of documents) {
-                const relations = document.resource.relations;
-                if (!relations || !relations[LIES_WITHIN]) continue;
-
-                let liesWithinTarget = undefined;
-                try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
-                if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
-
-                if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
-                relations[RECORDED_IN] = relations[LIES_WITHIN];
-                delete relations[LIES_WITHIN];
-            }
-        }
-
-        async function inferRecordedIns() {
-
-            const idMap = documents.reduce((tmpMap, document: Document) =>
-                    (tmpMap[document.resource.id] = document, tmpMap),
-                {} as {[id: string]: Document});
-
-
-            async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
-                if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
-
-                const target = liesWithinTargetInImport[1] as Document;
-                if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return determineRecordedInValueFor(target);
-            }
-
-
-            async function getRecordedInFromExistingDocument(targetId: string) {
-
-                try {
-                    const got = await get(targetId);
-                    return  operationTypeNames.includes(got.resource.type)
-                        ? got.resource.id
-                        : got.resource.relations[RECORDED_IN][0];
-                } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
-            }
-
-
-            async function determineRecordedInValueFor(document: Document): Promise<string|undefined> {
-
-                const relations = document.resource.relations;
-                if (!relations || isUndefinedOrEmpty(relations[LIES_WITHIN])) return;
-
-                const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
-                return liesWithinTargetInImport
-                    ? getRecordedInFromImportDocument(liesWithinTargetInImport)
-                    : getRecordedInFromExistingDocument(relations[LIES_WITHIN][0]);
-            }
-
-
-            for (let document of documents) {
-                const relations = document.resource.relations;
-
-                const _ = await determineRecordedInValueFor(document);
-                assertNoRecordedInMismatch(document, _, mainTypeDocumentId);
-
-                if (_) relations[RECORDED_IN] = [_];
-                if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
-                    delete relations[LIES_WITHIN];
-                }
-            }
-        }
-
-
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
-        await replaceTopLevelLiesWithins();
-        await inferRecordedIns();
+        await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
+        await inferRecordedIns(documents, operationTypeNames, get, mainTypeDocumentId);
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter.completeInverseRelations(
@@ -199,6 +131,81 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode)
             : [];
+    }
+
+
+    async function replaceTopLevelLiesWithins(documents: Array<Document>,
+                                              operationTypeNames: string[],
+                                              get: (_: string) => Promise<Document>,
+                                              mainTypeDocumentId: string) {
+
+        for (let document of documents) {
+            const relations = document.resource.relations;
+            if (!relations || !relations[LIES_WITHIN]) continue;
+
+            let liesWithinTarget = undefined;
+            try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
+            if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
+
+            if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
+            relations[RECORDED_IN] = relations[LIES_WITHIN];
+            delete relations[LIES_WITHIN];
+        }
+    }
+
+
+    async function inferRecordedIns(documents: Array<Document>,
+                                    operationTypeNames: string[],
+                                    get: (_: string) => Promise<Document>,
+                                    mainTypeDocumentId: string) {
+
+        const idMap = documents.reduce((tmpMap, document: Document) =>
+                (tmpMap[document.resource.id] = document, tmpMap),
+            {} as {[id: string]: Document});
+
+
+        async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
+            if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
+
+            const target = liesWithinTargetInImport[1] as Document;
+            if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return determineRecordedInValueFor(target);
+        }
+
+
+        async function getRecordedInFromExistingDocument(targetId: string) {
+
+            try {
+                const got = await get(targetId);
+                return  operationTypeNames.includes(got.resource.type)
+                    ? got.resource.id
+                    : got.resource.relations[RECORDED_IN][0];
+            } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
+        }
+
+
+        async function determineRecordedInValueFor(document: Document): Promise<string|undefined> {
+
+            const relations = document.resource.relations;
+            if (!relations || isUndefinedOrEmpty(relations[LIES_WITHIN])) return;
+
+            const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
+            return liesWithinTargetInImport
+                ? getRecordedInFromImportDocument(liesWithinTargetInImport)
+                : getRecordedInFromExistingDocument(relations[LIES_WITHIN][0]);
+        }
+
+
+        for (let document of documents) {
+            const relations = document.resource.relations;
+
+            const _ = await determineRecordedInValueFor(document);
+            assertNoRecordedInMismatch(document, _, mainTypeDocumentId);
+
+            if (_) relations[RECORDED_IN] = [_];
+            if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
+                delete relations[LIES_WITHIN];
+            }
+        }
     }
 
 

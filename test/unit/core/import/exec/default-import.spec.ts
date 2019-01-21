@@ -145,9 +145,6 @@ describe('DefaultImport', () => {
     });
 
 
-
-
-
     it('not well formed ', async done => {
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});

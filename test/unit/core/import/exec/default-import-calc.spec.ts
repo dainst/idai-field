@@ -18,9 +18,12 @@ describe('DefaultImportCalc', () => {
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
     const existingFeature2 = {resource: {type: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations:{ isRecordedIn: ['et2']}}};
 
-    let returnUndefined = () => undefined;
-
     let generateId = () => { resourceIdCounter++; return '10' + resourceIdCounter.toString() };
+
+    let getInverse = (_: string) => {
+
+        if (_ === 'isAfter') return 'isBefore';
+    };
 
 
     let get = async (resourceId): Promise<any> => {
@@ -67,19 +70,19 @@ describe('DefaultImportCalc', () => {
             'assertSettingIsRecordedInIsPermissibleForType',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
 
-        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             '',
             true);
 
-        processWithMainType = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+        processWithMainType = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             'et1',
             true);
 
-        processWithPlainIds = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+        processWithPlainIds = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             '',
@@ -90,10 +93,22 @@ describe('DefaultImportCalc', () => {
     // TODO test that includes relation gets not set
 
 
+    it('set inverse relation', async done => {
+
+        const result = await process([
+            d('Feature', 'newFeature', { parent: 'existingTrench',
+                isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench
+        ]);
+
+        expect(result[1][0].resource.relations['isBefore'][0]).toBe('101');
+        done();
+    });
+
+
     it('child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { parent: 'existingTrench'})
+            d('Feature', 'newFeature', { parent: 'existingTrench' })
             ]);
 
         const resource = result[0][0].resource;

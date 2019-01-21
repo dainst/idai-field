@@ -61,9 +61,6 @@ describe('DefaultImport', () => {
     });
 
 
-    // TODO recorded in existing document
-
-
     it('merge if exists', async done => {
 
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));

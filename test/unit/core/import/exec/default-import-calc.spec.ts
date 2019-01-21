@@ -1,5 +1,5 @@
-import {DefaultImportCalc} from "../../../../../app/core/import/exec/default-import-calc";
-import {ImportErrors as E} from "../../../../../app/core/import/exec/import-errors";
+import {DefaultImportCalc} from '../../../../../app/core/import/exec/default-import-calc';
+import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {Document} from 'idai-components-2';
 
 /**

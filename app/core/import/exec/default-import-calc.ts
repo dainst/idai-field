@@ -1,13 +1,25 @@
-import {Document} from "idai-components-2/src/model/core/document";
-import {ImportValidator} from "./import-validator";
-import {duplicates, hasNot, isUndefinedOrEmpty, to, equal,
-    isArray, includedIn, isNot, undefinedOrEmpty, asyncMap, isDefined} from "tsfun";
-import {ImportErrors as E} from "./import-errors";
-import {Relations} from "idai-components-2/src/model/core/relations";
-import {RelationsCompleter} from "./relations-completer";
-import {NewDocument} from "idai-components-2/src/model/core/new-document";
-import {DocumentMerge} from "./document-merge";
-import {clone} from "../../util/object-util";
+import {Document} from 'idai-components-2/src/model/core/document';
+import {ImportValidator} from './import-validator';
+import {
+    asyncForEach,
+    asyncMap,
+    duplicates,
+    equal,
+    hasNot,
+    includedIn,
+    isArray,
+    isDefined,
+    isNot,
+    isUndefinedOrEmpty,
+    to,
+    undefinedOrEmpty
+} from 'tsfun';
+import {ImportErrors as E} from './import-errors';
+import {Relations} from 'idai-components-2/src/model/core/relations';
+import {RelationsCompleter} from './relations-completer';
+import {NewDocument} from 'idai-components-2/src/model/core/new-document';
+import {DocumentMerge} from './document-merge';
+import {clone} from '../../util/object-util';
 
 
 /**
@@ -21,6 +33,7 @@ export module DefaultImportCalc {
     const INCLUDES = 'includes';
     const PARENT = 'parent';
     const RESOURCE_IDENTIFIER = 'resource.identifier';
+    const RESOURCE_ID = 'resource.id';
     const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
 
 
@@ -247,18 +260,6 @@ export module DefaultImportCalc {
     }
 
 
-    function asyncForEach<T>(f: ((_: T, i: number) => Promise<void>)|((_: T) => Promise<void>)) { // TODO move to tsfun
-
-        return async (c: Array<T>) => {
-
-            let i = 0;
-            for (let item of c) {
-                await (f as any)(item, i);
-            }
-        }
-    }
-
-
     async function iterateRelationsInImport(
         relations: Relations,
         asyncIterationFunction: (relation: string, i: number, idOrIdentifier: string) => Promise<void>): Promise<void> {
@@ -298,7 +299,7 @@ export module DefaultImportCalc {
     function assignIds(documents: Array<Document>, generateId: Function) {
 
         return documents
-            .filter(hasNot('resource.id'))
+            .filter(hasNot(RESOURCE_ID))
             .reduce((identifierMap, document)  =>
                 (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
             , {} as { [identifier: string]: string });

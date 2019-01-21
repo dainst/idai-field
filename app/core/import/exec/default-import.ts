@@ -3,7 +3,7 @@ import {ImportValidator} from './import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
-import {DefaultImportCalc} from "./default-import-calc";
+import {DefaultImportCalc} from './default-import-calc';
 
 
 /**

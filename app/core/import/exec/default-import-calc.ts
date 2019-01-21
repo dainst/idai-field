@@ -251,9 +251,9 @@ export module DefaultImportCalc {
             if (identifierMap[identifier]) {
                 relations[relation][i] = identifierMap[identifier];
             } else {
-                const targetDocFromDB = await find(identifier);
-                if (!targetDocFromDB) throw [E.MISSING_RELATION_TARGET, identifier];
-                relations[relation][i] = targetDocFromDB.resource.id;
+                const _ = await find(identifier);
+                if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
+                relations[relation][i] = _.resource.id;
             }
         });
     }

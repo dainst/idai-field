@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {ImportUpdater} from './import-updater';
@@ -82,7 +82,7 @@ export module DefaultImport {
     function neededFunctions(datastore: DocumentDatastore) {
 
         return {
-            get: (resourceId: string) => datastore.get(resourceId), // TODO convert to a function who returns undefined and does not return error in case doc not found
+            get: (resourceId: string) => datastore.get(resourceId),
             find: findByIdentifier(datastore)
         };
     }

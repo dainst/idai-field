@@ -119,6 +119,20 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('child of existing operation, assign via resource id', async done => {
+
+        const result = await processWithPlainIds([
+            d('Feature', 'newFeature', { parent: 'et1' })
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('101');
+        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(resource.relations['liesWithin']).toBeUndefined();
+        done();
+    });
+
+
     it('child of existing feature', async done => {
 
         const result = await process([

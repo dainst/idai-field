@@ -334,13 +334,17 @@ describe('DefaultImportCalc', () => {
     it('merge existing, add field', async done => {
 
         const result = await processMerge([
-            { resource: { type: 'Feature', identifier: 'existingFeature', field: 'new'}}
+            { resource: { type: 'Feature', identifier: 'existingFeature',
+                    field: 'new', // TODO should only be allowed to save allowed fields, add test were validates for it
+                    geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
+            }}
         ]);
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');
         expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
         expect(resource['field']).toEqual('new');
+        expect(resource['geometry']).toEqual({ type: 'Point', coordinates: [ 27.189335972070694, 39.14122423529625] });
         done();
     });
 

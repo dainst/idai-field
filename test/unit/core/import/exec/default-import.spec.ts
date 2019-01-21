@@ -102,36 +102,6 @@ describe('DefaultImport', () => {
     });
 
 
-    it('merge geometry', async done => {
-
-        const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
-        const docToMerge = { resource: { geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}}};
-
-        mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);
-
-        mockDatastore = jasmine.createSpyObj('datastore', ['find', 'bulkUpdate']);
-        mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
-        mockDatastore.bulkUpdate.and.returnValues(Promise.resolve());
-
-        importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
-            () => undefined,
-            () => '101', true);
-
-        await importFunction([docToMerge as any], mockDatastore, 'user1');
-
-        const importedDocument = mockDatastore.bulkUpdate.calls.mostRecent().args[0][0];
-        expect(importedDocument.resource).toEqual({
-            id: '1',
-            identifier: 'i1',
-            shortDescription: 'sd1',
-            geometry: { type: 'Point', coordinates: [ 27.189335972070694, 39.14122423529625] }, // merged from docToMerge
-            relations: {}
-        });
-        done();
-    });
-
-
     it('not well formed ', async done => {
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});

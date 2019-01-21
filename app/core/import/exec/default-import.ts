@@ -15,7 +15,7 @@ export module DefaultImport {
 
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
-                          projectConfiguration: ProjectConfiguration, // TODO give getInverseRelations as a param
+                          getInverseRelation: (_: string) => string|undefined,
                           generateId: () => string,
                           mergeMode: boolean = false,
                           allowOverwriteRelationsInMergeMode = false,
@@ -40,7 +40,7 @@ export module DefaultImport {
                                              datastore: DocumentDatastore,
                                              username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-            const {get, find, getInverseRelation} = neededFunctions(datastore, projectConfiguration);
+            const {get, find} = neededFunctions(datastore);
             const process = DefaultImportCalc.build(
                 validator,
                 operationTypeNames,
@@ -79,12 +79,11 @@ export module DefaultImport {
     }
 
 
-    function neededFunctions(datastore: DocumentDatastore, projectConfiguration: ProjectConfiguration) {
+    function neededFunctions(datastore: DocumentDatastore) {
 
         return {
             get: (resourceId: string) => datastore.get(resourceId), // TODO convert to a function who returns undefined and does not return error in case doc not found
-            find: findByIdentifier(datastore),
-            getInverseRelation: (propertyName: string) => projectConfiguration.getInverseRelations(propertyName)
+            find: findByIdentifier(datastore)
         };
     }
 }

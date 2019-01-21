@@ -128,19 +128,21 @@ export module Importer {
                                  updateRelationsOnMergeMode = false,
                                  generateId: () => string): ImportFunction {
 
+        const getInverseRelation = (propertyName: string) => projectConfiguration.getInverseRelations(propertyName);
+
         switch (format) {
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
             case 'shapefile':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
             case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
             default: // native
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

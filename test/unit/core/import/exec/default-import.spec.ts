@@ -8,7 +8,6 @@ describe('DefaultImport', () => {
 
     let mockDatastore;
     let mockValidator;
-    let mockProjectConfiguration;
     let importFunction;
     let operationTypeNames = ['Trench'];
 
@@ -20,12 +19,6 @@ describe('DefaultImport', () => {
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
-
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getTypesList', 'getFieldDefinitions', 'getInverseRelations',
-                'getRelationDefinitions', 'isMandatory', 'isRelationProperty']);
-        mockProjectConfiguration.getFieldDefinitions.and.returnValue([{name: 'id'}, {name: 'type'}, {name: 'identifier'}, {name: 'geometry'}, {name: 'shortDescription'}]);
-        mockProjectConfiguration.getRelationDefinitions.and.returnValue([{name: 'isRecordedIn'}]);
 
         mockValidator.assertHasLiesWithin.and.returnValue();
 
@@ -40,12 +33,9 @@ describe('DefaultImport', () => {
             else throw 'missing';
         });
 
-        mockProjectConfiguration.getTypesList.and.returnValue(
-            [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}, {name: 'Feature'}]);
-
         importFunction = DefaultImport.build(
             mockValidator, operationTypeNames,
-            mockProjectConfiguration,
+            () => undefined,
             () => '101');
     });
 
@@ -71,7 +61,7 @@ describe('DefaultImport', () => {
 
         const res = await (DefaultImport.build(
             mockValidator, operationTypeNames,
-            mockProjectConfiguration,
+            () => undefined,
              () => '101', true) as any)(
             [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
 
@@ -88,7 +78,7 @@ describe('DefaultImport', () => {
 
         await (DefaultImport.build(
             mockValidator, operationTypeNames,
-            mockProjectConfiguration,
+            () => undefined,
             () => '101', false) as any)([
                 { resource: {type: 'Find', identifier: 'one', relations: { parent: '0' } } } as any],
                 mockDatastore,'user1');
@@ -125,7 +115,7 @@ describe('DefaultImport', () => {
 
         importFunction = DefaultImport.build(
             mockValidator, operationTypeNames,
-            mockProjectConfiguration,
+            () => undefined,
             () => '101', true);
 
         await importFunction([docToMerge as any], mockDatastore, 'user1');

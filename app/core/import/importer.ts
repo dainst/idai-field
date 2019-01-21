@@ -86,10 +86,10 @@ export module Importer {
             format,
             new ImportValidator(projectConfiguration, datastore, typeUtility),
             typeUtility.getOverviewTypeNames().filter(isnt('Place')),
-            projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources,
             allowUpdatingRelationsOnMerge,
+            (_: string) => projectConfiguration.getInverseRelations(_),
             generateId);
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
@@ -122,13 +122,11 @@ export module Importer {
     function buildImportFunction(format: ImportFormat,
                                  validator: ImportValidator,
                                  operationTypeNames: string[],
-                                 projectConfiguration: ProjectConfiguration,
                                  mainTypeDocumentId: string,
                                  mergeMode = false,
                                  updateRelationsOnMergeMode = false,
+                                 getInverseRelation: (_: string) => string|undefined,
                                  generateId: () => string): ImportFunction {
-
-        const getInverseRelation = (propertyName: string) => projectConfiguration.getInverseRelations(propertyName);
 
         switch (format) {
             case 'meninxfind':

@@ -145,25 +145,6 @@ describe('DefaultImport', () => {
     });
 
 
-    it('rewrite identifiers to ids in relations - relation target not found', async done => {
-
-        importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
-            mockProjectConfiguration,
-             () => '101', false, false, '', true);
-
-        const docToImport = { resource: { type: 'Find', identifier: '1a',
-                relations: { parent: 'three' } } };
-
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({ totalCount: 0 }), Promise.resolve({ totalCount: 0 }));
-        const {errors} = await importFunction([ docToImport as any ], mockDatastore,'user1');
-
-        expect(errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);
-        done();
-    });
-
-
     xit('remove self referencing relation target', async done => { // TODO unxit
 
         importFunction = DefaultImport.build(

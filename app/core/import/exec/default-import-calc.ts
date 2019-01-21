@@ -12,7 +12,8 @@ import {
     isNot,
     isUndefinedOrEmpty,
     to,
-    undefinedOrEmpty
+    undefinedOrEmpty,
+    isnt
 } from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {Relations} from 'idai-components-2/src/model/core/relations';
@@ -297,8 +298,7 @@ export module DefaultImportCalc {
 
         if (!relations) return;
         for (let relName of Object.keys(relations)) {
-            relations[relName] = relations[relName]
-                .filter(relTarget => relTarget !== resourceIdentifier);
+            relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
             if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
         }
     }

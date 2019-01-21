@@ -40,6 +40,7 @@ describe('DefaultImportCalc', () => {
     let resourceIdCounter;
     let process;
     let processWithMainType;
+    let processWithPlainIds;
 
 
     beforeEach(() => {
@@ -63,6 +64,12 @@ describe('DefaultImportCalc', () => {
             false,
             'et1',
             true);
+
+        processWithPlainIds = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
+            false,
+            false,
+            '',
+            false);
     });
 
 
@@ -279,6 +286,35 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('duplicate identifiers in import file', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'dup', relations: { parent: 'et1' }}},
+            { resource: {type: 'Feature', identifier: 'dup', relations: { parent: 'et1' }}}
+        ]);
+
+        const error = result[2];
+        expect(error[0]).toEqual(E.DUPLICATE_IDENTIFIER);
+        expect(error[1]).toEqual('dup');
+        done();
+    });
+
+
+    it('duplicate identifiers, resource with such identifier already exists', async done => {
+
+        const result = await process(<any>[
+            { resource: {type: 'Feature', identifier: 'existingFeature', relations: { parent: 'existingTrench' }}},
+        ]);
+
+        const error = result[2];
+        expect(error[0]).toEqual(E.RESOURCE_EXISTS);
+        expect(error[1]).toEqual('existingFeature');
+        done();
+    });
+
+
     it('parent not found', async done => {
 
         const result = await process(<any>[
@@ -293,13 +329,7 @@ describe('DefaultImportCalc', () => {
 
     it('parent not found, when using plain ids', async done => {
 
-        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, returnUndefined,
-            false,
-            false,
-            '',
-            false); // <-
-
-        const result = await process(<any>[
+        const result = await processWithPlainIds(<any>[
             { resource: {type: 'Feature', identifier: 'zero', relations: { parent: 'notfound' }}},
         ]);
 

@@ -232,36 +232,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('duplicate identifiers in import file', async done => {
-
-        mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
-
-        const {errors} = await importFunction([
-            { resource: { type: 'Place', identifier: '1a' } } as any,
-            { resource: { type: 'Trench', identifier: '1a' } } as any
-        ], mockDatastore, 'user1');
-
-        expect(errors.length).toBe(1);
-        expect(errors[0][0]).toEqual(ImportErrors.DUPLICATE_IDENTIFIER);
-        expect(errors[0][1]).toEqual('1a');
-        done();
-    });
-
-
-    it('resource with such identifier already exists in non merge mode', async done => {
-
-        mockDatastore.find.and.returnValues(Promise.resolve(
-            { documents: [{ resource: { type: 'Place', identifier: '1a'} }], totalCount: 1 }));
-
-        const {errors} = await importFunction([
-            { resource: { type: 'Place', identifier: '1a', relations: { }} } as any
-        ], mockDatastore, 'user1');
-
-        expect(errors.length).toBe(1);
-        expect(errors[0][0]).toEqual(ImportErrors.RESOURCE_EXISTS);
-        expect(errors[0][1]).toEqual('1a');
-        done();
-    });
+    // TODO test in general that err from default import calc gets propagated
 
 
     xit('set liesWithin which clashes with isRecordedIn', async done => {

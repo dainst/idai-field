@@ -58,6 +58,7 @@ describe('DefaultImportCalc', () => {
     let process;
     let processWithMainType;
     let processWithPlainIds;
+    let processMerge;
 
 
     beforeEach(() => {
@@ -84,6 +85,12 @@ describe('DefaultImportCalc', () => {
 
         processWithPlainIds = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
+            false,
+            '',
+            false);
+
+        processMerge = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+            true,
             false,
             '',
             false);
@@ -315,9 +322,26 @@ describe('DefaultImportCalc', () => {
             d('Feature', 'one', { parent: 'existingFeature'})
         ]);
 
-        expect(result[0][0].resource.id).toBe('101');
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('ef1');
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('101');
+        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
+        expect(resource.relations['liesWithin'][0]).toBe('ef1');
+        done();
+    });
+
+
+    // merge mode //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('merge existing, add field', async done => {
+
+        const result = await processMerge([
+            { resource: { type: 'Feature', identifier: 'existingFeature', field: 'new'}}
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('ef1');
+        expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
+        expect(resource['field']).toEqual('new');
         done();
     });
 

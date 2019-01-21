@@ -72,7 +72,7 @@ describe('DefaultImport', () => {
             documents: [{resource: {identifier: '123', id: '1'}}]
         }));
 
-        await (DefaultImport.build(
+        const res = await (DefaultImport.build(
             mockValidator, operationTypeNames,
             mockProjectConfiguration,
              () => '101', true) as any)(

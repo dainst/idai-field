@@ -1,7 +1,7 @@
 import {Document} from "idai-components-2/src/model/core/document";
 import {ImportValidator} from "./import-validator";
 import {duplicates, hasNot, isUndefinedOrEmpty, to, equal,
-    isArray, includedIn, isNot, undefinedOrEmpty, asyncMap} from "tsfun";
+    isArray, includedIn, isNot, undefinedOrEmpty, asyncMap, isDefined} from "tsfun";
 import {ImportErrors as E} from "./import-errors";
 import {Relations} from "idai-components-2/src/model/core/relations";
 import {RelationsCompleter} from "./relations-completer";
@@ -148,7 +148,7 @@ export module DefaultImportCalc {
                 if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
 
                 const target = liesWithinTargetInImport[1] as Document;
-                if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return setRecordedInsFor(target);
+                if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return determineRecordedInValueFor(target);
             }
 
 
@@ -163,12 +163,10 @@ export module DefaultImportCalc {
             }
 
 
-            async function setRecordedInsFor(document: Document): Promise<string|undefined> {
+            async function determineRecordedInValueFor(document: Document): Promise<string|undefined> {
 
                 const relations = document.resource.relations;
-                if (!relations
-                    || isUndefinedOrEmpty(relations[LIES_WITHIN])
-                    || isNot(undefinedOrEmpty)(relations[RECORDED_IN])) return;
+                if (!relations || isUndefinedOrEmpty(relations[LIES_WITHIN])) return;
 
                 const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
                 return liesWithinTargetInImport
@@ -180,7 +178,9 @@ export module DefaultImportCalc {
             for (let document of documents) {
                 const relations = document.resource.relations;
 
-                const _ = await setRecordedInsFor(document);
+                const _ = await determineRecordedInValueFor(document);
+                assertNoRecordedInMismatch(document, _, mainTypeDocumentId);
+
                 if (_) relations[RECORDED_IN] = [_];
                 if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
                     delete relations[LIES_WITHIN];
@@ -191,7 +191,7 @@ export module DefaultImportCalc {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins();
-        if (!mainTypeDocumentId) await inferRecordedIns();
+        await inferRecordedIns();
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter.completeInverseRelations(
@@ -200,9 +200,19 @@ export module DefaultImportCalc {
                 mergeMode)
             : [];
     }
-    // if (!arrayEqual(liesWithinTarget.resource.relations[RECORDED_IN])(document.resource.relations[RECORDED_IN])) {
-    //     throw [ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
-    // }
+
+
+    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: string) {
+
+        const relations = document.resource.relations;
+        if (mainTypeDocumentId
+            && isNot(undefinedOrEmpty)(relations[RECORDED_IN])
+            && relations[RECORDED_IN][0] !== compare
+            && isDefined(compare)) {
+            throw [E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+        }
+    }
+
 
     async function rewriteIdentifiersInRelations(relations: Relations,
                                                  find: (identifier: string) => Promise<Document|undefined>,

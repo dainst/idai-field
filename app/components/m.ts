@@ -557,7 +557,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN] = {
             content: i18n({
                 id: 'messages.import.error.liesWithinRecordedInMismatch',
-                value: 'Beim Import ist ein Fehler aufgetreten: Liegt in Beziehung zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
+                value: '\'parent\' zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
             }),
             level: 'danger',
             params: ['?'],

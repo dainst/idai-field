@@ -12,7 +12,9 @@ describe('DefaultImportCalc', () => {
     let opTypeNames = ['Trench'];
 
     const existingTrench = {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
+    const existingTrench2 = {resource: {type: 'Trench', identifier: 'existingTrench2', id: 'et2', relations:{ }}};
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
+    const existingFeature2 = {resource: {type: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations:{ isRecordedIn: ['et2']}}};
 
     let returnUndefined = () => undefined;
 
@@ -20,13 +22,17 @@ describe('DefaultImportCalc', () => {
     let get = async (resourceId): Promise<any> => {
 
         if (resourceId === 'ef1') return existingFeature;
+        if (resourceId === 'ef2') return existingFeature2;
         if (resourceId === 'et1') return existingTrench;
+        if (resourceId === 'et2') return existingTrench2;
         else throw 'missing';
     };
     let find = async (_: any): Promise<any> => {
 
         if (_ === 'existingTrench') return existingTrench;
+        if (_ === 'existingTrench2') return existingTrench2;
         if (_ === 'existingFeature') return existingFeature;
+        if (_ === 'existingFeature2') return existingFeature2;
         return undefined;
     };
 
@@ -178,7 +184,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('import feature as child of existing operation, via parameter', async done => {
+    it('import feature as child of existing operation, via operation assignment parameter', async done => {
 
         const result = await processWithMainType(<any>[
             { resource: {type: 'Feature', identifier: 'one', relations: {}}}
@@ -221,7 +227,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('nested resources, assignment to operation via parameter', async done => {
+    it('nested resources, assignment to operation via operation assignment parameter', async done => {
 
         const result = await processWithMainType([
             { resource: {type: 'Feature', identifier: 'one', relations: {}}},
@@ -235,7 +241,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('nested resources, assignment to operation via parameter, order reversed', async done => {
+    it('nested resources, assignment to operation via operation assignment parameter, order reversed', async done => {
 
         const result = await processWithMainType(<any>[
             { resource: {type: 'Find', identifier: 'two', relations: { parent: 'one' }}},
@@ -250,7 +256,6 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    // TODO add test: assignment to existing feature, recorded in mismatch because of assignment via parameter
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
         const result = await processWithMainType([
@@ -259,6 +264,17 @@ describe('DefaultImportCalc', () => {
         expect(result[0][0].resource.id).toBe('101');
         expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
         expect(result[0][0].resource.relations['liesWithin'][0]).toBe('ef1');
+        done();
+    });
+
+
+    it('assignment to existing feature, via mismatch with operation assignment parameter , ', async done => {
+
+        const result = await processWithMainType([
+            {resource: {type: 'Feature', identifier: 'one', relations: { parent: 'existingFeature2' }}} as any]);
+
+        expect(result[2][0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
+        expect(result[2][1]).toEqual('one');
         done();
     });
 

@@ -22,7 +22,7 @@ export module ImportErrors {
     export const EMPTY_RELATION = 'ImportErrors.emptyRelation';
     export const INVALID_RELATIONS = 'ImportErrors.invalidRelations';
     export const INVALID_FIELDS = 'ImportErrors.invalidFields';
-    export const LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'ImportErrors.liesWithinTargetNotMatchesisrecordedin';
+    export const LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'ImportErrors.liesWithinTargetNotMatchesIsRecordedIn';
     export const PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'ImportErrors.parentAssignmentOperationnotallowed';
     export const PARENT_MUST_NOT_BE_ARRAY = 'ImportErrors.parentMustNotBeArray';
 }

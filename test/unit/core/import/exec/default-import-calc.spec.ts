@@ -60,6 +60,9 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    // TODO test that includes relation gets not set
+
+
     it('child of existing operation', async done => {
 
         const result = await process(<any>[

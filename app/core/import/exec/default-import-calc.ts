@@ -37,7 +37,6 @@ export module DefaultImportCalc {
         if (mainTypeDocumentId && mergeMode) {
             throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
-        // TODO set includes relations and adjust tests to check the results, or decide to not set includes at all
 
         return async function process(documents: Array<Document>) {
 

@@ -459,4 +459,31 @@ describe('DefaultImportCalc', () => {
         expect(result[2][2]).toEqual('includes');
         done();
     });
+
+
+    xit('remove self referencing relation target', async done => { // TODO unxit
+
+        // importFunction = DefaultImport.build(
+        //     mockValidator, operationTypeNames,
+        //     mockProjectConfiguration,
+        //
+        //     () => '101', false,  false, '', true);
+        //
+        // const docToImport = { resource: { type: 'Find', identifier: '1a',
+        //         relations: { parent: ['three', '1a'], liesWithin: ['1a'] } } };
+        //
+        // mockDatastore.find.and.returnValues(
+        //     Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }), // relation target
+        //     Promise.resolve({ documents: [], totalCount: 0 })); // looking if already exists
+        //
+        // const {errors} = await importFunction([ docToImport as any ],
+        //     mockDatastore,'user1');
+        //
+        // expect(errors.length).toBe(0);
+        // expect(Object.keys(docToImport.resource.relations).length).toBe(1);
+        // expect(Object.keys(docToImport.resource.relations)[0]).toBe('isRecordedIn');
+        // expect(docToImport.resource.relations['isRecordedIn'].length).toBe(1);
+        // expect(docToImport.resource.relations['isRecordedIn'][0]).toBe('3');
+        done();
+    });
 });

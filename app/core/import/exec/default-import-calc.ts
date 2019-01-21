@@ -140,7 +140,7 @@ export module DefaultImportCalc {
 
         async function inferRecordedIns() {
 
-            const idMap = documents.reduce((tmpMap, document: Document) =>  // TODO extract toMap method
+            const idMap = documents.reduce((tmpMap, document: Document) =>
                     (tmpMap[document.resource.id] = document, tmpMap),
                 {} as {[id: string]: Document});
 

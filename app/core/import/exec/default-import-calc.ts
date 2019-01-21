@@ -294,9 +294,8 @@ export module DefaultImportCalc {
     }
 
 
-    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: IDENTIFIER) {
+    function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: IDENTIFIER) {
 
-        if (!relations) return;
         for (let relName of Object.keys(relations)) {
             relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
             if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];

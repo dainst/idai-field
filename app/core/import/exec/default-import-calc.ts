@@ -304,10 +304,7 @@ export module DefaultImportCalc {
     }
 
 
-    /**
-     * Generates resource ids of documents in place, for those documents that have none yet
-     */
-    function assignIds(documents: Array<Document>, generateId: Function) {
+    function assignIds(documents: Array<Document>, generateId: Function): IDENTIFIER_MAP {
 
         return documents
             .filter(hasNot(RESOURCE_ID))

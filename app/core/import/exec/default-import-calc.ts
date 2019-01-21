@@ -28,8 +28,10 @@ import {clone} from '../../util/object-util';
  */
 export module DefaultImportCalc {
 
-    type GET_FN = (resourceId: string) => Promise<Document>;
-    type FIND_FN = (identifier: string) => Promise<Document|undefined>;
+    type GET = (resourceId: string) => Promise<Document>;
+    type FIND = (identifier: string) => Promise<Document|undefined>;
+    type GENERATE_ID = () => string;
+    type GET_INVERSE_RELATION = (propertyName: string) => string|undefined;
 
     const RECORDED_IN = 'isRecordedIn';
     const LIES_WITHIN = 'liesWithin';
@@ -43,10 +45,10 @@ export module DefaultImportCalc {
 
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
-                          generateId: () => string,
-                          find: FIND_FN,
-                          get: GET_FN,
-                          getInverseRelation: (propertyName: string) => string|undefined,
+                          generateId: GENERATE_ID,
+                          find: FIND,
+                          get: GET,
+                          getInverseRelation: GET_INVERSE_RELATION,
                           mergeMode: boolean,
                           allowOverwriteRelationsInMergeMode: boolean,
                           mainTypeDocumentId: string,
@@ -88,9 +90,9 @@ export module DefaultImportCalc {
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
                                     useIdentifiersInRelations: boolean,
-                                    find: FIND_FN,
-                                    get: GET_FN,
-                                    generateId: () => string): Promise<Array<Document>> {
+                                    find: FIND,
+                                    get: GET,
+                                    generateId: GENERATE_ID): Promise<Array<Document>> {
 
 
         async function preprocessAndValidateRelations(document: Document): Promise<Document> {
@@ -134,8 +136,8 @@ export module DefaultImportCalc {
                                     operationTypeNames: string[],
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
-                                    getInverseRelation: (_: string) => string|undefined,
-                                    get: GET_FN,
+                                    getInverseRelation: GET_INVERSE_RELATION,
+                                    get: GET,
                                     mainTypeDocumentId: string) {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
@@ -153,7 +155,7 @@ export module DefaultImportCalc {
 
     async function replaceTopLevelLiesWithins(documents: Array<Document>,
                                               operationTypeNames: string[],
-                                              get: GET_FN,
+                                              get: GET,
                                               mainTypeDocumentId: string) {
 
         for (let document of documents) {
@@ -173,7 +175,7 @@ export module DefaultImportCalc {
 
     async function inferRecordedIns(documents: Array<Document>,
                                     operationTypeNames: string[],
-                                    get: GET_FN,
+                                    get: GET,
                                     mainTypeDocumentId: string) {
 
         const idMap = documents.reduce((tmpMap, document: Document) =>
@@ -239,7 +241,7 @@ export module DefaultImportCalc {
 
 
     async function rewriteIdentifiersInRelations(relations: Relations,
-                                                 find: FIND_FN,
+                                                 find: FIND,
                                                  identifierMap: { [identifier: string]: string }): Promise<void> {
 
         return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: string) => {
@@ -255,7 +257,7 @@ export module DefaultImportCalc {
 
 
     async function assertNoMissingRelationTargets(relations: Relations,
-                                                  get: GET_FN): Promise<void> {
+                                                  get: GET): Promise<void> {
 
         return iterateRelationsInImport(relations, async (relation: string, i: number, id: string) => {
             try { await get(id) }
@@ -311,7 +313,7 @@ export module DefaultImportCalc {
 
 
     async function mergeOrUseAsIs(document: NewDocument|Document,
-                                  find: FIND_FN,
+                                  find: FIND,
                                   mergeIfExists: boolean,
                                   allowOverwriteRelationsOnMerge: boolean): Promise<Document> {
 

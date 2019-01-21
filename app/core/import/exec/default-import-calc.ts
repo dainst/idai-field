@@ -33,6 +33,9 @@ export module DefaultImportCalc {
     type GENERATE_ID = () => string;
     type GET_INVERSE_RELATION = (propertyName: string) => string|undefined;
 
+    type ID = string;
+    type IDENTIFIER = string;
+
     const RECORDED_IN = 'isRecordedIn';
     const LIES_WITHIN = 'liesWithin';
     const INCLUDES = 'includes';
@@ -51,7 +54,7 @@ export module DefaultImportCalc {
                           getInverseRelation: GET_INVERSE_RELATION,
                           mergeMode: boolean,
                           allowOverwriteRelationsInMergeMode: boolean,
-                          mainTypeDocumentId: string,
+                          mainTypeDocumentId: ID,
                           useIdentifiersInRelations: boolean) {
 
         if (mainTypeDocumentId && mergeMode) {
@@ -138,7 +141,7 @@ export module DefaultImportCalc {
                                     allowOverwriteRelationsInMergeMode: boolean,
                                     getInverseRelation: GET_INVERSE_RELATION,
                                     get: GET,
-                                    mainTypeDocumentId: string) {
+                                    mainTypeDocumentId: ID) {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
@@ -156,7 +159,7 @@ export module DefaultImportCalc {
     async function replaceTopLevelLiesWithins(documents: Array<Document>,
                                               operationTypeNames: string[],
                                               get: GET,
-                                              mainTypeDocumentId: string) {
+                                              mainTypeDocumentId: ID) {
 
         for (let document of documents) {
             const relations = document.resource.relations;
@@ -176,7 +179,7 @@ export module DefaultImportCalc {
     async function inferRecordedIns(documents: Array<Document>,
                                     operationTypeNames: string[],
                                     get: GET,
-                                    mainTypeDocumentId: string) {
+                                    mainTypeDocumentId: ID) {
 
         const idMap = documents.reduce((tmpMap, document: Document) =>
                 (tmpMap[document.resource.id] = document, tmpMap),
@@ -191,7 +194,7 @@ export module DefaultImportCalc {
         }
 
 
-        async function getRecordedInFromExistingDocument(targetId: string) {
+        async function getRecordedInFromExistingDocument(targetId: ID) {
 
             try {
                 const got = await get(targetId);
@@ -228,7 +231,7 @@ export module DefaultImportCalc {
     }
 
 
-    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: string) {
+    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: ID) {
 
         const relations = document.resource.relations;
         if (mainTypeDocumentId
@@ -244,7 +247,7 @@ export module DefaultImportCalc {
                                                  find: FIND,
                                                  identifierMap: { [identifier: string]: string }): Promise<void> {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: string) => {
+        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: IDENTIFIER) => {
             if (identifierMap[identifier]) {
                 relations[relation][i] = identifierMap[identifier];
             } else {
@@ -259,7 +262,7 @@ export module DefaultImportCalc {
     async function assertNoMissingRelationTargets(relations: Relations,
                                                   get: GET): Promise<void> {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, id: string) => {
+        return iterateRelationsInImport(relations, async (relation: string, i: number, id: ID) => {
             try { await get(id) }
             catch { throw [E.MISSING_RELATION_TARGET, id] }
         });
@@ -268,7 +271,7 @@ export module DefaultImportCalc {
 
     async function iterateRelationsInImport(
         relations: Relations,
-        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: string) => Promise<void>): Promise<void> {
+        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: ID|IDENTIFIER) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
             await asyncForEach((idOrIdentifier: string, i) =>
@@ -288,7 +291,7 @@ export module DefaultImportCalc {
     }
 
 
-    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: string) {
+    function removeSelfReferencingIdentifiers(relations: Relations|undefined, resourceIdentifier: IDENTIFIER) {
 
         if (!relations) return;
         for (let relName of Object.keys(relations)) {
@@ -331,7 +334,7 @@ export module DefaultImportCalc {
 
     async function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
                                                validator: ImportValidator,
-                                               mainTypeDocumentId: string) {
+                                               mainTypeDocumentId: ID) {
 
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
@@ -346,7 +349,7 @@ export module DefaultImportCalc {
     }
 
 
-    function searchInImport(targetDocumentResourceId: string,
+    function searchInImport(targetDocumentResourceId: ID,
                             idMap: {[id: string]: Document},
                             operationTypeNames: string[]
     ): [string|undefined,   // recordedInResourceId
@@ -367,7 +370,7 @@ export module DefaultImportCalc {
     }
 
 
-    function initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
+    function initRecordedIn(document: NewDocument, mainTypeDocumentId: ID) {
 
         const relations = document.resource.relations;
         if (!relations[RECORDED_IN]) relations[RECORDED_IN] = [];

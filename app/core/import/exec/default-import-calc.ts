@@ -323,7 +323,6 @@ export module DefaultImportCalc {
         if (!targetInImport) return undefined;
 
         if (operationTypeNames.includes(targetInImport.resource.type)) {
-            // TODO delete liesWithin in this case
             return [targetInImport.resource.id, undefined];
         }
         if (targetInImport.resource.relations.isRecordedIn

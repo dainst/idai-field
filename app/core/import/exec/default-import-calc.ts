@@ -34,7 +34,9 @@ export module DefaultImportCalc {
     type GET_INVERSE_RELATION = (propertyName: string) => string|undefined;
 
     type ID = string;
+    type ID_MAP = { [id: string]: Document };
     type IDENTIFIER = string;
+    type IDENTIFIER_MAP = { [identifier: string]: string };
 
     const RECORDED_IN = 'isRecordedIn';
     const LIES_WITHIN = 'liesWithin';
@@ -123,7 +125,7 @@ export module DefaultImportCalc {
 
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
-        const identifierMap: { [identifier: string]: string } = mergeMode ? {} : assignIds(documents, generateId);
+        const identifierMap: IDENTIFIER_MAP = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
             let _ = clone(document); 
@@ -183,7 +185,7 @@ export module DefaultImportCalc {
 
         const idMap = documents.reduce((tmpMap, document: Document) =>
                 (tmpMap[document.resource.id] = document, tmpMap),
-            {} as {[id: string]: Document});
+            {} as ID_MAP);
 
 
         async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
@@ -245,7 +247,7 @@ export module DefaultImportCalc {
 
     async function rewriteIdentifiersInRelations(relations: Relations,
                                                  find: FIND,
-                                                 identifierMap: { [identifier: string]: string }): Promise<void> {
+                                                 identifierMap: IDENTIFIER_MAP): Promise<void> {
 
         return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: IDENTIFIER) => {
             if (identifierMap[identifier]) {
@@ -311,7 +313,7 @@ export module DefaultImportCalc {
             .filter(hasNot(RESOURCE_ID))
             .reduce((identifierMap, document)  =>
                 (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
-            , {} as { [identifier: string]: string });
+            , {} as IDENTIFIER_MAP);
     }
 
 
@@ -350,7 +352,7 @@ export module DefaultImportCalc {
 
 
     function searchInImport(targetDocumentResourceId: ID,
-                            idMap: {[id: string]: Document},
+                            idMap: ID_MAP,
                             operationTypeNames: string[]
     ): [string|undefined,   // recordedInResourceId
         Document|undefined] // targetDocument

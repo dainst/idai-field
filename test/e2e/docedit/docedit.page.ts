@@ -18,32 +18,31 @@ export class DoceditPage {
     };
 
 
-    public static clickFieldsTab = function() {
+    public static clickFieldsTab() {
 
         common.click(element(by.id('docedit-fields-tab')));
     };
 
 
-    public static clickRelationsTab = function() {
+    public static clickRelationsTab() {
 
         common.click(element(by.id('docedit-relations-tab')));
     };
 
 
-    public static clickImagesTab = function() {
+    public static clickImagesTab() {
 
         common.click(element(by.id('docedit-images-tab')));
     };
 
 
-    public static clickConflictsTab = function() {
+    public static clickConflictsTab() {
 
         common.click(element(by.id('docedit-conflicts-tab')));
     };
 
 
-    public static clickSaveDocument = function(clickMsgAway: boolean = true,
-                                               waitForModalToClose: boolean = true) {
+    public static clickSaveDocument(clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
 
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {
@@ -66,6 +65,13 @@ export class DoceditPage {
     };
 
 
+    public static clickDuplicateDocument() {
+
+        common.click(element(by.id('document-edit-button-dropdown')));
+        common.click(element(by.id('document-edit-button-duplicate-document')));
+    };
+
+
     public static clickDeleteDocument() {
 
         common.click(element(by.id('document-edit-button-dropdown')));
@@ -73,34 +79,41 @@ export class DoceditPage {
     };
 
 
-    public static clickConfirmDeleteInModal = function() {
+    public static clickConfirmDuplicateInModal() {
+
+        common.click(element(by.id('duplicate-resource-confirm')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+    };
+
+
+    public static clickConfirmDeleteInModal() {
 
         common.click(element(by.id('delete-resource-confirm')));
     };
 
 
-    public static clickChooseRightRevision = function() {
+    public static clickChooseRightRevision() {
 
         browser.wait(EC.visibilityOf(element.all(by.css('input[type=radio]')).get(1)), delays.ECWaitTime);
         element.all(by.css('input[type=radio]')).get(1).click();
     };
 
 
-    public static clickSolveConflictButton = function() {
+    public static clickSolveConflictButton() {
 
         browser.wait(EC.visibilityOf(element(by.id('solve-conflict-button'))), delays.ECWaitTime);
         element(by.id('solve-conflict-button')).click();
     };
 
 
-    public static clickTypeSwitcherButton = function() {
+    public static clickTypeSwitcherButton() {
 
         browser.wait(EC.visibilityOf(element(by.id('type-switcher-button'))), delays.ECWaitTime);
         element(by.id('type-switcher-button')).click();
     };
 
 
-    public static clickTypeSwitcherOption = function(typeName: string) {
+    public static clickTypeSwitcherOption(typeName: string) {
 
         browser.wait(EC.visibilityOf(element(by.id('choose-type-option-' + typeName))), delays.ECWaitTime);
         element(by.id('choose-type-option-' + typeName)).click();
@@ -124,7 +137,7 @@ export class DoceditPage {
 
     // get text
 
-    public static getInputFieldValue = function(index) {
+    public static getInputFieldValue(index) {
 
         browser.wait(EC.visibilityOf(element.all(by.tagName('dai-input input')).get(index)), delays.ECWaitTime);
         return element.all(by.tagName('dai-input input')).get(index).getAttribute('value');
@@ -132,6 +145,11 @@ export class DoceditPage {
 
 
     // elements
+
+    public static getNumberOfDuplicatesInputField() {
+
+        return element(by.id('duplicate-input'));
+    }
 
     public static getConfirmDeletionInputField() {
 
@@ -141,7 +159,7 @@ export class DoceditPage {
 
     // type in
 
-    public static typeInInputField = function(fieldName: string, text: string) {
+    public static typeInInputField(fieldName: string, text: string) {
 
         browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' input'))),
             delays.ECWaitTime);
@@ -149,7 +167,13 @@ export class DoceditPage {
     };
 
 
-    public static typeInIdentifierInConfirmDeletionInputField(identifier) {
+    public static typeInNumberOfDuplicates(numberOfDuplicates: number) {
+
+        return common.typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
+    }
+
+
+    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
 
         return common.typeIn(this.getConfirmDeletionInputField(), identifier);
     }

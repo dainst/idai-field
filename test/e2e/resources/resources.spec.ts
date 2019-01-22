@@ -493,4 +493,18 @@ describe('resources --', () => {
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
     });
+
+
+    it('duplicate a resource', () => {
+
+        ResourcesPage.performCreateResource('resource1', 'feature');
+        ResourcesPage.openEditByDoubleClickResource('resource1');
+        DoceditPage.clickDuplicateDocument();
+        DoceditPage.typeInNumberOfDuplicates(2);
+        DoceditPage.clickConfirmDuplicateInModal();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource3')), delays.ECWaitTime);
+    });
 });

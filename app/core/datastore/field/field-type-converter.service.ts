@@ -3,13 +3,13 @@ import {Document, IdaiFieldImageDocument} from 'idai-components-2';
 import {takeOrMake} from 'tsfun';
 import {TypeConverter} from '../core/type-converter';
 import {TypeUtility} from '../../model/type-utility';
-import {FieldNameMigrator} from './field-name-migrator';
+import {FieldnameMigrator} from './fieldname-migrator';
 
 @Injectable()
 /**
  * @author Daniel de Oliveira
  */
-export class IdaiFieldTypeConverter extends TypeConverter<Document> {
+export class FieldTypeConverter extends TypeConverter<Document> {
 
 
     constructor(private typeUtility: TypeUtility) {
@@ -69,6 +69,6 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
             }
         }
 
-        return FieldNameMigrator.migrate(document) as T;
+        return FieldnameMigrator.migrate(document) as T;
     }
 }

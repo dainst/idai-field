@@ -10,7 +10,7 @@ export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<Id
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export abstract class ImageDocumentReadDatastore extends CachedReadDatastore<IdaiFieldImageDocument> {
+export abstract class ImageReadDatastore extends CachedReadDatastore<IdaiFieldImageDocument> {
 
     public async find(query: Query): Promise<IdaiFieldImageDocumentFindResult> {
 

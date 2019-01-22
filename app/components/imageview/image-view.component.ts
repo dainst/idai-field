@@ -9,7 +9,7 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
-import {ImageDocumentReadDatastore} from '../../core/datastore/field/image-document-read-datastore';
+import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
 
 
@@ -38,7 +38,7 @@ export class ImageViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: ImageDocumentReadDatastore,
+        private datastore: ImageReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,

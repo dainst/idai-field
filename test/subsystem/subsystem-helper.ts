@@ -1,9 +1,9 @@
 import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
-import {ImageDocumentDatastore} from '../../app/core/datastore/field/image-document-datastore';
-import {FieldDocumentDatastore} from '../../app/core/datastore/field/field-document-datastore';
+import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
+import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {TypeUtility} from '../../app/core/model/type-utility';
-import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
+import {FieldTypeConverter} from '../../app/core/datastore/field/field-type-converter.service';
 import {IndexerConfiguration} from '../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
@@ -86,11 +86,11 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeUtility = new TypeUtility(projectConfiguration);
 
-    const typeConverter = new IdaiFieldTypeConverter(typeUtility);
+    const typeConverter = new FieldTypeConverter(typeUtility);
 
-    const idaiFieldDocumentDatastore = new FieldDocumentDatastore(
+    const idaiFieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
-    const idaiFieldImageDocumentDatastore = new ImageDocumentDatastore(
+    const idaiFieldImageDocumentDatastore = new ImageDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);

@@ -6,7 +6,7 @@ import {isObject} from 'tsfun';
 /**
  * @author Thomas Kleinke
  */
-export module FieldNameMigrator {
+export module FieldnameMigrator {
 
     export function migrate(document: Document): Document {
 

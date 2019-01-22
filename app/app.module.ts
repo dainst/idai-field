@@ -49,7 +49,7 @@ import {SynchronizationStatus} from './core/settings/synchronization-status';
 import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
 import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
-import {FieldDocumentDatastore} from './core/datastore/field/field-document-datastore';
+import {FieldDatastore} from './core/datastore/field/field-datastore';
 
 
 const remote = require('electron').remote;
@@ -195,7 +195,7 @@ registerLocaleData(localeDe, 'de');
         {
             provide: Validator,
             useFactory: (
-                idaiFieldDocumentDatastore: FieldDocumentDatastore,
+                idaiFieldDocumentDatastore: FieldDatastore,
                 projectConfiguration: ProjectConfiguration,
                 typeUtility: TypeUtility) => {
 
@@ -205,7 +205,7 @@ registerLocaleData(localeDe, 'de');
                     typeUtility
                 )
             },
-            deps: [FieldDocumentDatastore, ProjectConfiguration]
+            deps: [FieldDatastore, ProjectConfiguration]
         },
         ImportValidator,
         { provide: MD, useClass: M},

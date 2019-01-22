@@ -10,7 +10,7 @@ import {IndexFacade} from '../index/index-facade';
  *
  * @author Daniel de Oliveira
  */
-export class FieldDocumentDatastore extends CachedDatastore<IdaiFieldDocument> {
+export class FieldDatastore extends CachedDatastore<IdaiFieldDocument> {
 
     constructor(
         datastore: PouchdbDatastore,

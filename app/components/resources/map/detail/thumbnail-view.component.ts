@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@ang
 import {on} from 'tsfun';
 import {Document, Messages, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
-import {ImageDocumentReadDatastore} from '../../../../core/datastore/field/image-document-read-datastore';
+import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ImageUploadResult} from '../../../imageupload/image-uploader';
 import {M} from '../../../m';
 import {ViewFacade} from '../../view/view-facade';
@@ -28,7 +28,7 @@ export class ThumbnailViewComponent implements OnChanges {
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
 
-    constructor(private datastore: ImageDocumentReadDatastore,
+    constructor(private datastore: ImageReadDatastore,
                 private messages: Messages,
                 private viewFacade: ViewFacade) {}
 

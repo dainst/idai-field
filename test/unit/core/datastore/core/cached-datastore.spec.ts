@@ -1,8 +1,8 @@
 import {IdaiFieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
-import {FieldDocumentDatastore} from '../../../../../app/core/datastore/field/field-document-datastore';
-import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/field/idai-field-type-converter';
+import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
 import {Static} from '../../../static';
 
 
@@ -12,7 +12,7 @@ import {Static} from '../../../static';
  */
 describe('CachedDatastore', () => {
 
-    let ds: FieldDocumentDatastore;
+    let ds: FieldDatastore;
     let mockdb: any;
     let mockIndexFacade: any;
 
@@ -26,11 +26,11 @@ describe('CachedDatastore', () => {
         mockTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const docDatastore = new FieldDocumentDatastore(
+        const docDatastore = new FieldDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new IdaiFieldTypeConverter(mockTypeUtility));
+            new FieldTypeConverter(mockTypeUtility));
         docDatastore.suppressWait = true;
         return docDatastore;
     }

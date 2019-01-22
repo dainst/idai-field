@@ -1,6 +1,7 @@
 import {DefaultImportCalc} from '../../../../../app/core/import/exec/default-import-calc';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {Document} from 'idai-components-2';
+import {logging} from 'selenium-webdriver';
 
 /**
  * @author Daniel de Oliveira
@@ -372,6 +373,19 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('merge, overwrite relations, reassign parent', async done => {
+
+        const result = await processMergeOverwriteRelations([
+            d('Feature', 'existingFeature2', { parent: 'existingFeature' })
+        ]);
+
+        const resource = result[0][0].resource;
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN][0]).toBe('ef1');
+        done();
+    });
+
+
     it('merge, ignore wrong relations when not setting overwrite relations', async done => {
 
         const result = await processMerge([
@@ -396,36 +410,6 @@ describe('DefaultImportCalc', () => {
         expect(result[2][1]).toEqual('one');
         done();
     });
-
-
-    // xit('set liesWithin which clashes with isRecordedIn in merge mode with overwrite relations', async done => {
-
-        // TODO rewrite test
-
-        // TR1 trench1
-        // - FE1 feature1
-        // TR2 trench2
-        // - FE2 feature2
-
-        // importFunction = DefaultImport.build(
-        //     mockValidator, operationTypeNames,
-        //     mockProjectConfiguration,
-        //     () => '101', true, true);
-        //
-        // mockDatastore.find.and.returnValues(Promise.resolve( // update target
-        //     { documents: [{ resource: { type: 'Find', identifier: 'find1', relations: {isRecordedIn: ['TR2']} }}], totalCount: 1 }));
-        // mockDatastore.get.and.returnValue(Promise.resolve(
-        //     { resource: { type: 'FE1', identifier: 'feature1', relations: { isRecordedIn: ['TR1']}} } as any));
-        //
-        // const {errors} = await importFunction([
-        //     { resource: { type: 'Find', identifier: 'find1', relations: { liesWithin: ['FE1']}} } as any
-        // ], mockDatastore, 'user1');
-        //
-        // expect(errors.length).toBe(1);
-        // expect(errors[0][0]).toEqual(ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
-        // expect(errors[0][1]).toEqual('find1');
-        // done();
-    // });
 
 
     it('duplicate identifiers in import file', async done => {

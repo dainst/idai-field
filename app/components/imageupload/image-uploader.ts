@@ -8,7 +8,7 @@ import {ExtensionUtil} from '../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {ImageDocumentReadDatastore} from '../../core/datastore/field/image-document-read-datastore';
+import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {M} from '../m';
 
@@ -37,7 +37,7 @@ export class ImageUploader {
         private projectConfiguration: ProjectConfiguration,
         private usernameProvider: UsernameProvider,
         private uploadStatus: UploadStatus,
-        private imageDocumentDatastore: ImageDocumentReadDatastore
+        private imageDocumentDatastore: ImageReadDatastore
     ) {}
 
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {unique, subtract} from 'tsfun';
 import {IdaiFieldImageDocument} from 'idai-components-2';
-import {ImageDocumentReadDatastore} from '../../../../core/datastore/field/image-document-read-datastore';
+import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 
 
@@ -28,7 +28,7 @@ export class LayerManager {
     private activeLayerIds: string[] = [];
 
 
-    constructor(private datastore: ImageDocumentReadDatastore,
+    constructor(private datastore: ImageReadDatastore,
                 private viewFacade: ViewFacade) {}
 
 

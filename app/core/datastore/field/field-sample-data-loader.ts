@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Converter} from '../../imagestore/converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
-import {getSampleDocuments} from './idai-field-sample-objects';
+import {getSampleDocuments} from './field-sample-objects';
 
 
 /**
@@ -9,7 +9,7 @@ import {getSampleDocuments} from './idai-field-sample-objects';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class IdaiFieldSampleDataLoader implements SampleDataLoader {
+export class FieldSampleDataLoader implements SampleDataLoader {
 
     constructor(private converter: Converter,
                 private imagestorePath: string,

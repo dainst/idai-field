@@ -3,7 +3,7 @@ import {IdaiFieldDocument, IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {FieldDocumentReadDatastore} from '../../../core/datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
@@ -40,7 +40,7 @@ export class RowComponent implements AfterViewInit {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private validator: Validator,
-        private datastore: FieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private navigationService: NavigationService
     ) {}
 

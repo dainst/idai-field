@@ -10,7 +10,7 @@ import {IndexFacade} from "../index/index-facade";
  *
  * @author Daniel de Oliveira
  */
-export class ImageDocumentDatastore
+export class ImageDatastore
     extends CachedDatastore<IdaiFieldImageDocument> {
 
     constructor(

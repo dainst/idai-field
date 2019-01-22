@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, tripleEqual, isEmpty} from 'tsfun';
 import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldFeatureDocument} from 'idai-components-2';
-import {FieldDocumentReadDatastore} from '../../core/datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
-import {FeatureDocumentReadDatastore} from '../../core/datastore/field/feature-document-read-datastore';
+import {FeatureReadDatastore} from '../../core/datastore/field/feature-read-datastore';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
@@ -42,9 +42,9 @@ export class MatrixViewComponent implements OnInit {
 
 
     constructor(
-        private datastore: FieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private featureDatastore: FeatureDocumentReadDatastore,
+        private featureDatastore: FeatureReadDatastore,
         private modalService: NgbModal,
         private matrixState: MatrixState,
         private loading: Loading

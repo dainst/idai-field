@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Query, IdaiFieldImageDocument} from 'idai-components-2';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
-import {ImageDocumentReadDatastore} from '../../../core/datastore/field/image-document-read-datastore';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class ImageDocumentsManager {
 
     constructor(public viewFacade: ViewFacade,
                 private imagesState: ImagesState,
-                private imageDatastore: ImageDocumentReadDatastore) {}
+                private imageDatastore: ImageReadDatastore) {}
 
 
     public getSelected = (): Array<IdaiFieldImageDocument> => this.selected;

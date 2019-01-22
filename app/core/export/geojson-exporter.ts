@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
 import {jsonClone} from 'tsfun';
 import {IdaiFieldDocument, IdaiFieldGeometry, Query} from 'idai-components-2';
-import {FieldDocumentReadDatastore} from '../datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/m';
 
 const geojsonRewind = require('geojson-rewind');
@@ -13,7 +13,7 @@ const geojsonRewind = require('geojson-rewind');
  */
 export module GeoJsonExporter {
 
-    export async function performExport(datastore: FieldDocumentReadDatastore, outputFilePath: string,
+    export async function performExport(datastore: FieldReadDatastore, outputFilePath: string,
                                         operationId: string): Promise<void> {
 
         const documents: Array<IdaiFieldDocument> = await getGeometryDocuments(datastore, operationId);
@@ -23,7 +23,7 @@ export module GeoJsonExporter {
     }
 
 
-    async function getGeometryDocuments(datastore: FieldDocumentReadDatastore,
+    async function getGeometryDocuments(datastore: FieldReadDatastore,
                                         operationId: string): Promise<Array<IdaiFieldDocument>> {
 
         const query: Query = createQuery(operationId);

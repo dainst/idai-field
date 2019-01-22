@@ -2,7 +2,7 @@ import {ProjectConfiguration, Query, IdaiFieldDocument} from 'idai-components-2'
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
-import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/field/idai-field-type-converter';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
 import {TypeUtility} from '../../../../../app/core/model/type-utility';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb-manager';
@@ -48,7 +48,7 @@ describe('IndexFacade', () => {
 
         const {datastore, documentCache, indexFacade} =
             await createPouchdbDatastore('testdb', projectConfiguration);
-        const converter = new IdaiFieldTypeConverter(
+        const converter = new FieldTypeConverter(
             new TypeUtility(projectConfiguration));
 
         return {datastore, documentCache, indexFacade};

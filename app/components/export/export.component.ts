@@ -8,7 +8,7 @@ import {ExportModalComponent} from './export-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
-import {FieldDocumentReadDatastore} from '../../core/datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 
@@ -40,7 +40,7 @@ export class ExportComponent implements OnInit {
                 private messages: Messages,
                 private i18n: I18n,
                 private viewFacade: ViewFacade,
-                private datastore: FieldDocumentReadDatastore) {}
+                private datastore: FieldReadDatastore) {}
 
 
     public getOperationLabel = (operation: IdaiFieldDocument) => ModelUtil.getDocumentLabel(operation);

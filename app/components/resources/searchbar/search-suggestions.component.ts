@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {Query, IdaiFieldDocument} from 'idai-components-2';
-import {FieldDocumentReadDatastore} from '../../../core/datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
@@ -28,7 +28,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
 
     constructor(private routingService: RoutingService,
-                private datastore: FieldDocumentReadDatastore,
+                private datastore: FieldReadDatastore,
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,

@@ -6,7 +6,7 @@ import {OperationViews} from './state/operation-views';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../core/util/observer-util';
-import {FieldDocumentReadDatastore} from '../../../core/datastore/field/field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {clone} from '../../../core/util/object-util';
 
 
@@ -41,7 +41,7 @@ export class ResourcesStateManager {
 
 
     constructor(
-        private datastore: FieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private serializer: StateSerializer,
         private views: OperationViews,
         private additionalOverviewTypeNames: string[],

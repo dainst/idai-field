@@ -61,6 +61,7 @@ describe('DefaultImportCalc', () => {
     let processWithMainType;
     let processWithPlainIds;
     let processMerge;
+    let processMergeOverwriteRelations;
 
 
     beforeEach(() => {
@@ -96,6 +97,12 @@ describe('DefaultImportCalc', () => {
             false,
             '',
             false);
+
+        processMergeOverwriteRelations = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+            true,
+            true,
+            '',
+            true);
     });
 
 
@@ -334,7 +341,7 @@ describe('DefaultImportCalc', () => {
 
     // merge mode //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('merge existing, add field', async done => {
+    it('merge, add field', async done => {
 
         const result = await processMerge([
             { resource: { type: 'Feature', identifier: 'existingFeature',
@@ -352,10 +359,20 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    // TODO write test for overwrite relations
+    it('merge, overwrite relations', async done => {
+
+        const result = await processMergeOverwriteRelations([
+            d('Feature', 'existingFeature', { isAfter: ['existingFeature2']})
+        ]);
+
+        expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
+        expect(result[1][0].resource.id).toEqual('ef2');
+        expect(result[1][0].resource.relations['isBefore'][0]).toEqual('ef1');
+        done();
+    });
 
 
-    it('merge existing, ignore wrong relations when not setting overwrite relations', async done => {
+    it('merge, ignore wrong relations when not setting overwrite relations', async done => {
 
         const result = await processMerge([
             d('Feature', 'existingFeature', { isAfter: 'unknown' })

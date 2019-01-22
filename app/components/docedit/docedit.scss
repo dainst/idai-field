@@ -97,8 +97,12 @@
     }
   }
 
-  #document-edit-button-delete-document {
-    color: red;
+  .mdi-delete {
+    color: #dc3545;
+  }
+
+  .mdi-expand-all {
+    color: #28a745;
   }
 
   .choose-geometry-icon {

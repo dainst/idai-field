@@ -500,7 +500,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('resource1', 'feature');
         ResourcesPage.openEditByDoubleClickResource('resource1');
         DoceditPage.clickDuplicateDocument();
-        DoceditPage.typeInNumberOfDuplicates(2);
+        DoceditPage.typeInNumberOfDuplicates('2');
         DoceditPage.clickConfirmDuplicateInModal();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
@@ -516,7 +516,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField('identifier', 'resource1');
         DoceditPage.clickDuplicateDocument();
-        DoceditPage.typeInNumberOfDuplicates(2);
+        DoceditPage.typeInNumberOfDuplicates('2');
         DoceditPage.clickConfirmDuplicateInModal();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);

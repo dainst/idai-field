@@ -81,7 +81,7 @@ export class DoceditPage {
 
     public static clickConfirmDuplicateInModal() {
 
-        common.click(element(by.id('duplicate-resource-confirm')));
+        common.click(element(by.id('duplicate-confirm')));
         browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     };
 
@@ -167,7 +167,7 @@ export class DoceditPage {
     };
 
 
-    public static typeInNumberOfDuplicates(numberOfDuplicates: number) {
+    public static typeInNumberOfDuplicates(numberOfDuplicates: string) {
 
         return common.typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
     }

@@ -1,11 +1,9 @@
-import {Injectable} from '@angular/core';
+import {isnt, on} from 'tsfun';
 import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
-import {isnt, on} from 'tsfun';
 
 
-@Injectable()
 /**
  * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
  *
@@ -13,7 +11,6 @@ import {isnt, on} from 'tsfun';
  * @author Thomas Kleinke
  */
 export class Validator {
-
 
     constructor(protected projectConfiguration: ProjectConfiguration,
                 protected find: (query: Query) => Promise<FindResult>,

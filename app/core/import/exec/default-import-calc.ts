@@ -29,6 +29,8 @@ import {clone} from '../../util/object-util';
  */
 export module DefaultImportCalc {
 
+    type Either<T1, T2> = [T1, undefined]|[undefined, T2];
+
     type GET = (resourceId: string) => Promise<Document>;
     type FIND = (identifier: string) => Promise<Document|undefined>;
     type GENERATE_ID = () => string;
@@ -351,9 +353,8 @@ export module DefaultImportCalc {
     function searchInImport(targetDocumentResourceId: ID,
                             idMap: ID_MAP,
                             operationTypeNames: string[]
-    ): [string, undefined]    // recordedInResourceId
-       |[undefined, Document] // targetDocument
-       |undefined {           // targetDocument not found
+    ): Either<string, Document> // recordedInResourceId|targetDocument
+       |undefined {             // targetDocument not found
 
         const targetInImport = idMap[targetDocumentResourceId];
         if (!targetInImport) return undefined;

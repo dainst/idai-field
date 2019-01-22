@@ -17,6 +17,7 @@
     <div class="input-group">
         <input id="duplicate-input"
                type="number" min="{{getMinNumberOfDuplicates()}}" max="{{getMaxNumberOfDuplicates()}}"
+               value="{{getMinNumberOfDuplicates()}}"
                class="form-control"
                [(ngModel)]="numberOfDuplicates"
                (keydown)="$event.key !== 'Enter' || confirmDuplication()" />

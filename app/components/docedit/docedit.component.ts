@@ -163,7 +163,7 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 DuplicateModalComponent, { keyboard: false }
             );
-            modalRef.componentInstance.newDocument = !this.documentHolder.clonedDocument.resource.id;
+            modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
             numberOfDuplicates = await modalRef.result;
         } catch(err) {
             // DuplicateModal has been canceled

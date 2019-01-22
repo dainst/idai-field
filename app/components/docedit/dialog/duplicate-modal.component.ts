@@ -26,6 +26,13 @@ export class DuplicateModalComponent {
     constructor(public activeModal: NgbActiveModal) {}
 
 
+    public initialize(newDocument: boolean) {
+
+        this.newDocument = newDocument;
+        this.numberOfDuplicates = this.getMinNumberOfDuplicates();
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');

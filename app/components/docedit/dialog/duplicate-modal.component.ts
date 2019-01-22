@@ -19,7 +19,7 @@ export class DuplicateModalComponent {
     public numberOfDuplicates: number|undefined;
 
     public readonly minNumberOfDuplicates: number = 1;
-    public readonly maxNumberOfDuplicates: number = 1000;
+    public readonly maxNumberOfDuplicates: number = 100;
 
 
     constructor(public activeModal: NgbActiveModal) {}

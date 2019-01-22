@@ -1,6 +1,6 @@
 import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
-import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
-import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
+import {ImageDocumentDatastore} from '../../app/core/datastore/field/image-document-datastore';
+import {FieldDocumentDatastore} from '../../app/core/datastore/field/field-document-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
@@ -88,9 +88,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeConverter = new IdaiFieldTypeConverter(typeUtility);
 
-    const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+    const idaiFieldDocumentDatastore = new FieldDocumentDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
-    const idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
+    const idaiFieldImageDocumentDatastore = new ImageDocumentDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);

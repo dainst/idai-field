@@ -10,7 +10,7 @@ import {IdaiFieldFeatureDocument} from 'idai-components-2';
  *
  * @author Daniel de Oliveira
  */
-export class IdaiFieldFeatureDocumentDatastore
+export class FeatureDocumentDatastore
     extends CachedDatastore<IdaiFieldFeatureDocument> {
 
     constructor(

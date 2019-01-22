@@ -10,7 +10,7 @@ export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export abstract class IdaiFieldFeatureDocumentReadDatastore extends CachedReadDatastore<IdaiFieldFeatureDocument> {
+export abstract class FeatureDocumentReadDatastore extends CachedReadDatastore<IdaiFieldFeatureDocument> {
 
     public async find(query: Query): Promise<IdaiFieldFeatureDocumentFindResult> {
 

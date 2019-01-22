@@ -57,7 +57,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     // create
 
-    it('IdaiFieldDocumentDatastore - throw when creating an image type', async done => {
+    it('FieldDocumentDatastore - throw when creating an image type', async done => {
 
         try {
             await _idaiFieldDocumentDatastore.create(image0);
@@ -69,7 +69,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - throw when creating a non image type', async done => {
+    it('ImageDocumentDatastore - throw when creating a non image type', async done => {
 
         try {
             await _idaiFieldImageDocumentDatastore.create(trench0);
@@ -83,7 +83,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     // update
 
-    it('IdaiFieldDocumentDatastore - throw when updating an image type', async done => {
+    it('FieldDocumentDatastore - throw when updating an image type', async done => {
 
         try {
             await _idaiFieldDocumentDatastore.update(image0);
@@ -95,7 +95,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - throw when updating a non image type', async done => {
+    it('ImageDocumentDatastore - throw when updating a non image type', async done => {
 
         try {
             await _idaiFieldImageDocumentDatastore.update(trench0);
@@ -109,7 +109,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     // remove
 
-    it('IdaiFieldDocumentDatastore - throw when deleting an image type', async done => {
+    it('FieldDocumentDatastore - throw when deleting an image type', async done => {
 
         try {
             await _idaiFieldDocumentDatastore.remove(image0);
@@ -121,7 +121,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - throw when deleting a non image type', async done => {
+    it('ImageDocumentDatastore - throw when deleting a non image type', async done => {
 
         try {
             await _idaiFieldImageDocumentDatastore.remove(trench0);
@@ -135,7 +135,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     // get
 
-    it('IdaiFieldDocumentDatastore - throw when getting an image type', async done => {
+    it('FieldDocumentDatastore - throw when getting an image type', async done => {
 
         try {
             await _idaiFieldDocumentDatastore.get('image0', { skip_cache: true });
@@ -147,7 +147,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - throw when getting a non image type', async done => {
+    it('ImageDocumentDatastore - throw when getting a non image type', async done => {
 
         try {
             await _idaiFieldImageDocumentDatastore.get('trench0', { skip_cache: true });
@@ -161,7 +161,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     // find
 
-    it('IdaiFieldDocumentDatastore - throw when find called with image type ', async done => {
+    it('FieldDocumentDatastore - throw when find called with image type ', async done => {
 
         try {
             await _idaiFieldDocumentDatastore.find({types: ['Image']});
@@ -173,7 +173,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - throw when find called with non image type ', async done => {
+    it('ImageDocumentDatastore - throw when find called with non image type ', async done => {
 
         try {
             await _idaiFieldImageDocumentDatastore.find({types: ['Trench']});
@@ -209,7 +209,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldImageDocumentDatastore - return only image type documents when called without types', async done => {
+    it('ImageDocumentDatastore - return only image type documents when called without types', async done => {
 
         try {
             const result = await _idaiFieldImageDocumentDatastore.find({});
@@ -222,7 +222,7 @@ describe('DAOs/Access/Subsystem', () => {
     });
 
 
-    it('IdaiFieldDocumentDatastore - return only non image type documents when called without types', async done => {
+    it('FieldDocumentDatastore - return only non image type documents when called without types', async done => {
 
         try {
             const result = await _idaiFieldDocumentDatastore.find({});

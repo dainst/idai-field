@@ -20,7 +20,7 @@ import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
-import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
+import {FieldDocumentDatastore} from '../../core/datastore/field/field-document-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
@@ -33,7 +33,7 @@ import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldDocumentReadDatastore} from '../../core/datastore/field/field-document-read-datastore';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
@@ -78,7 +78,7 @@ const remote = require('electron').remote;
         LayerImageProvider,
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: IdaiFieldDocumentReadDatastore,
+            useFactory: (datastore: FieldDocumentReadDatastore,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
@@ -95,13 +95,13 @@ const remote = require('electron').remote;
                     settingsService.getSettings().locale
                 );
             },
-            deps: [IdaiFieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
+            deps: [FieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
         },
         {
             provide: ViewFacade,
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
-                datastore: IdaiFieldDocumentDatastore,
+                datastore: FieldDocumentDatastore,
                 changesStream: RemoteChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading
@@ -116,7 +116,7 @@ const remote = require('electron').remote;
             },
             deps: [
                 ProjectConfiguration,
-                IdaiFieldDocumentDatastore,
+                FieldDocumentDatastore,
                 RemoteChangesStream,
                 ResourcesStateManager,
                 Loading

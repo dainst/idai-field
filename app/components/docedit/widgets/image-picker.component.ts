@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Query, IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
+import {ImageDocumentReadDatastore} from '../../../core/datastore/field/image-document-read-datastore';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {M} from '../../m';
 import {clone} from '../../../core/util/object-util';
@@ -37,7 +37,7 @@ export class ImagePickerComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        private datastore: IdaiFieldImageDocumentReadDatastore,
+        private datastore: ImageDocumentReadDatastore,
         private el: ElementRef,
         private typeUtility: TypeUtility
     ) {}

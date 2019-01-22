@@ -1,7 +1,7 @@
 import {IdaiFieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
-import {IdaiFieldDocumentDatastore} from '../../../../../app/core/datastore/field/idai-field-document-datastore';
+import {FieldDocumentDatastore} from '../../../../../app/core/datastore/field/field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/field/idai-field-type-converter';
 import {Static} from '../../../static';
 
@@ -12,7 +12,7 @@ import {Static} from '../../../static';
  */
 describe('CachedDatastore', () => {
 
-    let ds: IdaiFieldDocumentDatastore;
+    let ds: FieldDocumentDatastore;
     let mockdb: any;
     let mockIndexFacade: any;
 
@@ -26,7 +26,7 @@ describe('CachedDatastore', () => {
         mockTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const docDatastore = new IdaiFieldDocumentDatastore(
+        const docDatastore = new FieldDocumentDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,

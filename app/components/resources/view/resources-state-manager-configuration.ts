@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldDocumentReadDatastore} from '../../../core/datastore/field/field-document-read-datastore';
 import {StateSerializer} from '../../../common/state-serializer';
 import {ViewDefinition} from './state/view-definition';
 import {ResourcesStateManager} from './resources-state-manager';
@@ -13,7 +13,7 @@ export module ResourcesStateManagerConfiguration {
 
     export function build(
         projectConfiguration: ProjectConfiguration,
-        datastore: IdaiFieldDocumentReadDatastore,
+        datastore: FieldDocumentReadDatastore,
         stateSerializer: StateSerializer,
         projectName: string,
         suppressMapLoadForTest: boolean,

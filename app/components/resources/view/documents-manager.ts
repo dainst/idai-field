@@ -2,7 +2,7 @@ import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldDocumentReadDatastore} from '../../../core/datastore/field/field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
@@ -34,7 +34,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: FieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private operationTypeDocumentsManager: OperationsManager,
         private resourcesStateManager: ResourcesStateManager,

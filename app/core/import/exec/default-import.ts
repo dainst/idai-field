@@ -40,13 +40,12 @@ export module DefaultImport {
                                              datastore: DocumentDatastore,
                                              username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-            const {get, find} = neededFunctions(datastore);
             const process = DefaultImportCalc.build(
                 validator,
                 operationTypeNames,
                 generateId,
-                find,
-                get,
+                findByIdentifier(datastore),
+                (resourceId: string) => datastore.get(resourceId),
                 getInverseRelation,
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
@@ -77,14 +76,5 @@ export module DefaultImport {
                 ? result.documents[0]
                 : undefined;
         }
-    }
-
-
-    function neededFunctions(datastore: DocumentDatastore) {
-
-        return {
-            get: (resourceId: string) => datastore.get(resourceId),
-            find: findByIdentifier(datastore)
-        };
     }
 }

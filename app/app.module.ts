@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
-    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
+    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -49,6 +49,7 @@ import {SynchronizationStatus} from './core/settings/synchronization-status';
 import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
 import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
+import {IdaiFieldDocumentDatastore} from './core/datastore/field/idai-field-document-datastore';
 
 
 const remote = require('electron').remote;
@@ -191,7 +192,21 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         PersistenceManager,
-        Validator,
+        {
+            provide: Validator,
+            useFactory: (
+                idaiFieldDocumentDatastore: IdaiFieldDocumentDatastore,
+                projectConfiguration: ProjectConfiguration,
+                typeUtility: TypeUtility) => {
+
+                return new Validator(
+                    projectConfiguration,
+                    (q: Query) => idaiFieldDocumentDatastore.find(q),
+                    typeUtility
+                )
+            },
+            deps: [IdaiFieldDocumentDatastore, ProjectConfiguration]
+        },
         ImportValidator,
         { provide: MD, useClass: M},
         DoceditActiveTabService,

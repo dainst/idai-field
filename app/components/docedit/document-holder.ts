@@ -100,11 +100,12 @@ export class DocumentHolder {
         // TODO Remove this as soon as the includes relation isn't used anymore
         if (template.resource.relations.includes) delete template.resource.relations.includes;
 
-        let identifierNumber: number = 1;
+        let { baseIdentifier, identifierNumber } =
+            DocumentHolder.splitIdentifier(template.resource.identifier);
 
         for (let i = 0; i < numberOfDuplicates; i++) {
             identifierNumber = await this.setUniqueIdentifierForDuplicate(
-                template, documentAfterSave.resource.identifier, identifierNumber
+                template, baseIdentifier, identifierNumber
             );
 
             await this.persistenceManager.persist(
@@ -119,13 +120,13 @@ export class DocumentHolder {
     }
 
 
-    private async setUniqueIdentifierForDuplicate(document: NewDocument, originalIdentifier: string,
+    private async setUniqueIdentifierForDuplicate(document: NewDocument, baseIdentifier: string,
                                                   identifierNumber: number): Promise<number> {
 
         let uniqueIdentifier: boolean = false;
         do {
             identifierNumber++;
-            document.resource.identifier = originalIdentifier + identifierNumber;
+            document.resource.identifier = baseIdentifier + identifierNumber;
             try {
                 await this.validator.assertIdentifierIsUnique(document);
                 uniqueIdentifier = true;
@@ -266,5 +267,19 @@ export class DocumentHolder {
                 (typeof(this.clonedDocument.resource[_]) === 'string')
                 && this.clonedDocument.resource[_].length === 0
             );
+    }
+
+
+    private static splitIdentifier(identifier: string): { baseIdentifier: string, identifierNumber: number } {
+
+        const matches = identifier.match(/\d+$/);
+        if (matches) {
+            return {
+                baseIdentifier: identifier.substring(0, identifier.length - matches[0].length),
+                identifierNumber: parseInt(matches[0])
+            };
+        } else {
+            return { baseIdentifier: identifier, identifierNumber: 1 };
+        }
     }
 }

@@ -12,6 +12,8 @@ export module FieldNameMigrator {
 
         const resource: any = {};
 
+        if (document.resource.relations) delete document.resource.relations['includes'];
+
         Object.keys(document.resource).forEach((fieldName: string) => {
            const newFieldName: string = migrationMap[fieldName] ? migrationMap[fieldName] : fieldName;
 

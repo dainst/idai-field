@@ -11,6 +11,9 @@ import {clone} from '../../util/object-util';
  */
 export module RelationsCompleter {
 
+    const LIES_WITHIN = 'liesWithin';
+    const RECORDED_IN = 'isRecordedIn';
+
 
     /**
      * Iterates over all relation (ex) of the given resources. Between import resources, it validates the relations.
@@ -124,7 +127,8 @@ export module RelationsCompleter {
 
         return Object
             .keys(document.resource.relations)
-            .filter(isnt('isRecordedIn'))
+            .filter(isnt(LIES_WITHIN))
+            .filter(isnt(RECORDED_IN))
     }
 
 
@@ -140,6 +144,7 @@ export module RelationsCompleter {
                                                         documentsLookup: {[id: string]: Document},
                                                         getInverseRelation: (_: string) => string|undefined,
                                                         relationNamesExceptIsRecordedIn: string[]): Promise<void> {
+
 
 
         for (let relationName of relationNamesExceptIsRecordedIn) {

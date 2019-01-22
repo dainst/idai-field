@@ -106,9 +106,6 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    // TODO test that includes relation gets not set
-
-
     it('set inverse relation', async done => {
 
         const result = await process([

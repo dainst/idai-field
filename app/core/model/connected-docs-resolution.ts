@@ -1,4 +1,4 @@
-import {isNot, on, tripleEqual, jsonClone} from 'tsfun';
+import {on, tripleEqual, jsonClone, isnt} from 'tsfun';
 import {Document, relationsEquivalent} from 'idai-components-2';
 
 /**
@@ -6,6 +6,10 @@ import {Document, relationsEquivalent} from 'idai-components-2';
  * @author Thomas Kleinke
  */
 export module ConnectedDocsResolution {
+
+    const LIES_WITHIN = 'liesWithin';
+    const RECORDED_IN = 'isRecordedIn';
+
 
     /**
      * Determines which targetDocuments need their relations updated, based
@@ -47,7 +51,7 @@ export module ConnectedDocsResolution {
                                    keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
-            .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
+            .filter(relation => (!(keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN))))
             .forEach(removeRelation(resourceId, targetDocument.resource.relations));
     }
 
@@ -56,7 +60,8 @@ export module ConnectedDocsResolution {
                                  getInverseRelation: (_: string) => string|undefined) {
 
         Object.keys(document.resource.relations)
-            .filter(isNot(tripleEqual('isRecordedIn')) )
+            .filter(isnt(RECORDED_IN))
+            .filter(isnt(LIES_WITHIN))
             .forEach(relation => setInverseRelation(document, targetDocument,
                     relation, getInverseRelation(relation)));
     }

@@ -116,7 +116,6 @@
     "gulp-concat": "2.6.1",
     "gulp-rename": "1.4.0",
     "gulp-sass": "4.0.2",
-    "gulp-webserver": "0.9.1",
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
     "ngx-i18nsupport": "0.17.1",

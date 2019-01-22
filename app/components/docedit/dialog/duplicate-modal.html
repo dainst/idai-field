@@ -31,7 +31,7 @@
         <span *ngIf="!newDocument" i18n="@@buttons.duplicate">Vervielfältigen</span>
     </button>
     <button type="button" id="duplicate-cancel" class="btn btn-secondary"
-            (click)="activeModal.close('cancel')">
+            (click)="activeModal.dismiss('cancel')">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </button>
 </div>

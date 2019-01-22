@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {ImportErrors} from './import-errors';
+import {ImportErrors as E} from './import-errors';
 import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, on, subtractBy, union, isnt} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -117,7 +117,7 @@ export module RelationsCompleter {
         if (!targetDocument) try {
             targetDocument = clone(await get(targetId));
         } catch {
-            throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
+            throw [E.EXEC_MISSING_RELATION_TARGET, targetId]
         }
         return targetDocument as Document;
     }
@@ -146,9 +146,8 @@ export module RelationsCompleter {
                                                         relationNamesExceptIsRecordedIn: string[]): Promise<void> {
 
 
-
         for (let relationName of relationNamesExceptIsRecordedIn) {
-            if (isEmpty(document.resource.relations[relationName])) throw [ImportErrors.EMPTY_RELATION, document.resource.identifier];
+            if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
 
             const inverseRelationName = getInverseRelation(relationName);
             if (!inverseRelationName) continue;
@@ -156,7 +155,7 @@ export module RelationsCompleter {
             if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
                 const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
                 if (u.length > 0) {
-                    throw [ImportErrors.BAD_INTERRELATION,
+                    throw [E.BAD_INTERRELATION,
                         document.resource.identifier,
                         documentsLookup[u[0]].resource.identifier];
                 }

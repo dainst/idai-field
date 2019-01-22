@@ -353,7 +353,7 @@ export module DefaultImportCalc {
                             operationTypeNames: string[]
     ): [string|undefined,   // recordedInResourceId
         Document|undefined] // targetDocument
-        |undefined {        // targetDocument not found
+       |undefined {         // targetDocument not found
 
         const targetInImport = idMap[targetDocumentResourceId];
         if (!targetInImport) return undefined;

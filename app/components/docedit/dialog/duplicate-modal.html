@@ -24,11 +24,12 @@
 </div>
 
 <div class="modal-footer">
-    <button id="duplicate-confirm" class="btn btn-primary" type="button"
+    <button id="duplicate-confirm" class="btn btn-success" type="button"
             [ngClass]="{ 'disabled': !validateNumberOfDuplicates() }"
             (click)="confirmDuplication()">
-        <span *ngIf="newDocument" i18n="@@buttons.create">Erstellen</span>
-        <span *ngIf="!newDocument" i18n="@@buttons.duplicate">Vervielfältigen</span>
+        <span class="mdi mdi-content-save"></span>
+        <span *ngIf="newDocument" class="button-label" i18n="@@buttons.create">Erstellen</span>
+        <span *ngIf="!newDocument" class="button-label" i18n="@@buttons.duplicate">Vervielfältigen</span>
     </button>
     <button type="button" id="duplicate-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">

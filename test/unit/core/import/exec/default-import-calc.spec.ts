@@ -10,6 +10,9 @@ describe('DefaultImportCalc', () => {
 
     let validator;
 
+    const RECORDED_IN = 'isRecordedIn';
+    const LIES_WITHIN = 'liesWithin';
+    
     let opTypeNames = ['Trench'];
 
     const existingTrench = {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
@@ -119,8 +122,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('101');
-        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -133,8 +136,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('101');
-        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -147,8 +150,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('101');
-        expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
-        expect(resource.relations['liesWithin'][0]).toEqual('ef1');
+        expect(resource.relations[RECORDED_IN][0]).toEqual('et1');
+        expect(resource.relations[LIES_WITHIN][0]).toEqual('ef1');
         done();
     });
 
@@ -161,8 +164,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('zero');
-        expect(resource.relations['isRecordedIn']).toBeUndefined();
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN]).toBeUndefined();
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -176,8 +179,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][1].resource;
         expect(resource.identifier).toBe('two');
-        expect(resource.relations['isRecordedIn'][0]).toBe('101');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('101');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -191,8 +194,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('two');
-        expect(resource.relations['isRecordedIn'][0]).toBe('102');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('102');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -207,8 +210,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][2].resource;
         expect(resource.identifier).toBe('three');
-        expect(resource.relations['isRecordedIn'][0]).toBe('101');
-        expect(resource.relations['liesWithin'][0]).toEqual('102');
+        expect(resource.relations[RECORDED_IN][0]).toBe('101');
+        expect(resource.relations[LIES_WITHIN][0]).toEqual('102');
         done();
     });
 
@@ -223,8 +226,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('three');
-        expect(resource.relations['isRecordedIn'][0]).toBe('103');
-        expect(resource.relations['liesWithin'][0]).toEqual('102');
+        expect(resource.relations[RECORDED_IN][0]).toBe('103');
+        expect(resource.relations[LIES_WITHIN][0]).toEqual('102');
         done();
     });
 
@@ -236,8 +239,8 @@ describe('DefaultImportCalc', () => {
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -249,8 +252,8 @@ describe('DefaultImportCalc', () => {
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(resource.relations['liesWithin']).toBeUndefined();
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -262,10 +265,10 @@ describe('DefaultImportCalc', () => {
             d('Find', 'two', { parent: 'one' })
         ]);
 
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('101');
+        expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
+        expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('101');
         done();
     });
 
@@ -277,10 +280,10 @@ describe('DefaultImportCalc', () => {
             d('Feature', 'one', { parent: 'existingTrench'})
         ]);
 
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('102');
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
+        expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('102');
+        expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][1].resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -292,10 +295,10 @@ describe('DefaultImportCalc', () => {
             d('Find', 'two', { parent: 'one' })
         ]);
 
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin']).toBeUndefined();
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][1].resource.relations['liesWithin'][0]).toBe('101');
+        expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
+        expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('101');
         done();
     });
 
@@ -307,10 +310,10 @@ describe('DefaultImportCalc', () => {
             d('Feature', 'one')
         ]);
 
-        expect(result[0][0].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][0].resource.relations['liesWithin'][0]).toBe('102');
-        expect(result[0][1].resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(result[0][1].resource.relations['liesWithin']).toBeUndefined();
+        expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('102');
+        expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(result[0][1].resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
 
@@ -323,8 +326,8 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('101');
-        expect(resource.relations['isRecordedIn'][0]).toBe('et1');
-        expect(resource.relations['liesWithin'][0]).toBe('ef1');
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN][0]).toBe('ef1');
         done();
     });
 
@@ -342,11 +345,14 @@ describe('DefaultImportCalc', () => {
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');
-        expect(resource.relations['isRecordedIn'][0]).toEqual('et1');
+        expect(resource.relations[RECORDED_IN][0]).toEqual('et1');
         expect(resource['field']).toEqual('new');
         expect(resource['geometry']).toEqual({ type: 'Point', coordinates: [ 27.189335972070694, 39.14122423529625] });
         done();
     });
+
+
+    // TODO write test for overwrite relations
 
 
     it('merge existing, ignore wrong relations when not setting overwrite relations', async done => {
@@ -520,9 +526,9 @@ describe('DefaultImportCalc', () => {
         //
         // expect(errors.length).toBe(0);
         // expect(Object.keys(docToImport.resource.relations).length).toBe(1);
-        // expect(Object.keys(docToImport.resource.relations)[0]).toBe('isRecordedIn');
-        // expect(docToImport.resource.relations['isRecordedIn'].length).toBe(1);
-        // expect(docToImport.resource.relations['isRecordedIn'][0]).toBe('3');
+        // expect(Object.keys(docToImport.resource.relations)[0]).toBe(RECORDED_IN);
+        // expect(docToImport.resource.relations[RECORDED_IN].length).toBe(1);
+        // expect(docToImport.resource.relations[RECORDED_IN][0]).toBe('3');
         done();
     });
 });

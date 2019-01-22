@@ -11,6 +11,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {clone} from '../../core/util/object-util';
 import {M} from '../m';
+import {DuplicationUtil} from './duplication-util';
 
 
 @Injectable()
@@ -101,11 +102,11 @@ export class DocumentHolder {
         if (template.resource.relations.includes) delete template.resource.relations.includes;
 
         let { baseIdentifier, identifierNumber } =
-            DocumentHolder.splitIdentifier(template.resource.identifier);
+            DuplicationUtil.splitIdentifier(template.resource.identifier);
 
         for (let i = 0; i < numberOfDuplicates; i++) {
-            identifierNumber = await this.setUniqueIdentifierForDuplicate(
-                template, baseIdentifier, identifierNumber
+            identifierNumber = await DuplicationUtil.setUniqueIdentifierForDuplicate(
+                template, baseIdentifier, identifierNumber, this.validator
             );
 
             await this.persistenceManager.persist(
@@ -117,25 +118,6 @@ export class DocumentHolder {
         }
 
         return documentAfterSave;
-    }
-
-
-    private async setUniqueIdentifierForDuplicate(document: NewDocument, baseIdentifier: string,
-                                                  identifierNumber: number): Promise<number> {
-
-        let uniqueIdentifier: boolean = false;
-        do {
-            identifierNumber++;
-            document.resource.identifier = baseIdentifier + identifierNumber;
-            try {
-                await this.validator.assertIdentifierIsUnique(document);
-                uniqueIdentifier = true;
-            } catch(e) {
-                uniqueIdentifier = false;
-            }
-        } while (!uniqueIdentifier);
-
-        return identifierNumber;
     }
 
 
@@ -267,19 +249,5 @@ export class DocumentHolder {
                 (typeof(this.clonedDocument.resource[_]) === 'string')
                 && this.clonedDocument.resource[_].length === 0
             );
-    }
-
-
-    private static splitIdentifier(identifier: string): { baseIdentifier: string, identifierNumber: number } {
-
-        const matches = identifier.match(/\d+$/);
-        if (matches) {
-            return {
-                baseIdentifier: identifier.substring(0, identifier.length - matches[0].length),
-                identifierNumber: parseInt(matches[0])
-            };
-        } else {
-            return { baseIdentifier: identifier, identifierNumber: 1 };
-        }
     }
 }

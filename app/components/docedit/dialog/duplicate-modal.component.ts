@@ -17,9 +17,10 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class DuplicateModalComponent {
 
     public numberOfDuplicates: number|undefined;
+    public newDocument: boolean;
 
-    public readonly minNumberOfDuplicates: number = 1;
-    public readonly maxNumberOfDuplicates: number = 100;
+    private readonly minNumberOfDuplicates: number = 1;
+    private readonly maxNumberOfDuplicates: number = 100;
 
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -31,18 +32,36 @@ export class DuplicateModalComponent {
     }
 
 
+    public getMinNumberOfDuplicates(): number {
+
+        return this.newDocument
+            ? this.minNumberOfDuplicates + 1
+            : this.minNumberOfDuplicates;
+    }
+
+
+    public getMaxNumberOfDuplicates(): number {
+
+        return this.maxNumberOfDuplicates;
+    }
+
+
     public confirmDuplication() {
 
         if (!this.validateNumberOfDuplicates()) return;
 
-        this.activeModal.close(this.numberOfDuplicates);
+        this.activeModal.close(
+            this.newDocument
+                ? (this.numberOfDuplicates as number) - 1
+                : this.numberOfDuplicates
+        );
     }
 
 
     public validateNumberOfDuplicates(): boolean {
 
         return this.numberOfDuplicates !== undefined
-            && this.numberOfDuplicates >= this.minNumberOfDuplicates
-            && this.numberOfDuplicates <= this.maxNumberOfDuplicates;
+            && this.numberOfDuplicates >= this.getMinNumberOfDuplicates()
+            && this.numberOfDuplicates <= this.getMaxNumberOfDuplicates();
     }
 }

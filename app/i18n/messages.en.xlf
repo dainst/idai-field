@@ -1030,7 +1030,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
@@ -1054,7 +1054,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
@@ -1125,24 +1125,52 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.header" datatype="html">
-        <source>Ressource duplizieren</source>
+      <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
+        <source>Ressource mehrfach erstellen</source>
+        <target state="final">Create multiple instances</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
+        <source>Ressource vervielfältigen</source>
         <target state="final">Duplicate resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.info" datatype="html">
+      <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
         <source>
-        Wie viele Kopien der Ressource möchten Sie anlegen?
-    </source>
+              Wie viele Ressourcen möchten Sie anlegen?
+        </source>
         <target state="final">
-        How many duplicates of the resource do you want to create?
-    </target>
+              How many resources do you want to create?
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
+        <source>
+            Wie viele Kopien der Ressource möchten Sie anlegen?
+        </source>
+        <target state="final">
+            How many copies of the resource do you want to create?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.create" datatype="html">
+        <source>Erstellen</source>
+        <target state="final">Create</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.duplicate" datatype="html">
@@ -1150,11 +1178,11 @@
         <target state="final">Duplicate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
@@ -1183,12 +1211,20 @@
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="buttons.createMultipleInstances" datatype="html">
+        <source>Mehrfach erstellen</source>
+        <target state="final">Create multiple instances</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.tabs.metadata" datatype="html">
         <source>Metadaten</source>
         <target state="final">Metadata</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.relations" datatype="html">
@@ -1196,7 +1232,7 @@
         <target state="final">Relations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images" datatype="html">
@@ -1204,7 +1240,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -1212,7 +1248,7 @@
         <target state="final">Conflicts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1224,7 +1260,19 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
+        <source>
+                        Ressourcen werden erstellt...
+                    </source>
+        <target state="final">
+                        Creating resources...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1236,7 +1284,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.delete" datatype="html">
@@ -1248,7 +1296,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">

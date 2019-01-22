@@ -104,7 +104,6 @@ export class DoceditComponent {
     public showDuplicateButton(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
-            && this.documentHolder.clonedDocument.resource.id !== undefined
             && this.documentHolder.clonedDocument.resource.type !== 'Project'
             && !this.typeUtility.isSubtype(
                 this.documentHolder.clonedDocument.resource.type, 'Image'
@@ -161,9 +160,11 @@ export class DoceditComponent {
         let numberOfDuplicates: number|undefined;
 
         try {
-            numberOfDuplicates = await this.modalService.open(
+            const modalRef: NgbModalRef = this.modalService.open(
                 DuplicateModalComponent, { keyboard: false }
-            ).result;
+            );
+            modalRef.componentInstance.newDocument = !this.documentHolder.clonedDocument.resource.id;
+            numberOfDuplicates = await modalRef.result;
         } catch(err) {
             // DuplicateModal has been canceled
         } finally {

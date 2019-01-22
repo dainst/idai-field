@@ -40,7 +40,12 @@
                               class="dropdown-item" [class.disabled]="isLoading()"
                               (click)="isLoading() || openDuplicateModal()">
                             <span class="mdi mdi-plus"></span>
-                            <span class="dropdown-entry-label" i18n="@@buttons.duplicate">Vervielfältigen</span>
+                            <span *ngIf="!documentHolder.clonedDocument.resource.id"
+                                  class="dropdown-entry-label"
+                                  i18n="@@buttons.createMultipleInstances">Mehrfach erstellen</span>
+                            <span *ngIf="documentHolder.clonedDocument.resource.id"
+                                  class="dropdown-entry-label"
+                                  i18n="@@buttons.duplicate">Vervielfältigen</span>
                         </span>
                         <span id="document-edit-button-delete-document"
                               *ngIf="showDeleteButton()"
@@ -125,7 +130,12 @@
                     <span *ngIf="operationInProgress === 'save'" i18n="@@docedit.loadingInfo.save">
                         Ressource wird gespeichert...
                     </span>
-                    <span *ngIf="operationInProgress === 'duplicate'" i18n="@@docedit.loadingInfo.duplicate">
+                    <span *ngIf="operationInProgress === 'duplicate' && !documentHolder.clonedDocument.resource.id"
+                          i18n="@@docedit.loadingInfo.createMultipleInstances">
+                        Ressourcen werden erstellt...
+                    </span>
+                    <span *ngIf="operationInProgress === 'duplicate' && documentHolder.clonedDocument.resource.id"
+                          i18n="@@docedit.loadingInfo.duplicate">
                         Ressource wird vervielfältigt...
                     </span>
                     <span *ngIf="operationInProgress === 'delete'" i18n="@@docedit.loadingInfo.delete">

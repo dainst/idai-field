@@ -1,14 +1,22 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@docedit.duplicateModal.header">Ressource duplizieren</h5>
+    <h5 *ngIf="newDocument" class="modal-title"
+        i18n="@@docedit.duplicateModal.header.createMultipleInstances">Ressource mehrfach erstellen</h5>
+    <h5 *ngIf="!newDocument" class="modal-title"
+        i18n="@@docedit.duplicateModal.header.duplicate">Ressource vervielfältigen</h5>
 </div>
 
 <div class="modal-body">
-    <div id="duplicate-info" i18n="@@docedit.duplicateModal.info">
-        Wie viele Kopien der Ressource möchten Sie anlegen?
+    <div id="duplicate-info">
+        <span *ngIf="newDocument" i18n="@@docedit.duplicateModal.info.createMultipleTimes">
+              Wie viele Ressourcen möchten Sie anlegen?
+        </span>
+        <span *ngIf="!newDocument" i18n="@@docedit.duplicateModal.info.duplicate">
+            Wie viele Kopien der Ressource möchten Sie anlegen?
+        </span>
     </div>
     <div class="input-group">
         <input id="duplicate-input"
-               type="number" min="{{minNumberOfDuplicates}}" max="{{maxNumberOfDuplicates}}"
+               type="number" min="{{getMinNumberOfDuplicates()}}" max="{{getMaxNumberOfDuplicates()}}"
                class="form-control"
                [(ngModel)]="numberOfDuplicates"
                (keydown)="$event.key !== 'Enter' || confirmDuplication()" />
@@ -19,7 +27,8 @@
     <button id="duplicate-confirm" class="btn btn-primary" type="button"
             [ngClass]="{ 'disabled': !validateNumberOfDuplicates() }"
             (click)="confirmDuplication()">
-        <span i18n="@@buttons.duplicate">Vervielfältigen</span>
+        <span *ngIf="newDocument" i18n="@@buttons.create">Erstellen</span>
+        <span *ngIf="!newDocument" i18n="@@buttons.duplicate">Vervielfältigen</span>
     </button>
     <button type="button" id="duplicate-cancel" class="btn btn-secondary"
             (click)="activeModal.close('cancel')">

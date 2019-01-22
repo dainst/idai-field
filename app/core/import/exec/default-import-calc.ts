@@ -351,9 +351,9 @@ export module DefaultImportCalc {
     function searchInImport(targetDocumentResourceId: ID,
                             idMap: ID_MAP,
                             operationTypeNames: string[]
-    ): [string|undefined,   // recordedInResourceId
-        Document|undefined] // targetDocument
-       |undefined {         // targetDocument not found
+    ): [string, undefined]    // recordedInResourceId
+       |[undefined, Document] // targetDocument
+       |undefined {           // targetDocument not found
 
         const targetInImport = idMap[targetDocumentResourceId];
         if (!targetInImport) return undefined;

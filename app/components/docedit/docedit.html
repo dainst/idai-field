@@ -39,7 +39,7 @@
                               *ngIf="showDuplicateButton()"
                               class="dropdown-item" [class.disabled]="isLoading()"
                               (click)="isLoading() || openDuplicateModal()">
-                            <span class="mdi mdi-plus"></span>
+                            <span class="mdi mdi-expand-all"></span>
                             <span *ngIf="!documentHolder.clonedDocument.resource.id"
                                   class="dropdown-entry-label"
                                   i18n="@@buttons.createMultipleInstances">Mehrfach erstellen</span>

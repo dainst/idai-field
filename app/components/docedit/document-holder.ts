@@ -98,9 +98,6 @@ export class DocumentHolder {
         const template: NewDocument = { resource: clone(documentAfterSave.resource) };
         delete template.resource.id;
 
-        // TODO Remove this as soon as the includes relation isn't used anymore
-        if (template.resource.relations.includes) delete template.resource.relations.includes;
-
         let { baseIdentifier, identifierNumber } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);
 

@@ -1,5 +1,5 @@
-import {Document, relationsEquivalent} from 'idai-components-2';
 import {isNot, on, tripleEqual, jsonClone} from 'tsfun';
+import {Document, relationsEquivalent} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira
@@ -22,12 +22,9 @@ export module ConnectedDocsResolution {
      *   got an update in their relations.
      *   Note that targetDocuments relations get modified <b>in place</b>.
      */
-    export function determineDocsToUpdate(
-        document: Document,
-        targetDocuments: Array<Document>,
-        getInverseRelation: (_: string) => string|undefined,
-        setInverses: boolean = true
-    ): Array<Document> {
+    export function determineDocsToUpdate(document: Document, targetDocuments: Array<Document>,
+                                          getInverseRelation: (_: string) => string|undefined,
+                                          setInverses: boolean = true): Array<Document> {
 
         const copyOfTargetDocuments = jsonClone(targetDocuments);
 
@@ -55,20 +52,17 @@ export module ConnectedDocsResolution {
     }
 
 
-    function setInverseRelations(document: Document,
-                                 targetDocument: Document,
+    function setInverseRelations(document: Document, targetDocument: Document,
                                  getInverseRelation: (_: string) => string|undefined) {
 
         Object.keys(document.resource.relations)
-            .filter(isNot(tripleEqual("isRecordedIn")) )
+            .filter(isNot(tripleEqual('isRecordedIn')) )
             .forEach(relation => setInverseRelation(document, targetDocument,
                     relation, getInverseRelation(relation)));
     }
 
 
-    function setInverseRelation(document: Document,
-                                targetDoc: Document,
-                                relation: string,
+    function setInverseRelation(document: Document, targetDoc: Document, relation: string,
                                 inverse: string|undefined) {
 
         if (!inverse) return;

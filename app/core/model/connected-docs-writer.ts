@@ -1,12 +1,12 @@
+import {flatMap, subtract, to} from 'tsfun';
 import {Document, ProjectConfiguration, Relations, toResourceId} from 'idai-components-2';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {flatMap, subtract, to} from 'tsfun';
 
 
 /**
  * Architecture note: This class deals with automatic
- * udpate of documents directly connected
+ * update of documents directly connected
  * to a document via relations.
  *
  * Other operations, like correcting documents' isRecordedIn relations
@@ -25,14 +25,14 @@ export class ConnectedDocsWriter {
 
     public async update(document: Document, otherVersions: Array<Document>, username: string): Promise<void> {
 
-        const connectedDocs = await this.getExistingConnectedDocs(
-            [document].concat(otherVersions));
+        const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             document,
             connectedDocs,
             (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
-            true);
+            true
+        );
 
         await this.updateDocs(docsToUpdate, username);
     }
@@ -46,7 +46,8 @@ export class ConnectedDocsWriter {
             document,
             connectedDocs,
             (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
-            false);
+            false
+        );
 
         await this.updateDocs(docsToUpdate, username);
     }
@@ -54,7 +55,7 @@ export class ConnectedDocsWriter {
 
     private async updateDocs(docsToUpdate: Array<Document>, username: string) {
 
-        // Note that this does not update a document for beeing target of isRecordedIn
+        // Note that this does not update a document for being target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
             await this.datastore.update(docToUpdate, username, undefined);
         }
@@ -67,7 +68,8 @@ export class ConnectedDocsWriter {
             documents,
             this.projectConfiguration
                 .getAllRelationDefinitions()
-                .map(to('name')));
+                .map(to('name'))
+        );
 
         const connectedDocuments: Array<Document> = [];
         for (let id of uniqueConnectedDocIds) {

@@ -15,6 +15,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../../widgets/loading';
+import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
-    private operationInProgress: 'save'|'delete'|'none' = 'none';
+    private operationInProgress: 'save'|'duplicate'|'delete'|'none' = 'none';
     private escapeKeyPressed: boolean = false;
 
 
@@ -100,6 +101,25 @@ export class DoceditComponent {
     };
 
 
+    public showDuplicateButton(): boolean {
+
+        return this.documentHolder.clonedDocument !== undefined
+            && this.documentHolder.clonedDocument.resource.id !== undefined
+            && this.documentHolder.clonedDocument.resource.type !== 'Project'
+            && !this.typeUtility.isSubtype(
+                this.documentHolder.clonedDocument.resource.type, 'Image'
+            );
+    }
+
+
+    public showDeleteButton(): boolean {
+
+        return this.documentHolder.clonedDocument !== undefined
+            && this.documentHolder.clonedDocument.resource.id !== undefined
+            && this.documentHolder.clonedDocument.resource.type !== 'Project';
+    }
+
+
     public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
         this.documentHolder.setDocument(document);
@@ -135,6 +155,25 @@ export class DoceditComponent {
     }
 
 
+    public async openDuplicateModal() {
+
+        this.subModalOpened = true;
+        let numberOfDuplicates: number|undefined;
+
+        try {
+            numberOfDuplicates = await this.modalService.open(
+                DuplicateModalComponent, { keyboard: false }
+            ).result;
+        } catch(err) {
+            // DuplicateModal has been canceled
+        } finally {
+            this.subModalOpened = false;
+        }
+
+        if (numberOfDuplicates !== undefined) await this.save(numberOfDuplicates);
+    }
+
+
     public async openDeleteModal() {
 
         this.subModalOpened = true;
@@ -154,16 +193,18 @@ export class DoceditComponent {
     }
 
 
-    public async save() {
+    public async save(numberOfDuplicates?: number) {
 
-        this.operationInProgress = 'save';
+        this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
         this.loading.start('docedit');
 
         const documentBeforeSave: Document = clone(this.documentHolder.clonedDocument);
 
         try {
-            const documentAfterSave: Document = await this.documentHolder.save();
-            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave);
+            const documentAfterSave: Document = numberOfDuplicates
+                ? await this.documentHolder.duplicate(numberOfDuplicates)
+                : await this.documentHolder.save();
+            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, this.operationInProgress);
         } catch (errorWithParams) {
             await this.handleSaveError(errorWithParams);
         } finally {
@@ -173,13 +214,14 @@ export class DoceditComponent {
     }
 
 
-    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document) {
+    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document,
+                                    operation: 'save'|'duplicate') {
 
         try {
             if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
-                await this.closeModalAfterSave(documentAfterSave.resource.id);
+                await this.closeModalAfterSave(documentAfterSave.resource.id, operation);
             }
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -299,12 +341,15 @@ export class DoceditComponent {
     }
 
 
-    private async closeModalAfterSave(resourceId: string): Promise<any> {
+    private async closeModalAfterSave(resourceId: string, operation: 'save'|'duplicate'): Promise<any> {
 
         this.activeModal.close({
             document: (await this.datastore.get(resourceId))
         });
-        this.messages.add([M.DOCEDIT_SUCCESS_SAVE]);
+        this.messages.add(operation === 'save'
+            ? [M.DOCEDIT_SUCCESS_SAVE]
+            : [M.DOCEDIT_SUCCESS_SAVE]
+        );
     }
 
 

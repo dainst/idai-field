@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {DatastoreErrors, Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
+import {DatastoreErrors, Document, NewDocument, ProjectConfiguration, IdaiType,
+    FieldDefinition} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -86,6 +87,30 @@ export class DocumentHolder {
         );
 
         return this.fetchLatestRevision(savedDocument.resource.id);
+    }
+
+
+    public async duplicate(numberOfDuplicates: number): Promise<Document> {
+
+        const documentAfterSave: Document = await this.save();
+
+        const template: NewDocument = { resource: clone(documentAfterSave.resource) };
+        delete template.resource.id;
+
+        // TODO Remove this as soon as the includes relation isn't used anymore
+        if (template.resource.relations.includes) delete template.resource.relations.includes;
+
+        for (let i = 0; i < numberOfDuplicates; i++) {
+            // TODO Increment identifier
+            await this.persistenceManager.persist(
+                template,
+                this.usernameProvider.getUsername(),
+                this.oldVersion,
+                []
+            );
+        }
+
+        return documentAfterSave;
     }
 
 

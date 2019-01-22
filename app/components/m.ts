@@ -110,6 +110,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Docedit Package
     public static DOCEDIT_SUCCESS_SAVE = 'docedit.success.save';
+    public static DOCEDIT_SUCCESS_DUPLICATE = 'docedit.success.duplicate';
     public static DOCEDIT_SUCCESS_DELETE = 'docedit.success.delete';
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
     public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit.warning.typeChange.fields';
@@ -828,6 +829,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.success.save',
                 value: 'Die Ressource wurde erfolgreich gespeichert.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_SUCCESS_DUPLICATE] = {
+            content: i18n({
+                id: 'messages.docedit.success.duplicate',
+                value: 'Die Ressource wurde erfolgreich dupliziert.'
             }),
             level: 'success',
             params: [],

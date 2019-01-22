@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@docedit.duplicateModal.header">Ressource duplizieren</h5>
+</div>
+
+<div class="modal-body">
+    <div id="duplicate-info" i18n="@@docedit.duplicateModal.info">
+        Wie viele Kopien der Ressource möchten Sie anlegen?
+    </div>
+    <div class="input-group">
+        <input id="duplicate-input"
+               type="number" min="{{minNumberOfDuplicates}}" max="{{maxNumberOfDuplicates}}"
+               class="form-control"
+               [(ngModel)]="numberOfDuplicates"
+               (keydown)="$event.key !== 'Enter' || confirmDuplication()" />
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="duplicate-confirm" class="btn btn-primary" type="button"
+            [ngClass]="{ 'disabled': !validateNumberOfDuplicates() }"
+            (click)="confirmDuplication()">
+        <span i18n="@@buttons.duplicate">Duplizieren</span>
+    </button>
+    <button type="button" id="duplicate-cancel" class="btn btn-secondary"
+            (click)="activeModal.close('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

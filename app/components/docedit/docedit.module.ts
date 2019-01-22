@@ -34,6 +34,7 @@ import {NgbDateDEParserFormatter} from './core/forms/date-formatter.component';
 import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
+import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
     ],
     declarations: [
         ConflictDeletedModalComponent,
+        DuplicateModalComponent,
         DeleteModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
@@ -85,6 +87,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
         DoceditComponent,
         ConflictDeletedModalComponent,
         ImagePickerComponent,
+        DuplicateModalComponent,
         DeleteModalComponent,
         EditSaveDialogComponent
     ]

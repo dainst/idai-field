@@ -100,8 +100,13 @@ export class DocumentHolder {
         // TODO Remove this as soon as the includes relation isn't used anymore
         if (template.resource.relations.includes) delete template.resource.relations.includes;
 
+        let identifierNumber: number = 1;
+
         for (let i = 0; i < numberOfDuplicates; i++) {
-            // TODO Increment identifier
+            identifierNumber = await this.setUniqueIdentifierForDuplicate(
+                template, documentAfterSave.resource.identifier, identifierNumber
+            );
+
             await this.persistenceManager.persist(
                 template,
                 this.usernameProvider.getUsername(),
@@ -111,6 +116,25 @@ export class DocumentHolder {
         }
 
         return documentAfterSave;
+    }
+
+
+    private async setUniqueIdentifierForDuplicate(document: NewDocument, originalIdentifier: string,
+                                                  identifierNumber: number): Promise<number> {
+
+        let uniqueIdentifier: boolean = false;
+        do {
+            identifierNumber++;
+            document.resource.identifier = originalIdentifier + identifierNumber;
+            try {
+                await this.validator.assertIdentifierIsUnique(document);
+                uniqueIdentifier = true;
+            } catch(e) {
+                uniqueIdentifier = false;
+            }
+        } while (!uniqueIdentifier);
+
+        return identifierNumber;
     }
 
 

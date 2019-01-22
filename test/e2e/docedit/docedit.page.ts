@@ -68,6 +68,7 @@ export class DoceditPage {
 
     public static clickDeleteDocument() {
 
+        common.click(element(by.id('document-edit-button-dropdown')));
         common.click(element(by.id('document-edit-button-delete-document')));
     };
 

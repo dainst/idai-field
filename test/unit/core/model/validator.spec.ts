@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration, FindResult} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
 import {TypeUtility} from '../../../../app/core/model/type-utility';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
@@ -43,8 +43,7 @@ describe('Validator', () => {
 
     it('should report nothing', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+        const find = () => Promise.resolve({totalCount: 0, documents: []});
 
         const doc = {
             resource: {
@@ -56,7 +55,7 @@ describe('Validator', () => {
                 },
             }
         };
-        await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+        await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
             .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
@@ -64,13 +63,12 @@ describe('Validator', () => {
 
     it('should report missing isRecordedInTarget', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({documents: []}));
+        const find = () => Promise.resolve({ documents: [] } as FindResult);
 
         const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
                 .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
@@ -82,9 +80,8 @@ describe('Validator', () => {
 
     it('should report duplicate identifier', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(
-            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]}));
+        const find = () =>
+            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]} as unknown as FindResult);
 
         const doc = {
             resource: {
@@ -92,7 +89,7 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)).assertIdentifierIsUnique(doc);
+            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration)).assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);

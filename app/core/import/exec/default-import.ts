@@ -72,6 +72,7 @@ export module DefaultImport {
         return async (identifier: string): Promise<Document|undefined> => {
 
             const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
+
             return result.totalCount === 1
                 ? result.documents[0]
                 : undefined;

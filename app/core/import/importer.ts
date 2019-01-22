@@ -11,9 +11,9 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {isnt} from 'tsfun';
 import {ImportFunction} from "./exec/import-function";
+import {DocumentDatastore} from '../datastore/document-datastore';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -57,7 +57,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    typeUtility: TypeUtility,
-                                   datastore: IdaiFieldDocumentDatastore,
+                                   datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,

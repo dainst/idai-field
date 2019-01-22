@@ -6,7 +6,8 @@ import {jsonClone} from 'tsfun';
 
 export function clone<O>(object: O): O {
 
-    return convertDates(object, jsonClone(object));
+    const clone = jsonClone(object);
+    return convertDates(object, clone);
 }
 
 

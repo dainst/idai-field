@@ -8,6 +8,8 @@ import {isNot, includedIn} from 'tsfun';
  */
 export module DocumentMerge {
 
+    const RECORDED_IN = 'isRecordedIn';
+
     const PROTECTED_FIELDS = ['id', 'identifier', 'relations', 'type'];
 
 
@@ -25,8 +27,10 @@ export module DocumentMerge {
 
         if (allowOverwriteRelationsOnMerge) {
             clonedTarget.resource.relations = clone(additional.resource.relations);
-            if (clonedTarget.resource.relations && into.resource.relations) {
-                clonedTarget.resource.relations['isRecordedIn'] = clone(into.resource.relations['isRecordedIn']);
+            if (clonedTarget.resource.relations
+                && into.resource.relations
+                && into.resource.relations[RECORDED_IN]) {
+                clonedTarget.resource.relations[RECORDED_IN] = clone(into.resource.relations[RECORDED_IN]);
             }
         }
         return clonedTarget;

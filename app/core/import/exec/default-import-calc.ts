@@ -320,6 +320,7 @@ export module DefaultImportCalc {
 
         let documentForUpdate: Document = document as Document;
         const existingDocument = await find(document.resource.identifier);
+
         if (mergeIfExists) {
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate, allowOverwriteRelationsOnMerge);
             else throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];

@@ -346,7 +346,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await processMerge([
             { resource: { type: 'Feature', identifier: 'existingFeature',
-                    field: 'new', // TODO should only be allowed to save allowed fields, add test were validates for it
+                    field: 'new',
                     geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
             }}
         ]);
@@ -503,6 +503,20 @@ describe('DefaultImportCalc', () => {
         ]);
         expect(result[2][0]).toEqual(E.INVALID_RELATIONS);
         expect(result[2][2]).toEqual('includes');
+        done();
+    });
+
+
+    it('validation error - not wellformed', async done => {
+
+        validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
+
+        const result = await processWithMainType([
+            d('Feature', 'one')
+        ]);
+
+        expect(result[2][0]).toEqual(E.INVALID_FIELDS);
+        expect(result[2][1]).toEqual('invalidField');
         done();
     });
 

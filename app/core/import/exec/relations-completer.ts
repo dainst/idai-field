@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors} from './import-errors';
-import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, on, subtractBy, union} from 'tsfun';
+import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, on, subtractBy, union, isnt} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 
@@ -124,7 +124,7 @@ export module RelationsCompleter {
 
         return Object
             .keys(document.resource.relations)
-            .filter(relationName => relationName !== 'isRecordedIn')
+            .filter(isnt('isRecordedIn'))
     }
 
 

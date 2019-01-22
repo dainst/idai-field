@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
+import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
-import {ImportErrors} from '../import/exec/import-errors';
+import {isnt, on} from 'tsfun';
 
 
 @Injectable()
@@ -15,8 +14,9 @@ import {ImportErrors} from '../import/exec/import-errors';
  */
 export class Validator {
 
+
     constructor(protected projectConfiguration: ProjectConfiguration,
-                protected datastore: IdaiFieldDocumentDatastore,
+                protected find: (query: Query) => Promise<FindResult>,
                 protected typeUtility: TypeUtility) {}
 
 
@@ -47,14 +47,14 @@ export class Validator {
         let result;
 
         try {
-            result = await this.datastore.find({
+            result = await this.find({
                 constraints: { 'identifier:match': document.resource.identifier }
             });
         } catch (e) {
             throw ([ValidationErrors.GENERIC_DATASTORE]);
         }
 
-        if (result.totalCount > 0 && Validator.isNotSameDocument(result.documents[0], document)) {
+        if (result.totalCount > 0 && on('resource.id', isnt(result.documents[0]))(document)) {
             throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
     }
@@ -62,7 +62,7 @@ export class Validator {
 
     async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
-        return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
+        return (await this.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 
@@ -101,11 +101,5 @@ export class Validator {
         }
 
         return invalidRelationTargetIds.length > 0 ? invalidRelationTargetIds : undefined;
-    }
-
-
-    private static isNotSameDocument(result: any, doc: any) {
-
-        return result.resource.id !== doc.resource.id;
     }
 }

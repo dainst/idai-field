@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocumentDatastore} from '../../datastore/field/idai-field-document-datastore';
+import {Document, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
 import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
+import {DocumentDatastore} from '../../datastore/document-datastore';
 
 
 @Injectable()
@@ -22,10 +22,10 @@ import {ValidationErrors} from '../../model/validation-errors';
 export class ImportValidator extends Validator {
 
     constructor(projectConfiguration: ProjectConfiguration,
-                datastore: IdaiFieldDocumentDatastore,
+                private datastore: DocumentDatastore,
                 typeUtility: TypeUtility) {
 
-        super(projectConfiguration, datastore, typeUtility);
+        super(projectConfiguration, (q: Query) => datastore.find(q), typeUtility);
     }
 
 

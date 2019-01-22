@@ -20,7 +20,7 @@ import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {ImportValidator} from '../../core/import/exec/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
-import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 
 
 @Component({
@@ -51,7 +51,7 @@ export class ImportComponent implements OnInit {
 
     constructor(
         private messages: Messages,
-        private datastore: IdaiFieldDocumentDatastore,
+        private datastore: DocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private importValidator: ImportValidator,
         private http: HttpClient,

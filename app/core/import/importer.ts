@@ -11,9 +11,9 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {isnt} from 'tsfun';
 import {ImportFunction} from "./exec/import-function";
+import {DocumentDatastore} from '../datastore/document-datastore';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -57,7 +57,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    typeUtility: TypeUtility,
-                                   datastore: IdaiFieldDocumentDatastore,
+                                   datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,
@@ -86,10 +86,10 @@ export module Importer {
             format,
             new ImportValidator(projectConfiguration, datastore, typeUtility),
             typeUtility.getOverviewTypeNames().filter(isnt('Place')),
-            projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources,
             allowUpdatingRelationsOnMerge,
+            (_: string) => projectConfiguration.getInverseRelations(_),
             generateId);
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
@@ -122,25 +122,25 @@ export module Importer {
     function buildImportFunction(format: ImportFormat,
                                  validator: ImportValidator,
                                  operationTypeNames: string[],
-                                 projectConfiguration: ProjectConfiguration,
                                  mainTypeDocumentId: string,
                                  mergeMode = false,
                                  updateRelationsOnMergeMode = false,
+                                 getInverseRelation: (_: string) => string|undefined,
                                  generateId: () => string): ImportFunction {
 
         switch (format) {
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
             case 'shapefile':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
             case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
             default: // native
-                return DefaultImport.build(validator, operationTypeNames, projectConfiguration, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

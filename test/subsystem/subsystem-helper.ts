@@ -1,4 +1,4 @@
-import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document} from 'idai-components-2';
+import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
 import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -128,7 +128,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility),
+        new Validator(projectConfiguration, (q: Query) => idaiFieldDocumentDatastore.find(q), typeUtility),
         undefined,
         typeUtility,
         { getUsername: () => 'fakeuser' },

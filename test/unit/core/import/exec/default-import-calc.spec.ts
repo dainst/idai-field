@@ -117,7 +117,19 @@ describe('DefaultImportCalc', () => {
                 isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench
         ]);
 
-        expect(result[1][0].resource.relations['isBefore'][0]).toBe('101');
+        expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');
+        done();
+    });
+
+
+    it('remove self referencing relation target', async done => {
+
+        const result = await process([
+            d('Feature', 'newFeature', { parent: 'existingTrench', isAfter: ['newFeature', 'existingTrench']})
+        ]);
+
+        expect(result[0][0].resource.relations['isAfter'].length).toEqual(1);
+        expect(result[0][0].resource.relations['isAfter'][0]).toEqual('et1');
         done();
     });
 
@@ -517,33 +529,6 @@ describe('DefaultImportCalc', () => {
 
         expect(result[2][0]).toEqual(E.INVALID_FIELDS);
         expect(result[2][1]).toEqual('invalidField');
-        done();
-    });
-
-
-    xit('remove self referencing relation target', async done => { // TODO unxit
-
-        // importFunction = DefaultImport.build(
-        //     mockValidator, operationTypeNames,
-        //     mockProjectConfiguration,
-        //
-        //     () => '101', false,  false, '', true);
-        //
-        // const docToImport = { resource: { type: 'Find', identifier: '1a',
-        //         relations: { parent: ['three', '1a'], liesWithin: ['1a'] } } };
-        //
-        // mockDatastore.find.and.returnValues(
-        //     Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }), // relation target
-        //     Promise.resolve({ documents: [], totalCount: 0 })); // looking if already exists
-        //
-        // const {errors} = await importFunction([ docToImport as any ],
-        //     mockDatastore,'user1');
-        //
-        // expect(errors.length).toBe(0);
-        // expect(Object.keys(docToImport.resource.relations).length).toBe(1);
-        // expect(Object.keys(docToImport.resource.relations)[0]).toBe(RECORDED_IN);
-        // expect(docToImport.resource.relations[RECORDED_IN].length).toBe(1);
-        // expect(docToImport.resource.relations[RECORDED_IN][0]).toBe('3');
         done();
     });
 });

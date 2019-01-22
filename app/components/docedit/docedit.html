@@ -40,7 +40,7 @@
                               class="dropdown-item" [class.disabled]="isLoading()"
                               (click)="isLoading() || openDuplicateModal()">
                             <span class="mdi mdi-plus"></span>
-                            <span class="dropdown-entry-label" i18n="@@buttons.duplicate">Duplizieren</span>
+                            <span class="dropdown-entry-label" i18n="@@buttons.duplicate">Vervielfältigen</span>
                         </span>
                         <span id="document-edit-button-delete-document"
                               *ngIf="showDeleteButton()"
@@ -126,7 +126,7 @@
                         Ressource wird gespeichert...
                     </span>
                     <span *ngIf="operationInProgress === 'duplicate'" i18n="@@docedit.loadingInfo.duplicate">
-                        Ressource wird dupliziert...
+                        Ressource wird vervielfältigt...
                     </span>
                     <span *ngIf="operationInProgress === 'delete'" i18n="@@docedit.loadingInfo.delete">
                         Ressource wird gelöscht...

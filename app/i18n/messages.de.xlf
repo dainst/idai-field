@@ -1151,8 +1151,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.duplicate" datatype="html">
-        <source>Duplizieren</source>
-        <target state="final">Duplizieren</target>
+        <source>Vervielfältigen</source>
+        <target state="final">Vervielfältigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -1234,10 +1234,10 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
         <source>
-                        Ressource wird dupliziert...
+                        Ressource wird vervielfältigt...
                     </source>
         <target state="final">
-                        Ressource wird dupliziert...
+                        Ressource wird vervielfältigt...
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>

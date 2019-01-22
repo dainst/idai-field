@@ -349,6 +349,18 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('merge existing, ignore wrong relations when not setting overwrite relations', async done => {
+
+        const result = await processMerge([
+            d('Feature', 'existingFeature', { isAfter: 'unknown' })
+        ]);
+
+        expect(result[0].length).toBe(1);
+        expect(result[2]).toBeUndefined();
+        done();
+    });
+
+
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     it('assignment to existing feature, via mismatch with operation assignment parameter , ', async done => {

@@ -117,7 +117,7 @@ export module DefaultImportCalc {
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
                 removeSelfReferencingIdentifiers(relations, document.resource.identifier);
                 await rewriteIdentifiersInRelations(relations, find, identifierMap);
-            } else {
+            } else if (!mergeMode) {
                 await assertNoMissingRelationTargets(relations, get);
             }
             return document;

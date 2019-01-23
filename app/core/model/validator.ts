@@ -4,6 +4,8 @@ import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
 
 
+const RECORDED_IN = 'isRecordedIn';
+
 /**
  * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
  *
@@ -22,8 +24,8 @@ export class Validator {
      */
     public async assertIsRecordedInTargetsExist(document: Document|NewDocument): Promise<void> {
 
-        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
-            const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
+        if (document.resource.relations[RECORDED_IN] && document.resource.relations[RECORDED_IN].length > 0) {
+            const invalidRelationTargets = await this.validateRelationTargets(document as Document, RECORDED_IN);
             if (invalidRelationTargets) {
                 throw [
                     ValidationErrors.NO_ISRECORDEDIN_TARGET,
@@ -69,7 +71,7 @@ export class Validator {
     public assertHasIsRecordedIn(document: Document|NewDocument): void {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)
-            && !Document.hasRelations(document as Document, 'isRecordedIn')) {
+            && !Document.hasRelations(document as Document, RECORDED_IN)) {
 
             throw [ValidationErrors.NO_ISRECORDEDIN];
         }
@@ -78,11 +80,9 @@ export class Validator {
 
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
-        return !this.typeUtility
-            ? false
-            : this.typeUtility
-                .getRegularTypeNames()
-                .includes(document.resource.type);
+        return this.typeUtility
+            .getRegularTypeNames()
+            .includes(document.resource.type);
     }
 
 

@@ -1,11 +1,11 @@
-<div *ngIf="relationDefinitions && relationDefinitions.length > 0"
+<div *ngIf="relationDefinitionsToShow && relationDefinitionsToShow.length > 0"
      id="relations-form" class="card">
     <div class="card-header">
         <h3 class="card-title" i18n="@@docedit.relations">Relationen</h3>
     </div>
     <ul class="list-group list-group-flush"
         *ngIf="!isCollapsed">
-        <ng-template ngFor [ngForOf]="relationDefinitions" let-relationDefinition="$implicit">
+        <ng-template ngFor [ngForOf]="relationDefinitionsToShow" let-relationDefinition="$implicit">
             <li class="list-group-item">
                 <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
                 <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>

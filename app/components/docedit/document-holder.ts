@@ -94,9 +94,7 @@ export class DocumentHolder {
     public async duplicate(numberOfDuplicates: number): Promise<Document> {
 
         const documentAfterSave: Document = await this.save();
-
-        const template: NewDocument = { resource: clone(documentAfterSave.resource) };
-        delete template.resource.id;
+        const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
 
         let { baseIdentifier, identifierNumber } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);

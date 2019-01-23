@@ -201,7 +201,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 3);

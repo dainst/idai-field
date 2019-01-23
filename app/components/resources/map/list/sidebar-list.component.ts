@@ -22,12 +22,12 @@ export class SidebarListComponent extends BaseList {
 
     @Input() activeTab: string;
 
-    constructor(
-        resourcesComponent: ResourcesComponent,
-        viewFacade: ViewFacade,
-        loading: Loading,
-        private navigationService: NavigationService
-    ) {
+
+    constructor(resourcesComponent: ResourcesComponent,
+                viewFacade: ViewFacade,
+                loading: Loading,
+                private navigationService: NavigationService) {
+
         super(resourcesComponent, viewFacade, loading)
     }
 

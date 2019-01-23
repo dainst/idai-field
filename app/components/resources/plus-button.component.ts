@@ -96,7 +96,12 @@ export class PlusButtonComponent implements OnChanges {
     public chooseType(type: IdaiType) {
 
         this.selectedType = type.name;
-        if (this.preselectedGeometryType) this.startDocumentCreation();
+
+        if (this.preselectedGeometryType) {
+            this.startDocumentCreation();
+        } else if (this.selectedType === 'Inscription') {
+            this.startDocumentCreation('none');
+        }
     }
 
 

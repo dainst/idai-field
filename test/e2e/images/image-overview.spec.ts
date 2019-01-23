@@ -246,7 +246,7 @@ describe('images --', function() {
     });
 
 
-    xit('perform constraint search', () => {
+    it('perform constraint search', () => {
 
         ImageOverviewPage.doubleClickCell(0);
         DetailSidebarPage.performEditDocument();

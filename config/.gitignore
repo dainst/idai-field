@@ -6,10 +6,12 @@
 !Fields-Custom.json
 !Fields-Pergamon.json
 !Fields-Meninx.json
+!Fields-WarkaEnvirons.json
 !Hidden.json
 !Hidden-Custom.json
 !Hidden-Meninx.json
 !Hidden-Pergamon.json
+!Hidden-WarkaEnvirons.json
 !Language.de.json
 !Language.en.json
 !Language-Custom.de.json
@@ -18,11 +20,14 @@
 !Language-Meninx.en.json
 !Language-Pergamon.de.json
 !Language-Pergamon.en.json
+!Language-WarkaEnvirons.de.json
+!Language-WarkaEnvirons.en.json
 !Order.json
 !Search.json
 !Periods.json
 !Periods-Meninx.json
 !Periods-Pergamon.json
+!Periods-WarkaEnvirons.json
 !README.md
 !Fields.json
 !Dictionary.txt

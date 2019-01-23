@@ -1,0 +1,18 @@
+{
+  "types": {
+    "Pottery": {
+      "label": "Pottery",
+      "fields": {
+        "vesselpart": {
+          "label": "Part of vessel"
+        },
+        "firing": {
+          "label": "Firing of pottery"
+        },
+        "drawingnumber": {
+          "label": "Number of drawing"
+        }
+      }
+    }
+  }
+}

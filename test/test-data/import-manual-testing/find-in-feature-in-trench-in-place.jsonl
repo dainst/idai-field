@@ -1,0 +1,4 @@
+{ "type" : "Place", "identifier" : "Place0"}
+{ "type" : "Trench", "identifier" : "Trench0", "relations": { "parent" : "Place0" }}
+{ "type" : "Feature", "identifier" : "Feature0", "relations": { "parent" : "Trench0" }}
+{ "type" : "Find", "identifier" : "Find0", "relations": { "parent" : "Feature0" }}

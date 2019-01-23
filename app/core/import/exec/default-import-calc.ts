@@ -1,24 +1,9 @@
-import {Document} from 'idai-components-2/src/model/core/document';
 import {ImportValidator} from './import-validator';
-import {
-    asyncForEach,
-    asyncMap,
-    duplicates,
-    equal,
-    hasNot,
-    includedIn,
-    isArray,
-    isDefined,
-    isNot,
-    isUndefinedOrEmpty,
-    to,
-    undefinedOrEmpty,
-    isnt
-} from 'tsfun';
+import {asyncForEach, asyncMap, duplicates, equal, hasNot, includedIn, isArray,
+    isDefined, isNot, isUndefinedOrEmpty, to, undefinedOrEmpty, isnt} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
-import {Relations} from 'idai-components-2/src/model/core/relations';
+import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
-import {NewDocument} from 'idai-components-2/src/model/core/new-document';
 import {DocumentMerge} from './document-merge';
 import {clone} from '../../util/object-util';
 
@@ -31,15 +16,15 @@ export module DefaultImportCalc {
 
     type Either<T1, T2> = [T1, undefined]|[undefined, T2];
 
-    type GET = (resourceId: string) => Promise<Document>;
-    type FIND = (identifier: string) => Promise<Document|undefined>;
-    type GENERATE_ID = () => string;
-    type GET_INVERSE_RELATION = (propertyName: string) => string|undefined;
+    type Get = (resourceId: string) => Promise<Document>;
+    type Find = (identifier: string) => Promise<Document|undefined>;
+    type GenerateId = () => string;
+    type GetInverseRelation = (propertyName: string) => string|undefined;
 
-    type ID = string;
-    type ID_MAP = { [id: string]: Document };
-    type IDENTIFIER = string;
-    type IDENTIFIER_MAP = { [identifier: string]: string };
+    type Id = string;
+    type IdMap = { [id: string]: Document };
+    type Identifier = string;
+    type IdentifierMap = { [identifier: string]: string };
 
     const RECORDED_IN = 'isRecordedIn';
     const LIES_WITHIN = 'liesWithin';
@@ -53,20 +38,21 @@ export module DefaultImportCalc {
 
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
-                          generateId: GENERATE_ID,
-                          find: FIND,
-                          get: GET,
-                          getInverseRelation: GET_INVERSE_RELATION,
+                          generateId: GenerateId,
+                          find: Find,
+                          get: Get,
+                          getInverseRelation: GetInverseRelation,
                           mergeMode: boolean,
                           allowOverwriteRelationsInMergeMode: boolean,
-                          mainTypeDocumentId: ID,
+                          mainTypeDocumentId: Id,
                           useIdentifiersInRelations: boolean) {
 
         if (mainTypeDocumentId && mergeMode) {
             throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
 
-        return async function process(documents: Array<Document>) {
+        return async function process(documents: Array<Document>)
+            : Promise<[Array<Document>, Array<Document>, Array<string>|undefined]> {
 
             try {
                 const documentsForUpdate = await processDocuments(
@@ -98,9 +84,9 @@ export module DefaultImportCalc {
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
                                     useIdentifiersInRelations: boolean,
-                                    find: FIND,
-                                    get: GET,
-                                    generateId: GENERATE_ID): Promise<Array<Document>> {
+                                    find: Find,
+                                    get: Get,
+                                    generateId: GenerateId): Promise<Array<Document>> {
 
 
         async function preprocessAndValidateRelations(document: Document): Promise<Document> {
@@ -128,7 +114,7 @@ export module DefaultImportCalc {
 
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
-        const identifierMap: IDENTIFIER_MAP = mergeMode ? {} : assignIds(documents, generateId);
+        const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
             let _ = clone(document); 
@@ -144,9 +130,9 @@ export module DefaultImportCalc {
                                     operationTypeNames: string[],
                                     mergeMode: boolean,
                                     allowOverwriteRelationsInMergeMode: boolean,
-                                    getInverseRelation: GET_INVERSE_RELATION,
-                                    get: GET,
-                                    mainTypeDocumentId: ID) {
+                                    getInverseRelation: GetInverseRelation,
+                                    get: Get,
+                                    mainTypeDocumentId: Id) {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
@@ -163,8 +149,8 @@ export module DefaultImportCalc {
 
     async function replaceTopLevelLiesWithins(documents: Array<Document>,
                                               operationTypeNames: string[],
-                                              get: GET,
-                                              mainTypeDocumentId: ID) {
+                                              get: Get,
+                                              mainTypeDocumentId: Id) {
 
         for (let document of documents) {
             const relations = document.resource.relations;
@@ -183,12 +169,12 @@ export module DefaultImportCalc {
 
     async function inferRecordedIns(documents: Array<Document>,
                                     operationTypeNames: string[],
-                                    get: GET,
-                                    mainTypeDocumentId: ID) {
+                                    get: Get,
+                                    mainTypeDocumentId: Id) {
 
         const idMap = documents.reduce((tmpMap, document: Document) =>
                 (tmpMap[document.resource.id] = document, tmpMap),
-            {} as ID_MAP);
+            {} as IdMap);
 
 
         async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
@@ -199,7 +185,7 @@ export module DefaultImportCalc {
         }
 
 
-        async function getRecordedInFromExistingDocument(targetId: ID) {
+        async function getRecordedInFromExistingDocument(targetId: Id) {
 
             try {
                 const got = await get(targetId);
@@ -236,7 +222,7 @@ export module DefaultImportCalc {
     }
 
 
-    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: ID) {
+    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: Id) {
 
         const relations = document.resource.relations;
         if (mainTypeDocumentId
@@ -249,10 +235,10 @@ export module DefaultImportCalc {
 
 
     async function rewriteIdentifiersInRelations(relations: Relations,
-                                                 find: FIND,
-                                                 identifierMap: IDENTIFIER_MAP): Promise<void> {
+                                                 find: Find,
+                                                 identifierMap: IdentifierMap): Promise<void> {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: IDENTIFIER) => {
+        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: Identifier) => {
             if (identifierMap[identifier]) {
                 relations[relation][i] = identifierMap[identifier];
             } else {
@@ -265,9 +251,9 @@ export module DefaultImportCalc {
 
 
     async function assertNoMissingRelationTargets(relations: Relations,
-                                                  get: GET): Promise<void> {
+                                                  get: Get): Promise<void> {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, id: ID) => {
+        return iterateRelationsInImport(relations, async (relation: string, i: number, id: Id) => {
             try { await get(id) }
             catch { throw [E.MISSING_RELATION_TARGET, id] }
         });
@@ -276,7 +262,7 @@ export module DefaultImportCalc {
 
     async function iterateRelationsInImport(
         relations: Relations,
-        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: ID|IDENTIFIER) => Promise<void>): Promise<void> {
+        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: Id|Identifier) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
             await asyncForEach((idOrIdentifier: string, i) =>
@@ -296,7 +282,7 @@ export module DefaultImportCalc {
     }
 
 
-    function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: IDENTIFIER) {
+    function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
 
         for (let relName of Object.keys(relations)) {
             relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
@@ -305,18 +291,18 @@ export module DefaultImportCalc {
     }
 
 
-    function assignIds(documents: Array<Document>, generateId: Function): IDENTIFIER_MAP {
+    function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
 
         return documents
             .filter(hasNot(RESOURCE_ID))
             .reduce((identifierMap, document)  =>
                 (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
-            , {} as IDENTIFIER_MAP);
+            , {} as IdentifierMap);
     }
 
 
     async function mergeOrUseAsIs(document: NewDocument|Document,
-                                  find: FIND,
+                                  find: Find,
                                   mergeIfExists: boolean,
                                   allowOverwriteRelationsOnMerge: boolean): Promise<Document> {
 
@@ -335,7 +321,7 @@ export module DefaultImportCalc {
 
     async function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
                                                validator: ImportValidator,
-                                               mainTypeDocumentId: ID) {
+                                               mainTypeDocumentId: Id) {
 
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
@@ -350,8 +336,8 @@ export module DefaultImportCalc {
     }
 
 
-    function searchInImport(targetDocumentResourceId: ID,
-                            idMap: ID_MAP,
+    function searchInImport(targetDocumentResourceId: Id,
+                            idMap: IdMap,
                             operationTypeNames: string[]
     ): Either<string, Document> // recordedInResourceId|targetDocument
        |undefined {             // targetDocument not found
@@ -370,7 +356,7 @@ export module DefaultImportCalc {
     }
 
 
-    function initRecordedIn(document: NewDocument, mainTypeDocumentId: ID) {
+    function initRecordedIn(document: NewDocument, mainTypeDocumentId: Id) {
 
         const relations = document.resource.relations;
         if (!relations[RECORDED_IN]) relations[RECORDED_IN] = [];

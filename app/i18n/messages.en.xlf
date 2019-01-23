@@ -3395,6 +3395,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
+        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
+        <target state="final">Resources related across operations: '[0]', '[1]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
         <target state="final">Missing definition for 'Recorded in operation'. This assignment is mandatory.</target>

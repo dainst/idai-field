@@ -515,6 +515,22 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('illegal relation between import resources', async done => { // TODO move test to relations completer
+
+        const result = await process([
+            d('Feature', 'one', { parent: 'existingTrench', isAfter: ['two'] }),
+            d('Feature', 'two', { parent: 'existingTrench2' })
+        ]);
+
+        expect(result[2][0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
+        expect(result[2][1]).toEqual('one');
+        expect(result[2][2]).toEqual('two');
+        done();
+    });
+
+
+    // TODO illegal relation between import and db resource
+
     it('validation error - not wellformed', async done => {
 
         validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });

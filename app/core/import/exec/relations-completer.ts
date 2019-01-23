@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {filter, flatMap, flow, isEmpty, isUndefinedOrEmpty, on, subtractBy, union, isnt} from 'tsfun';
+import {filter, flatMap, flow, isEmpty, undefinedOrEmpty, isUndefinedOrEmpty, on, subtractBy, union, isnt, isNot} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 
@@ -161,9 +161,21 @@ export module RelationsCompleter {
                 }
             }
 
+            const documentRecordedIn = isNot(undefinedOrEmpty)(document.resource.relations['isRecordedIn'])
+                ? document.resource.relations['isRecordedIn'] : undefined; // TODO make getOrElse working with array index
+
             for (let targetId of document.resource.relations[relationName]) {
                 let targetDocument = documentsLookup[targetId];
                 if (!targetDocument) continue;
+
+                const targetDocumentRecordedIn = isNot(undefinedOrEmpty)(targetDocument.resource.relations['isRecordedIn'])
+                    ? targetDocument.resource.relations['isRecordedIn'] : undefined;
+
+                if (targetDocumentRecordedIn && documentRecordedIn
+                    && targetDocumentRecordedIn !== documentRecordedIn) {
+
+                    throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
+                }
 
                 if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
                     targetDocument.resource.relations[inverseRelationName] = [];

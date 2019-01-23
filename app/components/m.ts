@@ -95,6 +95,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.Import.ImportErrors.liesWithinRecordedInMismatch';
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
+    public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -733,6 +734,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_MUST_BE_IN_SAME_OPERATION] = {
+            content: i18n({
+                id: 'messages.import.error.mustBeInSameOperation',
+                value: 'Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\''
+            }),
+            level: 'danger',
+            params: ['?', '?'],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {

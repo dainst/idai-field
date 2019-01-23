@@ -2902,6 +2902,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
+        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
+        <target state="final">Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
         <source>'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</source>
         <target state="final">'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</target>

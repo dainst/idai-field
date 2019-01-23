@@ -5,6 +5,10 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 .navbar {
   -webkit-app-region: drag;
   padding: 0 10px;
+
+  .nav-item {
+    -webkit-app-region: no-drag;
+  }
 }
 
 .navbar.bg-primary {

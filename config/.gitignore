@@ -1,6 +1,6 @@
 *
 
-# Explicitely mention files which should be part of the repo.
+# Explicitly mention files which should be part of the repo.
 
 !Configuration.json
 !Fields-Custom.json
@@ -8,6 +8,7 @@
 !Fields-Meninx.json
 !Hidden.json
 !Hidden-Custom.json
+!Hidden-Meninx.json
 !Hidden-Pergamon.json
 !Language.de.json
 !Language.en.json
@@ -21,6 +22,7 @@
 !Search.json
 !Periods.json
 !Periods-Meninx.json
+!Periods-Pergamon.json
 !README.md
 !Fields.json
 !Dictionary.txt

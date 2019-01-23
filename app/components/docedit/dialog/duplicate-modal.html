@@ -29,8 +29,10 @@
             [ngClass]="{ 'disabled': !validateNumberOfDuplicates() }"
             (click)="confirmDuplication()">
         <span class="mdi mdi-content-save"></span>
-        <span *ngIf="newDocument" class="button-label" i18n="@@buttons.create">Erstellen</span>
-        <span *ngIf="!newDocument" class="button-label" i18n="@@buttons.duplicate">Vervielfältigen</span>
+        <span *ngIf="newDocument" class="button-label"
+              i18n="@@buttons.createResources">Ressourcen erstellen</span>
+        <span *ngIf="!newDocument" class="button-label"
+              i18n="@@buttons.saveResources">Ressourcen speichern</span>
     </button>
     <button type="button" id="duplicate-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">

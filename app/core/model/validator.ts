@@ -78,11 +78,9 @@ export class Validator {
 
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
-        return !this.typeUtility
-            ? false
-            : this.typeUtility
-                .getRegularTypeNames()
-                .includes(document.resource.type);
+        return this.typeUtility
+            .getRegularTypeNames()
+            .includes(document.resource.type);
     }
 
 

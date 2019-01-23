@@ -205,7 +205,7 @@ registerLocaleData(localeDe, 'de');
                     typeUtility
                 )
             },
-            deps: [FieldDatastore, ProjectConfiguration]
+            deps: [FieldDatastore, ProjectConfiguration, TypeUtility]
         },
         ImportValidator,
         { provide: MD, useClass: M},

@@ -19,10 +19,6 @@ export class NavigationService {
 
     public async moveInto(document: IdaiFieldDocument) {
 
-        if (this.viewFacade.getBypassHierarchy()) {
-            this.viewFacade.setBypassHierarchy(false);
-        }
-
         await this.viewFacade.moveInto(document);
     }
 
@@ -36,7 +32,7 @@ export class NavigationService {
     public showMoveIntoOption(document: IdaiFieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
-        if (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()) return false;
+        if (this.viewFacade.getBypassHierarchy()) return false;
 
         return ((this.projectConfiguration
             .getRelationDefinitions(document.resource.type, true) as any)

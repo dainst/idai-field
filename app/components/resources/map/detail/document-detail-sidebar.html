@@ -34,7 +34,7 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab id="document-view-geometry-tab">
+            <ngb-tab *ngIf="viewFacade.getSelectedDocument().resource.type !== 'Inscription'" id="document-view-geometry-tab">
                 <ng-template ngbTabTitle>
                     <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
                 </ng-template>

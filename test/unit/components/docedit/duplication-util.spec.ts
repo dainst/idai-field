@@ -1,4 +1,4 @@
-import {NewDocument} from 'idai-components-2';
+import {NewDocument, Document} from 'idai-components-2';
 import {DuplicationUtil} from '../../../../app/components/docedit/duplication-util';
 
 
@@ -18,6 +18,40 @@ describe('DuplicationUtil', () => {
         validator.assertIdentifierIsUnique.and.callFake(async (document: NewDocument) => {
             if (identifiers.includes(document.resource.identifier)) throw 'duplicate identifier';
         });
+    });
+
+
+    it('do not include non-hierarchy relations, id and geometry in template', () => {
+
+        const document: Document = {
+            resource: {
+                id: 't1',
+                identifier: 'test1',
+                relations: {
+                    isRecordedIn: ['t2'],
+                    liesWithin: ['t3'],
+                    borders: ['t4']
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [1.0, 1.0]
+                },
+                type: 'Find'
+            },
+            created: {
+                user: 'testuser',
+                date: new Date()
+            },
+            modified: []
+        };
+
+        const template: NewDocument = DuplicationUtil.createTemplate(document);
+
+        expect(template.resource.id).toBeUndefined();
+        expect(template.resource.relations.isRecordedIn).toEqual(['t2']);
+        expect(template.resource.relations.liesWithin).toEqual(['t3']);
+        expect(template.resource.relations.borders).toBeUndefined();
+        expect(template.resource.geometry).toBeUndefined();
     });
 
 

@@ -79,6 +79,9 @@ export class DoceditComponent {
             case 's':
                 if (event.ctrlKey || event.metaKey) await this.performQuickSave();
                 break;
+            case 'd':
+                if (event.ctrlKey || event.metaKey) await this.openDuplicateModal();
+                break;
         }
     }
 

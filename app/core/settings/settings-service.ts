@@ -112,7 +112,9 @@ export class SettingsService {
         let customProjectName = undefined;
         if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
         if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
-        if (this.getSelectedProject().indexOf('wes') === 0) customProjectName = 'WES';
+        if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
+            customProjectName = 'WES';
+        }
 
         try {
             return await this.appConfigurator.go(

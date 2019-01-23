@@ -142,9 +142,9 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
-        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, '2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
+        DoceditRelationsTabPage.typeInRelationByIndices(0, 0, '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
@@ -312,7 +312,7 @@ describe('resources --', () => {
     });
 
 
-    it('not reflect changes in overview in realtime', () => {
+    xit('not reflect changes in overview in realtime', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
@@ -377,11 +377,11 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(8, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(10, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
     });
@@ -407,7 +407,7 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(9, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(8, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');

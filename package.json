@@ -106,7 +106,7 @@
     "@types/papaparse": "4.1.28",
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
-    "electron": "2.0.8",
+    "electron": "3.1.1",
     "electron-builder": "20.28.3",
     "electron-packager": "8.4.0",
     "electron-rebuild": "1.5.7",
@@ -124,7 +124,7 @@
     "protractor-console-plugin": "0.1.1",
     "protractor-fail-fast": "3.1.0",
     "rimraf": "2.6.2",
-    "spectron": "4.0.0",
+    "spectron": "5.0.0",
     "typescript": "3.1.4",
     "yargs": "12.0.2"
   }

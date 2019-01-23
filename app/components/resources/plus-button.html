@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div *ngIf="getButtonType() === 'singleType' && preselectedGeometryType === 'none'"
+    <div *ngIf="getButtonType() === 'singleType' && (preselectedGeometryType === 'none' || this.typesTreeList[0].name === 'Inscription')"
             class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">

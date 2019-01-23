@@ -101,10 +101,16 @@ export class DoceditComponent {
     };
 
 
-    public showDuplicateButton(): boolean {
+    public showDropdownButton(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
-            && this.documentHolder.clonedDocument.resource.type !== 'Project'
+            && this.documentHolder.clonedDocument.resource.type !== 'Project';
+    }
+
+
+    public showDuplicateButton(): boolean {
+
+        return this.showDropdownButton()
             && !this.typeUtility.isSubtype(
                 this.documentHolder.clonedDocument.resource.type, 'Image'
             );
@@ -113,9 +119,8 @@ export class DoceditComponent {
 
     public showDeleteButton(): boolean {
 
-        return this.documentHolder.clonedDocument !== undefined
+        return this.showDropdownButton()
             && this.documentHolder.clonedDocument.resource.id !== undefined
-            && this.documentHolder.clonedDocument.resource.type !== 'Project';
     }
 
 

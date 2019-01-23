@@ -29,9 +29,11 @@
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label" i18n="@@buttons.save">Speichern</span>
                 </button>
-                <div ngbDropdown placement="bottom-right" class="d-inline-block">
-                    <button id="document-edit-button-dropdown" class="btn btn-primary"
-                            [class.disabled]="isLoading()" ngbDropdownToggle>
+                <div *ngIf="showDropdownButton()"
+                     ngbDropdown placement="bottom-right" class="d-inline-block">
+                    <button id="document-edit-button-dropdown"
+                            class="btn btn-primary" [class.disabled]="isLoading()"
+                            ngbDropdownToggle>
                         <span class="mdi mdi-dots-vertical"></span>
                     </button>
                     <div ngbDropdownMenu id="document-edit-dropdown-menu">

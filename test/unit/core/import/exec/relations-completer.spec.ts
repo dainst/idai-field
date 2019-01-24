@@ -39,7 +39,7 @@ describe('RelationsCompleter', () => {
                 id: '1',
                 identifier: 'one',
                 type: 'Object',
-                relations: { isBelow: [], isRecordedIn: [] }
+                relations: { isBelow: []}
             }
         };
 
@@ -69,7 +69,7 @@ describe('RelationsCompleter', () => {
             if (resourceId === '4') return doc3;
             throw "not found";
         };
-        isRelationProperty = (_: any) => true;
+        isRelationProperty = () => true;
         getInverseRelation = (_: string) => {
             // make sure it gets ignored even if inverses are set
             if (_ === RECORDED_IN) throw 'E';
@@ -85,8 +85,8 @@ describe('RelationsCompleter', () => {
 
         doc2.resource.relations[IS_ABOVE] =  ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
 
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(0);
         done();
     });
@@ -225,6 +225,8 @@ describe('RelationsCompleter', () => {
 
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // TODO add test for illegal relation between import and db resource
 
     it('illegal relation between import resources', async done => {
 

@@ -1,6 +1,8 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {filter, flatMap, flow, isEmpty, undefinedOrEmpty, isUndefinedOrEmpty, on, subtractBy, union, isnt, isNot} from 'tsfun';
+import {filter, flatMap, flow, getOrElse, isDefined,
+    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union
+} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 
@@ -10,6 +12,8 @@ import {clone} from '../../util/object-util';
  * @author Daniel de Oliveira
  */
 export module RelationsCompleter {
+
+    type DocumentsLookup = {[id: string]: Document};
 
     const LIES_WITHIN = 'liesWithin';
     const RECORDED_IN = 'isRecordedIn';
@@ -42,7 +46,7 @@ export module RelationsCompleter {
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
 
 
-        const documentsLookup: {[id: string]: Document} = documents
+        const documentsLookup: DocumentsLookup = documents
             .reduce((documentsMap: {[id: string]: Document}, document: Document) => {
                 documentsMap[document.resource.id] = document;
                 return documentsMap;
@@ -50,7 +54,7 @@ export module RelationsCompleter {
 
         for (let document of documents) {
 
-            await setInverseRelationsForImportResource(
+            setInverseRelationsForImportResource(
                 document,
                 documentsLookup,
                 getInverseRelation,
@@ -67,7 +71,7 @@ export module RelationsCompleter {
 
 
     async function setInverseRelationsForDbResources(documents: Array<Document>,
-                                                     documentsLookup: {[id: string]: Document},
+                                                     documentsLookup: DocumentsLookup,
                                                      get: (_: string) => Promise<Document>,
                                                      getInverseRelation: (_: string) => string|undefined,
                                                      mergeMode: boolean): Promise<Array<Document>> {
@@ -110,7 +114,9 @@ export module RelationsCompleter {
     }
 
 
-    async function getTargetDocument(targetId: string, totalDocsToUpdate: Array<Document>, get: Function): Promise<Document> {
+    async function getTargetDocument(targetId: string,
+                                     totalDocsToUpdate: Array<Document>,
+                                     get: Function): Promise<Document> {
 
         let targetDocument = totalDocsToUpdate
             .find(document => document.resource.id === targetId);
@@ -132,58 +138,75 @@ export module RelationsCompleter {
     }
 
 
-    function targetIdsReferingToObjects(document: Document, documentsLookup: any) {
+    function targetIdsReferingToObjects(document: Document,
+                                        documentsLookup: DocumentsLookup) {
 
         return flow(relationNamesExceptRecordedIn(document),
             flatMap(relationName => document.resource.relations[relationName]),
-            filter((targetId: string) => !documentsLookup[targetId]));
+            filter(targetId => !documentsLookup[targetId]));
     }
 
 
-    async function setInverseRelationsForImportResource(document: Document,
-                                                        documentsLookup: {[id: string]: Document},
-                                                        getInverseRelation: (_: string) => string|undefined,
-                                                        relationNamesExceptIsRecordedIn: string[]): Promise<void> {
+    function setInverseRelationsForImportResource(document: Document,
+                                                  documentsLookup: DocumentsLookup,
+                                                  getInverseRelation: (_: string) => string|undefined,
+                                                  relationNamesExceptIsRecordedIn: string[]): void {
 
 
-        for (let relationName of relationNamesExceptIsRecordedIn) {
-            if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
+        relationNamesExceptIsRecordedIn
+            .forEach(relationName => {
 
-            const inverseRelationName = getInverseRelation(relationName);
-            if (!inverseRelationName) continue;
+                if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
 
-            if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
-                const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
-                if (u.length > 0) {
-                    throw [E.BAD_INTERRELATION,
-                        document.resource.identifier,
-                        documentsLookup[u[0]].resource.identifier];
-                }
+                const inverseRelationName = getInverseRelation(relationName);
+                if (!inverseRelationName) return;
+
+                assertNotBadlyInterrelated(document, relationName, inverseRelationName, documentsLookup);
+
+                document.resource.relations[relationName]
+                    .map(targetId => documentsLookup[targetId])
+                    .filter(isDefined)
+                    .forEach(targetDocument => {
+                        assertInSameOperation(document, targetDocument);
+                        setInverse(document, targetDocument, inverseRelationName);
+                    });
+            })
+    }
+
+
+    function assertNotBadlyInterrelated(document: Document,
+                                        relationName: string,
+                                        inverseRelationName: string,
+                                        documentsLookup: DocumentsLookup) {
+
+        if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
+            const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
+            if (u.length > 0) {
+                throw [E.BAD_INTERRELATION,
+                    document.resource.identifier,
+                    documentsLookup[u[0]].resource.identifier];
             }
+        }
+    }
 
-            const documentRecordedIn = isNot(undefinedOrEmpty)(document.resource.relations['isRecordedIn'])
-                ? document.resource.relations['isRecordedIn'] : undefined; // TODO make getOrElse working with array index
 
-            for (let targetId of document.resource.relations[relationName]) {
-                let targetDocument = documentsLookup[targetId];
-                if (!targetDocument) continue;
+    function setInverse(document: Document, targetDocument: Document, inverseRelationName: string) {
 
-                const targetDocumentRecordedIn = isNot(undefinedOrEmpty)(targetDocument.resource.relations['isRecordedIn'])
-                    ? targetDocument.resource.relations['isRecordedIn'] : undefined;
+        if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
+            targetDocument.resource.relations[inverseRelationName] = [];
+        }
+        if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
+            targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
+        }
+    }
 
-                if (targetDocumentRecordedIn && documentRecordedIn
-                    && targetDocumentRecordedIn !== documentRecordedIn) {
 
-                    throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
-                }
+    function assertInSameOperation(document: Document, targetDocument: Document) {
 
-                if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
-                    targetDocument.resource.relations[inverseRelationName] = [];
-                }
-                if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
-                    targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
-                }
-            }
+        const documentRecordedIn = getOrElse(document, undefined)('resource.relations.' + RECORDED_IN);
+        const targetDocumentRecordedIn = getOrElse(targetDocument, undefined)('resource.relations.' + RECORDED_IN);
+        if (targetDocumentRecordedIn && targetDocumentRecordedIn !== documentRecordedIn) {
+            throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
     }
 }

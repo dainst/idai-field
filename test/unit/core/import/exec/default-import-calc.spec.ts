@@ -110,7 +110,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             d('Feature', 'newFeature', { parent: 'existingTrench',
-                isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench
+                isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench (see todo for adding test in relations completer spec)
         ]);
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');
@@ -514,8 +514,6 @@ describe('DefaultImportCalc', () => {
         done();
     });
 
-
-    // TODO illegal relation between import and db resource
 
     it('validation error - not wellformed', async done => {
 

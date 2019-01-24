@@ -10,6 +10,7 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
+import {MapPage} from '../map/map.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -492,6 +493,18 @@ describe('resources --', () => {
         ResourcesPage.clickSelectGeometryType('point');
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
+    });
+
+
+    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
+
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType('point');
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
+        MapPage.clickMapOption('ok');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
     });
 
 

@@ -111,9 +111,8 @@ export class DocumentsManager {
     public deselect() {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
-
             this.selectAndNotify(undefined);
-            this.documents = this.documents.filter(hasId);
+            this.removeNewDocument();
             this.resourcesStateManager.setActiveDocumentViewTab(undefined);
         }
     }
@@ -123,6 +122,12 @@ export class DocumentsManager {
 
         this.documents.unshift(document);
         this.selectAndNotify(document);
+    }
+
+
+    public removeNewDocument() {
+
+        this.documents = this.documents.filter(hasId);
     }
 
 

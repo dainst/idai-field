@@ -53,6 +53,8 @@ export class ViewFacade {
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
+    public removeNewDocument = () => this.documentsManager.removeNewDocument();
+
     public getView = (): string => this.resourcesStateManager.get().view;
 
     public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view

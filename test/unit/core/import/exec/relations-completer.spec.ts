@@ -1,5 +1,5 @@
 import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
 
 
@@ -226,6 +226,27 @@ describe('RelationsCompleter', () => {
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    it('illegal relation between import resources', async done => {
+
+        delete doc1.resource.relations[IS_BELOW];
+        doc1.resource.relations[RECORDED_IN] = ['t1'];
+        doc1.resource.relations[IS_AFTER] = ['2'];
+        doc2.resource.relations[RECORDED_IN] = ['t2'];
+        doc2.resource.relations[IS_BEFORE] = ['1'];
+
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
+            expect(errWithParams[1]).toEqual('one');
+            expect(errWithParams[2]).toEqual('two');
+        }
+        done();
+        done();
+    });
+
+
     it('set inverse relation within import itself - both directions set', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['2'];
@@ -234,7 +255,7 @@ describe('RelationsCompleter', () => {
             await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(ImportErrors.BAD_INTERRELATION);
+            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
             expect(errWithParams[1]).toEqual('one');
             expect(errWithParams[2]).toEqual('two');
         }
@@ -251,7 +272,7 @@ describe('RelationsCompleter', () => {
                 .completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET)
+            expect(errWithParams[0]).toEqual(E.EXEC_MISSING_RELATION_TARGET)
         }
         done();
     });
@@ -264,7 +285,7 @@ describe('RelationsCompleter', () => {
             await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(ImportErrors.EMPTY_RELATION);
+            expect(errWithParams[0]).toEqual(E.EMPTY_RELATION);
             expect(errWithParams[1]).toEqual('one');
         }
         done();

@@ -86,6 +86,10 @@
   }
 
   #document-edit-button-dropdown {
+    &:focus {
+      box-shadow: none;
+    }
+
     &::after {
       display: none;
     }

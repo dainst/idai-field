@@ -106,7 +106,7 @@
     "@types/papaparse": "4.1.28",
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
-    "electron": "2.0.16",
+    "electron": "2.0.8",
     "electron-builder": "20.28.3",
     "electron-packager": "8.4.0",
     "electron-rebuild": "1.5.7",

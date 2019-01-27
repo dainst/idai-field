@@ -32,15 +32,17 @@
                 <div *ngIf="showDropdownButton()"
                      ngbDropdown placement="bottom-right" class="d-inline-block">
                     <button id="document-edit-button-dropdown"
-                            class="btn btn-primary" [class.disabled]="isLoading()"
+                            class="btn btn-primary"
+                            [class.disabled]="isLoading()"
+                            [disabled]="isLoading()"
                             ngbDropdownToggle>
                         <span class="mdi mdi-dots-vertical"></span>
                     </button>
                     <div ngbDropdownMenu id="document-edit-dropdown-menu">
                         <span id="document-edit-button-duplicate-document"
                               *ngIf="showDuplicateButton()"
-                              class="dropdown-item" [class.disabled]="isLoading()"
-                              (click)="isLoading() || openDuplicateModal()">
+                              class="dropdown-item"
+                              (click)="openDuplicateModal()">
                             <span class="mdi mdi-expand-all"></span>
                             <span *ngIf="!documentHolder.clonedDocument.resource.id"
                                   class="dropdown-entry-label"
@@ -51,8 +53,8 @@
                         </span>
                         <span id="document-edit-button-delete-document"
                               *ngIf="showDeleteButton()"
-                              class="dropdown-item" [class.disabled]="isLoading()"
-                              (click)="isLoading() || openDeleteModal()">
+                              class="dropdown-item"
+                              (click)="openDeleteModal()">
                             <span class="mdi mdi-delete"></span>
                             <span class="dropdown-entry-label" i18n="@@buttons.delete">Löschen</span>
                         </span>

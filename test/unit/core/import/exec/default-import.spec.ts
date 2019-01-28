@@ -43,7 +43,7 @@ describe('DefaultImport', () => {
     it('should resolve on success', async done => {
 
         await importFunction([
-            { resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0'} } } as any],
+            { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any],
             mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
@@ -82,7 +82,7 @@ describe('DefaultImport', () => {
             mockValidator, operationTypeNames,
             () => undefined,
             () => '101', false) as any)([
-                { resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0' } } } as any],
+                { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore,'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
@@ -96,7 +96,7 @@ describe('DefaultImport', () => {
         mockDatastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
         const {errors} = await importFunction(
-            [{ resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0' } } } as any],
+            [{ resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
             mockDatastore,'user1');
 
         expect(errors[0][0]).toBe('abc');
@@ -109,7 +109,7 @@ describe('DefaultImport', () => {
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
         const {errors} = await importFunction([
-            { resource: { type: 'Nonexisting', identifier: '1a', relations: { hasParent: '0' } } } as any
+            { resource: { type: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors.length).toBe(1);

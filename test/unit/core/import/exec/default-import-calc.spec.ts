@@ -110,7 +110,7 @@ describe('DefaultImportCalc', () => {
     it('set inverse relation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { hasParent: 'existingTrench',
+            d('Feature', 'newFeature', { isChildOf: 'existingTrench',
                 isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench (see todo for adding test in relations completer spec)
         ]);
 
@@ -122,7 +122,7 @@ describe('DefaultImportCalc', () => {
     it('remove self referencing relation target', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { hasParent: 'existingTrench', isAfter: ['newFeature', 'existingTrench']})
+            d('Feature', 'newFeature', { isChildOf: 'existingTrench', isAfter: ['newFeature', 'existingTrench']})
         ]);
 
         expect(result[0][0].resource.relations['isAfter'].length).toEqual(1);
@@ -134,7 +134,7 @@ describe('DefaultImportCalc', () => {
     it('child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { hasParent: 'existingTrench' })
+            d('Feature', 'newFeature', { isChildOf: 'existingTrench' })
             ]);
 
         const resource = result[0][0].resource;
@@ -148,7 +148,7 @@ describe('DefaultImportCalc', () => {
     it('child of existing operation, assign via resource id', async done => {
 
         const result = await processWithPlainIds([
-            d('Feature', 'newFeature', { hasParent: 'et1' })
+            d('Feature', 'newFeature', { isChildOf: 'et1' })
         ]);
 
         const resource = result[0][0].resource;
@@ -162,7 +162,7 @@ describe('DefaultImportCalc', () => {
     it('child of existing feature', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { hasParent: 'existingFeature'})
+            d('Feature', 'newFeature', { isChildOf: 'existingFeature'})
         ]);
 
         const resource = result[0][0].resource;
@@ -191,7 +191,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             d('Trench', 'one'),
-            d('Feature', 'two', { hasParent: 'one' })
+            d('Feature', 'two', { isChildOf: 'one' })
         ]);
 
         const resource = result[0][1].resource;
@@ -205,7 +205,7 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature, order reversed', async done => {
 
         const result = await process([
-            d('Feature', 'two', { hasParent: 'one' }),
+            d('Feature', 'two', { isChildOf: 'one' }),
             d('Trench', 'one')
         ]);
 
@@ -221,8 +221,8 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             d('Trench', 'one'),
-            d('Feature', 'two', { hasParent: 'one' }),
-            d('Find', 'three', { hasParent: 'two' })
+            d('Feature', 'two', { isChildOf: 'one' }),
+            d('Find', 'three', { isChildOf: 'two' })
         ]);
 
         const resource = result[0][2].resource;
@@ -236,8 +236,8 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature, nest deeper, order reversed', async done => {
 
         const result = await process([
-            d('Find', 'three', { hasParent: 'two' }),
-            d('Feature', 'two', { hasParent: 'one' }),
+            d('Find', 'three', { isChildOf: 'two' }),
+            d('Feature', 'two', { isChildOf: 'one' }),
             d('Trench', 'one')
         ]);
 
@@ -252,7 +252,7 @@ describe('DefaultImportCalc', () => {
     it('import feature as child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'one', { hasParent: 'existingTrench' })
+            d('Feature', 'one', { isChildOf: 'existingTrench' })
         ]);
 
         const resource = result[0][0].resource;
@@ -278,8 +278,8 @@ describe('DefaultImportCalc', () => {
     it('nested resources, topmost child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'one', { hasParent: 'existingTrench' }),
-            d('Find', 'two', { hasParent: 'one' })
+            d('Feature', 'one', { isChildOf: 'existingTrench' }),
+            d('Find', 'two', { isChildOf: 'one' })
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -293,8 +293,8 @@ describe('DefaultImportCalc', () => {
     it('nested resources, topmost child of existing operation, order reversed', async done => {
 
         const result = await process([
-            d('Find', 'two', { hasParent: 'one' }),
-            d('Feature', 'one', { hasParent: 'existingTrench'})
+            d('Find', 'two', { isChildOf: 'one' }),
+            d('Feature', 'one', { isChildOf: 'existingTrench'})
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -309,7 +309,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await processWithMainType([
             d('Feature', 'one'),
-            d('Find', 'two', { hasParent: 'one' })
+            d('Find', 'two', { isChildOf: 'one' })
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -323,7 +323,7 @@ describe('DefaultImportCalc', () => {
     it('nested resources, assignment to operation via operation assignment parameter, order reversed', async done => {
 
         const result = await processWithMainType([
-            d('Find', 'two', { hasParent: 'one' }),
+            d('Find', 'two', { isChildOf: 'one' }),
             d('Feature', 'one')
         ]);
 
@@ -338,7 +338,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { hasParent: 'existingFeature'})
+            d('Feature', 'one', { isChildOf: 'existingFeature'})
         ]);
 
         const resource = result[0][0].resource;
@@ -385,7 +385,7 @@ describe('DefaultImportCalc', () => {
     it('merge, overwrite relations, reassign parent', async done => {
 
         const result = await processMergeOverwriteRelations([
-            d('Feature', 'existingFeature2', { hasParent: 'existingFeature' })
+            d('Feature', 'existingFeature2', { isChildOf: 'existingFeature' })
         ]);
 
         const resource = result[0][0].resource;
@@ -412,7 +412,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing feature, via mismatch with operation assignment parameter , ', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { hasParent: 'existingFeature2'})
+            d('Feature', 'one', { isChildOf: 'existingFeature2'})
         ]);
 
         expect(result[2][0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
@@ -424,8 +424,8 @@ describe('DefaultImportCalc', () => {
     it('duplicate identifiers in import file', async done => {
 
         const result = await process(<any>[
-            d('Feature', 'dup', { hasParent: 'etc1' }),
-            d('Feature', 'dup', { hasParent: 'etc1' }),
+            d('Feature', 'dup', { isChildOf: 'etc1' }),
+            d('Feature', 'dup', { isChildOf: 'etc1' }),
         ]);
 
         const error = result[2];
@@ -438,7 +438,7 @@ describe('DefaultImportCalc', () => {
     it('duplicate identifiers, resource with such identifier already exists', async done => {
 
         const result = await process([
-            d('Feature', 'existingFeature', { hasParent: 'existingTrench' })
+            d('Feature', 'existingFeature', { isChildOf: 'existingTrench' })
         ]);
 
         const error = result[2];
@@ -451,7 +451,7 @@ describe('DefaultImportCalc', () => {
     it('parent not found', async done => {
 
         const result = await process(<any>[
-            d('Feature', 'zero', { hasParent: 'notfound' })
+            d('Feature', 'zero', { isChildOf: 'notfound' })
         ]);
 
         expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
@@ -463,7 +463,7 @@ describe('DefaultImportCalc', () => {
     it('parent not found, when using plain ids', async done => {
 
         const result = await processWithPlainIds(<any>[
-            d('Feature', 'zero', { hasParent: 'notfound' })
+            d('Feature', 'zero', { isChildOf: 'notfound' })
         ]);
 
         expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
@@ -475,7 +475,7 @@ describe('DefaultImportCalc', () => {
     it('clash of assigned main type id with use of parent', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { hasParent: 'existingTrench'})
+            d('Feature', 'one', { isChildOf: 'existingTrench'})
         ]);
         expect(result[2][0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
@@ -485,7 +485,7 @@ describe('DefaultImportCalc', () => {
     it('parent is an array', async done => {
 
         const result = await process([
-            d('Feature', 'one', { hasParent: [] })
+            d('Feature', 'one', { isChildOf: [] })
         ]);
         expect(result[2][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
         expect(result[2][1]).toEqual('one');

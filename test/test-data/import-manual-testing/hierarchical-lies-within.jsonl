@@ -1,2 +1,2 @@
-{ "type": "Find", "identifier" : "ImportedFind", "shortDescription" : "O.B. Three", "relations" : { "hasParent" : "ImportedFeature" } }
-{ "type": "Feature", "identifier" : "ImportedFeature", "shortDescription" : "O.B. Two", "relations" : { "hasParent" : "T1" } }
+{ "type": "Find", "identifier" : "ImportedFind", "shortDescription" : "O.B. Three", "relations" : { "isChildOf" : "ImportedFeature" } }
+{ "type": "Feature", "identifier" : "ImportedFeature", "shortDescription" : "O.B. Two", "relations" : { "isChildOf" : "T1" } }

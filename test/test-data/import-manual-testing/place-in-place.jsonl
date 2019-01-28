@@ -1,2 +1,2 @@
 { "type" : "Place", "identifier" : "Place0"}
-{ "type" : "Place", "identifier" : "Place1", "relations": { "hasParent" : "Place0" }}
+{ "type" : "Place", "identifier" : "Place1", "relations": { "isChildOf" : "Place0" }}

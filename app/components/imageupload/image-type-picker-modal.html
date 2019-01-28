@@ -16,17 +16,17 @@
         <span i18n="@@imageUpload.imageTypePickerModal.chooseType">Bitte wählen Sie den gewünschten Typ aus.</span>
     </p>
     <ul *ngIf="imageType.children && imageType.children.length > 0" class="list-group">
-        <li [ngClass]="{'abstract-idai-type': imageType.isAbstract}" class="list-group-item popover-item"
+        <li [ngClass]="{ 'abstract-idai-type': imageType.isAbstract }" class="list-group-item popover-item"
             id="choose-image-maintype" (click)="!imageType.isAbstract && activeModal.close(imageType)">
             <type-icon [type]="imageType.name" size="30"></type-icon>
-            {{imageType.label}}
+            <span class="image-type-label">{{imageType.label}}</span>
             <ul style="padding: 0;">
                 <li *ngFor="let childType of imageType.children; let index = index"
                     id="choose-image-subtype-option-{{index}}"
                     class="list-group-item popover-item"
                     (click)="activeModal.close(childType)">
                     <type-icon [type]="childType.name" size="30"></type-icon>
-                    {{childType['label']}}
+                    <span class="image-type-label">{{childType['label']}}</span>
                 </li>
             </ul>
         </li>

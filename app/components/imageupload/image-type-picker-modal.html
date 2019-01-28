@@ -20,7 +20,7 @@
             id="choose-image-maintype" (click)="!imageType.isAbstract && activeModal.close(imageType)">
             <type-icon [type]="imageType.name" size="30"></type-icon>
             <span class="image-type-label">{{imageType.label}}</span>
-            <ul style="padding: 0;">
+            <ul id="choose-image-subtype">
                 <li *ngFor="let childType of imageType.children; let index = index"
                     id="choose-image-subtype-option-{{index}}"
                     class="list-group-item popover-item"

@@ -43,8 +43,8 @@ export class ImageUploader {
 
     /**
      * @param event The event containing the images to upload (can be drag event or event from file input element)
-     * @param depictsRelationTargetId If this parameter is set, each of the newly created image documents will contain
-     *  a depicts relation to the resource specified by the id.
+     * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
+     *  a depicts relation to the specified document.
      */
     public startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 

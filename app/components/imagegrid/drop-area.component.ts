@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input} from '@angular/core';
+import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@angular/core';
 import {Messages, Document} from 'idai-components-2';
 import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
 
@@ -18,7 +18,9 @@ export class DropAreaComponent {
 
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
-    private dragOverActive = false;
+    @ViewChild('fileInput') fileInputElement: ElementRef;
+
+    private dragOverActive: boolean = false;
 
 
     public constructor(
@@ -61,6 +63,8 @@ export class DropAreaComponent {
         const uploadResult: ImageUploadResult
             = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
         this.handleUploadResult(uploadResult);
+
+        this.fileInputElement.nativeElement.value = null;
     }
 
 

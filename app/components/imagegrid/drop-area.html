@@ -2,7 +2,8 @@
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
      (drop)="onDrop($event)">
-    <input class="file"
+    <input #fileInput
+           class="file"
            type="file"
            name="files[]"
            id="file"

@@ -29,7 +29,7 @@ export module DefaultImportCalc {
     const RECORDED_IN = 'isRecordedIn';
     const LIES_WITHIN = 'liesWithin';
     const INCLUDES = 'includes';
-    const PARENT = 'parent';
+    const PARENT = 'hasParent';
     const RESOURCE_IDENTIFIER = 'resource.identifier';
     const RESOURCE_ID = 'resource.id';
 

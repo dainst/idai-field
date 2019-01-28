@@ -43,7 +43,7 @@ describe('DefaultImport', () => {
     it('should resolve on success', async done => {
 
         await importFunction([
-            { resource: {type: 'Find', identifier: 'one', relations: { parent: '0'} } } as any],
+            { resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0'} } } as any],
             mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
@@ -56,14 +56,14 @@ describe('DefaultImport', () => {
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
-            documents: [{resource: {identifier: '123', id: '1'}}]
+            documents: [{ resource: { identifier: '123', id: '1' } }]
         }));
 
         const res = await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
              () => '101', true) as any)(
-            [{ resource: {id: '1', relations: undefined } } as any], mockDatastore,'user1');
+            [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).toHaveBeenCalled();
@@ -74,13 +74,15 @@ describe('DefaultImport', () => {
     it('does not overwrite if exists', async done => {
 
         // TODO The test runs without this. Check again how the test works.
-        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: '0', identifier: '0', type: 'Trench' }}));
+        mockDatastore.get.and.returnValue(Promise.resolve(
+            { resource: { id: '0', identifier: '0', type: 'Trench' }})
+        );
 
         await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
             () => '101', false) as any)([
-                { resource: {type: 'Find', identifier: 'one', relations: { parent: '0' } } } as any],
+                { resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0' } } } as any],
                 mockDatastore,'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
@@ -94,7 +96,7 @@ describe('DefaultImport', () => {
         mockDatastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
         const {errors} = await importFunction(
-            [{resource: {type: 'Find', identifier: 'one', relations: {parent: '0'}}} as any],
+            [{ resource: { type: 'Find', identifier: 'one', relations: { hasParent: '0' } } } as any],
             mockDatastore,'user1');
 
         expect(errors[0][0]).toBe('abc');
@@ -107,7 +109,7 @@ describe('DefaultImport', () => {
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
         const {errors} = await importFunction([
-            { resource: { type: 'Nonexisting', identifier: '1a', relations: { parent: '0' } } } as any
+            { resource: { type: 'Nonexisting', identifier: '1a', relations: { hasParent: '0' } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors.length).toBe(1);

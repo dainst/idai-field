@@ -10,6 +10,7 @@ import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 
 /**
@@ -27,6 +28,7 @@ export class DocumentsManager {
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
     private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
+    private childrenCountMap: { [resourceId: string]: number } = {};
 
     private currentQueryId: string;
 
@@ -38,7 +40,8 @@ export class DocumentsManager {
         private remoteChangesStream: RemoteChangesStream,
         private operationTypeDocumentsManager: OperationsManager,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading
+        private loading: Loading,
+        private indexFacade: IndexFacade
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
     }
@@ -47,6 +50,8 @@ export class DocumentsManager {
     public getDocuments = () => this.documents;
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
+
+    public getChildrenCount = (document: IdaiFieldDocument) => this.childrenCountMap[document.resource.id];
 
     public deselectionNotifications = (): Observable<Document> =>
         ObserverUtil.register(this.deselectionObservers);
@@ -164,6 +169,8 @@ export class DocumentsManager {
         this.currentQueryId = new Date().toISOString();
         const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
 
+        await this.updateChildrenCountMap(result.documents);
+
         if (this.loading) this.loading.stop();
         if (result.queryId !== this.currentQueryId) return;
 
@@ -198,6 +205,16 @@ export class DocumentsManager {
                 )
             )
         );
+    }
+
+
+    private async updateChildrenCountMap(documents: Array<IdaiFieldDocument>) {
+
+        for (let document of documents) {
+           this.childrenCountMap[document.resource.id] = this.indexFacade.getCount(
+               'liesWithin:contain', document.resource.id
+           );
+        }
     }
 
 

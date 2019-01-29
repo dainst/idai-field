@@ -50,8 +50,7 @@ export interface ConstraintIndex {
 export module ConstraintIndex {
 
     export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                         typesMap: { [typeName: string]: IdaiType },
-                         showWarnings = true) {
+                         typesMap: { [typeName: string]: IdaiType }, showWarnings: boolean = true) {
 
         const constraintIndex: ConstraintIndex = {
             showWarnings: true,
@@ -74,9 +73,7 @@ export module ConstraintIndex {
     export const clear = (constraintIndex: ConstraintIndex) => setUp(constraintIndex);
 
 
-    export function put(constraintIndex: ConstraintIndex,
-                        doc: Document,
-                        skipRemoval: boolean = false) {
+    export function put(constraintIndex: ConstraintIndex, doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(constraintIndex, doc);
         for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
@@ -85,8 +82,7 @@ export module ConstraintIndex {
     }
 
 
-    export function remove(constraintIndex: ConstraintIndex,
-                           doc: Document) {
+    export function remove(constraintIndex: ConstraintIndex, doc: Document) {
 
         Object.values(constraintIndex.indexDefinitions)
             .map(definition => (getIndex(constraintIndex, definition))[definition.path])
@@ -98,8 +94,7 @@ export module ConstraintIndex {
     }
 
 
-    export function get(constraintIndex: ConstraintIndex,
-                        indexName: string,
+    export function get(constraintIndex: ConstraintIndex, indexName: string,
                         matchTerms: string|string[]): Array<IndexItem> {
 
         const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
@@ -113,6 +108,20 @@ export module ConstraintIndex {
             date: matchedDocuments[id].date,
             identifier: matchedDocuments[id].identifier
         }});
+    }
+
+
+    export function getCount(constraintIndex: ConstraintIndex, indexName: string, matchTerm: string): number {
+
+        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+
+        const indexItems: { [id: string]: IndexItem }|undefined
+            = getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+
+        return indexItems
+            ? Object.keys(indexItems).length
+            : 0;
     }
 
 
@@ -188,7 +197,8 @@ export module ConstraintIndex {
     }
 
 
-    function getIndexItemsForMultipleMatchTerms(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+    function getIndexItemsForMultipleMatchTerms(constraintIndex: ConstraintIndex,
+                                                indexDefinition: IndexDefinition,
                                                 matchTerms: string[]): { [id: string]: IndexItem }|undefined {
 
         const result = matchTerms.map(matchTerm => {
@@ -203,7 +213,8 @@ export module ConstraintIndex {
     }
 
 
-    function getIndexItemsForSingleMatchTerm(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+    function getIndexItemsForSingleMatchTerm(constraintIndex: ConstraintIndex,
+                                             indexDefinition: IndexDefinition,
                                              matchTerm: string): { [id: string]: IndexItem }|undefined {
 
         return getIndex(constraintIndex, indexDefinition)[indexDefinition.path][matchTerm];

@@ -37,6 +37,7 @@ import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastor
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
 
 const remote = require('electron').remote;
 
@@ -104,14 +105,16 @@ const remote = require('electron').remote;
                 datastore: FieldDatastore,
                 changesStream: RemoteChangesStream,
                 resourcesStateManager: ResourcesStateManager,
-                loading: Loading
+                loading: Loading,
+                indexFacade: IndexFacade
             ) {
                 return new ViewFacade(
                     projectConfiguration,
                     datastore,
                     changesStream,
                     resourcesStateManager,
-                    loading
+                    loading,
+                    indexFacade
                 );
             },
             deps: [
@@ -119,7 +122,8 @@ const remote = require('electron').remote;
                 FieldDatastore,
                 RemoteChangesStream,
                 ResourcesStateManager,
-                Loading
+                Loading,
+                IndexFacade
             ]
         },
     ],

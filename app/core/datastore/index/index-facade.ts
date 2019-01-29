@@ -67,6 +67,12 @@ export class IndexFacade {
     }
 
 
+    public getCount(constraintIndexName: string, matchTerm: string): number {
+
+        return ConstraintIndex.getCount(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+
     private static performConstraints(constraintIndex: ConstraintIndex,
                                       constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
 

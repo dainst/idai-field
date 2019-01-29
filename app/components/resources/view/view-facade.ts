@@ -8,6 +8,7 @@ import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {NavigationPath} from './state/navigation-path';
 import {ResourcesState} from './state/resources-state';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 /**
  * Manages an overview of operation type resources
@@ -35,7 +36,8 @@ export class ViewFacade {
         private datastore: FieldReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading
+        private loading: Loading,
+        private indexFacade: IndexFacade
     ) {
         this.operationsManager = new OperationsManager(
             datastore,
@@ -46,7 +48,8 @@ export class ViewFacade {
             remoteChangesStream,
             this.operationsManager,
             resourcesStateManager,
-            loading
+            loading,
+            indexFacade
         );
     }
 
@@ -74,6 +77,8 @@ export class ViewFacade {
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
+
+    public getChildrenCount = (document: IdaiFieldDocument) => this.documentsManager.getChildrenCount(document);
 
     public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 

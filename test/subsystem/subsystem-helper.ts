@@ -1,3 +1,4 @@
+import * as PouchDB from 'pouchdb';
 import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
@@ -20,7 +21,7 @@ import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
-import * as PouchDB from 'pouchdb';
+
 
 class IdGenerator {
     public generateId() {
@@ -116,7 +117,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         idaiFieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
-        undefined
+        undefined,
+        createdIndexFacade
     );
 
     const persistenceManager = new PersistenceManager(

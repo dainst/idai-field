@@ -7,8 +7,8 @@ const messageDictionary = {
         'autoUpdate.available.no': 'Nein',
         'autoUpdate.downloaded.title': 'Update installieren',
         'autoUpdate.downloaded.message.1': 'Version ',
-        'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, um sie zu '
-            + 'installieren.',
+        'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, '
+            + 'um sie zu installieren.',
         'menu.about': 'Über iDAI.field',
         'menu.file': 'Datei',
         'menu.file.exit': 'Beenden',
@@ -35,8 +35,8 @@ const messageDictionary = {
         'autoUpdate.available.no': ' No ',
         'autoUpdate.downloaded.title': 'Install update',
         'autoUpdate.downloaded.message.1': 'Version ',
-        'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the application to' +
-            'install it.',
+        'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the ' +
+            'application to install it.',
         'menu.about': 'About iDAI.field',
         'menu.file': 'File',
         'menu.file.exit': 'Exit',

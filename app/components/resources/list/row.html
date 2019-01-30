@@ -5,15 +5,15 @@
             <i>{{getLabel()}}</i>
        </div>
         <button *ngIf="showMoveIntoOption()"
-                class="hierarchy-button btn float-right align-middle"
+                class="hierarchy-button move-into-button btn float-right align-middle"
                 (click)="moveInto()">
             <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </button>
         <button *ngIf="showJumpToViewOption()"
-                class="hierarchy-button btn float-right align-middle"
+                class="hierarchy-button jump-to-view-button btn float-right align-middle"
                 (click)="jumpToView()">
-            <span class="mdi mdi-arrow-top-right mdi-18px float-right"></span>
+            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
         </button>
     </div>
     <div class="input-field">

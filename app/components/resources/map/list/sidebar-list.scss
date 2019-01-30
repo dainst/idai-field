@@ -60,25 +60,29 @@
       width: 44px;
       color: #868e96;
 
-      .badge {
-        background-color: #8b96a0;
-      }
-
-      &:not(:hover) {
-        padding-left: 0;
-        padding-right: 0;
-
-        .mdi {
-          display: none;
-        }
-      }
-
       &:hover {
         color: darken(#868e96, 10%);
         background-color: darken($list-item-hover-color, 10%);
+      }
 
+      &.move-into-button {
         .badge {
-          display: none;
+          background-color: #8b96a0;
+        }
+
+        &:not(:hover) {
+          padding-left: 0;
+          padding-right: 0;
+
+          .mdi {
+            display: none;
+          }
+        }
+
+        &:hover {
+          .badge {
+            display: none;
+          }
         }
       }
     }

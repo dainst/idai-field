@@ -13,6 +13,7 @@
               class="hierarchy-button btn float-right"
               (click)="moveInto(document); $event.stopPropagation();">
             <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </div>
 
         <div *ngIf="showJumpToViewOption(document)"

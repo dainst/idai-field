@@ -59,10 +59,19 @@
       right: 7px;
       color: #868e96;
 
+      &:not(:hover) {
+        .mdi {
+          display: none;
+        }
+      }
+
       &:hover {
         color: darken(#868e96, 10%);
         background-color: darken($list-item-hover-color, 10%);
-        transition: background-color .65s ease;
+
+        .badge {
+          display: none;
+        }
       }
     }
   }

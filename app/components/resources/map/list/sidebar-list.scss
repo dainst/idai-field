@@ -57,9 +57,13 @@
       position: relative;
       top: 3px;
       right: 7px;
+      width: 44px;
       color: #868e96;
 
       &:not(:hover) {
+        padding-left: 0;
+        padding-right: 0;
+
         .mdi {
           display: none;
         }

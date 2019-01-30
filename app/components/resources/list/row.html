@@ -4,13 +4,12 @@
         <div [class.text-info]="!document.resource.id">
             <i>{{getLabel()}}</i>
        </div>
-
         <button *ngIf="showMoveIntoOption()"
                 class="hierarchy-button btn float-right align-middle"
                 (click)="moveInto()">
-            <span class="mdi mdi-subdirectory-arrow-right mdi-18px float-right"></span>
+            <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </button>
-
         <button *ngIf="showJumpToViewOption()"
                 class="hierarchy-button btn float-right align-middle"
                 (click)="jumpToView()">
@@ -23,7 +22,6 @@
                (blur)="stopEditing(document.resource.identifier)"
                (keyup)="onKeyup($event, document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
-
     </div>
     <div class="input-field">
         <input [(ngModel)]="document.resource.shortDescription"

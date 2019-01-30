@@ -63,6 +63,7 @@
       &:hover {
         color: darken(#868e96, 10%);
         background-color: darken($list-item-hover-color, 10%);
+        transition: background-color .2s ease;
       }
 
       &.move-into-button {
@@ -90,7 +91,7 @@
 
   .list-group-item:hover {
     background-color: darken($list-item-hover-color, 5%);
-    transition: background-color .65s ease;
+    transition: background-color .2s ease;
   }
 
   .selected {

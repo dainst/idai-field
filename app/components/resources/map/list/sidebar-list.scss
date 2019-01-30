@@ -60,6 +60,10 @@
       width: 44px;
       color: #868e96;
 
+      .badge {
+        background-color: #8b96a0;
+      }
+
       &:not(:hover) {
         padding-left: 0;
         padding-right: 0;

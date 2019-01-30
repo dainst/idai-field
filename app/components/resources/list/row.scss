@@ -33,6 +33,10 @@
     background-color: #fff;
     cursor: pointer;
 
+    .badge {
+      background-color: #8b96a0;
+    }
+
     &:not(:hover) {
       padding-left: 0;
       padding-right: 0;

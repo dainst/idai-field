@@ -10,8 +10,17 @@
         [id]="'resource-' + document.resource.identifier">
 
         <div *ngIf="showMoveIntoOption(document)"
-              class="hierarchy-button move-into-button btn float-right"
-              (click)="moveInto(document); $event.stopPropagation();">
+             class="hierarchy-button move-into-button btn float-right"
+             ngbTooltip="Untergeordnete Ressourcen ansehen"
+             i18n-ngbTooltip="@@resources.sidebarList.moveIntoButton.tooltip"
+             placement="left"
+             container="body"
+             triggers="manual"
+             #tooltip="ngbTooltip"
+             (mouseover)="tooltip.open()"
+             (mouseleave)="tooltip.close()"
+             (mousedown)="tooltip.close()"
+             (click)="moveInto(document); $event.stopPropagation();">
             <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </div>

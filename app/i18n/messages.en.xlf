@@ -1716,6 +1716,30 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
+        <source>Untergeordnete Ressourcen ansehen</source>
+        <target state="final">Show child resources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.jumpToView.tooltip" datatype="html">
+        <source>Zur Maßnahme wechseln</source>
+        <target state="final">Switch to operation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.detailSidebar.editMetadata" datatype="html">
         <source>Metadaten bearbeiten</source>
         <target state="final">Edit metadata</target>
@@ -1738,22 +1762,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
           <context context-type="linenumber">81</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.sidebarList.moveIntoButton.tooltip" datatype="html">
-        <source>Untergeordnete Ressourcen ansehen</source>
-        <target state="final">Show child resources</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.sidebarList.jumpToView.tooltip" datatype="html">
-        <source>Zur Maßnahme wechseln</source>
-        <target state="final">Switch to operation</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">

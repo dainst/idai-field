@@ -1756,6 +1756,14 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.sidebarList.jumpToView.tooltip" datatype="html">
+        <source>Zur Maßnahme wechseln</source>
+        <target state="final">Zur Maßnahme wechseln</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
         <source>
         Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
@@ -1771,7 +1779,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.all" datatype="html">

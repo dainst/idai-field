@@ -1030,7 +1030,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
@@ -1186,7 +1186,7 @@
         <target state="final">Duplicate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
@@ -1220,7 +1220,7 @@
         <target state="final">Create multiple instances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.metadata" datatype="html">
@@ -1228,7 +1228,7 @@
         <target state="final">Metadata</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.relations" datatype="html">
@@ -1236,7 +1236,7 @@
         <target state="final">Relations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images" datatype="html">
@@ -1244,7 +1244,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -1252,7 +1252,7 @@
         <target state="final">Conflicts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1264,7 +1264,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1276,7 +1276,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1288,7 +1288,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.delete" datatype="html">
@@ -1300,7 +1300,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -1514,7 +1514,7 @@
         <target state="final">Drag images to the marked area to import them, or click to open a file selection dialog.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
@@ -1755,7 +1755,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.all" datatype="html">

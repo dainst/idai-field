@@ -415,4 +415,25 @@ describe('ConstraintIndexer', () => {
         expect(ConstraintIndex.get(ci, 'field:exist', 'KNOWN'))
             .toEqual([indexItem('1'),indexItem('2')]);
     });
+
+
+    it('get count', () => {
+
+        const docs = [
+            doc('2'),
+            doc('3')
+        ];
+        docs[0].resource.relations['liesWithin'] = ['1'];
+        docs[1].resource.relations['liesWithin'] = ['1'];
+
+        ci = ConstraintIndex.make({
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+        }, typesMap, false);
+
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+
+        expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '1')).toBe(2);
+        expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '2')).toBe(0);
+    });
 });

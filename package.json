@@ -114,7 +114,6 @@
     "@types/rimraf": "2.0.2",
     "@types/showdown": "1.7.5",
     "@types/three": "0.89.2",
-    "archiver": "1.1.0",
     "electron": "2.0.16",
     "electron-builder": "20.28.3",
     "electron-packager": "8.4.0",

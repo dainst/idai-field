@@ -847,7 +847,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_SUCCESS_DUPLICATE] = {
             content: i18n({
                 id: 'messages.docedit.success.duplicate',
-                value: 'Die Ressource wurde erfolgreich dupliziert.'
+                value: 'Die Ressourcen wurde erfolgreich gespeichert.'
             }),
             level: 'success',
             params: [],

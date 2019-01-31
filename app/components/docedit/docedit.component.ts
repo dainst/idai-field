@@ -357,7 +357,7 @@ export class DoceditComponent {
         });
         this.messages.add(operation === 'save'
             ? [M.DOCEDIT_SUCCESS_SAVE]
-            : [M.DOCEDIT_SUCCESS_SAVE]
+            : [M.DOCEDIT_SUCCESS_DUPLICATE]
         );
     }
 

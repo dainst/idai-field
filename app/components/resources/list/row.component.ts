@@ -3,7 +3,7 @@ import {IdaiFieldDocument, IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
@@ -40,7 +40,7 @@ export class RowComponent implements AfterViewInit {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private validator: Validator,
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private navigationService: NavigationService
     ) {}
 
@@ -80,7 +80,8 @@ export class RowComponent implements AfterViewInit {
     private async save() {
 
         try {
-            await this.validator.validate(this.document);
+            await this.validator.assertIdentifierIsUnique(this.document);
+            await this.validator.assertIsRecordedInTargetsExist(this.document);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
             this.restoreIdentifier(this.document);

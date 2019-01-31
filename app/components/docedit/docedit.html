@@ -22,22 +22,44 @@
             </div>
 
             <div>
-                <button *ngIf="documentHolder.clonedDocument && documentHolder.clonedDocument.resource.id
-                            && documentHolder.clonedDocument.resource.type != 'Project'"
-                        id="document-edit-button-delete-document"
-                        class="btn btn-danger pull-right"
-                        [class.disabled]="isLoading()"
-                        (click)="isLoading() || openDeleteModal()">
-                    <span class="mdi mdi-delete"></span>
-                    <span class="button-label" i18n="@@buttons.delete">Löschen</span>
-                </button>
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
                         [class.disabled]="!isChanged() || isLoading()"
-                        (click)="!isChanged() || isLoading() || save(true)">
+                        (click)="!isChanged() || isLoading() || save()">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label" i18n="@@buttons.save">Speichern</span>
                 </button>
+                <div *ngIf="showDropdownButton()"
+                     ngbDropdown placement="bottom-right" class="d-inline-block">
+                    <button id="document-edit-button-dropdown"
+                            class="btn btn-primary"
+                            [class.disabled]="isLoading()"
+                            [disabled]="isLoading()"
+                            ngbDropdownToggle>
+                        <span class="mdi mdi-dots-vertical"></span>
+                    </button>
+                    <div ngbDropdownMenu id="document-edit-dropdown-menu">
+                        <span id="document-edit-button-duplicate-document"
+                              *ngIf="showDuplicateButton()"
+                              class="dropdown-item"
+                              (click)="openDuplicateModal()">
+                            <span class="mdi mdi-expand-all"></span>
+                            <span *ngIf="!documentHolder.clonedDocument.resource.id"
+                                  class="dropdown-entry-label"
+                                  i18n="@@buttons.createMultipleInstances">Mehrfach erstellen</span>
+                            <span *ngIf="documentHolder.clonedDocument.resource.id"
+                                  class="dropdown-entry-label"
+                                  i18n="@@buttons.duplicate">Vervielfältigen</span>
+                        </span>
+                        <span id="document-edit-button-delete-document"
+                              *ngIf="showDeleteButton()"
+                              class="dropdown-item"
+                              (click)="openDeleteModal()">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="dropdown-entry-label" i18n="@@buttons.delete">Löschen</span>
+                        </span>
+                    </div>
+                </div>
                 <button class="btn btn-primary"
                         id="document-edit-button-goto-view"
                         [class.disabled]="isLoading()"
@@ -110,6 +132,14 @@
                 <div id="operation-in-progress-info" class="alert alert-primary">
                     <span *ngIf="operationInProgress === 'save'" i18n="@@docedit.loadingInfo.save">
                         Ressource wird gespeichert...
+                    </span>
+                    <span *ngIf="operationInProgress === 'duplicate' && !documentHolder.clonedDocument.resource.id"
+                          i18n="@@docedit.loadingInfo.createMultipleInstances">
+                        Ressourcen werden erstellt...
+                    </span>
+                    <span *ngIf="operationInProgress === 'duplicate' && documentHolder.clonedDocument.resource.id"
+                          i18n="@@docedit.loadingInfo.duplicate">
+                        Ressource wird vervielfältigt...
                     </span>
                     <span *ngIf="operationInProgress === 'delete'" i18n="@@docedit.loadingInfo.delete">
                         Ressource wird gelöscht...

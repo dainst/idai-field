@@ -121,14 +121,8 @@
     "Drilling": {
       "label": "Drilling",
       "fields": {
-        "date": {
-          "label": "Date"
-        },
         "description": {
           "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "dimensionDiameter": {
           "label": "Diameter"

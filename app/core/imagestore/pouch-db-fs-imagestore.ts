@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {Converter} from './converter';
-import {Imagestore} from './imagestore';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
@@ -232,7 +231,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
     }
 
     
-    private readOriginal(key: string): /*Promise<ArrayBuffer>TODO*/ Promise<any> {
+    private readOriginal(key: string): Promise<any> {
 
         let path = this.projectPath + key;
         return new Promise((resolve, reject) => {

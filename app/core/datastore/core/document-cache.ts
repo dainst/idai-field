@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2';
 
 
@@ -11,7 +11,7 @@ export class DocumentCache<T extends Document> {
     protected _: { [resourceId: string]: T } = { };
 
 
-    public set(doc: T) {
+    public set(doc: T): T {
 
         return this._[doc.resource.id as any] = doc;
     }

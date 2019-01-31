@@ -5,8 +5,9 @@
                class="form-control"
                [class.small-search-input]="extendedSearch"
                [(ngModel)]="q"
-               (keyup)="onKeyUp()"
-               (focus)="showSuggestions()"
+               (keyup)="onKeyUp($event)"
+               (focus)="focused = true; showSuggestions();"
+               (blur)="focused = false"
                name="searchInput"
                type="text"
                placeholder="Suchen..."
@@ -16,9 +17,9 @@
         </search-suggestions>
     </span>
 
-    <search-constraints *ngIf="extendedSearch"
-                        [type]="isTypeSelected() ? types[0] : undefined">
-    </search-constraints>
+    <resources-search-constraints *ngIf="extendedSearch"
+                                  [type]="getSelectedType()">
+    </resources-search-constraints>
 
     <div *ngIf="showFiltersMenu" id="filter-button">
         <button id="searchfilter"

@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h5 *ngIf="newDocument" class="modal-title"
+        i18n="@@docedit.duplicateModal.header.createMultipleInstances">Ressource mehrfach erstellen</h5>
+    <h5 *ngIf="!newDocument" class="modal-title"
+        i18n="@@docedit.duplicateModal.header.duplicate">Ressource vervielfältigen</h5>
+</div>
+
+<div class="modal-body">
+    <div id="duplicate-info">
+        <span *ngIf="newDocument" i18n="@@docedit.duplicateModal.info.createMultipleTimes">
+              Wie viele Ressourcen möchten Sie anlegen?
+        </span>
+        <span *ngIf="!newDocument" i18n="@@docedit.duplicateModal.info.duplicate">
+            Wie viele Kopien der Ressource möchten Sie anlegen?
+        </span>
+    </div>
+    <div class="input-group">
+        <input id="duplicate-input"
+               type="number" min="{{getMinNumberOfDuplicates()}}" max="{{getMaxNumberOfDuplicates()}}"
+               value="{{getMinNumberOfDuplicates()}}"
+               class="form-control"
+               [(ngModel)]="numberOfDuplicates"
+               (keydown)="$event.key !== 'Enter' || confirmDuplication()" />
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="duplicate-confirm" class="btn btn-success" type="button"
+            [ngClass]="{ 'disabled': !validateNumberOfDuplicates() }"
+            (click)="confirmDuplication()">
+        <span class="mdi mdi-content-save"></span>
+        <span *ngIf="newDocument" class="button-label"
+              i18n="@@buttons.createResources">Ressourcen erstellen</span>
+        <span *ngIf="!newDocument" class="button-label"
+              i18n="@@buttons.saveResources">Ressourcen speichern</span>
+    </button>
+    <button type="button" id="duplicate-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

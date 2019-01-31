@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild,
+    ElementRef} from '@angular/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 
 
@@ -36,6 +37,9 @@ export class SearchBarComponent implements OnChanges {
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
     @ViewChild('p') protected popover: any;
+    @ViewChild('searchInput') fulltextSearchInput: ElementRef;
+
+    public focused: boolean = false;
 
     protected filterOptions: Array<IdaiType> = [];
 
@@ -72,7 +76,11 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public onKeyUp() {
+    public onKeyUp(event: KeyboardEvent) {
+
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Escape'].includes(event.key)) {
+            return;
+        }
 
         if (this.emitQueryTimeout) clearTimeout(this.emitQueryTimeout);
 
@@ -80,6 +88,12 @@ export class SearchBarComponent implements OnChanges {
             this.emitQueryTimeout = undefined;
             this.onQueryStringChanged.emit(this.q);
         }, 200);
+    }
+
+
+    public blur() {
+
+        this.fulltextSearchInput.nativeElement.blur();
     }
 
 

@@ -7,6 +7,9 @@ import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
 
 
+type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string, shortened: boolean } };
+
+
 @Component({
     moduleId: module.id,
     selector: 'navigation',
@@ -19,6 +22,9 @@ import {Loading} from '../../../widgets/loading';
 export class NavigationComponent {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
+    public labels: NavigationButtonLabelMap = {};
+
+    private static maxTotalLabelCharacters: number = 40;
 
 
     constructor(
@@ -29,15 +35,20 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
+            this.labels = NavigationComponent.getLabels(this.navigationPath);
         });
     }
 
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+    public getOperationButtonLabel = (document: IdaiFieldDocument) => ModelUtil.getDocumentLabel(document);
+
+    public getNavigationButtonLabel = (id: string) => this.labels[id];
 
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
+
+    public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 
 
     public getTypeName() {
@@ -114,5 +125,66 @@ export class NavigationComponent {
         if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument
             this.viewFacade.setActiveDocumentViewTab(undefined);
         }
+    }
+
+
+    private static getLabels(navigationPath: NavigationPath): NavigationButtonLabelMap {
+
+        const labels: NavigationButtonLabelMap = {};
+
+        navigationPath.segments.forEach(segment => {
+            labels[segment.document.resource.id] = {
+                text: segment.document.resource.identifier,
+                fullText: segment.document.resource.identifier,
+                shortened: false
+            };
+        });
+
+        NavigationComponent.shortenLabelsIfNecessary(labels, navigationPath.selectedSegmentId);
+
+        return labels;
+    }
+
+
+    private static shortenLabelsIfNecessary(labels: NavigationButtonLabelMap,
+                                            selectedSegmentId: string|undefined) {
+
+        const totalCharacters: number = this.getTotalLabelCharacterCount(labels);
+
+        if (totalCharacters > this.maxTotalLabelCharacters) {
+            const maxSingleLabelCharacters: number
+                = this.computeMaxSingleLabelCharacters(labels, selectedSegmentId);
+
+            Object.keys(labels).forEach(id => {
+                if (labels[id].text.length > maxSingleLabelCharacters && id !== selectedSegmentId) {
+                    labels[id].text = labels[id].text.substring(
+                        0, Math.max(0, maxSingleLabelCharacters - 3)
+                    ) + '...';
+                    labels[id].shortened = true;
+                }
+            })
+        }
+    }
+
+
+    private static getTotalLabelCharacterCount(labels: NavigationButtonLabelMap): number {
+
+        let result: number = 0;
+        Object.values(labels).forEach(label => result += label.text.length);
+
+        return result;
+    }
+
+
+    private static computeMaxSingleLabelCharacters(labels: NavigationButtonLabelMap,
+                                                   selectedSegmentId: string|undefined): number {
+
+        let maxSingleLabelCharacters: number
+            = this.maxTotalLabelCharacters - (selectedSegmentId ? labels[selectedSegmentId].text.length : 0);
+
+        const labelCount: number = Object.keys(labels).length;
+        if (labelCount > 1) maxSingleLabelCharacters /= selectedSegmentId ? labelCount - 1 : labelCount;
+
+        return maxSingleLabelCharacters;
     }
 }

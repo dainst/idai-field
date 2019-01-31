@@ -146,14 +146,8 @@
     "Drilling": {
       "label": "Bohrung",
       "fields": {
-        "date": {
-          "label": "Datum"
-        },
         "description": {
           "label": "Beschreibung"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin"
         },
         "dimensionDiameter": {
           "label": "Durchmesser"

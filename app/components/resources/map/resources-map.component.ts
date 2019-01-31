@@ -7,12 +7,16 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
+import {DoceditLauncher} from '../service/docedit-launcher';
 
 
 @Component({
     selector: 'resources-map',
     moduleId: module.id,
-    templateUrl: './resources-map.html'
+    templateUrl: './resources-map.html',
+    host: {
+        '(window:keydown)': '(onKeyDown($event))'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -34,7 +38,8 @@ export class ResourcesMapComponent {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private settingsService: SettingsService,
-        private messages: Messages
+        private messages: Messages,
+        private doceditLauncher: DoceditLauncher
     ) {
         this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
 
@@ -53,12 +58,24 @@ export class ResourcesMapComponent {
         .map(_ => _.resource.id).join(',');
 
 
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && !this.doceditLauncher.isDoceditModalOpened) {
+            if (this.resourcesComponent.isEditingGeometry) {
+                await this.quitEditing(undefined);
+            } else {
+                this.viewFacade.deselect();
+            }
+        }
+    }
+
+
     public async select(document: IdaiFieldDocument|undefined) {
 
         this.resourcesComponent.setScrollTarget(document);
 
         if (document) {
-            await this.viewFacade.setSelectedDocument(document.resource.id);
+            await this.viewFacade.setSelectedDocument(document.resource.id, false);
         } else {
             this.viewFacade.deselect();
         }
@@ -70,7 +87,7 @@ export class ResourcesMapComponent {
      *   <code>null</code> indicates geometry should get deleted.
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: IdaiFieldGeometry) {
+    public async quitEditing(geometry: IdaiFieldGeometry|undefined) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;

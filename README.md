@@ -1,4 +1,4 @@
-# iDAI.field
+# iDAI.field 
 
 ![idai-field](img/README-1.png) 
    
@@ -33,8 +33,15 @@ $ npm run build
 $ npm start
 ```
 
-`npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the electron app. For a fast development workflow it is recommended to set up your IDE to compile the typescript files continuously while you are 
+`npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the Electron app. For a fast development workflow it is recommended to set up your IDE to compile the typescript files continuously while you are 
  working on the sources. That way you can just hit reload to see changes made to the *.ts* or *.html* files.
+ 
+Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
+```
+$ npm run build-java
+```
+You can also call `npm run build-all` to build everything in one step. 
+
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
@@ -75,6 +82,6 @@ to extract the package. In that case, please use a different archiver, for examp
 
 When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build Windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
 
-Note that creating **Linux** packages should be possible with electron, but this is yet untested and not enabled.
+Note that creating **Linux** packages should be possible with Electron, but this is yet untested and not enabled.
 
 

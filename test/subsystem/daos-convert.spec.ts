@@ -63,7 +63,7 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // create
 
-    it('IdaiFieldDocumentDatastore - add relations with create', async done => {
+    it('FieldDatastore - add relations with create', async done => {
 
         try {
             expect((await _idaiFieldImageDocumentDatastore.
@@ -76,7 +76,7 @@ describe('DAOs/Convert/Subsystem', () => {
     });
 
 
-    it('IdaiFieldDocumentDatastore - add relations with create', async done => {
+    it('FieldDatastore - add relations with create', async done => {
 
         try {
             expect((await _idaiFieldDocumentDatastore.
@@ -105,7 +105,7 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // update
 
-    it('IdaiFieldImageDocumentDatastore - add relations with update', async done => {
+    it('ImageDatastore - add relations with update', async done => {
 
         delete image0.resource.relations.depicts;
         expect((await _idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
@@ -113,7 +113,7 @@ describe('DAOs/Convert/Subsystem', () => {
     });
 
 
-    it('IdaiFieldDocumentDatastore - add relations with update', async done => {
+    it('FieldDatastore - add relations with update', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
         expect((await _idaiFieldDocumentDatastore.

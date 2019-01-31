@@ -6,8 +6,15 @@ import {Document} from 'idai-components-2';
 @Component({
     selector: 'delete-modal',
     moduleId: module.id,
-    templateUrl: './delete-modal.html'
+    templateUrl: './delete-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
+
+/**
+ * @author Thomas Kleinke
+ */
 export class DeleteModalComponent {
 
     public document: any;
@@ -21,4 +28,18 @@ export class DeleteModalComponent {
     public setDocument = (document: Document) => this.document = document;
 
     public setCount = (count: number) => this.isRecordedInResourcesCount = count;
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public confirmDeletion() {
+
+        if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
+
+        this.activeModal.close('delete');
+    }
 }

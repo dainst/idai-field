@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
+import {arrayEquivalent, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {arrayEquivalent, isArray, isNot, isUndefinedOrEmpty, mapTo, on} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
@@ -46,12 +46,9 @@ export class PersistenceManager {
      * @returns a copy of the updated document
      * @throws msgWithParams
      */
-    public async persist(
-        document: NewDocument|Document,
-        username: string,
-        oldVersion: Document = document as Document,
-        revisionsToSquash: Document[] = [],
-        ): Promise<Document> {
+    public async persist(document: NewDocument|Document, username: string,
+                         oldVersion: Document = document as Document,
+                         revisionsToSquash: Document[] = []): Promise<Document> {
 
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash, username);
@@ -84,12 +81,11 @@ export class PersistenceManager {
     }
 
 
-    private async updateWithConnections(document: Document,
-                        oldVersion: Document,
-                        revisionsToSquash: Array<Document>,
-                        username: string) {
+    private async updateWithConnections(document: Document, oldVersion: Document,
+                                        revisionsToSquash: Array<Document>, username: string) {
 
-        const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
+        const revs = revisionsToSquash.map(to('_rev')).filter(isDefined);
+        const updated = await this.persistIt(document, username, revs);
 
         await this.connectedDocsWriter.update(
             updated, [oldVersion].concat(revisionsToSquash), username);
@@ -148,7 +144,8 @@ export class PersistenceManager {
     }
 
 
-    private persistIt(document: Document|NewDocument, username: string, squashRevisionIds: string[]): Promise<Document> {
+    private persistIt(document: Document|NewDocument, username: string,
+                      squashRevisionIds: string[]): Promise<Document> {
 
         return document.resource.id
             ? this.datastore.update(

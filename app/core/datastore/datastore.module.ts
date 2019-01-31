@@ -4,20 +4,20 @@ import {IdaiFieldDocument} from 'idai-components-2';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
-import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
-import {IdaiFieldDocumentReadDatastore} from './field/idai-field-document-read-datastore';
-import {IdaiFieldImageDocumentDatastore} from './field/idai-field-image-document-datastore';
-import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-document-read-datastore';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {FieldDatastore} from './field/field-datastore';
+import {FieldReadDatastore} from './field/field-read-datastore';
+import {ImageDatastore} from './field/image-datastore';
+import {IdaiFieldImageDocument} from 'idai-components-2';
+import {ImageReadDatastore} from './field/image-read-datastore';
 import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
-import {IdaiFieldTypeConverter} from './field/idai-field-type-converter';
+import {FieldTypeConverter} from './field/field-type-converter.service';
 import {RemoteChangesStream} from './core/remote-changes-stream';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
-import {IdaiFieldFeatureDocumentDatastore} from './field/idai-field-feature-document-datastore';
-import {IdaiFieldFeatureDocumentReadDatastore} from './field/idai-field-feature-document-read-datastore';
+import {FeatureDatastore} from './field/feature-datastore';
+import {FeatureReadDatastore} from './field/feature-read-datastore';
 import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {IdaiField3DDocumentDatastore} from './idai-field-3d-document-datastore';
 import {IdaiField3DDocument} from '../model/idai-field-3d-document';
@@ -36,7 +36,7 @@ import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-r
     providers: [
         RemoteChangesStream,
         PouchdbManager,
-        { provide: TypeConverter, useClass: IdaiFieldTypeConverter },
+        { provide: TypeConverter, useClass: FieldTypeConverter },
         DocumentCache,
         IdGenerator,
         {
@@ -61,7 +61,7 @@ import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-r
 
         // NOTE: When choosing a datastore instance one should always try to use the most
         // specific instance. For example if you need read acces to only IdaiFieldImageDocuments,
-        // choose IdaiFieldImageDocumentReadDatastore. Avoid using Datastore and ReadDatastore.
+        // choose ImageReadDatastore. Avoid using Datastore and ReadDatastore.
         // They are for components-2 internal use.
 
 
@@ -90,17 +90,17 @@ import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-r
         // guarantees that identifier, liesWithin, isRecordedIn constraints are available
         // provides caching
         {
-            provide: IdaiFieldDocumentDatastore,
+            provide: FieldDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldDocument>,
                                  documentConverter: TypeConverter<IdaiFieldDocument>
-            ): IdaiFieldDocumentDatastore {
-                return new IdaiFieldDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            ): FieldDatastore {
+                return new FieldDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
-        { provide: IdaiFieldDocumentReadDatastore, useExisting: IdaiFieldDocumentDatastore }, // read-only version of it
+        { provide: FieldReadDatastore, useExisting: FieldDatastore }, // read-only version of it
 
 
         // idai-field datastore
@@ -108,17 +108,17 @@ import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-r
         // guarantees that identifier constraint is available
         // provides caching
         {
-            provide: IdaiFieldImageDocumentDatastore,
+            provide: ImageDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldImageDocument>,
                                  documentConverter: TypeConverter<IdaiFieldImageDocument>,
-            ): IdaiFieldImageDocumentDatastore {
-                return new IdaiFieldImageDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            ): ImageDatastore {
+                return new ImageDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
-        { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
+        { provide: ImageReadDatastore, useExisting: ImageDatastore }, // read-only version of it
 
         {
             provide: IdaiField3DDocumentDatastore,
@@ -151,17 +151,17 @@ import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-r
         // guarantees that identifier constraint is available
         // provides caching
         {
-            provide: IdaiFieldFeatureDocumentDatastore,
+            provide: FeatureDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldFeatureDocument>,
                                  documentConverter: TypeConverter<IdaiFieldFeatureDocument>,
-            ): IdaiFieldFeatureDocumentDatastore {
-                return new IdaiFieldFeatureDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            ): FeatureDatastore {
+                return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
-        { provide: IdaiFieldFeatureDocumentReadDatastore, useExisting: IdaiFieldFeatureDocumentDatastore }, // read-only version of it
+        { provide: FeatureReadDatastore, useExisting: FeatureDatastore }, // read-only version of it
     ]
 })
 

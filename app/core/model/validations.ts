@@ -1,13 +1,127 @@
 import {on} from 'tsfun';
-import {FieldDefinition, ProjectConfiguration, RelationDefinition, Resource, NewResource} from 'idai-components-2';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../core/util/number-util';
+import {FieldDefinition, IdaiFieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
+    Resource, NewDocument, Document} from 'idai-components-2';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
+import {ValidationErrors} from './validation-errors';
+
 
 export module Validations {
 
-    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
+    /**
+     * @throws [INVALID_NUMERICAL_VALUES]
+     */
+    export function assertCorrectnessOfNumericalValues(document: Document|NewDocument,
+                                                       projectConfiguration: ProjectConfiguration,
+                                                       allowStrings: boolean = true) {
+
+        const invalidFields: string[] = Validations.validateNumericValues(
+            document.resource,
+            projectConfiguration,
+            allowStrings ? validateNumberAsString : validateNumber,
+            ['unsignedInt', 'float', 'unsignedFloat']
+        );
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_NUMERICAL_VALUES,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
+     * @throws [INVALID_DECIMAL_SEPARATORS]
+     */
+    export function assertUsageOfDotAsDecimalSeparator(document: Document|NewDocument,
+                                                       projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateNumericValues(
+            document.resource,
+            projectConfiguration,
+            validateDecimalSeparator,
+            ['float', 'unsignedFloat']
+        );
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_DECIMAL_SEPARATORS,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
+     * @throws [MISSING_PROPERTY]
+     */
+    export function assertNoFieldsMissing(document: Document|NewDocument,
+                                          projectConfiguration: ProjectConfiguration): void {
+
+        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+
+        if (missingProperties.length > 0) {
+            throw [
+                ValidationErrors.MISSING_PROPERTY,
+                document.resource.type,
+                missingProperties.join(', ')
+            ];
+        }
+    }
+
+
+    export function validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
+
+        if (!geometry) return null;
+
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
+
+        switch(geometry.type) {
+            case 'Point':
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
+            case 'LineString':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
+                }
+                break;
+            case 'MultiLineString':
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
+                }
+                break;
+            case 'Polygon':
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
+                }
+                break;
+            case 'MultiPolygon':
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
+                }
+                break;
+            default:
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        }
+
+        return null;
+    }
+
+
+    export function getMissingProperties(resource: Resource|NewResource,
+                                         projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
-        const fieldDefinitions: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
+        const fieldDefinitions: Array<FieldDefinition>
+            = projectConfiguration.getFieldDefinitions(resource.type);
 
         for (let fieldDefinition of fieldDefinitions) {
             if (projectConfiguration.isMandatory(resource.type, fieldDefinition.name)) {
@@ -26,7 +140,8 @@ export module Validations {
      * @param projectConfiguration
      * @returns {boolean} true if the type of the resource is valid, otherwise false
      */
-    export function validateType(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): boolean {
+    export function validateType(resource: Resource|NewResource,
+                                 projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.type) return false;
         return projectConfiguration
@@ -35,7 +150,11 @@ export module Validations {
     }
 
 
-    export function validateFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): Array<string> {
+    /**
+     * @returns the names of invalid fields if one or more of the fields are invalid
+     */
+    export function validateDefinedFields(resource: Resource|NewResource,
+                                          projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
@@ -59,7 +178,7 @@ export module Validations {
             }
         }
 
-        if (projectConfiguration.getFieldDefinitions(resource.type) // TODO unit test this
+        if (projectConfiguration.getFieldDefinitions(resource.type)
                 .find(fd => fd.name === 'dating')) {
             invalidFields = invalidFields
                 .filter(_ => _ !== 'period' && _!== 'periodEnd');
@@ -69,10 +188,10 @@ export module Validations {
 
 
     /**
-     * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
-     * <code>undefined</code>
+     * @returns the names of invalid relation fields if one or more of the fields are invalid
      */
-    export function validateRelations(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateDefinedRelations(resource: Resource|NewResource,
+                                             projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
         const invalidFields: Array<any> = [];
@@ -96,10 +215,12 @@ export module Validations {
     }
 
 
-    export function validateNumericValues(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[]|undefined {
+    export function validateNumericValues(resource: Resource|NewResource,
+                                          projectConfiguration: ProjectConfiguration,
+                                          validationFunction: (value: string, inputType: string) => boolean,
+                                          numericInputTypes: string[]): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
@@ -108,16 +229,18 @@ export module Validations {
             let value = resource[fieldDefinition.name];
 
             if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
-                    && !validateNumber(value, fieldDefinition.inputType as string)) {
+                    && !validationFunction(value, fieldDefinition.inputType as string)) {
                 invalidFields.push(fieldDefinition.name);
             }
         });
 
-        return (invalidFields.length > 0) ? invalidFields : undefined;
+        return invalidFields;
     }
 
 
-    function validateNumber(value: string, inputType: string): boolean {
+    function validateNumberAsString(value: string|number, inputType: string): boolean {
+
+        if (typeof value === 'number') value = value.toString();
 
         switch(inputType) {
             case 'unsignedInt':
@@ -129,6 +252,20 @@ export module Validations {
             default:
                 return false;
         }
+    }
+
+
+    function validateNumber(value: string|number, inputType: string): boolean {
+
+        if (typeof value !== 'number') return false;
+
+        return validateNumberAsString(value, inputType);
+    }
+
+
+    function validateDecimalSeparator(value: string|number): boolean {
+
+        return typeof value === 'number' || !value.includes(',');
     }
 
 

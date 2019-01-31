@@ -1,5 +1,5 @@
-import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
 import {DatastoreErrors, Document} from 'idai-components-2';
+import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
 import {Static} from '../../../static';
 
 
@@ -18,12 +18,17 @@ describe('PouchdbDatastore', () => {
     beforeEach(() => {
 
         let idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
-        idGenerator.generateId.and.returnValue(1);
+        idGenerator.generateId.and.returnValues(1, 2);
 
-        pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put', 'remove']);
+        pouchdbProxy = jasmine.createSpyObj('pouchdbProxy',
+            ['get', 'put', 'bulkDocs', 'remove', 'allDocs']);
         pouchdbProxy.put.and.callFake(async doc => res = doc);
         pouchdbProxy.get.and.callFake(async () => res);
         pouchdbProxy.remove.and.returnValue(Promise.resolve(undefined));
+        pouchdbProxy.bulkDocs.and.callFake(async documents => res = documents);
+        pouchdbProxy.allDocs.and.callFake(() => Promise.resolve({
+            rows: res ? res.map(document => { return { doc: document }; }) : []
+        }));
 
         datastore = new PouchdbDatastore(
             pouchdbProxy,
@@ -64,7 +69,7 @@ describe('PouchdbDatastore', () => {
         docToCreate.resource.id = 'a1';
 
         await datastore.create(docToCreate, 'u');
-        // this step was added to adress a problem where a document
+        // this step was added to address a problem where a document
         // with an existing resource.id was stored but could not
         // get refreshed later
         await datastore.fetch(docToCreate.resource.id);
@@ -79,7 +84,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('create: should not create a document with the resource.id of an alredy existing doc', async done => {
+    it('create: should not create a document with the resource.id of an already existing doc', async done => {
 
         const docToCreate1: Document = Static.doc('sd1');
         docToCreate1.resource.id = 'a1';
@@ -107,6 +112,39 @@ describe('PouchdbDatastore', () => {
         expect(result.created.date instanceof Date).toBeTruthy();
         expect(Array.isArray(result.modified)).toBeTruthy();
         expect(result.modified.length).toBe(0);
+        done();
+    });
+
+
+    it('bulkCreate: create ids', async done => {
+
+        try {
+            const result = await datastore.bulkCreate(
+                [Static.doc('sd1'), Static.doc('sd2')], 'u'
+            );
+            expect(result[0].resource.id).toBe(1 as any);
+            expect(result[1].resource.id).toBe(2 as any);
+        } catch (e) {
+            fail(e);
+        }
+        done();
+    });
+
+
+    it('bulkCreate: should not create a document with the resource.id of an already existing doc', async done => {
+
+        const docToCreate1: Document = Static.doc('sd1');
+        docToCreate1.resource.id = 'a1';
+        const docToCreate2: Document = Static.doc('sd1');
+        docToCreate2.resource.id = 'a1';
+
+        try {
+            await datastore.bulkCreate([docToCreate1], 'u');
+            await datastore.bulkCreate([docToCreate2], 'u');
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS);
+        }
         done();
     });
 
@@ -242,6 +280,18 @@ describe('PouchdbDatastore', () => {
         expect(result.modified.length).toBe(1);
         expect(result.modified[0].user).toEqual('u');
         expect(result.modified[0].date instanceof Date).toBeTruthy();
+        done();
+    });
+
+
+    it('bulkUpdate: should not update if resource id not present', async done => {
+
+        try {
+            await datastore.bulkUpdate([Static.doc('sd1')], 'u');
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+        }
         done();
     });
 

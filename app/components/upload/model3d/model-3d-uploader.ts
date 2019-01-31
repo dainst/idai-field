@@ -17,7 +17,7 @@ import {Model3DStore} from '../../core-3d/model-3d-store';
  */
 export class Model3DUploader extends Uploader {
 
-    public static supportedFileTypes: Array<string> = ['dae'];
+    public static readonly supportedFileTypes: Array<string> = ['dae'];
 
 
     public constructor(

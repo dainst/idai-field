@@ -5,9 +5,18 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'conflict-deleted-modal',
     moduleId: module.id,
-    templateUrl: './conflict-deleted-modal.html'
+    templateUrl: './conflict-deleted-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+    }
 })
 export class ConflictDeletedModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
 }

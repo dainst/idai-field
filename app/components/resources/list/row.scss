@@ -28,14 +28,43 @@
     top: -2px;
     right: -1px;
     padding: 2px 2px 2px 4px;
+    width: 44px;
+    height: 33px;
     color: #868e96;
     background-color: #fff;
     cursor: pointer;
 
     &:hover {
       color: darken(#868e96, 5%);
-      background-color: darken(#fff, 5%);
-      transition: background-color .4s ease;
+      background-color: darken($list-item-hover-color, 5%);
+    }
+
+    &.move-into-button {
+      .badge {
+        background-color: #8b96a0;
+      }
+
+      &:not(:hover) {
+        padding-left: 0;
+        padding-right: 0;
+
+        .mdi {
+          display: none;
+        }
+      }
+
+      &:hover {
+        .badge {
+          display: none;
+        }
+      }
+    }
+
+    &.jump-to-view-button {
+      .mdi {
+        position: relative;
+        right: 1px;
+      }
     }
   }
 

@@ -133,6 +133,103 @@
       }
     }
   },
+  "Bone": {
+    "fields": {
+      "sex":{
+        "inputType": "radio",
+        "valuelist": [
+          "Männlich",
+          "Weiblich",
+          "Männlich oder Kastrat"
+        ]
+      },
+      "boneClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Atlas",
+          "Axis (Epistropheus)",
+          "Calcaneus",
+          "Carpale",
+          "Carpale II+III",
+          "Carpometacarpus",
+          "Centroquartale",
+          "Clavicula",
+          "Coracoid",
+          "Costa",
+          "Coxa",
+          "Cranium",
+          "Dens inferior",
+          "Dens superior",
+          "Dens superior/inferior",
+          "Femur",
+          "Fibula",
+          "Humerus",
+          "indet.",
+          "Mandibula",
+          "Metacarpus II",
+          "Metacarpus III",
+          "Metacarpus III+IV",
+          "Metacarpus IV",
+          "Metapodium",
+          "Metapodium Hauptstrahl",
+          "Metapodium III+IV",
+          "Metapodium Nebenstrahl",
+          "Metatarsus Hauptstrahl",
+          "Metatarsus II",
+          "Metatarsus III",
+          "Metatarsus III+IV",
+          "Metatarsus indet. Nebenstrahl",
+          "Metatarsus IV",
+          "Metatarsus V",
+          "Os carpi intermedium",
+          "Os carpi radiale",
+          "Os carpi ulnare",
+          "Os hyoideum",
+          "Os tarsi centrale (Os naviculare)",
+          "Patella",
+          "Phalanx 1 ant./post.",
+          "Phalanx 1 Hauptstrahl",
+          "Phalanx 1 Nebenstrahl",
+          "Phalanx 1 post.",
+          "Phalanx 2 ant.",
+          "Phalanx 2 ant./post.",
+          "Phalanx 2 post.",
+          "Phalanx 3 ant.",
+          "Phalanx 3 ant./post.",
+          "Phalanx 3 Hauptstrahl",
+          "Phalanx 3 post.",
+          "Processus cornualis",
+          "Pygale",
+          "Radius",
+          "Radius+Ulna (verwachsen)",
+          "Sacrum/Synsacrum",
+          "Scapula",
+          "Schneckenhaus (Gastropoda)",
+          "Sesamoid",
+          "Talus (Astragalus)",
+          "Tarsale",
+          "Tarsale II+III",
+          "Tarsometatarsus",
+          "Tibia/Tibiotarsus",
+          "Tibia+Fibula (verwachsen)",
+          "Ulna",
+          "Vertebra",
+          "Vertebra caudalis",
+          "Vertebra cervicalis",
+          "Vertebra lumbalis",
+          "Vertebra thoracica",
+          "Vertebra thoracica 1",
+          "Vertebra thoracica 2",
+          "Vertebra thoracica 3",
+          "Vertebra thoracica 4",
+          "Vertebra thoracica 5",
+          "Vertebra thoracica 6",
+          "Vertebra thoracica 7",
+          "Vertebra thoracica 8"
+        ]
+      }
+    }
+  },
   "Wall_surface": {
     "fields": {
       "area": {
@@ -457,14 +554,8 @@
   },
   "Drilling": {
     "fields": {
-      "date": {
-        "inputType": "date"
-      },
       "description": {
         "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "dimensionDiameter": {
         "inputType": "dimension",

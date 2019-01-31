@@ -367,7 +367,7 @@
         <target state="final">Quelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -375,7 +375,7 @@
         <target state="final">Datei</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
@@ -383,7 +383,7 @@
         <target state="final">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -391,7 +391,7 @@
         <target state="final">Pfad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -399,7 +399,7 @@
         <target state="final">Datei auswählen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -407,7 +407,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format" datatype="html">
@@ -415,7 +415,7 @@
         <target state="final">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.native" datatype="html">
@@ -423,7 +423,7 @@
         <target state="final">iDAI.field – JSONL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.iDig" datatype="html">
@@ -431,15 +431,23 @@
         <target state="final">iDig (experimentell) – CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.geoJson" datatype="html">
-        <source>GeoJSON – JSONL</source>
-        <target state="final">GeoJSON – JSONL</target>
+        <source>GeoJSON</source>
+        <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.shapefile" datatype="html">
+        <source>Shapefile</source>
+        <target state="final">Shapefile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.meninx" datatype="html">
@@ -447,7 +455,7 @@
         <target state="final">Meninx/Funde (experimentell) – CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -459,29 +467,59 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.info" datatype="html">
         <source>
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
         <target state="final">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.relationsLabel" datatype="html">
+        <source>
+                            Relationen überschreiben
+                        </source>
+        <target state="final">
+                            Relationen überschreiben
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
+        <source>
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                    </source>
+        <target state="final">
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -489,7 +527,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -497,23 +535,163 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.geoJson.info" datatype="html">
+      <trans-unit id="import.geojson.info" datatype="html">
         <source>
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                        Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </source>
         <target state="final">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                        Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.shapefile.javaWarning" datatype="html">
+        <source>
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </source>
+        <target state="final">
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.shapefile.info" datatype="html">
+        <source>
+                        Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet
+                        werden können, werden ignoriert.
+                    </source>
+        <target state="final">
+                        Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet
+                        werden können, werden ignoriert.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.modal.info" datatype="html">
+        <source>Daten werden exportiert...</source>
+        <target state="final">Daten werden exportiert...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export-modal.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.startExport" datatype="html">
+        <source>Export starten</source>
+        <target state="final">Export starten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.operationSelect.label" datatype="html">
+        <source>Maßnahme</source>
+        <target state="final">Maßnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.operationSelect.all" datatype="html">
+        <source>Alle Maßnahmen</source>
+        <target state="final">Alle Maßnahmen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.format" datatype="html">
+        <source>Format</source>
+        <target state="final">Format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.formats.geojson" datatype="html">
+        <source>GeoJSON</source>
+        <target state="final">GeoJSON</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.formats.shapefile" datatype="html">
+        <source>Shapefile</source>
+        <target state="final">Shapefile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.geojson.info" datatype="html">
+        <source>
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressourcen.
+                    </source>
+        <target state="final">
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressourcen.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.javaWarning" datatype="html">
+        <source>
+                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </source>
+        <target state="final">
+                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.info" datatype="html">
+        <source>
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressourcen.
+                    </source>
+        <target state="final">
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressourcen.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -539,7 +717,7 @@
                         gesicherten Zwischenstand wiederherzustellen.
                         <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                        in dem unter<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
+                        in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
                     </source>
         <target state="final">
                         Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
@@ -547,7 +725,7 @@
                         gesicherten Zwischenstand wiederherzustellen.
                         <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                        in dem unter<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
+                        in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-creation.html</context>
@@ -694,12 +872,20 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.export" datatype="html">
+        <source>Export</source>
+        <target state="final">Export</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.createBackup" datatype="html">
         <source>Backup erstellen</source>
         <target state="final">Backup erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.restoreBackup" datatype="html">
@@ -707,7 +893,7 @@
         <target state="final">Backup einlesen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.settings" datatype="html">
@@ -715,7 +901,7 @@
         <target state="final">Einstellungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
@@ -845,15 +1031,15 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="sourcefile">components/mediaoverview/delete-modal.html</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/georeference-view.html</context>
@@ -865,23 +1051,27 @@
         <target state="final">Abbrechen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/link-modal.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/remove-link-modal.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="sourcefile">components/mediaoverview/delete-modal.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/upload/image/image-type-picker-modal.html</context>
@@ -901,7 +1091,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
@@ -929,7 +1119,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
@@ -938,6 +1128,70 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
+        <source>Ressource mehrfach erstellen</source>
+        <target state="final">Ressource mehrfach erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
+        <source>Ressource vervielfältigen</source>
+        <target state="final">Ressource vervielfältigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
+        <source>
+              Wie viele Ressourcen möchten Sie anlegen?
+        </source>
+        <target state="final">
+              Wie viele Ressourcen möchten Sie anlegen?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
+        <source>
+            Wie viele Kopien der Ressource möchten Sie anlegen?
+        </source>
+        <target state="final">
+            Wie viele Kopien der Ressource möchten Sie anlegen?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.createResources" datatype="html">
+        <source>Ressourcen erstellen</source>
+        <target state="final">Ressourcen erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.saveResources" datatype="html">
+        <source>Ressourcen speichern</source>
+        <target state="final">Ressourcen speichern</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/duplicate-modal.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.duplicate" datatype="html">
+        <source>Vervielfältigen</source>
+        <target state="final">Vervielfältigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
@@ -966,12 +1220,20 @@
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="buttons.createMultipleInstances" datatype="html">
+        <source>Mehrfach erstellen</source>
+        <target state="final">Mehrfach erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.tabs.metadata" datatype="html">
         <source>Metadaten</source>
         <target state="final">Metadaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.relations" datatype="html">
@@ -979,7 +1241,7 @@
         <target state="final">Relationen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.media" datatype="html">
@@ -987,7 +1249,7 @@
         <target state="final">Medienressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -995,7 +1257,7 @@
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1007,7 +1269,31 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
+        <source>
+                        Ressourcen werden erstellt...
+                    </source>
+        <target state="final">
+                        Ressourcen werden erstellt...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
+        <source>
+                        Ressource wird vervielfältigt...
+                    </source>
+        <target state="final">
+                        Ressource wird vervielfältigt...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.delete" datatype="html">
@@ -1019,27 +1305,27 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
         <source>Projekte verwalten</source>
         <target state="final">Projekte verwalten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.newProject.enterName" datatype="html">
         <source>
-                    Bitte geben Sie den Namen des neuen Projekts ein.
-                </source>
+                Bitte geben Sie den Namen des neuen Projekts ein.
+            </source>
         <target state="final">
-                    Bitte geben Sie den Namen des neuen Projekts ein.
-                </target>
+                Bitte geben Sie den Namen des neuen Projekts ein.
+            </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
@@ -1143,7 +1429,7 @@
         <target state="final">Alle Medienressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.filter.unlinked" datatype="html">
@@ -1151,7 +1437,7 @@
         <target state="final">Unverknüpfte Medienressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.filter.linked" datatype="html">
@@ -1159,7 +1445,7 @@
         <target state="final">Verknüpfte Medienressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1187,31 +1473,31 @@
         <target state="final">Verknüpfungen löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/remove-link-modal.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source>
-            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Medienressourcen wirklich löschen?
-        </source>
+        Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedMediaResources}}"/> markierten Medienressourcen wirklich löschen?
+    </source>
         <target state="final">
-            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Medienressourcen wirklich löschen?
-        </target>
+        Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedMediaResources}}"/> markierten Medienressourcen wirklich löschen?
+    </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
+          <context context-type="sourcefile">components/mediaoverview/delete-modal.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.deleteModal.question.single" datatype="html">
         <source>
-            Möchten Sie die markierte Medienressource wirklich löschen?
-        </source>
+        Möchten Sie die markierte Medienressource wirklich löschen?
+    </source>
         <target state="final">
-            Möchten Sie die markierte Medienressource wirklich löschen?
-        </target>
+        Möchten Sie die markierte Medienressource wirklich löschen?
+    </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="sourcefile">components/mediaoverview/delete-modal.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.tooltips.delete" datatype="html">
@@ -1219,7 +1505,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.tooltips.removeLinks" datatype="html">
@@ -1227,7 +1513,7 @@
         <target state="final">Verknüpfungen entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.tooltips.createLink" datatype="html">
@@ -1235,7 +1521,7 @@
         <target state="final">Verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.taskbar.tooltips.deselect" datatype="html">
@@ -1243,7 +1529,15 @@
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/mediaoverview/media-overview-taskbar.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.mediaResourceTypeFilter" datatype="html">
+        <source>Nach Medienressourcentyp filtern:</source>
+        <target state="final">Nach Medienressourcentyp filtern:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/mediaoverview/searchbar/media-overview-search-bar.html</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
@@ -1251,7 +1545,7 @@
         <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
@@ -1393,7 +1687,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
@@ -1401,7 +1695,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -1409,7 +1703,7 @@
         <target state="final">Punkt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -1417,7 +1711,7 @@
         <target state="final">Keine Geometriedaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.type" datatype="html">
@@ -1462,6 +1756,30 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
+        <source>Untergeordnete Ressourcen ansehen</source>
+        <target state="final">Untergeordnete Ressourcen ansehen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.jumpToView.tooltip" datatype="html">
+        <source>Zur Maßnahme wechseln</source>
+        <target state="final">Zur Maßnahme wechseln</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.detailSidebar.editMetadata" datatype="html">
         <source>Metadaten bearbeiten</source>
         <target state="final">Metadaten bearbeiten</target>
@@ -1501,7 +1819,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.all" datatype="html">
@@ -1509,11 +1827,11 @@
         <target state="final">Alle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">
@@ -1521,7 +1839,7 @@
         <target state="final">Projekt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -1532,8 +1850,12 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/mediaoverview/searchbar/media-overview-search-bar.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.resourceTypeFilter" datatype="html">
@@ -1545,7 +1867,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.typePicker.allTypes" datatype="html">
@@ -1572,64 +1894,12 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.header" datatype="html">
-        <source>Suchkriterien</source>
-        <target state="final">Suchkriterien</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.typeFilterInfo" datatype="html">
-        <source>
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </source>
-        <target state="final">
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
-        <source>Feld wählen</source>
-        <target state="final">Feld wählen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
-        <source>Suchbegriff eingeben</source>
-        <target state="final">Suchbegriff eingeben</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.selectSearchTerm" datatype="html">
-        <source>Suchbegriff wählen</source>
-        <target state="final">Suchbegriff wählen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.mediaResourcePicker.linkMediaResource" datatype="html">
         <source>Medienressource verknüpfen</source>
         <target state="final">Medienressource verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/media-resource-picker.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/widgets/media-resource-picker.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.mediaResourcePicker.linkMediaResources" datatype="html">
@@ -1637,7 +1907,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Medienressourcen verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/media-resource-picker.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.media.linkedMediaResources" datatype="html">
@@ -1660,6 +1930,150 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.header" datatype="html">
+        <source>Suchkriterien</source>
+        <target state="final">Suchkriterien</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.typeFilterInfo" datatype="html">
+        <source>
+        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
+    </source>
+        <target state="final">
+        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
+        <source>Feld wählen</source>
+        <target state="final">Feld wählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
+        <source>Suchbegriff</source>
+        <target state="final">Suchbegriff</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
+        <source>Beliebiger Wert</source>
+        <target state="final">Beliebiger Wert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
+        <source>Kein Wert</source>
+        <target state="final">Kein Wert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
+        <source>Suchbegriff eingeben</source>
+        <target state="final">Suchbegriff eingeben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.options.anyValue" datatype="html">
+        <source>- Beliebiger Wert -</source>
+        <target state="final">- Beliebiger Wert -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
+        <source>- Kein Wert -</source>
+        <target state="final">- Kein Wert -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="boolean.yes" datatype="html">
         <source>Ja</source>
         <target state="final">Ja</target>
@@ -1668,8 +2082,12 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -1684,8 +2102,12 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -1769,6 +2191,10 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
           <context context-type="linenumber">93</context>
         </context-group>
         <context-group purpose="location">
@@ -1844,7 +2270,7 @@
         <source>Keine Ziele gefunden</source>
         <target state="final">Keine Ziele gefunden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/widgets/relationspick/relation-picker.html</context>
+          <context context-type="sourcefile">components/docedit/widgets/relationpicker/relation-picker.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
@@ -1975,7 +2401,7 @@
         <target state="final">Einzelwert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
@@ -1983,7 +2409,7 @@
         <target state="final">Bereich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
@@ -1991,7 +2417,7 @@
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -1999,7 +2425,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2007,7 +2433,7 @@
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -2030,12 +2456,12 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/upload/image/image-type-picker-modal.html</context>
@@ -2051,27 +2477,27 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
         <source>
-                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
-                </source>
+                Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+            </source>
         <target state="final">
-                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
-                </target>
+                Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+            </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.close" datatype="html">
         <source>Schließen</source>
         <target state="final">Schließen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/projects.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="sourcefile">components/navbar/projects-modal.html</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -2488,6 +2914,62 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.dialog.filter.geojson" datatype="html">
+        <source>GeoJSON-Datei</source>
+        <target state="final">GeoJSON-Datei</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.dialog.filter.zip" datatype="html">
+        <source>ZIP-Archiv</source>
+        <target state="final">ZIP-Archiv</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.notupdated" datatype="html">
+        <source>Fehlgeschlagene Zuordnung per Bezeichner '[0]'. Ressource nicht vorhanden.</source>
+        <target state="final">Fehlgeschlagene Zuordnung per Bezeichner '[0]'. Ressource nicht vorhanden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
+        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
+        <target state="final">Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
+        <source>'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</source>
+        <target state="final">'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.notInterrelated" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.emptyRelation" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>
@@ -2664,22 +3146,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.warning.geojson.duplicateIdentifier" datatype="html">
-        <source>In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</source>
-        <target state="final">In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.warning.geojson.duplicateIdentifiers" datatype="html">
-        <source>In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.</source>
-        <target state="final">In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.genericStartError" datatype="html">
         <source>Import kann nicht gestartet werden.</source>
         <target state="final">Import kann nicht gestartet werden.</target>
@@ -2723,6 +3189,14 @@
       <trans-unit id="messages.import.error.missingIdentifier" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2776,6 +3250,54 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
+        <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</source>
+        <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.importerrors.parentassignmenttooperationnotallowed" datatype="html">
+        <source>Wenn der Modus 'Daten einer Maßnahme zuordnen gewählt ist', dürfen keine Zuordnungen zu Maßnahmen per 'parent' vorgenommen werden.</source>
+        <target state="final">Wenn der Modus 'Daten einer Maßnahme zuordnen gewählt ist', dürfen keine Zuordnungen zu Maßnahmen per 'parent' vorgenommen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
+        <source>Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</source>
+        <target state="final">Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.typeNotAllowed" datatype="html">
+        <source>Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</source>
+        <target state="final">Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.typeOnlyAllowedOnUpdate" datatype="html">
+        <source>Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
+        <target state="final">Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
+        <source>Mehrfach vorhandener Identifier in Importdatei: '[0]'.</source>
+        <target state="final">Mehrfach vorhandener Identifier in Importdatei: '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.genericDatastoreError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</target>
@@ -2800,17 +3322,17 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.missingResource" datatype="html">
-        <source>Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.</source>
-        <target state="final">Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.</target>
+      <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</source>
-        <target state="final">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</target>
+      <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2827,6 +3349,38 @@
       <trans-unit id="messages.import.error.noFeatureAssignable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.readError" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2889,16 +3443,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
-        <source>Falsche Zahlenwerte für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Falsche Zahlenwerte für das Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültiger Zahlenwert im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Ungültiger Zahlenwert im Feld '[1]' der Ressource vom Typ '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
-        <source>Falsche Zahlenwerte für die Felder '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Falsche Zahlenwerte für die Felder '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2928,9 +3482,73 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.export.success" datatype="html">
+        <source>Die Exportdatei wurde erfolgreich erstellt.</source>
+        <target state="final">Die Exportdatei wurde erfolgreich erstellt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.generic" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.geojson.error.write" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.shapefile.error.tempFolderCreation" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.shapefile.error.zipFileCreation" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.shapefile.error.write" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
+        <target state="final">Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.docedit.success.save" datatype="html">
         <source>Die Ressource wurde erfolgreich gespeichert.</source>
         <target state="final">Die Ressource wurde erfolgreich gespeichert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.success.duplicate" datatype="html">
+        <source>Die Ressource wurde erfolgreich dupliziert.</source>
+        <target state="final">Die Ressource wurde erfolgreich dupliziert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2993,8 +3611,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
-        <source>Bitte tragen Sie in den Feldern '[1]' gültige Zahlenwerte ein.</source>
-        <target state="final">Bitte tragen Sie in den Feldern '[1]' gültige Zahlenwerte ein.</target>
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparator" datatype="html">
+        <source>Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</source>
+        <target state="final">Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparators" datatype="html">
+        <source>Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</source>
+        <target state="final">Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3120,14 +3754,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
-        <source>Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</source>
-        <target state="final">Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.success.fileUploaded" datatype="html">
         <source>Die Datei wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</source>
         <target state="final">Die Datei wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</target>
@@ -3201,8 +3827,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.upload.error.unsupportedExtensions" datatype="html">
-        <source>Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</source>
-        <target state="final">Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</target>
+        <source>Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</source>
+        <target state="final">Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3276,7 +3902,7 @@
         <source>Weitere Suchkriterien einstellen</source>
         <target state="final">Weitere Suchkriterien einstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3284,7 +3910,7 @@
         <source>Aktive Suchkriterien</source>
         <target state="final">Aktive Suchkriterien</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

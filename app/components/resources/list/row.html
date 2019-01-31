@@ -4,17 +4,34 @@
         <div [class.text-info]="!document.resource.id">
             <i>{{getLabel()}}</i>
        </div>
-
         <button *ngIf="showMoveIntoOption()"
-                class="hierarchy-button btn float-right align-middle"
+                class="hierarchy-button move-into-button btn float-right align-middle"
+                ngbTooltip="Untergeordnete Ressourcen ansehen"
+                i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
+                placement="left"
+                container="body"
+                triggers="manual"
+                #tooltip="ngbTooltip"
+                (mouseover)="tooltip.open()"
+                (mouseleave)="tooltip.close()"
+                (mousedown)="tooltip.close()"
                 (click)="moveInto()">
-            <span class="mdi mdi-subdirectory-arrow-right mdi-18px float-right"></span>
+            <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </button>
-
         <button *ngIf="showJumpToViewOption()"
-                class="hierarchy-button btn float-right align-middle"
+                class="hierarchy-button jump-to-view-button btn float-right align-middle"
+                ngbTooltip="Zur Maßnahme wechseln"
+                i18n-ngbTooltip="@@resources.jumpToView.tooltip"
+                placement="left"
+                container="body"
+                triggers="manual"
+                #tooltip="ngbTooltip"
+                (mouseover)="tooltip.open()"
+                (mouseleave)="tooltip.close()"
+                (mousedown)="tooltip.close()"
                 (click)="jumpToView()">
-            <span class="mdi mdi-arrow-top-right mdi-18px float-right"></span>
+            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
         </button>
     </div>
     <div class="input-field">
@@ -23,7 +40,6 @@
                (blur)="stopEditing(document.resource.identifier)"
                (keyup)="onKeyup($event, document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
-
     </div>
     <div class="input-field">
         <input [(ngModel)]="document.resource.shortDescription"

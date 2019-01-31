@@ -18,7 +18,7 @@ import {M} from '../m';
  */
 export abstract class Uploader {
 
-    public static supportedFileTypes: Array<string> = [];
+    public static readonly supportedFileTypes: Array<string> = [];
 
 
     public constructor(
@@ -29,9 +29,7 @@ export abstract class Uploader {
 
 
     /**
-     * @param event The event containing the files to upload (can be drag event or event from file input
-     * element)
-     * @param depictsRelationTargetId If this parameter is set, each of the newly created documents will
+     * @param relationTarget If this parameter is set, each of the newly created documents will
      * contain a relation to the resource specified by the id. The type of the relation is determined by the
      * extending class.
      */

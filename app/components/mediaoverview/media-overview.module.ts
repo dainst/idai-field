@@ -14,7 +14,9 @@ import {MediaOverviewTaskbarComponent} from './media-overview-taskbar.component'
 import {MediaOverviewFacade} from './view/media-overview-facade';
 import {MediaDocumentsManager} from './view/media-documents-manager';
 import {PersistenceHelper} from './service/persistence-helper';
-
+import {MediaOverviewSearchBarComponent} from './searchbar/media-overview-search-bar.component';
+import {MediaOverviewSearchConstraintsComponent} from './searchbar/media-overview-search-constraints.component';
+import {DeleteModalComponent} from './delete-modal.component';
 
 @NgModule({
     imports: [
@@ -30,12 +32,16 @@ import {PersistenceHelper} from './service/persistence-helper';
     declarations: [
         MediaOverviewComponent,
         MediaOverviewTaskbarComponent,
+        MediaOverviewSearchBarComponent,
+        MediaOverviewSearchConstraintsComponent,
         LinkModalComponent,
-        RemoveLinkModalComponent
+        RemoveLinkModalComponent,
+        DeleteModalComponent
     ],
     entryComponents: [
         LinkModalComponent,
-        RemoveLinkModalComponent
+        RemoveLinkModalComponent,
+        DeleteModalComponent
     ],
     providers: [
         MediaState,

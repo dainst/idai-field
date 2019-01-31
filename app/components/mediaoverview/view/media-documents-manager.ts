@@ -49,6 +49,13 @@ export class MediaDocumentsManager {
      */
     public select(document: IdaiFieldMediaDocument) {
 
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
+    }
+
+
+    public toggleSelected(document: IdaiFieldMediaDocument) {
+
         if (this.selected.indexOf(document) == -1) {
             this.selected.push(document);
         } else {

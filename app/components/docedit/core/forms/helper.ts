@@ -1,9 +1,6 @@
 import {includedIn, isNot, isArray} from 'tsfun';
 import {Resource} from 'idai-components-2';
 
-
-// TODO Rename
-
 /**
  * @author Daniel de Oliveira
  */

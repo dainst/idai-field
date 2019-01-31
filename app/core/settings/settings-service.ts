@@ -6,7 +6,7 @@ import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
-import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
+import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
@@ -100,8 +100,9 @@ export class SettingsService {
         await this.updateSettings(settings);
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
-            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath, this.settings.model3DStorePath,
-                this.settings.locale));
+            new FieldSampleDataLoader(this.converter, this.settings.imagestorePath,
+                this.settings.model3DStorePath, this.settings.locale)
+        );
 
         if (this.settings.isSyncActive) await this.startSync();
         await this.loadProjectDocument(true);
@@ -113,6 +114,9 @@ export class SettingsService {
         let customProjectName = undefined;
         if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
         if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
+        if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
+            customProjectName = 'WES';
+        }
 
         try {
             return await this.appConfigurator.go(

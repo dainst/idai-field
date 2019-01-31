@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, SimpleChanges} from '@angular/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -9,7 +9,7 @@ import {ViewFacade} from '../view/view-facade';
     selector: 'resources-search-bar',
     templateUrl: './resources-search-bar.html',
     host: {
-        '(document:click)': 'handleClick($event)',
+        '(document:click)': 'handleClick($event)'
     }
 })
 /**
@@ -18,8 +18,6 @@ import {ViewFacade} from '../view/view-facade';
 export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     @Input() extendedSearch: boolean;
-
-    @ViewChild('searchInput') fulltextSearchInput: ElementRef;
 
     public suggestionsVisible: boolean = false;
 
@@ -42,6 +40,12 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
+    public getSelectedType(): string|undefined {
+
+        return this.types !== undefined && this.types.length > 0 ? this.types[0] : undefined
+    }
+
+
     public showSuggestions() {
 
         this.suggestionsVisible = true;
@@ -57,13 +61,6 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public isTypeSelected(): boolean {
 
         return this.types !== undefined && this.types.length > 0;
-    }
-
-
-    public isFocused(): boolean {
-
-        return this.fulltextSearchInput.nativeElement.ownerDocument.activeElement
-            === this.fulltextSearchInput.nativeElement;
     }
 
 
@@ -83,7 +80,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
         const types: Array<IdaiType> = this.extendedSearch ?
             this.typeUtility.getNonMediaTypes().filter(type => !type.parentType) :
-            this.typeUtility.getOverviewTypes();
+            this.typeUtility.getOverviewTopLevelTypes();
 
         types.forEach(type => this.addFilterOption(type));
     }

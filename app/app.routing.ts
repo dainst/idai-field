@@ -6,6 +6,7 @@ import {BackupLoadingComponent} from './components/backup/backup-loading.compone
 import {SettingsComponent} from './components/settings/settings.component';
 import {MatrixViewComponent} from './components/matrix/matrix-view.component';
 import {HelpComponent} from './components/help/help.component';
+import {ExportComponent} from './components/export/export.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: 'matrix', component: MatrixViewComponent },
     { path: 'help', component: HelpComponent },
     { path: 'import', component: ImportComponent },
+    { path: 'export', component: ExportComponent },
     { path: 'backup-creation', component: BackupCreationComponent },
     { path: 'backup-loading', component: BackupLoadingComponent },
     { path: 'settings', component: SettingsComponent }

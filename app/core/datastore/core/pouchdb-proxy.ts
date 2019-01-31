@@ -19,6 +19,12 @@ export class PouchdbProxy {
     }
 
 
+    public bulkDocs(documents: Array<any>, options: any = {}): Promise<any> {
+
+        return this.rdy.then(db => db.bulkDocs(documents, options));
+    }
+
+
     public remove(document: any, revisionId?: any): Promise<any> {
 
         return this.rdy.then(db => db.remove(document, revisionId));
@@ -40,6 +46,12 @@ export class PouchdbProxy {
     public get(id: any, options = {}): Promise<any> {
 
         return this.rdy.then(db => db.get(id, options));
+    }
+
+
+    public allDocs(options = {}): Promise<any> {
+
+        return this.rdy.then(db => db.allDocs(options));
     }
 
 

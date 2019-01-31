@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import * as THREE from 'three';
 import {IdaiFieldGeoreference} from 'idai-components-2'
 import {SettingsService} from '../../../../../../core/settings/settings-service';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/field/idai-field-image-document-read-datastore';
+import {ImageReadDatastore} from '../../../../../../core/datastore/field/image-read-datastore';
 import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';;
 import {MeshPreparationUtility} from '../../../../../core-3d/mesh-loading/mesh-preparation-utility';
 import {getPointVector} from '../../../../../../util/util-3d';
@@ -15,7 +15,7 @@ import {getPointVector} from '../../../../../../util/util-3d';
 export class Layer2DMeshBuilder {
 
     constructor(private settingsService: SettingsService,
-                private datastore: IdaiFieldImageDocumentReadDatastore) {}
+                private datastore: ImageReadDatastore) {}
 
 
     public async build(imageResourceId: string): Promise<THREE.Mesh> {

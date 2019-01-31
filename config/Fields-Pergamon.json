@@ -118,15 +118,6 @@
     "fields": {
       "hasFinds": {
         "inputType": "boolean"
-      },
-      "date": {
-        "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
       }
     }
   },
@@ -446,13 +437,6 @@
       }
     }
   },
-  "Area": {
-    "fields": {
-      "description": {
-        "inputType": "text"
-      }
-    }
-  },
   "Excavation": {
     "fields": {
       "beginningDate": {
@@ -466,12 +450,6 @@
       },
       "diary": {
         "inputType": "input"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "hasDisturbance": {
-        "inputType": "boolean"
       },
       "processor": {
         "inputType": "input"
@@ -500,24 +478,6 @@
           "weiß"
         ]
       },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
       "featureBorders": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -540,10 +500,10 @@
           "verwaschen",
           "wellig"
         ]
-      },
-      "isIllegal": {
-        "inputType": "boolean"
       }
+    },
+    "hasDisturbance": {
+      "inputType": "boolean"
     }
   },
   "BuildingFloor": {

@@ -1,5 +1,5 @@
- <div class="modal-header">
-    <h4 class="modal-title" i18n="@@docedit.deleteModal.header">Ressource löschen?</h4>
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@docedit.deleteModal.header">Ressource löschen?</h5>
 </div>
 
 <div class="modal-body">
@@ -16,17 +16,22 @@
         Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
     </div>
     <div class="input-group">
-        <input id="delete-resource-input" type="text" class="form-control" [(ngModel)]="confirmDeletionIdentifier"/>
+        <input id="delete-resource-input"
+               type="text"
+               class="form-control"
+               [(ngModel)]="confirmDeletionIdentifier"
+               (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
     </div>
 </div>
 
 <div class="modal-footer" *ngIf="document">
     <button id="delete-resource-confirm" class="btn btn-danger" type="button"
             [ngClass]="{ 'disabled': confirmDeletionIdentifier !== document.resource.identifier }"
-            (click)="confirmDeletionIdentifier !== document.resource.identifier || activeModal.close('delete')">
+            (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </button>
-    <button type="button" id="delete-resource-cancel" class="btn btn-secondary" (click)="activeModal.close('cancel')">
+    <button type="button" id="delete-resource-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </button>
 </div>

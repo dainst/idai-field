@@ -1,12 +1,11 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
-import {ImportFacade} from '../../app/core/import/import-facade';
-import {Validator} from '../../app/core/model/validator';
+import {Importer} from '../../app/core/import/importer';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
-import {M} from '../../app/components/m';
-import {ImportErrors} from '../../app/core/import/import-errors';
+import {ImportErrors} from '../../app/core/import/exec/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
+import {ImportValidator} from '../../app/core/import/exec/import-validator';
 
 /**
  * @author Daniel de Oliveira
@@ -29,16 +28,16 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
-        await ImportFacade.doImport(
+       await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            undefined,
-            { go: () => Promise.resolve(
-                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}')});
+            false,
+           false,
+                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}', () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -51,39 +50,18 @@ describe('Import/Subsystem', () => {
 
         const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        const report = await ImportFacade.doImport(
+        const report = await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             trench.resource.id,
-            undefined,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }')});
+            false, false,
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
+            () => '101');
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
-        done();
-    });
-
-
-    // TODO this test has to be removed since 'produce validation error' already shows that validation error works
-    it('produce validation error 2', async done => {
-
-        const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
-
-        const report = await ImportFacade.doImport(
-            'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
-            datastore,
-            { getUsername: () => 'testuser'},
-            _projectConfiguration,
-            trench.resource.id,
-            undefined,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "Polygon", "coordinates": [[1, 2, 3]] } }')});
-
-        expect(report.errors[0]).toEqual([ValidationErrors.INVALID_COORDINATES, "Polygon"]);
         done();
     });
 
@@ -92,16 +70,16 @@ describe('Import/Subsystem', () => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        await ImportFacade.doImport(
+        await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             stored.resource.id,
-            false,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}')});
+            false, false,
+                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
+            () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -111,66 +89,45 @@ describe('Import/Subsystem', () => {
     });
 
 
-    function createRollbackTestImportFunction(allowMergingExistingResources: boolean, resourceId: string) {
+    it('invalid structure - dont import', async done => {
 
-        return ImportFacade.doImport(
+        const resourceId = (await datastore.create(
+            { resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}}
+            )).resource.id;
+
+        const importReport = await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             resourceId,
-            allowMergingExistingResources,
-            { go: () => Promise.resolve(
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
-                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')});
-    }
+            false, false,
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}',
+            () => '101');
 
-
-    it('rollback', async done => {
-
-        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
-
-        const importReport = await createRollbackTestImportFunction(false, id);
-        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, 'InvalidType']); // TODO should be validation error
+        expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(1);
-        done();
-    });
-
-
-    it('no rollback, because after merge we will not perform it', async done => {
-
-        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ['t1']}}});
-
-        const importReport = await createRollbackTestImportFunction(true, id);
-        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
-
-        const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
-        expect(result.documents.map(to('resource.identifier'))).toContain('f1');
-        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
-        expect(result.documents.map(to('resource.shortDescription'))).toContain('feature1'); // updated
-        expect(result.documents.map(to('resource.shortDescription'))).toContain('Our Trench 1');
+        expect(result.documents.length).toBe(1); // only the trench
         done();
     });
 
 
     it('update shortDescription', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        await ImportFacade.doImport(
+        await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            true,
-            { go: () => Promise.resolve(
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}')});
+            true, false,
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}',
+            () => '101');
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
@@ -178,25 +135,27 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('unmatched items get ignored on merge', async done => {
+    it('unmatched items on merge', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             undefined,
-            true,
-            { go: () => Promise.resolve(
+            true, false,
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
-                + '{ "type": "Feature", "identifier" : "f2", "shortDescription" : "feature_2"}')});
+                + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}',
+            () => '101');
 
+        expect(importReport.errors.length).toBe(1);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
-        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
+        expect(result.documents[0].resource.shortDescription).toBe('feature1'); // nothing gets updated at all
         done();
     });
 
@@ -205,27 +164,21 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
 
-        const importReport = await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new TypeUtility(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             'f1',
-            false,
-            { go: () => Promise.resolve(
-                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}')});
+            false, false,
+                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}',
+            () => '101');
 
-        expect(importReport.errors[0]).toEqual([ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');
         done();
     });
-
-
-
-
-
-    // TODO test: merge mode, but isRecordedIn is set. decide how we deal with it.
 });

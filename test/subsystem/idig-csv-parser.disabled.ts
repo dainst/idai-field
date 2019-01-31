@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2';
-import {IdigCsvParser} from '../../app/core/import/idig-csv-parser';
-import {ImportErrors} from '../../app/core/import/import-errors';
+import {IdigCsvParser} from '../../app/core/import/parser/idig-csv-parser';
+import {ParserErrors} from '../../app/core/import/parser/parser-errors';
 
 /**
  * @author Sebastian Cuy
@@ -57,7 +57,7 @@ describe('IdigCsvParser', () => {
         }, (msgWithParams) => {
             expect(documents.length).toBe(1);
             expect(documents[0].resource.id).toEqual('1');
-            expect(msgWithParams).toEqual([ImportErrors.MANDATORY_CSV_FIELD_MISSING, 2, 'IdentifierUUID']);
+            expect(msgWithParams).toEqual([ParserErrors.MANDATORY_CSV_FIELD_MISSING, 2, 'IdentifierUUID']);
             done();
         });
 
@@ -111,7 +111,7 @@ describe('IdigCsvParser', () => {
         }, (err) => {
             expect(documents.length).toBe(1);
             expect(documents[0].resource.id).toEqual('1');
-            expect(err).toEqual([ImportErrors.INVALID_GEOMETRY, 2]);
+            expect(err).toEqual([ParserErrors.INVALID_GEOMETRY, 2]);
             done();
         });
 

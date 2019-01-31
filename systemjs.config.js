@@ -97,7 +97,11 @@
         'path': '@node/path',
         'glob': '@node/glob',
         'read-depth': 'lib/read-depth/read-depth.js',
-        'earcut': 'node_modules/earcut/dist/earcut.min.js'
+        'earcut': 'node_modules/earcut/dist/earcut.min.js',
+        'child_process': '@node/child_process',
+        'geojson-rewind': 'node_modules/geojson-rewind/index.js',
+        '@mapbox/geojson-area': 'node_modules/@mapbox/geojson-area/index.js',
+        'wgs84': 'node_modules/wgs84/index.js'
     };
 
     config.meta = {

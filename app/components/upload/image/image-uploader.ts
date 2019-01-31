@@ -20,7 +20,7 @@ import {UsernameProvider} from '../../../core/settings/username-provider';
  */
 export class ImageUploader extends Uploader {
 
-    public static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
+    public static readonly supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
 
 
     public constructor(

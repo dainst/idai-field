@@ -8,6 +8,7 @@ import {RoutingService} from '../routing-service';
 import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 import {UploadResult} from '../upload/upload-result';
 import {M} from '../m';
+import {MediaFilterOption} from './view/media-state';
 
 @Component({
     moduleId: module.id,
@@ -36,10 +37,6 @@ export class MediaOverviewComponent implements OnInit {
     }
 
 
-    public jumpToRelationTarget
-        = (documentToSelect: IdaiFieldMediaDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
-        undefined, true);
-
     public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
 
     public getDocuments = () => this.mediaOverviewFacade.getDocuments();
@@ -48,26 +45,39 @@ export class MediaOverviewComponent implements OnInit {
 
     public getTotalDocumentCount = () => this.mediaOverviewFacade.getTotalDocumentCount();
 
-    public select = (document: Document) => this.mediaOverviewFacade.select(document as IdaiFieldMediaDocument);
+    public toggleSelected =
+        (document: Document) => this.mediaOverviewFacade.toggleSelected(document as IdaiFieldMediaDocument);
 
     public getGridSize = () => this.mediaOverviewFacade.getGridSize();
 
     public getQuery = () => this.mediaOverviewFacade.getQuery();
 
-    public getMainTypeDocumentFilterOption = () => this.mediaOverviewFacade.getMainTypeDocumentFilterOption();
+    public getLinkFilter = () => this.mediaOverviewFacade.getLinkFilter();
 
     public setQueryString = (q: string) => this.mediaOverviewFacade.setQueryString(q);
-
-    public setTypeFilters = (types: string[]) => this.mediaOverviewFacade.setTypeFilters(types);
 
     public onResize = () => this.imageGrid.calcGrid();
 
     public refreshGrid = () => this.mediaOverviewFacade.fetchDocuments();
 
 
-    public ngOnInit() {
+    ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.mediaOverviewFacade.getGridSize();
+    }
+
+
+    public jumpToRelationTarget(document: IdaiFieldMediaDocument) {
+
+        this.mediaOverviewFacade.select(document);
+        this.routingService.jumpToRelationTarget(document, undefined, true);
+    }
+
+
+    public setTypeFilters(types: string[]) {
+
+        this.mediaOverviewFacade.setTypeFilters(types);
+        this.mediaOverviewFacade.setCustomConstraints({});
     }
 
 
@@ -83,9 +93,9 @@ export class MediaOverviewComponent implements OnInit {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: string) {
+    public setLinkFilter(filterOption: MediaFilterOption) {
 
-        this.mediaOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
+        this.mediaOverviewFacade.setLinkFilter(filterOption);
     }
 
 

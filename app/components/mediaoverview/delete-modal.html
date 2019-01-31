@@ -1,0 +1,20 @@
+<div class="modal-body">
+    <p *ngIf="numberOfSelectedMediaResources > 1"
+       i18n="@@mediaOverview.taskbar.deleteModal.question.multiple">
+        Möchten Sie die {{numberOfSelectedMediaResources}} markierten Medienressourcen wirklich löschen?
+    </p>
+    <p *ngIf="numberOfSelectedMediaResources === 1"
+       i18n="@@mediaOverview.taskbar.deleteModal.question.single">
+        Möchten Sie die markierte Medienressource wirklich löschen?
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" id="delete-media-resources-confirm" class="btn btn-danger"
+            (click)="activeModal.close('delete')" i18n="@@buttons.delete">
+        Löschen
+    </button>
+    <button type="button" id="delete-media-resources-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">
+        Abbrechen
+    </button>
+</div>

@@ -1,17 +1,18 @@
 import {IdaiFieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
-import {IdaiFieldDocumentDatastore} from '../../../../../app/core/datastore/field/idai-field-document-datastore';
-import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/field/idai-field-type-converter';
+import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
 import {Static} from '../../../static';
 
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('CachedDatastore', () => {
 
-    let ds: IdaiFieldDocumentDatastore;
+    let ds: FieldDatastore;
     let mockdb: any;
     let mockIndexFacade: any;
 
@@ -25,11 +26,11 @@ describe('CachedDatastore', () => {
         mockTypeUtility.getNonMediaTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const docDatastore = new IdaiFieldDocumentDatastore(
+        const docDatastore = new FieldDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new IdaiFieldTypeConverter(mockTypeUtility));
+            new FieldTypeConverter(mockTypeUtility));
         docDatastore.suppressWait = true;
         return docDatastore;
     }
@@ -45,10 +46,9 @@ describe('CachedDatastore', () => {
     beforeEach(() => {
 
         mockdb = jasmine.createSpyObj('mockdb',
-                ['create', 'update', 'fetch', 'fetchRevision']);
+                ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
             ['perform', 'put', 'remove']);
-
 
         mockdb.update.and.callFake(function(dd) {
             // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -91,6 +91,67 @@ describe('CachedDatastore', () => {
     });
 
 
+    // get multiple
+
+    it('should add missing fields on getMultiple, bypassing cache', async done => {
+
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
+                resource: {
+                    id: '1',
+                    relations: {}
+                }
+            }, {
+                resource: {
+                    id: '2',
+                    relations: {}
+                }
+            }
+        ]));
+
+        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2']);
+        expect(documents.length).toBe(2);
+        verifyIsIdaiFieldDocument(documents[0]);
+        verifyIsIdaiFieldDocument(documents[1]);
+        done();
+    });
+
+
+    it('should retain order when fetching documents from both cache and datastore on getMultiple',
+            async done => {
+
+        mockdb.fetch.and.returnValues(Promise.resolve({
+            resource: {
+                id: '2',
+                relations: {}
+            }
+        }));
+
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
+                resource: {
+                    id: '1',
+                    relations: {}
+                }
+            }, {
+                resource: {
+                    id: '3',
+                    relations: {}
+                }
+            }
+        ]));
+
+        await ds.get('2');  // Save in cache
+
+        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2', '3']);
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toEqual('1');
+        expect(documents[1].resource.id).toEqual('2');
+        expect(documents[2].resource.id).toEqual('3');
+        done();
+    });
+
+
     // getRevision
 
     it('should add missing fields on getRevision (bypassing cache)', async done => {
@@ -113,12 +174,14 @@ describe('CachedDatastore', () => {
     it('should add missing fields on find, bypassing cache', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetch.and.returnValues(Promise.resolve({
-            resource: {
-                id: '1',
-                relations: {}
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+             {
+                resource: {
+                    id: '1',
+                    relations: {}
+                }
             }
-        }));
+        ]));
 
         const documents = (await ds.find({})).documents; // fetch from mockdb
         expect(documents.length).toBe(1);
@@ -167,7 +230,7 @@ describe('CachedDatastore', () => {
     it('cant find one and only document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetch.and.returnValue(Promise.reject("e"));
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(0);
@@ -179,14 +242,15 @@ describe('CachedDatastore', () => {
     it('cant find second document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1', '2']);
-        mockdb.fetch.and.returnValues(
-            Promise.resolve({
+
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
                 resource: {
                     id: '1',
                     relations: {}
                 }
-            }),
-            Promise.reject("e"));
+            }
+        ]));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(1);
@@ -259,8 +323,6 @@ describe('CachedDatastore', () => {
         done();
     });
 
-
-    // xitted
 
     it('should return cached instance on update', async done => {
 

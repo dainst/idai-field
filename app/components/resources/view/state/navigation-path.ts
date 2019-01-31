@@ -92,7 +92,8 @@ export module NavigationPath {
     }
 
 
-    export function setSelectedDocument(navPath: NavigationPath, document: IdaiFieldDocument|undefined) {
+    export function setSelectedDocument(navPath: NavigationPath,
+                                        document: IdaiFieldDocument|undefined): NavigationPath {
 
         const _clone = clone(navPath);
         (getViewContext(_clone) as any).selected = document;
@@ -106,7 +107,7 @@ export module NavigationPath {
     }
 
 
-    export function setQueryString(navPath: NavigationPath, q: string) {
+    export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
 
         const _clone = clone(navPath);
         (getViewContext(_clone) as any).q = q;

@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
 
+
+export type MediaFilterOption = 'ALL'|'LINKED'|'UNLINKED';
+
+
 @Injectable()
 /**
  * @author Thomas Kleinke
@@ -8,7 +12,8 @@ import {Query} from 'idai-components-2';
 export class MediaState {
 
     private query: Query;
-    private mainTypeDocumentFilterOption: string = '';
+    private customConstraints: { [name: string]: string } = {};
+    private linkFilter: MediaFilterOption = 'ALL';
     private gridSize: number = 4;
 
     private initialized: boolean = false;
@@ -42,21 +47,33 @@ export class MediaState {
     }
 
 
-    public getMainTypeDocumentFilterOption(): string {
+    public getCustomConstraints(): { [name: string]: string } {
 
-        if (!this.mainTypeDocumentFilterOption) return 'ALL';
+        return this.customConstraints;
+    }
 
-        const result = this.mainTypeDocumentFilterOption;
-        if (['LINKED','UNLINKED'].indexOf(this.mainTypeDocumentFilterOption) !== -1) {
+
+    public setCustomConstraints(customConstraints: { [name: string]: string }) {
+
+        this.customConstraints = customConstraints;
+    }
+
+
+    public getLinkFilter(): MediaFilterOption {
+
+        if (!this.linkFilter) return 'ALL';
+
+        const result = this.linkFilter;
+        if (['LINKED','UNLINKED'].indexOf(this.linkFilter) !== -1) {
             return result;
         }
         return 'ALL';
     }
 
 
-    public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
+    public setLinkFilter(linkFilter: MediaFilterOption) {
 
-        this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
+        this.linkFilter = linkFilter;
     }
 
 

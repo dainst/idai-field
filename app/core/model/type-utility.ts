@@ -43,7 +43,7 @@ export class TypeUtility {
     }
 
 
-    public getOverviewTypes(): Array<IdaiType> {
+    public getOverviewTopLevelTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => type.name === 'Operation' || type.name === 'Place');
@@ -99,6 +99,16 @@ export class TypeUtility {
             .filter(typename => !this.isSubtype(typename, 'Operation'))
             .filter(typename => !this.isSubtype(typename, 'Image'))
             .filter(typename => !this.isSubtype(typename, 'Model3D'));
+    }
+
+
+    public getOverviewTypeNames(): string[] {
+
+        return this.projectConfiguration
+            .getTypesList()
+            .map(to('name'))
+            .filter(typename => this.isSubtype(typename, 'Operation'))
+            .concat('Place');
     }
 
 

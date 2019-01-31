@@ -1,7 +1,7 @@
 /**
  * @author Daniel de Oliveira
  */
-import {MeninxFindCsvParser} from '../../app/core/import/meninx-find-csv-parser';
+import {MeninxFindCsvParser} from '../../app/core/import/parser/meninx-find-csv-parser';
 
 
 xdescribe('MeninxCsvParser', () => {

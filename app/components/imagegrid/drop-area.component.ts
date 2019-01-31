@@ -1,7 +1,7 @@
+import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@angular/core';
+import {Messages, Document} from 'idai-components-2';
 import {UploadResult} from '../upload/upload-result';
 import {UploadService} from '../upload/upload-service';
-import {Component, Output, EventEmitter, Input} from '@angular/core';
-import {Messages, Document} from 'idai-components-2';
 
 @Component({
     selector: 'drop-area',
@@ -19,7 +19,9 @@ export class DropAreaComponent {
 
     @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
-    private dragOverActive = false;
+    @ViewChild('fileInput') fileInputElement: ElementRef;
+
+    private dragOverActive: boolean = false;
 
 
     public constructor(
@@ -62,6 +64,16 @@ export class DropAreaComponent {
         const uploadResult: UploadResult = await this.uploadService.startUpload(event,
             this.depictsRelationTarget);
         this.handleUploadResult(uploadResult);
+
+        this.fileInputElement.nativeElement.value = null;
+    }
+
+
+    public getSupportedFileExtensions(): string {
+
+        return UploadService.getSupportedFileTypes()
+            .map(extension => '.' + extension)
+            .join(',');
     }
 
 

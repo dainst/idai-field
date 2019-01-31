@@ -3,8 +3,8 @@ import {Messages, Document, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridConstruction} from './image-grid-builder';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
-import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {UploadResult} from '../upload/upload-result';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {M} from '../m';
 
 
@@ -58,7 +58,7 @@ export class ImageGridComponent implements OnChanges {
         private el: ElementRef,
         private messages: Messages,
         private imagestore: Imagestore,
-        private datastore: IdaiFieldDocumentReadDatastore
+        private datastore: FieldReadDatastore
     ) {}
 
 

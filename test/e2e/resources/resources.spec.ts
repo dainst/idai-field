@@ -10,6 +10,7 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditMediaTabPage} from '../docedit/docedit-media-tab.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {MediaResourcePickerModalPage} from '../widgets/image-picker-modal.page';
+import {MapPage} from '../map/map.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -38,7 +39,7 @@ describe('resources --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToProject();
+            NavbarPage.clickNavigateToOverview();
             browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToExcavation();
         }
@@ -142,9 +143,9 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
-        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, '2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
+        DoceditRelationsTabPage.typeInRelationByIndices(0, 0, '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
@@ -183,6 +184,7 @@ describe('resources --', () => {
             'shortDescription', 'Text', undefined,
             false, false);
 
+        NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
         NavbarPage.awaitAlert('Bezeichner', false);
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickCloseEdit();
@@ -266,7 +268,7 @@ describe('resources --', () => {
 
     it('should delete a main type resource', () => {
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
 
         function del(what: any) {
 
@@ -311,7 +313,7 @@ describe('resources --', () => {
     });
 
 
-    it('not reflect changes in overview in realtime', () => {
+    xit('not reflect changes in overview in realtime', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
@@ -376,11 +378,11 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(8, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(10, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
     });
@@ -406,7 +408,7 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(9, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(8, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
@@ -439,7 +441,7 @@ describe('resources --', () => {
 
     it('maintype -- should edit a main type resource', () => {
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
@@ -484,34 +486,6 @@ describe('resources --', () => {
     });
 
 
-    // TODO Check if this test can be removed completely. Currently there are no sibling types with differing relations.
-    xit('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'wall_surface');
-        ResourcesPage.performCreateRelation('1', '2',
-            10); // Trägt
-        ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
-
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickTypeSwitcherButton();
-        DoceditPage.clickTypeSwitcherOption('feature-layer');
-        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
-            + 'verloren gehen: Trägt');
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickSaveDocument();
-        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-        ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-    });
-
-
     it('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
@@ -519,5 +493,46 @@ describe('resources --', () => {
         ResourcesPage.clickSelectGeometryType('point');
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
+    });
+
+
+    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
+
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType('point');
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
+        MapPage.clickMapOption('ok');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+    });
+
+
+    it('duplicate a resource', () => {
+
+        ResourcesPage.performCreateResource('resource1', 'feature');
+        ResourcesPage.openEditByDoubleClickResource('resource1');
+        DoceditPage.clickDuplicateDocument();
+        DoceditPage.typeInNumberOfDuplicates('2');
+        DoceditPage.clickConfirmDuplicateInModal();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource3')), delays.ECWaitTime);
+    });
+
+
+    it('create two instances of a new resource', () => {
+
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType();
+        DoceditPage.typeInInputField('identifier', 'resource1');
+        DoceditPage.clickDuplicateDocument();
+        DoceditPage.typeInNumberOfDuplicates('2');
+        DoceditPage.clickConfirmDuplicateInModal();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
     });
 });

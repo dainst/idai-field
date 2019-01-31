@@ -1,5 +1,5 @@
 {
-  "types": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "Floor", "DrillCoreLayer", "Other", "Wall_surface", "Room", "SurveyUnit", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "Image", "Drawing", "Photo"],
+  "types": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "Floor", "DrillCoreLayer", "Other", "Wall_surface", "Area", "SurveyUnit", "Sondage", "Excavation", "BuildingPart", "Room", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "Image", "Drawing", "Photo"],
   "fields": {
     "Project": ["description", "institution", "supervisor", "contactPerson", "contactMail", "projectURI", "externalReference", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"],
     "Operation": ["description", "beginningDate", "endDate", "processor", "supervisor", "campaign", "area", "diaryAbstract"],
@@ -28,17 +28,18 @@
     "Wood": ["color", "typeOfWood", "objectType"],
     "Coin": ["metalMaterial", "manufacturingMethod", "preservedDiameter", "frontSideDescription", "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint", "mintingRuler"],
     "PlasterFragment": ["plasterComponents", "area", "color", "composition", "hasDecoration"],
-    "Mollusk": [],
+    "Mollusk": ["classification"],
     "Inscription": ["processor", "description", "dimensionWidth", "dimensionHeight", "objectType", "condition", "conditionAmount", "conditionComment", "language", "content", "period", "dating", "comparison"],
     "ProcessUnit": ["processor", "date", "description", "operationClassification"],
     "Profile": ["orientation", "dimensionHeight", "dimensionVerticalExtent"],
     "Planum": ["area", "horizontalLocation", "orientation", "planumForm", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent"],
-    "Drilling": ["drillingEquipment", "dimensionDiameter", "dimensionHeight", "dimensionVerticalExtent"],
+    "Drilling": ["description", "drillingEquipment", "dimensionDiameter", "dimensionHeight", "dimensionVerticalExtent"],
     "Sample": ["soilType", "sampleType", "weight", "labNumber"],
-    "SurveyUnit": ["area", "dimensionLength", "dimensionWidth", "hasFinds"],
     "Image": ["description", "draughtsmen", "processor"],
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],
     "Photo": ["originalType"],
-    "BuildingPart": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "orientation", "spatialLocation", "condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight", "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm", "materialCharacteristic", "construction", "constructionDetailsDescription", "descriptionOfBuildingTechnique", "brickwork", "blockTreatment", "blockProcessing", "mark", "markDescription", "bibliography", "findingPlace", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"]
+    "BuildingPart": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "orientation", "spatialLocation", "condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight", "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm", "materialCharacteristic", "construction", "constructionDetailsDescription", "descriptionOfBuildingTechnique", "brickwork", "blockTreatment", "blockProcessing", "mark", "markDescription", "bibliography", "findingPlace", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"],
+    "Area": ["description", "area", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth"],
+    "Excavation": ["isIllegal"]
   }
 }

@@ -86,8 +86,12 @@
       }
     },
     "Mollusk": {
-      "label": "Molluske",
-      "fields": {}
+      "label": "Mollusk",
+      "fields": {
+        "classification": {
+          "label": "Molluske-Klassification"
+        }
+      }
     },
     "Planum": {
       "label": "Planum",
@@ -769,6 +773,10 @@
         "dimensionWidth": {
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
         },
         "objectType": {
           "label": "Ansprache bzw. Art der Inschrift"
@@ -1531,6 +1539,9 @@
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
+        "metalMaterial": {
+          "label": "Material"
+        },
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
@@ -1550,6 +1561,39 @@
     "BuildingPart": {
       "label": "Bauwerksteil",
       "fields": {}
+    },
+    "Area": {
+      "label": "Bereich",
+      "fields": {
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        }
+      }
+    },
+    "Excavation": {
+      "label": "Ausgrabung",
+      "fields": {
+        "isIllegal": {
+          "label": "Raubgrabung"
+        }
+      }
     }
   },
   "relations": {

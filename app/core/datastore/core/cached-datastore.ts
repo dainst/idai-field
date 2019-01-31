@@ -37,8 +37,20 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
      */
     public async create(document: NewDocument, username: string): Promise<T> {
 
-        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.create(document, username));
+    }
+
+
+    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
+
+        for (let document of documents) {
+            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        }
+
+        return (await this.datastore.bulkCreate(documents, username)).map(document => {
+            return this.updateIndex(document);
+        });
     }
 
 
@@ -48,8 +60,20 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
      */
     public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<T> {
 
-        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
+    }
+
+
+    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
+
+        for (let document of documents) {
+            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        }
+
+        return (await this.datastore.bulkUpdate(documents, username)).map(document => {
+            return this.updateIndex(document);
+        });
     }
 
 
@@ -68,7 +92,7 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
      */
     public async remove(document: Document): Promise<void> {
 
-        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
 
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to

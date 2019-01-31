@@ -5,9 +5,6 @@
   "Glass": {
     "constraint": ["color", "decorationTechnique", "formDescription", "manufacturingMethod", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
   },
-  "Drilling": {
-    "constraint": ["drillingEquipment"]
-  },
   "Planum": {
     "constraint": ["horizontalLocation", "orientation", "planumForm"]
   },
@@ -16,9 +13,6 @@
   },
   "Burial": {
     "constraint": ["amountIndividuals", "burialCharacteristic", "burialDocumentation", "graveFeature", "positionArms", "positionLegs", "positioningIndividuals", "material"]
-  },
-  "SurveyUnit": {
-    "constraint": ["hasFinds"]
   },
   "Building": {
     "constraint": ["hasRestoration", "architecturalOrders", "buildingCategory", "buildingCategorySpecific", "buildingTechnique", "buildingType", "condition", "conditionAmount", "context"]
@@ -33,7 +27,7 @@
     "constraint": ["processor", "supervisor", "campaign"]
   },
   "Place": {
-    "constraint": ["placeName", "ancient", "findspotClassification", "siteClassification"]
+    "constraint": ["gazId", "placeName", "ancient", "findspotClassification", "siteClassification"]
   },
   "Layer": {
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]
@@ -97,5 +91,20 @@
   },
   "Metal": {
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
+  },
+  "Area": {
+    "constraint": ["area"]
+  },
+  "Excavation": {
+    "constraint": ["isIllegal"]
+  },
+  "Image": {
+    "constraint": ["draughtsmen", "processor"]
+  },
+  "Drawing": {
+    "constraint": ["drawingMaterial", "drawingTool", "drawingType", "scale"]
+  },
+  "Photo": {
+    "constraint": ["originalType"]
   }
 }

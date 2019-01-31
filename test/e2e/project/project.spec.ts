@@ -1,7 +1,7 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from '../resources/resources.page';
-import {ProjectPage} from '../project.page';
+import {ProjectPage} from './project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
@@ -20,12 +20,14 @@ describe('project --', function() {
 
 
     beforeAll(() => {
+
        removeResourcesStateFile();
     });
 
 
     beforeEach(() => {
-        return ProjectPage.get();
+
+        return ResourcesPage.get('project');
     });
 
 
@@ -72,7 +74,7 @@ describe('project --', function() {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 5);
@@ -94,7 +96,7 @@ describe('project --', function() {
         ResourcesPage.get();
         NavbarPage.clickNavigateToMediaOverview();
         browser.sleep(200);
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         //
 
         browser.sleep(200);
@@ -102,7 +104,7 @@ describe('project --', function() {
         ResourcesPage.performCreateResource('abc_t1', 'trench');
 
         NavbarPage.clickNavigateToBuilding();
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         browser.sleep(delays.shortRest);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
@@ -133,7 +135,7 @@ describe('project --', function() {
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 10);
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

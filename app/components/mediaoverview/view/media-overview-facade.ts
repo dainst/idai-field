@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
-import {MediaState} from './media-state';
+import {MediaFilterOption, MediaState} from './media-state';
 import {MediaDocumentsManager} from './media-documents-manager';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
@@ -48,9 +48,24 @@ export class MediaOverviewFacade {
     }
 
 
-    public getMainTypeDocumentFilterOption() {
+    public getCustomConstraints(): { [name: string]: string } {
 
-        return this.mediaState.getMainTypeDocumentFilterOption();
+        return this.mediaState.getCustomConstraints();
+    }
+
+
+    public setCustomConstraints(customConstraints: { [name: string]: string }) {
+
+        this.mediaState.setCustomConstraints(customConstraints);
+        this.setQueryConstraints();
+
+        this.fetchDocuments();
+    }
+
+
+    public getLinkFilter(): MediaFilterOption {
+
+        return this.mediaState.getLinkFilter();
     }
 
 
@@ -80,9 +95,9 @@ export class MediaOverviewFacade {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: string) {
+    public setLinkFilter(filterOption: MediaFilterOption) {
 
-        this.mediaState.setMainTypeDocumentFilterOption(filterOption);
+        this.mediaState.setLinkFilter(filterOption);
         this.setQueryConstraints();
 
         this.fetchDocuments();
@@ -91,7 +106,13 @@ export class MediaOverviewFacade {
 
     public select(document: IdaiFieldMediaDocument) {
 
-        return this.mediaDocumentsManager.select(document);
+        this.mediaDocumentsManager.select(document);
+    }
+
+
+    public toggleSelected(document: IdaiFieldMediaDocument) {
+
+        this.mediaDocumentsManager.toggleSelected(document);
     }
 
 
@@ -141,19 +162,17 @@ export class MediaOverviewFacade {
 
         const query: Query = this.mediaState.getQuery();
 
-        switch(this.mediaState.getMainTypeDocumentFilterOption()) {
+        query.constraints = this.getCustomConstraints();
 
+        switch(this.mediaState.getLinkFilter()) {
             case 'UNLINKED':
-                this.mediaState.getQuery().constraints = { 'depicts:exist': 'UNKNOWN' };
+                query.constraints['depicts:exist'] = 'UNKNOWN';
                 break;
-
             case 'LINKED':
-                this.mediaState.getQuery().constraints = { 'depicts:exist': 'KNOWN' };
+                query.constraints['depicts:exist'] = 'KNOWN';
                 break;
-
-            // case 'ALL':
-            default:
-                delete query.constraints;
+            case 'ALL':
+                delete query.constraints['depicts:exist'];
         }
     }
 }

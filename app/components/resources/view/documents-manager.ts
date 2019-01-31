@@ -2,7 +2,7 @@ import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
@@ -10,6 +10,7 @@ import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 
 /**
@@ -27,6 +28,7 @@ export class DocumentsManager {
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
     private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
+    private childrenCountMap: { [resourceId: string]: number } = {};
 
     private currentQueryId: string;
 
@@ -34,11 +36,12 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private operationTypeDocumentsManager: OperationsManager,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading
+        private loading: Loading,
+        private indexFacade: IndexFacade
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
     }
@@ -47,6 +50,8 @@ export class DocumentsManager {
     public getDocuments = () => this.documents;
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
+
+    public getChildrenCount = (document: IdaiFieldDocument) => this.childrenCountMap[document.resource.id];
 
     public deselectionNotifications = (): Observable<Document> =>
         ObserverUtil.register(this.deselectionObservers);
@@ -111,9 +116,8 @@ export class DocumentsManager {
     public deselect() {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
-
             this.selectAndNotify(undefined);
-            this.documents = this.documents.filter(hasId);
+            this.removeNewDocument();
             this.resourcesStateManager.setActiveDocumentViewTab(undefined);
         }
     }
@@ -126,15 +130,21 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(resourceId: string): Promise<any> {
+    public removeNewDocument() {
+
+        this.documents = this.documents.filter(hasId);
+    }
+
+
+    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true): Promise<any> {
 
         this.documents = this.documents.filter(hasId);
 
         try {
-            const documentToSelect = await this.datastore.get(resourceId);
+            const documentToSelect: IdaiFieldDocument = await this.datastore.get(resourceId);
             this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-            if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
+            if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
                 await this.populateDocumentList();
             }
@@ -158,6 +168,8 @@ export class DocumentsManager {
 
         this.currentQueryId = new Date().toISOString();
         const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
+
+        await this.updateChildrenCountMap(result.documents);
 
         if (this.loading) this.loading.stop();
         if (result.queryId !== this.currentQueryId) return;
@@ -193,6 +205,22 @@ export class DocumentsManager {
                 )
             )
         );
+    }
+
+
+    private async updateChildrenCountMap(documents: Array<IdaiFieldDocument>) {
+
+        for (let document of documents) {
+           this.childrenCountMap[document.resource.id] = this.indexFacade.getCount(
+               'liesWithin:contain', document.resource.id
+           );
+        }
+    }
+
+
+    private async isDocumentInList(document: IdaiFieldDocument): Promise<boolean> {
+
+        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(document)) !== undefined;
     }
 
 

@@ -77,7 +77,7 @@
                         {{getTargetIdentifiers(document.resource.relations[field.name])}}
                     </div>
                     <div *ngIf="!document.resource.relations[field.name]">
-
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
                     </div>
                 </div>
             </div>

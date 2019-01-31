@@ -6,6 +6,8 @@ import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 import {MediaResourcePickerComponent} from '../widgets/media-resource-picker.component';
+import {SortUtil} from '../../../core/util/sort-util';
+import {DoceditComponent} from '../docedit.component';
 
 @Component({
     selector: 'docedit-media-tab',
@@ -29,6 +31,7 @@ export class DoceditMediaTabComponent {
 
     constructor(private datastore: IdaiFieldMediaDocumentReadDatastore,
                 private modalService: NgbModal,
+                private doceditComponent: DoceditComponent,
                 private i18n: I18n) {}
 
 
@@ -74,11 +77,6 @@ export class DoceditMediaTabComponent {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
 
-        if (targetsToRemove.length > 0) {
-            // TODO adjust
-            // this.documentEditChangeMonitor.setChanged();
-        }
-
         if (isDepictedIn.length == 0) {
             this.document.resource.relations['isDepictedIn'] = [];
             this.documents = [];
@@ -107,6 +105,9 @@ export class DoceditMediaTabComponent {
 
         Promise.all(promises as any).then(docs => {
             this.documents = docs as any;
+            this.documents.sort((a: IdaiFieldMediaDocument, b: IdaiFieldMediaDocument) => {
+                return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+            });
             this.clearSelection();
         });
     }
@@ -136,20 +137,25 @@ export class DoceditMediaTabComponent {
     }
 
 
-    public openMediaResourcePicker() {
+    public async openMediaResourcePicker() {
 
-        const modal = this.modalService.open(MediaResourcePickerComponent, { size: 'lg' });
-        modal.componentInstance.setDocument(this.document);
+        this.doceditComponent.subModalOpened = true;
 
-        modal.result.then(
-            (selectedMediaResources: Array<IdaiFieldMediaDocument>) => {
-                this.addIsDepictedInRelations(selectedMediaResources);
+        if (document.activeElement) (document.activeElement as HTMLElement).blur();
 
-                // this.documentEditChangeMonitor.setChanged();
-                // TODO adjust
-            }
-        ).catch(() => {
-            // Cancel
-        });
+        let mediaResourcePickerModal = this.modalService.open(
+            MediaResourcePickerComponent, { size: 'lg', keyboard: false }
+        );
+        mediaResourcePickerModal.componentInstance.setDocument(this.document);
+
+        try {
+            const selectedMediaResources: Array<IdaiFieldMediaDocument>
+                = await mediaResourcePickerModal.result;
+            this.addIsDepictedInRelations(selectedMediaResources);
+        } catch(err) {
+            // Media resource picker modal has been canceled
+        } finally {
+            this.doceditComponent.subModalOpened = false;
+        }
     }
 }

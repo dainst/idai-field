@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
-    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
+    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -32,14 +32,15 @@ import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
 import {PersistenceManager} from './core/model/persistence-manager';
 import {Validator} from './core/model/validator';
+import {ImportValidator} from './core/import/exec/import-validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
 import {TypeUtility} from './core/model/type-utility';
 import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
-import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
-import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
+import {FulltextIndex} from './core/datastore/index/fulltext-index';
+import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
 import {M} from './components/m';
@@ -47,13 +48,16 @@ import {SettingsSerializer} from './core/settings/settings-serializer';
 import {IndexerConfiguration} from './indexer-configuration';
 import {SynchronizationStatus} from './core/settings/synchronization-status';
 import {Translations} from './translations';
+import {ExportModule} from './components/export/export.module';
+import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
+import {FieldDatastore} from './core/datastore/field/field-datastore';
 
 
 const remote = require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
-let fulltextIndexer: FulltextIndexer|undefined = undefined;
-let constraintIndexer: ConstraintIndexer|undefined = undefined;
+let fulltextIndex: FulltextIndex|undefined = undefined;
+let constraintIndex: ConstraintIndex|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
 
 
@@ -77,6 +81,7 @@ registerLocaleData(localeDe, 'de');
         IdaiWidgetsModule,
         WidgetsModule,
         ImportModule,
+        ExportModule,
         BackupModule,
         DatastoreModule,
         MatrixModule
@@ -88,6 +93,7 @@ registerLocaleData(localeDe, 'de');
         TaskbarConflictsComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
+        ProjectsModalComponent,
         HelpComponent
     ],
     providers: [
@@ -111,10 +117,10 @@ registerLocaleData(localeDe, 'de');
                     .then(configuration => {
                         projectConfiguration = configuration;
 
-                        const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+                        const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
                             IndexerConfiguration.configureIndexers(projectConfiguration);
-                        constraintIndexer = createdConstraintIndexer;
-                        fulltextIndexer = createdFulltextIndexer;
+                        constraintIndex = createdConstraintIndex;
+                        fulltextIndex = createdFulltextIndex;
                         return createdIndexFacade;
                      }).then(facade => {
                          indexFacade = facade;
@@ -155,24 +161,24 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         {
-            provide: FulltextIndexer,
+            provide: FulltextIndex,
             useFactory: () => {
-                if (!fulltextIndexer) {
+                if (!fulltextIndex) {
                     console.error('fulltext indexer has not yet been provided');
                     throw 'fulltext indexer has not yet been provided';
                 }
-                return fulltextIndexer;
+                return fulltextIndex;
             },
             deps: []
         },
         {
-            provide: ConstraintIndexer,
+            provide: ConstraintIndex,
             useFactory: () => {
-                if (!constraintIndexer) {
+                if (!constraintIndex) {
                     console.error('constraint indexer has not yet been provided');
                     throw 'constraint indexer has not yet been provided';
                 }
-                return constraintIndexer;
+                return constraintIndex;
             },
             deps: []
         },
@@ -188,10 +194,28 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         PersistenceManager,
-        Validator,
+        {
+            provide: Validator,
+            useFactory: (
+                idaiFieldDocumentDatastore: FieldDatastore,
+                projectConfiguration: ProjectConfiguration,
+                typeUtility: TypeUtility) => {
+
+                return new Validator(
+                    projectConfiguration,
+                    (q: Query) => idaiFieldDocumentDatastore.find(q),
+                    typeUtility
+                )
+            },
+            deps: [FieldDatastore, ProjectConfiguration, TypeUtility]
+        },
+        ImportValidator,
         { provide: MD, useClass: M},
         DoceditActiveTabService,
         SynchronizationStatus
+    ],
+    entryComponents: [
+        ProjectsModalComponent
     ],
     bootstrap: [ AppComponent ]
 })

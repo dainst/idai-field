@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration, FindResult} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
 import {TypeUtility} from '../../../../app/core/model/type-utility';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
@@ -43,8 +43,7 @@ describe('Validator', () => {
 
     it('should report nothing', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+        const find = () => Promise.resolve({totalCount: 0, documents: []});
 
         const doc = {
             resource: {
@@ -56,22 +55,21 @@ describe('Validator', () => {
                 },
             }
         };
-        await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
+        await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
+            .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
 
     it('should report missing isRecordedInTarget', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({documents: []}));
+        const find = () => Promise.resolve({ documents: [] } as FindResult);
 
         const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, false, false, true);
+            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
+                .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
@@ -80,11 +78,10 @@ describe('Validator', () => {
     });
 
 
-    it('should report duplicate id', async done => {
+    it('should report duplicate identifier', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(
-            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]}));
+        const find = () =>
+            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]} as unknown as FindResult);
 
         const doc = {
             resource: {
@@ -92,202 +89,11 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, false, false, true);
+            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration)).assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ValidationErrors.IDENTIFIER_EXISTS, 'eins']);
+            expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);
         }
         done();
-    });
-
-
-
-    it('should report nothing when omitting optional property', async done => {
-
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: 'm',
-                relations: {},
-            }
-        };
-
-        new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
-    });
-
-
-    it('should report error when omitting mandatory property', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                relations: {},
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
-            done();
-        });
-    });
-
-
-    it('should report error when leaving mandatory property empty', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: '',
-                relations: {},
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
-                done();
-            });
-    });
-
-
-    it('should report a missing field definition', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                a: 'b',
-                mandatory: 'm',
-                relations: {},
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a']);
-            done();
-        });
-    });
-
-
-    it('should report missing field definitions', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                a: 'b',
-                b: 'a',
-                mandatory: 'm',
-                relations: {},
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a, b']);
-            done();
-        });
-    });
-
-
-    it('should report a missing relation field definition', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T2',
-                relations: {
-                    isRelatedTo: ['2']
-                }
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
-                    'isRelatedTo']);
-                done();
-            });
-    });
-
-
-    it('should report missing relation field definitions', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T2',
-                relations: {
-                    isRelatedTo: ['2'],
-                    isDepictedIn: ['3']
-                }
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
-                    'isRelatedTo, isDepictedIn']);
-                done();
-            });
-    });
-
-
-    it('should report invalid numeric field', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: 'm',
-                number1: 'ABC',
-                relations: {}
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
-                done();
-            });
-    });
-
-
-    it('should report invalid numeric fields', done => {
-
-        const doc = {
-            resource: {
-                id: '1',
-                type: 'T',
-                mandatory: 'm',
-                number1: 'ABC',
-                number2: 'DEF',
-                relations: {}
-            }
-        };
-
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
-                done();
-            });
     });
 });

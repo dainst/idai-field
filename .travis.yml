@@ -9,7 +9,6 @@ matrix:
   
 cache:
   directories:
-  - node_modules
   - "$HOME/.electron"
   - "$HOME/.cache"
   - "$HOME/Library/Caches/electron"
@@ -31,7 +30,7 @@ install:
 
 script:
 - npm rebuild node-sass
-- npm run build
+- npm run build-all
 - npm run package-mac
 
 notifications:

@@ -70,7 +70,11 @@
     },
     "Mollusk": {
       "label": "Mollusk",
-      "fields": {}
+      "fields": {
+        "classification": {
+          "label": "Mollusk classification"
+        }
+      }
     },
     "Planum": {
       "label": "Planum",
@@ -660,6 +664,9 @@
         "dimensionWidth": {
           "label": "Width"
         },
+        "dimensionHeight": {
+          "label": "Height"
+        },
         "objectType": {
           "label": "Designation or type of inscription"
         }
@@ -864,7 +871,7 @@
         "publicationDatingStratigraphy": {
           "label": "Dating (stratigraphy)"
         },
-        "publication": {
+        "publicationRemark": {
           "label": "Publication remark"
         },
         "spatialLocation": {
@@ -1325,6 +1332,9 @@
         "manufacturingMethod": {
           "label": "Manufacturing method"
         },
+        "metalMaterial": {
+          "label": "Material"
+        },
         "objectType": {
           "label": "Designation or type of the object"
         },
@@ -1342,6 +1352,34 @@
     "BuildingPart": {
       "label": "Building part",
       "fields": {}
+    },
+    "Area": {
+      "label": "Area",
+      "fields": {
+        "description": {
+          "label": "Description"
+        },
+        "area": {
+          "label": "Area in m2"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        }
+      }
+    },
+    "Excavation": {
+      "label": "Excavation",
+      "fields": {
+        "isIllegal": {
+          "label": "Illegal excavation"
+        }
+      }
     }
   },
   "relations": {

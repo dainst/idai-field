@@ -1,0 +1,241 @@
+{
+"Pottery": {
+  "parent": "Find",
+  "fields": {
+    "hasCoat": {
+      "inputType": "boolean"
+    },
+    "decorationDescription": {
+      "inputType": "input"
+    },
+    "vesselpart": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "wall sherd",
+        "rim sherd",
+        "base sherd",
+        "handle",
+        "spout",
+        "lid",
+        "shoulder",
+        "other"
+      ]
+    },
+    "firing": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "normal",
+        "over fired",
+        "semi melted",
+        "waste"
+      ]
+    },
+    "condition": {
+      "inputType": "dropdown",
+      "valuelist": [
+        "well preserved",
+        "eroded"
+      ]
+    },
+    "clayColorInside": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "beige",
+        "pale-",
+        "blue",
+        "brown",
+        "creme",
+        "dark-",
+        "yellow",
+        "grey",
+        "green",
+        "bright-",
+        "luminous-",
+        "ocher",
+        "orange",
+        "pink",
+        "red",
+        "black",
+        "turquoise",
+        "violet",
+        "white"
+      ]
+    },
+    "clayColorOutside": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "beige",
+        "pale-",
+        "blue",
+        "brown",
+        "creme",
+        "dark-",
+        "yellow",
+        "grey",
+        "green",
+        "bright-",
+        "luminous-",
+        "ocher",
+        "orange",
+        "pink",
+        "red",
+        "black",
+        "turquoise",
+        "violet",
+        "white"
+      ]
+    },
+    "decorationTechnique": {
+      "inputType": "dropdown",
+      "valuelist": [
+        "painting",
+        "decorative band (applied)",
+        "relief decor",
+        "carving",
+        "stamp",
+        "stamp decor",
+        "swab decor",
+        "wartdecor",
+        "comb incised"
+      ]
+    },
+    "manufacturingMethod": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "turned (on a wheel)",
+        "handformed",
+        "turned (wheel) into form",
+        "tournette",
+        "bulit up"
+      ]
+    },
+    "temper": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "mica",
+        "lime",
+        "mineral particles",
+        "muschelgrus",
+        "organic particles",
+        "quartz",
+        "fire clay",
+        "miscellaneous",
+        "small stones",
+        "straw/chaff",
+        "vacua",
+        "volcanic particles",
+        "mineral-straw/chaff",
+        "sand"
+      ]
+    },
+    "temperAmount": {
+      "inputType": "radio",
+      "valuelist": [
+        "no inclusions",
+        "medium",
+        "not visible",
+        "very frequent",
+        "occasional",
+        "frequent",
+        "sparse"
+      ]
+    },
+    "drawingnumber": {
+      "inputType": "input"
+    },
+    "temperParticles": {
+      "inputType": "radio",
+      "valuelist": [
+        "fine",
+        "coarse",
+        "medium",
+        "medium-fine",
+        "very-fine",
+        "very-coarse"
+      ]
+    },
+    "temperTypeClay": {
+      "inputType": "input"
+    },
+    "vesselForm": {
+      "inputType": "dropdown",
+      "valuelist": [
+        "cup",
+        "lid",
+        "lid vessel",
+        "bottle",
+        "closed vessel",
+        "pot",
+        "casserole",
+        "cooking pot",
+        "jug",
+        "bowl",
+        "open vessel",
+        "pan",
+        "incense burner",
+        "plate",
+        "saucer",
+        "unknown",
+        "vascular, stock",
+        "basin"
+      ]
+    },
+    "coatInsideType": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "other",
+        "painted",
+        "smoothed",
+        "glazed",
+        "polished",
+        "wet smoothed",
+        "slip"
+      ]
+    },
+    "coatOutsideType": {
+      "inputType": "checkboxes",
+      "valuelist": [
+        "other",
+        "painted",
+        "smoothed",
+        "glazed",
+        "polished",
+        "wet smoothed",
+        "slip"
+      ]
+    }
+    }
+  },
+  "Stone": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Andesite",
+          "Basalt",
+          "Feldspar",
+          "Flint",
+          "Mica",
+          "Granite",
+          "Lime",
+          "Lime mortar",
+          "Limestone",
+          "Calcite",
+          "Chalk",
+          "Marble",
+          "Porphyry",
+          "Quartz",
+          "Sandstone",
+          "Sinter",
+          "Trachyt",
+          "Tuff",
+          "Calzedon",
+          "Dolomite",
+          "Carnelian"
+        ]
+      }
+      }
+      }
+}

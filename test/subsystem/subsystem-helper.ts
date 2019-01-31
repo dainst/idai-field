@@ -1,9 +1,10 @@
-import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document} from 'idai-components-2';
-import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
-import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
+import * as PouchDB from 'pouchdb';
+import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
+import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
+import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {TypeUtility} from '../../app/core/model/type-utility';
-import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
+import {FieldTypeConverter} from '../../app/core/datastore/field/field-type-converter.service';
 import {IndexerConfiguration} from '../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
@@ -20,7 +21,7 @@ import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
-import * as PouchDB from 'pouchdb';
+
 
 class IdGenerator {
     public generateId() {
@@ -75,7 +76,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const {settingsService, projectConfiguration} = await setupSettingsService(
         pouchdbmanager, projectName, startSync);
 
-    const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+    const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
         IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(
@@ -87,11 +88,11 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeUtility = new TypeUtility(projectConfiguration);
 
-    const typeConverter = new IdaiFieldTypeConverter(typeUtility);
+    const typeConverter = new FieldTypeConverter(typeUtility);
 
-    const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+    const idaiFieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
-    const idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
+    const idaiFieldImageDocumentDatastore = new ImageDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
@@ -117,7 +118,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         idaiFieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
-        undefined
+        undefined,
+        createdIndexFacade
     );
 
     const persistenceManager = new PersistenceManager(
@@ -129,7 +131,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility),
+        new Validator(projectConfiguration, (q: Query) => idaiFieldDocumentDatastore.find(q), typeUtility),
         undefined,
         undefined,
         typeUtility,

@@ -9,13 +9,16 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
+import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-view.html'
+    templateUrl: './image-view.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -35,7 +38,7 @@ export class ImageViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private datastore: IdaiFieldImageDocumentReadDatastore,
+        private datastore: ImageReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,
@@ -53,6 +56,12 @@ export class ImageViewComponent implements OnInit {
 
         this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.deselect();
     }
 
 
@@ -79,9 +88,6 @@ export class ImageViewComponent implements OnInit {
             if (result.document) this.image.document = result.document;
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
-
-            // this.documentEditChangeMonitor.reset();
-            // TODO reset document
             if (closeReason === 'deleted') await this.deselect();
         }
     }

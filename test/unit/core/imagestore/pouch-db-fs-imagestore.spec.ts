@@ -6,6 +6,7 @@ import {IndexFacade} from '../../../../app/core/datastore/index/index-facade';
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
+import {ConstraintIndex} from '../../../../app/core/datastore/index/constraint-index';
 
 /**
  * @author Sebastian Cuy
@@ -37,12 +38,14 @@ describe('PouchDbFsImagestore', () => {
         mockConverter.convert.and.callFake(data => { return data; });
         const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
         mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
-        const mockConstraintIndexer = jasmine.createSpyObj('mockConstraintIndexer',['update', 'clear']);
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
         manager = new PouchdbManager();
 
+        const mockConstraintIndexer = ConstraintIndex.make(
+            {}, {} as any);
+
         await manager.loadProjectDb('unittest', undefined);
-        await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer));
+        await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined));
 
         store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager.getDbProxy());
         await store.setPath('store/', 'unittest');

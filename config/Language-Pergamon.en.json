@@ -94,15 +94,6 @@
       "fields": {
         "hasFinds": {
           "label": "Finds"
-        },
-        "date": {
-          "label": "Date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
         }
       }
     },
@@ -252,14 +243,6 @@
         }
       }
     },
-    "Area": {
-      "label": "Area",
-      "fields": {
-        "description": {
-          "label": "Description"
-        }
-      }
-    },
     "Excavation": {
       "label": "Excavation",
       "fields": {
@@ -272,17 +255,8 @@
         "diary": {
           "label": "Diary"
         },
-        "description": {
-          "label": "Description"
-        },
-        "hasDisturbance": {
-          "label": "Disturbance"
-        },
         "processor": {
           "label": "Processor"
-        },
-        "color": {
-          "label": "Color and intensity"
         },
         "period": {
           "label": "Period"
@@ -290,20 +264,14 @@
         "dating": {
           "label": "Dating"
         },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
+        "color": {
+          "label": "Color and intensity"
         },
         "featureBorders": {
           "label": "Borders"
         },
-        "isIllegal": {
-          "label": "Illegal excavation"
+        "hasDisturbance": {
+          "label": "Disturbance"
         }
       }
     },

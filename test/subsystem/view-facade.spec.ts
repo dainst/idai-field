@@ -352,6 +352,15 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
+    it('operations view: update children count map when populating document list', async done => {
+
+        await viewFacade.selectView('excavation');
+        expect(viewFacade.getChildrenCount(featureDocument1)).toBe(2);
+        expect(viewFacade.getChildrenCount(featureDocument2)).toBe(0);
+        done();
+    });
+
+
     it('operations view: select operations type document', async done => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');

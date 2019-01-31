@@ -27,11 +27,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
 
     // Model Package
-    public static MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS = 'model.validation.error.identifierExists';
-    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'model.validation.error.missingCoordinates';
-    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
-    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
-    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'model.validation.error.unsupportedGeometryType';
+    public static MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS = 'model.validation.error.identifierExists';
+    public static MODEL_VALIDATION_MISSING_COORDINATES = 'model.validation.error.missingCoordinates';
+    public static MODEL_VALIDATION_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
+    public static MODEL_VALIDATION_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
+    public static MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE = 'model.validation.error.unsupportedGeometryType';
 
     // Backup Package
     public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
@@ -42,46 +42,76 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
-    // Import Package
-    public static IMPORT_SUCCESS_SINGLE= 'importer.success.single';
-    public static IMPORT_SUCCESS_MULTIPLE= 'importer.success.multiple';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer.warning.geojsonDuplicateIdentifier';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer.warning.geojsonDuplicateIdentifiers';
-    public static IMPORT_ERROR_GENERIC_START_ERROR= 'importer.error.genericStartError';
-    public static IMPORT_ERROR_FILE_UNREADABLE = 'importer.error.fileUnreadable';
-    public static IMPORT_ERROR_INVALID_JSON = 'importer.error.invalidJson';
-    public static IMPORT_ERROR_INVALID_JSONL = 'importer.error.invalidJsonl';
-    public static IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT = 'importer.error.invalidGeojsonImportStruct';
-    public static IMPORT_ERROR_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
-    public static IMPORT_ERROR_IDENTIFIER_FORMAT = 'importer.error.identifierFormat';
-    public static IMPORT_ERROR_INVALID_CSV = 'importer.error.invalidCsv';
-    public static IMPORT_ERROR_GENERIC_CSV_ERROR = 'importer.error.genericCsvError';
-    public static IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING = 'importer.error.mandatoryCsvFieldMissing';
-    public static IMPORT_ERROR_GENERIC_DATASTORE_ERROR = 'importer.error.genericDatastoreError';
-    public static IMPORT_ERROR_INVALID_GEOMETRY = 'importer.error.invalidGeometry';
-    public static IMPORT_ERROR_ROLLBACK_ERROR = 'importer.error.rollbackError';
-    public static IMPORT_ERROR_MISSING_RESOURCE = 'importer.error.missingResource';
-    public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
-    public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
-    public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
-    public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
-    public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
-    public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import.validation.error.missingProperty';
-    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
-    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
-    public static IMPORT_VALIDATION_ERROR_INVALID_TYPE = 'import.validation.error.invalidType';
-    public static IMPORT_VALIDATION_ERROR_INVALID_FIELD = 'import.validation.error.invalidField';
-    public static IMPORT_VALIDATION_ERROR_INVALID_FIELDS = 'import.validation.error.invalidFields';
-    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD = 'import.validation.error.invalidRelationField';
-    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'import.validation.error.invalidRelationFields';
-    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import.validation.error.invalidNumericValue';
-    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import.validation.error.invalidNumericValues';
+    // ImportPackage - ParserErrors
+    public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
+    public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
+    public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
+    public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
+    public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
+    public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
+    public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
+    public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
+    public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
+    public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
+    public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
+
+    // ImportPackage - ReaderErrors
+    public static IMPORT_READER_GENERIC_START_ERROR = 'M.Import.ReaderErrors.genericStartError';
+    public static IMPORT_READER_FILE_UNREADABLE = 'M.Import.ReaderErrors.fileUnreadable';
+    public static IMPORT_READER_GENERIC_DATASTORE = 'M.Import.ReaderErrors..genericDatastoreError';
+    public static IMPORT_READER_ROLLBACK = 'M.Import.ReaderErrors.rollbackError';
+    public static IMPORT_READER_INVALID_OPERATION_RESOURCE = 'M.Import.ReaderErrors.invalidOperationResource';
+    public static IMPORT_READER_SHAPEFILE_READ_ERROR = 'M.Import.ReaderErrors.shapefile.readError';
+    public static IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'M.Import.ReaderErrors.shapefile.unsupportedGeometryType';
+    public static IMPORT_READER_SHAPEFILE_JSONL_WRITE = 'M.Import.ReaderErrors.shapefile.jsonlWriteError';
+
+    // ImportPackage ValidationErrors
+    public static IMPORT_VALIDATION_MISSING_PROPERTY = 'M.Import.ValidationErrors.missingProperty';
+    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'M.Import.ValidationErrors.noRecordedin';
+    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'M.Import.ValidationErrors.noRecordedinTarget';
+    public static IMPORT_VALIDATION_ERROR_INVALID_FIELD = 'M.Import.ValidationErrors.invalidField';
+    public static IMPORT_VALIDATION_ERROR_INVALID_FIELDS = 'M.Import.ValidationErrors.invalidFields';
+    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD = 'M.Import.ValidationErrors.invalidRelationField';
+    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'M.Import.ValidationErrors.invalidRelationFields';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'M.Import.ValidationErrors.invalidNumericValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
+
+    // Import Package - ImportErrors
+    public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
+    public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
+    public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
+    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.operationsNotAllowed';
+    public static IMPORT_VALIDATION_INVALID_TYPE = 'M.Import.ImportErrors.invalidType';
+    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.Import.ImportErrors.duplicateIdentifier';
+    public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
+    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
+    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.typeOnlyAllowedOnUpdate';
+    public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
+    public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
+    public static IMPORT_SUCCESS_MULTIPLE = 'M.Import.success.multiple';
+    public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
+    public static IMPORT_EXEC_NOT_INTERRELATED = 'M.Import.ImportErrors.notInterrelated';
+    public static IMPORT_EXEC_EMPTY_RELATION = 'M.Import.ImportErrors.emptyRelation';
+    public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.Import.ImportErrors.liesWithinRecordedInMismatch';
+    public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
+    public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
+    public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
+
+    // Export Package
+    public static EXPORT_SUCCESS = 'export.success';
+    public static EXPORT_ERROR_GENERIC = 'export.error.generic';
+    public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
+    public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
+    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
+    public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
+    public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
 
     // Datastore Package
     public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
 
     // Docedit Package
     public static DOCEDIT_SUCCESS_SAVE = 'docedit.success.save';
+    public static DOCEDIT_SUCCESS_DUPLICATE = 'docedit.success.duplicate';
     public static DOCEDIT_SUCCESS_DELETE = 'docedit.success.delete';
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
     public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit.warning.typeChange.fields';
@@ -90,6 +120,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
@@ -108,7 +140,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_WRITE = 'imagestore.error.write';
     public static IMAGESTORE_ERROR_DELETE = 'imagestore.error.delete';
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'imagestore.error.invalidWorldfile';
-    public static IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS = 'imagestore.dropArea.error.unsupportedExtensions';
 
     // Resources Package
     public static RESOURCES_SUCCESS_FILE_UPLOADED = 'resources.success.fileUploaded';
@@ -144,7 +175,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     constructor(private i18n: I18n) {
 
         super();
-
+        this.msgs[M.IMPORT_ERROR_NOT_UPDATED] = {
+            content: i18n({
+                id: 'messages.import.error.notupdated',
+                value: 'Fehlgeschlagene Zuordnung per Bezeichner \'[0]\'. Ressource nicht vorhanden.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.MESSAGES_ERROR_UNKNOWN_MESSAGE] = {
             content: i18n({
                 id: 'messages.messages.error.unknownMessage',
@@ -271,7 +310,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS] = {
+        this.msgs[M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS] = {
             content: i18n({
                 id: 'messages.model.validation.error.identifierExists',
                 value: 'Der Ressourcen-Bezeichner [0] existiert bereits.'
@@ -280,7 +319,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [''],
             hidden: false
         };
-        this.msgs[M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES] = {
+        this.msgs[M.MODEL_VALIDATION_MISSING_COORDINATES] = {
             content: i18n({
                 id: 'messages.model.validation.error.missingCoordinates',
                 value: 'Die Koordinaten einer Geometrie sind nicht definiert.'
@@ -289,7 +328,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES] = {
+        this.msgs[M.MODEL_VALIDATION_INVALID_COORDINATES] = {
             content: i18n({
                 id: 'messages.model.validation.error.invalidCoordinates',
                 value: 'Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.'
@@ -298,7 +337,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE] = {
+        this.msgs[M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE] = {
             content: i18n({
                 id: 'messages.model.validation.error.missingGeometryType',
                 value: 'Der Typ einer Geometrie ist nicht definiert.'
@@ -307,7 +346,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE] = {
+        this.msgs[M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE] = {
             content: i18n({
                 id: 'messages.model.validation.error.unsupportedGeometryType',
                 value: 'Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.'
@@ -338,25 +377,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 })],
             hidden: false
         };
-        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.warning.geojson.duplicateIdentifier',
-                value: 'In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.'
-            }),
-            level: 'warning',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS] = {
-            content: i18n({
-                id: 'messages.import.warning.geojson.duplicateIdentifiers',
-                value: 'In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.'
-            }),
-            level: 'warning',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_ERROR_GENERIC_START_ERROR] = {
+        this.msgs[M.IMPORT_READER_GENERIC_START_ERROR] = {
             content: i18n({
                 id: 'messages.import.error.genericStartError',
                 value: 'Import kann nicht gestartet werden.'
@@ -365,7 +386,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_FILE_UNREADABLE] = {
+        this.msgs[M.IMPORT_READER_FILE_UNREADABLE] = {
             content: i18n({
                 id: 'messages.import.error.fileUnreadable',
                 value: 'Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.',
@@ -374,7 +395,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [''],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_JSON] = {
+        this.msgs[M.IMPORT_PARSER_INVALID_JSON] = {
             content: i18n({
                 id: 'messages.import.error.invalidJson',
                 value: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].'
@@ -383,7 +404,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_JSONL] = {
+        this.msgs[M.IMPORT_PARSER_INVALID_JSONL] = {
             content: i18n({
                 id: 'messages.import.error.invalidJsonl',
                 value: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.'
@@ -392,7 +413,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT] = {
+        this.msgs[M.IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT] = {
             content: i18n({
                 id: 'messages.import.error.invalidGeojsonImportStruct',
                 value: 'Fehlerhafte GeoJSON-Importstruktur. Grund: [0].'
@@ -401,7 +422,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_MISSING_IDENTIFIER] = {
+        this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER] = {
             content: i18n({
                 id: 'messages.import.error.missingIdentifier',
                 value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.'
@@ -410,7 +431,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_IDENTIFIER_FORMAT] = {
+        this.msgs[M.IMPORT_PARSER_ID_MUST_NOT_BE_SET] = {
+            content: i18n({
+                id: 'messages.import.error.parser.idnottobeset',
+                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_IDENTIFIER_FORMAT] = {
             content: i18n({
                 id: 'messages.import.error.identifierFormat',
                 value: 'Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.'
@@ -419,7 +449,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_CSV] = {
+        this.msgs[M.IMPORT_PARSER_INVALID_CSV] = {
             content: i18n({
                 id: 'messages.import.error.invalidCsv',
                 value: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.'
@@ -428,7 +458,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_GENERIC_CSV_ERROR] = {
+        this.msgs[M.IMPORT_PARSER_GENERIC_CSV_ERROR] = {
             content: i18n({
                 id: 'messages.import.error.genericCsvError',
                 value: 'Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.'
@@ -437,7 +467,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING] = {
+        this.msgs[M.IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING] = {
             content: i18n({
                 id: 'messages.import.error.mandatoryCsvFieldMissing',
                 value: 'Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld \'[1]\'.'
@@ -446,7 +476,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?', '?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_OPERATION_RESOURCE] = {
+        this.msgs[M.IMPORT_READER_INVALID_OPERATION_RESOURCE] = {
             content: i18n({
                 id: 'messages.import.error.invalidOperationResource',
                 value: 'Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.'
@@ -455,7 +485,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?', '?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_OPERATIONS_NOT_ALLOWED] = {
+        this.msgs[M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED] = {
             content: i18n({
                 id: 'messages.import.error.operationsNotAllowed',
                 value: 'Wenn die Option \'Daten einer Maßnahme zuordnen\' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.'
@@ -464,7 +494,25 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_GENERIC_DATASTORE_ERROR] = {
+        this.msgs[M.IMPORT_EXEC_NO_LIES_WITHIN_SET] = {
+            content: i18n({
+                id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
+                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'liesWithin\'-Zuordnungen haben.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER] = {
+            content: i18n({
+                id: 'messages.import.error.duplicateidentifier',
+                value: 'Mehrfach vorhandener Identifier in Importdatei: \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [ '?' ],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_READER_GENERIC_DATASTORE] = {
             content: i18n({
                 id: 'messages.import.error.genericDatastoreError',
                 value: 'Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.'
@@ -473,7 +521,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ '?' ],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_INVALID_GEOMETRY] = {
+        this.msgs[M.IMPORT_PARSER_INVALID_GEOMETRY] = {
             content: i18n({
                 id: 'messages.import.error.invalidGeometry',
                 value: 'Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].'
@@ -482,7 +530,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_ROLLBACK_ERROR] = {
+        this.msgs[M.IMPORT_READER_ROLLBACK] = {
             content: i18n({
                 id: 'messages.import.error.rollbackError',
                 value: 'Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.'
@@ -491,16 +539,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_MISSING_RESOURCE] = {
-            content: i18n({
-                id: 'messages.import.error.missingResource',
-                value: 'Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.'
-            }),
-            level: 'danger',
-            params: ['?'],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_ERROR_MISSING_RELATION_TARGET] = {
+        this.msgs[M.IMPORT_EXEC_MISSING_RELATION_TARGET] = {
             content: i18n({
                 id: 'messages.import.error.missingRelationTarget',
                 value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.'
@@ -509,7 +548,61 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE] = {
+        this.msgs[M.IMPORT_EXEC_NOT_INTERRELATED] = {
+            content: i18n({
+                id: 'messages.import.error.notInterrelated',
+                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen \'[0]\' und \'[1]\' fehlerhaft.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_EXEC_EMPTY_RELATION] = {
+            content: i18n({
+                id: 'messages.import.error.emptyRelation',
+                value: 'Beim Import ist ein Fehler aufgetreten: Leere Relation bei \'[0]\'.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN] = {
+            content: i18n({
+                id: 'messages.import.error.liesWithinRecordedInMismatch',
+                value: '\'parent\' zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] = {
+            content: i18n({
+                id: 'messages.importerrors.parentassignmenttooperationnotallowed',
+                value: 'Wenn der Modus \'Daten einer Maßnahme zuordnen gewählt ist\', dürfen keine Zuordnungen zu Maßnahmen per \'parent\' vorgenommen werden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARENT_MUST_NOT_BE_ARRAY] = {
+            content: i18n({
+                id: 'messages.Import.ImportErrors.parentMustNotBeArray',
+                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Die \'parent\'-Relation darf kein Array sein.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {
+            content: i18n({
+                id: 'messages.import.error.prevalidation.missingRelationTarget',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_NO_OPERATION_ASSIGNABLE] = {
             content: i18n({
                 id: 'messages.import.error.noOperationAssignable',
                 value: 'Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner \'[0]\' zugeordnet werden.'
@@ -518,7 +611,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_NO_FEATURE_ASSIGNABLE] = {
+        this.msgs[M.IMPORT_NO_FEATURE_ASSIGNABLE] = {
             content: i18n({
                 id: 'messages.import.error.noFeatureAssignable',
                 value: 'Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: \'[0]\''
@@ -527,7 +620,43 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE] = {
+        this.msgs[M.IMPORT_READER_SHAPEFILE_READ_ERROR] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.readError',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.unsupportedGeometryType',
+                value: 'Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_READER_SHAPEFILE_JSONL_WRITE] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.jsonlWriteError',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_SHAPEFILE_GENERIC] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.generic',
+                value: 'Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_INVALID_TYPE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidType',
                 value: 'Ungültige Typdefinition: \'[0]\''
@@ -593,7 +722,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValue',
-                value: 'Falsche Zahlenwerte für das Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültiger Zahlenwert im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -602,13 +731,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValues',
-                value: 'Falsche Zahlenwerte für die Felder \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_MISSING_PROPERTY] = {
+        this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
             content: i18n({
                 id: 'messages.import.validation.error.missingProperty',
                 value: 'Eigenschaft(en) der Ressource vom Typ \'[0]\' müssen vorhanden sein: \'[1]\'.'
@@ -617,19 +746,109 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_ERROR_TYPE_NOT_ALLOWED] = {
+            content: i18n({
+                id: 'messages.import.error.typeNotAllowed',
+                value: 'Ressourcen von folgendem Typ sind beim Import nicht erlaubt: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE] = {
+            content: i18n({
+                id: 'messages.import.error.typeOnlyAllowedOnUpdate',
+                value: 'Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_MUST_BE_IN_SAME_OPERATION] = {
+            content: i18n({
+                id: 'messages.import.error.mustBeInSameOperation',
+                value: 'Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\''
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {
             content: i18n({
                 id: 'messages.import.validation.error.noRecordedIn',
                 value: 'Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.'
             }),
             level: 'danger',
-            params: [],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
             content: i18n({
                 id: 'messages.import.validation.error.noRecordedInTarget',
                 value: 'Fehlendes Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel-ID: [0].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SUCCESS] = {
+            content: i18n({
+                id: 'messages.export.success',
+                value: 'Die Exportdatei wurde erfolgreich erstellt.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_ERROR_GENERIC] = {
+            content: i18n({
+                id: 'messages.export.error.generic',
+                value: 'Beim Export ist ein Fehler aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_GEOJSON_ERROR_WRITE] = {
+            content: i18n({
+                id: 'messages.export.geojson.error.write',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
+            content: i18n({
+                id: 'messages.export.shapefile.error.tempFolderCreation',
+                value: 'Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
+            content: i18n({
+                id: 'messages.export.shapefile.error.zipFileCreation',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
+            content: i18n({
+                id: 'messages.export.shapefile.error.write',
+                value: 'Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
+            content: i18n({
+                id: 'messages.export.shapefile.error.getResources',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.'
             }),
             level: 'danger',
             params: [],
@@ -648,6 +867,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.success.save',
                 value: 'Die Ressource wurde erfolgreich gespeichert.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_SUCCESS_DUPLICATE] = {
+            content: i18n({
+                id: 'messages.docedit.success.duplicate',
+                value: 'Die Ressource wurde erfolgreich dupliziert.'
             }),
             level: 'success',
             params: [],
@@ -719,7 +947,25 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidNumericValues',
-                value: 'Bitte tragen Sie in den Feldern \'[1]\' gültige Zahlenwerte ein.'
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDecimalSeparator',
+                value: 'Bitte verwenden Sie im Feld \'[1]\' den Punkt als Dezimaltrennzeichen.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDecimalSeparators',
+                value: 'Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].'
             }),
             level: 'danger',
             params: [],
@@ -851,15 +1097,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS] = {
-            content: i18n({
-                id: 'messages.imagestore.dropArea.error.unsupportedExtensions',
-                value: 'Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.RESOURCES_SUCCESS_FILE_UPLOADED] = {
             content: i18n({
                 id: 'messages.resources.success.fileUploaded',
@@ -944,7 +1181,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_UNSUPPORTED_EXTENSIONS] = {
             content: i18n({
                 id: 'messages.upload.error.unsupportedExtensions',
-                value: 'Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.'
+                value: 'Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]'
             }),
             level: 'danger',
             params: [],

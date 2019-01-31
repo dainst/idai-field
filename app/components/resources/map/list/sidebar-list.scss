@@ -34,6 +34,15 @@
         align-items: center;
         height: 66px;
 
+        .title {
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          font-size: 14px;
+        }
+
         .subtitle {
           display: -webkit-box;
           overflow: hidden;
@@ -48,19 +57,41 @@
       position: relative;
       top: 3px;
       right: 7px;
+      width: 44px;
       color: #868e96;
 
       &:hover {
         color: darken(#868e96, 10%);
         background-color: darken($list-item-hover-color, 10%);
-        transition: background-color .65s ease;
+        transition: background-color .2s ease;
+      }
+
+      &.move-into-button {
+        .badge {
+          background-color: #8b96a0;
+        }
+
+        &:not(:hover) {
+          padding-left: 0;
+          padding-right: 0;
+
+          .mdi {
+            display: none;
+          }
+        }
+
+        &:hover {
+          .badge {
+            display: none;
+          }
+        }
       }
     }
   }
 
   .list-group-item:hover {
     background-color: darken($list-item-hover-color, 5%);
-    transition: background-color .65s ease;
+    transition: background-color .2s ease;
   }
 
   .selected {

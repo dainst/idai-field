@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Query, IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocumentDatastore} from '../core/datastore/field/idai-field-document-datastore';
+import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
 
@@ -27,7 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     private currentQueryId: string;
 
 
-    constructor(private datastore: IdaiFieldDocumentDatastore,
+    constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading) {}
 

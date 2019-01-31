@@ -19,11 +19,11 @@ export class OperationBarPage {
 
     public static performSelectOperation(index) {
 
-        browser.wait(EC.presenceOf(element(by.css('.operation-document-selector'))), delays.ECWaitTime);
-        element.all(by.css('.operation-document-selector .dropdown-toggle-split')).click();
-        browser.wait(EC.presenceOf(element(by.css('.operation-document-selector .dropdown-menu'))),
+        browser.wait(EC.presenceOf(element(by.css('.dropdown'))), delays.ECWaitTime);
+        element.all(by.css('.dropdown .dropdown-toggle-split')).click();
+        browser.wait(EC.presenceOf(element(by.css('.dropdown .dropdown-menu'))),
             delays.ECWaitTime);
-        element.all(by.css('.operation-document-selector .dropdown-menu button')).get(index).click();
+        element.all(by.css('.dropdown .dropdown-menu button')).get(index).click();
         browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
     }
 }

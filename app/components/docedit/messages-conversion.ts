@@ -19,7 +19,8 @@ export module MessagesConversion {
 
         if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
-        if (msg === ValidationErrors.IDENTIFIER_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
+        if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
+        if (msg === ValidationErrors.GENERIC_DATASTORE) msgWithParams[0] = M.IMPORT_READER_GENERIC_DATASTORE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
@@ -34,6 +35,18 @@ export module MessagesConversion {
                 msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
             } else {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            }
+        }
+
+        if (msg === ValidationErrors.INVALID_DECIMAL_SEPARATORS) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR;
                 msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
                 msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
             }

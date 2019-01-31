@@ -1,0 +1,63 @@
+<div class="row" (dragover)="false" (dragleave)="false" (drop)="false">
+    <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light text-right">
+                <button id="exportStartButton"
+                        class="btn btn-primary" [class.disabled]="isJavaInstallationMissing() || running"
+                        (click)="isJavaInstallationMissing() || running || startExport()">
+                    <span class="mdi mdi-file-export"></span>
+                    <span class="button-label" i18n="@@export.startExport">Export starten</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col default-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    <div class="form-group">
+                        <label class="control-label col-form-label"
+                               for="operationSelect"
+                               i18n="@@export.operationSelect.label">Maßnahme</label>
+                        <select id="operationSelect" class="form-control"
+                                [(ngModel)]="selectedOperationId">
+                            <option value="project"
+                                    i18n="@@export.operationSelect.all">Alle Maßnahmen</option>
+                            <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
+                                {{getOperationLabel(operation)}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-form-label"
+                               for="ExportFormatSelect" i18n="@@export.format">Format</label>
+                        <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
+                            <option value="geojson" i18n="@@export.formats.geojson">GeoJSON</option>
+                            <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="format === 'geojson'" class="export-info"
+                         i18n="@@export.geojson.info">
+                        Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
+                        <em>Kurzbeschreibung</em> (shortDescription) und <em>Typ</em> (type) der jeweiligen
+                        Ressourcen.
+                    </div>
+
+                    <div *ngIf="isJavaInstallationMissing()" class="export-info text-danger"
+                         i18n="@@export.shapefile.javaWarning">
+                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </div>
+
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="export-info"
+                         i18n="@@export.shapefile.info">
+                        Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
+                        <em>Kurzbeschreibung</em> (shortdesc) und <em>Typ</em> (type) der jeweiligen
+                        Ressourcen.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

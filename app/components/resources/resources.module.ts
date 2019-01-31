@@ -34,7 +34,7 @@ import {Layers2DComponent} from './map/map-3d/layers/layers-2d/layers-2d.compone
 import {Layer2DMeshManager} from './map/map-3d/layers/layers-2d/layer-2d-mesh-manager';
 import {Layer2DMeshBuilder} from './map/map-3d/layers/layers-2d/layer-2d-mesh-builder';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
-import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
+import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
@@ -45,10 +45,11 @@ import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
-import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 import {LayerMapComponent} from './map/map/layer-map.component';
+import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
 
 const remote = require('electron').remote;
 
@@ -87,8 +88,8 @@ const remote = require('electron').remote;
         ControlButtonsComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
-        SearchSuggestionsComponent,
-        SearchConstraintsComponent
+        ResourcesSearchConstraintsComponent,
+        SearchSuggestionsComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -103,7 +104,7 @@ const remote = require('electron').remote;
         Layer2DMeshBuilder,
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: IdaiFieldDocumentReadDatastore,
+            useFactory: (datastore: FieldReadDatastore,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
@@ -120,31 +121,34 @@ const remote = require('electron').remote;
                     settingsService.getSettings().locale
                 );
             },
-            deps: [IdaiFieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
+            deps: [FieldReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
         },
         {
             provide: ViewFacade,
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
-                datastore: IdaiFieldDocumentDatastore,
+                datastore: FieldDatastore,
                 changesStream: RemoteChangesStream,
                 resourcesStateManager: ResourcesStateManager,
-                loading: Loading
+                loading: Loading,
+                indexFacade: IndexFacade
             ) {
                 return new ViewFacade(
                     projectConfiguration,
                     datastore,
                     changesStream,
                     resourcesStateManager,
-                    loading
+                    loading,
+                    indexFacade
                 );
             },
             deps: [
                 ProjectConfiguration,
-                IdaiFieldDocumentDatastore,
+                FieldDatastore,
                 RemoteChangesStream,
                 ResourcesStateManager,
-                Loading
+                Loading,
+                IndexFacade
             ]
         }
     ],

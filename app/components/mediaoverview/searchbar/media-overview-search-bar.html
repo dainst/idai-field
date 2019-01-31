@@ -1,0 +1,43 @@
+<form id="search-bar" class="form-inline">
+    <input #searchInput
+           id="object-search"
+           class="form-control"
+           [(ngModel)]="q"
+           (focus)="focused = true"
+           (blur)="focused = false"
+           (keyup)="onKeyUp($event)"
+           name="searchInput"
+           type="text"
+           placeholder="Suchen..."
+           i18n-placeholder="@@widgets.searchBar.placeholder">
+
+    <media-overview-search-constraints [type]="getSelectedType()">
+    </media-overview-search-constraints>
+
+    <div *ngIf="showFiltersMenu" id="filter-button">
+        <button id="searchfilter"
+                class="btn btn-primary"
+                type="button"
+                [ngbPopover]="filterMenu"
+                [autoClose]="false"
+                #p="ngbPopover"
+                placement="bottom">
+            <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>
+            <span *ngIf="isTypeSelected()">
+                <type-icon [type]="types[0]" size="30"></type-icon>
+            </span>
+        </button>
+
+        <ng-template #filterMenu>
+            <div class="filtermenu">
+                <div class="popover-custom-title">
+                    <span i18n="@@widgets.searchBar.mediaResourceTypeFilter">Nach Medienressourcentyp filtern:</span>
+                </div>
+                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
+                             [selectedTypes]="types" [allowPickingAbstractTypes]="true"
+                             (onTypePicked)="chooseTypeFilter($event); p.close();">
+                </type-picker>
+            </div>
+        </ng-template>
+    </div>
+</form>

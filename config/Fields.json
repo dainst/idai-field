@@ -284,7 +284,17 @@
   "Mollusk": {
     "color": "#ff99ff",
     "parent": "Find",
-    "fields": {}
+    "fields": {
+      "classification": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schuppe",
+          "Coxa",
+          "Muschelschale (Bivalvia)",
+          "Schneckenhaus (Gastropoda)"
+        ]
+      }
+    }
   },
   "Brick": {
     "color": "#CC0000",
@@ -830,9 +840,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1038,9 +1049,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1183,14 +1195,12 @@
         "inputType": "input"
       },
       "campaign": {
-        "inputType": "input",
-        "valuelist": [
-          "Campaign"
-        ]
+        "inputType": "input"
       }
     }
   },
   "Place": {
+    "color": "#5572A1",
     "fields": {
       "dating": {
         "inputType": "dating"
@@ -1467,9 +1477,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1578,9 +1589,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -2249,9 +2261,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -2480,9 +2493,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -3196,8 +3210,8 @@
           "Argenteus",
           "As",
           "Aureus",
-          "Aureus²",
           "Aureus¹",
+          "Aureus²",
           "Bruchteil",
           "Cistophor",
           "Denar",
@@ -3654,9 +3668,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -4029,9 +4044,15 @@
       }
     }
   },
-  "SurveyUnit": {
-    "color": "#6baed6",
+  "BuildingPart": {
+    "color": "#707070",
+    "fields": {}
+  },
+  "Area": {
     "fields": {
+      "description": {
+        "inputType": "text"
+      },
       "area": {
         "inputType": "unsignedFloat"
       },
@@ -4041,18 +4062,32 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
       },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
       "dimensionWidth": {
         "inputType": "dimension",
         "positionValues": [
           "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+          "Minimale Ausdehnung"]
       }
     }
   },
-  "BuildingPart": {
-    "color": "#707070",
+  "SurveyUnit": {
+    "color": "#6baed6",
+    "parent": "Area",
     "fields": {}
+  },
+  "Excavation": {
+    "parent": "Area",
+    "fields": {
+      "isIllegal": {
+        "inputType": "boolean"
+      }
+    }
   },
   "Model3D": {
     "fields": {

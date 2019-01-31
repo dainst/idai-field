@@ -56,9 +56,15 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
 
         return this.documentCache.set(this.typeConverter.convert(document));
+    }
+
+
+    public async getMultiple(ids: string[]): Promise<Array<T>> {
+
+        return (await this.getDocumentsForIds(ids)).documents;
     }
 
 
@@ -79,7 +85,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (clonedQuery.types) {
             clonedQuery.types.forEach(type => {
-                this.typeConverter.validateTypeToBeOfClass(type, this.typeClass);
+                this.typeConverter.assertTypeToBeOfClass(type, this.typeClass);
             });
         } else {
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
@@ -129,23 +135,78 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     private async getDocumentsForIds(ids: string[],
                                      limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
-        const docs: Array<T> = [];
-        let failures = 0;
-        let i = 0;
-        for (let id of ids) {
+        let totalCount: number = ids.length;
+        let idsToFetch: string[] = ids;
+        if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
+
+        const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
+        let documents: Array<T> = documentsFromCache;
+
+        if (notCachedIds.length > 0) {
             try {
-                docs.push(await this.get(id));
-                i++;
-                if ((limit) && (limit == i)) break;
+                const documentsFromDatastore = await this.getDocumentsFromDatastore(notCachedIds);
+                documents = this.mergeDocuments(documentsFromCache, documentsFromDatastore, idsToFetch);
+                totalCount -= (idsToFetch.length - documents.length);
             } catch (e) {
-                failures++;
-                console.error('tried to fetch indexed document, ' +
-                    'but document is either non existent or invalid. id: '+id);
+                console.error('Error while fetching documents from datastore', e);
+                return { documents: [], totalCount: 0 };
             }
         }
+
         return {
-            documents: docs,
-            totalCount: ids.length - failures
+            documents: documents,
+            totalCount: totalCount
         };
+    }
+
+
+    private async getDocumentsFromCache(ids: string[])
+            : Promise<{ documentsFromCache: Array<T>, notCachedIds: string[] }> {
+
+        const documents: Array<T> = [];
+        const notCachedIds: string[] = [];
+
+        for (let id of ids) {
+            const document: T = this.documentCache.get(id);
+            if (document) {
+                documents.push(document);
+            } else {
+                notCachedIds.push(id);
+            }
+        }
+
+        return {
+            documentsFromCache: documents,
+            notCachedIds: notCachedIds
+        };
+    }
+
+
+    private async getDocumentsFromDatastore(ids: string[]): Promise<Array<T>> {
+
+        const documents: Array<T> = [];
+        const result: Array<Document> = await this.datastore.bulkFetch(ids);
+
+        result.forEach(document => {
+            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+            documents.push(this.documentCache.set(this.typeConverter.convert(document)));
+        });
+
+        return documents;
+    }
+
+
+    private mergeDocuments(documentsFromCache: Array<T>, documentsFromDatastore: Array<T>,
+                           idsInOrder: string[]): Array<T> {
+
+        const documents: Array<T> = documentsFromCache.concat(documentsFromDatastore);
+
+        documents.sort((a: T, b: T) => {
+            return idsInOrder.indexOf(a.resource.id) < idsInOrder.indexOf(b.resource.id)
+                ? -1
+                : 1;
+        });
+
+        return documents;
     }
 }

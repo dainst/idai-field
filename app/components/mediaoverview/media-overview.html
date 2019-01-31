@@ -2,17 +2,18 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
         <div class="row bg-light media-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 media-overview-nav-content">
-                <search-bar [q]="getQuery().q"
-                            [types]="getQuery().types" [relationName]="'depicts'"
-                            [relationRangeType]="'Trench'" [hidden]="getSelected().length"
-                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
-                </search-bar>
+                <media-overview-search-bar [q]="getQuery().q"
+                                           [types]="getQuery().types" [relationName]="'depicts'"
+                                           [relationRangeType]="'Trench'" [hidden]="getSelected().length"
+                                           (onQueryStringChanged)="setQueryString($event)"
+                                           (onTypesChanged)="setTypeFilters($event)">
+                </media-overview-search-bar>
             </div>
 
             <div *ngIf="!getSelected().length" class="col-sm-3 media-overview-nav-content">
-                <select id="main-type-document-filter-select" class="form-control"
-                        [ngModel]="getMainTypeDocumentFilterOption()"
-                        (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
+                <select id="link-filter-select" class="form-control"
+                        [ngModel]="getLinkFilter()"
+                        (ngModelChange)="setLinkFilter($event)">
                     <option value="ALL"><em i18n="@@mediaOverview.filter.all">Alle Medienressourcen</em></option>
                     <option value="UNLINKED"><em i18n="@@mediaOverview.filter.unlinked">Unverknüpfte Medienressourcen</em></option>
                     <option value="LINKED"><em i18n="@@mediaOverview.filter.linked">Verknüpfte Medienressourcen</em></option>
@@ -45,9 +46,9 @@
                     [showGeoIcon]="true"
                     [showTooltips]="true"
                     [paddingRight]="20"
-                    (onClick)="select($event)"
+                    (onClick)="toggleSelected($event)"
                     (onDoubleClick)="jumpToRelationTarget($event)"
-                    (onFilesUploaded)="onFilesUploaded($event);">
+                    (onFilesUploaded)="onFilesUploaded($event)">
             </image-grid>
         </div>
     </div>

@@ -1,0 +1,146 @@
+/**
+ * @author Thomas Kleinke
+ */
+resources-search-constraints,
+media-overview-search-constraints {
+  width: 100%;
+
+  #constraints-menu-button {
+    position: absolute;
+    top: -36px;
+    right: 83px;
+    width: 42px;
+    height: 39px;
+    text-align: left;
+    border-left-width: 0 !important;
+    border-color: lightgrey;
+
+    &.focused {
+      border-color: #7998cb !important;
+    }
+
+    &:active {
+      border-color: #ced4da !important;
+    }
+  }
+
+  #constraints-menu {
+    display: inline;
+    position: absolute;
+    top: 3px;
+    width: calc(100% - 34px);
+    background-color: #f7f7f7;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    cursor: default;
+    user-select: none;
+
+    h6,
+    #constraints-type-filter-info,
+    .constraint-list-item,
+    .form-inline {
+      padding: 10px;
+    }
+
+    #constraints-type-filter-info {
+      background-color: white;
+    }
+
+    h6 {
+      background-color: #f7f7f7;
+      margin-bottom: 0;
+      cursor: default;
+    }
+
+    .constraint-list-item {
+      position: relative;
+      cursor: pointer;
+      background-color: white;
+      margin-bottom: 1px;
+
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .65s ease;
+      }
+
+      .constraint-list-item-text {
+        width: calc(100% - 36px);
+        overflow: hidden;
+        word-wrap: break-word;
+        font-size: 14px;
+      }
+
+      .mdi-close-circle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+        color: #dc3545;
+      }
+    }
+
+    .form-inline {
+      background-color: white;
+      margin-top: 1px;
+
+      select,
+      input {
+        height: 39px;
+        font-size: 14px;
+      }
+
+      select {
+        padding-top: 7px;
+        width: calc(50% - 31px);
+      }
+
+      input {
+        width: calc(50% - 57px);
+
+        &:focus {
+          z-index: 1;
+        }
+      }
+
+      #constraint-field-select,
+      #constraint-search-term-select,
+      #constraint-search-term-boolean-select,
+      #constraint-search-search-term-input-dropdown {
+        margin-right: 10px;
+      }
+
+      #constraint-search-search-term-input-dropdown {
+        left: -1px;
+
+        button {
+          height: 39px;
+          color: #6c757d;
+          border-color: #ced4da;
+          font-size: 14px;
+
+          &:focus {
+            z-index: 1;
+            border-color: #7998cb !important;
+          }
+        }
+
+        .dropdown-menu {
+          top: 36px !important;
+
+          .dropdown-item {
+            height: 30px;
+            color: black;
+          }
+        }
+      }
+
+      #add-constraint-button {
+        height: 39px;
+
+        span {
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+  }
+}

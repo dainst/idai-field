@@ -77,6 +77,12 @@ export module MediaOverviewPage {
     }
 
 
+    export function clickCancelLinkModalButton() {
+
+        return common.click(element(by.id('link-modal-cancel-button')));
+    }
+
+
     export function clickConfirmDeleteButton() {
 
         return common.click(element(by.id('delete-media-resources-confirm')));
@@ -89,10 +95,10 @@ export module MediaOverviewPage {
     }
 
 
-    export function clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
+    export function clickSelectLinkFilterOption(optionIndex: number) {
 
-        browser.wait(EC.presenceOf(element(by.id('main-type-document-filter-select'))), delays.ECWaitTime);
-        element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
+        browser.wait(EC.presenceOf(element(by.id('link-filter-select'))), delays.ECWaitTime);
+        element.all(by.css('#link-filter-select option')).get(optionIndex).click();
     }
 
 
@@ -106,7 +112,7 @@ export module MediaOverviewPage {
 
     export function doubleClickCell(index) {
 
-        return browser.actions().doubleClick(MediaOverviewPage.getCell(index)).perform();
+        browser.actions().doubleClick(MediaOverviewPage.getCell(index)).perform();
     }
 
 
@@ -145,13 +151,6 @@ export module MediaOverviewPage {
 
     // elements
 
-    export function getLinkModalListEntries() {
-
-        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
-        return element.all(by.css('#document-picker ul li'));
-    }
-
-
     export function getAllCells() {
 
         return element.all(by.css('.cell'));
@@ -182,15 +181,24 @@ export module MediaOverviewPage {
     }
 
 
-    export function typeInIdentifierInLinkModal(identifier) {
+    export function getLinkModalListEntries() {
 
-        return common.typeIn(MediaOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
+        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
+        return element.all(by.css('#document-picker ul li'));
     }
 
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
         return MediaOverviewPage.getLinkModal().element(by.id('resource-' + identifier))
+    }
+
+
+    // type in
+
+    export function typeInIdentifierInLinkModal(identifier) {
+
+        return common.typeIn(MediaOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
     }
 
 

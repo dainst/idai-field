@@ -183,11 +183,14 @@ verwenden.
 <p align="center"><img src="images/de/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
 
 Handelt es sich um Freitextfelder, so geben Sie den Suchbegriff direkt ein; bei Feldern mit Wertelisten
-wählen Sie den Begriff aus der Liste aller erlaubten Werte in einem Dropdown-Menü aus. 
+wählen Sie den Begriff aus der Liste aller erlaubten Werte in einem Dropdown-Menü aus.
  
 **Achtung**: Im Gegensatz zum Suchfilter wird an dieser Stelle keine Präfix-Suche durchgeführt. Der
-eingestellte Begriff muss exakt so mit dem Feldinhalt des entsprechenden Feldes einer Ressource
-übereinstimmen, damit die Ressource als Suchergebnis auftaucht. 
+eingestellte Begriff muss exakt mit dem Feldinhalt des entsprechenden Feldes einer Ressource
+übereinstimmen, damit die Ressource als Suchergebnis auftaucht.
+
+Alternativ zur Angabe eines konkreten Suchbegriffs kann außerdem nach allen Ressourcen gesucht werden, bei
+denen das Feld gesetzt (Option "Beliebiger Wert") bzw. nicht gesetzt ist (Option "Kein Wert").
 
 Die Zahl neben dem Typfilter-Button gibt die Anzahl der aktiven Suchkriterien an. Sie können Suchkriterien
 auch nachträglich wieder entfernen, indem Sie das Menü durch einen Klick auf die Zahl erneut öffnen und das

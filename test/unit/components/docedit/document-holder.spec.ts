@@ -21,10 +21,20 @@ describe('DocumentHolder', () => {
         const pconf = new ProjectConfiguration({
             types: [{
                 type: 'Trench',
-                fields: [{ name: 'id' }, { name: 'type' }, { name: 'emptyfield' }]
+                fields: [
+                    { name: 'id' },
+                    { name: 'type' },
+                    { name: 'emptyfield' }
+                ]
             }, {
                 type: 'Find',
-                fields: [{ name: 'id' }, { name: 'type' }]
+                fields: [
+                    { name: 'id' },
+                    { name: 'type' },
+                    { name: 'unsignedIntField', inputType: 'unsignedInt' },
+                    { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
+                    { name: 'floatField', inputType: 'float' }
+                ]
             }],
             relations: [
                 {
@@ -63,7 +73,10 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        const validator = jasmine.createSpyObj('Validator', ['validate']);
+        const validator = jasmine.createSpyObj('Validator', [
+            'assertIsRecordedInTargetsExist', 'assertIdentifierIsUnique',
+            'assertHasIsRecordedIn', 'assertNoFieldsMissing',
+            'assertCorrectnessOfNumericalValues']);
 
         const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['persist']);
         persistenceManager.persist.and.callFake((doc, b, c, d) => {
@@ -215,5 +228,32 @@ describe('DocumentHolder', () => {
             fail();
             done();
         }
+    });
+
+
+    it('convert strings to numbers for int & float fields', async done => {
+
+        const document: Document = {
+            resource: {
+                type: 'Find',
+                id: '1',
+                identifier: '1',
+                unsignedIntField: '7',
+                unsignedFloatField: '7.49',
+                floatField: '-7.49',
+                relations: {}
+            },
+            modified: [],
+            created: { user: 'a', date: new Date() }
+        };
+
+        docHolder.setDocument(document);
+        const savedDocument: Document = await docHolder.save();
+
+        expect(savedDocument.resource.unsignedIntField).toBe(7);
+        expect(savedDocument.resource.unsignedFloatField).toBe(7.49);
+        expect(savedDocument.resource.floatField).toBe(-7.49);
+
+        done();
     });
 });

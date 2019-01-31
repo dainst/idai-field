@@ -3,8 +3,8 @@
 @import 'tabs/docedit-conflicts-tab';
 @import 'widgets/type-switcher-button';
 @import 'widgets/media-resource-picker';
-@import 'widgets/relationspick/relation-picker';
-@import 'widgets/relationspick/relation-picker-group';
+@import 'widgets/relationpicker/relation-picker';
+@import 'widgets/relationpicker/relation-picker-group';
 
 #document-edit-wrapper {
 
@@ -63,10 +63,10 @@
 
   #document-edit-button-save-document:active,
   #document-edit-button-save-document:focus,
-  #document-edit-button-delete-document:active,
-  #document-edit-button-delete-document:focus,
   #document-edit-button-goto-view:active,
   #document-edit-button-goto-view:focus,
+  #document-edit-button-dropdown:active,
+  #document-edit-button-dropdown:focus,
   #document-view-button-edit-document:active,
   #document-view-button-edit-document:focus,
   #document-view-button-back-to-map:active,
@@ -75,13 +75,40 @@
   }
 
   #document-edit-button-save-document,
-  #document-edit-button-delete-document,
-  #document-edit-button-goto-view {
+  #document-edit-button-goto-view,
+  #document-edit-button-dropdown {
+    position: relative;
+    top: 8px;
     margin-right: 7px;
-    margin-top: 8px;
     border: 0;
     border-radius: 2px;
     color: #fff;
+  }
+
+  #document-edit-button-dropdown {
+    &:focus {
+      box-shadow: none;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  #document-edit-dropdown-menu {
+    .dropdown-entry-label {
+      margin-left: 5px;
+    }
+  }
+
+  #document-edit-button-delete-document {
+    .mdi-delete {
+      color: #dc3545;
+    }
+  }
+
+  .mdi-expand-all {
+    color: #28a745;
   }
 
   .choose-geometry-icon {

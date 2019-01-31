@@ -20,8 +20,8 @@ import {DocumentHolder} from './document-holder';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {EditFormComponent} from './core/edit-form.component';
 import {RelationsFormComponent} from './core/relations-form.component';
-import {RelationPickerComponent} from './widgets/relationspick/relation-picker.component';
-import {RelationPickerGroupComponent} from './widgets/relationspick/relation-picker-group.component';
+import {RelationPickerComponent} from './widgets/relationpicker/relation-picker.component';
+import {RelationPickerGroupComponent} from './widgets/relationpicker/relation-picker-group.component';
 import {CheckboxesComponent} from './core/forms/checkboxes.component';
 import {DropdownComponent} from './core/forms/dropdown.component';
 import {InputComponent} from './core/forms/input.component';
@@ -34,6 +34,7 @@ import {NgbDateDEParserFormatter} from './core/forms/date-formatter.component';
 import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
+import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
     ],
     declarations: [
         ConflictDeletedModalComponent,
+        DuplicateModalComponent,
         DeleteModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
@@ -85,6 +87,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
         DoceditComponent,
         ConflictDeletedModalComponent,
         MediaResourcePickerComponent,
+        DuplicateModalComponent,
         DeleteModalComponent,
         EditSaveDialogComponent
     ]

@@ -1,5 +1,5 @@
 import {IdaiFieldDocument, Query} from 'idai-components-2';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
 
@@ -14,7 +14,7 @@ export class OperationsManager {
 
 
     constructor(
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private resourcesStateManager: ResourcesStateManager
     ) {}
 

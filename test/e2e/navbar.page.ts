@@ -8,7 +8,7 @@ export class NavbarPage {
 
     // click
 
-    public static clickNavigateToProject() {
+    public static clickNavigateToOverview() {
 
         return common.click(element.all(by.css('.nav-link')).get(0));
     }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {unique, subtract} from 'tsfun';
+import {subtract} from 'tsfun';
 import {IdaiFieldImageDocument} from 'idai-components-2';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
+import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer-manager';
 
@@ -13,7 +13,7 @@ import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer
  */
 export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
 
-    constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
+    constructor(private datastore: ImageReadDatastore,
                 viewFacade: ViewFacade) {
 
         super(viewFacade);
@@ -73,8 +73,8 @@ export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
     }
 
 
-    private static computeActiveLayersChange(newActiveLayerIds: Array<string>,
-                                             oldActiveLayerIds: Array<string>): ListDiffResult {
+    private static computeActiveLayersChange(newActiveLayerIds: string[],
+                                             oldActiveLayerIds: string[]): ListDiffResult {
 
         return {
             removed: subtract(newActiveLayerIds)(oldActiveLayerIds),

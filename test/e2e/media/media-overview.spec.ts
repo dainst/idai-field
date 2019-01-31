@@ -4,6 +4,8 @@ import {NavbarPage} from '../navbar.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view-page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {DoceditPage} from '../docedit/docedit.page';
+import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -207,23 +209,23 @@ describe('media/media-overview --', function() {
     });
 
 
-    it('link -- use main type document filter', () => {
+    it('link -- use link filter', () => {
 
         MediaOverviewPage.createDepictsRelation('testf1');
 
-        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
+        MediaOverviewPage.clickSelectLinkFilterOption(1);
         browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
-        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
+        MediaOverviewPage.clickSelectLinkFilterOption(2);
         browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
-        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
+        MediaOverviewPage.clickSelectLinkFilterOption(0);
         browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
@@ -231,7 +233,7 @@ describe('media/media-overview --', function() {
     });
 
 
-    it('link -- filter types in overview', async done => {
+    it('link -- filter types in overview', done => {
 
         MediaOverviewPage.clickCell(0);
         MediaOverviewPage.clickLinkButton();
@@ -241,6 +243,29 @@ describe('media/media-overview --', function() {
         SearchBarPage.clickChooseTypeFilter('operation-trench');
         MediaOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
+        MediaOverviewPage.clickCancelLinkModalButton();
+
         done();
+    });
+
+
+    it('perform constraint search', () => {
+
+        MediaOverviewPage.doubleClickCell(0);
+        DetailSidebarPage.performEditDocument();
+        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.clickSaveDocument();
+        DetailSidebarPage.clickBackToGridButton();
+        MediaOverviewPage.clickDeselectButton();
+
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
+            delays.ECWaitTime);
     });
 });

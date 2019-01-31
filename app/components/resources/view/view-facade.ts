@@ -2,12 +2,13 @@ import {Document, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {DocumentsManager} from './documents-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {NavigationPath} from './state/navigation-path';
 import {ResourcesState} from './state/resources-state';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 /**
  * Manages an overview of operation type resources
@@ -32,10 +33,11 @@ export class ViewFacade {
 
     constructor(
         private projectConfiguration: ProjectConfiguration,
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: FieldReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading
+        private loading: Loading,
+        private indexFacade: IndexFacade
     ) {
         this.operationsManager = new OperationsManager(
             datastore,
@@ -46,12 +48,15 @@ export class ViewFacade {
             remoteChangesStream,
             this.operationsManager,
             resourcesStateManager,
-            loading
+            loading,
+            indexFacade
         );
     }
 
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
+
+    public removeNewDocument = () => this.documentsManager.removeNewDocument();
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
@@ -73,9 +78,11 @@ export class ViewFacade {
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
+    public getChildrenCount = (document: IdaiFieldDocument) => this.documentsManager.getChildrenCount(document);
+
     public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 
-    public setSelectedDocument = (resourceId: string) => this.documentsManager.setSelected(resourceId);
+    public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
 
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 

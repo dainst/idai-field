@@ -16,6 +16,7 @@ $roboto-font-path: '../fonts/';
 @import 'default-page';
 @import 'components/resources/resources';
 @import 'components/import/import';
+@import 'components/export/export';
 @import 'components/settings/settings';
 @import 'components/imageview/imageview';
 @import 'components/docedit/docedit';
@@ -194,15 +195,10 @@ html [type='button'],
 
 .popover-custom-title {
   background-color: #eee;
-  padding: 10px;
-  font-weight: lighter;
+  padding: 10px 10px 8px 10px;
+  font-size: 1.1em;
   user-select: none;
   cursor: default;
-}
-
-.popover-custom-title {
-  font-size: 1.2em;
-  padding-bottom: 10px;
 }
 
 .popover-body .list-group {

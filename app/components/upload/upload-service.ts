@@ -18,6 +18,10 @@ export class UploadService {
                 private model3DUploader: Model3DUploader) {}
 
 
+    /**
+     * @param event The event containing the files to upload (can be drag event or event from file input
+     * element)
+     */
     public startUpload(event: Event, relationTarget?: Document): Promise<UploadResult> {
 
         const uploadResult: UploadResult = { uploadedFiles: 0, messages: [] };
@@ -25,7 +29,14 @@ export class UploadService {
         const files = UploadService.getFiles(event);
 
         const result = ExtensionUtil.reportUnsupportedFileTypes(files, UploadService.getSupportedFileTypes());
-        if (result[1]) uploadResult.messages.push([M.UPLOAD_ERROR_UNSUPPORTED_EXTENSIONS, result[1]]);
+        if (result[1]) {
+            uploadResult.messages.push([
+                M.UPLOAD_ERROR_UNSUPPORTED_EXTENSIONS,
+                result[1],
+                UploadService.getSupportedFileTypes().map(extension => '.' + extension).join(', ')
+            ]);
+        }
+
         if (result[0] == 0) return Promise.resolve(uploadResult);
 
         const uploader: Uploader|undefined = this.getUploader(files);
@@ -58,7 +69,7 @@ export class UploadService {
     }
 
 
-    private static getSupportedFileTypes(): Array<string> {
+    public static getSupportedFileTypes(): Array<string> {
 
         return ImageUploader.supportedFileTypes.concat(Model3DUploader.supportedFileTypes);
     }

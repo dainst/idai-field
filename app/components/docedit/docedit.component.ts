@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
@@ -15,12 +15,17 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../../widgets/loading';
+import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 
 
 @Component({
     selector: 'detail-modal',
     moduleId: module.id,
-    templateUrl: './docedit.html'
+    templateUrl: './docedit.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:keyup)': 'onKeyUp($event)',
+    }
 })
 /**
  * Uses the document edit forms of idai-components-2 and adds styling
@@ -33,9 +38,12 @@ import {Loading} from '../../widgets/loading';
  */
 export class DoceditComponent {
 
+    public subModalOpened: boolean = false;
+
     private parentLabel: string|undefined = undefined;
     private showDoceditMediaTab: boolean = false;
-    private operationInProgress: 'save'|'delete'|'none' = 'none';
+    private operationInProgress: 'save'|'duplicate'|'delete'|'none' = 'none';
+    private escapeKeyPressed: boolean = false;
 
 
     constructor(
@@ -62,6 +70,28 @@ export class DoceditComponent {
         this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
+    public async onKeyDown(event: KeyboardEvent) {
+
+        switch(event.key) {
+            case 'Escape':
+                await this.onEscapeKeyDown(event);
+                break;
+            case 's':
+                if (event.ctrlKey || event.metaKey) await this.performQuickSave();
+                break;
+            case 'd':
+                if (event.ctrlKey || event.metaKey) await this.openDuplicateModal();
+                break;
+        }
+    }
+
+
+    public onKeyUp(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.escapeKeyPressed = false;
+    }
+
+
     public getActiveTab() {
 
         return 'docedit-' + this.activeTabService.getActiveTab() + '-tab';
@@ -72,6 +102,29 @@ export class DoceditComponent {
 
         this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
     };
+
+
+    public showDropdownButton(): boolean {
+
+        return this.documentHolder.clonedDocument !== undefined
+            && this.documentHolder.clonedDocument.resource.type !== 'Project';
+    }
+
+
+    public showDuplicateButton(): boolean {
+
+        return this.showDropdownButton()
+            && !this.typeUtility.isSubtype(
+                this.documentHolder.clonedDocument.resource.type, 'Image'
+            );
+    }
+
+
+    public showDeleteButton(): boolean {
+
+        return this.showDropdownButton()
+            && this.documentHolder.clonedDocument.resource.id !== undefined
+    }
 
 
     public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
@@ -100,37 +153,65 @@ export class DoceditComponent {
     public async cancel() {
 
         if (this.documentHolder.isChanged()) {
-            await this.showModal();
+            await this.openEditSaveDialogModal();
         } else {
             this.activeModal.dismiss('cancel');
         }
     }
 
 
-    public async openDeleteModal() {
+    public async openDuplicateModal() {
 
-        const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
-        const decision = await ref.result;
-        if (decision === 'delete') await this.deleteDocument();
+        this.subModalOpened = true;
+        let numberOfDuplicates: number|undefined;
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                DuplicateModalComponent, { keyboard: false }
+            );
+            modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
+            numberOfDuplicates = await modalRef.result;
+        } catch(err) {
+            // DuplicateModal has been canceled
+        } finally {
+            this.subModalOpened = false;
+        }
+
+        if (numberOfDuplicates !== undefined) await this.save(numberOfDuplicates);
     }
 
 
-    /**
-     * @param viaSaveButton if true, it is assumed the call for save came directly
-     *   via a user interaction.
-     */
-    public async save(viaSaveButton: boolean) {
+    public async openDeleteModal() {
 
-        this.operationInProgress = 'save';
+        this.subModalOpened = true;
+
+        const ref: NgbModalRef = this.modalService.open(DeleteModalComponent, { keyboard: false });
+        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
+
+        try {
+            const decision: string = await ref.result;
+            if (decision === 'delete') await this.deleteDocument();
+        } catch(err) {
+            // DeleteModal has been canceled
+        } finally {
+            this.subModalOpened = false;
+        }
+    }
+
+
+    public async save(numberOfDuplicates?: number) {
+
+        this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
         this.loading.start('docedit');
 
         const documentBeforeSave: Document = clone(this.documentHolder.clonedDocument);
 
         try {
-            const documentAfterSave: Document = await this.documentHolder.save();
-            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
+            const documentAfterSave: Document = numberOfDuplicates
+                ? await this.documentHolder.duplicate(numberOfDuplicates)
+                : await this.documentHolder.save();
+            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, this.operationInProgress);
         } catch (errorWithParams) {
             await this.handleSaveError(errorWithParams);
         } finally {
@@ -141,13 +222,13 @@ export class DoceditComponent {
 
 
     private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document,
-                                    viaSaveButton: boolean) {
+                                    operation: 'save'|'duplicate') {
 
         try {
             if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
-                await this.closeModalAfterSave(documentAfterSave.resource.id, viaSaveButton);
+                await this.closeModalAfterSave(documentAfterSave.resource.id, operation);
             }
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -158,7 +239,7 @@ export class DoceditComponent {
     private async handleSaveError(errorWithParams: any) {
 
         if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
-            this.handleDeletedConflict();
+            await this.handleDeletedConflict();
             return undefined;
         }
 
@@ -166,6 +247,26 @@ export class DoceditComponent {
             this.messages.add(MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration));
         } else {
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
+    }
+
+
+    private async onEscapeKeyDown(event: KeyboardEvent) {
+
+        if (!this.subModalOpened && !this.escapeKeyPressed) {
+            this.escapeKeyPressed = true;
+            if (event.srcElement) (event.srcElement as HTMLElement).blur();
+            await this.cancel();
+        } else {
+            this.escapeKeyPressed = true;
+        }
+    }
+
+
+    private async performQuickSave() {
+
+        if (this.isChanged() && !this.isLoading() && !this.subModalOpened) {
+            await this.save();
         }
     }
 
@@ -186,12 +287,27 @@ export class DoceditComponent {
     }
 
 
-    private async showModal() {
+    private async openEditSaveDialogModal() {
+
+        this.subModalOpened = true;
 
         try {
-            if ((await this.modalService.open(EditSaveDialogComponent).result) === 'save') this.save(false);
-        } catch (_) {
-            this.activeModal.dismiss('discard');
+            const modalRef: NgbModalRef = this.modalService.open(
+                EditSaveDialogComponent, { keyboard: false }
+            );
+            modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
+
+            const result: string = await modalRef.result;
+
+            if (result === 'save') {
+                await this.save();
+            } else if (result === 'discard') {
+                this.activeModal.dismiss('discard');
+            }
+        } catch(err) {
+            // EditSaveDialogModal has been canceled
+        } finally {
+            this.subModalOpened = false;
         }
     }
 
@@ -232,13 +348,15 @@ export class DoceditComponent {
     }
 
 
-    private async closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
+    private async closeModalAfterSave(resourceId: string, operation: 'save'|'duplicate'): Promise<any> {
 
         this.activeModal.close({
-            document: (await this.datastore.get(resourceId)),
-            viaSaveButton: viaSaveButton
+            document: (await this.datastore.get(resourceId))
         });
-        this.messages.add([M.DOCEDIT_SUCCESS_SAVE]);
+        this.messages.add(operation === 'save'
+            ? [M.DOCEDIT_SUCCESS_SAVE]
+            : [M.DOCEDIT_SUCCESS_SAVE]
+        );
     }
 
 
@@ -268,13 +386,21 @@ export class DoceditComponent {
     }
 
 
-    private handleDeletedConflict() {
+    private async handleDeletedConflict() {
 
-        this.modalService.open(
-            ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
-        ).result.then(() => {
+        this.subModalOpened = true;
+
+        try {
+            await this.modalService.open(
+                ConflictDeletedModalComponent,
+                { windowClass: 'conflict-deleted-modal', keyboard: false }
+            ).result;
+        } catch(err) {
+            // ConflictDeletedModal has been canceled
+        } finally {
             this.documentHolder.makeClonedDocAppearNew();
-        }).catch(doNothing);
+            this.subModalOpened = false;
+        }
     }
 
 
@@ -291,4 +417,4 @@ export class DoceditComponent {
 }
 
 
-const doNothing = () => {}; // TODO move to tsfun;
+const doNothing = () => {};

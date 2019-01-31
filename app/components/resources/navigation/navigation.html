@@ -8,13 +8,14 @@
          #tooltip="ngbTooltip"
          (mouseover)="tooltip.open()"
          (mouseleave)="tooltip.close()"
-         (click)="tooltip.close(); toggleDisplayHierarchy();">
+         (mousedown)="tooltip.close()"
+         (click)="toggleDisplayHierarchy()">
             <span *ngIf="!getBypassHierarchy()" class="mdi mdi-magnify"></span>
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
     <div class="btn-group">
-        <div *ngIf="!viewFacade.isInOverview()" class="btn-group operation-document-selector"
+        <div *ngIf="!viewFacade.isInOverview()" class="btn-group dropdown"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
@@ -27,7 +28,7 @@
 
                 <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
-                    {{getDocumentLabel(document)}}
+                    {{getOperationButtonLabel(document)}}
                 </button>
             </div>
         </div>
@@ -53,10 +54,20 @@
             <span i18n="@@resources.navigation.project">Projekt</span>
         </div>
 
-        <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document.resource.id === navigationPath.selectedSegmentId"
+        <div *ngFor="let document of getSegments()"
+             class="btn btn-outline-primary navigation-button"
+             [class.root-document]="isSelectedSegment(document.resource.id)"
+             [class.shortened-label]="getNavigationButtonLabel(document.resource.id).shortened"
+             ngbTooltip="{{getNavigationButtonLabel(document.resource.id).fullText}}"
+             placement="bottom"
+             container="body"
+             triggers="manual"
+             #tooltip="ngbTooltip"
+             (mouseover)="getNavigationButtonLabel(document.resource.id).shortened && tooltip.open()"
+             (mouseleave)="tooltip.close()"
+             (mousedown)="tooltip.close()"
              (click)="moveInto(document)">
-            {{document.resource.identifier}}
+            {{getNavigationButtonLabel(document.resource.id).text}}
         </div>
     </div>
 </div>

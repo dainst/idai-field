@@ -15,6 +15,22 @@
         <div class="row">
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
+
+                    <div class="form-group">
+                        <label class="control-label col-form-label"
+                               for="importFormatSelect" i18n="@@import.format">Format</label>
+                        <select id="importFormatSelect" class="form-control"
+                                [(ngModel)]="format" (change)="onFormatChange()">
+                            <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
+                            <option *ngIf="getProject().indexOf('test') !== -1" value="idig"
+                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
+                            <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
+                            <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
+                            <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind"
+                                    i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
@@ -22,7 +38,8 @@
                                 [(ngModel)]="sourceType"
                                 (ngModelChange)="reset()">
                             <option value="file" i18n="@@import.file">Datei</option>
-                            <option value="http" i18n="@@import.http">HTTP</option>
+                            <option *ngIf="format !== 'shapefile'" value="http"
+                                    i18n="@@import.http">HTTP</option>
                         </select>
                     </div>
 
@@ -35,6 +52,7 @@
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
                             <input id="import-file-input" class="file-input" type="file"
+                                   accept="{{getFileInputExtensions()}}"
                                    (change)="selectFile($event)">
                             <label for="import-file-input" class="btn btn-secondary file-input-label">
                                 <span class="mdi mdi-folder"></span>
@@ -49,20 +67,6 @@
                                [(ngModel)]="url">
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-form-label"
-                               for="importFormatSelect" i18n="@@import.format">Format</label>
-                        <select id="importFormatSelect" class="form-control"
-                                [(ngModel)]="format">
-                            <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
-                            <option *ngIf="getProject().indexOf('test') !== -1" value="idig"
-                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
-                            <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON – JSONL</option>
-                            <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind"
-                                    i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
-                        </select>
-                    </div>
-
                     <div *ngIf="format === 'native'" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
                                [(ngModel)]="allowMergingExistingResources">
@@ -74,10 +78,25 @@
                     <div *ngIf="format === 'native'" class="import-info" i18n="@@import.mergeOption.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <em>identifier</em>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
+                    </div>
+
+                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="form-group form-check-inline">
+                        <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
+                               [(ngModel)]="allowUpdatingRelationOnMerge">
+                        <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.relationsLabel">
+                            Relationen überschreiben
+                        </label>
+                    </div>
+
+                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="import-info" i18n="@@import.mergeOption.relationsInfo">
+                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
+                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </div>
 
                     <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
@@ -93,10 +112,27 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geoJson.info">
+                    <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <em>identifier</em> im Objekt <em>properties</em>). Datensätze in der
+                        Importdatei, die nicht zugeordnet werden können, werden ignoriert.
+                    </div>
+
+                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger"
+                         i18n="@@import.shapefile.javaWarning">
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </div>
+
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="import-info"
+                         i18n="@@import.shapefile.info">
+                        Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <em>identifier</em>). Datensätze im Shapefile, die nicht zugeordnet
+                        werden können, werden ignoriert.
                     </div>
                 </div>
             </div>

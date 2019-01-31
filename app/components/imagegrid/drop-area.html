@@ -2,11 +2,13 @@
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
      (drop)="onDrop($event)">
-    <input class="file"
+    <input #fileInput
+           class="file"
            type="file"
            name="files[]"
            id="file"
            multiple
+           accept="{{getSupportedFileExtensions()}}"
            (change)="onSelectImages($event)">
     <label for="file"
            ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü"

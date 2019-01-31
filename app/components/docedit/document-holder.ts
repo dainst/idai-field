@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {flow, includedIn, isEmpty, isNot, jsonEqual} from 'tsfun';
-import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
+import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
+import {DatastoreErrors, Document, NewDocument, ProjectConfiguration, IdaiType,
+    FieldDefinition} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -11,6 +12,7 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {clone} from '../../core/util/object-util';
 import {M} from '../m';
 import {Model3DStore} from '../core-3d/model-3d-store';
+import {DuplicationUtil} from './duplication-util';
 
 
 @Injectable()
@@ -52,7 +54,7 @@ export class DocumentHolder {
 
         if (!this.clonedDocument) return false;
 
-        return (this.inspectedRevisions.length > 0 || !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource));
+        return (this.inspectedRevisions.length > 0 || !equal(this.clonedDocument.resource)(this.oldVersion.resource));
     }
 
 
@@ -77,7 +79,8 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        await this.validator.validate(this.clonedDocument, true);
+        await this.performAssertions();
+        this.convertStringsToNumbers();
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),
@@ -87,6 +90,31 @@ export class DocumentHolder {
         );
 
         return this.fetchLatestRevision(savedDocument.resource.id);
+    }
+
+
+    public async duplicate(numberOfDuplicates: number): Promise<Document> {
+
+        const documentAfterSave: Document = await this.save();
+        const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
+
+        let { baseIdentifier, identifierNumber } =
+            DuplicationUtil.splitIdentifier(template.resource.identifier);
+
+        for (let i = 0; i < numberOfDuplicates; i++) {
+            identifierNumber = await DuplicationUtil.setUniqueIdentifierForDuplicate(
+                template, baseIdentifier, identifierNumber, this.validator
+            );
+
+            await this.persistenceManager.persist(
+                template,
+                this.usernameProvider.getUsername(),
+                this.oldVersion,
+                []
+            );
+        }
+
+        return documentAfterSave;
     }
 
 
@@ -103,6 +131,35 @@ export class DocumentHolder {
 
         await this.removeAssociatedMediaFiles();
         await this.removeWithPersistenceManager();
+    }
+
+
+    private async performAssertions() {
+
+        await this.validator.assertIdentifierIsUnique(this.clonedDocument);
+        this.validator.assertHasIsRecordedIn(this.clonedDocument);
+        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
+        Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
+        await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
+    }
+
+
+    private convertStringsToNumbers() {
+
+        const type: IdaiType = this.projectConfiguration.getTypesMap()[this.clonedDocument.resource.type];
+
+        for (let fieldName in this.clonedDocument.resource) {
+            const field: FieldDefinition|undefined
+                = type.fields.find(field => field.name === fieldName);
+            if (!field) continue;
+
+            if (field.inputType === 'unsignedInt') {
+                this.clonedDocument.resource[fieldName] = parseInt(this.clonedDocument.resource[fieldName]);
+            } else if (field.inputType === 'float' || field.inputType === 'unsignedFloat') {
+                this.clonedDocument.resource[fieldName] = parseFloat(this.clonedDocument.resource[fieldName]);
+            }
+        }
     }
 
 
@@ -158,13 +215,13 @@ export class DocumentHolder {
 
     private validateFields(): Array<string> {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateFields);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedFields);
     }
 
 
     private validateRelationFields(): Array<string> {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateRelations);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedRelations);
     }
 
 

@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
@@ -141,7 +141,7 @@ export class DoceditImageTabComponent {
 
         if (document.activeElement) (document.activeElement as HTMLElement).blur();
 
-        let imagePickerModal = this.modalService.open(
+        const imagePickerModal: NgbModalRef = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
         imagePickerModal.componentInstance.setDocument(this.document);

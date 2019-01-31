@@ -23,7 +23,8 @@ export class DoceditLauncher {
     ) {}
 
 
-    public async editDocument(document: Document|NewDocument, activeTabName?: string): Promise<any> {
+    public async editDocument(document: Document|NewDocument,
+                              activeTabName?: string): Promise<IdaiFieldDocument|undefined> {
 
         this.isDoceditModalOpened = true;
 
@@ -33,12 +34,13 @@ export class DoceditLauncher {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(document);
 
-        const result: any = {};
+        let result: IdaiFieldDocument|undefined;
 
         try {
-            await this.handleSaveResult(result, await doceditRef.result);
+            result = (await doceditRef.result)['document'];
+            await this.handleSaveResult(result as IdaiFieldDocument);
         } catch(closeReason) {
-            await this.handleClosed(closeReason, result);
+            await this.handleClosed(closeReason);
         } finally {
             this.isDoceditModalOpened = false;
         }
@@ -47,30 +49,26 @@ export class DoceditLauncher {
     }
 
 
-    private async handleSaveResult(result: any, res: any) {
-
-        result['document'] = res['document'];
+    private async handleSaveResult(document: IdaiFieldDocument) {
 
         const nextActiveTab = this.doceditActiveTabService.getActiveTab();
         if (['relations','images','fields'].indexOf(nextActiveTab) != -1) {
-            result['tab'] = nextActiveTab;
+            this.viewFacade.setActiveDocumentViewTab(nextActiveTab);
         }
 
-        result['updateScrollTarget'] = true;
-
-        await this.viewFacade.setSelectedDocument((result['document'] as IdaiFieldDocument).resource.id);
         await this.viewFacade.populateDocumentList();
+        await this.viewFacade.setSelectedDocument(document.resource.id);
     }
 
 
-    private async handleClosed(closeReason: string, result: any) {
+    private async handleClosed(closeReason: string) {
 
         if (closeReason === 'deleted') {
             this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         } else if (closeReason === 'cancel') {
-            result['canceled'] = true;
+            this.viewFacade.removeNewDocument();
         }
     }
 }

@@ -127,6 +127,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
         if (result['updateScrollTarget']) this.scrollTarget = result['document'];
         if (result['canceled']) this.viewFacade.removeNewDocument();
+        if (result['document']) {
+            await this.viewFacade.setSelectedDocument(result['document'].resource.id);
+        }
     }
 
 

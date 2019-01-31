@@ -31,8 +31,9 @@ export class DocumentCache<T extends Document> {
 
     public reassign(doc: T) {
 
-        if (!(doc as any)['_conflicts'])
+        if (!(doc as any)['_conflicts']) {
             delete (this.get(doc.resource.id) as any)['_conflicts'];
+        }
         Object.assign(this.get(doc.resource.id), doc);
         return doc;
     }

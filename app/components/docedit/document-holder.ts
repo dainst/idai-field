@@ -228,7 +228,6 @@ export class DocumentHolder {
     }
 
 
-
     private getEmptyRelationFields(): Array<string> {
 
         return Object

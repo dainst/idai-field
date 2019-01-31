@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
@@ -142,8 +142,8 @@ export class DoceditMediaTabComponent {
         this.doceditComponent.subModalOpened = true;
 
         if (document.activeElement) (document.activeElement as HTMLElement).blur();
-
-        let mediaResourcePickerModal = this.modalService.open(
+        
+        const mediaResourcePickerModal: NgbModalRef = this.modalService.open(
             MediaResourcePickerComponent, { size: 'lg', keyboard: false }
         );
         mediaResourcePickerModal.componentInstance.setDocument(this.document);

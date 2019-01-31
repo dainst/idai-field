@@ -1,13 +1,12 @@
 import {NgModule} from '@angular/core';
-import {Datastore, Document, ReadDatastore} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {Datastore, Document, ReadDatastore, IdaiFieldDocument, IdaiFieldImageDocument,
+    IdaiFieldFeatureDocument} from 'idai-components-2';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
 import {FieldDatastore} from './field/field-datastore';
 import {FieldReadDatastore} from './field/field-read-datastore';
 import {ImageDatastore} from './field/image-datastore';
-import {IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageReadDatastore} from './field/image-read-datastore';
 import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
@@ -18,7 +17,6 @@ import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
 import {FeatureReadDatastore} from './field/feature-read-datastore';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {IdaiField3DDocumentDatastore} from './idai-field-3d-document-datastore';
 import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-datastore';

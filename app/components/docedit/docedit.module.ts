@@ -1,12 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import {IdaiDocumentsModule} from 'idai-components-2';
-import {DoceditComponent} from './docedit.component';
 import {RouterModule} from '@angular/router';
-import {IdaiWidgetsModule} from 'idai-components-2';
-import {IdaiMessagesModule} from 'idai-components-2';
+import {IdaiDocumentsModule, IdaiWidgetsModule, IdaiMessagesModule} from 'idai-components-2';
+import {DoceditComponent} from './docedit.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditMediaTabComponent} from './tabs/docedit-media-tab.component';
 import {DoceditConflictsTabComponent} from './tabs/docedit-conflicts-tab.component';
@@ -17,7 +15,6 @@ import {MediaResourcePickerComponent} from './widgets/media-resource-picker.comp
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {DocumentHolder} from './document-holder';
-import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {EditFormComponent} from './core/edit-form.component';
 import {RelationsFormComponent} from './core/relations-form.component';
 import {RelationPickerComponent} from './widgets/relationpicker/relation-picker.component';

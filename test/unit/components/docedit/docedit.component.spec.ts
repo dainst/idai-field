@@ -12,8 +12,8 @@ describe('DoceditComponent', () => {
 
     beforeEach(() => {
 
-        const typeUtility = jasmine.createSpyObj('typeUtility', ['getSubtypes']);
-        typeUtility.getSubtypes.and.returnValue({'Object':[]});
+        const typeUtility = jasmine.createSpyObj('typeUtility', ['getMediaTypeNames']);
+        typeUtility.getMediaTypeNames.and.returnValue([]);
         const documentHolder = jasmine.createSpyObj('documentHolder', ['setDocument']);
         const projectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getFieldDefinitionLabel']);
         activeTabService = new DoceditActiveTabService();

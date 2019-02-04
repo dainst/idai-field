@@ -60,6 +60,10 @@
   #map-editor-button-ok {
     right: 119px;
     bottom: 8px;
+
+    &.near-to-right {
+      right: 91px;
+    }
   }
 
   #map-editor-button-abort {

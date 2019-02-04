@@ -3,6 +3,8 @@ import {IdaiFieldDocument, IdaiFieldGeometry, IdaiFieldPolyline, IdaiFieldMarker
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 
+const remote = require('electron').remote;
+
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
      interface Draw { Line: L.PM.Draw.Line } } }
@@ -13,7 +15,6 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
     selector: 'editable-map',
     templateUrl: './editable-map.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -36,6 +37,9 @@ export class EditableMapComponent extends LayerMapComponent {
     private selectedPolygon: L.Polygon;
 
     private drawMode: string = 'None';
+
+
+    public getLocale = () => remote.getGlobal('config').locale;
 
 
     private addPolyLayer(drawMode: string) {

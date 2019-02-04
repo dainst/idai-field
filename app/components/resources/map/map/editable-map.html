@@ -29,7 +29,9 @@
          class="btn btn-success" (click)="addMarker()">
         <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
-    <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">
+    <div id="map-editor-button-ok"
+         class="btn btn-primary" [class.near-to-right]="getLocale() === 'en'"
+         (click)="finishEditing()">
         <span i18n="@@buttons.ok">OK</span>
     </div>
     <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">

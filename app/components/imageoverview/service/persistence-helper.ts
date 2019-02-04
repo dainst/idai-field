@@ -24,32 +24,21 @@ export class PersistenceHelper {
     ) {}
 
 
-    public deleteSelectedImageDocuments(): Promise<any> {
+    public async deleteSelectedImageDocuments() {
 
-        return new Promise<any>((resolve, reject) => {
+        for (let document of this.imageOverviewFacade.getSelected()) {
+            if (!document.resource.id) continue;
+            const resourceId: string = document.resource.id;
 
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let document of this.imageOverviewFacade.getSelected()) {
-                if (!document.resource.id) continue;
-                const resourceId = document.resource.id;
-
-                promise = promise.then(
-                    () => this.imagestore.remove(resourceId),
-                    msgWithParams => reject(msgWithParams)
-                ).then(
-                    () => this.persistenceManager.remove(document, this.usernameProvider.getUsername()),
-                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
-                ).then(() => {
-                    this.imageOverviewFacade.remove(document);
-                })
+            try {
+                await this.imagestore.remove(resourceId);
+            } catch (err) {
+                throw [M.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
-            );
-        });
+            await this.persistenceManager.remove(document, this.usernameProvider.getUsername());
+            this.imageOverviewFacade.remove(document);
+        }
     }
 
 

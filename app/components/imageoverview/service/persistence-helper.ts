@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {PersistenceManager} from "../../../core/model/persistence-manager";
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
+import {clone} from '../../../core/util/object-util';
+
 
 @Injectable()
 /**
@@ -80,18 +82,15 @@ export class PersistenceHelper {
     }
 
 
-    public removeRelationsOnSelectedDocuments() {
+    public async removeRelationsOnSelectedDocuments() {
 
-        const promises = [] as any;
         for (let document of this.imageOverviewFacade.getSelected()) {
-
-            const oldVersion = JSON.parse(JSON.stringify(document));
+            const oldVersion: IdaiFieldImageDocument = clone(document);
             document.resource.relations.depicts = [];
 
-            promises.push(this.persistenceManager.persist(
-                document, this.usernameProvider.getUsername(),
-                oldVersion) as never);
+            await this.persistenceManager.persist(
+                document, this.usernameProvider.getUsername(), oldVersion
+            );
         }
-        return Promise.all(promises);
     }
 }

@@ -53,32 +53,20 @@ export class PersistenceHelper {
     }
 
 
-    public addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
+    public async addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument) {
 
-        return new Promise<any>((resolve, reject) => {
+        for (let imageDocument of this.imageOverviewFacade.getSelected()) {
+            const oldVersion: IdaiFieldImageDocument = clone(imageDocument);
+            const depictsRelations: string[] = imageDocument.resource.relations.depicts;
 
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let imageDocument of this.imageOverviewFacade.getSelected()) {
-                const oldVersion = JSON.parse(JSON.stringify(imageDocument));
-
-                const depictsEl = imageDocument.resource.relations.depicts;
-
-                if (depictsEl.indexOf(targetDocument.resource.id as any) == -1) {
-                    depictsEl.push(targetDocument.resource.id as any);
-                }
-
-                promise = promise.then(
-                    () => this.persistenceManager.persist(imageDocument, this.usernameProvider.getUsername(), oldVersion),
-                    msgWithParams => reject(msgWithParams)
-                );
+            if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
+                depictsRelations.push(targetDocument.resource.id);
             }
 
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
+            await this.persistenceManager.persist(
+                imageDocument, this.usernameProvider.getUsername(), oldVersion
             );
-        });
+        }
     }
 
 

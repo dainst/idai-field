@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {Imagestore} from '../../../core/imagestore/imagestore';
-import {PersistenceManager} from "../../../core/model/persistence-manager";
+import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 import {clone} from '../../../core/util/object-util';
@@ -42,7 +42,7 @@ export class PersistenceHelper {
     }
 
 
-    public async addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument) {
+    public async addDepictsRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument) {
 
         for (let imageDocument of this.imageOverviewFacade.getSelected()) {
             const oldVersion: IdaiFieldImageDocument = clone(imageDocument);
@@ -59,7 +59,7 @@ export class PersistenceHelper {
     }
 
 
-    public async removeRelationsOnSelectedDocuments() {
+    public async removeDepictsRelationsOnSelectedDocuments() {
 
         for (let document of this.imageOverviewFacade.getSelected()) {
             const oldVersion: IdaiFieldImageDocument = clone(document);

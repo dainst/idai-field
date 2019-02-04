@@ -58,7 +58,7 @@ export class ImageOverviewTaskbarComponent {
             if (!targetDoc) return;
 
             try {
-                await this.persistenceHelper.addRelationsToSelectedDocuments(targetDoc);
+                await this.persistenceHelper.addDepictsRelationsToSelectedDocuments(targetDoc);
                 this.imageOverviewFacade.clearSelection();
             } catch(msgWithParams) {
                 this.messages.add(msgWithParams);
@@ -96,7 +96,7 @@ export class ImageOverviewTaskbarComponent {
 
         try {
             await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
-            await this.persistenceHelper.removeRelationsOnSelectedDocuments();
+            await this.persistenceHelper.removeDepictsRelationsOnSelectedDocuments();
             this.imageOverviewFacade.clearSelection();
             await this.imageOverviewFacade.fetchDocuments();
             this.imageGrid.calcGrid();

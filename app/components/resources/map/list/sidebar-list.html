@@ -20,8 +20,10 @@
              (mouseleave)="tooltip.close()"
              (mousedown)="tooltip.close()"
              (click)="moveInto(document); $event.stopPropagation();">
-            <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
-            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
+            <span *ngIf="viewFacade.getChildrenCount(document) > 0"
+                  class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"
+                  [class.show-only-on-hover]="viewFacade.getChildrenCount(document) > 0"></span>
         </div>
 
         <div *ngIf="showJumpToViewOption(document)"

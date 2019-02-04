@@ -110,9 +110,12 @@ export class ImageOverviewTaskbarComponent {
 
     private async deleteSelected() {
 
-        await this.persistenceHelper.deleteSelectedImageDocuments();
-
-        this.imageOverviewFacade.clearSelection();
-        await this.imageOverviewFacade.fetchDocuments();
+        try {
+            await this.persistenceHelper.deleteSelectedImageDocuments();
+            this.imageOverviewFacade.clearSelection();
+            await this.imageOverviewFacade.fetchDocuments();
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
     }
 }

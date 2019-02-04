@@ -123,10 +123,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         this.quitGeometryEditing(document);
 
-        const result = await this.doceditLauncher.editDocument(document, activeTabName);
-        if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
-        if (result['updateScrollTarget']) this.scrollTarget = result['document'];
-        if (result['canceled']) this.viewFacade.removeNewDocument();
+        const editedDocument: IdaiFieldDocument|undefined
+            = await this.doceditLauncher.editDocument(document, activeTabName);
+        if (editedDocument) this.scrollTarget = editedDocument;
     }
 
 

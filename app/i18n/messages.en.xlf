@@ -3536,8 +3536,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.success.duplicate" datatype="html">
-        <source>Die Ressource wurde erfolgreich dupliziert.</source>
-        <target state="final">The resource has been duplicated successfully.</target>
+        <source>Die Ressourcen wurde erfolgreich gespeichert.</source>
+        <target state="final">The resources have been saved successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

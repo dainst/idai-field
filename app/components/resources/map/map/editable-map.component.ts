@@ -41,22 +41,24 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public getLocale = () => remote.getGlobal('config').locale;
 
+    public addPolygon = () => this.addPolyLayer('Poly');
 
-    private addPolyLayer(drawMode: string) {
+    public addPolyline = () => this.addPolyLayer('Line');
 
-        if (this.drawMode != 'None') this.finishDrawing();
 
-        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
-        className += ' active';
+    @HostListener('document:keyup', ['$event'])
+    public handleKeyEvent(event: KeyboardEvent) {
 
-        const drawOptions = {
-            templineStyle: { className: 'templine' },
-            hintlineStyle: { className: 'hintline' },
-            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
-        };
+        if (event.key == 'Escape') this.finishDrawing();
+    }
 
-        this.map.pm.enableDraw(drawMode, drawOptions);
-        this.drawMode = drawMode;
+
+    public abortEditing() {
+
+        this.fadeInMapElements();
+        this.resetEditing();
+
+        this.onQuitEditing.emit(undefined as any);
     }
 
 
@@ -92,52 +94,6 @@ export class EditableMapComponent extends LayerMapComponent {
         this.resetEditing();
 
         this.onQuitEditing.emit(geometry as any);
-    }
-
-
-    private finishDrawing() {
-
-        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
-            ((this.map.pm.Draw).Line)._finishShape();
-        } else if (this.drawMode != 'None') {
-            this.map.pm.disableDraw(this.drawMode);
-        }
-
-        this.drawMode = 'None';
-    }
-
-
-    private createEditableMarker(position: L.LatLng): L.Marker {
-
-        const color: string = this.typeColors[this.selectedDocument.resource.type];
-        const editableMarker: L.Marker = L.marker(position, {
-            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
-            draggable: true,
-            zIndexOffset: 1000
-        });
-        this.setupMarkerEvents(editableMarker);
-        editableMarker.addTo(this.map);
-        this.editableMarkers.push(editableMarker);
-
-        return editableMarker;
-    }
-
-
-    private setSelectedMarkerPosition(position: L.LatLng) {
-
-        if (this.selectedMarker) this.selectedMarker.setLatLng(position);
-    }
-
-
-    public addPolygon() {
-
-        this.addPolyLayer('Poly');
-    }
-
-
-    public addPolyline() {
-
-        this.addPolyLayer('Line');
     }
 
 
@@ -197,6 +153,58 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.selectedMarker = undefined as any;
             }
         }
+    }
+
+
+    private finishDrawing() {
+
+        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
+            ((this.map.pm.Draw).Line)._finishShape();
+        } else if (this.drawMode != 'None') {
+            this.map.pm.disableDraw(this.drawMode);
+        }
+
+        this.drawMode = 'None';
+    }
+
+
+    private createEditableMarker(position: L.LatLng): L.Marker {
+
+        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const editableMarker: L.Marker = L.marker(position, {
+            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
+            draggable: true,
+            zIndexOffset: 1000
+        });
+        this.setupMarkerEvents(editableMarker);
+        editableMarker.addTo(this.map);
+        this.editableMarkers.push(editableMarker);
+
+        return editableMarker;
+    }
+
+
+    private setSelectedMarkerPosition(position: L.LatLng) {
+
+        if (this.selectedMarker) this.selectedMarker.setLatLng(position);
+    }
+
+
+    private addPolyLayer(drawMode: string) {
+
+        if (this.drawMode != 'None') this.finishDrawing();
+
+        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        className += ' active';
+
+        const drawOptions = {
+            templineStyle: { className: 'templine' },
+            hintlineStyle: { className: 'hintline' },
+            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
+        };
+
+        this.map.pm.enableDraw(drawMode, drawOptions);
+        this.drawMode = drawMode;
     }
 
 
@@ -274,7 +282,6 @@ export class EditableMapComponent extends LayerMapComponent {
         (markers: Array<IdaiFieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
 
 
-
     private forAll<T>(f: (arg: T) => void) {
 
         return this.forFiltered(f, () => true);
@@ -343,10 +350,37 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    @HostListener('document:keyup', ['$event'])
-    public handleKeyEvent(event: KeyboardEvent) {
+    protected clickOnMap(clickPosition: L.LatLng) {
 
-        if (event.key == 'Escape') this.finishDrawing();
+        if (!this.selectedDocument) return;
+
+        switch(this.getEditorType()) {
+            case 'point':
+                this.setSelectedMarkerPosition(clickPosition);
+                break;
+            case 'none':
+                this.deselect();
+                break;
+        }
+    }
+
+
+    protected select(document: IdaiFieldDocument): boolean {
+
+        if (!this.isEditing) {
+            this.onSelectDocument.emit(document);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected deselect() {
+
+        if (!this.isEditing) {
+            this.onSelectDocument.emit(undefined);
+        }
     }
 
 
@@ -565,49 +599,6 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.map.removeLayer(marker);
         EditableMapComponent.removeElement(marker, this.editableMarkers);
-    }
-
-
-    public abortEditing() {
-
-        this.fadeInMapElements();
-        this.resetEditing();
-
-        this.onQuitEditing.emit(undefined as any);
-    }
-
-
-    protected clickOnMap(clickPosition: L.LatLng) {
-
-        if (!this.selectedDocument) return;
-
-        switch(this.getEditorType()) {
-            case 'point':
-                this.setSelectedMarkerPosition(clickPosition);
-                break;
-            case 'none':
-                this.deselect();
-                break;
-        }
-    }
-
-
-    protected select(document: IdaiFieldDocument): boolean {
-
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(document);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    protected deselect() {
-
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(undefined);
-        }
     }
 
 

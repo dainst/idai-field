@@ -60,9 +60,6 @@ let constraintIndex: ConstraintIndex|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
 
 
-registerLocaleData(localeDe, 'de');
-
-
 @NgModule({
     imports: [
         ImageOverviewModule,

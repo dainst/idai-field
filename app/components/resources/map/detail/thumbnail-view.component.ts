@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {on} from 'tsfun';
 import {Document, Messages, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
@@ -18,7 +18,7 @@ import {SortUtil} from '../../../../core/util/sort-util';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ThumbnailViewComponent implements OnChanges {
+export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: IdaiFieldImageDocument[];
@@ -33,9 +33,17 @@ export class ThumbnailViewComponent implements OnChanges {
                 private viewFacade: ViewFacade) {}
 
 
-    ngOnChanges() {
+    ngOnInit() {
 
-        this.updateGrid();
+        this.viewFacade.populateDocumentNotifications().subscribe(async () => {
+            await this.updateGrid();
+        });
+    }
+
+
+    async ngOnChanges() {
+
+        await this.updateGrid();
     }
 
 
@@ -92,8 +100,8 @@ export class ThumbnailViewComponent implements OnChanges {
         });
         this.imageGrid.calcGrid();
     }
-    
-    
+
+
     private showUploadResultMessage(uploadResult: ImageUploadResult) {
 
         if (uploadResult.uploadedImages == 1) {

@@ -64,7 +64,7 @@ export class ThumbnailViewComponent implements OnInit, OnChanges {
         if (updatedDoc) {
             this.document = updatedDoc;
             // so that other callers (like Docedit) work with the latest version, too
-            this.viewFacade.setSelectedDocument(this.document.resource.id);
+            await this.viewFacade.setSelectedDocument(this.document.resource.id);
         }
         //
 

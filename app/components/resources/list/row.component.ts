@@ -104,7 +104,7 @@ export class RowComponent implements AfterViewInit {
         try {
             Object.assign(
                 this.document,
-                await this.datastore.get(document.resource.id as any, {skip_cache: true})
+                await this.datastore.get(document.resource.id as any, { skipCache: true })
             );
         } catch(_) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);

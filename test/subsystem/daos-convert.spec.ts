@@ -1,3 +1,8 @@
+import {createApp, setupSyncTestDb} from './subsystem-helper';
+import * as PouchDB from 'pouchdb';
+import {Static} from '../unit/static';
+
+
 /**
  * This test suite focuses on the differences between the Data Access Objects.
  *
@@ -7,11 +12,6 @@
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import {createApp, setupSyncTestDb} from './subsystem-helper';
-import * as PouchDB from 'pouchdb';
-import {Static} from '../unit/static';
-
-
 describe('DAOs/Convert/Subsystem', () => {
 
     let image0;
@@ -126,13 +126,13 @@ describe('DAOs/Convert/Subsystem', () => {
 
     it('get - add relations for IdaiFieldDocument', async done => {
 
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skip_cache: true })).
+        expect((await _idaiFieldDocumentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skip_cache: false })).
+        expect((await _idaiFieldDocumentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skip_cache: true })).
+        expect((await _documentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skip_cache: false })).
+        expect((await _documentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -140,13 +140,13 @@ describe('DAOs/Convert/Subsystem', () => {
 
     it('get - add relations for IdaiFieldImageDocument', async done => {
 
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skip_cache: true })).
+        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skip_cache: false })).
+        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skip_cache: true })).
+        expect((await _documentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skip_cache: false })).
+        expect((await _documentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
         done();
     });

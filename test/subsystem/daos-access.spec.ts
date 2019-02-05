@@ -138,7 +138,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when getting an image type', async done => {
 
         try {
-            await _idaiFieldDocumentDatastore.get('image0', { skip_cache: true });
+            await _idaiFieldDocumentDatastore.get('image0', { skipCache: true });
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -150,7 +150,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('ImageDatastore - throw when getting a non image type', async done => {
 
         try {
-            await _idaiFieldImageDocumentDatastore.get('trench0', { skip_cache: true });
+            await _idaiFieldImageDocumentDatastore.get('trench0', { skipCache: true });
             fail();
         } catch (expected) {
             expectErr1(expected);

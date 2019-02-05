@@ -46,14 +46,14 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      *
      * Additional specs:
      *
-     * @param options.skip_cache: boolean
+     * @param options.skipCache: boolean
      * @throws if fetched doc is not of type T, determined by resource.type
      */
-    public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
+    public async get(id: string, options?: { skipCache: boolean }): Promise<T> {
 
         const cachedDocument: T = this.documentCache.get(id);
 
-        if ((!options || !options.skip_cache) && cachedDocument) {
+        if ((!options || !options.skipCache) && cachedDocument) {
             return cachedDocument;
         }
 

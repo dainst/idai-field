@@ -1,10 +1,10 @@
-<div *ngIf="document.resource.identifier" class="identifier">
+<div *ngIf="identifier" class="identifier">
     <h3 class="fieldname">{{getLabel('identifier')}}</h3>
-    <div class="fieldvalue">{{document.resource.identifier}}</div>
+    <div class="fieldvalue">{{identifier}}</div>
 </div>
-<div *ngIf="document.resource.shortDescription" class="short-description">
+<div *ngIf="shortDescription" class="short-description">
     <h3 class="fieldname">{{getLabel('shortDescription')}}</h3>
-    <div class="fieldvalue">{{document.resource.shortDescription}}</div>
+    <div class="fieldvalue">{{shortDescription}}</div>
 </div>
 <div *ngIf="typeLabel" class="type">
     <h3 class="fieldname">{{getLabel('type')}}</h3>

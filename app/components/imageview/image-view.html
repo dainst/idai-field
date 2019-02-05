@@ -41,7 +41,10 @@
                         </div>
 
                         <div class="tab-view-container">
-                            <description-view [document]="image.document"></description-view>
+                            <description-view [identifier]="image.document.resource.identifier"
+                                              [shortDescription]="image.document.resource.shortDescription"
+                                              [type]="image.document.resource.type">
+                            </description-view>
                             <fields-view [resource]="image.document.resource"></fields-view>
                         </div>
                     </ng-template>

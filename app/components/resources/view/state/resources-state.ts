@@ -1,6 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
-import {clone} from '../../../../core/util/object-util';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
 
@@ -10,10 +9,10 @@ import {ViewContext} from './view-context';
  */
 export interface ResourcesState { // 'the' resources state
 
-    readonly viewStates: { [viewName: string]: ViewState };
-    readonly view: string;
-    readonly mode: 'map' | 'list';
-    readonly activeDocumentViewTab: string|undefined;
+    viewStates: { [viewName: string]: ViewState };
+    view: string;
+    mode: 'map' | 'list';
+    activeDocumentViewTab: string|undefined;
 }
 
 
@@ -97,38 +96,31 @@ export module ResourcesState {
 
     export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
 
-        const cloned: any = clone(state);
-        cloned.activeDocumentViewTab = activeDocumentViewTab;
-        return cloned;
+        state.activeDocumentViewTab = activeDocumentViewTab;
+        return state;
     }
 
 
     export function setView(state: ResourcesState, view: string): ResourcesState {
 
-        const cloned: any = clone(state);
-        cloned.view = view;
-        return cloned;
+        state.view = view;
+        return state;
     }
 
 
     export function setMode(state: ResourcesState, mode: 'map' | 'list'): ResourcesState {
 
-        const cloned: any = clone(state);
-        cloned.mode = mode;
-        return cloned;
+        state.mode = mode;
+        return state;
     }
 
 
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).q = q;
-            return cloned;
-
+            (viewState(state).searchContext as any).q = q;
+            return state;
         } else {
-
             return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
         }
     }
@@ -137,13 +129,9 @@ export module ResourcesState {
     export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).types = types;
-            return cloned;
-
+            (viewState(state).searchContext as any).types = types;
+            return state;
         } else {
-
             return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
         }
     }
@@ -152,9 +140,8 @@ export module ResourcesState {
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}): ResourcesState {
 
-        const cloned: any = clone(state);
-        (viewState(cloned) as any).customConstraints = constraints;
-        return cloned;
+        (viewState(state) as any).customConstraints = constraints;
+        return state;
     }
 
 
@@ -162,13 +149,9 @@ export module ResourcesState {
                                         document: IdaiFieldDocument|undefined): ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).selected = document;
-            return cloned;
-
+            (viewState(state).searchContext as any).selected = document;
+            return state;
         } else {
-
             return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
         }
     }
@@ -176,39 +159,33 @@ export module ResourcesState {
 
     export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]): ResourcesState {
 
-        const cloned = clone(state);
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
+        if (!mainTypeDocumentResourceId) return state;
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (!mainTypeDocumentResourceId) return cloned;
+        const layerContextId = isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId;
+        viewState(state).layerIds[layerContextId] = activeLayersIds.slice(0);
 
-        const layerContextId = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
-        viewState(cloned).layerIds[layerContextId] = activeLayersIds.slice(0);
-
-        return cloned;
+        return state;
     }
 
 
     export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
 
-        const cloned = clone(state);
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
+        if (mainTypeDocumentResourceId) delete viewState(state).layerIds[mainTypeDocumentResourceId];
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (mainTypeDocumentResourceId) delete viewState(cloned).layerIds[mainTypeDocumentResourceId];
-
-        return cloned;
+        return state;
     }
 
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
 
-        const cloned = clone(state);
+        const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(state);
+        if (!mainTypeDocumentResourceId) return state;
 
-        const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
-        if (!mainTypeDocumentResourceId) return cloned;
+        viewState(state).navigationPaths[mainTypeDocumentResourceId] = navPath;
 
-        viewState(cloned).navigationPaths[mainTypeDocumentResourceId] = navPath;
-
-        return cloned;
+        return state;
     }
 
 
@@ -258,38 +235,35 @@ export module ResourcesState {
 
     export function complete(state: ResourcesState ): ResourcesState {
 
-        const cloned = clone(state);
-        Object.keys(cloned.viewStates)
-            .forEach(viewName => ViewState.complete(cloned.viewStates[viewName]));
-        return cloned;
+        Object.keys(state.viewStates)
+            .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
+        return state;
     }
 
 
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
 
-        const cloned = clone(state);
-        (viewState(cloned) as any).bypassHierarchy = bypassHierarchy;
-        return cloned;
+        (viewState(state) as any).bypassHierarchy = bypassHierarchy;
+        return state;
     }
 
 
     export function setMainTypeDocumentResourceId(state: ResourcesState,
                                                   mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
-        const cloned = clone(state);
-        (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(cloned) as any).searchContext.selected = undefined;
-        return cloned;
+        (viewState(state) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        (viewState(state) as any).searchContext.selected = undefined;
+        return state;
     }
+
 
     export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
 
-        const cloned = clone(state);
-        (viewState(cloned) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
+        (viewState(state) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
             (viewState(state) as any).searchContext.selected = undefined;
         }
-        return cloned;
+        return state;
     }
 
 

@@ -83,24 +83,30 @@ export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     private async updateGrid() {
 
-        if (this.updatingGrid) return;
+        if (this.updatingGrid || !Document.hasRelations(this.document, 'isDepictedIn')) return;
 
         this.updatingGrid = true;
-        this.documents = [];
 
-        if (!Document.hasRelations(this.document, 'isDepictedIn')) return;
-
-        for (let id of this.document.resource.relations['isDepictedIn']) {
-            this.documents.push(await this.datastore.get(id));
-        }
-
-        this.documents.sort((a: ImageDocument, b: ImageDocument) => {
-           return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-        });
-
+        this.documents = await this.getImageDocuments();
         this.imageGrid.calcGrid();
 
         this.updatingGrid = false;
+    }
+
+
+    private async getImageDocuments(): Promise<Array<ImageDocument>> {
+
+        const documents: Array<ImageDocument> = [];
+
+        for (let id of this.document.resource.relations['isDepictedIn']) {
+            documents.push(await this.datastore.get(id));
+        }
+
+        documents.sort((a: ImageDocument, b: ImageDocument) => {
+            return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+        });
+
+        return documents;
     }
 
 

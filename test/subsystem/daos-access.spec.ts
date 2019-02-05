@@ -7,7 +7,7 @@ describe('DAOs/Access/Subsystem', () => {
     let image0;
     let trench0;
     let _documentDatastore;
-    let _FieldDocumentDatastore;
+    let _fieldDocumentDatastore;
     let _idaiFieldImageDocumentDatastore;
 
     function expectErr1(err) {
@@ -26,12 +26,12 @@ describe('DAOs/Access/Subsystem', () => {
             viewFacade,
             documentHolder,
             documentDatastore,
-            FieldDocumentDatastore,
+            fieldDocumentDatastore,
             idaiFieldImageDocumentDatastore
         } = await createApp();
 
         _documentDatastore = documentDatastore;
-        _FieldDocumentDatastore = FieldDocumentDatastore;
+        _fieldDocumentDatastore = fieldDocumentDatastore;
         _idaiFieldImageDocumentDatastore = idaiFieldImageDocumentDatastore;
 
         spyOn(console, 'error');
@@ -43,7 +43,7 @@ describe('DAOs/Access/Subsystem', () => {
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
         await _idaiFieldImageDocumentDatastore.create(image0);
-        await _FieldDocumentDatastore.create(trench0);
+        await _fieldDocumentDatastore.create(trench0);
         done();
     });
 
@@ -60,7 +60,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when creating an image type', async done => {
 
         try {
-            await _FieldDocumentDatastore.create(image0);
+            await _fieldDocumentDatastore.create(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -86,7 +86,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when updating an image type', async done => {
 
         try {
-            await _FieldDocumentDatastore.update(image0);
+            await _fieldDocumentDatastore.update(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -112,7 +112,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when deleting an image type', async done => {
 
         try {
-            await _FieldDocumentDatastore.remove(image0);
+            await _fieldDocumentDatastore.remove(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -138,7 +138,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when getting an image type', async done => {
 
         try {
-            await _FieldDocumentDatastore.get('image0', { skipCache: true });
+            await _fieldDocumentDatastore.get('image0', { skipCache: true });
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -164,7 +164,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - throw when find called with image type ', async done => {
 
         try {
-            await _FieldDocumentDatastore.find({types: ['Image']});
+            await _fieldDocumentDatastore.find({types: ['Image']});
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -225,7 +225,7 @@ describe('DAOs/Access/Subsystem', () => {
     it('FieldDatastore - return only non image type documents when called without types', async done => {
 
         try {
-            const result = await _FieldDocumentDatastore.find({});
+            const result = await _fieldDocumentDatastore.find({});
             expect(result.documents.length).toBe(1);
             expect(result.documents[0].resource.id).toEqual('trench0');
         } catch (expected) {

@@ -195,13 +195,13 @@ registerLocaleData(localeDe, 'de');
         {
             provide: Validator,
             useFactory: (
-                FieldDocumentDatastore: FieldDatastore,
+                fieldDocumentDatastore: FieldDatastore,
                 projectConfiguration: ProjectConfiguration,
                 typeUtility: TypeUtility) => {
 
                 return new Validator(
                     projectConfiguration,
-                    (q: Query) => FieldDocumentDatastore.find(q),
+                    (q: Query) => fieldDocumentDatastore.find(q),
                     typeUtility
                 )
             },

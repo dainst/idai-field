@@ -29,7 +29,7 @@ describe('ViewFacade/Subsystem', () => {
     let findDocument2: FieldDocument;
     let featureDocument1: FieldDocument;
     let featureDocument2: FieldDocument;
-    let FieldDocumentDatastore: CachedDatastore<FieldDocument>;
+    let fieldDocumentDatastore: CachedDatastore<FieldDocument>;
 
 
     /*
@@ -48,8 +48,8 @@ describe('ViewFacade/Subsystem', () => {
         await setupSyncTestDb();
 
         const result = await createApp();
-        
-        FieldDocumentDatastore = result.FieldDocumentDatastore;
+
+        fieldDocumentDatastore = result.fieldDocumentDatastore;
         viewFacade = result.viewFacade;
 
         // await new PouchDB('testdb').destroy();
@@ -76,13 +76,13 @@ describe('ViewFacade/Subsystem', () => {
         featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        // await FieldDocumentDatastore.create(projectDocument, 'u');
-        await FieldDocumentDatastore.create(trenchDocument1, 'u');
-        await FieldDocumentDatastore.create(trenchDocument2, 'u');
-        await FieldDocumentDatastore.create(findDocument1, 'u');
-        await FieldDocumentDatastore.create(findDocument2, 'u');
-        await FieldDocumentDatastore.create(featureDocument1, 'u');
-        await FieldDocumentDatastore.create(featureDocument2, 'u');
+        // await fieldDocumentDatastore.create(projectDocument, 'u');
+        await fieldDocumentDatastore.create(trenchDocument1, 'u');
+        await fieldDocumentDatastore.create(trenchDocument2, 'u');
+        await fieldDocumentDatastore.create(findDocument1, 'u');
+        await fieldDocumentDatastore.create(findDocument2, 'u');
+        await fieldDocumentDatastore.create(featureDocument1, 'u');
+        await fieldDocumentDatastore.create(featureDocument2, 'u');
 
         stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
         stateSerializer.load.and.returnValue(Promise.resolve({}));
@@ -120,7 +120,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        await FieldDocumentDatastore.create(findDocument3, 'u');
+        await fieldDocumentDatastore.create(findDocument3, 'u');
 
         await viewFacade.selectView('excavation');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');
@@ -287,7 +287,7 @@ describe('ViewFacade/Subsystem', () => {
     it('reload predefined layer ids on startup in test/demo project', async done => {
 
         resourcesState = new ResourcesStateManager(
-            FieldDocumentDatastore,
+            fieldDocumentDatastore,
             stateSerializer,
             new OperationViews(viewsList),
             [],
@@ -298,7 +298,7 @@ describe('ViewFacade/Subsystem', () => {
 
         viewFacade = new viewFacade(
             projectConfiguration,
-            FieldDocumentDatastore,
+            fieldDocumentDatastore,
             changesStream,
             resourcesState,
             loading
@@ -365,7 +365,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await FieldDocumentDatastore.create(findDocument3, 'u');
+        await fieldDocumentDatastore.create(findDocument3, 'u');
 
         await viewFacade.selectView('excavation');
         await viewFacade.selectOperation(trenchDocument2.resource.id);
@@ -504,7 +504,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'feature3');
         featureDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await FieldDocumentDatastore.create(featureDocument3, 'u');
+        await fieldDocumentDatastore.create(featureDocument3, 'u');
         await viewFacade.selectView('excavation');
 
         await viewFacade.moveInto(featureDocument1);

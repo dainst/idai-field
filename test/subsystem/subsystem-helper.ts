@@ -89,7 +89,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeConverter = new FieldTypeConverter(typeUtility);
 
-    const FieldDocumentDatastore = new FieldDatastore(
+    const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const idaiFieldImageDocumentDatastore = new ImageDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
@@ -105,7 +105,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const resourcesStateManager = ResourcesStateManagerConfiguration.build(
         projectConfiguration,
-        FieldDocumentDatastore,
+        fieldDocumentDatastore,
         new StandardStateSerializer(settingsService),
         'synctest',
         true,
@@ -114,7 +114,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const viewFacade = new ViewFacade(
         projectConfiguration,
-        FieldDocumentDatastore,
+        fieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
@@ -122,7 +122,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const persistenceManager = new PersistenceManager(
-        FieldDocumentDatastore,
+        fieldDocumentDatastore,
         projectConfiguration,
         typeUtility,
     );
@@ -130,7 +130,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => FieldDocumentDatastore.find(q), typeUtility),
+        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), typeUtility),
         undefined,
         typeUtility,
         { getUsername: () => 'fakeuser' },
@@ -142,7 +142,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         viewFacade,
         documentHolder,
         documentDatastore,
-        FieldDocumentDatastore,
+        fieldDocumentDatastore,
         idaiFieldImageDocumentDatastore,
         settingsService
     }

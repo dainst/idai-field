@@ -20,8 +20,8 @@ describe('Import/Subsystem', () => {
         await setupSyncTestDb();
         const {projectConfiguration} = await setupSettingsService(new PouchdbManager());
         _projectConfiguration = projectConfiguration;
-        const {FieldDocumentDatastore} = await createApp();
-        datastore = FieldDocumentDatastore;
+        const {fieldDocumentDatastore} = await createApp();
+        datastore = fieldDocumentDatastore;
         done();
     });
 

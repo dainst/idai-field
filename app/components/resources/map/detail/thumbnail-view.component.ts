@@ -21,11 +21,13 @@ import {SortUtil} from '../../../../core/util/sort-util';
 export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: ImageDocument[];
+    public documents: Array<ImageDocument>;
 
     @Input() document: Document;
 
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
+
+    private updatingGrid: boolean = false;
 
 
     constructor(private datastore: ImageReadDatastore,
@@ -81,24 +83,24 @@ export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     private async updateGrid() {
 
+        if (this.updatingGrid) return;
+
+        this.updatingGrid = true;
         this.documents = [];
 
         if (!Document.hasRelations(this.document, 'isDepictedIn')) return;
 
-        let promise = Promise.resolve();
         for (let id of this.document.resource.relations['isDepictedIn']) {
-            promise = promise.then(() => this.datastore.get(id))
-                .then(doc => {
-                    this.documents.push(doc as any);
-                });
+            this.documents.push(await this.datastore.get(id));
         }
-
-        await promise;
 
         this.documents.sort((a: ImageDocument, b: ImageDocument) => {
            return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
         });
+
         this.imageGrid.calcGrid();
+
+        this.updatingGrid = false;
     }
 
 

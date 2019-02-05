@@ -106,6 +106,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const resourcesStateManager = ResourcesStateManagerConfiguration.build(
         projectConfiguration,
         fieldDocumentDatastore,
+        createdIndexFacade,
         new StandardStateSerializer(settingsService),
         'synctest',
         true,

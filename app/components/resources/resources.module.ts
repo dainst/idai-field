@@ -80,6 +80,7 @@ const remote = require('electron').remote;
         {
             provide: ResourcesStateManager,
             useFactory: (datastore: FieldReadDatastore,
+                         indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
@@ -90,13 +91,14 @@ const remote = require('electron').remote;
                 return ResourcesStateManagerConfiguration.build(
                     projectConfiguration,
                     datastore,
+                    indexFacade,
                     stateSerializer,
                     projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test,
                     settingsService.getSettings().locale
                 );
             },
-            deps: [FieldReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
+            deps: [FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService]
         },
         {
             provide: ViewFacade,

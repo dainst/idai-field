@@ -1,5 +1,4 @@
 import {FieldDocument} from 'idai-components-2';
-import {Query} from 'idai-components-2';
 import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
@@ -20,12 +19,11 @@ describe('ResourcesStateManager', () => {
     ];
 
     let mockDatastore: any;
+    let mockIndexFacade: any;
 
-    const find = (query: Query) => {
-        return {
-            totalCount: documents.map(document => document.resource.id)
-                .find(id => id == query.constraints['id:match']) ? 1 : 0
-        };
+    const getCount = (constraintIndexName: string, matchTerm: string) => {
+        return documents.map(document => document.resource.id)
+            .find(id => id === matchTerm) ? 1 : 0
     };
 
     let resourcesStateManager: ResourcesStateManager;
@@ -36,12 +34,15 @@ describe('ResourcesStateManager', () => {
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['get', 'find']);
-        mockDatastore.find.and.callFake(find);
+        mockDatastore = jasmine.createSpyObj('datastore', ['get']);
+
+        mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
+        mockIndexFacade.getCount.and.callFake(getCount);
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
         resourcesStateManager = new ResourcesStateManager(
             mockDatastore,
+            mockIndexFacade,
             mockSerializer,
             new OperationViews(viewsList),
             undefined,

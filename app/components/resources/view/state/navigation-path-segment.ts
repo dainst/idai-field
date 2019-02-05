@@ -15,11 +15,11 @@ export interface NavigationPathSegment extends ViewContext {
 
 export module NavigationPathSegment {
 
-    export async function isValid(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
+    export function isValid(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
                                   segments: Array<NavigationPathSegment>,
-                                  exists: (_: string) => Promise<boolean>): Promise<boolean> {
+                                  exists: (_: string) => boolean): boolean {
 
-        return await exists(segment.document.resource.id)
+        return exists(segment.document.resource.id)
             && hasValidRelation(mainTypeDocumentResourceId, segment, segments);
     }
 

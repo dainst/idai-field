@@ -4,6 +4,7 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {ViewDefinition} from './state/view-definition';
 import {ResourcesStateManager} from './resources-state-manager';
 import {OperationViews} from './state/operation-views';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 
 /**
@@ -14,6 +15,7 @@ export module ResourcesStateManagerConfiguration {
     export function build(
         projectConfiguration: ProjectConfiguration,
         datastore: FieldReadDatastore,
+        indexFacade: IndexFacade,
         stateSerializer: StateSerializer,
         projectName: string,
         suppressMapLoadForTest: boolean,
@@ -42,6 +44,7 @@ export module ResourcesStateManagerConfiguration {
 
         return new ResourcesStateManager(
             datastore,
+            indexFacade,
             stateSerializer,
             new OperationViews(views),
             ['Place'],

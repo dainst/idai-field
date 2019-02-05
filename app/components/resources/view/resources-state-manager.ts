@@ -8,6 +8,7 @@ import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {clone} from '../../../core/util/object-util';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 
 
 /**
@@ -42,6 +43,7 @@ export class ResourcesStateManager {
 
     constructor(
         private datastore: FieldReadDatastore,
+        private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private views: OperationViews,
         private additionalOverviewTypeNames: string[],
@@ -164,8 +166,9 @@ export class ResourcesStateManager {
         const invalidSegment = await NavigationPath.findInvalidSegment(
             ResourcesState.getMainTypeDocumentResourceId(this.resourcesState),
             ResourcesState.getNavigationPath(this.resourcesState),
-            async (resourceId: string) => (await this.datastore.find({ q: '',
-                constraints: { 'id:match': resourceId }})).totalCount !== 0);
+            (resourceId: string) => {
+                return this.indexFacade.getCount('id:match', resourceId) > 0;
+            });
 
         const validatedNavigationPath = invalidSegment
             ? NavigationPath.shorten(ResourcesState.getNavigationPath(this.resourcesState), invalidSegment)

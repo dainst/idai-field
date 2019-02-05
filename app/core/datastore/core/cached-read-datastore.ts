@@ -51,14 +51,19 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
 
-        if ((!options || !options.skip_cache) && this.documentCache.get(id)) {
-            return this.documentCache.get(id);
+        const cachedDocument: T = this.documentCache.get(id);
+
+        if ((!options || !options.skip_cache) && cachedDocument) {
+            return cachedDocument;
         }
 
-        const document = await this.datastore.fetch(id);
+        let document: T = await this.datastore.fetch(id) as T;
         this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        document = this.typeConverter.convert(document);
 
-        return this.documentCache.set(this.typeConverter.convert(document));
+        return cachedDocument
+            ? this.documentCache.reassign(document)
+            : this.documentCache.set(document);
     }
 
 

@@ -1,4 +1,4 @@
-import {IdaiFieldDocument, Query} from 'idai-components-2';
+import {FieldDocument, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
@@ -10,7 +10,7 @@ import {ResourcesState} from './state/resources-state';
  */
 export class OperationsManager {
 
-    private documents: Array<IdaiFieldDocument>;
+    private documents: Array<FieldDocument>;
 
 
     constructor(
@@ -37,7 +37,7 @@ export class OperationsManager {
 
 
     public selectLinkedOperationForSelectedDocument(
-        selectedDocument: IdaiFieldDocument|undefined) {
+        selectedDocument: FieldDocument|undefined) {
 
         if (!this.documents || this.documents.length === 0) return;
 
@@ -51,12 +51,12 @@ export class OperationsManager {
     }
 
 
-    public async getAllOperations(): Promise<Array<IdaiFieldDocument>> {
+    public async getAllOperations(): Promise<Array<FieldDocument>> {
 
         const viewMainTypes = this.resourcesStateManager.getViews()
             .map((view: any) => {return view.operationSubtype});
 
-        let operations: Array<IdaiFieldDocument> = [];
+        let operations: Array<FieldDocument> = [];
 
         for (let viewMainType of viewMainTypes) {
             if (viewMainType === 'Project') continue;
@@ -107,15 +107,15 @@ export class OperationsManager {
     }
 
 
-    private static getMainTypeDocumentForDocument(document: IdaiFieldDocument|undefined,
-                                                  mainTypeDocuments: IdaiFieldDocument[]): IdaiFieldDocument|undefined {
+    private static getMainTypeDocumentForDocument(document: FieldDocument|undefined,
+                                                  mainTypeDocuments: FieldDocument[]): FieldDocument|undefined {
 
         if (!mainTypeDocuments) return undefined;
         if (!document) return undefined;
 
         for (let documentId of document.resource.relations.isRecordedIn) {
             for (let mainTypeDocument of mainTypeDocuments) {
-                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument as IdaiFieldDocument;
+                if (mainTypeDocument.resource.id == documentId) return mainTypeDocument as FieldDocument;
             }
         }
     }

@@ -17,7 +17,7 @@ describe('DAOs/Convert/Subsystem', () => {
     let image0;
     let trench0;
     let _documentDatastore;
-    let _idaiFieldDocumentDatastore;
+    let _FieldDocumentDatastore;
     let _idaiFieldImageDocumentDatastore;
 
 
@@ -37,19 +37,19 @@ describe('DAOs/Convert/Subsystem', () => {
             viewFacade,
             documentHolder,
             documentDatastore,
-            idaiFieldDocumentDatastore,
+            FieldDocumentDatastore,
             idaiFieldImageDocumentDatastore
         } = await createApp();
 
         _documentDatastore = documentDatastore;
-        _idaiFieldDocumentDatastore = idaiFieldDocumentDatastore;
+        _FieldDocumentDatastore = FieldDocumentDatastore;
         _idaiFieldImageDocumentDatastore = idaiFieldImageDocumentDatastore;
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
         image0 = await _idaiFieldImageDocumentDatastore.create(image0);
-        trench0 = await _idaiFieldDocumentDatastore.create(trench0);
+        trench0 = await _FieldDocumentDatastore.create(trench0);
         done();
     });
 
@@ -79,7 +79,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await _idaiFieldDocumentDatastore.
+            expect((await _FieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Trench','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
         } catch (err) {
@@ -92,7 +92,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('create - unknown type', async done => {
 
         try {
-            expect((await _idaiFieldDocumentDatastore.
+            expect((await _FieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Unknown','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
             fail();
@@ -116,7 +116,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('FieldDatastore - add relations with update', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
-        expect((await _idaiFieldDocumentDatastore.
+        expect((await _FieldDocumentDatastore.
         update(trench0)).resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -124,11 +124,11 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // get
 
-    it('get - add relations for IdaiFieldDocument', async done => {
+    it('get - add relations for FieldDocument', async done => {
 
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skipCache: true })).
+        expect((await _FieldDocumentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skipCache: false })).
+        expect((await _FieldDocumentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
         expect((await _documentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
@@ -138,7 +138,7 @@ describe('DAOs/Convert/Subsystem', () => {
     });
 
 
-    it('get - add relations for IdaiFieldImageDocument', async done => {
+    it('get - add relations for ImageDocument', async done => {
 
         expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
@@ -154,9 +154,9 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // find
 
-    it('find - add relations for IdaiFieldDocument', async done => {
+    it('find - add relations for FieldDocument', async done => {
 
-        expect((await _idaiFieldDocumentDatastore.find({})). // result coming from cache
+        expect((await _FieldDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.isRecordedIn).toEqual([]);
         expect((await _idaiFieldImageDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.depicts).toEqual([]);

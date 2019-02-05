@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query, IdaiFieldImageDocument} from 'idai-components-2';
+import {Query, ImageDocument} from 'idai-components-2';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
@@ -12,9 +12,9 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
  */
 export class ImageDocumentsManager {
 
-    public selected: Array<IdaiFieldImageDocument> = [];
+    public selected: Array<ImageDocument> = [];
 
-    private documents: Array<IdaiFieldImageDocument>;
+    private documents: Array<ImageDocument>;
     private totalDocumentCount: number;
 
     private depictsRelationsSelected: boolean = false;
@@ -26,9 +26,9 @@ export class ImageDocumentsManager {
                 private imageDatastore: ImageReadDatastore) {}
 
 
-    public getSelected = (): Array<IdaiFieldImageDocument> => this.selected;
+    public getSelected = (): Array<ImageDocument> => this.selected;
 
-    public getDocuments = (): Array<IdaiFieldImageDocument> => this.documents;
+    public getDocuments = (): Array<ImageDocument> => this.documents;
 
     public getTotalDocumentCount = (): number => this.totalDocumentCount;
 
@@ -37,20 +37,20 @@ export class ImageDocumentsManager {
     public clearSelection = () => this.selected = [];
 
 
-    public remove(document: IdaiFieldImageDocument) {
+    public remove(document: ImageDocument) {
 
         this.documents.splice(this.documents.indexOf(document), 1);
     }
 
 
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: ImageDocument) {
 
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
     }
 
 
-    public toggleSelected(document: IdaiFieldImageDocument) {
+    public toggleSelected(document: ImageDocument) {
 
         if (this.selected.indexOf(document) == -1) {
             this.selected.push(document);

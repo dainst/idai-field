@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
@@ -54,7 +54,7 @@ export class ViewFacade {
     }
 
 
-    public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
+    public addNewDocument = (document: FieldDocument) => this.documentsManager.addNewDocument(document);
 
     public removeNewDocument = () => this.documentsManager.removeNewDocument();
 
@@ -78,7 +78,7 @@ export class ViewFacade {
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
-    public getChildrenCount = (document: IdaiFieldDocument) => this.documentsManager.getChildrenCount(document);
+    public getChildrenCount = (document: FieldDocument) => this.documentsManager.getChildrenCount(document);
 
     public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 
@@ -102,7 +102,7 @@ export class ViewFacade {
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 
-    public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
+    public moveInto = (document: FieldDocument|undefined) => this.documentsManager.moveInto(document);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
@@ -149,7 +149,7 @@ export class ViewFacade {
     }
 
 
-    public getSelectedOperations(): Array<IdaiFieldDocument> {
+    public getSelectedOperations(): Array<FieldDocument> {
 
         if (this.isInOverview()) return [];
         if (!this.operationsManager.getDocuments()) return [];
@@ -162,7 +162,7 @@ export class ViewFacade {
     }
 
 
-    public getOperations(): Array<IdaiFieldDocument> {
+    public getOperations(): Array<FieldDocument> {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperations');
         return this.operationsManager.getDocuments();

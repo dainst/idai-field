@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 
 
 @Component({
@@ -14,7 +14,7 @@ import {IdaiFieldDocument} from 'idai-components-2';
  */
 export class GeometryViewComponent {
 
-    @Input() document: IdaiFieldDocument;
+    @Input() document: FieldDocument;
     @Output() onCreateGeometry: EventEmitter<string> = new EventEmitter<string>();
-    @Output() onEditGeometry: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onEditGeometry: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 }

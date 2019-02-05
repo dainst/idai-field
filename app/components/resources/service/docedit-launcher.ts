@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, NewDocument, IdaiFieldDocument} from 'idai-components-2';
+import {Document, NewDocument, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';
@@ -24,7 +24,7 @@ export class DoceditLauncher {
 
 
     public async editDocument(document: Document|NewDocument,
-                              activeTabName?: string): Promise<IdaiFieldDocument|undefined> {
+                              activeTabName?: string): Promise<FieldDocument|undefined> {
 
         this.isDoceditModalOpened = true;
 
@@ -34,11 +34,11 @@ export class DoceditLauncher {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(document);
 
-        let result: IdaiFieldDocument|undefined;
+        let result: FieldDocument|undefined;
 
         try {
             result = (await doceditRef.result)['document'];
-            await this.handleSaveResult(result as IdaiFieldDocument);
+            await this.handleSaveResult(result as FieldDocument);
         } catch(closeReason) {
             await this.handleClosed(closeReason);
         } finally {
@@ -49,7 +49,7 @@ export class DoceditLauncher {
     }
 
 
-    private async handleSaveResult(document: IdaiFieldDocument) {
+    private async handleSaveResult(document: FieldDocument) {
 
         const nextActiveTab = this.doceditActiveTabService.getActiveTab();
         if (['relations','images','fields'].indexOf(nextActiveTab) != -1) {

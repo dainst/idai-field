@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, IdaiFieldDocument} from 'idai-components-2';
+import {Messages, FieldDocument} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -27,7 +27,7 @@ export class ExportComponent implements OnInit {
     public format: 'geojson'|'shapefile' = 'geojson';
     public running: boolean = false;
     public javaInstalled: boolean = true;
-    public operations: Array<IdaiFieldDocument> = [];
+    public operations: Array<FieldDocument> = [];
     public selectedOperationId: string = 'project';
 
     private modalRef: NgbModalRef|undefined;
@@ -43,7 +43,7 @@ export class ExportComponent implements OnInit {
                 private datastore: FieldReadDatastore) {}
 
 
-    public getOperationLabel = (operation: IdaiFieldDocument) => ModelUtil.getDocumentLabel(operation);
+    public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 

@@ -1,5 +1,5 @@
 import {to, differentFromBy, on} from 'tsfun';
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ViewContext} from './view-context';
 
 
@@ -9,7 +9,7 @@ import {ViewContext} from './view-context';
  */
 export interface NavigationPathSegment extends ViewContext {
 
-    readonly document: IdaiFieldDocument;
+    readonly document: FieldDocument;
 }
 
 

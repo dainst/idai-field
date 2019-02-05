@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
-    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator, Query} from 'idai-components-2';
+    ProjectConfiguration, IdaiWidgetsModule, AppConfigurator, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -101,7 +101,7 @@ registerLocaleData(localeDe, 'de');
         I18n,
         ConfigReader,
         ConfigLoader,
-        IdaiFieldAppConfigurator,
+        AppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
@@ -195,13 +195,13 @@ registerLocaleData(localeDe, 'de');
         {
             provide: Validator,
             useFactory: (
-                idaiFieldDocumentDatastore: FieldDatastore,
+                FieldDocumentDatastore: FieldDatastore,
                 projectConfiguration: ProjectConfiguration,
                 typeUtility: TypeUtility) => {
 
                 return new Validator(
                     projectConfiguration,
-                    (q: Query) => idaiFieldDocumentDatastore.find(q),
+                    (q: Query) => FieldDocumentDatastore.find(q),
                     typeUtility
                 )
             },

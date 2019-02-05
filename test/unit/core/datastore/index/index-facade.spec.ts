@@ -1,4 +1,4 @@
-import {ProjectConfiguration, Query, IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration, Query, FieldDocument} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
@@ -27,7 +27,7 @@ describe('IndexFacade', () => {
         const {createdIndexFacade} =
             IndexerConfiguration.configureIndexers(projectConfiguration);
 
-        const documentCache = new DocumentCache<IdaiFieldDocument>();
+        const documentCache = new DocumentCache<FieldDocument>();
         const pouchdbManager = new PouchdbManager();
 
         const datastore = new PouchdbDatastore(

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration, RelationDefinition, IdaiFieldDocument, IdaiType} from 'idai-components-2';
+import {ProjectConfiguration, RelationDefinition, FieldDocument, IdaiType} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 
@@ -17,19 +17,19 @@ export class NavigationService {
     }
 
 
-    public async moveInto(document: IdaiFieldDocument) {
+    public async moveInto(document: FieldDocument) {
 
         await this.viewFacade.moveInto(document);
     }
 
 
-    public async jumpToView(document: IdaiFieldDocument) {
+    public async jumpToView(document: FieldDocument) {
 
         await this.routingService.jumpToMainTypeHomeView(document);
     }
 
 
-    public showMoveIntoOption(document: IdaiFieldDocument): boolean {
+    public showMoveIntoOption(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.getBypassHierarchy()) return false;
@@ -41,7 +41,7 @@ export class NavigationService {
     }
 
 
-    public showJumpToViewOption(document: IdaiFieldDocument): boolean {
+    public showJumpToViewOption(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.getBypassHierarchy()) return false;

@@ -1,4 +1,4 @@
-import {Document, IdaiFieldImageResource} from 'idai-components-2';
+import {Document, ImageResource} from 'idai-components-2';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 
@@ -94,7 +94,7 @@ export module ImageGridConstruction {
     function newCell(document: any, calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
-        const image = document.resource as IdaiFieldImageResource;
+        const image = document.resource as ImageResource;
         cell.document = document;
         cell.calculatedWidth = image.width * calculatedHeight / image.height;
         cell.calculatedHeight = calculatedHeight;

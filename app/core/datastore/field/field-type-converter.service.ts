@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, IdaiFieldImageDocument} from 'idai-components-2';
+import {Document, ImageDocument} from 'idai-components-2';
 import {takeOrMake} from 'tsfun';
 import {TypeConverter} from '../core/type-converter';
 import {TypeUtility} from '../../model/type-utility';
@@ -20,17 +20,17 @@ export class FieldTypeConverter extends TypeConverter<Document> {
 
     public assertTypeToBeOfClass(type: string, typeClass: string): void {
 
-        if (typeClass === 'IdaiFieldImageDocument') {
+        if (typeClass === 'ImageDocument') {
 
-            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be IdaiFieldImageDocument';
+            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be ImageDocument';
 
-        } else if (typeClass === 'IdaiFieldFeatureDocument') {
+        } else if (typeClass === 'FeatureDocument') {
 
-            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be IdaiFieldFeatureDocument';
+            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be FeatureDocument';
 
-        } else if (typeClass === 'IdaiFieldDocument') {
+        } else if (typeClass === 'FieldDocument') {
 
-            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be IdaiFieldImageDocument';
+            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be ImageDocument';
             // feature docs are allowed to also be idai field documents
         }
     }
@@ -38,15 +38,15 @@ export class FieldTypeConverter extends TypeConverter<Document> {
 
     public getTypesForClass(typeClass: string): string[]|undefined {
 
-        if (typeClass === 'IdaiFieldImageDocument') {
+        if (typeClass === 'ImageDocument') {
 
             return this.typeUtility.getImageTypeNames();
 
-        } else if (typeClass === 'IdaiFieldFeatureDocument') {
+        } else if (typeClass === 'FeatureDocument') {
 
             return this.typeUtility.getFeatureTypeNames();
 
-        } else if (typeClass === 'IdaiFieldDocument') {
+        } else if (typeClass === 'FieldDocument') {
 
             return this.typeUtility.getNonImageTypeNames();
         }

@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {Query} from 'idai-components-2';
 import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
@@ -30,8 +30,8 @@ describe('ResourcesStateManager', () => {
 
     let resourcesStateManager: ResourcesStateManager;
 
-    let documents: Array<IdaiFieldDocument>;
-    let trenchDocument1: IdaiFieldDocument;
+    let documents: Array<FieldDocument>;
+    let trenchDocument1: FieldDocument;
 
 
     beforeEach(() => {

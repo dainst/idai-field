@@ -1,5 +1,5 @@
 import {takeUntil, takeWhile, on} from 'tsfun';
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
@@ -73,7 +73,7 @@ export module NavigationPath {
      * @return a new path object with updated state
      */
     export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
-                                             newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
+                                             newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
         const updatedNavigationPath = clone(navigationPath);
 
@@ -93,7 +93,7 @@ export module NavigationPath {
 
 
     export function setSelectedDocument(navPath: NavigationPath,
-                                        document: IdaiFieldDocument|undefined): NavigationPath {
+                                        document: FieldDocument|undefined): NavigationPath {
 
         const _clone = clone(navPath);
         (getViewContext(_clone) as any).selected = document;
@@ -101,7 +101,7 @@ export module NavigationPath {
     }
 
 
-    export function getSelectedDocument(navPath: NavigationPath): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(navPath: NavigationPath): FieldDocument|undefined {
 
         return getViewContext(navPath).selected;
     }
@@ -178,7 +178,7 @@ export module NavigationPath {
     }
 
 
-    export function isPartOfNavigationPath(document: IdaiFieldDocument, navPath: NavigationPath,
+    export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath,
                                            mainTypeDocumentResourceId: string|undefined): boolean {
 
         if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
@@ -193,7 +193,7 @@ export module NavigationPath {
     }
 
 
-    export async function makeSegments(document: IdaiFieldDocument, get: (_: string) => Promise<IdaiFieldDocument>) {
+    export async function makeSegments(document: FieldDocument, get: (_: string) => Promise<FieldDocument>) {
 
         const segments: Array<NavigationPathSegment> = [];
 
@@ -234,7 +234,7 @@ export module NavigationPath {
 
     function rebuildElements(oldSegments: Array<NavigationPathSegment>,
                              oldSelectedSegmentId: string|undefined,
-                             newSelectedSegmentDoc: IdaiFieldDocument): Array<NavigationPathSegment> {
+                             newSelectedSegmentDoc: FieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments

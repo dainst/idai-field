@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
@@ -42,7 +42,7 @@ export module ResourcesState {
     }
 
 
-    export function getSelectedDocument(state: ResourcesState): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(state: ResourcesState): FieldDocument|undefined {
 
         return viewState(state).bypassHierarchy
             ? viewState(state).searchContext.selected
@@ -146,7 +146,7 @@ export module ResourcesState {
 
 
     export function setSelectedDocument(state: ResourcesState,
-                                        document: IdaiFieldDocument|undefined): ResourcesState {
+                                        document: FieldDocument|undefined): ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).selected = document;

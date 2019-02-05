@@ -1,5 +1,5 @@
 import {Observer, Observable} from 'rxjs';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
@@ -101,7 +101,7 @@ export class ResourcesStateManager {
     }
 
 
-    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
+    public setSelectedDocument(document: FieldDocument|undefined) {
 
         this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
     }
@@ -159,7 +159,7 @@ export class ResourcesStateManager {
     }
 
 
-    public async moveInto(document: IdaiFieldDocument|undefined) {
+    public async moveInto(document: FieldDocument|undefined) {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
             ResourcesState.getMainTypeDocumentResourceId(this.resourcesState),
@@ -202,7 +202,7 @@ export class ResourcesStateManager {
     }
 
 
-    public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
+    public async updateNavigationPathForDocument(document: FieldDocument) {
 
         this.setBypassHierarchy(false);
 
@@ -219,7 +219,7 @@ export class ResourcesStateManager {
     }
 
 
-    private async createNavigationPathForDocument(document: IdaiFieldDocument) {
+    private async createNavigationPathForDocument(document: FieldDocument) {
 
         const segments = await NavigationPath.makeSegments(document, resourceId => this.datastore.get(resourceId));
         if (segments.length == 0) return await this.moveInto(undefined);
@@ -256,7 +256,7 @@ export class ResourcesStateManager {
 
     private async updateSelectedDocument(navigationPath: NavigationPath): Promise<NavigationPath> {
 
-        const selectedDocument: IdaiFieldDocument|undefined
+        const selectedDocument: FieldDocument|undefined
             = NavigationPath.getSelectedDocument(navigationPath);
 
         if (!selectedDocument) return navigationPath;

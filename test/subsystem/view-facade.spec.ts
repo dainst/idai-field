@@ -1,4 +1,4 @@
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import * as PouchDB from 'pouchdb';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
@@ -23,13 +23,13 @@ describe('ViewFacade/Subsystem', () => {
     let changesStream;
     let loading;
 
-    let trenchDocument1: IdaiFieldDocument;
-    let trenchDocument2: IdaiFieldDocument;
-    let findDocument1: IdaiFieldDocument;
-    let findDocument2: IdaiFieldDocument;
-    let featureDocument1: IdaiFieldDocument;
-    let featureDocument2: IdaiFieldDocument;
-    let idaiFieldDocumentDatastore: CachedDatastore<IdaiFieldDocument>;
+    let trenchDocument1: FieldDocument;
+    let trenchDocument2: FieldDocument;
+    let findDocument1: FieldDocument;
+    let findDocument2: FieldDocument;
+    let featureDocument1: FieldDocument;
+    let featureDocument2: FieldDocument;
+    let FieldDocumentDatastore: CachedDatastore<FieldDocument>;
 
 
     /*
@@ -49,7 +49,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const result = await createApp();
         
-        idaiFieldDocumentDatastore = result.idaiFieldDocumentDatastore;
+        FieldDocumentDatastore = result.FieldDocumentDatastore;
         viewFacade = result.viewFacade;
 
         // await new PouchDB('testdb').destroy();
@@ -76,13 +76,13 @@ describe('ViewFacade/Subsystem', () => {
         featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        // await idaiFieldDocumentDatastore.create(projectDocument, 'u');
-        await idaiFieldDocumentDatastore.create(trenchDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(trenchDocument2, 'u');
-        await idaiFieldDocumentDatastore.create(findDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(findDocument2, 'u');
-        await idaiFieldDocumentDatastore.create(featureDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(featureDocument2, 'u');
+        // await FieldDocumentDatastore.create(projectDocument, 'u');
+        await FieldDocumentDatastore.create(trenchDocument1, 'u');
+        await FieldDocumentDatastore.create(trenchDocument2, 'u');
+        await FieldDocumentDatastore.create(findDocument1, 'u');
+        await FieldDocumentDatastore.create(findDocument2, 'u');
+        await FieldDocumentDatastore.create(featureDocument1, 'u');
+        await FieldDocumentDatastore.create(featureDocument2, 'u');
 
         stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
         stateSerializer.load.and.returnValue(Promise.resolve({}));
@@ -120,7 +120,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        await idaiFieldDocumentDatastore.create(findDocument3, 'u');
+        await FieldDocumentDatastore.create(findDocument3, 'u');
 
         await viewFacade.selectView('excavation');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');
@@ -287,7 +287,7 @@ describe('ViewFacade/Subsystem', () => {
     it('reload predefined layer ids on startup in test/demo project', async done => {
 
         resourcesState = new ResourcesStateManager(
-            idaiFieldDocumentDatastore,
+            FieldDocumentDatastore,
             stateSerializer,
             new OperationViews(viewsList),
             [],
@@ -298,7 +298,7 @@ describe('ViewFacade/Subsystem', () => {
 
         viewFacade = new viewFacade(
             projectConfiguration,
-            idaiFieldDocumentDatastore,
+            FieldDocumentDatastore,
             changesStream,
             resourcesState,
             loading
@@ -365,7 +365,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await idaiFieldDocumentDatastore.create(findDocument3, 'u');
+        await FieldDocumentDatastore.create(findDocument3, 'u');
 
         await viewFacade.selectView('excavation');
         await viewFacade.selectOperation(trenchDocument2.resource.id);
@@ -504,7 +504,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'feature3');
         featureDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await idaiFieldDocumentDatastore.create(featureDocument3, 'u');
+        await FieldDocumentDatastore.create(featureDocument3, 'u');
         await viewFacade.selectView('excavation');
 
         await viewFacade.moveInto(featureDocument1);

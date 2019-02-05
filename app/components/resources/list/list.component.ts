@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IdaiFieldDocument, IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -18,7 +18,7 @@ import {BaseList} from '../base-list';
  */
 export class ListComponent extends BaseList {
 
-    @Input() documents: Array<IdaiFieldDocument>;
+    @Input() documents: Array<FieldDocument>;
 
     public typesMap: { [type: string]: IdaiType };
 
@@ -34,7 +34,7 @@ export class ListComponent extends BaseList {
     }
 
 
-    public async createNewDocument(doc: IdaiFieldDocument) {
+    public async createNewDocument(doc: FieldDocument) {
 
         this.documents = this.documents
             .filter(_ => _.resource.id)

@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
+import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
@@ -21,10 +21,10 @@ export class DoceditImageTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    @Input() document: IdaiFieldDocument;
+    @Input() document: FieldDocument;
 
-    public documents: Array<IdaiFieldImageDocument>;
-    public selected: Array<IdaiFieldImageDocument> = [];
+    public documents: Array<ImageDocument>;
+    public selected: Array<ImageDocument> = [];
 
 
     constructor(private datastore: ImageReadDatastore,
@@ -45,7 +45,7 @@ export class DoceditImageTabComponent {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: ImageDocument) {
 
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
@@ -103,7 +103,7 @@ export class DoceditImageTabComponent {
 
         Promise.all(imageDocPromises as any).then(docs => {
             this.documents = docs as any;
-            this.documents.sort((a: IdaiFieldImageDocument, b: IdaiFieldImageDocument) => {
+            this.documents.sort((a: ImageDocument, b: ImageDocument) => {
                 return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
             });
             this.clearSelection();
@@ -111,7 +111,7 @@ export class DoceditImageTabComponent {
     }
 
 
-    private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
+    private addIsDepictedInRelations(imageDocuments: ImageDocument[]) {
 
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
@@ -147,7 +147,7 @@ export class DoceditImageTabComponent {
         imagePickerModal.componentInstance.setDocument(this.document);
 
         try {
-            const selectedImages: Array<IdaiFieldImageDocument> = await imagePickerModal.result;
+            const selectedImages: Array<ImageDocument> = await imagePickerModal.result;
             this.addIsDepictedInRelations(selectedImages);
         } catch(err) {
             // Image picker modal has been canceled

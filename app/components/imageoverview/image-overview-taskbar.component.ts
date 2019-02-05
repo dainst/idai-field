@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument, Messages} from 'idai-components-2';
+import {FieldDocument, Messages} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
@@ -52,7 +52,7 @@ export class ImageOverviewTaskbarComponent {
         this.modalOpenend = true;
 
         try {
-            const targetDoc: IdaiFieldDocument = await this.modalService.open(
+            const targetDoc: FieldDocument = await this.modalService.open(
                 LinkModalComponent, { keyboard: false }
             ).result;
             if (!targetDoc) return;

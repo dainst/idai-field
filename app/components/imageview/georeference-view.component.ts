@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2';
-import {IdaiFieldGeoreference} from 'idai-components-2';
+import {ImageGeoreference} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from "../../core/model/persistence-manager";
 import {UsernameProvider} from '../../core/settings/username-provider';
@@ -79,7 +79,7 @@ export class GeoreferenceViewComponent {
     }
 
 
-    private createGeoreference(worldfileContent: string[]): IdaiFieldGeoreference {
+    private createGeoreference(worldfileContent: string[]): ImageGeoreference {
 
         const width: number = parseInt(this.document.resource.width);
         const height: number = parseInt(this.document.resource.height);

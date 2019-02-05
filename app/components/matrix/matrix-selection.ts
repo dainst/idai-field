@@ -1,6 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {on} from 'tsfun';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
+import {FeatureDocument} from 'idai-components-2';
 import {ObserverUtil} from '../../core/util/observer-util';
 
 
@@ -48,10 +48,10 @@ export class MatrixSelection {
     }
 
 
-    public getSelectedDocuments(documents: Array<IdaiFieldFeatureDocument>): Array<IdaiFieldFeatureDocument> {
+    public getSelectedDocuments(documents: Array<FeatureDocument>): Array<FeatureDocument> {
 
         return this.selectedDocumentsIds.map(id => {
-            return documents.find(on('resource.id:')(id)) as IdaiFieldFeatureDocument;
+            return documents.find(on('resource.id:')(id)) as FeatureDocument;
         });
     }
 

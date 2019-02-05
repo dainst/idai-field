@@ -1,7 +1,7 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
-import {Document, IdaiFieldDocument, IdaiFieldGeometry, Messages} from 'idai-components-2';
+import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -23,7 +23,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
 
-    private scrollTarget: IdaiFieldDocument|undefined;
+    private scrollTarget: FieldDocument|undefined;
     private clickEventObservers: Array<any> = [];
 
     private deselectionSubscription: Subscription;
@@ -61,9 +61,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
-    public solveConflicts = (doc: IdaiFieldDocument) => this.editDocument(doc, 'conflicts');
+    public solveConflicts = (doc: FieldDocument) => this.editDocument(doc, 'conflicts');
 
-    public setScrollTarget = (doc: IdaiFieldDocument|undefined) => this.scrollTarget = doc;
+    public setScrollTarget = (doc: FieldDocument|undefined) => this.scrollTarget = doc;
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
@@ -103,12 +103,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
+    public startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
 
         if (geometryType == 'none') {
             this.editDocument(newDocument);
         } else {
-            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
+            newDocument.resource['geometry'] = <FieldGeometry> { 'type': geometryType };
 
             this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
@@ -123,7 +123,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         this.quitGeometryEditing(document);
 
-        const editedDocument: IdaiFieldDocument|undefined
+        const editedDocument: FieldDocument|undefined
             = await this.doceditLauncher.editDocument(document, activeTabName);
         if (editedDocument) this.scrollTarget = editedDocument;
     }
@@ -198,7 +198,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private static scrollToDocument(doc: IdaiFieldDocument): boolean {
+    private static scrollToDocument(doc: FieldDocument): boolean {
 
         const element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {

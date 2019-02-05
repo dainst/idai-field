@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {on} from 'tsfun';
-import {Document, Messages, IdaiFieldImageDocument} from 'idai-components-2';
+import {Document, Messages, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ImageUploadResult} from '../../../imageupload/image-uploader';
@@ -21,7 +21,7 @@ import {SortUtil} from '../../../../core/util/sort-util';
 export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: IdaiFieldImageDocument[];
+    public documents: ImageDocument[];
 
     @Input() document: Document;
 
@@ -95,7 +95,7 @@ export class ThumbnailViewComponent implements OnInit, OnChanges {
 
         await promise;
 
-        this.documents.sort((a: IdaiFieldImageDocument, b: IdaiFieldImageDocument) => {
+        this.documents.sort((a: ImageDocument, b: ImageDocument) => {
            return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
         });
         this.imageGrid.calcGrid();

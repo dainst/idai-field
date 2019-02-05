@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira
@@ -8,7 +8,7 @@ export interface ViewContext {
 
     readonly q: string;
     readonly types: string[];
-    readonly selected?: IdaiFieldDocument;
+    readonly selected?: FieldDocument;
 }
 
 

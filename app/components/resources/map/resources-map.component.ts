@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Document, Messages, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document, Messages, FieldDocument, FieldGeometry} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -69,7 +69,7 @@ export class ResourcesMapComponent {
     }
 
 
-    public async select(document: IdaiFieldDocument|undefined) {
+    public async select(document: FieldDocument|undefined) {
 
         this.resourcesComponent.setScrollTarget(document);
 
@@ -86,7 +86,7 @@ export class ResourcesMapComponent {
      *   <code>null</code> indicates geometry should get deleted.
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: IdaiFieldGeometry|undefined) {
+    public async quitEditing(geometry: FieldGeometry|undefined) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;

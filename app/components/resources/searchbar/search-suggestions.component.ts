@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {Query, IdaiFieldDocument} from 'idai-components-2';
+import {Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
@@ -20,9 +20,9 @@ export class SearchSuggestionsComponent implements OnChanges {
     @Input() maxSuggestions: number;
     @Input() visible: boolean;
 
-    public selectedSuggestion: IdaiFieldDocument|undefined;
+    public selectedSuggestion: FieldDocument|undefined;
 
-    private suggestedDocuments: Array<IdaiFieldDocument> = [];
+    private suggestedDocuments: Array<FieldDocument> = [];
     private documentsFound: boolean;
     private stopListeningToKeyDownEvents: Function|undefined;
 
@@ -69,7 +69,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     }
 
 
-    public async jumpToDocument(document: IdaiFieldDocument) {
+    public async jumpToDocument(document: FieldDocument) {
 
         await this.viewFacade.setSearchString('', false);
         await this.routingService.jumpToRelationTarget(document);

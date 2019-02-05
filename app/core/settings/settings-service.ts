@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {unique} from 'tsfun';
-import {Messages, ProjectConfiguration, Document, IdaiFieldAppConfigurator} from 'idai-components-2';
+import {Messages, ProjectConfiguration, Document, AppConfigurator} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
@@ -39,7 +39,7 @@ export class SettingsService {
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private messages: Messages,
-                private appConfigurator: IdaiFieldAppConfigurator,
+                private appConfigurator: AppConfigurator,
                 private converter: Converter,
                 private synchronizationStatus: SynchronizationStatus) {
     }

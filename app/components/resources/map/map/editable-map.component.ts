@@ -1,5 +1,5 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry, IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2';
+import {FieldDocument, FieldGeometry, FieldPolyline, FieldMarker, FieldPolygon} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 
@@ -22,8 +22,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() isEditing: boolean;
 
-    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
-        new EventEmitter<IdaiFieldGeometry>();
+    @Output() onQuitEditing: EventEmitter<FieldGeometry> =
+        new EventEmitter<FieldGeometry>();
 
     public mousePositionCoordinates: string[]|undefined;
 
@@ -66,7 +66,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode !== 'None') this.finishDrawing();
 
-        let geometry: IdaiFieldGeometry|undefined|null = { type: '', coordinates: [] };
+        let geometry: FieldGeometry|undefined|null = { type: '', coordinates: [] };
 
         if (this.editablePolygons.length === 1) {
             geometry.type = 'Polygon';
@@ -275,11 +275,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     private applyStyle = (style: { opacity: number, fillOpacity?: number }) =>
-        (geometry: IdaiFieldPolygon|IdaiFieldPolyline) => geometry.setStyle(style);
+        (geometry: FieldPolygon|FieldPolyline) => geometry.setStyle(style);
 
 
     private applyOpacity = (style: number) =>
-        (markers: Array<IdaiFieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
+        (markers: Array<FieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
 
 
     private forAll<T>(f: (arg: T) => void) {
@@ -365,7 +365,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    protected select(document: IdaiFieldDocument): boolean {
+    protected select(document: FieldDocument): boolean {
 
         if (!this.isEditing) {
             this.onSelectDocument.emit(document);

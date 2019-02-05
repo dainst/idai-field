@@ -1,6 +1,6 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, IdaiType, ProjectConfiguration, IdaiFieldDocument, Messages} from 'idai-components-2';
+import {Relations, IdaiType, ProjectConfiguration, FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
@@ -22,14 +22,14 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
-    @Input() isRecordedIn: IdaiFieldDocument | undefined; // undefined when in resources overview
-    @Input() liesWithin: IdaiFieldDocument;
+    @Input() isRecordedIn: FieldDocument | undefined; // undefined when in resources overview
+    @Input() liesWithin: FieldDocument;
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
     @Input() status: PlusButtonStatus = 'enabled';
 
-    @Output() documentRequested: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     @ViewChild('popover') private popover: any;
 
@@ -61,7 +61,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (this.popover) this.popover.close();
 
-        const newDocument: IdaiFieldDocument = <IdaiFieldDocument> {
+        const newDocument: FieldDocument = <FieldDocument> {
             'resource': {
                 'relations': this.createRelations(),
                 'type': this.selectedType

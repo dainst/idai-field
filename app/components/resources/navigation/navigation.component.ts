@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
@@ -40,13 +40,13 @@ export class NavigationComponent {
     }
 
 
-    public getOperationButtonLabel = (document: IdaiFieldDocument) => ModelUtil.getDocumentLabel(document);
+    public getOperationButtonLabel = (document: FieldDocument) => ModelUtil.getDocumentLabel(document);
 
     public getNavigationButtonLabel = (id: string) => this.labels[id];
 
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
-    public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
+    public moveInto = (document: FieldDocument|undefined) => this.viewFacade.moveInto(document);
 
     public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 
@@ -111,7 +111,7 @@ export class NavigationComponent {
     }
 
 
-    public getSegments(): Array<IdaiFieldDocument> {
+    public getSegments(): Array<FieldDocument> {
 
         return !this.viewFacade.getBypassHierarchy()
             ? this.navigationPath.segments.map(_ => _.document)
@@ -119,7 +119,7 @@ export class NavigationComponent {
     }
 
 
-    public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
+    public async chooseOperationTypeDocumentOption(document: FieldDocument) {
 
         this.viewFacade.selectOperation(document.resource.id);
         if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument

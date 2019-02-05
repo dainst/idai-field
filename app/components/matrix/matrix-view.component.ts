@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, tripleEqual, isEmpty} from 'tsfun';
-import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldFeatureDocument} from 'idai-components-2';
+import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -33,11 +33,11 @@ export class MatrixViewComponent implements OnInit {
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
 
-    public trenches: Array<IdaiFieldDocument> = [];
-    public selectedTrench: IdaiFieldDocument|undefined;
+    public trenches: Array<FieldDocument> = [];
+    public selectedTrench: FieldDocument|undefined;
 
-    private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
-    private totalFeatureDocuments: Array<IdaiFieldFeatureDocument> = [];
+    private featureDocuments: Array<FeatureDocument> = [];
+    private totalFeatureDocuments: Array<FeatureDocument> = [];
     private trenchesLoaded: boolean = false;
 
 
@@ -83,7 +83,7 @@ export class MatrixViewComponent implements OnInit {
     public async edit(resourceId: string) {
 
         await this.openEditorModal(
-            this.featureDocuments.find(on('resource.id:')(resourceId)) as IdaiFieldFeatureDocument
+            this.featureDocuments.find(on('resource.id:')(resourceId)) as FeatureDocument
         );
     }
 
@@ -92,7 +92,7 @@ export class MatrixViewComponent implements OnInit {
 
         if (!this.documentsSelected()) return;
 
-        const selectedDocuments: Array<IdaiFieldFeatureDocument>
+        const selectedDocuments: Array<FeatureDocument>
             = this.selection.getSelectedDocuments(this.featureDocuments);
         this.selection.clear();
         this.selection.setMode('none');
@@ -149,7 +149,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async selectTrench(trench: IdaiFieldDocument) {
+    private async selectTrench(trench: FieldDocument) {
 
         if (trench === this.selectedTrench) return;
 
@@ -166,7 +166,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async loadFeatureDocuments(trench: IdaiFieldDocument) {
+    private async loadFeatureDocuments(trench: FieldDocument) {
 
         this.loading.start();
 
@@ -178,7 +178,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async openEditorModal(docToEdit: IdaiFieldFeatureDocument) {
+    private async openEditorModal(docToEdit: FeatureDocument) {
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
@@ -195,12 +195,12 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>, clusterMode: MatrixClusterMode)
-            : { [period: string]: Array<IdaiFieldFeatureDocument> } {
+    private static getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
+            : { [period: string]: Array<FeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
-        return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
+        return documents.reduce((periodMap: any, document: FeatureDocument) => {
             const period: string = document.resource.period || 'UNKNOWN';
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);

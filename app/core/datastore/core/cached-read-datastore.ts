@@ -22,7 +22,7 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  *    for clients to work with references to documents.
  *
  * 2) Returns fully checked instances of
- *    IdaiFieldDocument and IdaiFieldImageDocument respectively,
+ *    FieldDocument and ImageDocument respectively,
  *    so that the rest of the app can rely that the declared
  *    fields are present.
  *

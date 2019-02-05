@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Document, IdaiFieldImageDocument, Messages} from 'idai-components-2';
+import {Document, ImageDocument, Messages} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
@@ -45,7 +45,7 @@ export class ImageOverviewComponent implements OnInit {
     public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
 
     public toggleSelected =
-        (document: Document) => this.imageOverviewFacade.toggleSelected(document as IdaiFieldImageDocument);
+        (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
 
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
 
@@ -66,7 +66,7 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public jumpToRelationTarget(document: IdaiFieldImageDocument) {
+    public jumpToRelationTarget(document: ImageDocument) {
 
         this.imageOverviewFacade.select(document);
         this.routingService.jumpToRelationTarget(document, undefined, true);

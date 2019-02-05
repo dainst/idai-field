@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {MapComponent, Messages, ProjectConfiguration, IdaiFieldImageDocument,
-    IdaiFieldGeoreference} from 'idai-components-2';
+import {MapComponent, Messages, ProjectConfiguration, ImageDocument,
+    ImageGeoreference} from 'idai-components-2';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
@@ -21,7 +21,7 @@ export class LayerMapComponent extends MapComponent {
 
     @Input() mainTypeDocumentIds: string;
 
-    public layers: Array<IdaiFieldImageDocument> = [];
+    public layers: Array<ImageDocument> = [];
 
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
@@ -50,7 +50,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public async toggleLayer(layer: IdaiFieldImageDocument) {
+    public async toggleLayer(layer: ImageDocument) {
 
         this.layerManager.toggleLayer(layer.resource.id as any);
 
@@ -62,7 +62,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public focusLayer(layer: IdaiFieldImageDocument) {
+    public focusLayer(layer: ImageDocument) {
 
         const georeference = layer.resource.georeference;
         const bounds = [] as any;
@@ -133,13 +133,13 @@ export class LayerMapComponent extends MapComponent {
 
     private async addLayerToMap(resourceId: string) {
 
-        const layerDocument: IdaiFieldImageDocument|undefined
+        const layerDocument: ImageDocument|undefined
             = this.layers.find(layer => layer.resource.id == resourceId);
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
-        const georeference = layerDocument.resource.georeference as IdaiFieldGeoreference;
+        const georeference = layerDocument.resource.georeference as ImageGeoreference;
         this.imageOverlays[resourceId] = L.imageOverlay(
             imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any,
             [georeference.topLeftCoordinates,

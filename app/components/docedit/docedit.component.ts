@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
-import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
+import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
     ProjectConfiguration} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
@@ -127,7 +127,7 @@ export class DoceditComponent {
     }
 
 
-    public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
+    public async setDocument(document: FieldDocument|ImageDocument) {
 
         this.documentHolder.setDocument(document);
 
@@ -273,7 +273,7 @@ export class DoceditComponent {
     }
 
 
-    private async fetchParentLabel(document: IdaiFieldDocument|IdaiFieldImageDocument) {
+    private async fetchParentLabel(document: FieldDocument|ImageDocument) {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0

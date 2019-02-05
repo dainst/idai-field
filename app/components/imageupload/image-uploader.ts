@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiType, ProjectConfiguration, NewIdaiFieldImageDocument} from 'idai-components-2';
+import {Document, IdaiType, ProjectConfiguration, NewImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
@@ -195,7 +195,7 @@ export class ImageUploader {
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                const doc: NewIdaiFieldImageDocument = {
+                const doc: NewImageDocument = {
                     resource: {
                         identifier: file.name,
                         shortDescription: '',

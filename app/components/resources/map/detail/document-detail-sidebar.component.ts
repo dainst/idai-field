@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty} from 'tsfun';
-import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
@@ -58,7 +58,7 @@ export class DocumentViewSidebarComponent {
     }
 
 
-    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
+    public jumpToRelationTarget(documentToSelect: FieldDocument) {
         
         this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
         this.resourcesComponent.setScrollTarget(documentToSelect);

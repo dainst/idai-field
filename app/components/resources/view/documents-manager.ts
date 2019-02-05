@@ -1,6 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
-import {Document, Query, IdaiFieldDocument} from 'idai-components-2';
+import {Document, Query, FieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
@@ -51,7 +51,7 @@ export class DocumentsManager {
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
-    public getChildrenCount = (document: IdaiFieldDocument) => this.childrenCountMap[document.resource.id];
+    public getChildrenCount = (document: FieldDocument) => this.childrenCountMap[document.resource.id];
 
     public deselectionNotifications = (): Observable<Document> =>
         ObserverUtil.register(this.deselectionObservers);
@@ -106,7 +106,7 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: IdaiFieldDocument|undefined) {
+    public async moveInto(document: FieldDocument|undefined) {
 
         await this.resourcesStateManager.moveInto(document);
         await this.populateAndDeselectIfNecessary();
@@ -123,7 +123,7 @@ export class DocumentsManager {
     }
 
 
-    public addNewDocument(document: IdaiFieldDocument) {
+    public addNewDocument(document: FieldDocument) {
 
         this.documents.unshift(document);
         this.selectAndNotify(document);
@@ -141,7 +141,7 @@ export class DocumentsManager {
         this.documents = this.documents.filter(hasId);
 
         try {
-            const documentToSelect: IdaiFieldDocument = await this.datastore.get(resourceId);
+            const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
             this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
             if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
@@ -167,7 +167,7 @@ export class DocumentsManager {
         }
 
         this.currentQueryId = new Date().toISOString();
-        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
+        const result: IdaiFieldFindResult<FieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
 
         await this.updateChildrenCountMap(result.documents);
 
@@ -181,7 +181,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
+    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
@@ -208,7 +208,7 @@ export class DocumentsManager {
     }
 
 
-    private async updateChildrenCountMap(documents: Array<IdaiFieldDocument>) {
+    private async updateChildrenCountMap(documents: Array<FieldDocument>) {
 
         for (let document of documents) {
            this.childrenCountMap[document.resource.id] = this.indexFacade.getCount(
@@ -218,13 +218,13 @@ export class DocumentsManager {
     }
 
 
-    private async isDocumentInList(document: IdaiFieldDocument): Promise<boolean> {
+    private async isDocumentInList(document: FieldDocument): Promise<boolean> {
 
         return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(document)) !== undefined;
     }
 
 
-    private selectAndNotify(document: IdaiFieldDocument|undefined) {
+    private selectAndNotify(document: FieldDocument|undefined) {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
             ObserverUtil.notify(this.deselectionObservers,
@@ -270,7 +270,7 @@ export class DocumentsManager {
     }
 
 
-    private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
+    private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
 
         this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
@@ -294,7 +294,7 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
+    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         try {
             return this.datastore.find(query);

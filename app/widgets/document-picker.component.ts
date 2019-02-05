@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Query, IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {Query, FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
@@ -19,9 +19,9 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() relationName: string;
     @Input() relationRangeType: string;
 
-    @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    public documents: Array<IdaiFieldDocument>;
+    public documents: Array<FieldDocument>;
 
     private query: Query = { limit: 50 };
     private currentQueryId: string;
@@ -93,9 +93,9 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private filterNotAllowedRelationDomainTypes(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private filterNotAllowedRelationDomainTypes(documents: Array<FieldDocument>): Array<FieldDocument> {
 
-        const result: Array<IdaiFieldDocument> = [];
+        const result: Array<FieldDocument> = [];
 
         for (let document of documents) {
 

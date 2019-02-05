@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty} from 'tsfun';
-import {Messages, IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
+import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
@@ -32,7 +32,7 @@ export class ImageViewComponent implements OnInit {
     private comingFrom: Array<any>|undefined = undefined;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument) => this.routingService.jumpToRelationTarget(
+    public jumpToRelationTarget = (documentToJumpTo: FieldDocument) => this.routingService.jumpToRelationTarget(
         documentToJumpTo, undefined, true);
 
 
@@ -111,7 +111,7 @@ export class ImageViewComponent implements OnInit {
 
         this.getRouteParams(async (id: string, menu: string, tab?: string) => {
 
-            let document: IdaiFieldImageDocument;
+            let document: ImageDocument;
 
             try {
                 document = await this.datastore.get(id);

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldDocument, IdaiType, Messages} from 'idai-components-2';
+import {FieldDocument, IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -25,7 +25,7 @@ const RETURN_KEY = 13;
  */
 export class RowComponent implements AfterViewInit {
 
-    @Input() document: IdaiFieldDocument;
+    @Input() document: FieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
 
     @ViewChild('identifierInput') identifierInput: ElementRef;
@@ -99,7 +99,7 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+    private async restoreIdentifier(document: FieldDocument): Promise<any> {
 
         try {
             Object.assign(

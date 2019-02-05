@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {Datastore, Document, ReadDatastore, IdaiFieldDocument, IdaiFieldImageDocument,
-    IdaiFieldFeatureDocument} from 'idai-components-2';
+import {Datastore, Document, ReadDatastore, FieldDocument, ImageDocument,
+    FeatureDocument} from 'idai-components-2';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
@@ -20,7 +20,7 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
- * IdaiFieldDocument, IdaiFieldImageDocument related stuff for example.
+ * FieldDocument, ImageDocument related stuff for example.
  *
  * There is the core package. This is meant to be more general purpose.
  */
@@ -78,15 +78,15 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
 
 
         // idai-field datastore
-        // knows IdaiFieldDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // knows FieldDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
         // guarantees that identifier, liesWithin, isRecordedIn constraints are available
         // provides caching
         {
             provide: FieldDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
-                                 documentCache: DocumentCache<IdaiFieldDocument>,
-                                 documentConverter: TypeConverter<IdaiFieldDocument>
+                                 documentCache: DocumentCache<FieldDocument>,
+                                 documentConverter: TypeConverter<FieldDocument>
             ): FieldDatastore {
                 return new FieldDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
@@ -96,15 +96,15 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
 
 
         // idai-field datastore
-        // knows IdaiFieldImageDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // knows ImageDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
         // guarantees that identifier constraint is available
         // provides caching
         {
             provide: ImageDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
-                                 documentCache: DocumentCache<IdaiFieldImageDocument>,
-                                 documentConverter: TypeConverter<IdaiFieldImageDocument>,
+                                 documentCache: DocumentCache<ImageDocument>,
+                                 documentConverter: TypeConverter<ImageDocument>,
             ): ImageDatastore {
                 return new ImageDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
@@ -114,15 +114,15 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
 
 
         // idai-field datastore
-        // knows IdaiFieldFeatureDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // knows FeatureDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
         // guarantees that identifier constraint is available
         // provides caching
         {
             provide: FeatureDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
-                                 documentCache: DocumentCache<IdaiFieldFeatureDocument>,
-                                 documentConverter: TypeConverter<IdaiFieldFeatureDocument>,
+                                 documentCache: DocumentCache<FeatureDocument>,
+                                 documentConverter: TypeConverter<FeatureDocument>,
             ): FeatureDatastore {
                 return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },

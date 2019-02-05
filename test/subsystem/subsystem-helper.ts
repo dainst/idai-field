@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb';
-import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
+import {AppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -40,7 +40,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
         pouchdbmanager,
         undefined,
-        new IdaiFieldAppConfigurator(
+        new AppConfigurator(
             new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
             () => ''
         ),
@@ -89,7 +89,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeConverter = new FieldTypeConverter(typeUtility);
 
-    const idaiFieldDocumentDatastore = new FieldDatastore(
+    const FieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const idaiFieldImageDocumentDatastore = new ImageDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
@@ -105,7 +105,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const resourcesStateManager = ResourcesStateManagerConfiguration.build(
         projectConfiguration,
-        idaiFieldDocumentDatastore,
+        FieldDocumentDatastore,
         new StandardStateSerializer(settingsService),
         'synctest',
         true,
@@ -114,7 +114,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const viewFacade = new ViewFacade(
         projectConfiguration,
-        idaiFieldDocumentDatastore,
+        FieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
@@ -122,7 +122,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const persistenceManager = new PersistenceManager(
-        idaiFieldDocumentDatastore,
+        FieldDocumentDatastore,
         projectConfiguration,
         typeUtility,
     );
@@ -130,7 +130,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => idaiFieldDocumentDatastore.find(q), typeUtility),
+        new Validator(projectConfiguration, (q: Query) => FieldDocumentDatastore.find(q), typeUtility),
         undefined,
         typeUtility,
         { getUsername: () => 'fakeuser' },
@@ -142,7 +142,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         viewFacade,
         documentHolder,
         documentDatastore,
-        idaiFieldDocumentDatastore,
+        FieldDocumentDatastore,
         idaiFieldImageDocumentDatastore,
         settingsService
     }

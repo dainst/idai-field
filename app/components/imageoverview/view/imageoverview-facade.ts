@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query, IdaiFieldImageDocument} from 'idai-components-2';
+import {Query, ImageDocument} from 'idai-components-2';
 import {ImageFilterOption, ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -105,19 +105,19 @@ export class ImageOverviewFacade {
     }
 
 
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: ImageDocument) {
 
         this.imageDocumentsManager.select(document);
     }
 
 
-    public toggleSelected(document: IdaiFieldImageDocument) {
+    public toggleSelected(document: ImageDocument) {
 
         this.imageDocumentsManager.toggleSelected(document);
     }
 
 
-    public getDocuments(): Array<IdaiFieldImageDocument> {
+    public getDocuments(): Array<ImageDocument> {
 
         return this.imageDocumentsManager.getDocuments();
     }
@@ -129,13 +129,13 @@ export class ImageOverviewFacade {
     }
 
 
-    public remove(document: IdaiFieldImageDocument) {
+    public remove(document: ImageDocument) {
 
         return this.imageDocumentsManager.remove(document);
     }
 
 
-    public getSelected(): Array<IdaiFieldImageDocument> {
+    public getSelected(): Array<ImageDocument> {
 
         return this.imageDocumentsManager.getSelected();
     }

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
@@ -32,16 +32,16 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
+    public moveInto = (document: FieldDocument) => this.navigationService.moveInto(document);
 
-    public jumpToView = (document: IdaiFieldDocument) => this.navigationService.jumpToView(document);
+    public jumpToView = (document: FieldDocument) => this.navigationService.jumpToView(document);
 
-    public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
+    public showMoveIntoOption = (document: FieldDocument) => this.navigationService.showMoveIntoOption(document);
 
-    public showJumpToViewOption = (document: IdaiFieldDocument) => this.navigationService.showJumpToViewOption(document);
+    public showJumpToViewOption = (document: FieldDocument) => this.navigationService.showJumpToViewOption(document);
 
 
-    public async select(document: IdaiFieldDocument, autoScroll: boolean = false) {
+    public async select(document: FieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
 

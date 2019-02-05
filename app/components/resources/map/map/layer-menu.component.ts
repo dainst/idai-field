@@ -1,5 +1,5 @@
 import {Input, Output, EventEmitter, Renderer2, Component} from '@angular/core';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
 
@@ -14,10 +14,10 @@ import {MenuComponent} from '../../../../widgets/menu.component';
  */
 export class LayerMenuComponent extends MenuComponent {
 
-    @Input() layers: Array<IdaiFieldImageDocument> = [];
+    @Input() layers: Array<ImageDocument> = [];
 
-    @Output() onToggleLayer = new EventEmitter<IdaiFieldImageDocument>();
-    @Output() onFocusLayer = new EventEmitter<IdaiFieldImageDocument>();
+    @Output() onToggleLayer = new EventEmitter<ImageDocument>();
+    @Output() onFocusLayer = new EventEmitter<ImageDocument>();
 
 
     constructor(private layerManager: LayerManager,
@@ -27,12 +27,12 @@ export class LayerMenuComponent extends MenuComponent {
     }
 
 
-    public isActiveLayer = (layer: IdaiFieldImageDocument) => this.layerManager.isActiveLayer(layer.resource.id as any);
-    public toggleLayer = (layer: IdaiFieldImageDocument) => this.onToggleLayer.emit(layer);
-    public focusLayer = (layer: IdaiFieldImageDocument) => this.onFocusLayer.emit(layer);
+    public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id as any);
+    public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
+    public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
 
 
-    public getLayerLabel(layer: IdaiFieldImageDocument): string {
+    public getLayerLabel(layer: ImageDocument): string {
 
         let label = layer.resource.shortDescription && layer.resource.shortDescription != '' ?
             layer.resource.shortDescription :

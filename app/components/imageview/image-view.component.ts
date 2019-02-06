@@ -32,7 +32,7 @@ export class ImageViewComponent implements OnInit {
     private comingFrom: Array<any>|undefined = undefined;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToJumpTo: FieldDocument) => this.routingService.jumpToRelationTarget(
+    public jumpToResource = (documentToJumpTo: FieldDocument) => this.routingService.jumpToResource(
         documentToJumpTo, undefined, true);
 
 

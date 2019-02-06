@@ -58,9 +58,9 @@ export class DocumentViewSidebarComponent {
     }
 
 
-    public jumpToRelationTarget(documentToSelect: FieldDocument) {
+    public async jumpToResource(documentToSelect: FieldDocument) {
         
-        this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
+        await this.routingService.jumpToResource(documentToSelect, 'relations');
         this.resourcesComponent.setScrollTarget(documentToSelect);
     }
 }

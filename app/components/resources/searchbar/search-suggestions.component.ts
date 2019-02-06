@@ -72,7 +72,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     public async jumpToDocument(document: FieldDocument) {
 
         await this.viewFacade.setSearchString('', false);
-        await this.routingService.jumpToRelationTarget(document);
+        await this.routingService.jumpToResource(document);
         this.resourcesComponent.setScrollTarget(document);
     }
 

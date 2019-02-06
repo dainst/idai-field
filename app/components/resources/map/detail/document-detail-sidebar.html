@@ -65,7 +65,7 @@
 
                     <div class="tab-view-container">
                         <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
-                                        (onRelationTargetClicked)="jumpToRelationTarget($event)"
+                                        (onRelationTargetClicked)="jumpToResource($event)"
                                         [hideRelations]="relationsToHide">
                         </relations-view>
                     </div>
@@ -87,7 +87,7 @@
 
                     <div class="tab-view-container">
                         <thumbnail-view [document]="viewFacade.getSelectedDocument()"
-                                        (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                                        (onRelationTargetClicked)="jumpToResource($event)">
                         </thumbnail-view>
                     </div>
                 </ng-template>

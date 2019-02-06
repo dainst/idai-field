@@ -70,10 +70,10 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public jumpToRelationTarget(document: ImageDocument) {
+    public async jumpToResource(document: ImageDocument) {
 
         this.imageOverviewFacade.select(document);
-        this.routingService.jumpToRelationTarget(document, undefined, true);
+        await this.routingService.jumpToResource(document, undefined, true);
     }
 
 

@@ -11,6 +11,7 @@ import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
+import {AngularUtility} from '../../../common/angular-utility';
 
 
 /**
@@ -170,21 +171,19 @@ export class DocumentsManager {
             this.documents = [];
         }
 
-        // The timeout is necessary for Angular to show the cleared document list & the loading icon
-        await new Promise(resolve => setTimeout(async () => {
-            this.currentQueryId = new Date().toISOString();
-            const result: IdaiFieldFindResult<FieldDocument>
-                = await this.createUpdatedDocumentList(this.currentQueryId);
+        await AngularUtility.refresh();
 
-            await this.updateChildrenCountMap(result.documents);
+        this.currentQueryId = new Date().toISOString();
+        const result: IdaiFieldFindResult<FieldDocument>
+            = await this.createUpdatedDocumentList(this.currentQueryId);
 
-            if (this.loading) this.loading.stop();
-            if (result.queryId !== this.currentQueryId) return resolve();
+        await this.updateChildrenCountMap(result.documents);
 
-            this.documents = result.documents;
-            this.totalDocumentCount = result.totalCount;
-            resolve();
-        }, 1));
+        if (this.loading) this.loading.stop();
+        if (result.queryId !== this.currentQueryId) return;
+
+        this.documents = result.documents;
+        this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);

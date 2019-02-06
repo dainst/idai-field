@@ -183,11 +183,11 @@ export class DocumentsManager {
 
             this.documents = result.documents;
             this.totalDocumentCount = result.totalCount;
-
-            this.populateInProgress = false;
-            ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
             resolve();
         }, 1));
+
+        this.populateInProgress = false;
+        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 
 

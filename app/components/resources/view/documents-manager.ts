@@ -175,7 +175,7 @@ export class DocumentsManager {
             await this.updateChildrenCountMap(result.documents);
 
             if (this.loading) this.loading.stop();
-            if (result.queryId !== this.currentQueryId) return;
+            if (result.queryId !== this.currentQueryId) return resolve();
 
             this.documents = result.documents;
             this.totalDocumentCount = result.totalCount;

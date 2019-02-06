@@ -56,7 +56,7 @@ describe('project --', function() {
     }
 
 
-    it('delete project', () => {
+    xit('delete project', () => {
 
         performCreateProject();
         ResourcesPage.get();

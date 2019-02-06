@@ -77,6 +77,8 @@ describe('project --', function() {
         NavbarPage.clickNavigateToOverview();
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest * 5);
+        SearchBarPage.typeInSearchField('SE');
 
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
 

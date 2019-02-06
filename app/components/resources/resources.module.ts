@@ -38,6 +38,7 @@ import {ResourcesStateManagerConfiguration} from './view/resources-state-manager
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {MoveModalComponent} from './move-modal.component';
 
 const remote = require('electron').remote;
 
@@ -68,7 +69,8 @@ const remote = require('electron').remote;
         NavigationComponent,
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,
-        SearchSuggestionsComponent
+        SearchSuggestionsComponent,
+        MoveModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -131,6 +133,9 @@ const remote = require('electron').remote;
     ],
     exports: [
         GeometryViewComponent
+    ],
+    entryComponents: [
+        MoveModalComponent
     ]
 })
 

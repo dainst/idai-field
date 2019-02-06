@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {union} from 'tsfun';
 import {Query, FieldDocument, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
@@ -36,6 +37,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     async ngOnChanges() {
 
+        this.query.types = this.getAllAvailableTypeNames();
         await this.updateResultList();
     }
 
@@ -52,8 +54,9 @@ export class DocumentPickerComponent implements OnChanges {
         if (types && types.length > 0) {
             this.query.types = types;
         } else {
-            delete this.query.types;
+            this.query.types = this.getAllAvailableTypeNames();
         }
+
         await this.updateResultList();
     }
 
@@ -61,7 +64,8 @@ export class DocumentPickerComponent implements OnChanges {
     public isQuerySpecified(): boolean {
 
         return ((this.query.q !== undefined && this.query.q.length > 0)
-            || (this.query.types !== undefined && this.query.types.length > 0));
+            || (this.query.types !== undefined
+                && this.query.types.length < this.getAllAvailableTypeNames().length));
     }
 
 
@@ -87,5 +91,15 @@ export class DocumentPickerComponent implements OnChanges {
         } finally {
             this.loading.stop();
         }
+    }
+
+
+    private getAllAvailableTypeNames(): string[] {
+
+        return union(this.filterOptions.map(type => {
+            return type.children
+                ? [type.name].concat(type.children.map(child => child.name))
+                : [type.name];
+        }));
     }
 }

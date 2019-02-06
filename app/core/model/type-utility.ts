@@ -98,13 +98,28 @@ export class TypeUtility {
     }
 
 
-    public getAllowedRelationRangeTypes(relationName: string, domainTypeName: string): Array<IdaiType> {
+    public getAllowedRelationDomainTypes(relationName: string, rangeTypeName: string): Array<IdaiType> {
 
-        return this.projectConfiguration.getTypesTreeList()
+        return this.projectConfiguration.getTypesList()
             .filter(type => {
                 return this.projectConfiguration.isAllowedRelationDomainType(
-                    type.name, domainTypeName, relationName
-                );
+                    type.name, rangeTypeName, relationName
+                ) && (!type.parentType || !this.projectConfiguration.isAllowedRelationDomainType(
+                    type.parentType.name, rangeTypeName, relationName
+                ));
+            });
+    }
+
+
+    public getAllowedRelationRangeTypes(relationName: string, domainTypeName: string): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => {
+                return this.projectConfiguration.isAllowedRelationDomainType(
+                    domainTypeName, type.name, relationName
+                ) && (!type.parentType || !this.projectConfiguration.isAllowedRelationDomainType(
+                    domainTypeName, type.parentType.name, relationName
+                ));
             });
     }
 

@@ -1,5 +1,6 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
 import {Document, FieldDocument, FieldGeometry, Messages, IdaiType} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
@@ -8,6 +9,7 @@ import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {M} from '../m';
 import {TypeUtility} from '../../core/model/type-utility';
+import {MoveModalComponent} from './move-modal.component';
 
 
 @Component({
@@ -24,12 +26,14 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
 
+    public filterOptions: Array<IdaiType> = [];
     private scrollTarget: FieldDocument|undefined;
     private clickEventObservers: Array<any> = [];
 
     private deselectionSubscription: Subscription;
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
+    private navigationPathSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -40,7 +44,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
-                private typeUtility: TypeUtility
+                private typeUtility: TypeUtility,
+                private modalService: NgbModal
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
@@ -92,6 +97,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (this.changedDocumentFromRemoteSubscription) {
             this.changedDocumentFromRemoteSubscription.unsubscribe();
         }
+        if (this.navigationPathSubscription) this.navigationPathSubscription.unsubscribe();
     }
 
 
@@ -103,16 +109,18 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public getFilterOptions(): Array<IdaiType> {
+    private updateFilterOptions() {
 
         const viewType: string|undefined = this.viewFacade.getViewType();
-        if (!viewType) return [];
-
-        return this.viewFacade.isInOverview()
-            ? this.viewFacade.getBypassHierarchy()
-                ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
-                : this.typeUtility.getOverviewTopLevelTypes()
-            : this.typeUtility.getAllowedRelationRangeTypes('isRecordedIn', viewType);
+        if (!viewType) {
+            this.filterOptions = [];
+        } else {
+            this.filterOptions = this.viewFacade.isInOverview()
+                ? this.viewFacade.getBypassHierarchy()
+                    ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
+                    : this.typeUtility.getOverviewTopLevelTypes()
+                : this.typeUtility.getAllowedRelationDomainTypes('isRecordedIn', viewType);
+        }
     }
 
 
@@ -139,6 +147,15 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         const editedDocument: FieldDocument|undefined
             = await this.doceditLauncher.editDocument(document, activeTabName);
         if (editedDocument) this.scrollTarget = editedDocument;
+    }
+
+
+    public async moveDocument(document: FieldDocument) {
+
+        const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
+        modalRef.componentInstance.setDocument(document);
+
+        await modalRef.result;
     }
 
 
@@ -207,6 +224,11 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.changedDocumentFromRemoteSubscription =
             this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
+            });
+
+        this.navigationPathSubscription =
+            this.viewFacade.navigationPathNotifications().subscribe(() => {
+                this.updateFilterOptions();
             });
     }
 

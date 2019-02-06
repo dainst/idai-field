@@ -7,7 +7,7 @@
         <div class="row">
             <div id="search-bar-container" class="col-md-9">
                 <resources-search-bar *ngIf="!isViewWithoutMainTypeDocuments()"
-                                      [filterOptions]="getFilterOptions()"
+                                      [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [extendedSearch]="getBypassHierarchy()"

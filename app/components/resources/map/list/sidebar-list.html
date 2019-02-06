@@ -2,6 +2,7 @@
     <li *ngFor="let document of viewFacade.getDocuments()"
         (click)="select(document)"
         (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+        (contextmenu)="resourcesComponent.moveDocument(document)"
         class="list-group-item"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"

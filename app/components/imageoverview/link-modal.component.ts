@@ -29,7 +29,7 @@ export class LinkModalComponent {
 
     public initializeFilterOptions() {
 
-        this.filterOptions = this.typeUtility.getAllowedRelationRangeTypes(
+        this.filterOptions = this.typeUtility.getAllowedRelationDomainTypes(
             'isDepictedIn', 'Image'
         );
     }

@@ -167,7 +167,7 @@ export class DocumentsManager {
         }
 
         // The timeout is necessary for Angular to show the cleared document list & the loading icon
-        setTimeout(async () => {
+        await new Promise(resolve => setTimeout(async () => {
             this.currentQueryId = new Date().toISOString();
             const result: IdaiFieldFindResult<FieldDocument>
                 = await this.createUpdatedDocumentList(this.currentQueryId);
@@ -181,7 +181,8 @@ export class DocumentsManager {
             this.totalDocumentCount = result.totalCount;
 
             ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
-        }, 1);
+            resolve();
+        }, 1));
     }
 
 

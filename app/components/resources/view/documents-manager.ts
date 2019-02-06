@@ -31,6 +31,7 @@ export class DocumentsManager {
     private childrenCountMap: { [resourceId: string]: number } = {};
 
     private currentQueryId: string;
+    private populateInProgress: boolean = false;
 
     private static documentLimit: number = 200;
 
@@ -61,6 +62,8 @@ export class DocumentsManager {
 
     public documentChangedFromRemoteNotifications = (): Observable<undefined> =>
         ObserverUtil.register(this.documentChangedFromRemoteObservers);
+
+    public isPopulateInProgress = () => this.populateInProgress;
 
 
     public isNewDocumentFromRemote(document: Document): boolean {
@@ -159,6 +162,7 @@ export class DocumentsManager {
 
     public async populateDocumentList(reset: boolean = true) {
 
+        this.populateInProgress = true;
         if (this.loading) this.loading.start();
 
         if (reset) {
@@ -180,6 +184,7 @@ export class DocumentsManager {
             this.documents = result.documents;
             this.totalDocumentCount = result.totalCount;
 
+            this.populateInProgress = false;
             ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
             resolve();
         }, 1));

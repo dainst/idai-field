@@ -134,7 +134,7 @@ export class LayerMapComponent extends MapComponent {
     private async addLayerToMap(resourceId: string) {
 
         const layerDocument: ImageDocument|undefined
-            = this.layers.find(layer => layer.resource.id == resourceId);
+            = this.layers.find(layer => layer.resource.id === resourceId);
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
@@ -202,6 +202,6 @@ export class LayerMapComponent extends MapComponent {
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.
         return (changes['documents'] && changes['documents'].currentValue
-            && changes['documents'].currentValue.length == 0);
+            && changes['documents'].currentValue.length === 0);
     }
 }

@@ -128,7 +128,7 @@ export class ViewFacade {
 
     public documentChangedFromRemoteNotifications = () => this.documentsManager.documentChangedFromRemoteNotifications();
 
-    public isReady = () => this.ready;
+    public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
 
     public getNavigationPath() {

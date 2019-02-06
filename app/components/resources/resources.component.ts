@@ -153,7 +153,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public async moveDocument(document: FieldDocument) {
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
-        modalRef.componentInstance.setDocument(document);
+        await modalRef.componentInstance.setDocument(document);
 
         try {
             await modalRef.result;

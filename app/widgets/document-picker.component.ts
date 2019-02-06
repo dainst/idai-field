@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {union} from 'tsfun';
-import {Query, FieldDocument, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
@@ -18,6 +18,7 @@ import {clone} from '../core/util/object-util';
 export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType>;
+    @Input() constraints: { [name: string]: string|Constraint };
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -81,6 +82,7 @@ export class DocumentPickerComponent implements OnChanges {
         this.loading.start();
 
         this.currentQueryId = new Date().toISOString();
+        if (this.constraints) this.query.constraints = this.constraints;
         this.query.id = this.currentQueryId;
 
         try {

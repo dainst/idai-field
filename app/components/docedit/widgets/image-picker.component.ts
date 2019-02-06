@@ -124,7 +124,7 @@ export class ImagePickerComponent implements OnInit {
 
         return this.datastore.find(clone(this.query))
             .then(result => {
-                if (result.queryId === this.currentQueryId) this.documents = result.documents
+                if (result.queryId === this.currentQueryId) this.documents = result.documents;
             })
             .catch(errWithParams => {
                 console.error('Error in find with query', this.query);

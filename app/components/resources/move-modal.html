@@ -1,6 +1,7 @@
 <div class="modal-body" id="link-modal">
     <p i18n="@@imageOverview.moveModal.chooseParentResource">Neue Elternressource wählen:</p>
     <document-picker [filterOptions]="filterOptions"
+                     [constraints]="constraints"
                      (documentSelected)="moveDocument($event)"></document-picker>
 </div>
 

@@ -155,7 +155,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
         modalRef.componentInstance.setDocument(document);
 
-        await modalRef.result;
+        try {
+            await modalRef.result;
+            await this.viewFacade.setSelectedDocument(document.resource.id);
+        } catch(err) {
+            if (err !== 'cancel') this.messages.add(err);
+        }
     }
 
 

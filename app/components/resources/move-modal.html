@@ -1,7 +1,7 @@
 <div class="modal-body" id="link-modal">
     <p i18n="@@imageOverview.moveModal.chooseParentResource">Neue Elternressource wählen:</p>
     <document-picker [filterOptions]="filterOptions"
-                     (documentSelected)="activeModal.close($event)"></document-picker>
+                     (documentSelected)="moveDocument($event)"></document-picker>
 </div>
 
 <div class="modal-footer">

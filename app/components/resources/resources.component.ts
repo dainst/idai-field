@@ -10,6 +10,7 @@ import {ViewFacade} from './view/view-facade';
 import {M} from '../m';
 import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
+import {AngularUtility} from '../../common/angular-utility';
 
 
 @Component({
@@ -172,22 +173,22 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public switchMode(mode: 'map' | 'list') {
+    public async switchMode(mode: 'map' | 'list') {
 
         if (!this.isReady()) return;
 
+        this.loading.start();
+        await AngularUtility.refresh();
+
         // This is so that new elements are properly included and sorted when coming back to list
         if (this.viewFacade.getMode() === 'list' && mode === 'map') {
-            this.viewFacade.populateDocumentList();
+            await this.viewFacade.populateDocumentList();
         }
 
-        this.loading.start();
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(() => {
-            this.viewFacade.deselect();
-            this.viewFacade.setMode(mode);
-            this.loading.stop();
-        }, 1);
+        this.viewFacade.deselect();
+        this.viewFacade.setMode(mode);
+
+        this.loading.stop();
     }
 
 

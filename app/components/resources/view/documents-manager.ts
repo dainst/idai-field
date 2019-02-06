@@ -166,18 +166,22 @@ export class DocumentsManager {
             this.documents = [];
         }
 
-        this.currentQueryId = new Date().toISOString();
-        const result: IdaiFieldFindResult<FieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
+        // The timeout is necessary for Angular to show the cleared document list & the loading icon
+        setTimeout(async () => {
+            this.currentQueryId = new Date().toISOString();
+            const result: IdaiFieldFindResult<FieldDocument>
+                = await this.createUpdatedDocumentList(this.currentQueryId);
 
-        await this.updateChildrenCountMap(result.documents);
+            await this.updateChildrenCountMap(result.documents);
 
-        if (this.loading) this.loading.stop();
-        if (result.queryId !== this.currentQueryId) return;
+            if (this.loading) this.loading.stop();
+            if (result.queryId !== this.currentQueryId) return;
 
-        this.documents = result.documents;
-        this.totalDocumentCount = result.totalCount;
+            this.documents = result.documents;
+            this.totalDocumentCount = result.totalCount;
 
-        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
+            ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
+        }, 1);
     }
 
 

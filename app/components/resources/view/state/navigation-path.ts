@@ -75,29 +75,26 @@ export module NavigationPath {
     export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
                                              newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = clone(navigationPath);
-
         if (newSelectedSegmentDoc) {
-            (updatedNavigationPath as any).segments = rebuildElements(
+            (navigationPath as any).segments = rebuildElements(
                 navigationPath.segments,
                 navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
 
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc
+        (navigationPath as any).selectedSegmentId = newSelectedSegmentDoc
             ? newSelectedSegmentDoc.resource.id
             : undefined;
 
-        return updatedNavigationPath;
+        return navigationPath;
     }
 
 
     export function setSelectedDocument(navPath: NavigationPath,
                                         document: FieldDocument|undefined): NavigationPath {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).selected = document;
-        return _clone;
+        (getViewContext(navPath) as any).selected = document;
+        return navPath;
     }
 
 
@@ -109,9 +106,8 @@ export module NavigationPath {
 
     export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).q = q;
-        return _clone;
+        (getViewContext(navPath) as any).q = q;
+        return navPath;
     }
 
 
@@ -123,9 +119,8 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).types = types;
-        return _clone;
+        (getViewContext(navPath) as any).types = types;
+        return navPath;
     }
 
 
@@ -137,20 +132,21 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortened = clone(navPath);
-        (shortened as any /* cast ok on construction */).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
+        const oldNavPath = clone(navPath);
+        (navPath as any /* cast ok on construction */).segments
+            = takeWhile(differentFrom(firstToBeExcluded))(oldNavPath.segments);
 
-        if (shortened.selectedSegmentId) {
+        if (navPath.selectedSegmentId) {
 
-            const stillSelectedSegment = shortened.segments
-                .find(_ => _.document.resource.id === shortened.selectedSegmentId);
+            const stillSelectedSegment = navPath.segments
+                .find(_ => _.document.resource.id === navPath.selectedSegmentId);
 
             if (!stillSelectedSegment) {
-                (shortened as any /* cast ok on construction */).selectedSegmentId = undefined;
+                (navPath as any /* cast ok on construction */).selectedSegmentId = undefined;
             }
         }
 
-        return shortened;
+        return navPath;
     }
 
 
@@ -207,17 +203,16 @@ export module NavigationPath {
     }
 
 
-    export function replaceSegmentsIfNecessary(navPath:NavigationPath, newSegments: NavigationPathSegment[],
+    export function replaceSegmentsIfNecessary(navPath: NavigationPath,
+                                               newSegments: Array<NavigationPathSegment>,
                                                newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = clone(navPath);
-
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
-            (updatedNavigationPath as any).segments = newSegments;
+            (navPath as any).segments = newSegments;
         }
 
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentId;
-        return updatedNavigationPath;
+        (navPath as any).selectedSegmentId = newSelectedSegmentId;
+        return navPath;
     }
 
 

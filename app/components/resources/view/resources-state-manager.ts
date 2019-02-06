@@ -225,7 +225,7 @@ export class ResourcesStateManager {
     private async createNavigationPathForDocument(document: FieldDocument) {
 
         const segments = await NavigationPath.makeSegments(document, resourceId => this.datastore.get(resourceId));
-        if (segments.length == 0) return await this.moveInto(undefined);
+        if (segments.length === 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
             ResourcesState.getNavigationPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);

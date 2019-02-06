@@ -1,26 +1,32 @@
 #document-picker {
   #document-picker-list {
-    max-height: calc(100vh - 350px) !important;
+    max-height: calc(100vh - 350px);
+    width: calc(100% - 1px);
     overflow-x: hidden;
     overflow-y: auto;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
     .list-group-item {
       display: block;
       cursor: pointer;
-      margin: 0 0 -1px 0 !important;
-      font-size: 1em;
+      min-height: 62px;
+      margin: 0 0 -1px 0;
       padding: 10px 5px 10px 10px;
+      font-size: 1em;
+      border-radius: 0;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      min-height: 62px;
-    }
 
-    .list-group-item:hover {
-      background-color: darken($list-item-hover-color, 5%);
-      transition: background-color .65s ease;
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .65s ease;
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
     }
 
     .selected {

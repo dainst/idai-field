@@ -42,7 +42,7 @@
                     <span i18n="@@widgets.searchBar.resourceTypeFilter">Nach Ressourcentyp filtern:</span>
                 </div>
                 <type-picker [typesTreeList]="filterOptions"
-                             [allTypesOptionVisible]="filterOptions && filterOptions.length > 1"
+                             [allTypesOptionVisible]="isAllTypesOptionVisible()"
                              [selectedTypes]="types"
                              [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">

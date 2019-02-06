@@ -35,6 +35,9 @@ export class SearchBarComponent {
     private emitQueryTimeout: any = undefined;
 
 
+    public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
+
+
     public chooseTypeFilter(type: IdaiType) {
 
         if (!type) {

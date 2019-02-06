@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Query, FieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {Query, FieldDocument, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
@@ -16,8 +16,7 @@ import {clone} from '../core/util/object-util';
  */
 export class DocumentPickerComponent implements OnChanges {
 
-    @Input() relationName: string;
-    @Input() relationRangeType: string;
+    @Input() filterOptions: Array<IdaiType>;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -82,32 +81,11 @@ export class DocumentPickerComponent implements OnChanges {
 
         try {
             const result = await this.datastore.find(clone(this.query));
-            if (result.queryId === this.currentQueryId) {
-                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
-            }
+            if (result.queryId === this.currentQueryId) this.documents = result.documents;
         } catch (err) {
             console.error(err);
         } finally {
             this.loading.stop();
         }
-    }
-
-
-    private filterNotAllowedRelationDomainTypes(documents: Array<FieldDocument>): Array<FieldDocument> {
-
-        const result: Array<FieldDocument> = [];
-
-        for (let document of documents) {
-
-            if (this.projectConfiguration.isAllowedRelationDomainType(
-                    document.resource.type,
-                    this.relationRangeType,
-                    this.relationName)) {
-
-                result.push(document);
-            }
-        }
-
-        return result;
     }
 }

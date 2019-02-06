@@ -6,10 +6,10 @@
     <div class="col-md-6 mr-md-auto">
         <div class="row">
             <div id="search-bar-container" class="col-md-9">
-                <resources-search-bar *ngIf="!isViewWithoutMainTypeDocuments()" [q]="getQueryString()"
+                <resources-search-bar *ngIf="!isViewWithoutMainTypeDocuments()"
+                                      [filterOptions]="getFilterOptions()"
+                                      [q]="getQueryString()"
                                       [types]="getTypeFilters()"
-                                      [relationName]="'isRecordedIn'"
-                                      [relationRangeType]="getViewType()"
                                       [extendedSearch]="getBypassHierarchy()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">

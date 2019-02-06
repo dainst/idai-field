@@ -1,7 +1,5 @@
 <div id="document-picker">
-    <search-bar [showFiltersMenu]="true"
-                [relationName]="relationName"
-                [relationRangeType]="relationRangeType"
+    <search-bar [filterOptions]="filterOptions"
                 (onQueryStringChanged)="setQueryString($event)"
                 (onTypesChanged)="setQueryTypes($event)"></search-bar>
 

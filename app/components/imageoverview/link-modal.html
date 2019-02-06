@@ -1,7 +1,6 @@
 <div class="modal-body" id="link-modal">
     <p i18n="@@imageOverview.linkModal.chooseResourcesToLink">Zu verknüpfende Ressource wählen:</p>
-    <document-picker [relationName]="'isDepictedIn'"
-                     [relationRangeType]="'Image'"
+    <document-picker [filterOptions]="filterOptions"
                      (documentSelected)="activeModal.close($event)"></document-picker>
 </div>
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {to} from 'tsfun';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2';
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class TypeUtility {
     }
 
 
-    public getSubtypes(superTypeName: string): any {
+    public getSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
 
         const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
         let subtypes: any = {};
@@ -95,6 +95,17 @@ export class TypeUtility {
             .map(to('name'))
             .filter(typename => this.isSubtype(typename, 'Operation'))
             .concat('Place');
+    }
+
+
+    public getAllowedRelationRangeTypes(relationName: string, domainTypeName: string): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesTreeList()
+            .filter(type => {
+                return this.projectConfiguration.isAllowedRelationDomainType(
+                    type.name, domainTypeName, relationName
+                );
+            });
     }
 
 

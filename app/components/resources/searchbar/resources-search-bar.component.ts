@@ -1,8 +1,5 @@
-import {Component, ElementRef, Input, SimpleChanges} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
-import {TypeUtility} from '../../../core/model/type-utility';
-import {ViewFacade} from '../view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -22,21 +19,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public suggestionsVisible: boolean = false;
 
 
-    constructor(private elementRef: ElementRef,
-                private viewFacade: ViewFacade,
-                private typeUtility: TypeUtility,
-                projectConfiguration: ProjectConfiguration) {
+    constructor(private elementRef: ElementRef) {
 
-        super(projectConfiguration);
-    }
-
-
-    public ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['relationName'] || changes['relationRangeType'] || changes['parentType'] ||
-            changes['showFiltersMenu'] || changes['extendedSearch']) {
-            this.initializeFilterOptions();
-        }
+        super();
     }
 
 
@@ -61,28 +46,6 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public isTypeSelected(): boolean {
 
         return this.types !== undefined && this.types.length > 0;
-    }
-
-
-    protected initializeFilterOptions() {
-
-        this.filterOptions = [];
-
-        if (this.viewFacade.isInOverview()) {
-            this.addFilterTypesForOverview();
-        } else {
-            this.addFilterOptionsFromConfiguration();
-        }
-    }
-
-
-    private addFilterTypesForOverview() {
-
-        const types: Array<IdaiType> = this.extendedSearch ?
-            this.typeUtility.getNonImageTypes().filter(type => !type.parentType) :
-            this.typeUtility.getOverviewTopLevelTypes();
-
-        types.forEach(type => this.addFilterOption(type));
     }
 
 

@@ -52,13 +52,16 @@ export class ImageOverviewTaskbarComponent {
         this.modalOpenend = true;
 
         try {
-            const targetDoc: FieldDocument = await this.modalService.open(
+            const modalRef: NgbModalRef = this.modalService.open(
                 LinkModalComponent, { keyboard: false }
-            ).result;
-            if (!targetDoc) return;
+            );
+            modalRef.componentInstance.initializeFilterOptions();
+
+            const targetDocument: FieldDocument = await modalRef.result;
+            if (!targetDocument) return;
 
             try {
-                await this.persistenceHelper.addDepictsRelationsToSelectedDocuments(targetDoc);
+                await this.persistenceHelper.addDepictsRelationsToSelectedDocuments(targetDocument);
                 this.imageOverviewFacade.clearSelection();
             } catch(msgWithParams) {
                 this.messages.add(msgWithParams);

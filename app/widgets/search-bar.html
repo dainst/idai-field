@@ -28,8 +28,10 @@
                 <div class="popover-custom-title">
                     <span i18n="@@widgets.searchBar.resourceTypeFilter">Nach Ressourcentyp filtern:</span>
                 </div>
-                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
-                             [selectedTypes]="types" [allowPickingAbstractTypes]="true"
+                <type-picker [typesTreeList]="filterOptions"
+                             [allTypesOptionVisible]="filterOptions && filterOptions.length > 1"
+                             [selectedTypes]="types"
+                             [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">
                 </type-picker>
             </div>

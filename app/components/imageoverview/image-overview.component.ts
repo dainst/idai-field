@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Document, ImageDocument, Messages} from 'idai-components-2';
+import {Document, ImageDocument, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
@@ -8,6 +8,7 @@ import {RoutingService} from '../routing-service';
 import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
 import {ImageFilterOption} from './view/images-state';
+
 
 @Component({
     moduleId: module.id,
@@ -30,7 +31,8 @@ export class ImageOverviewComponent implements OnInit {
     constructor(public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private routingService: RoutingService,
-                private messages: Messages) {
+                private messages: Messages,
+                private projectConfiguration: ProjectConfiguration) {
 
         this.imageOverviewFacade.initialize();
     }
@@ -48,6 +50,8 @@ export class ImageOverviewComponent implements OnInit {
         (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
 
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
+
+    public getFilterOptions = () => [this.projectConfiguration.getTypesTree()['Image']];
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 

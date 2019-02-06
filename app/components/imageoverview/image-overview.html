@@ -3,8 +3,10 @@
 
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 image-overview-nav-content">
-                <image-overview-search-bar [q]="getQuery().q" [types]="getQuery().types"
-                                           [parentType]="'Image'" [hidden]="getSelected().length"
+                <image-overview-search-bar [filterOptions]="getFilterOptions()"
+                                           [q]="getQuery().q"
+                                           [types]="getQuery().types"
+                                           [hidden]="getSelected().length"
                                            (onQueryStringChanged)="setQueryString($event)"
                                            (onTypesChanged)="setTypeFilters($event)">
                 </image-overview-search-bar>

@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild,
-    ElementRef} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
+import {IdaiType} from 'idai-components-2';
 
 
 @Component({
@@ -17,21 +16,13 @@ import {ProjectConfiguration, IdaiType} from 'idai-components-2';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent implements OnChanges {
+export class SearchBarComponent {
 
-    // If these values are set, only valid domain types for the given relation name & range type are shown in the
-    // filter menu.
-    @Input() relationName: string;
-    @Input() relationRangeType: string;
-
-    // If this value is set, only child types of the parent type are shown in the filter menu.
-    // The 'all types' option is not visible if a parent type is set because choosing the parent type is equivalent to
-    // this option.
-    @Input() parentType: string;
+    @Input() filterOptions: Array<IdaiType> = [];
+    @Input() showFiltersMenu: boolean = true;
 
     @Input() q: string = '';
     @Input() types: string[]|undefined;
-    @Input() showFiltersMenu: boolean = true;
 
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
@@ -41,21 +32,7 @@ export class SearchBarComponent implements OnChanges {
 
     public focused: boolean = false;
 
-    protected filterOptions: Array<IdaiType> = [];
-
     private emitQueryTimeout: any = undefined;
-
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
-
-
-    public ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['relationName'] || changes['relationRangeType'] || changes['parentType'] ||
-            changes['showFiltersMenu']) {
-            this.initializeFilterOptions();
-        }
-    }
 
 
     public chooseTypeFilter(type: IdaiType) {
@@ -94,53 +71,6 @@ export class SearchBarComponent implements OnChanges {
     public blur() {
 
         this.fulltextSearchInput.nativeElement.blur();
-    }
-
-
-    protected initializeFilterOptions() {
-
-        this.filterOptions = [];
-        this.addFilterOptionsFromConfiguration();
-    }
-
-
-    protected addFilterOptionsFromConfiguration() {
-
-        for (let type of this.projectConfiguration.getTypesTreeList()) {
-
-            if (this.parentType && type.name !== this.parentType) continue;
-
-            if ((!this.relationName && !this.relationRangeType)
-                    || this.projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
-                    this.relationName)) {
-
-                this.addFilterOption(type);
-
-            } else if (type.children) {
-
-                this.addFilterOptionsFor(type);
-            }
-
-        }
-    }
-
-
-    protected addFilterOptionsFor(type: IdaiType) {
-
-        for (let childType of type.children) {
-            if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
-                    this.relationName)) {
-                this.addFilterOption(childType);
-            }
-        }
-    }
-
-
-    protected addFilterOption(type: IdaiType) {
-
-        if (this.filterOptions.indexOf(type) == -1) {
-            this.filterOptions.push(type);
-        }
     }
 
 

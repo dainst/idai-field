@@ -1,12 +1,13 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
-import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
+import {Document, FieldDocument, FieldGeometry, Messages, IdaiType} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {M} from '../m';
+import {TypeUtility} from '../../core/model/type-utility';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private renderer: Renderer2,
                 private messages: Messages,
                 private loading: Loading,
-                private changeDetectorRef: ChangeDetectorRef
+                private changeDetectorRef: ChangeDetectorRef,
+                private typeUtility: TypeUtility
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
@@ -50,8 +52,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.initializeSubscriptions();
     }
 
-
-    public getViewType = () => this.viewFacade.getViewType();
 
     public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
 
@@ -100,6 +100,19 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         return Observable.create((observer: any) => {
             this.clickEventObservers.push(observer);
         });
+    }
+
+
+    public getFilterOptions(): Array<IdaiType> {
+
+        const viewType: string|undefined = this.viewFacade.getViewType();
+        if (!viewType) return [];
+
+        return this.viewFacade.isInOverview()
+            ? this.viewFacade.getBypassHierarchy()
+                ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
+                : this.typeUtility.getOverviewTopLevelTypes()
+            : this.typeUtility.getAllowedRelationRangeTypes('isRecordedIn', viewType);
     }
 
 

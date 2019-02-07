@@ -1,14 +1,12 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {unique} from 'tsfun';
-import {IdaiType, FieldDocument, Document, Constraint} from 'idai-components-2';
+import {IdaiType, FieldDocument, Document, Constraint, Messages} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {clone} from '../../core/util/object-util';
 import {SettingsService} from '../../core/settings/settings-service';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
-import {AngularUtility} from '../../common/angular-utility';
-import {Loading} from '../../widgets/loading';
 
 
 @Component({
@@ -36,7 +34,8 @@ export class MoveModalComponent {
                 private typeUtility: TypeUtility,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
-                private datastore: FieldReadDatastore) {
+                private datastore: FieldReadDatastore,
+                private messages: Messages) {
     }
 
 
@@ -64,10 +63,15 @@ export class MoveModalComponent {
 
     public async moveDocument(newParent: FieldDocument) {
 
-        const oldVersion: FieldDocument = clone(this.document);
-
-        this.updateRelations(newParent);
-        await this.persistenceManager.persist(this.document, this.settingsService.getUsername(), oldVersion);
+        try {
+            const oldVersion: FieldDocument = clone(this.document);
+            this.updateRelations(newParent);
+            await this.persistenceManager.persist(
+                this.document, this.settingsService.getUsername(), oldVersion
+            );
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
 
         this.activeModal.close();
     }

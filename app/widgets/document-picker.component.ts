@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {union} from 'tsfun';
-import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint} from 'idai-components-2';
+import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint, Messages} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
 import {AngularUtility} from '../common/angular-utility';
+
 
 @Component({
     selector: 'document-picker',
@@ -31,7 +32,8 @@ export class DocumentPickerComponent implements OnChanges {
 
     constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private loading: Loading) {}
+                private loading: Loading,
+                private messages: Messages) {}
 
 
     public isLoading = () => this.loading.isLoading();
@@ -84,14 +86,15 @@ export class DocumentPickerComponent implements OnChanges {
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
-        if (this.getConstraints) this.query.constraints = await this.getConstraints();
-        this.query.id = this.currentQueryId;
 
         try {
+            if (this.getConstraints) this.query.constraints = await this.getConstraints();
+            this.query.id = this.currentQueryId;
+
             const result = await this.datastore.find(clone(this.query));
             if (result.queryId === this.currentQueryId) this.documents = result.documents;
-        } catch (err) {
-            console.error(err);
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
         } finally {
             this.loading.stop();
         }

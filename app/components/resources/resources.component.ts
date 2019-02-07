@@ -160,8 +160,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             await modalRef.result;
             await this.viewFacade.rebuildNavigationPath();
             await this.routingService.jumpToResource(document);
-        } catch(err) {
-            if (err !== 'cancel') this.messages.add(err);
+        } catch(msgWithParams) {
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            // Otherwise, the move modal has been canceled
         }
     }
 

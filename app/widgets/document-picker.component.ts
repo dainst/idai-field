@@ -80,7 +80,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     private async fetchDocuments() {
 
-        this.loading.start();
+        this.loading.start('documentPicker');
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();

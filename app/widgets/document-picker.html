@@ -15,7 +15,7 @@
 
     <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
         <br>
-        <loading-icon></loading-icon>
+        <loading-icon [context]="'documentPicker'"></loading-icon>
         <span *ngIf="!isQuerySpecified()"
               i18n="@@widgets.documentPicker.noSearchCriteria">Keine Suchkriterien angegeben</span>
         <span *ngIf="isQuerySpecified() && !isLoading()"

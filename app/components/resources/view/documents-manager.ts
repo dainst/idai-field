@@ -180,7 +180,10 @@ export class DocumentsManager {
         await this.updateChildrenCountMap(result.documents);
 
         if (this.loading) this.loading.stop();
-        if (result.queryId !== this.currentQueryId) return;
+        if (result.queryId !== this.currentQueryId) {
+            this.populateInProgress = false;
+            return;
+        }
 
         this.documents = result.documents;
         this.totalDocumentCount = result.totalCount;

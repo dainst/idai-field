@@ -1083,7 +1083,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/move-modal.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
@@ -1609,8 +1609,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.moveModal.chooseParentResource" datatype="html">
-        <source>Bitte wählen Sie die neue Elternressource:</source>
-        <target state="final">Bitte wählen Sie die neue Elternressource:</target>
+        <source>
+        Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
+    </source>
+        <target state="final">
+        Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
+    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/move-modal.html</context>
           <context context-type="linenumber">2</context>

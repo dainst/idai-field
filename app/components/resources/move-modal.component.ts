@@ -22,10 +22,10 @@ import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastor
  */
 export class MoveModalComponent {
 
+    public document: FieldDocument;
     public filterOptions: Array<IdaiType> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
 
-    private document: FieldDocument;
     private isRecordedInTargetTypes: Array<IdaiType>;
     private liesWithinTargetTypes: Array<IdaiType>;
 

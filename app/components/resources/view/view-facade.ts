@@ -49,7 +49,8 @@ export class ViewFacade {
             this.operationsManager,
             resourcesStateManager,
             loading,
-            indexFacade
+            (indexName: string, matchTerm: string) =>
+                indexFacade.getCount(indexName, matchTerm)
         );
     }
 

@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {unique} from 'tsfun';
-import {IdaiType, FieldDocument, Document, Constraint, Messages} from 'idai-components-2';
+import {IdaiType, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
-import {clone} from '../../core/util/object-util';
 import {SettingsService} from '../../core/settings/settings-service';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {MoveUtility} from './move-utility';
 
 
 @Component({
@@ -41,7 +41,10 @@ export class MoveModalComponent {
 
     public getConstraints = () => {
 
-        if (!this.constraints) this.constraints = this.createConstraints();
+        if (!this.constraints) {
+            this.constraints = MoveUtility.createConstraints(this.document, this.datastore);
+        }
+
         return this.constraints;
     };
 
@@ -64,29 +67,18 @@ export class MoveModalComponent {
     public async moveDocument(newParent: FieldDocument) {
 
         try {
-            const oldVersion: FieldDocument = clone(this.document);
-            this.updateRelations(newParent);
-            await this.persistenceManager.persist(
-                this.document, this.settingsService.getUsername(), oldVersion
+            await MoveUtility.moveDocument(
+                this.document,
+                newParent,
+                this.settingsService.getUsername(),
+                this.persistenceManager,
+                this.isRecordedInTargetTypes
             );
-        } catch(msgWithParams) {
+        } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         }
 
         this.activeModal.close();
-    }
-
-
-    private updateRelations(newParent: FieldDocument) {
-
-        if (this.isRecordedInTargetTypes.map(type => type.name)
-            .includes(newParent.resource.type)) {
-            this.document.resource.relations['isRecordedIn'] = [newParent.resource.id];
-            this.document.resource.relations['liesWithin'] = [];
-        } else {
-            this.document.resource.relations['liesWithin'] = [newParent.resource.id];
-            this.document.resource.relations['isRecordedIn'] = newParent.resource.relations['isRecordedIn'];
-        }
     }
 
 
@@ -103,46 +95,5 @@ export class MoveModalComponent {
         return this.typeUtility.getAllowedRelationRangeTypes(
             'liesWithin', this.document.resource.type
         );
-    }
-
-
-    private async createConstraints(): Promise<{ [name: string]: Constraint }> {
-
-        return {
-            'id:match': {
-                value: await this.getResourceIdsToSubtract(),
-                type: 'subtract'
-            }
-        };
-    }
-
-
-    private async getResourceIdsToSubtract(): Promise<string[]> {
-
-        const ids: string[] = [this.document.resource.id];
-
-        if (Document.hasRelations(this.document, 'liesWithin')) {
-            ids.push(this.document.resource.relations['liesWithin'][0]);
-        } else if (Document.hasRelations(this.document, 'isRecordedIn')) {
-            ids.push(this.document.resource.relations.isRecordedIn[0]);
-        }
-
-        return ids.concat(await this.getDescendentIds(this.document));
-    }
-
-
-    private async getDescendentIds(document: FieldDocument): Promise<string[]> {
-
-        const descendents: Array<FieldDocument> = (await this.datastore.find(
-            { constraints: { 'liesWithin:contain': document.resource.id } }
-            )).documents;
-
-        let descendentIds: string[] = descendents.map(descendent => descendent.resource.id);
-
-        for (let descendent of descendents) {
-            descendentIds = descendentIds.concat(await this.getDescendentIds(descendent));
-        }
-
-        return descendentIds;
     }
 }

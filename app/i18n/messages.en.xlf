@@ -335,7 +335,7 @@
         <target state="final">No search criteria specified</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/document-picker.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
@@ -343,7 +343,7 @@
         <target state="final">No targets found</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/document-picker.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
@@ -1062,7 +1062,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
@@ -1077,8 +1077,12 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/move-modal.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -1398,7 +1402,7 @@
         <target state="final">All images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.unlinked" datatype="html">
@@ -1406,7 +1410,7 @@
         <target state="final">Unlinked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.linked" datatype="html">
@@ -1414,7 +1418,7 @@
         <target state="final">Linked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1542,7 +1546,7 @@
         <target state="final">Edit relations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -1595,6 +1599,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/georeference-view.html</context>
           <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.moveModal.chooseParentResource" datatype="html">
+        <source>Bitte wählen Sie die neue Elternressource:</source>
+        <target state="final">Please choose the new parent resource:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/move-modal.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.map" datatype="html">
@@ -1725,7 +1737,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.tooltip" datatype="html">
@@ -1733,11 +1745,11 @@
         <target state="final">Switch to operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.editMetadata" datatype="html">
@@ -1753,7 +1765,7 @@
         <target state="final">Edit relations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.editImageLinks" datatype="html">
@@ -1761,7 +1773,7 @@
         <target state="final">Edit image links</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
@@ -1779,7 +1791,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.all" datatype="html">
@@ -2411,7 +2423,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -3911,7 +3923,7 @@
         <source>Höhe</source>
         <target state="final">Height</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3919,7 +3931,7 @@
         <source>Breite</source>
         <target state="final">Width</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3927,7 +3939,7 @@
         <source>Projekt</source>
         <target state="final">Project</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3935,7 +3947,7 @@
         <source>Koordinatenbezugssystem</source>
         <target state="final">Coordinate reference system</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3943,7 +3955,7 @@
         <source>Kurzbeschreibung</source>
         <target state="final">Short description</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3951,7 +3963,7 @@
         <source>Eindeutiger Bezeichner dieser Ressource</source>
         <target state="final">Unique identifier of this resource</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3959,7 +3971,7 @@
         <source>Bezeichner</source>
         <target state="final">Identifier</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3967,7 +3979,7 @@
         <source>Zeigt</source>
         <target state="final">Depicts</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3975,7 +3987,7 @@
         <source>Wird gezeigt in</source>
         <target state="final">Depicted in</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3983,7 +3995,7 @@
         <source>Zeitlich nach</source>
         <target state="final">After</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3991,7 +4003,7 @@
         <source>Zeitlich vor</source>
         <target state="final">Before</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3999,7 +4011,7 @@
         <source>Zeitgleich mit</source>
         <target state="final">Contemporary with</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4007,7 +4019,7 @@
         <source>Liegt über</source>
         <target state="final">Above</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4015,7 +4027,7 @@
         <source>Liegt unter</source>
         <target state="final">Below</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4023,7 +4035,7 @@
         <source>Schneidet</source>
         <target state="final">Cuts</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4031,7 +4043,7 @@
         <source>Wird geschnitten von</source>
         <target state="final">Cut by</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4039,11 +4051,19 @@
         <source>Grenzt an</source>
         <target state="final">Borders</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4051,43 +4071,51 @@
         <source>Aufgenommen in Maßnahme</source>
         <target state="final">Recorded in operation</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4095,15 +4123,27 @@
         <source>Beinhaltet</source>
         <target state="final">Includes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4111,15 +4151,31 @@
         <source>Liegt in</source>
         <target state="final">Lies within</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4127,7 +4183,7 @@
         <source>Trägt</source>
         <target state="final">Bears</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4135,7 +4191,7 @@
         <source>Ist aufgebracht auf</source>
         <target state="final">Found on</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

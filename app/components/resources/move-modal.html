@@ -1,12 +1,17 @@
-<div class="modal-body" id="link-modal">
-    <p i18n="@@imageOverview.moveModal.chooseParentResource">Neue Elternressource wählen:</p>
-    <document-picker [filterOptions]="filterOptions"
-                     [constraints]="constraints"
-                     (documentSelected)="moveDocument($event)"></document-picker>
+<div class="modal-body" id="move-modal">
+    <div *ngIf="isInitialized()">
+        <p i18n="@@imageOverview.moveModal.chooseParentResource">Bitte wählen Sie die neue Elternressource:</p>
+        <document-picker [filterOptions]="filterOptions"
+                         [constraints]="constraints"
+                         (documentSelected)="moveDocument($event)"></document-picker>
+    </div>
+    <div *ngIf="!isInitialized()" id="loading-icon-container">
+        <loading-icon [context]="'moveModal'"></loading-icon>
+    </div>
 </div>
 
 <div class="modal-footer">
-    <button type="button" id="link-modal-cancel-button" class="btn btn-secondary"
+    <button type="button" id="move-modal-cancel-button" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </button>

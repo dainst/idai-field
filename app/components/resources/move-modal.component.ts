@@ -7,6 +7,8 @@ import {PersistenceManager} from '../../core/model/persistence-manager';
 import {clone} from '../../core/util/object-util';
 import {SettingsService} from '../../core/settings/settings-service';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {AngularUtility} from '../../common/angular-utility';
+import {Loading} from '../../widgets/loading';
 
 
 @Component({
@@ -34,22 +36,34 @@ export class MoveModalComponent {
                 private typeUtility: TypeUtility,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
-                private datastore: FieldReadDatastore) {}
-
-
-    public onKeyDown(event: KeyboardEvent) {
-
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+                private datastore: FieldReadDatastore,
+                private loading: Loading) {
     }
 
 
-    public async setDocument(document: FieldDocument) {
+    public isInitialized = () => this.constraints !== undefined;
+
+
+    public async initialize(document: FieldDocument) {
+
+        this.loading.start('moveModal');
 
         this.document = document;
         this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
         this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
         this.filterOptions = unique(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
+
+        await AngularUtility.refresh();
+
         this.constraints = await this.createConstraints();
+
+        this.loading.stop();
+    }
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 

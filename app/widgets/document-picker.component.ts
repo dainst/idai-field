@@ -69,7 +69,8 @@ export class DocumentPickerComponent implements OnChanges {
 
         return ((this.query.q !== undefined && this.query.q.length > 0)
             || (this.query.types !== undefined
-                && this.query.types.length < this.getAllAvailableTypeNames().length));
+                && (this.query.types.length < this.getAllAvailableTypeNames().length
+                    || this.query.types.length === 1)));
     }
 
 

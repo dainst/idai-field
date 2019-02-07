@@ -532,7 +532,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.selectedPolyline.pm.disable();
         }
 
-        polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        polyline.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
         polyline.on('pm:edit', function() {

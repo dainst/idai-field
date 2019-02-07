@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {IdaiType} from 'idai-components-2';
 
 
@@ -16,7 +16,7 @@ import {IdaiType} from 'idai-components-2';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent {
+export class SearchBarComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType> = [];
     @Input() showFiltersMenu: boolean = true;
@@ -38,21 +38,9 @@ export class SearchBarComponent {
     public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
 
 
-    public chooseTypeFilter(type: IdaiType) {
+    ngOnChanges() {
 
-        if (!type) {
-            this.types = undefined;
-        } else {
-            this.types = [type.name];
-
-            if (type.children) {
-                for (let childType of type.children) {
-                    this.types.push(childType.name);
-                }
-            }
-        }
-
-        this.onTypesChanged.emit(this.types);
+        if (this.filterOptions.length === 1) this.chooseTypeFilter(this.filterOptions[0]);
     }
 
 
@@ -68,6 +56,24 @@ export class SearchBarComponent {
             this.emitQueryTimeout = undefined;
             this.onQueryStringChanged.emit(this.q);
         }, 200);
+    }
+
+
+    public chooseTypeFilter(type: IdaiType) {
+
+        if (!type) {
+            this.types = undefined;
+        } else {
+            this.types = [type.name];
+
+            if (type.children) {
+                for (let childType of type.children) {
+                    this.types.push(childType.name);
+                }
+            }
+        }
+
+        this.onTypesChanged.emit(this.types);
     }
 
 

@@ -20,15 +20,15 @@ describe('BaseList', () => {
         viewFacade.isReady.and.returnValue(true);
 
         resourcesComponent = jasmine.createSpyObj('resourcesComponent', ['getViewType']);
-        loading = jasmine.createSpyObj('loading', ['isLoading']);
+        loading = jasmine.createSpyObj('loading', ['isLoading', 'getContext']);
 
         bl = new BaseList(resourcesComponent, viewFacade, loading);
 
         // partial requirements to show plus button
         loading.isLoading.and.returnValue(false);
+        loading.getContext.and.returnValue(undefined);
         viewFacade.isInOverview.and.returnValue(true);
         resourcesComponent.isEditingGeometry = false;
-        loading.isLoading.and.returnValue(false);
     });
 
 

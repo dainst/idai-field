@@ -25,7 +25,7 @@ import {Loading} from '../../widgets/loading';
 export class MoveModalComponent {
 
     public filterOptions: Array<IdaiType> = [];
-    public constraints: { [name: string]: Constraint };
+    public constraints: Promise<{ [name: string]: Constraint }>;
 
     private document: FieldDocument;
     private isRecordedInTargetTypes: Array<IdaiType>;
@@ -36,28 +36,23 @@ export class MoveModalComponent {
                 private typeUtility: TypeUtility,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
-                private datastore: FieldReadDatastore,
-                private loading: Loading) {
+                private datastore: FieldReadDatastore) {
     }
 
 
-    public isInitialized = () => this.constraints !== undefined;
+    public getConstraints = () => {
+
+        if (!this.constraints) this.constraints = this.createConstraints();
+        return this.constraints;
+    };
 
 
-    public async initialize(document: FieldDocument) {
-
-        this.loading.start('moveModal');
+    public initialize(document: FieldDocument) {
 
         this.document = document;
         this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
         this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
         this.filterOptions = unique(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
-
-        await AngularUtility.refresh();
-
-        this.constraints = await this.createConstraints();
-
-        this.loading.stop();
     }
 
 

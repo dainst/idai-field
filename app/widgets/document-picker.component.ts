@@ -4,6 +4,7 @@ import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint} from '
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
+import {AngularUtility} from '../common/angular-utility';
 
 @Component({
     selector: 'document-picker',
@@ -18,7 +19,7 @@ import {clone} from '../core/util/object-util';
 export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType>;
-    @Input() constraints: { [name: string]: string|Constraint };
+    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -80,9 +81,10 @@ export class DocumentPickerComponent implements OnChanges {
     private async fetchDocuments() {
 
         this.loading.start();
+        await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
-        if (this.constraints) this.query.constraints = this.constraints;
+        if (this.getConstraints) this.query.constraints = await this.getConstraints();
         this.query.id = this.currentQueryId;
 
         try {

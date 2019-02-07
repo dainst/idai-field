@@ -1,13 +1,8 @@
 <div class="modal-body" id="move-modal">
-    <div *ngIf="isInitialized()">
-        <p i18n="@@imageOverview.moveModal.chooseParentResource">Bitte wählen Sie die neue Elternressource:</p>
-        <document-picker [filterOptions]="filterOptions"
-                         [constraints]="constraints"
-                         (documentSelected)="moveDocument($event)"></document-picker>
-    </div>
-    <div *ngIf="!isInitialized()" id="loading-icon-container">
-        <loading-icon [context]="'moveModal'"></loading-icon>
-    </div>
+    <p i18n="@@imageOverview.moveModal.chooseParentResource">Bitte wählen Sie die neue Elternressource:</p>
+    <document-picker [filterOptions]="filterOptions"
+                     [getConstraints]="getConstraints"
+                     (documentSelected)="moveDocument($event)"></document-picker>
 </div>
 
 <div class="modal-footer">

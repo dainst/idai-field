@@ -1,4 +1,4 @@
-import {NestedArray, union, uniteObject, includedIn, isNot} from 'tsfun';
+import {NestedArray, union, uniteObj, includedIn, isNot} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
 
@@ -45,7 +45,7 @@ export module ResultSets {
                             indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
 
         const indexItemsMap = intoObject(indexItems);
-        resultSets.map = uniteObject(indexItemsMap)(resultSets.map);
+        resultSets.map = uniteObj(indexItemsMap)(resultSets.map);
 
         if (mode !== 'subtract') {
             resultSets.addSets.push(Object.keys(indexItemsMap));

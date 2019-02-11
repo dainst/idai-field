@@ -1,6 +1,6 @@
 import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
 import {IndexItem} from './index-item';
-import {getOrElse} from 'tsfun';
+import {getOnOr} from 'tsfun';
 
 
 export interface IndexDefinition {
@@ -129,7 +129,7 @@ export module ConstraintIndex {
                     indexDefinition: IndexDefinition,
                     doc: Document) {
 
-        const elForPath = getOrElse(doc, undefined)(indexDefinition.path);
+        const elForPath = getOnOr(doc, undefined)(indexDefinition.path);
 
         switch(indexDefinition.type) {
             case 'exist':

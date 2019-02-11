@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {getOrElse} from 'tsfun';
+import {nthOr} from 'tsfun';
 
 /**
  * @author: Thomas Kleinke
@@ -19,7 +19,7 @@ export class ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return getOrElse(targetIds, undefined)(index);
+        return nthOr(targetIds, undefined)(index);
     }
 }
 

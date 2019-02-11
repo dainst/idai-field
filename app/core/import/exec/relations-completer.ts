@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {filter, flatMap, flow, getOrElse, isDefined,
+import {filter, flatMap, flow, getOnOr, isDefined,
     isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union
 } from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
@@ -203,8 +203,8 @@ export module RelationsCompleter {
 
     function assertInSameOperation(document: Document, targetDocument: Document) {
 
-        const documentRecordedIn = getOrElse(document, undefined)('resource.relations.' + RECORDED_IN);
-        const targetDocumentRecordedIn = getOrElse(targetDocument, undefined)('resource.relations.' + RECORDED_IN);
+        const documentRecordedIn = getOnOr(document, undefined)('resource.relations.' + RECORDED_IN);
+        const targetDocumentRecordedIn = getOnOr(targetDocument, undefined)('resource.relations.' + RECORDED_IN);
         if (targetDocumentRecordedIn && targetDocumentRecordedIn !== documentRecordedIn) {
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }

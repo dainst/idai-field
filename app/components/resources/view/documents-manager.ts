@@ -197,7 +197,9 @@ export class DocumentsManager {
             return { documents: [], totalCount: 0 };
         }
 
-        const isRecordedInTargetIdOrIds = undefined;
+        const isRecordedInTargetIdOrIds = this.resourcesStateManager.get().view === 'project'
+            ? undefined
+            : this.resourcesStateManager.get().view;
 
         // = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
         //     () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
@@ -307,6 +309,7 @@ export class DocumentsManager {
 
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
+        console.log(query);
 
         try {
             return await this.datastore.find(query);

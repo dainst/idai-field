@@ -258,15 +258,15 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('ViewState -- restore operation type selection after switching views', async done => {
+    xit('ViewState -- restore operation type selection after switching views', async done => {
 
-        await viewFacade.selectView('excavation');
+        /*await viewFacade.selectView('excavation');
         expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument1.resource.id);
         await viewFacade.selectOperation(trenchDocument2.resource.id);
         await viewFacade.selectView('project');
         await viewFacade.selectView('excavation');
         expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument2.resource.id);
-        done();
+        done();*/
     });
 
 

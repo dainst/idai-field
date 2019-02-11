@@ -1,4 +1,4 @@
-<div *ngIf="showNavigation()" id="navigation" class="row">
+<div id="navigation" class="row">
     <div id="hierarchy-mode-switch"
          class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="{{getTooltip()}}"
@@ -15,7 +15,7 @@
     </div>
 
     <div class="btn-group">
-        <div *ngIf="!viewFacade.isInOverview()" class="btn-group dropdown"
+        <!--<div *ngIf="!viewFacade.isInOverview()" class="btn-group dropdown"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
@@ -31,7 +31,7 @@
                     {{getOperationButtonLabel(document)}}
                 </button>
             </div>
-        </div>
+        </div>-->
 
         <div *ngIf="showOperationAsFirstSegment()"
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"

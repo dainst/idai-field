@@ -135,7 +135,8 @@ export class ExportComponent implements OnInit {
     private async fetchOperations() {
 
         try {
-            this.operations = await this.viewFacade.getAllOperations();
+            // TODO Get operations using datastore.find
+            this.operations = []; //await this.viewFacade.getAllOperations();
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         }

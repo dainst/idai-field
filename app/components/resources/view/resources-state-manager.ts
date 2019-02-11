@@ -2,7 +2,6 @@ import {Observer, Observable} from 'rxjs';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
-import {OperationViews} from './state/operation-views';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../core/util/observer-util';
@@ -82,15 +81,9 @@ export class ResourcesStateManager {
 
         this.resourcesState.view = viewName;
 
-        if (viewName === 'project' && !this.resourcesState.overviewState) {
-
-            this.resourcesState.overviewState = ViewState.default();
-
-        }  else if (!this.resourcesState.operationViewStates[viewName]) {
-
+        if (viewName !== 'project' && !this.resourcesState.operationViewStates[viewName]) {
             this.resourcesState.operationViewStates[viewName] = ViewState.default();
         }
-
 
         this.setActiveDocumentViewTab(undefined);
     }

@@ -57,6 +57,8 @@
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedType]="getCurrentFilterType()"
              [liesWithin]="getSelectedSegmentDoc()"
-             [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
+             [isRecordedIn]="undefined"
              [status]="getPlusButtonStatus()"></plus-button>
 <loading-icon></loading-icon>
+
+<!--[isRecordedIn]="viewFacade.getSelectedOperations()[0]"-->

@@ -73,9 +73,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
-    public isViewWithoutMainTypeDocuments = () => this.isReady() && !this.viewFacade.isInOverview()
-        && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
-
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
     public isReady = () => this.viewFacade.isReady();

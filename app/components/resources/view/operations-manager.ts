@@ -1,14 +1,14 @@
-import {FieldDocument, Query} from 'idai-components-2';
+/*import {FieldDocument, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
-
+*/
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class OperationsManager {
+/*export class OperationsManager {
 
     private documents: Array<FieldDocument>;
 
@@ -129,4 +129,4 @@ export class OperationsManager {
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
     }
-}
+}*/

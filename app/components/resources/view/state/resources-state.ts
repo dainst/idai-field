@@ -1,7 +1,7 @@
 import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
-import {ViewContext} from './view-context';
+
 
 /**
  * @author Thomas Kleinke

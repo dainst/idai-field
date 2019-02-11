@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {Observable} from 'rxjs';
-import {Observer} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
 import {Document, ProjectConfiguration} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
@@ -43,10 +42,7 @@ export class RoutingService {
 
     public async jumpToMainTypeHomeView(document: Document) {
 
-        // TODO
-        // await this.router.navigate(['resources',
-        //     this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
-
+        await this.router.navigate(['resources', document.resource.id]);
         await this.viewFacade.selectOperation(document.resource.id);
     }
 

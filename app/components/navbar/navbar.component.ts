@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
-import {ViewDefinition} from '../resources/view/state/view-definition';
+
 
 @Component({
     moduleId: module.id,
@@ -15,7 +15,6 @@ import {ViewDefinition} from '../resources/view/state/view-definition';
  */
 export class NavbarComponent implements OnInit {
 
-    public views: Array<ViewDefinition>;
     public activeRoute: string;
 
 
@@ -24,6 +23,11 @@ export class NavbarComponent implements OnInit {
 
         router.events.subscribe(() => this.activeRoute = router.url);
     }
+
+
+    public getOperationViews = () => this.viewFacade.getView() === 'project'
+        ? []
+        : [this.viewFacade.getView()];
 
 
     public ngOnInit() {

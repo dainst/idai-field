@@ -30,6 +30,10 @@ export class ResourcesMapComponent {
     public parentDocuments: Array<Document>;
 
 
+    // TODO Remove
+    private mainTypeIds = [];
+
+
     constructor(
         public loading: Loading,
         public viewFacade: ViewFacade,
@@ -53,8 +57,9 @@ export class ResourcesMapComponent {
 
     // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1.
     // this is ok because we do not offer the 'all'-selection if only one operation is available.
-    public mainTypeIds = () => this.viewFacade.getSelectedOperations()
-        .map(_ => _.resource.id).join(',');
+    // TODO
+    public getMainTypeIds = () => /*this.viewFacade.getSelectedOperations()*/ this.mainTypeIds;
+        //.map(_ => _.resource.id).join(',');
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -148,7 +153,9 @@ export class ResourcesMapComponent {
     private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
 
         if (this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) {
-            return this.viewFacade.getSelectedOperations();
+            // TODO
+            //return this.viewFacade.getSelectedOperations();
+            return [];
         }
 
         const segment = navigationPath.segments

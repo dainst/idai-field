@@ -79,15 +79,9 @@ export class NavigationComponent {
     }
 
 
-    public showNavigation(): boolean {
-
-        return this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperations().length > 0;
-    }
-
-
     public showSelectAllOperationsOption(): boolean {
 
-        return this.viewFacade.getBypassHierarchy() && this.viewFacade.getOperations().length > 1;
+        return this.viewFacade.getBypassHierarchy() //&& this.viewFacade.getOperations().length > 1;
     }
 
 

@@ -63,10 +63,11 @@ export class ImportComponent implements OnInit {
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
     ) {
-        this.viewFacade.getAllOperations().then(
+        // TODO Implement using datastore.find
+        /*this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
-        );
+        );*/
     }
 
 

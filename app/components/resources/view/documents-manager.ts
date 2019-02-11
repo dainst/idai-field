@@ -1,7 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, FieldDocument} from 'idai-components-2';
-import {OperationsManager} from './operations-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
@@ -39,7 +38,6 @@ export class DocumentsManager {
     constructor(
         private datastore: FieldReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private operationTypeDocumentsManager: OperationsManager,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number
@@ -199,8 +197,6 @@ export class DocumentsManager {
             return { documents: [], totalCount: 0 };
         }
 
-        const state = this.resourcesStateManager.get();
-
         const isRecordedInTargetIdOrIds = undefined;
 
         // = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
@@ -211,7 +207,7 @@ export class DocumentsManager {
         return (await this.fetchDocuments(
                 DocumentsManager.buildQuery(
                     isRecordedInTargetIdOrIds,
-                    state,
+                    this.resourcesStateManager.get(),
                     this.resourcesStateManager.isInOverview(),
                     this.resourcesStateManager.getOverviewTypeNames(),
                     queryId
@@ -286,7 +282,8 @@ export class DocumentsManager {
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
 
-        this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
+        // TODO
+        //this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
@@ -310,8 +307,9 @@ export class DocumentsManager {
 
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
+
         try {
-            return this.datastore.find(query);
+            return await this.datastore.find(query);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], totalCount: 0 };

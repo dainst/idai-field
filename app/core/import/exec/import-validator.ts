@@ -125,6 +125,7 @@ export class ImportValidator extends Validator {
     // TODO throw no lies within in stead no_isrecordedin
     public assertHasLiesWithin(document: Document|NewDocument) {
 
+        // TODO Is this check necessary?
         if (this.isExpectedToHaveIsRecordedInRelation(document)
             && !Document.hasRelations(document as Document, 'liesWithin')) {
 

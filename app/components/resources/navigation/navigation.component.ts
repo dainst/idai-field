@@ -87,7 +87,7 @@ export class NavigationComponent {
 
     public showOperationAsFirstSegment(): boolean {
 
-        return false;
+        return !this.viewFacade.isInOverview();
         // return !this.viewFacade.isInOverview()
         //     && (!this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
     }

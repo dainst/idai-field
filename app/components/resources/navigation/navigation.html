@@ -15,29 +15,11 @@
     </div>
 
     <div class="btn-group">
-        <!--<div *ngIf="!viewFacade.isInOverview()" class="btn-group dropdown"
-             ngbDropdown placement="bottom-left" role="group">
-            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
-                        (click)="activateBypassOperationTypeSelection()">
-                    <em i18n="@@resources.navigation.all">Alle</em>
-                </button>
-                <hr *ngIf="showSelectAllOperationsOption()">
-
-                <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
-                        (click)="chooseOperationTypeDocumentOption(document)">
-                    {{getOperationButtonLabel(document)}}
-                </button>
-            </div>
-        </div>-->
-
-        <div *ngIf="showOperationAsFirstSegment()"
+        <div *ngIf="!viewFacade.isInOverview()"
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            {{viewFacade.getSelectedOperations()[0].resource.identifier}}
+            {{viewFacade.getView()}}
         </div>
 
         <div *ngIf="showOperationsAllAsFirstSegment()"

@@ -25,9 +25,7 @@ export class NavbarComponent implements OnInit {
     }
 
 
-    public getOperationViews = () => this.viewFacade.getView() === 'project'
-        ? []
-        : [this.viewFacade.getView()];
+    public getOperationViews = () => this.viewFacade.getOperationViews();
 
 
     public ngOnInit() {

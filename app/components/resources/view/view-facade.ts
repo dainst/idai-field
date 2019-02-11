@@ -121,6 +121,8 @@ export class ViewFacade {
 
     public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
+    public getOperationViews = () => Object.keys(this.resourcesStateManager.get().operationViewStates);
+
 
     public getNavigationPath() {
 

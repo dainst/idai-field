@@ -26,13 +26,14 @@ export class OperationsManager {
 
         if (this.resourcesStateManager.isInOverview()) return this.resourcesStateManager.setMainTypeDocument('project');
 
-        this.documents = await this.fetchDocuments({ types: [
-                this.resourcesStateManager.getViewType() as string // cast ok because we populate only when not in overview
-            ]});
-
-        if (this.documents.length === 0) return this.resourcesStateManager.setMainTypeDocument(undefined);
-
-        await this.restoreLastSelectedOperationTypeDocument();
+        // TODO
+        // this.documents = await this.fetchDocuments({ types: [
+        //         this.resourcesStateManager.getViewType() as string // cast ok because we populate only when not in overview
+        //     ]});
+        //
+        // if (this.documents.length === 0) return this.resourcesStateManager.setMainTypeDocument(undefined);
+        //
+        // await this.restoreLastSelectedOperationTypeDocument();
     }
 
 
@@ -45,7 +46,8 @@ export class OperationsManager {
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument.resource.id
-                !== ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())) {
+                !== this.resourcesStateManager.get().view) {
+
             this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         }
     }
@@ -53,17 +55,18 @@ export class OperationsManager {
 
     public async getAllOperations(): Promise<Array<FieldDocument>> {
 
-        const viewMainTypes = this.resourcesStateManager.getViews()
-            .map((view: any) => {return view.operationSubtype});
-
+        // TODO
+        // const viewMainTypes = this.resourcesStateManager.getViews()
+        //     .map((view: any) => {return view.operationSubtype});
+        //
         let operations: Array<FieldDocument> = [];
-
-        for (let viewMainType of viewMainTypes) {
-            if (viewMainType === 'Project') continue;
-
-            operations = operations.concat(
-                (await this.datastore.find({ types: [viewMainType] })).documents);
-        }
+        //
+        // for (let viewMainType of viewMainTypes) {
+        //     if (viewMainType === 'Project') continue;
+        //
+        //     operations = operations.concat(
+        //         (await this.datastore.find({ types: [viewMainType] })).documents);
+        // }
 
         return operations;
     }
@@ -92,7 +95,7 @@ export class OperationsManager {
 
     private async restoreLastSelectedOperationTypeDocument(): Promise<void> {
 
-        const mainTypeDocumentResourceId = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
+        const mainTypeDocumentResourceId = this.resourcesStateManager.get().view;
         if (!mainTypeDocumentResourceId) {
             this.selectFirstOperationFromList();
         } else {

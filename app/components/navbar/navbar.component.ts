@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
 
     public ngOnInit() {
 
-        this.views = this.viewFacade.getOperationSubtypeViews();
+        // this.views = this.viewFacade.getOperationSubtypeViews();
     }
 
 

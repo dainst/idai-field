@@ -45,8 +45,8 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        private views: OperationViews,
-        private additionalOverviewTypeNames: string[],
+        // private views: OperationViews,
+        // private additionalOverviewTypeNames: string[],
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
@@ -54,46 +54,55 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
+    // public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
-    public getViews = () => this.views.get();
+    // public getViews = () => this.views.get();
 
-    public getLabelForName = (name: string) => this.views.getLabelForName(name);
+    // public getLabelForName = (name: string) => this.views.getLabelForName(name);
 
-    public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
-
-
-    public getViewNameForMainType(name: string) {
-
-        return (name === 'Project')
-            ? 'project'
-            : this.views.getViewNameForOperationSubtype(name);
-    }
+    // public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
 
-    public async initialize(viewName: string): Promise<any> {
+    // public getViewNameForMainType(name: string) {
+    //
+    //     return (name === 'Project')
+    //         ? 'project'
+    //         : this.views.getViewNameForOperationSubtype(name);
+    // }
+
+
+    public async initialize(viewName: 'project' | string): Promise<any> {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
             this.loaded = true;
         }
 
-        this.resourcesState = ResourcesState.setView(this.resourcesState, viewName);
+        this.resourcesState.view = viewName;
 
-        if (!this.resourcesState.viewStates[this.resourcesState.view]) {
-            this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
+        if (viewName === 'project' && !this.resourcesState.overviewState) {
+
+            this.resourcesState.overviewState = ViewState.default();
+
+        }  else if (!this.resourcesState.operationViewStates[viewName]) {
+
+            this.resourcesState.operationViewStates[viewName] = ViewState.default();
         }
+
 
         this.setActiveDocumentViewTab(undefined);
     }
 
 
     public getOverviewTypeNames() {
-        return this.views.get()
-            .map(_ => _.operationSubtype)
-            .concat(this.additionalOverviewTypeNames);
+
+        // TODO use typeUtilily
+        return ['Place', 'Trench', 'Survey', 'Building'];
+        // return this.views.get()
+        //     .map(_ => _.operationSubtype)
+        //     .concat(this.additionalOverviewTypeNames);
     }
 
 
@@ -105,43 +114,43 @@ export class ResourcesStateManager {
 
     public setSelectedDocument(document: FieldDocument|undefined) {
 
-        this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
+        ResourcesState.setSelectedDocument(this.resourcesState, document);
     }
 
 
     public setQueryString(q: string) {
 
-        this.resourcesState = ResourcesState.setQueryString(this.resourcesState, q);
+        ResourcesState.setQueryString(this.resourcesState, q);
     }
 
 
     public setTypeFilters(types: string[]) {
 
-        this.resourcesState = ResourcesState.setTypeFilters(this.resourcesState, types);
+        ResourcesState.setTypeFilters(this.resourcesState, types);
     }
 
 
     public setCustomConstraints(constraints: { [name: string]: string}) {
 
-        this.resourcesState = ResourcesState.setCustomConstraints(this.resourcesState, constraints);
+        ResourcesState.setCustomConstraints(this.resourcesState, constraints);
     }
 
 
     public setMode(mode: 'map' | 'list') {
 
-        this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
+        ResourcesState.setMode(this.resourcesState, mode);
     }
 
     public setBypassHierarchy(bypassHierarchy: boolean) {
 
-        this.resourcesState = ResourcesState.setBypassHierarchy(this.resourcesState, bypassHierarchy);
+        ResourcesState.setBypassHierarchy(this.resourcesState, bypassHierarchy);
         this.notifyNavigationPathObservers();
     }
 
 
     public setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
-        this.resourcesState = ResourcesState.setSelectAllOperationsOnBypassHierarchy(this.resourcesState,
+        ResourcesState.setSelectAllOperationsOnBypassHierarchy(this.resourcesState,
             selectAllOperationsOnBypassHierarchy);
         this.notifyNavigationPathObservers();
     }
@@ -149,14 +158,14 @@ export class ResourcesStateManager {
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        this.resourcesState = ResourcesState.setActiveLayerIds(this.resourcesState, activeLayersIds);
+        ResourcesState.setActiveLayerIds(this.resourcesState, activeLayersIds);
         this.serialize();
     }
 
 
     public removeActiveLayersIds() {
 
-        this.resourcesState = ResourcesState.removeActiveLayersIds(this.resourcesState);
+        ResourcesState.removeActiveLayersIds(this.resourcesState);
         this.serialize();
     }
 
@@ -164,7 +173,7 @@ export class ResourcesStateManager {
     public async moveInto(document: FieldDocument|undefined) {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
-            ResourcesState.getMainTypeDocumentResourceId(this.resourcesState),
+            this.resourcesState.view,
             ResourcesState.getNavigationPath(this.resourcesState),
             (resourceId: string) => {
                 return this.indexFacade.getCount('id:match', resourceId) > 0;
@@ -176,7 +185,7 @@ export class ResourcesStateManager {
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
 
-        this.resourcesState = ResourcesState.updateNavigationPath(
+        ResourcesState.updateNavigationPath(
             this.resourcesState,
             await this.updateSelectedDocument(updatedNavigationPath)
         );
@@ -194,14 +203,16 @@ export class ResourcesStateManager {
 
     public setMainTypeDocument(resourceId: string|undefined) {
 
-        this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
+        this.resourcesState.view = resourceId ? resourceId : 'overview';
 
-        if (resourceId && !this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
-            this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]
-                = NavigationPath.empty();
-        }
-
-        this.notifyNavigationPathObservers();
+        // this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
+        //
+        // if (resourceId && !this.resourcesState.operationViewStates[this.resourcesState.view].navigationPaths[resourceId]) {
+        //     this.resourcesState.operationViewStates[this.resourcesState.view].navigationPaths[resourceId]
+        //         = NavigationPath.empty();
+        // }
+        //
+        // this.notifyNavigationPathObservers();
     }
 
 
@@ -210,7 +221,7 @@ export class ResourcesStateManager {
         this.setBypassHierarchy(false);
 
         if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavigationPath(this.resourcesState),
-                ResourcesState.getMainTypeDocumentResourceId(this.resourcesState))) {
+                this.resourcesState.view)) {
             await this.createNavigationPathForDocument(document);
         }
     }
@@ -230,7 +241,7 @@ export class ResourcesStateManager {
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
             ResourcesState.getNavigationPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
 
-        this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, navPath);
+        ResourcesState.updateNavigationPath(this.resourcesState, navPath);
         this.notifyNavigationPathObservers();
     }
 
@@ -249,7 +260,7 @@ export class ResourcesStateManager {
         if (this.project === 'test' || this.project === 'synctest') {
             if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
         } else {
-            (resourcesState as any).viewStates = await this.serializer.load('resources-state');
+            (resourcesState as any).operationViewStates = await this.serializer.load('resources-state');
             resourcesState = ResourcesState.complete(resourcesState);
         }
 
@@ -275,12 +286,12 @@ export class ResourcesStateManager {
 
         const objectToSerialize: { [viewName: string]: ViewState } = {};
 
-        for (let viewName of Object.keys(state.viewStates)) {
-            objectToSerialize[viewName] = {} as any;
-            if (ResourcesState.getLayerIds(state)) {
-                (objectToSerialize[viewName] as any).layerIds = ResourcesState.getLayerIds(state);
-            }
-        }
+        // for (let viewName of Object.keys(state.operationViewStates)) {
+        //     objectToSerialize[viewName] = {} as any;
+        //     if (ResourcesState.getLayerIds(state)) {
+        //         (objectToSerialize[viewName] as any).layerIds = ResourcesState.getLayerIds(state);
+        //     }
+        // }
 
         return objectToSerialize;
     }

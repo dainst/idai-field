@@ -61,11 +61,11 @@ export class ViewFacade {
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
-    public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view
+    // public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
-    public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
+    // public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
 
     public getMode = () => this.resourcesStateManager.get().mode;
 
@@ -115,7 +115,7 @@ export class ViewFacade {
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
-    public getMainTypeHomeViewName = (mainTypeName: string) => this.resourcesStateManager.getViewNameForMainType(mainTypeName);
+    // public getMainTypeHomeViewName = (mainTypeName: string) => this.resourcesStateManager.getViewNameForMainType(mainTypeName);
 
     public getAllOperations = () => this.operationsManager.getAllOperations();
 
@@ -142,11 +142,14 @@ export class ViewFacade {
 
     public getOperationLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
-        const typeName: string = this.resourcesStateManager
-            .getOperationSubtypeForViewName(this.resourcesStateManager.get().view) as string;
+        // TODO
+        return 'todo'
 
-        return this.projectConfiguration.getTypesMap()[typeName].label;
+        // if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
+        // const typeName: string = this.resourcesStateManager
+        //     .getOperationSubtypeForViewName(this.resourcesStateManager.get().view) as string;
+        //
+        // return this.projectConfiguration.getTypesMap()[typeName].label;
     }
 
 
@@ -158,7 +161,7 @@ export class ViewFacade {
             return this.operationsManager.getDocuments();
         }
         const selectedOperationTypeDocument = this.operationsManager.getDocuments()
-            .find(_ => _.resource.id === ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get()));
+            .find(_ => _.resource.id === this.resourcesStateManager.get().view);
         return selectedOperationTypeDocument ? [selectedOperationTypeDocument] : [];
     }
 
@@ -203,10 +206,14 @@ export class ViewFacade {
     public async selectView(viewName: string): Promise<void> {
 
         this.ready = false;
-
         await this.resourcesStateManager.initialize(viewName);
+
+
+
         await this.operationsManager.populate();
         await this.populateDocumentList();
+
+
         this.ready = true;
     }
 

@@ -53,7 +53,7 @@ export class NavigationComponent {
 
     public getTypeName() {
 
-        return this.projectConfiguration.getLabelForType(this.viewFacade.getViewType() as any);
+        // return this.projectConfiguration.getLabelForType(this.viewFacade.getViewType() as any);
     }
 
 
@@ -93,15 +93,17 @@ export class NavigationComponent {
 
     public showOperationAsFirstSegment(): boolean {
 
-        return !this.viewFacade.isInOverview()
-            && (!this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
+        return false;
+        // return !this.viewFacade.isInOverview()
+        //     && (!this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
     }
 
 
     public showOperationsAllAsFirstSegment(): boolean {
 
-        return !this.viewFacade.isInOverview()
-            && (this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
+        return false;
+        // return !this.viewFacade.isInOverview()
+        //     && (this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
     }
 
 

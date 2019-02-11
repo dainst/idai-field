@@ -44,8 +44,8 @@ describe('ResourcesStateManager', () => {
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
-            new OperationViews(viewsList),
-            undefined,
+            // new OperationViews(viewsList),
+            // undefined,
             undefined
         );
 

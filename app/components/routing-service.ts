@@ -43,8 +43,9 @@ export class RoutingService {
 
     public async jumpToMainTypeHomeView(document: Document) {
 
-        await this.router.navigate(['resources',
-            this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
+        // TODO
+        // await this.router.navigate(['resources',
+        //     this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
 
         await this.viewFacade.selectOperation(document.resource.id);
     }
@@ -65,19 +66,20 @@ export class RoutingService {
 
     public async jumpToConflictResolver(document: Document) {
 
-        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
-            return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
-        } else {
-            const mainTypeName = await this.getMainTypeNameForDocument(document);
-            if (!mainTypeName) return;
-
-            const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-            if (this.router.url.includes('resources')) {
-                // indirect away first to reload the resources component, in case you are already there
-                await this.router.navigate(['resources', viewName]);
-            }
-            return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
-        }
+        // TODO
+        // if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+        //     return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+        // } else {
+        //     const mainTypeName = await this.getMainTypeNameForDocument(document);
+        //     if (!mainTypeName) return;
+        //
+        //     const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+        //     if (this.router.url.includes('resources')) {
+        //         // indirect away first to reload the resources component, in case you are already there
+        //         await this.router.navigate(['resources', viewName]);
+        //     }
+        //     return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
+        // }
     }
 
 
@@ -116,18 +118,19 @@ export class RoutingService {
     private async jumpToFieldTypeResource(documentToSelect: Document, tab?: string,
                                           comingFromOutsideResourcesComponent: boolean = false) {
 
-        const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
-        if (!mainTypeName) return;
-
-        const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-
-        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
-            await this.router.navigate(tab
-                ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
-                : ['resources', viewName, documentToSelect.resource.id]);
-        } else {
-            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
-        }
+        // TODO
+        // const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
+        // if (!mainTypeName) return;
+        //
+        // const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+        //
+        // if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
+        //     await this.router.navigate(tab
+        //         ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
+        //         : ['resources', viewName, documentToSelect.resource.id]);
+        // } else {
+        //     await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
+        // }
     }
 
 

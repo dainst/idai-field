@@ -112,16 +112,17 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     private updateFilterOptions() {
 
-        const viewType: string|undefined = this.viewFacade.getViewType();
-        if (!viewType) {
-            this.filterOptions = [];
-        } else {
-            this.filterOptions = this.viewFacade.isInOverview()
-                ? this.viewFacade.getBypassHierarchy()
-                    ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
-                    : this.typeUtility.getOverviewTopLevelTypes()
-                : this.typeUtility.getAllowedRelationDomainTypes('isRecordedIn', viewType);
-        }
+        // TODO
+        // const viewType: string|undefined = this.viewFacade.getViewType();
+        // if (!viewType) {
+        //     this.filterOptions = [];
+        // } else {
+        //     this.filterOptions = this.viewFacade.isInOverview()
+        //         ? this.viewFacade.getBypassHierarchy()
+        //             ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
+        //             : this.typeUtility.getOverviewTopLevelTypes()
+        //         : this.typeUtility.getAllowedRelationDomainTypes('isRecordedIn', viewType);
+        // }
     }
 
 

@@ -21,33 +21,33 @@ export module ResourcesStateManagerConfiguration {
         suppressMapLoadForTest: boolean,
         locale: string) {
 
-        const views: ViewDefinition[] = [
-            {
-                'label': locale === 'de' ? 'Ausgrabung' : 'Excavation',
-                'name': 'excavation',
-                'operationSubtype': 'Trench'
-            },
-            {
-                'label': locale === 'de' ? 'Bauaufnahme' : 'Building',
-                'name': 'Building',
-                'operationSubtype': 'Building'
-            },
-            {
-                'label': 'Survey',
-                'name': 'survey',
-                'operationSubtype': 'Survey'
-            }
-        ];
-        for (let view of views) {
-            (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
-        }
+        // const views: ViewDefinition[] = [
+        //     {
+        //         'label': locale === 'de' ? 'Ausgrabung' : 'Excavation',
+        //         'name': 'excavation',
+        //         'operationSubtype': 'Trench'
+        //     },
+        //     {
+        //         'label': locale === 'de' ? 'Bauaufnahme' : 'Building',
+        //         'name': 'Building',
+        //         'operationSubtype': 'Building'
+        //     },
+        //     {
+        //         'label': 'Survey',
+        //         'name': 'survey',
+        //         'operationSubtype': 'Survey'
+        //     }
+        // ];
+        // for (let view of views) {
+        //     (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
+        // }
 
         return new ResourcesStateManager(
             datastore,
             indexFacade,
             stateSerializer,
-            new OperationViews(views),
-            ['Place'],
+            // new OperationViews(views),
+            // ['Place'],
             projectName,
             suppressMapLoadForTest
         );

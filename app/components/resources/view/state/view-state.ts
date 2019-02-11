@@ -7,29 +7,30 @@ import {ViewContext} from './view-context';
  */
 export interface ViewState {
 
-    readonly mainTypeDocumentResourceId?: string;
+    // readonly mainTypeDocumentResourceId?: string;
 
-    readonly layerIds: {[mainTypeDocumentId: string]: string[]};
-    readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
+    layerIds: string[];
+    navigationPath: NavigationPath;
 
     // bypassHierarchy (search mode) related
     readonly bypassHierarchy: boolean;
-    readonly selectAllOperationsOnBypassHierarchy: boolean;
     readonly searchContext: ViewContext;
     readonly customConstraints: { [name: string]: string }
+
+    // readonly selectAllOperationsOnBypassHierarchy: boolean;
 }
 
 
 export class ViewState {
 
-    public static default() {
+    public static default(): ViewState {
 
         return {
-            mode: 'map',
+            // mode: 'map',
             bypassHierarchy: false,
-            selectAllOperationsOnBypassHierarchy: false,
-            navigationPaths: {},
-            layerIds: {},
+            // selectAllOperationsOnBypassHierarchy: false,
+            navigationPath: NavigationPath.empty(),
+            layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };

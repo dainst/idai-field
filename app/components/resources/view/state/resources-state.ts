@@ -9,8 +9,11 @@ import {ViewContext} from './view-context';
  */
 export interface ResourcesState { // 'the' resources state
 
-    viewStates: { [viewName: string]: ViewState };
-    view: string;
+    overviewState: ViewState;
+    operationViewStates: { [operationId: string]: ViewState };
+
+    view: 'project' | string; // <- active view state
+
     mode: 'map' | 'list';
     activeDocumentViewTab: string|undefined;
 }
@@ -52,17 +55,15 @@ export module ResourcesState {
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const mainTypeDocumentResourceId = viewState(state).mainTypeDocumentResourceId;
-        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
-
-        const path = viewState(state).navigationPaths[mainTypeDocumentResourceId];
+        const path: NavigationPath = viewState(state).navigationPath;
         return path ? path : NavigationPath.empty();
     }
 
 
     export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
 
-        return viewState(state).selectAllOperationsOnBypassHierarchy;
+        throw "not implemented";
+        // return viewState(state).selectAllOperationsOnBypassHierarchy;
     }
 
 
@@ -72,38 +73,19 @@ export module ResourcesState {
     }
 
 
-    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
-
-        return viewState(state).mainTypeDocumentResourceId;
-    }
-
-
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return [];
+        // if (!mainTypeDocumentResourceId) return [];
 
-        const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
+        // const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
+        const layersIds = viewState(state).layerIds;
         return layersIds ? layersIds : [];
-    }
-
-
-    export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
-
-        return viewState(state).layerIds;
     }
 
 
     export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
 
         state.activeDocumentViewTab = activeDocumentViewTab;
-        return state;
-    }
-
-
-    export function setView(state: ResourcesState, view: string): ResourcesState {
-
-        state.view = view;
         return state;
     }
 
@@ -115,24 +97,22 @@ export module ResourcesState {
     }
 
 
-    export function setQueryString(state: ResourcesState, q: string): ResourcesState {
+    export function setQueryString(state: ResourcesState, q: string) {
 
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).q = q;
-            return state;
         } else {
-            return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
+            updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
         }
     }
 
 
-    export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
+    export function setTypeFilters(state: ResourcesState, types: string[]) {
 
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).types = types;
-            return state;
         } else {
-            return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
+            updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
         }
     }
 
@@ -146,86 +126,71 @@ export module ResourcesState {
 
 
     export function setSelectedDocument(state: ResourcesState,
-                                        document: FieldDocument|undefined): ResourcesState {
+                                        document: FieldDocument|undefined) {
 
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).selected = document;
-            return state;
         } else {
-            return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
+            updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
         }
     }
 
 
-    export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]): ResourcesState {
+    export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]) {
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return state;
-
-        const layerContextId = isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId;
-        viewState(state).layerIds[layerContextId] = activeLayersIds.slice(0);
-
-        return state;
+        // const layerContextId = isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId;
+        viewState(state).layerIds = activeLayersIds.slice(0);
     }
 
 
-    export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
+    export function removeActiveLayersIds(state: ResourcesState) {
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (mainTypeDocumentResourceId) delete viewState(state).layerIds[mainTypeDocumentResourceId];
-
-        return state;
+        delete viewState(state).layerIds;
     }
 
 
-    export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
+    export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath) {
 
-        const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return state;
-
-        viewState(state).navigationPaths[mainTypeDocumentResourceId] = navPath;
-
-        return state;
+        viewState(state).navigationPath = navPath;
     }
 
 
     export function makeSampleDefaults(): ResourcesState {
 
-        return {
-            viewStates: {
-                project: {
-                    layerIds: { 'project': ['o25'] },
-                    bypassHierarchy: false,
-                    selectAllOperationsOnBypassHierarchy: false,
-                    navigationPaths: {},
-                    searchContext: ViewContext.empty(),
-                    customConstraints: {}
-                },
-                excavation: {
-                    bypassHierarchy: false,
-                    selectAllOperationsOnBypassHierarchy: false,
-                    navigationPaths: {
-                        't1': NavigationPath.empty()
-                    },
-                    layerIds: { 't1': ['o25'] },
-                    searchContext: ViewContext.empty(),
-                    customConstraints: {}
-                }
-            },
-            view: 'project',
-            mode: 'map',
-            activeDocumentViewTab: undefined
-        }
+        return makeDefaults();
+        // return {
+        //     operationViewStates: {
+        //         project: {
+        //             layerIds: { 'project': ['o25'] },
+        //             bypassHierarchy: false,
+        //             selectAllOperationsOnBypassHierarchy: false,
+        //             navigationPaths: {},
+        //             searchContext: ViewContext.empty(),
+        //             customConstraints: {}
+        //         },
+        //         excavation: {
+        //             bypassHierarchy: false,
+        //             selectAllOperationsOnBypassHierarchy: false,
+        //             navigationPaths: {
+        //                 't1': NavigationPath.empty()
+        //             },
+        //             layerIds: { 't1': ['o25'] },
+        //             searchContext: ViewContext.empty(),
+        //             customConstraints: {}
+        //         }
+        //     },
+        //     view: 'project',
+        //     mode: 'map',
+        //     activeDocumentViewTab: undefined
+        // }
     }
 
 
     export function makeDefaults(): ResourcesState {
 
         return {
-            viewStates: {
-                excavation: ViewState.default(),
-                project: ViewState.default()
-            },
+            overviewState: ViewState.default(),
+            operationViewStates: {},
             view: 'project',
             mode: 'map',
             activeDocumentViewTab: undefined
@@ -235,8 +200,8 @@ export module ResourcesState {
 
     export function complete(state: ResourcesState ): ResourcesState {
 
-        Object.keys(state.viewStates)
-            .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
+        Object.keys(state.operationViewStates)
+            .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
         return state;
     }
 
@@ -269,13 +234,17 @@ export module ResourcesState {
 
     function isAllSelection(viewState: ViewState): boolean {
 
-        return viewState.bypassHierarchy && viewState.selectAllOperationsOnBypassHierarchy;
+        return false;
+        // return viewState.bypassHierarchy;
+            // && viewState.selectAllOperationsOnBypassHierarchy;
     }
 
 
     function viewState(state: ResourcesState): ViewState {
 
-        return state.viewStates[state.view];
+        return state.view === 'project'
+            ? state.overviewState
+            : state.operationViewStates[state.view];
     }
 }
 

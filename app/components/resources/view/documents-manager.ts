@@ -201,10 +201,12 @@ export class DocumentsManager {
 
         const state = this.resourcesStateManager.get();
 
-        const isRecordedInTargetIdOrIds = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
-            () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
-            ResourcesState.getBypassHierarchy(state),
-            ResourcesState.getSelectAllOperationsOnBypassHierarchy(state));
+        const isRecordedInTargetIdOrIds = undefined;
+
+        // = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
+        //     () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
+        //     ResourcesState.getBypassHierarchy(state),
+        //     ResourcesState.getSelectAllOperationsOnBypassHierarchy(state));
 
         return (await this.fetchDocuments(
                 DocumentsManager.buildQuery(
@@ -264,9 +266,10 @@ export class DocumentsManager {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
-            return this.operationTypeDocumentsManager.populate();
-        }
+        // TODO review
+        // if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
+        //     return this.operationTypeDocumentsManager.populate();
+        // }
 
         this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(false);
@@ -277,7 +280,7 @@ export class DocumentsManager {
 
         return this.resourcesStateManager.isInOverview()
             ? undefined
-            : ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
+            : this.resourcesStateManager.get().view;
     }
 
 

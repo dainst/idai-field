@@ -141,11 +141,6 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   user-select: none;
 }
 
-.navbar-hover-element {
-  transition: text-shadow .25s ease-in-out;
-  cursor: pointer;
-}
-
 .navbar-separator-element:hover {
   color: #fff !important;
 }

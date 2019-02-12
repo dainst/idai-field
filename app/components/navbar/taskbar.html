@@ -7,7 +7,7 @@
         <taskbar-conflicts></taskbar-conflicts>
     </li>
 
-    <li class="nav-item navbar-hover-element pr-2">
+    <li class="nav-item pr-2">
         <a href="#" routerLink="/settings">
             <span class="mdi mdi-cloud" *ngIf="isConnected() && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist aktiv"
@@ -27,12 +27,12 @@
         </a>
     </li>
 
-    <li class="nav-item navbar-hover-element">
+    <li class="nav-item">
         <projects></projects>
     </li>
 
     <div ngbDropdown placement="bottom-right">
-        <li id="taskbar-dropdown" class="nav-item navbar-hover-element" ngbDropdownToggle>
+        <li id="taskbar-dropdown" class="nav-item" ngbDropdownToggle>
             <span class="mdi mdi-dots-vertical"></span>
         </li>
         <div ngbDropdownMenu>

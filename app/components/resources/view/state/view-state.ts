@@ -14,12 +14,9 @@ export interface ViewState {
     navigationPath: NavigationPath;
     mode: 'map' | 'list';
 
-    // bypassHierarchy (search mode) related
-    readonly bypassHierarchy: boolean;
-    readonly searchContext: ViewContext;
-    readonly customConstraints: { [name: string]: string }
-
-    // readonly selectAllOperationsOnBypassHierarchy: boolean;
+    bypassHierarchy: boolean;
+    searchContext: ViewContext;
+    customConstraints: { [name: string]: string }
 }
 
 
@@ -30,7 +27,6 @@ export class ViewState {
         return {
             operation: undefined,
             bypassHierarchy: false,
-            // selectAllOperationsOnBypassHierarchy: false,
             navigationPath: NavigationPath.empty(),
             mode: 'map',
             layerIds: [],
@@ -43,7 +39,7 @@ export class ViewState {
     public static complete(viewState: ViewState) {
 
         if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
-            (viewState as any).layerIds = {};
+            viewState.layerIds = [];
         } else {
             for (let key of Object.keys(viewState.layerIds)) {
                 if (!Array.isArray(viewState.layerIds[key])) {
@@ -52,9 +48,9 @@ export class ViewState {
             }
         }
 
-        (viewState as any).bypassHierarchy = false;
-        (viewState as any).searchContext = ViewContext.empty();
-        (viewState as any).navigationPaths = {};
-        (viewState as any).customConstraints = {};
+        viewState.bypassHierarchy = false;
+        viewState.searchContext = ViewContext.empty();
+        viewState.navigationPath = NavigationPath.empty();
+        viewState.customConstraints = {};
     }
 }

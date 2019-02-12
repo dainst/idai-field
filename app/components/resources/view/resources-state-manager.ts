@@ -44,8 +44,6 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        // private views: OperationViews,
-        // private additionalOverviewTypeNames: string[],
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
@@ -53,26 +51,10 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    // public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
-
     public isInOverview = () => this.resourcesState.view === 'project';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
-
-    // public getViews = () => this.views.get();
-
-    // public getLabelForName = (name: string) => this.views.getLabelForName(name);
-
-    // public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
-
-
-    // public getViewNameForMainType(name: string) {
-    //
-    //     return (name === 'Project')
-    //         ? 'project'
-    //         : this.views.getViewNameForOperationSubtype(name);
-    // }
 
 
     public async initialize(viewName: 'project' | string) {
@@ -96,31 +78,27 @@ export class ResourcesStateManager {
 
     public deactivate(viewName: string) {
 
-        if (this.resourcesState.operationViewStates[viewName]) {
-            delete this.resourcesState.operationViewStates[viewName];
-        }
-
+        if (this.resourcesState.operationViewStates[viewName]) delete this.resourcesState.operationViewStates[viewName];
         this.notifyNavigationPathObservers();
     }
 
 
-    public getOperationViews(): Array<{ id: string, label: string }> {
+    public getOperationViews(): {[id: string]: string} {
 
         return Object.keys(this.resourcesState.operationViewStates)
-            .map(viewName => {
+            .reduce((acc, viewName) => {
                 const operation: FieldDocument|undefined
                     = this.resourcesState.operationViewStates[viewName].operation;
 
-                if (!operation) {
-                    console.warn('Missing operation document for view: ' + viewName);
-                    return { id: viewName, label: 'MISSING' };
-                }
+                if (!operation) console.warn('Missing operation document for view: ' + viewName);
 
-                return {
-                    id: viewName,
-                    label: operation.resource.identifier
-                }
-            });
+                acc[viewName] = !operation
+                    ?'MISSING'
+                    :operation.resource.identifier;
+
+                return acc;
+
+            }, {} as {[id: string]: string});
     }
 
 
@@ -128,9 +106,6 @@ export class ResourcesStateManager {
 
         // TODO use typeUtilily
         return ['Place', 'Trench', 'Survey', 'Building'];
-        // return this.views.get()
-        //     .map(_ => _.operationSubtype)
-        //     .concat(this.additionalOverviewTypeNames);
     }
 
 
@@ -142,7 +117,7 @@ export class ResourcesStateManager {
 
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
-        this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
+        ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
     }
 
 
@@ -296,10 +271,11 @@ export class ResourcesStateManager {
 
         if (!selectedDocument) return navigationPath;
 
-        return NavigationPath.setSelectedDocument(
+        NavigationPath.setSelectedDocument(
             navigationPath,
             await this.datastore.get(selectedDocument.resource.id)
         );
+        return navigationPath;
     }
 
 

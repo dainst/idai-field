@@ -1,4 +1,4 @@
-import {takeUntil, takeWhile, on} from 'tsfun';
+import {takeUntil, takeWhile, on, is} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
@@ -13,13 +13,13 @@ import {ModelUtil} from '../../../../core/model/model-util';
 export interface NavigationPath {
 
     readonly basicContext: ViewContext; // used when no segment selected
-    readonly segments: Array<NavigationPathSegment>;
+    segments: Array<NavigationPathSegment>;
 
     /**
      * The selected segment is 'identified' by this id.
      * It corresponds with segment[_].document.resource.id.
      */
-    readonly selectedSegmentId?: string;
+    selectedSegmentId?: string;
 }
 
 
@@ -36,8 +36,8 @@ export module NavigationPath {
 
     export function getSelectedSegment(navPath: NavigationPath) {
 
-        return navPath.segments.find(element =>
-            element.document.resource.id === navPath.selectedSegmentId) as NavigationPathSegment;
+        return navPath.segments
+            .find(on('document.resource.id', is(navPath.selectedSegmentId))) as NavigationPathSegment;
     }
 
 
@@ -91,10 +91,9 @@ export module NavigationPath {
 
 
     export function setSelectedDocument(navPath: NavigationPath,
-                                        document: FieldDocument|undefined): NavigationPath {
+                                        document: FieldDocument|undefined) {
 
-        (getViewContext(navPath) as any).selected = document;
-        return navPath;
+        getViewContext(navPath).selected = document;
     }
 
 
@@ -104,10 +103,9 @@ export module NavigationPath {
     }
 
 
-    export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
+    export function setQueryString(navPath: NavigationPath, q: string) {
 
-        (getViewContext(navPath) as any).q = q;
-        return navPath;
+        getViewContext(navPath).q = q;
     }
 
 
@@ -119,8 +117,7 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
-        (getViewContext(navPath) as any).types = types;
-        return navPath;
+        getViewContext(navPath).types = types;
     }
 
 
@@ -208,10 +205,10 @@ export module NavigationPath {
                                                newSelectedSegmentId: string): NavigationPath {
 
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
-            (navPath as any).segments = newSegments;
+            navPath.segments = newSegments;
         }
 
-        (navPath as any).selectedSegmentId = newSelectedSegmentId;
+        navPath.selectedSegmentId = newSelectedSegmentId;
         return navPath;
     }
 

@@ -66,7 +66,6 @@ export module ResourcesState {
     export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
 
         throw "not implemented";
-        // return viewState(state).selectAllOperationsOnBypassHierarchy;
     }
 
 
@@ -78,9 +77,6 @@ export module ResourcesState {
 
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
-        // if (!mainTypeDocumentResourceId) return [];
-
-        // const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
         const layersIds = viewState(state).layerIds;
         return layersIds ? layersIds : [];
     }
@@ -92,19 +88,19 @@ export module ResourcesState {
     }
 
 
-    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
+    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined) {
 
         state.activeDocumentViewTab = activeDocumentViewTab;
-        return state;
     }
 
 
     export function setQueryString(state: ResourcesState, q: string) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).q = q;
+            viewState(state).searchContext.q = q;
         } else {
-            updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
+            NavigationPath.setQueryString(getNavigationPath(state), q);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
@@ -112,18 +108,18 @@ export module ResourcesState {
     export function setTypeFilters(state: ResourcesState, types: string[]) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).types = types;
+            viewState(state).searchContext.types = types;
         } else {
-            updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
+            NavigationPath.setTypeFilters(getNavigationPath(state), types);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
 
     export function setCustomConstraints(state: ResourcesState,
-                                         constraints: { [name: string]: string}): ResourcesState {
+                                         constraints: { [name: string]: string}) {
 
-        (viewState(state) as any).customConstraints = constraints;
-        return state;
+        viewState(state).customConstraints = constraints;
     }
 
 
@@ -131,9 +127,10 @@ export module ResourcesState {
                                         document: FieldDocument|undefined) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).selected = document;
+            viewState(state).searchContext.selected = document;
         } else {
-            updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
+            NavigationPath.setSelectedDocument(getNavigationPath(state), document);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
@@ -212,37 +209,19 @@ export module ResourcesState {
     }
 
 
-    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
+    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
-        (viewState(state) as any).bypassHierarchy = bypassHierarchy;
-        return state;
+        viewState(state).bypassHierarchy = bypassHierarchy;
     }
 
 
-    export function setMainTypeDocumentResourceId(state: ResourcesState,
-                                                  mainTypeDocumentResourceId: string|undefined): ResourcesState {
+    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState,
+                                                            selectAllOperationsOnBypassHierarchy: boolean) {
 
-        (viewState(state) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(state) as any).searchContext.selected = undefined;
-        return state;
-    }
-
-
-    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
-
-        (viewState(state) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
+        // viewState(state).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
-            (viewState(state) as any).searchContext.selected = undefined;
+            viewState(state).searchContext.selected = undefined;
         }
-        return state;
-    }
-
-
-    function isAllSelection(viewState: ViewState): boolean {
-
-        return false;
-        // return viewState.bypassHierarchy;
-            // && viewState.selectAllOperationsOnBypassHierarchy;
     }
 
 

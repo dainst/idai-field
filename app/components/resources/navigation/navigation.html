@@ -19,7 +19,7 @@
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            {{viewFacade.getView()}}
+            {{viewFacade.getCurrentOperation().resource.identifier}}
         </div>
 
         <div *ngIf="showOperationsAllAsFirstSegment()"

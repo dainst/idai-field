@@ -1,5 +1,7 @@
+import {FieldDocument} from 'idai-components-2';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
+
 
 /**
  * @author Thomas Kleinke
@@ -9,6 +11,7 @@ export interface ViewState {
 
     // readonly mainTypeDocumentResourceId?: string;
 
+    operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
 
@@ -23,10 +26,10 @@ export interface ViewState {
 
 export class ViewState {
 
-    public static default(): ViewState {
+    public static default(operation: FieldDocument|undefined): ViewState {
 
         return {
-            // mode: 'map',
+            operation: operation,
             bypassHierarchy: false,
             // selectAllOperationsOnBypassHierarchy: false,
             navigationPath: NavigationPath.empty(),

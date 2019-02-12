@@ -115,15 +115,6 @@ export class NavigationComponent {
     }
 
 
-    public async chooseOperationTypeDocumentOption(document: FieldDocument) {
-
-        this.viewFacade.selectOperation(document.resource.id);
-        if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument
-            this.viewFacade.setActiveDocumentViewTab(undefined);
-        }
-    }
-
-
     private static getLabels(navigationPath: NavigationPath): NavigationButtonLabelMap {
 
         const labels: NavigationButtonLabelMap = {};

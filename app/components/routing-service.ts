@@ -43,7 +43,6 @@ export class RoutingService {
     public async jumpToMainTypeHomeView(document: Document) {
 
         await this.router.navigate(['resources', document.resource.id]);
-        await this.viewFacade.selectOperation(document.resource.id);
     }
 
 

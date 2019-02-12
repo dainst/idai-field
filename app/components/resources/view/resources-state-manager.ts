@@ -57,6 +57,9 @@ export class ResourcesStateManager {
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
+    public getCurrentOperation = (): FieldDocument|undefined =>
+        ResourcesState.getCurrentOperation(this.resourcesState);
+
     // public getViews = () => this.views.get();
 
     // public getLabelForName = (name: string) => this.views.getLabelForName(name);
@@ -82,10 +85,13 @@ export class ResourcesStateManager {
         this.resourcesState.view = viewName;
 
         if (viewName !== 'project' && !this.resourcesState.operationViewStates[viewName]) {
-            this.resourcesState.operationViewStates[viewName] = ViewState.default();
+            this.resourcesState.operationViewStates[viewName] = ViewState.default(
+                await this.datastore.get(viewName)
+            );
         }
 
         this.setActiveDocumentViewTab(undefined);
+        this.notifyNavigationPathObservers();
     }
 
 
@@ -133,6 +139,7 @@ export class ResourcesStateManager {
 
         ResourcesState.setMode(this.resourcesState, mode);
     }
+
 
     public setBypassHierarchy(bypassHierarchy: boolean) {
 
@@ -194,21 +201,6 @@ export class ResourcesStateManager {
     }
 
 
-    public setMainTypeDocument(resourceId: string|undefined) {
-
-        this.resourcesState.view = resourceId ? resourceId : 'overview';
-
-        // this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
-        //
-        // if (resourceId && !this.resourcesState.operationViewStates[this.resourcesState.view].navigationPaths[resourceId]) {
-        //     this.resourcesState.operationViewStates[this.resourcesState.view].navigationPaths[resourceId]
-        //         = NavigationPath.empty();
-        // }
-        //
-        // this.notifyNavigationPathObservers();
-    }
-
-
     public async updateNavigationPathForDocument(document: FieldDocument) {
 
         this.setBypassHierarchy(false);
@@ -251,9 +243,10 @@ export class ResourcesStateManager {
         let resourcesState = ResourcesState.makeDefaults();
 
         if (this.project === 'test' || this.project === 'synctest') {
-            if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
+            if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults();
         } else {
-            (resourcesState as any).operationViewStates = await this.serializer.load('resources-state');
+            (resourcesState as any).operationViewStates
+                = await this.serializer.load('resources-state');
             resourcesState = ResourcesState.complete(resourcesState);
         }
 

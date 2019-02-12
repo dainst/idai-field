@@ -60,6 +60,12 @@ export module ResourcesState {
     }
 
 
+    export function getCurrentOperation(state: ResourcesState): FieldDocument|undefined {
+
+        return viewState(state).operation;
+    }
+
+
     export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
 
         throw "not implemented";
@@ -189,7 +195,7 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.default(),
+            overviewState: ViewState.default(undefined),
             operationViewStates: {},
             view: 'project',
             mode: 'map',

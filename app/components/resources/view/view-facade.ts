@@ -53,6 +53,9 @@ export class ViewFacade {
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
+    public getCurrentOperation = (): FieldDocument|undefined =>
+        this.resourcesStateManager.getCurrentOperation();
+
     // public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
@@ -152,16 +155,9 @@ export class ViewFacade {
     }
 
 
-    public async selectOperation(resourceId: string): Promise<void> {
-
-        if (this.isInOverview()) throw ViewFacade.err('selectOperation');
-        if (this.getBypassHierarchy()) await this.setSelectAllOperationsOnBypassHierarchy(false);
-        this.resourcesStateManager.setMainTypeDocument(resourceId);
-        await this.populateDocumentList();
-    }
-
-
     public async selectView(viewName: 'project'|string): Promise<void> {
+
+        console.log('select view', viewName);
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);

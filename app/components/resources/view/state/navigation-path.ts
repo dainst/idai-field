@@ -13,13 +13,13 @@ import {ModelUtil} from '../../../../core/model/model-util';
 export interface NavigationPath {
 
     readonly basicContext: ViewContext; // used when no segment selected
-    readonly segments: Array<NavigationPathSegment>;
+    segments: Array<NavigationPathSegment>;
 
     /**
      * The selected segment is 'identified' by this id.
      * It corresponds with segment[_].document.resource.id.
      */
-    readonly selectedSegmentId?: string;
+    selectedSegmentId?: string;
 }
 
 
@@ -93,7 +93,7 @@ export module NavigationPath {
     export function setSelectedDocument(navPath: NavigationPath,
                                         document: FieldDocument|undefined): NavigationPath {
 
-        (getViewContext(navPath) as any).selected = document;
+        getViewContext(navPath).selected = document;
         return navPath;
     }
 
@@ -106,7 +106,7 @@ export module NavigationPath {
 
     export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
 
-        (getViewContext(navPath) as any).q = q;
+        getViewContext(navPath).q = q;
         return navPath;
     }
 
@@ -119,7 +119,7 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
-        (getViewContext(navPath) as any).types = types;
+        getViewContext(navPath).types = types;
         return navPath;
     }
 
@@ -208,10 +208,10 @@ export module NavigationPath {
                                                newSelectedSegmentId: string): NavigationPath {
 
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
-            (navPath as any).segments = newSegments;
+            navPath.segments = newSegments;
         }
 
-        (navPath as any).selectedSegmentId = newSelectedSegmentId;
+        navPath.selectedSegmentId = newSelectedSegmentId;
         return navPath;
     }
 

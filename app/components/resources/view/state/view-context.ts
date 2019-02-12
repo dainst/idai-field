@@ -6,9 +6,9 @@ import {FieldDocument} from 'idai-components-2';
  */
 export interface ViewContext {
 
-    readonly q: string;
-    readonly types: string[];
-    readonly selected?: FieldDocument;
+    q: string;
+    types: string[];
+    selected?: FieldDocument;
 }
 
 

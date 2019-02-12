@@ -44,8 +44,6 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        // private views: OperationViews,
-        // private additionalOverviewTypeNames: string[],
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
@@ -53,26 +51,10 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    // public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
-
     public isInOverview = () => this.resourcesState.view === 'project';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
-
-    // public getViews = () => this.views.get();
-
-    // public getLabelForName = (name: string) => this.views.getLabelForName(name);
-
-    // public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
-
-
-    // public getViewNameForMainType(name: string) {
-    //
-    //     return (name === 'Project')
-    //         ? 'project'
-    //         : this.views.getViewNameForOperationSubtype(name);
-    // }
 
 
     public async initialize(viewName: 'project' | string) {
@@ -127,9 +109,6 @@ export class ResourcesStateManager {
 
         // TODO use typeUtilily
         return ['Place', 'Trench', 'Survey', 'Building'];
-        // return this.views.get()
-        //     .map(_ => _.operationSubtype)
-        //     .concat(this.additionalOverviewTypeNames);
     }
 
 

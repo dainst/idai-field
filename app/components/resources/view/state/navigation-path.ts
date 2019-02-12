@@ -1,4 +1,4 @@
-import {takeUntil, takeWhile, on} from 'tsfun';
+import {takeUntil, takeWhile, on, is} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
@@ -36,8 +36,8 @@ export module NavigationPath {
 
     export function getSelectedSegment(navPath: NavigationPath) {
 
-        return navPath.segments.find(element =>
-            element.document.resource.id === navPath.selectedSegmentId) as NavigationPathSegment;
+        return navPath.segments
+            .find(on('document.resource.id', is(navPath.selectedSegmentId))) as NavigationPathSegment;
     }
 
 

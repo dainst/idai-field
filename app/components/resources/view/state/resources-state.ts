@@ -216,13 +216,12 @@ export module ResourcesState {
 
 
     export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState,
-                                                            selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
+                                                            selectAllOperationsOnBypassHierarchy: boolean) {
 
         // viewState(state).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
             viewState(state).searchContext.selected = undefined;
         }
-        return state;
     }
 
 

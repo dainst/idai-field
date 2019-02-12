@@ -19,8 +19,8 @@ export class NavbarComponent {
     public operationViews: Array<{ id: string, label: string }> = [];
 
 
-    constructor(private viewFacade: ViewFacade,
-                private router: Router) {
+    constructor(public router: Router,
+                private viewFacade: ViewFacade) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
         this.viewFacade.navigationPathNotifications().subscribe(() => {

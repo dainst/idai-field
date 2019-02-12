@@ -26,8 +26,10 @@
             <li *ngFor="let view of operationViews" class="nav-item">
                 <a class="nav-link"
                    [class.active]="isActiveRoute('/resources/' + view.id)"
-                   href="#" routerLink="/resources/{{view.id}}"
-                   (contextmenu)="close(view.id)">{{view.label}}</a>
+                   (click)="router.navigate(['resources', view.id])">
+                    {{view.label}}
+                    <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(view.id);"></span>
+                </a>
             </li>
 
             <li class="nav-item">

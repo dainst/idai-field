@@ -92,10 +92,9 @@ export module ResourcesState {
     }
 
 
-    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
+    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined) {
 
         state.activeDocumentViewTab = activeDocumentViewTab;
-        return state;
     }
 
 
@@ -104,7 +103,8 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).q = q;
         } else {
-            updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
+            NavigationPath.setQueryString(getNavigationPath(state), q);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
@@ -114,7 +114,8 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).types = types;
         } else {
-            updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
+            NavigationPath.setTypeFilters(getNavigationPath(state), types);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
@@ -133,7 +134,8 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).selected = document;
         } else {
-            updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
+            NavigationPath.setSelectedDocument(getNavigationPath(state), document)
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 

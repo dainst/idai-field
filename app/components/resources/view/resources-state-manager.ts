@@ -78,10 +78,7 @@ export class ResourcesStateManager {
 
     public deactivate(viewName: string) {
 
-        if (this.resourcesState.operationViewStates[viewName]) {
-            delete this.resourcesState.operationViewStates[viewName];
-        }
-
+        if (this.resourcesState.operationViewStates[viewName]) delete this.resourcesState.operationViewStates[viewName];
         this.notifyNavigationPathObservers();
     }
 
@@ -120,7 +117,7 @@ export class ResourcesStateManager {
 
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
-        this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
+        ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
     }
 
 
@@ -274,10 +271,11 @@ export class ResourcesStateManager {
 
         if (!selectedDocument) return navigationPath;
 
-        return NavigationPath.setSelectedDocument(
+        NavigationPath.setSelectedDocument(
             navigationPath,
             await this.datastore.get(selectedDocument.resource.id)
         );
+        return navigationPath;
     }
 
 

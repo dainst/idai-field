@@ -91,10 +91,9 @@ export module NavigationPath {
 
 
     export function setSelectedDocument(navPath: NavigationPath,
-                                        document: FieldDocument|undefined): NavigationPath {
+                                        document: FieldDocument|undefined) {
 
         getViewContext(navPath).selected = document;
-        return navPath;
     }
 
 
@@ -104,10 +103,9 @@ export module NavigationPath {
     }
 
 
-    export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
+    export function setQueryString(navPath: NavigationPath, q: string) {
 
         getViewContext(navPath).q = q;
-        return navPath;
     }
 
 
@@ -120,7 +118,6 @@ export module NavigationPath {
     export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
         getViewContext(navPath).types = types;
-        return navPath;
     }
 
 

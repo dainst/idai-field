@@ -28,7 +28,7 @@
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="getCurrentFilterType()"
                  [liesWithin]="getSelectedSegmentDoc()"
-                 [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
+                 [isRecordedIn]="viewFacade.getCurrentOperation()"
                  [skipFormAndReturnNewDocument]="true"
                  [status]="getPlusButtonStatus()"
                  (documentRequested)="createNewDocument($event)"></plus-button>

@@ -23,11 +23,11 @@
                 <span class="nav-link navbar-separator-element">|</span>
             </li>
 
-            <li *ngFor="let view of operationViews" class="nav-item">
+            <li *ngFor="let viewId of operationViewKeys()" class="nav-item">
                 <a class="nav-link"
-                   [class.active]="isActiveRoute('/resources/' + view.id)"
-                   href="#" routerLink="/resources/{{view.id}}"
-                   (contextmenu)="close(view.id)">{{view.label}}</a>
+                   [class.active]="isActiveRoute('/resources/' + viewId)"
+                   href="#" routerLink="/resources/{{viewId}}"
+                   (contextmenu)="close(viewId)">{{operationViews[viewId]}}</a>
             </li>
 
             <li class="nav-item">

@@ -104,23 +104,22 @@ export class ResourcesStateManager {
     }
 
 
-    public getOperationViews(): Array<{ id: string, label: string }> {
+    public getOperationViews(): {[id: string]: string} {
 
         return Object.keys(this.resourcesState.operationViewStates)
-            .map(viewName => {
+            .reduce((acc, viewName) => {
                 const operation: FieldDocument|undefined
                     = this.resourcesState.operationViewStates[viewName].operation;
 
-                if (!operation) {
-                    console.warn('Missing operation document for view: ' + viewName);
-                    return { id: viewName, label: 'MISSING' };
-                }
+                if (!operation) console.warn('Missing operation document for view: ' + viewName);
 
-                return {
-                    id: viewName,
-                    label: operation.resource.identifier
-                }
-            });
+                acc[viewName] = !operation
+                    ?'MISSING'
+                    :operation.resource.identifier;
+
+                return acc;
+
+            }, {} as {[id: string]: string});
     }
 
 

@@ -16,7 +16,7 @@ import {ViewFacade} from '../resources/view/view-facade';
 export class NavbarComponent {
 
     public activeRoute: string;
-    public operationViews: Array<{ id: string, label: string }> = [];
+    public operationViews: {[id: string]: string} = {};
 
 
     constructor(private viewFacade: ViewFacade,
@@ -27,6 +27,9 @@ export class NavbarComponent {
             this.operationViews = this.viewFacade.getOperationViews();
         });
     }
+
+
+    public operationViewKeys = () => Object.keys(this.operationViews);
 
 
     public isActiveRoute(route: string) {

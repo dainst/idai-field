@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Document, ImageDocument, Messages, ProjectConfiguration} from 'idai-components-2';
+import {Document, ImageDocument, Messages, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
@@ -26,6 +26,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public maxGridSize: number = 12;
     public minGridSize: number = 2;
+    public filterOptions: Array<IdaiType> = [];
 
 
     constructor(public viewFacade: ViewFacade,
@@ -51,8 +52,6 @@ export class ImageOverviewComponent implements OnInit {
 
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
 
-    public getFilterOptions = () => [this.projectConfiguration.getTypesTree()['Image']];
-
     public getQuery = () => this.imageOverviewFacade.getQuery();
 
     public getLinkFilter = () => this.imageOverviewFacade.getLinkFilter();
@@ -67,6 +66,7 @@ export class ImageOverviewComponent implements OnInit {
     ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
+        this.filterOptions = [this.projectConfiguration.getTypesTree()['Image']];
     }
 
 

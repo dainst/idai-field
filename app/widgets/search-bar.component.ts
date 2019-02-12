@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges,
+    SimpleChanges} from '@angular/core';
 import {IdaiType} from 'idai-components-2';
 
 
@@ -38,9 +39,11 @@ export class SearchBarComponent implements OnChanges {
     public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
 
-        if (this.filterOptions.length === 1) this.chooseTypeFilter(this.filterOptions[0]);
+        if (changes['filterOptions'] && this.filterOptions.length === 1) {
+            this.chooseTypeFilter(this.filterOptions[0]);
+        }
     }
 
 
@@ -61,17 +64,13 @@ export class SearchBarComponent implements OnChanges {
 
     public chooseTypeFilter(type: IdaiType) {
 
-        if (!type) {
-            this.types = undefined;
-        } else {
-            this.types = [type.name];
-
-            if (type.children) {
-                for (let childType of type.children) {
-                    this.types.push(childType.name);
-                }
-            }
-        }
+        this.types = type
+            ? [type.name].concat(
+                type.children
+                    ? type.children.map(childType => childType.name)
+                    : []
+            )
+            : undefined;
 
         this.onTypesChanged.emit(this.types);
     }

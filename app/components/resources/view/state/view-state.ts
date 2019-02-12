@@ -15,7 +15,7 @@ export interface ViewState {
     mode: 'map' | 'list';
 
     // bypassHierarchy (search mode) related
-    readonly bypassHierarchy: boolean;
+    bypassHierarchy: boolean;
     readonly searchContext: ViewContext;
     customConstraints: { [name: string]: string }
 

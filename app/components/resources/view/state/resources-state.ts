@@ -211,16 +211,7 @@ export module ResourcesState {
 
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
 
-        (viewState(state) as any).bypassHierarchy = bypassHierarchy;
-        return state;
-    }
-
-
-    export function setMainTypeDocumentResourceId(state: ResourcesState,
-                                                  mainTypeDocumentResourceId: string|undefined): ResourcesState {
-
-        (viewState(state) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(state) as any).searchContext.selected = undefined;
+        viewState(state).bypassHierarchy = bypassHierarchy;
         return state;
     }
 
@@ -232,14 +223,6 @@ export module ResourcesState {
             (viewState(state) as any).searchContext.selected = undefined;
         }
         return state;
-    }
-
-
-    function isAllSelection(viewState: ViewState): boolean {
-
-        return false;
-        // return viewState.bypassHierarchy;
-            // && viewState.selectAllOperationsOnBypassHierarchy;
     }
 
 

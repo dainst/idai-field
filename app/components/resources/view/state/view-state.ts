@@ -16,7 +16,7 @@ export interface ViewState {
 
     // bypassHierarchy (search mode) related
     bypassHierarchy: boolean;
-    readonly searchContext: ViewContext;
+    searchContext: ViewContext;
     customConstraints: { [name: string]: string }
 
     // readonly selectAllOperationsOnBypassHierarchy: boolean;

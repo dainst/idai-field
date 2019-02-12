@@ -209,18 +209,18 @@ export module ResourcesState {
     }
 
 
-    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
+    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
         viewState(state).bypassHierarchy = bypassHierarchy;
-        return state;
     }
 
 
-    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
+    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState,
+                                                            selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
 
-        (viewState(state) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
+        // viewState(state).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
-            (viewState(state) as any).searchContext.selected = undefined;
+            viewState(state).searchContext.selected = undefined;
         }
         return state;
     }

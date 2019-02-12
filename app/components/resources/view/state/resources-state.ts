@@ -97,7 +97,7 @@ export module ResourcesState {
     export function setQueryString(state: ResourcesState, q: string) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).q = q;
+            viewState(state).searchContext.q = q;
         } else {
             NavigationPath.setQueryString(getNavigationPath(state), q);
             updateNavigationPath(state, getNavigationPath(state));
@@ -108,7 +108,7 @@ export module ResourcesState {
     export function setTypeFilters(state: ResourcesState, types: string[]) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).types = types;
+            viewState(state).searchContext.types = types;
         } else {
             NavigationPath.setTypeFilters(getNavigationPath(state), types);
             updateNavigationPath(state, getNavigationPath(state));
@@ -127,7 +127,7 @@ export module ResourcesState {
                                         document: FieldDocument|undefined) {
 
         if (viewState(state).bypassHierarchy) {
-            (viewState(state).searchContext as any).selected = document;
+            viewState(state).searchContext.selected = document;
         } else {
             NavigationPath.setSelectedDocument(getNavigationPath(state), document);
             updateNavigationPath(state, getNavigationPath(state));

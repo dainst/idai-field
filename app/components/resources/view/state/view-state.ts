@@ -14,6 +14,7 @@ export interface ViewState {
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
+    mode: 'map' | 'list';
 
     // bypassHierarchy (search mode) related
     readonly bypassHierarchy: boolean;
@@ -33,6 +34,7 @@ export class ViewState {
             bypassHierarchy: false,
             // selectAllOperationsOnBypassHierarchy: false,
             navigationPath: NavigationPath.empty(),
+            mode: 'map',
             layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}

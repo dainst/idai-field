@@ -135,6 +135,12 @@ export class ResourcesStateManager {
     }
 
 
+    public getMode(): 'map'|'list' {
+
+        return ResourcesState.getMode(this.resourcesState);
+    }
+
+
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
         this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);

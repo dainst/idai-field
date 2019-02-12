@@ -11,10 +11,7 @@ export interface ResourcesState { // 'the' resources state
 
     overviewState: ViewState;
     operationViewStates: { [operationId: string]: ViewState };
-
     view: 'project' | string; // <- active view state
-
-    mode: 'map' | 'list';
     activeDocumentViewTab: string|undefined;
 }
 
@@ -89,16 +86,15 @@ export module ResourcesState {
     }
 
 
-    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
+    export function getMode(state: ResourcesState): 'map'|'list' {
 
-        state.activeDocumentViewTab = activeDocumentViewTab;
-        return state;
+        return viewState(state).mode;
     }
 
 
-    export function setMode(state: ResourcesState, mode: 'map' | 'list'): ResourcesState {
+    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
 
-        state.mode = mode;
+        state.activeDocumentViewTab = activeDocumentViewTab;
         return state;
     }
 
@@ -149,6 +145,12 @@ export module ResourcesState {
     }
 
 
+    export function setMode(state: ResourcesState, mode: 'map'|'list') {
+
+        viewState(state).mode = mode;
+    }
+
+
     export function removeActiveLayersIds(state: ResourcesState) {
 
         delete viewState(state).layerIds;
@@ -186,7 +188,6 @@ export module ResourcesState {
         //         }
         //     },
         //     view: 'project',
-        //     mode: 'map',
         //     activeDocumentViewTab: undefined
         // }
     }
@@ -198,7 +199,6 @@ export module ResourcesState {
             overviewState: ViewState.default(undefined),
             operationViewStates: {},
             view: 'project',
-            mode: 'map',
             activeDocumentViewTab: undefined
         };
     }

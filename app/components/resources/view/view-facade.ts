@@ -64,7 +64,7 @@ export class ViewFacade {
 
     public getOperationViews = () => this.resourcesStateManager.getOperationViews();
 
-    public getMode = () => this.resourcesStateManager.get().mode;
+    public getMode = () => this.resourcesStateManager.getMode();
 
     public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
 

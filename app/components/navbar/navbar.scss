@@ -121,7 +121,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 
   &:not(:hover) {
     .mdi-close {
-      visibility: hidden;
+      opacity: 0;
     }
   }
 
@@ -132,10 +132,8 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     margin-top: -1px;
     padding-left: 1px;
     line-height: normal;
-
-    &:hover {
-      border-radius: 4px;
-    }
+    border-radius: 4px;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
   }
 }
 

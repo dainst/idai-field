@@ -46,8 +46,7 @@ describe('ResourcesStateManager', () => {
 
     it('repair navigation path if a relation is changed', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -76,8 +75,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -110,8 +108,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument - is correct navigation path', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -139,8 +136,7 @@ describe('ResourcesStateManager', () => {
 
     it('step into', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -159,8 +155,7 @@ describe('ResourcesStateManager', () => {
 
     it('step out', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -180,8 +175,7 @@ describe('ResourcesStateManager', () => {
 
     it('repair navigation path if a document is deleted', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
@@ -213,16 +207,15 @@ describe('ResourcesStateManager', () => {
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(['Find']);
         resourcesStateManager.setQueryString('abc');
 
-        await resourcesStateManager.initialize('survey');
+        await resourcesStateManager.initialize('anotherOperationId');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual([]);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
-        await resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(['Find']);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
@@ -235,8 +228,7 @@ describe('ResourcesStateManager', () => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
@@ -251,8 +243,7 @@ describe('ResourcesStateManager', () => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
 
-        await resourcesStateManager.initialize('excavation');
-        //resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');

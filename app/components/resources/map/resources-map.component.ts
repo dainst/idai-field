@@ -152,10 +152,10 @@ export class ResourcesMapComponent {
 
     private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
 
-        if (this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) {
-            // TODO
-            //return this.viewFacade.getSelectedOperations();
-            return [];
+        const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
+
+        if ((this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) && currentOperation) {
+            return [currentOperation];
         }
 
         const segment = navigationPath.segments

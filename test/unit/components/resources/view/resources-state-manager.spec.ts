@@ -1,5 +1,4 @@
 import {FieldDocument} from 'idai-components-2';
-import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
 import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
@@ -8,15 +7,6 @@ import {ResourcesState} from '../../../../../app/components/resources/view/state
  * @author Daniel de Oliveira
  */
 describe('ResourcesStateManager', () => {
-
-    const viewsList = [
-        {
-            'mainTypeLabel': 'Schnitt',
-            'label': 'Ausgrabung',
-            'operationSubtype': 'Trench',
-            'name': 'excavation'
-        }
-    ];
 
     let mockDatastore: any;
     let mockIndexFacade: any;
@@ -44,8 +34,6 @@ describe('ResourcesStateManager', () => {
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
-            // new OperationViews(viewsList),
-            // undefined,
             undefined
         );
 

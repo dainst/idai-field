@@ -12,7 +12,6 @@ import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
 import {RemoteChangesStream} from '../../app/core/datastore/core/remote-changes-stream';
-import {ResourcesStateManagerConfiguration} from '../../app/components/resources/view/resources-state-manager-configuration';
 import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
@@ -21,6 +20,7 @@ import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
+import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 
 
 class IdGenerator {
@@ -103,14 +103,12 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         typeConverter,
         { getUsername: () => 'fakeuser' });
 
-    const resourcesStateManager = ResourcesStateManagerConfiguration.build(
-        projectConfiguration,
+    const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,
         createdIndexFacade,
         new StandardStateSerializer(settingsService),
         'synctest',
-        true,
-        'de'
+        true
     );
 
     const viewFacade = new ViewFacade(

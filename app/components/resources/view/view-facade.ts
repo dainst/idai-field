@@ -56,11 +56,7 @@ export class ViewFacade {
     public getCurrentOperation = (): FieldDocument|undefined =>
         this.resourcesStateManager.getCurrentOperation();
 
-    // public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view
-
     public isInOverview = () => this.resourcesStateManager.isInOverview();
-
-    // public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
 
     public getOperationViews = () => this.resourcesStateManager.getOperationViews();
 
@@ -111,8 +107,6 @@ export class ViewFacade {
     public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
-
-    // public getMainTypeHomeViewName = (mainTypeName: string) => this.resourcesStateManager.getViewNameForMainType(mainTypeName);
 
     public getSelectAllOperationsOnBypassHierarchy = () => ResourcesState.getSelectAllOperationsOnBypassHierarchy(this.resourcesStateManager.get());
 

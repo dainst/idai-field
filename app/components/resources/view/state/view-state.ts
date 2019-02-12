@@ -9,8 +9,6 @@ import {ViewContext} from './view-context';
  */
 export interface ViewState {
 
-    // readonly mainTypeDocumentResourceId?: string;
-
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;

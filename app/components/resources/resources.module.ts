@@ -34,7 +34,6 @@ import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
-import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
@@ -90,14 +89,12 @@ const remote = require('electron').remote;
                 const projectName = settingsService.getSelectedProject();
                 if (!projectName) throw 'project not set';
 
-                return ResourcesStateManagerConfiguration.build(
-                    projectConfiguration,
+                return new ResourcesStateManager(
                     datastore,
                     indexFacade,
                     stateSerializer,
                     projectName,
-                    remote.getGlobal('switches').suppress_map_load_for_test,
-                    settingsService.getSettings().locale
+                    remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
             deps: [FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService]

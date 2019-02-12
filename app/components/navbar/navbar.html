@@ -23,9 +23,10 @@
                 <span class="nav-link navbar-separator-element">|</span>
             </li>
 
-            <li *ngFor="let view of getOperationViews();" class="nav-item">
-                <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/' + view)"
-                   href="#" routerLink="/resources/{{view}}">{{view}}</a>
+            <li *ngFor="let view of operationViews" class="nav-item">
+                <a class="nav-link navbar-hover-element"
+                   [class.active]="isActiveRoute('/resources/' + view.id)"
+                   href="#" routerLink="/resources/{{view.id}}">{{view.label}}</a>
             </li>
 
             <li class="nav-item">

@@ -95,6 +95,26 @@ export class ResourcesStateManager {
     }
 
 
+    public getOperationViews(): Array<{ id: string, label: string }> {
+
+        return Object.keys(this.resourcesState.operationViewStates)
+            .map(viewName => {
+                const operation: FieldDocument|undefined
+                    = this.resourcesState.operationViewStates[viewName].operation;
+
+                if (!operation) {
+                    console.warn('Missing operation document for view: ' + viewName);
+                    return { id: viewName, label: 'MISSING' };
+                }
+
+                return {
+                    id: viewName,
+                    label: operation.resource.identifier
+                }
+            });
+    }
+
+
     public getOverviewTypeNames() {
 
         // TODO use typeUtilily

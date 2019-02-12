@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
 
@@ -13,24 +13,19 @@ import {ViewFacade} from '../resources/view/view-facade';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
     public activeRoute: string;
+    public operationViews: Array<{ id: string, label: string }> = [];
 
 
     constructor(private viewFacade: ViewFacade,
                 router: Router) {
 
         router.events.subscribe(() => this.activeRoute = router.url);
-    }
-
-
-    public getOperationViews = () => this.viewFacade.getOperationViews();
-
-
-    public ngOnInit() {
-
-        // this.views = this.viewFacade.getOperationSubtypeViews();
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
+            this.operationViews = this.viewFacade.getOperationViews();
+        });
     }
 
 

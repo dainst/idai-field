@@ -62,6 +62,8 @@ export class ViewFacade {
 
     // public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
 
+    public getOperationViews = () => this.resourcesStateManager.getOperationViews();
+
     public getMode = () => this.resourcesStateManager.get().mode;
 
     public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
@@ -124,27 +126,12 @@ export class ViewFacade {
 
     public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
-    public getOperationViews = () => Object.keys(this.resourcesStateManager.get().operationViewStates);
-
 
     public getNavigationPath() {
 
         return this.isInOverview()
             ? NavigationPath.empty()
             : ResourcesState.getNavigationPath(this.resourcesStateManager.get());
-    }
-
-
-    public getOperationLabel(): string {
-
-        // TODO
-        return 'todo'
-
-        // if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
-        // const typeName: string = this.resourcesStateManager
-        //     .getOperationSubtypeForViewName(this.resourcesStateManager.get().view) as string;
-        //
-        // return this.projectConfiguration.getTypesMap()[typeName].label;
     }
 
 

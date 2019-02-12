@@ -117,8 +117,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
              'isRecordedIn',
                 (this.viewFacade.getCurrentOperation() as FieldDocument).resource.type
             );
-
-        console.log('updated filter options', this.filterOptions);
     }
 
 

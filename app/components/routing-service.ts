@@ -49,7 +49,7 @@ export class RoutingService {
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
-            this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             await this.jumpToFieldTypeResource(documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
@@ -73,7 +73,8 @@ export class RoutingService {
     }
 
 
-    private jumpToImageTypeResource(documentToSelect: Document, comingFromOutsideResourcesComponent: boolean) {
+    private async jumpToImageTypeResource(documentToSelect: Document,
+                                          comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -82,7 +83,7 @@ export class RoutingService {
             }
         }
 
-        this.router.navigate(
+        await this.router.navigate(
             ['images', documentToSelect.resource.id, 'show',
                 comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }

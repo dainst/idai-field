@@ -66,7 +66,6 @@ export module ResourcesState {
     export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
 
         throw "not implemented";
-        // return viewState(state).selectAllOperationsOnBypassHierarchy;
     }
 
 
@@ -78,9 +77,6 @@ export module ResourcesState {
 
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
-        // if (!mainTypeDocumentResourceId) return [];
-
-        // const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
         const layersIds = viewState(state).layerIds;
         return layersIds ? layersIds : [];
     }
@@ -123,7 +119,7 @@ export module ResourcesState {
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}): ResourcesState {
 
-        (viewState(state) as any).customConstraints = constraints;
+        viewState(state).customConstraints = constraints;
         return state;
     }
 
@@ -134,7 +130,7 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
             (viewState(state).searchContext as any).selected = document;
         } else {
-            NavigationPath.setSelectedDocument(getNavigationPath(state), document)
+            NavigationPath.setSelectedDocument(getNavigationPath(state), document);
             updateNavigationPath(state, getNavigationPath(state));
         }
     }

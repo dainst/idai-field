@@ -75,7 +75,7 @@ export class ResourcesStateManager {
     // }
 
 
-    public async initialize(viewName: 'project' | string): Promise<any> {
+    public async initialize(viewName: 'project' | string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
@@ -91,6 +91,16 @@ export class ResourcesStateManager {
         }
 
         this.setActiveDocumentViewTab(undefined);
+        this.notifyNavigationPathObservers();
+    }
+
+
+    public deactivate(viewName: string) {
+
+        if (this.resourcesState.operationViewStates[viewName]) {
+            delete this.resourcesState.operationViewStates[viewName];
+        }
+
         this.notifyNavigationPathObservers();
     }
 

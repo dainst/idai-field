@@ -124,6 +124,8 @@ export class ViewFacade {
 
     public documentChangedFromRemoteNotifications = () => this.documentsManager.documentChangedFromRemoteNotifications();
 
+    public deactivate = (viewName: string) => this.resourcesStateManager.deactivate(viewName);
+
     public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
 

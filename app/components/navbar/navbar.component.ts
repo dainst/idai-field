@@ -20,9 +20,9 @@ export class NavbarComponent {
 
 
     constructor(private viewFacade: ViewFacade,
-                router: Router) {
+                private router: Router) {
 
-        router.events.subscribe(() => this.activeRoute = router.url);
+        this.router.events.subscribe(() => this.activeRoute = this.router.url);
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.operationViews = this.viewFacade.getOperationViews();
         });
@@ -39,5 +39,15 @@ export class NavbarComponent {
     public isRunningOnMac() {
 
         return navigator.appVersion.indexOf('Mac') !== -1;
+    }
+
+
+    public async close(viewName: string) {
+
+        if (this.isActiveRoute('/resources/' + viewName)) {
+            await this.router.navigate(['resources', 'project']);
+        }
+
+        this.viewFacade.deactivate(viewName);
     }
 }

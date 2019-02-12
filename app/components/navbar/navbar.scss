@@ -102,6 +102,11 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
   }
 
+  &:not(:hover):not(.active) {
+    .mdi-close {
+      visibility: hidden;
+    }
+  }
 }
 
 #idai-field-brand {

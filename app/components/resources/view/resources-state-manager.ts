@@ -85,9 +85,8 @@ export class ResourcesStateManager {
         this.resourcesState.view = viewName;
 
         if (viewName !== 'project' && !this.resourcesState.operationViewStates[viewName]) {
-            this.resourcesState.operationViewStates[viewName] = ViewState.default(
-                await this.datastore.get(viewName)
-            );
+            this.resourcesState.operationViewStates[viewName] = ViewState.default();
+            this.resourcesState.operationViewStates[viewName].operation = await this.datastore.get(viewName);
         }
 
         this.setActiveDocumentViewTab(undefined);

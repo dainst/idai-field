@@ -27,10 +27,10 @@ export interface ViewState {
 
 export class ViewState {
 
-    public static default(operation: FieldDocument|undefined): ViewState {
+    public static default(): ViewState {
 
         return {
-            operation: operation,
+            operation: undefined,
             bypassHierarchy: false,
             // selectAllOperationsOnBypassHierarchy: false,
             navigationPath: NavigationPath.empty(),

@@ -196,7 +196,7 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.default(undefined),
+            overviewState: ViewState.default(),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined

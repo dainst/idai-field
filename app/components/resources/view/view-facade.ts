@@ -146,8 +146,6 @@ export class ViewFacade {
 
     public async selectView(viewName: 'project'|string): Promise<void> {
 
-        console.log('select view', viewName);
-
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);
         await this.populateDocumentList();

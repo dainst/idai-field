@@ -117,10 +117,9 @@ export module ResourcesState {
 
 
     export function setCustomConstraints(state: ResourcesState,
-                                         constraints: { [name: string]: string}): ResourcesState {
+                                         constraints: { [name: string]: string}) {
 
         viewState(state).customConstraints = constraints;
-        return state;
     }
 
 

@@ -24,7 +24,7 @@
             </li>
 
             <li *ngFor="let viewId of operationViewKeys()" class="nav-item">
-                <a class="nav-link"
+                <a class="nav-link operation-view-tab"
                    [class.active]="isActiveRoute('/resources/' + viewId)"
                    (click)="router.navigate(['resources', viewId])">
                     {{operationViews[viewId]}}

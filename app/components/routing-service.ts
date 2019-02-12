@@ -113,19 +113,18 @@ export class RoutingService {
     private async jumpToFieldTypeResource(documentToSelect: Document, tab?: string,
                                           comingFromOutsideResourcesComponent: boolean = false) {
 
-        // TODO
-        // const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
-        // if (!mainTypeName) return;
-        //
-        // const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-        //
-        // if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
-        //     await this.router.navigate(tab
-        //         ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
-        //         : ['resources', viewName, documentToSelect.resource.id]);
-        // } else {
-        //     await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
-        // }
+        const viewName: 'project'|string
+            = this.typeUtility.getOverviewTypeNames().includes(documentToSelect.resource.type)
+                ? 'project'
+                : documentToSelect.resource.relations['isRecordedIn'][0];
+
+        if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
+            await this.router.navigate(tab
+                ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
+                : ['resources', viewName, documentToSelect.resource.id]);
+        } else {
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
+        }
     }
 
 

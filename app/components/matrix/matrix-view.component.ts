@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {on, tripleEqual, isEmpty} from 'tsfun';
+import {on, tripleEqual, isEmpty, is} from 'tsfun';
 import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
@@ -83,7 +83,7 @@ export class MatrixViewComponent implements OnInit {
     public async edit(resourceId: string) {
 
         await this.openEditorModal(
-            this.featureDocuments.find(on('resource.id:')(resourceId)) as FeatureDocument
+            this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
         );
     }
 
@@ -142,7 +142,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id:')(this.matrixState.getSelectedTrenchId()));
+            .find(on('resource.id', is(this.matrixState.getSelectedTrenchId())));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         await this.selectTrench(this.trenches[0]);

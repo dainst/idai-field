@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2';
-import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy, is} from 'tsfun';
 import {Edges} from './edges-builder';
 
 
@@ -149,7 +149,7 @@ export module DotBuilder {
 
         return (targetId: string) => {
 
-            const targetDocument = documents.find(on('resource.id:')(targetId));
+            const targetDocument = documents.find(on('resource.id', is(targetId)));
             return (targetDocument
                 && !isRootDocument(documents, edges, processedDocuments)(targetDocument)) === true;
         }
@@ -199,7 +199,7 @@ export module DotBuilder {
 
         return (id: string): string => {
 
-            const document: Document|undefined = documents.find(on('resource.id:')(id));
+            const document: Document|undefined = documents.find(on('resource.id', is(id)));
             return document ? document.resource.identifier : '';
         }
     }

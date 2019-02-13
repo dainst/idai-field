@@ -1,4 +1,4 @@
-import {on} from 'tsfun';
+import {on, is} from 'tsfun';
 import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
     Resource, NewDocument, Document} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -146,7 +146,7 @@ export module Validations {
         if (!resource.type) return false;
         return projectConfiguration
             .getTypesList()
-            .some(on('name:')(resource.type));
+            .some(on('name', is(resource.type)));
     }
 
 

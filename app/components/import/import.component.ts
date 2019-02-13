@@ -62,14 +62,7 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-    ) {
-        // TODO Implement using datastore.find
-        /*this.viewFacade.getAllOperations().then(
-            documents => this.mainTypeDocuments = documents,
-            msgWithParams => messages.add(msgWithParams)
-        );*/
-    }
-
+    ) {}
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
@@ -80,6 +73,7 @@ export class ImportComponent implements OnInit {
 
     async ngOnInit() {
 
+        this.mainTypeDocuments = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -192,6 +186,19 @@ export class ImportComponent implements OnInit {
             filter(isNot(empty)),
             take(1))
             .forEach((msgWithParams: any) => this.messages.add(msgWithParams));
+    }
+
+
+    private async fetchOperations(): Promise<Array<Document>> {
+
+        try {
+            return (await this.datastore.find({
+                types: this.typeUtility.getOperationTypeNames()
+            })).documents;
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+            return [];
+        }
     }
 
 

@@ -76,6 +76,12 @@ export class TypeUtility {
     }
 
 
+    public getOperationTypeNames(): string[] {
+
+        return Object.keys(this.getSubtypes('Operation'));
+    }
+
+
     public getRegularTypeNames(): string[] {
 
         return this.projectConfiguration

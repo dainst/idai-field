@@ -11,6 +11,7 @@ import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
+import {TypeUtility} from '../../core/model/type-utility';
 
 const remote = require('electron').remote;
 
@@ -40,7 +41,8 @@ export class ExportComponent implements OnInit {
                 private messages: Messages,
                 private i18n: I18n,
                 private viewFacade: ViewFacade,
-                private datastore: FieldReadDatastore) {}
+                private datastore: FieldReadDatastore,
+                private typeUtility: TypeUtility) {}
 
 
     public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -50,7 +52,7 @@ export class ExportComponent implements OnInit {
 
     async ngOnInit() {
 
-        await this.fetchOperations();
+        this.operations = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -132,13 +134,15 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private async fetchOperations() {
+    private async fetchOperations(): Promise<Array<FieldDocument>> {
 
         try {
-            // TODO Get operations using datastore.find
-            this.operations = []; //await this.viewFacade.getAllOperations();
+            return (await this.datastore.find({
+                types: this.typeUtility.getOperationTypeNames()
+            })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
+            return [];
         }
     }
 }

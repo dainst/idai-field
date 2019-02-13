@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
-    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, arrayEqual
+    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, arrayEqual, is
 } from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -126,7 +126,7 @@ export module RelationsCompleter {
                                      get: Function): Promise<Document> {
 
         let targetDocument = totalDocsToUpdate
-            .find(document => document.resource.id === targetId);
+            .find(on('resource.id', is(targetId)));
         if (!targetDocument) try {
             targetDocument = clone(await get(targetId));
         } catch {

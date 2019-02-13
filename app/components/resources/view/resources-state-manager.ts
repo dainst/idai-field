@@ -249,8 +249,12 @@ export class ResourcesStateManager {
         if (this.project === 'test' || this.project === 'synctest') {
             if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults();
         } else {
-            (resourcesState as any).operationViewStates
-                = await this.serializer.load('resources-state');
+            const loadedState = await this.serializer.load('resources-state');
+            if (loadedState.overviewState) resourcesState.overviewState = loadedState.overviewState;
+            if (loadedState.operationViewStates) {
+                resourcesState.operationViewStates = loadedState.operationViewStates;
+            }
+
             resourcesState = ResourcesState.complete(resourcesState);
         }
 
@@ -288,18 +292,30 @@ export class ResourcesStateManager {
     }
 
 
-    private static createObjectToSerialize(state: ResourcesState) : { [viewName: string]: ViewState } {
+    private static createObjectToSerialize(state: ResourcesState): any {
 
-        const objectToSerialize: { [viewName: string]: ViewState } = {};
+        const objectToSerialize: { overviewState: any, operationViewStates: any } = {
+            overviewState: this.createObjectToSerializeForViewState(state.overviewState),
+            operationViewStates: {}
+        };
 
         for (let viewName of Object.keys(state.operationViewStates)) {
-            objectToSerialize[viewName] = {} as any;
-            if (ResourcesState.getActiveLayersIds(state)) {
-                (objectToSerialize[viewName] as any).layerIds = state.operationViewStates[viewName].layerIds;
-                (objectToSerialize[viewName] as any).active = state.operationViewStates[viewName].active;
-                (objectToSerialize[viewName] as any).mode = state.operationViewStates[viewName].mode;
-            }
+            objectToSerialize.operationViewStates[viewName]
+                = this.createObjectToSerializeForViewState(state.operationViewStates[viewName]);
         }
+
+        return objectToSerialize;
+    }
+
+
+    private static createObjectToSerializeForViewState(viewState: ViewState): any {
+
+        const objectToSerialize: any = {
+            active: viewState.active,
+            mode: viewState.mode
+        };
+
+        if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
 
         return objectToSerialize;
     }

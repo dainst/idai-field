@@ -96,16 +96,36 @@ describe('ViewFacade/Subsystem', () => {
     afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
 
 
-    it('reload layer ids on startup', async done => {
+    it('reload view states on startup', async done => {
 
         resourcesStateManager.loaded = false;
         stateSerializer.load.and.returnValue({
             overviewState: {
+                mode: 'list',
                 layerIds: ['layerId1']
+            },
+            operationViewStates: {
+                t1: {
+                    active: true,
+                    mode: 'map',
+                    layerIds: ['layerId2']
+                },
+                t2: {
+                    active: false,
+                    mode: 'map'
+                }
             }
         });
+
         await viewFacade.selectView('project');
+        expect(viewFacade.getActiveOperationViews()).toEqual({ 't1': 'trench1' });
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
+        expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t1');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
+        expect(viewFacade.getMode()).toEqual('map');
+
         done();
     });
 

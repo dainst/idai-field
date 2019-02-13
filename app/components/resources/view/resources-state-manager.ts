@@ -68,10 +68,13 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
+        const currentMode: 'map'|'list' = this.getMode();
+
         this.resourcesState.view = viewName;
 
         if (viewName !== 'project' && !this.resourcesState.operationViewStates[viewName]) {
             this.resourcesState.operationViewStates[viewName] = ViewState.default();
+            this.resourcesState.operationViewStates[viewName].mode = currentMode;
             this.resourcesState.operationViewStates[viewName].operation = await this.datastore.get(viewName);
         }
 

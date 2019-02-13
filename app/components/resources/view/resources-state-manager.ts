@@ -65,7 +65,6 @@ export class ResourcesStateManager {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
-            await this.fetchOperations();
             this.loaded = true;
         }
 
@@ -86,6 +85,7 @@ export class ResourcesStateManager {
         }
 
         this.setActiveDocumentViewTab(undefined);
+        this.serialize();
         this.notifyNavigationPathObservers();
     }
 
@@ -156,6 +156,7 @@ export class ResourcesStateManager {
     public setMode(mode: 'map' | 'list') {
 
         ResourcesState.setMode(this.resourcesState, mode);
+        this.serialize();
     }
 
 
@@ -241,19 +242,6 @@ export class ResourcesStateManager {
     }
 
 
-    private async fetchOperations() {
-
-        for (let id of Object.keys(this.resourcesState.operationViewStates)) {
-            try {
-                this.resourcesState.operationViewStates[id].operation = await this.datastore.get(id);
-            } catch (err) {
-                console.warn('Failed to load operation document for view: ' + id);
-                delete this.resourcesState.operationViewStates[id];
-            }
-        }
-    }
-
-
     private async load(): Promise<ResourcesState> {
 
         let resourcesState = ResourcesState.makeDefaults();
@@ -266,7 +254,22 @@ export class ResourcesStateManager {
             resourcesState = ResourcesState.complete(resourcesState);
         }
 
+        await this.addOperations(resourcesState);
+
         return resourcesState;
+    }
+
+
+    private async addOperations(resourcesState: ResourcesState) {
+
+        for (let id of Object.keys(resourcesState.operationViewStates)) {
+            try {
+                resourcesState.operationViewStates[id].operation = await this.datastore.get(id);
+            } catch (err) {
+                console.warn('Failed to load operation document for view: ' + id);
+                delete resourcesState.operationViewStates[id];
+            }
+        }
     }
 
 

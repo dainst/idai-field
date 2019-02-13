@@ -111,7 +111,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             d('Feature', 'newFeature', { isChildOf: 'existingTrench',
-                isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench (see todo for adding test in relations completer spec)
+                isAfter: ['existingFeature']})
         ]);
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');
@@ -372,7 +372,7 @@ describe('DefaultImportCalc', () => {
     it('merge, overwrite relations', async done => {
 
         const result = await processMergeOverwriteRelations([
-            d('Feature', 'existingFeature', { isAfter: ['existingFeature2']})
+            d('Feature', 'existingFeature', { isChildOf: 'existingTrench2', isAfter: ['existingFeature2']})
         ]);
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');

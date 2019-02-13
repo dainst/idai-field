@@ -226,8 +226,6 @@ describe('RelationsCompleter', () => {
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // TODO add test for illegal relation between import and db resource
-
     it('illegal relation between import resources', async done => {
 
         delete doc1.resource.relations[IS_BELOW];
@@ -245,6 +243,23 @@ describe('RelationsCompleter', () => {
             expect(errWithParams[2]).toEqual('two');
         }
         done();
+    });
+
+
+    it('illegal relation between import and db resource', async done => {
+
+        doc2.resource.relations[RECORDED_IN] = ['t1'];
+        doc1.resource.relations[IS_BELOW] = ['2'];
+        doc1.resource.relations[RECORDED_IN] = ['t2'];
+
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1], get, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
+            expect(errWithParams[1]).toEqual('one');
+            expect(errWithParams[2]).toEqual('two');
+        }
         done();
     });
 

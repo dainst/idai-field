@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {filter, flatMap, flow, getOnOr, isDefined,
-    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union
+import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
+    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, arrayEqual
 } from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -76,41 +76,48 @@ export module RelationsCompleter {
                                                      getInverseRelation: (_: string) => string|undefined,
                                                      mergeMode: boolean): Promise<Array<Document>> {
 
-        let totalDocsToUpdate: Array<Document> = [];
-
-        for (let document of documents) {
-
-            const documentTargetDocs: Array<Document> = [];
+        async function getTargetIds(document: Document) {
 
             let targetIds = targetIdsReferingToObjects(document, documentsLookup);
             if (mergeMode) {
                 let oldVersion;
                 try {
                     oldVersion = await get(document.resource.id);
-                } catch { throw "FATAL" } // TODO improve
+                } catch { throw "FATAL existing version of document not found" }
                 targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, documentsLookup)]);
             }
-            for (let targetId of targetIds) documentTargetDocs.push(
-                await getTargetDocument(targetId, totalDocsToUpdate, get));
+            return targetIds;
+        }
+
+
+        async function getDocumentTargetDocsToUpdate(document: Document) {
+
+            const documentTargetDocs: Array<Document> = await asyncMap(
+                async (targetId: any /* TODO improve tsf typing */) => getTargetDocument(targetId, totalDocsToUpdate, get))
+            (await getTargetIds(document));
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocs, getInverseRelation);
 
-            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate)(documentTargetDocsToUpdate);
+            for (let targetDocument of documentTargetDocsToUpdate) {
+                assertInSameOperation(document, targetDocument);
+            }
+            return documentTargetDocs;
         }
 
+
+        let totalDocsToUpdate: Array<Document> = [];
+        for (let document of documents) {
+            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
+        }
         return totalDocsToUpdate;
     }
 
 
-    function addOrOverwrite(to: Array<Document>) {
+    function addOrOverwrite(to: Array<Document>, from: Array<Document>) {
 
-        return (from: Array<Document>) => {
-
-            const result = subtractBy(on('resource.id'))(from)(to);
-            from.forEach(doc => result.push(doc));
-            return result;
-        }
+        const difference = subtractBy(on('resource.id'))(from)(to);
+        return difference.concat(from);
     }
 
 
@@ -205,7 +212,7 @@ export module RelationsCompleter {
 
         const documentRecordedIn = getOnOr(document, undefined)('resource.relations.' + RECORDED_IN);
         const targetDocumentRecordedIn = getOnOr(targetDocument, undefined)('resource.relations.' + RECORDED_IN);
-        if (targetDocumentRecordedIn && targetDocumentRecordedIn !== documentRecordedIn) {
+        if (isNot(undefinedOrEmpty)(targetDocumentRecordedIn) && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
     }

@@ -19,10 +19,6 @@
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
-            <li class="nav-item">
-                <span class="nav-link navbar-separator-element">|</span>
-            </li>
-
             <li *ngFor="let viewId of operationViewKeys()" class="nav-item">
                 <a class="nav-link operation-view-tab"
                    [class.active]="isActiveRoute('/resources/' + viewId)"
@@ -31,7 +27,6 @@
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(viewId);"></span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <span class="nav-link navbar-separator-element">|</span>
             </li>

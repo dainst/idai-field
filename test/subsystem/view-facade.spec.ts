@@ -18,9 +18,10 @@ import {Static} from '../unit/static';
 describe('ViewFacade/Subsystem', () => {
     
     let viewFacade: ViewFacade;
-    let resourcesState: ResourcesStateManager;
     let changesStream;
     let loading;
+    let resourcesStateManager: ResourcesStateManager;
+    let stateSerializer;
 
     let trenchDocument1: FieldDocument;
     let trenchDocument2: FieldDocument;
@@ -50,6 +51,8 @@ describe('ViewFacade/Subsystem', () => {
 
         fieldDocumentDatastore = result.fieldDocumentDatastore;
         viewFacade = result.viewFacade;
+        resourcesStateManager = result.resourcesStateManager;
+        stateSerializer = result.stateSerializer;
 
         spyOn(console, 'debug'); // suppress console.debug
 
@@ -90,19 +93,19 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    afterEach((done) => new PouchDB('test').destroy().then(() => {done()}), 5000);
+    afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
 
 
-    xit('reload layer ids on startup', async done => {
+    it('reload layer ids on startup', async done => {
 
-        resourcesState.loaded = false;
-        /*stateSerializer.load.and.returnValue({ excavation: {
-            navigationPaths: { 't1': { elements: [] } },
-            layerIds: { 't1': ['layerid1'] }
-        }});*/
-        await viewFacade.selectView('excavation');
-        //await viewFacade.selectOperation(trenchDocument1.resource.id);
-        expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
+        resourcesStateManager.loaded = false;
+        stateSerializer.load.and.returnValue({
+            overviewState: {
+                layerIds: ['layerId1']
+            }
+        });
+        await viewFacade.selectView('project');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
         done();
     });
 

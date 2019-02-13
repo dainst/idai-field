@@ -142,12 +142,6 @@ export module ResourcesState {
     }
 
 
-    export function removeActiveLayersIds(state: ResourcesState) {
-
-        delete viewState(state).layerIds;
-    }
-
-
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath) {
 
         viewState(state).navigationPath = navPath;

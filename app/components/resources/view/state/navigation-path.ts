@@ -229,7 +229,7 @@ export module NavigationPath {
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
-                    ? takeUntil(on('document.resource.id:')(oldSelectedSegmentId))(oldSegments)
+                    ? takeUntil(on('document.resource.id', is(oldSelectedSegmentId)))(oldSegments)
                     : []
             ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]) as NavigationPathSegment[];
     }

@@ -42,8 +42,8 @@ export class ImportComponent implements OnInit {
     public format: ImportFormat = 'native';
     public file: File|undefined;
     public url: string|undefined;
-    public mainTypeDocuments: Array<Document> = [];
-    public mainTypeDocumentId: string = ''; // no assignment to a mainType
+    public operations: Array<Document> = [];
+    public selectedOperationId: string = '';
     public allowMergingExistingResources = false;
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
@@ -73,7 +73,7 @@ export class ImportComponent implements OnInit {
 
     async ngOnInit() {
 
-        this.mainTypeDocuments = await this.fetchOperations();
+        this.operations = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -104,7 +104,7 @@ export class ImportComponent implements OnInit {
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,
-            this.mainTypeDocumentId,
+            this.selectedOperationId,
             this.allowMergingExistingResources,
             this.allowUpdatingRelationOnMerge,
             await reader.go(),

@@ -101,12 +101,12 @@
 
                     <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
                         <label class="control-label col-form-label"
-                               for="mainTypeDocumentSelect"
+                               for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>
-                        <select id="mainTypeDocumentSelect" class="form-control"
-                                [(ngModel)]="mainTypeDocumentId">
+                        <select id="operationSelect" class="form-control"
+                                [(ngModel)]="selectedOperationId">
                             <option value="" i18n="@@import.assignToOperation.noAssignment">Keine Zuordnung</option>
-                            <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
+                            <option *ngFor="let document of operations" value="{{document.resource.id}}">
                                 {{getDocumentLabel(document)}}
                             </option>
                         </select>

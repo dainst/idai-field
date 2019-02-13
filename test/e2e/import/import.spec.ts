@@ -45,7 +45,7 @@ xdescribe('import --', function() {
         ImportPage.clickSourceOption(1);
         expect(ImportPage.getFormatOptionValue(0)).toEqual('native');
         ImportPage.clickFormatOption(0);
-        ImportPage.clickMainTypeDocumentOption(mainTypeDocumentOption);
+        ImportPage.clickOperationOption(mainTypeDocumentOption);
         common.typeIn(ImportPage.getImportURLInput(), url);
         ImportPage.clickStartImportButton();
         browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);

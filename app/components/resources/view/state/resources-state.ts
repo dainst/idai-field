@@ -1,6 +1,7 @@
 import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
+import {ViewContext} from './view-context';
 
 
 /**
@@ -155,29 +156,32 @@ export module ResourcesState {
 
     export function makeSampleDefaults(): ResourcesState {
 
-        return makeDefaults();
-        // return {
-        //     operationViewStates: {
-        //         project: {
-        //             layerIds: { 'project': ['o25'] },
-        //             bypassHierarchy: false,
-        //             navigationPaths: {},
-        //             searchContext: ViewContext.empty(),
-        //             customConstraints: {}
-        //         },
-        //         excavation: {
-        //             bypassHierarchy: false,
-        //             navigationPaths: {
-        //                 't1': NavigationPath.empty()
-        //             },
-        //             layerIds: { 't1': ['o25'] },
-        //             searchContext: ViewContext.empty(),
-        //             customConstraints: {}
-        //         }
-        //     },
-        //     view: 'project',
-        //     activeDocumentViewTab: undefined
-        // }
+        return {
+            overviewState: {
+                active: true,
+                operation: undefined,
+                layerIds: ['o25'],
+                mode: 'map',
+                bypassHierarchy: false,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {}
+            },
+            operationViewStates: {
+                't1': {
+                    active: false,
+                    operation: undefined,
+                    layerIds: ['o25'],
+                    mode: 'map',
+                    bypassHierarchy: false,
+                    navigationPath: NavigationPath.empty(),
+                    searchContext: ViewContext.empty(),
+                    customConstraints: {}
+                }
+            },
+            view: 'project',
+            activeDocumentViewTab: undefined
+        }
     }
 
 

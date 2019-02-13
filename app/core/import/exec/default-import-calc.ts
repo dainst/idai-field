@@ -181,8 +181,10 @@ export module DefaultImportCalc {
                                     get: Get,
                                     mainTypeDocumentId: Id) {
 
-        const idMap = documents.reduce((tmpMap, document: Document) =>
-                (tmpMap[document.resource.id] = document, tmpMap),
+        const idMap = documents.reduce((tmpMap, document: Document) => {
+                tmpMap[document.resource.id] = document;
+                return tmpMap;
+            },
             {} as IdMap);
 
 
@@ -304,9 +306,10 @@ export module DefaultImportCalc {
 
         return documents
             .filter(hasNot(RESOURCE_ID))
-            .reduce((identifierMap, document)  =>
-                (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
-            , {} as IdentifierMap);
+            .reduce((identifierMap, document)  => {
+                identifierMap[document.resource.identifier] = document.resource.id = generateId();
+                return identifierMap;
+            }, {} as IdentifierMap);
     }
 
 

@@ -19,7 +19,6 @@ describe('ViewFacade/Subsystem', () => {
     
     let viewFacade: ViewFacade;
     let resourcesState: ResourcesStateManager;
-    let stateSerializer;
     let changesStream;
     let loading;
 
@@ -81,10 +80,6 @@ describe('ViewFacade/Subsystem', () => {
         await fieldDocumentDatastore.create(featureDocument1, 'u');
         await fieldDocumentDatastore.create(featureDocument2, 'u');
 
-        stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
-        stateSerializer.load.and.returnValue(Promise.resolve({}));
-        stateSerializer.store.and.returnValue(Promise.resolve());
-
         changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
         changesStream.notifications.and.returnValue({
             subscribe: () => {}
@@ -95,16 +90,16 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
+    afterEach((done) => new PouchDB('test').destroy().then(() => {done()}), 5000);
 
 
     xit('reload layer ids on startup', async done => {
 
         resourcesState.loaded = false;
-        stateSerializer.load.and.returnValue({ excavation: {
+        /*stateSerializer.load.and.returnValue({ excavation: {
             navigationPaths: { 't1': { elements: [] } },
             layerIds: { 't1': ['layerid1'] }
-        }});
+        }});*/
         await viewFacade.selectView('excavation');
         //await viewFacade.selectOperation(trenchDocument1.resource.id);
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);

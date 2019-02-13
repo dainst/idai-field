@@ -82,10 +82,10 @@ export class ResourcesStateManager {
                     await this.datastore.get(viewName);
             }
             this.resourcesState.operationViewStates[viewName].active = true;
+            this.serialize();
         }
 
         this.setActiveDocumentViewTab(undefined);
-        this.serialize();
         this.notifyNavigationPathObservers();
     }
 

@@ -103,10 +103,14 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         typeConverter,
         { getUsername: () => 'fakeuser' });
 
+    const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
+    stateSerializer.load.and.returnValue(Promise.resolve({}));
+    stateSerializer.store.and.returnValue(Promise.resolve());
+
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,
         createdIndexFacade,
-        new StandardStateSerializer(settingsService),
+        stateSerializer,
         typeUtility,
         'synctest',
         true

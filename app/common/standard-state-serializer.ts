@@ -44,7 +44,7 @@ export class StandardStateSerializer extends StateSerializer {
 
         return new Promise((resolve, reject) => {
 
-            if (this.settingsService.getSelectedProject() == 'test') return resolve();
+            if (this.settingsService.getSelectedProject() === 'test') return resolve();
 
             fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {

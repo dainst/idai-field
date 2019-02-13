@@ -157,10 +157,10 @@ export module RelationsCompleter {
     function setInverseRelationsForImportResource(document: Document,
                                                   documentsLookup: DocumentsLookup,
                                                   getInverseRelation: (_: string) => string|undefined,
-                                                  relationNamesExceptIsRecordedIn: string[]): void {
+                                                  relations: string[]): void {
 
 
-        relationNamesExceptIsRecordedIn
+        relations
             .forEach(relationName => {
 
                 if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];

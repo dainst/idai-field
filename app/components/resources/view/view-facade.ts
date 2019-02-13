@@ -108,8 +108,6 @@ export class ViewFacade {
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
-    public getSelectAllOperationsOnBypassHierarchy = () => ResourcesState.getSelectAllOperationsOnBypassHierarchy(this.resourcesStateManager.get());
-
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
@@ -131,24 +129,11 @@ export class ViewFacade {
     }
 
 
-    public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
-
-        if (this.isInOverview()) throw ViewFacade.err('setSelectAllOperationsOnBypassHierarchy');
-        await this.documentsManager.setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy);
-    }
-
-
     public async selectView(viewName: 'project'|string): Promise<void> {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);
         await this.populateDocumentList();
         this.ready = true;
-    }
-
-
-    private static err(fnName: string) {
-        
-        return 'Calling ' + fnName + ' is forbidden when isInOverview';
     }
 }

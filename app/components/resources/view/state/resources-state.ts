@@ -63,12 +63,6 @@ export module ResourcesState {
     }
 
 
-    export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
-
-        throw "not implemented";
-    }
-
-
     export function getBypassHierarchy(state: ResourcesState): boolean {
 
         return viewState(state).bypassHierarchy;
@@ -137,7 +131,6 @@ export module ResourcesState {
 
     export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]) {
 
-        // const layerContextId = isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId;
         viewState(state).layerIds = activeLayersIds.slice(0);
     }
 
@@ -168,14 +161,12 @@ export module ResourcesState {
         //         project: {
         //             layerIds: { 'project': ['o25'] },
         //             bypassHierarchy: false,
-        //             selectAllOperationsOnBypassHierarchy: false,
         //             navigationPaths: {},
         //             searchContext: ViewContext.empty(),
         //             customConstraints: {}
         //         },
         //         excavation: {
         //             bypassHierarchy: false,
-        //             selectAllOperationsOnBypassHierarchy: false,
         //             navigationPaths: {
         //                 't1': NavigationPath.empty()
         //             },
@@ -212,16 +203,6 @@ export module ResourcesState {
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
         viewState(state).bypassHierarchy = bypassHierarchy;
-    }
-
-
-    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState,
-                                                            selectAllOperationsOnBypassHierarchy: boolean) {
-
-        // viewState(state).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
-        if (selectAllOperationsOnBypassHierarchy) {
-            viewState(state).searchContext.selected = undefined;
-        }
     }
 
 

@@ -100,13 +100,6 @@ export class DocumentsManager {
     }
 
 
-    public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
-
-        this.resourcesStateManager.setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy);
-        await this.populateAndDeselectIfNecessary();
-    }
-
-
     public async moveInto(document: FieldDocument|undefined) {
 
         await this.resourcesStateManager.moveInto(document);
@@ -197,18 +190,13 @@ export class DocumentsManager {
             return { documents: [], totalCount: 0 };
         }
 
-        const isRecordedInTargetIdOrIds = this.resourcesStateManager.get().view === 'project'
+        const operationId: string|undefined = this.resourcesStateManager.get().view === 'project'
             ? undefined
             : this.resourcesStateManager.get().view;
 
-        // = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
-        //     () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
-        //     ResourcesState.getBypassHierarchy(state),
-        //     ResourcesState.getSelectAllOperationsOnBypassHierarchy(state));
-
         return (await this.fetchDocuments(
                 DocumentsManager.buildQuery(
-                    isRecordedInTargetIdOrIds,
+                    operationId,
                     this.resourcesStateManager.get(),
                     this.resourcesStateManager.isInOverview(),
                     this.resourcesStateManager.getOverviewTypeNames(),
@@ -311,37 +299,24 @@ export class DocumentsManager {
     }
 
 
-    private static chooseIsRecordedInTargetIdOrIds(mainTypeDocumentResourceId: string|undefined,
-                                                   operationTypeDocumentIds: () => string[],
-                                                   bypassHierarchy: boolean,
-                                                   selectAllOperationsOnBypassHierarchy: boolean): string|string[]|undefined {
+    private static buildQuery(operationId: string|undefined, state: ResourcesState, isInOverview: boolean,
+                              overviewTypeNames: string[], queryId?: string): Query {
 
-        if (!mainTypeDocumentResourceId) return undefined;
-
-        return bypassHierarchy && selectAllOperationsOnBypassHierarchy
-            ? operationTypeDocumentIds()
-            : mainTypeDocumentResourceId;
-    }
-
-
-    private static buildQuery(isRecordedInTargetIdOrIds: string|string[]|undefined, state: ResourcesState,
-                              isInOverview: boolean, overviewTypeNames: string[], queryId?: string): Query {
-
-        const bypassHierarchy = ResourcesState.getBypassHierarchy(state);
-        const typeFilters = ResourcesState.getTypeFilters(state);
-        const customConstraints = ResourcesState.getCustomConstraints(state);
+        const bypassHierarchy: boolean = ResourcesState.getBypassHierarchy(state);
+        const typeFilters: string[] = ResourcesState.getTypeFilters(state);
+        const customConstraints: { [name: string]: string } = ResourcesState.getCustomConstraints(state);
 
         return {
             q: ResourcesState.getQueryString(state),
             constraints: DocumentsManager.buildConstraints(
                 customConstraints,
-                isRecordedInTargetIdOrIds,
+                operationId,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
                 !bypassHierarchy
             ),
             types: (typeFilters.length > 0)
                 ? typeFilters
-                : !isRecordedInTargetIdOrIds && isInOverview && !bypassHierarchy
+                : isInOverview && !bypassHierarchy
                     ? overviewTypeNames
                     : undefined,
             limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined,
@@ -351,7 +326,7 @@ export class DocumentsManager {
 
 
     private static buildConstraints(customConstraints: { [name: string]: string },
-                                    isRecordedInIdOrIds: string|string[]|undefined,
+                                    operationId: string|undefined,
                                     liesWithinId: string|undefined,
                                     addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
@@ -365,7 +340,7 @@ export class DocumentsManager {
             }
         }
 
-        if (isRecordedInIdOrIds) constraints['isRecordedIn:contain'] = isRecordedInIdOrIds;
+        if (operationId) constraints['isRecordedIn:contain'] = operationId;
 
         return constraints;
     }

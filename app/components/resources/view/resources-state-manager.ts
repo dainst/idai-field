@@ -155,14 +155,6 @@ export class ResourcesStateManager {
     }
 
 
-    public setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
-
-        ResourcesState.setSelectAllOperationsOnBypassHierarchy(this.resourcesState,
-            selectAllOperationsOnBypassHierarchy);
-        this.notifyNavigationPathObservers();
-    }
-
-
     public setActiveLayersIds(activeLayersIds: string[]) {
 
         ResourcesState.setActiveLayerIds(this.resourcesState, activeLayersIds);

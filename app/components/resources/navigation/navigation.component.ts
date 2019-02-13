@@ -51,12 +51,6 @@ export class NavigationComponent {
     public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 
 
-    public getTypeName() {
-
-        // return this.projectConfiguration.getLabelForType(this.viewFacade.getViewType() as any);
-    }
-
-
     public getTooltip() {
 
         return this.viewFacade.getBypassHierarchy()
@@ -76,34 +70,6 @@ export class NavigationComponent {
         if (this.loading.isLoading()) return;
 
         await this.viewFacade.setBypassHierarchy(!this.viewFacade.getBypassHierarchy());
-    }
-
-
-    public showSelectAllOperationsOption(): boolean {
-
-        return this.viewFacade.getBypassHierarchy() //&& this.viewFacade.getOperations().length > 1;
-    }
-
-
-    public showOperationAsFirstSegment(): boolean {
-
-        return !this.viewFacade.isInOverview();
-        // return !this.viewFacade.isInOverview()
-        //     && (!this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
-    }
-
-
-    public showOperationsAllAsFirstSegment(): boolean {
-
-        return false;
-        // return !this.viewFacade.isInOverview()
-        //     && (this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
-    }
-
-
-    public async activateBypassOperationTypeSelection() {
-
-        await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
     }
 
 

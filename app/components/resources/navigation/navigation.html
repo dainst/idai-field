@@ -22,13 +22,6 @@
             {{viewFacade.getCurrentOperation().resource.identifier}}
         </div>
 
-        <div *ngIf="showOperationsAllAsFirstSegment()"
-             id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="!navigationPath.selectedSegmentId"
-             (click)="moveInto(undefined)">
-            <em i18n="@@resources.navigation.all">Alle</em>
-        </div>
-
         <div *ngIf="viewFacade.isInOverview()"
              id="selected-project-document" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"

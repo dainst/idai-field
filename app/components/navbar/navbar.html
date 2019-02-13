@@ -19,7 +19,7 @@
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
-            <li *ngFor="let viewId of operationViewKeys()" class="nav-item">
+            <li *ngFor="let viewId of operationViewIds()" class="nav-item">
                 <a class="nav-link operation-view-tab"
                    [class.active]="isActiveRoute('/resources/' + viewId)"
                    (click)="router.navigate(['resources', viewId])">

@@ -72,10 +72,13 @@ export class ResourcesStateManager {
 
         this.resourcesState.view = viewName;
 
-        if (viewName !== 'project' && !this.resourcesState.operationViewStates[viewName]) {
-            this.resourcesState.operationViewStates[viewName] = ViewState.default();
-            this.resourcesState.operationViewStates[viewName].mode = currentMode;
-            this.resourcesState.operationViewStates[viewName].operation = await this.datastore.get(viewName);
+        if (viewName !== 'project') {
+            if (!this.resourcesState.operationViewStates[viewName]) {
+                this.resourcesState.operationViewStates[viewName] = ViewState.default();
+                this.resourcesState.operationViewStates[viewName].mode = currentMode;
+                this.resourcesState.operationViewStates[viewName].operation = await this.datastore.get(viewName);
+            }
+            this.resourcesState.operationViewStates[viewName].active = true;
         }
 
         this.setActiveDocumentViewTab(undefined);
@@ -85,14 +88,15 @@ export class ResourcesStateManager {
 
     public deactivate(viewName: string) {
 
-        if (this.resourcesState.operationViewStates[viewName]) delete this.resourcesState.operationViewStates[viewName];
+        ResourcesState.deactivate(this.resourcesState, viewName);
         this.notifyNavigationPathObservers();
     }
 
 
-    public getOperationViews(): {[id: string]: string} {
+    public getActiveOperationViews(): {[id: string]: string} {
 
         return Object.keys(this.resourcesState.operationViewStates)
+            .filter(viewName => this.resourcesState.operationViewStates[viewName].active)
             .reduce((acc, viewName) => {
                 const operation: FieldDocument|undefined
                     = this.resourcesState.operationViewStates[viewName].operation;

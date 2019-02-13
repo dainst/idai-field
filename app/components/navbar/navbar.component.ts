@@ -24,12 +24,12 @@ export class NavbarComponent {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
         this.viewFacade.navigationPathNotifications().subscribe(() => {
-            this.operationViews = this.viewFacade.getOperationViews();
+            this.operationViews = this.viewFacade.getActiveOperationViews();
         });
     }
 
 
-    public operationViewKeys = () => Object.keys(this.operationViews);
+    public operationViewIds = () => Object.keys(this.operationViews);
 
 
     public isActiveRoute(route: string) {

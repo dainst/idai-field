@@ -192,7 +192,7 @@ export module ResourcesState {
     }
 
 
-    export function complete(state: ResourcesState ): ResourcesState {
+    export function complete(state: ResourcesState): ResourcesState {
 
         Object.keys(state.operationViewStates)
             .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
@@ -203,6 +203,16 @@ export module ResourcesState {
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
         viewState(state).bypassHierarchy = bypassHierarchy;
+    }
+
+
+    export function deactivate(state: ResourcesState, viewName: string) {
+
+        const deactivatedState: ViewState = ViewState.default();
+        deactivatedState.operation = state.operationViewStates[viewName].operation;
+        deactivatedState.layerIds = state.operationViewStates[viewName].layerIds;
+
+        state.operationViewStates[viewName] = deactivatedState;
     }
 
 

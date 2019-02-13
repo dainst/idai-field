@@ -25,5 +25,6 @@ export module ImportErrors {
     export const LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'ImportErrors.liesWithinTargetNotMatchesIsRecordedIn';
     export const PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'ImportErrors.parentAssignmentOperationnotallowed';
     export const PARENT_MUST_NOT_BE_ARRAY = 'ImportErrors.parentMustNotBeArray';
+    export const MUST_BE_ARRAY = 'ImportErrors.relationMustBeArray';
     export const MUST_BE_IN_SAME_OPERATION = 'ImportErrors.mustBeInSameOperation';
 }

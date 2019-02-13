@@ -816,7 +816,7 @@
         <target state="final">Matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.images" datatype="html">
@@ -824,7 +824,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
@@ -1402,7 +1402,7 @@
         <target state="final">All images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.unlinked" datatype="html">
@@ -1410,7 +1410,7 @@
         <target state="final">Unlinked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.linked" datatype="html">
@@ -1418,7 +1418,7 @@
         <target state="final">Linked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1783,24 +1783,12 @@
           <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.navigation.all" datatype="html">
-        <source>Alle</source>
-        <target state="final">All</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -3279,6 +3267,14 @@
       <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
         <source>Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</source>
         <target state="final">Error with resource with '[0]'. 'parent'-Relation must not be an array.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.Import.ImportErrors.relationMustBeArray" datatype="html">
+        <source>Fehler bei Ressource mit Bezeichner '[0]'. Relationen ausser 'isChildOf' müssen Arrays sein.</source>
+        <target state="final">Error with resource with identifier '[0]'. Except 'isChildOf' all relations must be arrays.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

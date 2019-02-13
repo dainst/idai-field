@@ -95,6 +95,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.Import.ImportErrors.liesWithinRecordedInMismatch';
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
+    public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
     public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
 
     // Export Package
@@ -578,6 +579,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.Import.ImportErrors.parentMustNotBeArray',
                 value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Die \'parent\'-Relation darf kein Array sein.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_MUST_BE_ARRAY] = {
+            content: i18n({
+                id: 'messages.Import.ImportErrors.relationMustBeArray',
+                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Relationen ausser \'isChildOf\' müssen Arrays sein.'
             }),
             level: 'danger',
             params: ['?'],

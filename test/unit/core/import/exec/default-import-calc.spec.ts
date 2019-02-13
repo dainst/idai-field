@@ -482,12 +482,23 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('parent is an array', async done => {
+    it('isChildOf is an array', async done => {
 
         const result = await process([
             d('Feature', 'one', { isChildOf: [] })
         ]);
         expect(result[2][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
+        expect(result[2][1]).toEqual('one');
+        done();
+    });
+
+
+    it('other relation is not an array', async done => {
+
+        const result = await process([
+            d('Feature', 'one', { isAbove: 'b' })
+        ]);
+        expect(result[2][0]).toEqual(E.MUST_BE_ARRAY);
         expect(result[2][1]).toEqual('one');
         done();
     });

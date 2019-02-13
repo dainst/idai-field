@@ -264,11 +264,6 @@ export class DocumentsManager {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        // TODO review
-        // if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
-        //     return this.operationTypeDocumentsManager.populate();
-        // }
-
         this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(false);
     }
@@ -284,8 +279,6 @@ export class DocumentsManager {
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
 
-        // TODO
-        //this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }

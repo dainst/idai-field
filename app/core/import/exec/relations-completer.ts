@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
     isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, arrayEqual, is
@@ -175,7 +175,7 @@ export module RelationsCompleter {
                     .filter(isDefined)
                     .forEach(targetDocument => {
                         assertInSameOperation(document, targetDocument);
-                        setInverse(document, targetDocument, inverseRelationName);
+                        setInverse(document.resource.id, targetDocument.resource.relations, inverseRelationName);
                     });
             })
     }
@@ -197,13 +197,13 @@ export module RelationsCompleter {
     }
 
 
-    function setInverse(document: Document, targetDocument: Document, inverseRelationName: string) {
+    function setInverse(resourceId: string, targetDocumentRelations: Relations, inverseRelationName: string) {
 
-        if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
-            targetDocument.resource.relations[inverseRelationName] = [];
+        if (isUndefinedOrEmpty(targetDocumentRelations[inverseRelationName])) {
+            targetDocumentRelations[inverseRelationName] = [];
         }
-        if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
-            targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
+        if (!targetDocumentRelations[inverseRelationName].includes(resourceId)) {
+            targetDocumentRelations[inverseRelationName].push(resourceId);
         }
     }
 

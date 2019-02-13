@@ -107,6 +107,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         createdIndexFacade,
         new StandardStateSerializer(settingsService),
+        typeUtility,
         'synctest',
         true
     );

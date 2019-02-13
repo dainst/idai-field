@@ -8,6 +8,7 @@ import {ObserverUtil} from '../../../core/util/observer-util';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {clone} from '../../../core/util/object-util';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 /**
@@ -44,6 +45,7 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
+        private typeUtility: TypeUtility,
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
@@ -55,6 +57,8 @@ export class ResourcesStateManager {
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
+
+    public getOverviewTypeNames = (): string[] => this.typeUtility.getOverviewTypeNames();
 
 
     public async initialize(viewName: 'project' | string) {
@@ -99,13 +103,6 @@ export class ResourcesStateManager {
                 return acc;
 
             }, {} as {[id: string]: string});
-    }
-
-
-    public getOverviewTypeNames() {
-
-        // TODO use typeUtilily
-        return ['Place', 'Trench', 'Survey', 'Building'];
     }
 
 

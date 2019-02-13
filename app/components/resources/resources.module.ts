@@ -38,6 +38,7 @@ import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
+import {TypeUtility} from '../../core/model/type-utility';
 
 const remote = require('electron').remote;
 
@@ -84,7 +85,8 @@ const remote = require('electron').remote;
                          indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
-                         settingsService: SettingsService) => {
+                         settingsService: SettingsService,
+                         typeUtility: TypeUtility) => {
 
                 const projectName = settingsService.getSelectedProject();
                 if (!projectName) throw 'project not set';
@@ -93,11 +95,15 @@ const remote = require('electron').remote;
                     datastore,
                     indexFacade,
                     stateSerializer,
+                    typeUtility,
                     projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
-            deps: [FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService]
+            deps: [
+                FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
+                TypeUtility
+            ]
         },
         {
             provide: ViewFacade,

@@ -41,16 +41,11 @@ export class ViewState {
 
     public static complete(viewState: ViewState) {
 
-        if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
+        if (!viewState.layerIds || !Array.isArray(viewState.layerIds)) {
             viewState.layerIds = [];
-        } else {
-            for (let key of Object.keys(viewState.layerIds)) {
-                if (!Array.isArray(viewState.layerIds[key])) {
-                    delete viewState.layerIds[key];
-                }
-            }
         }
 
+        if (!viewState.mode) viewState.mode = 'map';
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

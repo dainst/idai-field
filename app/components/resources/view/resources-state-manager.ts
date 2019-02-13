@@ -65,6 +65,7 @@ export class ResourcesStateManager {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
+            await this.fetchOperations();
             this.loaded = true;
         }
 
@@ -172,13 +173,6 @@ export class ResourcesStateManager {
     }
 
 
-    public removeActiveLayersIds() {
-
-        ResourcesState.removeActiveLayersIds(this.resourcesState);
-        this.serialize();
-    }
-
-
     public async moveInto(document: FieldDocument|undefined) {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
@@ -247,6 +241,19 @@ export class ResourcesStateManager {
     }
 
 
+    private async fetchOperations() {
+
+        for (let id of Object.keys(this.resourcesState.operationViewStates)) {
+            try {
+                this.resourcesState.operationViewStates[id].operation = await this.datastore.get(id);
+            } catch (err) {
+                console.warn('Failed to load operation document for view: ' + id);
+                delete this.resourcesState.operationViewStates[id];
+            }
+        }
+    }
+
+
     private async load(): Promise<ResourcesState> {
 
         let resourcesState = ResourcesState.makeDefaults();
@@ -282,12 +289,14 @@ export class ResourcesStateManager {
 
         const objectToSerialize: { [viewName: string]: ViewState } = {};
 
-        // for (let viewName of Object.keys(state.operationViewStates)) {
-        //     objectToSerialize[viewName] = {} as any;
-        //     if (ResourcesState.getLayerIds(state)) {
-        //         (objectToSerialize[viewName] as any).layerIds = ResourcesState.getLayerIds(state);
-        //     }
-        // }
+        for (let viewName of Object.keys(state.operationViewStates)) {
+            objectToSerialize[viewName] = {} as any;
+            if (ResourcesState.getActiveLayersIds(state)) {
+                (objectToSerialize[viewName] as any).layerIds = state.operationViewStates[viewName].layerIds;
+                (objectToSerialize[viewName] as any).active = state.operationViewStates[viewName].active;
+                (objectToSerialize[viewName] as any).mode = state.operationViewStates[viewName].mode;
+            }
+        }
 
         return objectToSerialize;
     }

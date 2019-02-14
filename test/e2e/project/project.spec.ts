@@ -128,7 +128,7 @@ describe('project --', function() {
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();
-        NavbarPage.navigate('t1');
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 10);
 
         NavbarPage.navigate('project');

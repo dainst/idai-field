@@ -112,7 +112,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         createdIndexFacade,
         stateSerializer,
         typeUtility,
-        'synctest',
+        projectName,
         true
     );
 
@@ -148,7 +148,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore,
         fieldDocumentDatastore,
         idaiFieldImageDocumentDatastore,
-        settingsService
+        settingsService,
+        resourcesStateManager,
+        stateSerializer
     }
 }
 

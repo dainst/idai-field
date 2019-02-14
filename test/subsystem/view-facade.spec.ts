@@ -13,14 +13,16 @@ import {Static} from '../unit/static';
  * The subsystem gets assembled in the ViewFacade's constructor.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 
 describe('ViewFacade/Subsystem', () => {
     
     let viewFacade: ViewFacade;
-    let resourcesState: ResourcesStateManager;
     let changesStream;
     let loading;
+    let resourcesStateManager: ResourcesStateManager;
+    let stateSerializer;
 
     let trenchDocument1: FieldDocument;
     let trenchDocument2: FieldDocument;
@@ -50,6 +52,8 @@ describe('ViewFacade/Subsystem', () => {
 
         fieldDocumentDatastore = result.fieldDocumentDatastore;
         viewFacade = result.viewFacade;
+        resourcesStateManager = result.resourcesStateManager;
+        stateSerializer = result.stateSerializer;
 
         spyOn(console, 'debug'); // suppress console.debug
 
@@ -90,19 +94,61 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    afterEach((done) => new PouchDB('test').destroy().then(() => {done()}), 5000);
+    afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
 
 
-    xit('reload layer ids on startup', async done => {
+    it('reload view states on startup', async done => {
 
-        resourcesState.loaded = false;
-        /*stateSerializer.load.and.returnValue({ excavation: {
-            navigationPaths: { 't1': { elements: [] } },
-            layerIds: { 't1': ['layerid1'] }
-        }});*/
-        await viewFacade.selectView('excavation');
-        //await viewFacade.selectOperation(trenchDocument1.resource.id);
-        expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
+        resourcesStateManager.loaded = false;
+        stateSerializer.load.and.returnValue({
+            overviewState: {
+                mode: 'list',
+                layerIds: ['layerId1']
+            },
+            operationViewStates: {
+                t1: {
+                    active: true,
+                    mode: 'map',
+                    layerIds: ['layerId2']
+                },
+                t2: {
+                    active: false,
+                    mode: 'map'
+                }
+            }
+        });
+
+        await viewFacade.selectView('project');
+        expect(viewFacade.getActiveOperationViews()).toEqual({ 't1': 'trench1' });
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
+        expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t1');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
+        expect(viewFacade.getMode()).toEqual('map');
+
+        done();
+    });
+
+
+    it('keep only map layer ids when deactivating view', async done => {
+
+        await viewFacade.selectView('t1');
+        await viewFacade.setSearchString('test');
+        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setSelectedDocument('feature1');
+        viewFacade.setMode('list');
+        viewFacade.setActiveLayersIds(['layer1']);
+
+        await viewFacade.deactivate('t1');
+        await viewFacade.selectView('t1');
+
+        expect(viewFacade.getSearchString()).toEqual('');
+        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getSelectedDocument()).toBeUndefined();
+        expect(viewFacade.getMode()).toEqual('map');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layer1']);
+
         done();
     });
 

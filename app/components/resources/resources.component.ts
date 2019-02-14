@@ -221,7 +221,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             });
 
         this.populateDocumentsSubscription =
-            this.viewFacade.populateDocumentNotifications().subscribe(() => {
+            this.viewFacade.populateDocumentsNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
             });
 

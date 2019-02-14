@@ -37,7 +37,7 @@ export class ThumbnailViewComponent implements OnInit, OnChanges {
 
     ngOnInit() {
 
-        this.viewFacade.populateDocumentNotifications().subscribe(async () => {
+        this.viewFacade.populateDocumentsNotifications().subscribe(async () => {
             await this.updateGrid();
         });
     }

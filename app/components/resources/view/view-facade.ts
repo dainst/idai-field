@@ -112,7 +112,7 @@ export class ViewFacade {
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
-    public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
+    public populateDocumentsNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
     public documentChangedFromRemoteNotifications = () => this.documentsManager.documentChangedFromRemoteNotifications();
 

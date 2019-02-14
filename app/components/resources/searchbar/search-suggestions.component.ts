@@ -34,7 +34,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private resourcesComponent: ResourcesComponent,
                 private renderer: Renderer2) {
 
-        this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
+        this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
             await this.updateSuggestions();
         });

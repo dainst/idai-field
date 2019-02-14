@@ -36,7 +36,7 @@ describe('settings --', function() {
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
 
-        NavbarPage.navigate('t1')
+        NavbarPage.navigate('project')
             .then(() => {
                 browser.sleep(5000);
                 return SettingsPage.get().then(() => browser.sleep(2000));

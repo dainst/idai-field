@@ -5,7 +5,7 @@ import {TypeConverter} from '../core/type-converter';
 import {TypeUtility} from '../../model/type-utility';
 import {FieldnameMigrator} from './fieldname-migrator';
 
-
+// if o has not already a value at path, it sets it to alternative
 const takeOrMake = <T>(o: T, path: string, alternative: any) =>
     setOn(o, path)(getOnOr(path , alternative)(o));
 

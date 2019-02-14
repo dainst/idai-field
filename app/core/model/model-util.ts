@@ -19,7 +19,7 @@ export class ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return nthOr(targetIds, undefined)(index);
+        return nthOr(index, undefined as any)(targetIds);
     }
 }
 

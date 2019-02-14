@@ -129,7 +129,7 @@ export module ConstraintIndex {
                     indexDefinition: IndexDefinition,
                     doc: Document) {
 
-        const elForPath = getOnOr(doc, undefined)(indexDefinition.path);
+        const elForPath = getOnOr(indexDefinition.path, undefined)(doc);
 
         switch(indexDefinition.type) {
             case 'exist':

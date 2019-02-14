@@ -210,8 +210,8 @@ export module RelationsCompleter {
 
     function assertInSameOperation(document: Document, targetDocument: Document) {
 
-        const documentRecordedIn = getOnOr(document, undefined)('resource.relations.' + RECORDED_IN);
-        const targetDocumentRecordedIn = getOnOr(targetDocument, undefined)('resource.relations.' + RECORDED_IN);
+        const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);
+        const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
         if (isNot(undefinedOrEmpty)(targetDocumentRecordedIn) && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }

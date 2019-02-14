@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Document, ImageDocument} from 'idai-components-2';
-import {takeOrMake} from 'tsfun';
+import {compose, getOnOr, setOn} from 'tsfun';
 import {TypeConverter} from '../core/type-converter';
 import {TypeUtility} from '../../model/type-utility';
 import {FieldnameMigrator} from './fieldname-migrator';
+
+
+const takeOrMake = (path: string, alternative: any) => <T>(o: T) => compose(getOnOr(path , alternative), setOn(o, path))(o);
 
 @Injectable()
 /**
@@ -56,16 +59,16 @@ export class FieldTypeConverter extends TypeConverter<Document> {
     public convert<T extends Document>(document: Document): T {
 
         if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
-            takeOrMake(document,'resource.identifier','');
-            takeOrMake(document,'resource.relations.depicts', []);
+            takeOrMake('resource.identifier','')(document);
+            takeOrMake('resource.relations.depicts', [])(document);
         } else {
-            takeOrMake(document,'resource.identifier','');
-            takeOrMake(document,'resource.relations.isRecordedIn', []);
+            takeOrMake('resource.identifier','')(document);
+            takeOrMake('resource.relations.isRecordedIn', [])(document);
 
             if (this.typeUtility.isSubtype(document.resource.type,'Feature')) {
-                takeOrMake(document,'resource.relations.isContemporaryWith', []);
-                takeOrMake(document,'resource.relations.isAfter', []);
-                takeOrMake(document,'resource.relations.isBefore', []);
+                takeOrMake('resource.relations.isContemporaryWith', [])(document);
+                takeOrMake('resource.relations.isAfter', [])(document);
+                takeOrMake('resource.relations.isBefore', [])(document);
             }
         }
 

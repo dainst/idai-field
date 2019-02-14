@@ -133,4 +133,17 @@ export class MatrixPage {
         browser.wait(EC.presenceOf(element(by.id('create-graph-from-selection-button'))), delays.ECWaitTime);
         return element(by.id('create-graph-from-selection-button'));
     }
+
+
+    // sequence
+
+    public static performSelectOperation(index) {
+
+        browser.wait(EC.presenceOf(element(by.css('.dropdown'))), delays.ECWaitTime);
+        element.all(by.css('.dropdown .dropdown-toggle-split')).click();
+        browser.wait(EC.presenceOf(element(by.css('.dropdown .dropdown-menu'))),
+            delays.ECWaitTime);
+        element.all(by.css('.dropdown .dropdown-menu button')).get(index).click();
+        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
+    }
 }

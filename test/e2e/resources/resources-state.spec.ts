@@ -7,7 +7,6 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {OperationBarPage} from '../operation-bar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 
@@ -128,10 +127,8 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a fulltext search', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('S2');
         ResourcesPage.clickListModeButton();
-
-        OperationBarPage.performSelectOperation(1);
 
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('SE1');
@@ -141,10 +138,8 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a type filter search', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('S2');
         ResourcesPage.clickListModeButton();
-
-        OperationBarPage.performSelectOperation(1);
 
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('feature-architecture');
@@ -266,14 +261,14 @@ describe('resources/state --', function() {
 
     it('search/suggestions -- show suggestion for extended search query', done => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
         ResourcesPage.clickHierarchyButton('S1');
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
         SearchConstraintsPage.clickConstraintsMenuButton();
@@ -294,7 +289,7 @@ describe('resources/state --', function() {
 
     it('search/extended -- perform constraint search for simple input field', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('processor', 'testvalue');
@@ -313,7 +308,7 @@ describe('resources/state --', function() {
 
     it('search/extended -- perform constraint search for dropdown field', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
         DoceditPage.clickSelectOption('layerClassification', 1);
@@ -332,7 +327,7 @@ describe('resources/state --', function() {
 
     it('search/extended -- perform constraint search for boolean field', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
@@ -366,7 +361,7 @@ describe('resources/state --', function() {
 
     it('search/extended -- remove field from dropdown after adding constraint', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('operation');
         SearchConstraintsPage.clickConstraintsMenuButton();
@@ -386,28 +381,6 @@ describe('resources/state --', function() {
         createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-    });
-
-
-    it('operate in different views', () => {
-
-        ResourcesPage.performCreateResource('trench3', 'trench');
-
-        ResourcesPage.clickHierarchyButton('S1');
-
-        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
-
-        OperationBarPage.performSelectOperation(1);
-
-        OperationBarPage.performSelectOperation(0); // trench2
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
-
-        NavbarPage.navigate('project');
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('A1'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('B1'));
-        ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('S1'));
-        ResourcesPage.getListItemIdentifierText(3).then(text => expect(text).toEqual('S2'));
-        ResourcesPage.getListItemIdentifierText(4).then(text => expect(text).toEqual('trench3'));
     });
 
 
@@ -507,19 +480,8 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
-    });
-
-
-    it('navpath/hierarchy - select all', () => {
-
-        ResourcesPage.clickHierarchyButton('S1');
-
-        OperationBarPage.clickSwitchHierarchyMode();
-        OperationBarPage.performSelectOperation(0);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SE1'));
     });
 });

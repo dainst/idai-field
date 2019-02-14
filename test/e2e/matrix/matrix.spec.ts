@@ -3,7 +3,6 @@ import {NavbarPage} from '../navbar.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {OperationBarPage} from '../operation-bar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -37,7 +36,7 @@ describe('matrix --', () => {
         i++;
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
-        OperationBarPage.performSelectOperation(1);
+        MatrixPage.performSelectOperation(1);
 
         done();
     });
@@ -63,13 +62,13 @@ describe('matrix --', () => {
     it('show matrix for different trenches', () => {
 
         testDefaultMatrix();
-        OperationBarPage.performSelectOperation(0);
+        MatrixPage.performSelectOperation(0);
 
         MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
         browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
         MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
 
-        OperationBarPage.performSelectOperation(1);
+        MatrixPage.performSelectOperation(1);
         testDefaultMatrix();
     });
 
@@ -110,7 +109,7 @@ describe('matrix --', () => {
         MatrixPage.clickSingleSelectionModeButton();
         MatrixPage.clickNode('si1');
 
-        OperationBarPage.performSelectOperation(0);
+        MatrixPage.performSelectOperation(0);
         expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
         expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });

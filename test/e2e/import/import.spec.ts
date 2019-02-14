@@ -2,7 +2,6 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {OperationBarPage} from '../operation-bar.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -58,7 +57,6 @@ xdescribe('import --', function() {
         browser.sleep(delays.shortRest * 4);
         NavbarPage.navigate('project');
         ResourcesPage.clickHierarchyButton('S1');
-        OperationBarPage.performSelectOperation(0);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);

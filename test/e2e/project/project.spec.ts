@@ -102,11 +102,6 @@ describe('project --', function() {
         browser.sleep(200);
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
-
-        ResourcesPage.clickHierarchyButton('S1');
-        NavbarPage.navigate('project');
-        browser.sleep(delays.shortRest);
-
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
         ProjectPage.clickProjectsBadge();

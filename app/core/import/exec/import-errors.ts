@@ -6,7 +6,7 @@ export module ImportErrors {
 
     export const INVALID_TYPE = 'ImportErrors.invalidType';
     export const OPERATIONS_NOT_ALLOWED = 'ImportErrors.operationsNotAllowed';
-    export const NO_LIES_WITHIN_SET = 'ImportErrors.noOperationAssigned';
+    export const NO_PARENT_ASSIGNED = 'ImportErrors.noParentAssigned';
     export const DUPLICATE_IDENTIFIER = 'ImportErrors.duplicateIdentifier';
     export const MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget'; // by identifier
     export const EXEC_MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget';

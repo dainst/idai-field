@@ -511,7 +511,7 @@ describe('DefaultImportCalc', () => {
         const result = await process([
             d('Feature', 'one')
         ]);
-        expect(result[2][0]).toEqual(E.NO_LIES_WITHIN_SET);
+        expect(result[2][0]).toEqual(E.NO_PARENT_ASSIGNED);
         done();
     });
 

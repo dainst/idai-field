@@ -66,6 +66,42 @@ describe('Import/Subsystem', () => {
     });
 
 
+    it('liesWithin not set', async done => {
+
+        const report = await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            '',
+            false, false,
+            '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
+            () => '101');
+
+        expect(report.errors[0]).toEqual([ImportErrors.NO_PARENT_ASSIGNED]);
+        done();
+    });
+
+
+    it('liesWithin not set (but does not matter)', async done => {
+
+        const report = await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            '',
+            false, false,
+            '{ "type": "Trench", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
+            () => '101');
+
+        expect(report.errors.length).toBe(0);
+        done();
+    });
+
+
     it('create one find, connect to existing operation ', async done => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});

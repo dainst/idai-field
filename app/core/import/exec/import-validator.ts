@@ -6,6 +6,7 @@ import {Validations} from '../../model/validations';
 import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
+import {isnt} from 'tsfun';
 
 
 @Injectable()
@@ -104,7 +105,7 @@ export class ImportValidator extends Validator {
         const invalidRelationFields = Validations
             .validateDefinedRelations(document.resource, this.projectConfiguration)
             // operations have empty isRecordedIn which however is not defined. image types must not be imported. regular types all have isRecordedIn
-            .filter(item => item !== 'isRecordedIn');
+            .filter(isnt('isRecordedIn'));
 
         if (invalidRelationFields.length > 0) {
             throw [
@@ -122,14 +123,12 @@ export class ImportValidator extends Validator {
     }
 
 
-    // TODO throw no lies within in stead no_isrecordedin
     public assertHasLiesWithin(document: Document|NewDocument) {
 
-        // TODO Is this check necessary?
         if (this.isExpectedToHaveIsRecordedInRelation(document)
-            && !Document.hasRelations(document as Document, 'liesWithin')) {
+            && !Document.hasRelations(document as Document, 'liesWithin')) { // isRecordedIn gets constructed from liesWithin
 
-            throw [ValidationErrors.NO_ISRECORDEDIN];
+            throw [ImportErrors.NO_PARENT_ASSIGNED]; // replaces ValidationErrors.NO_RECORDEDIN
         }
     }
 

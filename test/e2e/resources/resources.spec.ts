@@ -99,7 +99,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(function(relations) {
+        RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(2);
         });
     });
@@ -127,7 +127,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'area', '100');
         ResourcesPage.clickSelectResource('1');
-        FieldsViewPage.getFields().then(function(items) {
+        FieldsViewPage.getFields().then(items => {
             expect(items.length).toBe(1);
         });
     });
@@ -151,7 +151,7 @@ describe('resources --', () => {
         ResourcesPage.clickDiscardInModal();
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
-        RelationsViewPage.getRelations().then(function(relations) {
+        RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(1);
         });
     });
@@ -272,18 +272,18 @@ describe('resources --', () => {
 
         NavbarPage.navigate('project');
 
-        function del(what: any) {
+        const deleteResource = (identifier: string) => {
 
-            ResourcesPage.openEditByDoubleClickResource(what);
+            ResourcesPage.openEditByDoubleClickResource(identifier);
             DoceditPage.clickDeleteDocument();
-            DoceditPage.typeInIdentifierInConfirmDeletionInputField(what);
+            DoceditPage.typeInIdentifierInConfirmDeletionInputField(identifier);
             DoceditPage.clickConfirmDeleteInModal();
             browser.sleep(delays.shortRest);
             NavbarPage.clickCloseAllMessages();
-        }
+        };
 
-        del('S1');
-        del('S2');
+        deleteResource('S1');
+        deleteResource('S2');
 
         NavbarPage.navigate('t1');
 

@@ -22,7 +22,7 @@ describe('images/state --', () => {
         SearchBarPage.clickChooseTypeFilter('image-drawing');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.navigate('project')
+        NavbarPage.navigate('project');
         NavbarPage.navigate('images');
 
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));

@@ -267,6 +267,7 @@ describe('resources/state --', function() {
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
+        ResourcesPage.clickSwitchHierarchyMode();
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickSwitchHierarchyMode();
 

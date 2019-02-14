@@ -172,9 +172,9 @@ describe('map --', function() {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToOverview();
+            NavbarPage.navigate('project');
             browser.sleep(delays.shortRest * 4);
-            NavbarPage.clickNavigateToExcavation();
+            ResourcesPage.clickHierarchyButton('S1');
         }
 
         index++;

@@ -38,7 +38,7 @@ describe('resources/state --', function() {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToOverview();
+            NavbarPage.navigate('project');
             browser.sleep(delays.shortRest * 3);
         }
 
@@ -63,7 +63,7 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('images');
         browser.sleep(delays.shortRest * 5);
         ImageOverviewPage.createDepictsRelation('S1');
     }
@@ -119,7 +119,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 
-        NavbarPage.clickNavigateToOverview();
+        ResourcesPage.clickHierarchyButton('S1');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
@@ -128,7 +128,7 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a fulltext search', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickListModeButton();
 
         OperationBarPage.performSelectOperation(1);
@@ -141,7 +141,7 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a type filter search', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickListModeButton();
 
         OperationBarPage.performSelectOperation(1);
@@ -154,7 +154,7 @@ describe('resources/state --', function() {
 
     it('search -- select all filter', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -169,7 +169,7 @@ describe('resources/state --', function() {
 
     it('search -- show correct types in plus type menu after choosing type filter', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         const checkTypeOptions = () => {
 
@@ -203,7 +203,7 @@ describe('resources/state --', function() {
 
     it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
 
         const checkTypeIcon = () => {
@@ -250,7 +250,7 @@ describe('resources/state --', function() {
 
     it('search -- filter by parent type', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -272,7 +272,7 @@ describe('resources/state --', function() {
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         OperationBarPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
@@ -393,7 +393,7 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResource('trench3', 'trench');
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
@@ -402,7 +402,7 @@ describe('resources/state --', function() {
         OperationBarPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.navigate('project');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('A1'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('B1'));
         ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('S1'));
@@ -438,19 +438,16 @@ describe('resources/state --', function() {
 
     it('jump from operation overview to view via move into button', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToOverview();
-        ResourcesPage.performCreateResource('t2', 'trench');
-        ResourcesPage.clickHierarchyButton('t2');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
+        ResourcesPage.performCreateResource('newTrench', 'trench');
+        ResourcesPage.clickHierarchyButton('newTrench');
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('newTrench'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
     });
 
 
     it('navpath -- show correct navigation path after click on relation link', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('c2', 'feature');
         ResourcesPage.clickHierarchyButton('c2');
@@ -471,7 +468,7 @@ describe('resources/state --', function() {
 
     it('navpath -- update navigation path after changing liesWithin relation', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('context2', 'feature');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -495,8 +492,7 @@ describe('resources/state --', function() {
 
     it('navpath -- update navigation path after deleting resource', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-
+        ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.clickMainTypeDocumentNavigationButton();
 
@@ -515,7 +511,7 @@ describe('resources/state --', function() {
 
     it('navpath/hierarchy - switch between modes', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.clickHierarchyButton('SE0');
@@ -528,7 +524,8 @@ describe('resources/state --', function() {
 
     it('navpath/hierarchy - select all', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
+
         OperationBarPage.clickSwitchHierarchyMode();
         OperationBarPage.performSelectOperation(0);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));

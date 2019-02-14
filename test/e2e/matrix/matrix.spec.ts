@@ -31,7 +31,7 @@ describe('matrix --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToMatrix();
+            NavbarPage.navigate('matrix');
         }
 
         i++;

@@ -74,9 +74,9 @@ describe('project --', function() {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.navigate('project');
         browser.sleep(delays.shortRest * 15);
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
 
@@ -94,17 +94,17 @@ describe('project --', function() {
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unknown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('images');
         browser.sleep(200);
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.navigate('project');
         //
 
         browser.sleep(200);
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
 
-        NavbarPage.clickNavigateToBuilding();
-        NavbarPage.clickNavigateToOverview();
+        ResourcesPage.clickHierarchyButton('B1');
+        NavbarPage.navigate('project');
         browser.sleep(delays.shortRest);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
@@ -118,7 +118,8 @@ describe('project --', function() {
         browser.sleep(delays.shortRest * 20);
 
         NavbarPage.performNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
 
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
@@ -132,10 +133,10 @@ describe('project --', function() {
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();
-        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.navigate('t1');
         browser.sleep(delays.shortRest * 10);
 
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.navigate('project');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

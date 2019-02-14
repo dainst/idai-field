@@ -12,7 +12,7 @@ const delays = require('../config/delays');
 
 export class ResourcesPage {
 
-    public static get(view: string = 'excavation') {
+    public static get(view: string = 'project') {
 
         return browser.get('#/resources/' + view);
     }
@@ -278,7 +278,7 @@ export class ResourcesPage {
 
     public static performCreateMainTypeResource(identifier: string) {
 
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.navigate('project');
         this.performCreateResource(identifier, 'trench');
         this.clickHierarchyButton(identifier);
     }

@@ -8,34 +8,10 @@ export class NavbarPage {
 
     // click
 
-    public static clickNavigateToOverview() {
+    public static navigate(tabName: string) {
 
-        return common.click(element.all(by.css('.nav-link')).get(0));
+        return common.click(element(by.id('navbar-' + tabName)));
     }
-
-
-    public static clickNavigateToExcavation() {
-
-        return common.click(element.all(by.css('.nav-link')).get(2));
-    };
-
-
-    public static clickNavigateToBuilding() {
-
-        return common.click(element.all(by.css('.nav-link')).get(3));
-    };
-
-
-    public static clickNavigateToImages() {
-
-        return common.click(element.all(by.css('.nav-link')).get(8));
-    };
-
-
-    public static clickNavigateToMatrix() {
-
-        return common.click(element.all(by.css('.nav-link')).get(6));
-    };
 
 
     public static clickConflictsButton() {

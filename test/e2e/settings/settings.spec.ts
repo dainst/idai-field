@@ -36,7 +36,7 @@ describe('settings --', function() {
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
 
-        NavbarPage.clickNavigateToExcavation()
+        NavbarPage.navigate('t1')
             .then(() => {
                 browser.sleep(5000);
                 return SettingsPage.get().then(() => browser.sleep(2000));
@@ -59,7 +59,7 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
         NavbarPage.clickCloseAllMessages();
 
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('images');
         browser.sleep(delays.shortRest * 50);
         ImageOverviewPage.clickUploadArea();
         ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));

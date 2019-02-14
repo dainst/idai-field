@@ -143,7 +143,8 @@ describe('syncing --', function() {
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
                 NavbarPage.performNavigateToSettings();
-                NavbarPage.clickNavigateToExcavation();
+                NavbarPage.navigate('project');
+                ResourcesPage.clickHierarchyButton('S1');
                 return browser.sleep(delays.shortRest * 10);
             });
     }
@@ -152,7 +153,8 @@ describe('syncing --', function() {
     function createEventualConflict(nr) {
 
         return createOneDocument(nr)
-            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => NavbarPage.navigate('project'))
+            .then(() => ResourcesPage.clickHierarchyButton('S1'))
             .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => createAlternateDocument(nr));
     }
@@ -195,7 +197,8 @@ describe('syncing --', function() {
 
         const nr = '6';
         let testDocument = await createOneDocument(nr);
-        await NavbarPage.clickNavigateToExcavation();
+        await NavbarPage.navigate('project');
+        await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
         ResourcesPage.clickSelectResource('testf' + nr);
@@ -247,7 +250,8 @@ describe('syncing --', function() {
         const nr = '7';
 
         await createOneDocument(nr);
-        await NavbarPage.clickNavigateToExcavation();
+        await NavbarPage.navigate('project');
+        await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
         expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');

@@ -22,8 +22,8 @@ describe('images/state --', () => {
         SearchBarPage.clickChooseTypeFilter('image-drawing');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('project')
+        NavbarPage.navigate('images');
 
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
@@ -37,8 +37,8 @@ describe('images/state --', () => {
         SearchBarPage.typeInSearchField('Layer 1');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('project');
+        NavbarPage.navigate('images');
 
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('Layer 1'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
@@ -50,8 +50,8 @@ describe('images/state --', () => {
         ImageOverviewPage.clickIncreaseGridSizeButton();
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.navigate('project');
+        NavbarPage.navigate('images');
 
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });

@@ -73,6 +73,13 @@ export class NavbarPage {
     }
 
 
+    public static getNavLinkLabel(viewName: string) {
+
+        browser.wait(EC.visibilityOf(element(by.css('#navbar-' + viewName))), delays.ECWaitTime);
+        return element(by.css('#navbar-' + viewName)).getText();
+    }
+
+
     // sequences
 
     public static performNavigateToSettings() {

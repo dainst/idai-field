@@ -322,7 +322,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/savedialog -- should save changes via dialog modal', () => {
+    it('docedit/savedialog -- save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -331,11 +331,13 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
 
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('2'); });
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('2');
+        });
     });
 
 
-    it('docedit/savedialog -- should discard changes via dialog modal', () => {
+    it('docedit/savedialog -- discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -343,11 +345,14 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1'); });
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('1');
+        });
     });
 
 
-    it('docedit/savedialog -- should cancel dialog modal', () => {
+    it('docedit/savedialog -- cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -375,13 +380,14 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(8, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(8, 0, 0))
+            .toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0))
+            .toEqual('2');
         DoceditPage.clickCloseEdit();
-
     });
 
 
@@ -392,7 +398,7 @@ describe('resources --', () => {
         DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', '123');
         DoceditPage.clickSaveDocument();
-        // expectation?
+        // TODO expectation?
     });
 
 
@@ -426,13 +432,13 @@ describe('resources --', () => {
     });
 
 
-    it('maintype -- should create a new main type resource', () => {
+    it('maintype -- create a new operation', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-        ResourcesPage.performCreateMainTypeResource('newTrench');
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
+        ResourcesPage.performCreateOperation('newTrench');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('newTrench'));
     });
 
 
@@ -443,8 +449,7 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newIdentifier'));
+        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('newIdentifier'));
     });
 
 

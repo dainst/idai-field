@@ -128,20 +128,6 @@ export class ResourcesPage {
     }
 
 
-    public static getSelectedMainTypeDocumentOption() {
-
-        browser.wait(EC.presenceOf(element(by.id('selected-operation-type-document'))), delays.ECWaitTime);
-        return element(by.id('selected-operation-type-document')).getText();
-    }
-
-
-    public static getMainTypeDocumentOption() {
-
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
-        return element.all(by.css('#mainTypeSelectBox')).getText();
-    }
-
-
     public static getListModeInputFieldValue(identifier, index) {
 
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
@@ -275,7 +261,7 @@ export class ResourcesPage {
     }
 
 
-    public static performCreateMainTypeResource(identifier: string) {
+    public static performCreateOperation(identifier: string) {
 
         NavbarPage.navigate('project');
         this.performCreateResource(identifier, 'trench');

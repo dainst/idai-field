@@ -436,15 +436,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('jump from operation overview to view via move into button', () => {
-
-        ResourcesPage.performCreateResource('newTrench', 'trench');
-        ResourcesPage.clickHierarchyButton('newTrench');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('newTrench'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
-    });
-
-
     it('navpath -- show correct navigation path after click on relation link', () => {
 
         ResourcesPage.clickHierarchyButton('S1');

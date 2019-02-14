@@ -103,7 +103,7 @@ describe('project --', function() {
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
 
-        ResourcesPage.clickHierarchyButton('B1');
+        ResourcesPage.clickHierarchyButton('S1');
         NavbarPage.navigate('project');
         browser.sleep(delays.shortRest);
 

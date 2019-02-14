@@ -128,7 +128,7 @@ export class ImportValidator extends Validator {
         if (this.isExpectedToHaveIsRecordedInRelation(document)
             && !Document.hasRelations(document as Document, 'liesWithin')) { // isRecordedIn gets constructed from liesWithin
 
-            throw [ImportErrors.NO_PARENT_ASSIGNED]; // replaces ValidationErrors.NO_RECORDEDIN
+            throw [ImportErrors.NO_PARENT_ASSIGNED];
         }
     }
 

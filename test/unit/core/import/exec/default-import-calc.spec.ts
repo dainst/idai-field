@@ -506,7 +506,7 @@ describe('DefaultImportCalc', () => {
 
     it('missing liesWithin and no operation assigned', async done => {
 
-        validator.assertHasLiesWithin.and.throwError('E');
+        validator.assertHasLiesWithin.and.callFake(() => { throw [E.NO_PARENT_ASSIGNED]});
 
         const result = await process([
             d('Feature', 'one')

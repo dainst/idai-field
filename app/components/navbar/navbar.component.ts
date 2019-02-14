@@ -51,6 +51,6 @@ export class NavbarComponent {
             await this.router.navigate(['resources', 'project']);
         }
 
-        this.viewFacade.deactivate(viewName);
+        this.viewFacade.deactivateView(viewName);
     }
 }

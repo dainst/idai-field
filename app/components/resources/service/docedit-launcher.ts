@@ -40,7 +40,7 @@ export class DoceditLauncher {
             result = (await doceditRef.result)['document'];
             await this.handleSaveResult(result as FieldDocument);
         } catch(closeReason) {
-            await this.handleClosed(closeReason);
+            await this.handleClosed(closeReason, document.resource.id);
         } finally {
             this.isDoceditModalOpened = false;
         }
@@ -61,10 +61,11 @@ export class DoceditLauncher {
     }
 
 
-    private async handleClosed(closeReason: string) {
+    private async handleClosed(closeReason: string, resourceId: string|undefined) {
 
         if (closeReason === 'deleted') {
             this.viewFacade.deselect();
+            this.viewFacade.removeView(resourceId as string);
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         } else if (closeReason === 'cancel') {

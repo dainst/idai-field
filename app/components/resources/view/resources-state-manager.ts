@@ -90,9 +90,19 @@ export class ResourcesStateManager {
     }
 
 
-    public deactivate(viewName: string) {
+    public deactivateView(viewName: string) {
 
         ResourcesState.deactivate(this.resourcesState, viewName);
+        this.notifyNavigationPathObservers();
+    }
+
+
+    public removeView(viewName: string) {
+
+        if (!this.resourcesState.operationViewStates[viewName]) return;
+
+        delete this.resourcesState.operationViewStates[viewName];
+        this.serialize();
         this.notifyNavigationPathObservers();
     }
 

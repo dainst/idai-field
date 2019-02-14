@@ -93,7 +93,7 @@ export module RelationsCompleter {
         async function getDocumentTargetDocsToUpdate(document: Document) {
 
             const documentTargetDocs: Array<Document> = await asyncMap(
-                async (targetId: any /* TODO improve tsf typing */) => getTargetDocument(targetId, totalDocsToUpdate, get))
+                async (targetId: any) => getTargetDocument(targetId, totalDocsToUpdate, get))
             (await getTargetIds(document));
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(

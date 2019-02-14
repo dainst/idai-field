@@ -94,9 +94,8 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectResourceType(typeName?) {
+    public static clickSelectResourceType(typeName: string = 'feature-architecture') {
 
-        if (!typeName) typeName = "feature-architecture";
         return common.click(element(by.id('choose-type-option-' + typeName)));
     }
 

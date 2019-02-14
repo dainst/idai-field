@@ -30,6 +30,7 @@ describe('resources --', () => {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 4);
+        ResourcesPage.clickHierarchyButton('S1');
     });
 
 
@@ -267,6 +268,19 @@ describe('resources --', () => {
     });
 
 
+    it('delete a resource', () => {
+
+        ResourcesPage.performCreateResource('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        ResourcesPage.clickSelectResource('1');
+        DetailSidebarPage.performEditDocument();
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
+        DoceditPage.clickConfirmDeleteInModal();
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
     it('delete an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
@@ -286,34 +300,23 @@ describe('resources --', () => {
     });
 
 
-    it('find it by its identifier', () => {
+    it('find a resource by its identifier', () => {
 
         ResourcesPage.performCreateResource('1');
         SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
-    });
-
-
-    it('should delete a resource', () => {
-
-        ResourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
-        DoceditPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 
 
-    xit('not reflect changes in overview in realtime', () => {
+    it('do not reflect changes in list while editing resource', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
         DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '1b');
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1a'); });
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('1a');
+        });
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
     });

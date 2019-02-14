@@ -23,7 +23,12 @@ export class NavbarComponent {
                 private viewFacade: ViewFacade) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
+
         this.viewFacade.navigationPathNotifications().subscribe(() => {
+            this.operationViews = this.viewFacade.getActiveOperationViews();
+        });
+
+        this.viewFacade.populateDocumentsNotifications().subscribe(() => {
             this.operationViews = this.viewFacade.getActiveOperationViews();
         });
     }

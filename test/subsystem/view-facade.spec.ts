@@ -140,7 +140,7 @@ describe('ViewFacade/Subsystem', () => {
         viewFacade.setMode('list');
         viewFacade.setActiveLayersIds(['layer1']);
 
-        await viewFacade.deactivate('t1');
+        await viewFacade.deactivateView('t1');
         await viewFacade.selectView('t1');
 
         expect(viewFacade.getSearchString()).toEqual('');

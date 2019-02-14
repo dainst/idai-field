@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 @Component({
     moduleId: module.id,
@@ -19,9 +20,10 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public suggestionsVisible: boolean = false;
 
 
-    constructor(private elementRef: ElementRef) {
+    constructor(private elementRef: ElementRef,
+                typeUtility: TypeUtility) {
 
-        super();
+        super(typeUtility);
     }
 
 

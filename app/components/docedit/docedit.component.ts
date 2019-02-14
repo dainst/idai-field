@@ -134,7 +134,7 @@ export class DoceditComponent {
         if (!document.resource.id) this.activeTabService.setActiveTab('fields');
 
         this.showDoceditImagesTab = (!
-            (this.typeUtility.getSubtypes('Image'))[document.resource.type]
+            (this.typeUtility.getTypeAndSubtypes('Image'))[document.resource.type]
         );
 
         this.getFieldDefinitionLabel = (fieldName: string) =>

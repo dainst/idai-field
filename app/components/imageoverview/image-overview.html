@@ -5,6 +5,7 @@
             <div *ngIf="!getSelected().length" class="col-sm-7 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
+                                           [types]="getQuery().types"
                                            [hidden]="getSelected().length"
                                            (onQueryStringChanged)="setQueryString($event)"
                                            (onTypesChanged)="setTypeFilters($event)">

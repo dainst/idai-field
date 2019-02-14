@@ -23,18 +23,18 @@ export class TypeUtility {
     }
 
 
-    public getSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
+    public getTypeAndSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
 
-        const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
+        const projectTypesMap: { [type: string]: IdaiType } = this.projectConfiguration.getTypesMap();
         let subtypes: any = {};
 
-        if (projectTypesTree[superTypeName]) {
-            subtypes[superTypeName] = projectTypesTree[superTypeName];
+        if (projectTypesMap[superTypeName]) {
+            subtypes[superTypeName] = projectTypesMap[superTypeName];
 
-            if (projectTypesTree[superTypeName].children) {
-                for (let i = projectTypesTree[superTypeName].children.length - 1; i >= 0; i--) {
-                    subtypes[projectTypesTree[superTypeName].children[i].name]
-                        = projectTypesTree[superTypeName].children[i];
+            if (projectTypesMap[superTypeName].children) {
+                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
+                    subtypes[projectTypesMap[superTypeName].children[i].name]
+                        = projectTypesMap[superTypeName].children[i];
                 }
             }
         }
@@ -58,6 +58,12 @@ export class TypeUtility {
     }
 
 
+    public getNamesOfTypeAndSubtypes(superTypeName: string): string[] {
+
+        return Object.keys(this.getTypeAndSubtypes(superTypeName));
+    }
+
+
     public getNonImageTypeNames(): string[] {
 
         return this.getNonImageTypes().map(type => type.name);
@@ -66,19 +72,19 @@ export class TypeUtility {
 
     public getImageTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Image'));
+        return Object.keys(this.getTypeAndSubtypes('Image'));
     }
 
 
     public getFeatureTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Feature'));
+        return Object.keys(this.getTypeAndSubtypes('Feature'));
     }
 
 
     public getOperationTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Operation'));
+        return Object.keys(this.getTypeAndSubtypes('Operation'));
     }
 
 

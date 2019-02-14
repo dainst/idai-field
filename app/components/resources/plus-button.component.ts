@@ -176,7 +176,7 @@ export class PlusButtonComponent implements OnChanges {
 
     private getOverviewTypes() {
 
-        return Object.keys(this.typeUtility.getSubtypes('Operation'))
+        return Object.keys(this.typeUtility.getTypeAndSubtypes('Operation'))
             .concat(['Place'])
             .filter(el => el !== 'Operation');
     }

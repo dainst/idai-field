@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges,
-    SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
 import {IdaiType} from 'idai-components-2';
+import {TypeUtility} from '../core/model/type-utility';
 
 
 @Component({
@@ -17,7 +17,7 @@ import {IdaiType} from 'idai-components-2';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent implements OnChanges {
+export class SearchBarComponent {
 
     @Input() filterOptions: Array<IdaiType> = [];
     @Input() showFiltersMenu: boolean = true;
@@ -36,15 +36,10 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
+    constructor(private typeUtility: TypeUtility) {}
+
+
     public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
-
-
-    ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['filterOptions'] && this.filterOptions.length === 1) {
-            this.chooseTypeFilter(this.filterOptions[0]);
-        }
-    }
 
 
     public onKeyUp(event: KeyboardEvent) {
@@ -65,11 +60,7 @@ export class SearchBarComponent implements OnChanges {
     public chooseTypeFilter(type: IdaiType) {
 
         this.types = type
-            ? [type.name].concat(
-                type.children
-                    ? type.children.map(childType => childType.name)
-                    : []
-            )
+            ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
         this.onTypesChanged.emit(this.types);

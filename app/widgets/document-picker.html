@@ -1,5 +1,6 @@
 <div id="document-picker">
     <search-bar [filterOptions]="filterOptions"
+                [types]="getQueryTypes()"
                 (onQueryStringChanged)="setQueryString($event)"
                 (onTypesChanged)="setQueryTypes($event)"></search-bar>
 

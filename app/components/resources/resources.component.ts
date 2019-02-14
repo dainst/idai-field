@@ -34,7 +34,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     private deselectionSubscription: Subscription;
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
-    private navigationPathSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -95,7 +94,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (this.changedDocumentFromRemoteSubscription) {
             this.changedDocumentFromRemoteSubscription.unsubscribe();
         }
-        if (this.navigationPathSubscription) this.navigationPathSubscription.unsubscribe();
     }
 
 
@@ -223,16 +221,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.populateDocumentsSubscription =
             this.viewFacade.populateDocumentsNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
+                this.updateFilterOptions();
             });
 
         this.changedDocumentFromRemoteSubscription =
             this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
-            });
-
-        this.navigationPathSubscription =
-            this.viewFacade.navigationPathNotifications().subscribe(() => {
-                this.updateFilterOptions();
             });
     }
 

@@ -163,6 +163,7 @@ describe('map --', function() {
         ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         browser.sleep(750);
+        ResourcesPage.clickHierarchyButton('S1');
     });
 
 

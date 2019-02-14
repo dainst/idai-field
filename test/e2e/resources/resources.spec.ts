@@ -157,14 +157,14 @@ describe('resources --', () => {
     });
 
 
-    it('messages -- create a new object of first listed type ', () => {
+    it('messages -- create a new resource of first listed type ', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
 
-    it('messages -- show the success msg also on route change', () => {
+    it('messages -- show the success message after saving via modal', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         ResourcesPage.openEditByDoubleClickResource('12');
@@ -267,30 +267,22 @@ describe('resources --', () => {
     });
 
 
-    // TODO Adjust or remove
-    xit('should delete a main type resource', () => {
+    it('delete an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        NavbarPage.navigate('project');
 
-        const deleteResource = (identifier: string) => {
+        browser.wait(EC.presenceOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
 
-            ResourcesPage.openEditByDoubleClickResource(identifier);
-            DoceditPage.clickDeleteDocument();
-            DoceditPage.typeInIdentifierInConfirmDeletionInputField(identifier);
-            DoceditPage.clickConfirmDeleteInModal();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseAllMessages();
-        };
-
-        deleteResource('S1');
-        deleteResource('S2');
-
-        NavbarPage.navigate('t1');
-
+        ResourcesPage.openEditByDoubleClickResource('S1');
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('S1');
+        DoceditPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(element(by.css('.no-main-type-resource-alert'))), delays.ECWaitTime);
+        NavbarPage.clickCloseAllMessages();
 
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        browser.wait(EC.stalenessOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
     });
 
 

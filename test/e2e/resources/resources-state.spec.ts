@@ -119,7 +119,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 
-        ResourcesPage.clickHierarchyButton('S1');
+        NavbarPage.navigate('project');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();

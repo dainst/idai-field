@@ -13,6 +13,7 @@ import {Static} from '../unit/static';
  * The subsystem gets assembled in the ViewFacade's constructor.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 
 describe('ViewFacade/Subsystem', () => {
@@ -125,6 +126,28 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
         expect(viewFacade.getMode()).toEqual('map');
+
+        done();
+    });
+
+
+    it('keep only map layer ids when deactivating view', async done => {
+
+        await viewFacade.selectView('t1');
+        await viewFacade.setSearchString('test');
+        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setSelectedDocument('feature1');
+        viewFacade.setMode('list');
+        viewFacade.setActiveLayersIds(['layer1']);
+
+        await viewFacade.deactivate('t1');
+        await viewFacade.selectView('t1');
+
+        expect(viewFacade.getSearchString()).toEqual('');
+        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getSelectedDocument()).toBeUndefined();
+        expect(viewFacade.getMode()).toEqual('map');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layer1']);
 
         done();
     });

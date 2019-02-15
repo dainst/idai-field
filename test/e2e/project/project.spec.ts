@@ -128,10 +128,7 @@ describe('project --', function() {
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();
-        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 10);
-
-        NavbarPage.navigate('project');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

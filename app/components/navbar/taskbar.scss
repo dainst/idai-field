@@ -35,18 +35,6 @@
     }
   }
 
-  .dropdown-item:focus {
-    background-color: #fff;
-  }
-
-  .dropdown-item:hover {
-    background-color: $list-item-hover-color;
-  }
-
-  .dropdown-item:active {
-    background-color: darken($list-item-hover-color, 5%);
-  }
-
   .dropdown-entry-label {
     position: relative;
     display: inline-block;

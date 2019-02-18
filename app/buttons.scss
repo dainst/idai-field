@@ -169,22 +169,27 @@ type-switcher-button {
 .dropdown {
   height: 39px;
 
-  .dropdown-item {
-    cursor: pointer;
+  hr {
+    margin: 7px 0 9px 0;
+  }
+}
+
+.dropdown-item {
+  cursor: default;
+  user-select: none;
+
+  &:focus {
+    background-color: #fff;
   }
 
-  .dropdown-item:hover {
+  &:hover {
     background-color: $list-item-hover-color;
   }
 
-  .dropdown-item:active {
+  &:active {
     background-color: darken($list-item-hover-color, 5%);
     color: #000;
     outline: 0;
-  }
-
-  hr {
-    margin: 7px 0 9px 0;
   }
 }
 

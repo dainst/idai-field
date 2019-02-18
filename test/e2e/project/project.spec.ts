@@ -56,14 +56,14 @@ describe('project --', function() {
     }
 
 
-    xit('delete project', () => {
+    it('delete project', () => {
 
         performCreateProject();
         ResourcesPage.get();
 
         ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+        ProjectPage.getProjectNameOptionText(0).then(text => { expect(text).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(text => { expect(text).toContain('test') });
 
         ProjectPage.clickDeleteProject();
         browser.sleep(delays.shortRest);
@@ -73,8 +73,6 @@ describe('project --', function() {
         browser.sleep(1000);
 
         ResourcesPage.get();
-        browser.sleep(delays.shortRest * 10);
-        NavbarPage.navigate('project');
         browser.sleep(delays.shortRest * 15);
         ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 5);

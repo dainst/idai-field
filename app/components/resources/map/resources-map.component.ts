@@ -51,8 +51,11 @@ export class ResourcesMapComponent {
         this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
+            this.closeContextMenu();
             this.parentDocuments = this.getParentDocuments(path);
         });
+
+        this.resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
     }
 
 
@@ -94,6 +97,13 @@ export class ResourcesMapComponent {
 
         this.contextMenuPosition = { x: event.clientX, y: event.clientY };
         this.contextMenuDocument = document;
+    }
+
+
+    public closeContextMenu() {
+
+        this.contextMenuPosition = undefined;
+        this.contextMenuDocument = undefined;
     }
 
 
@@ -162,13 +172,6 @@ export class ResourcesMapComponent {
     }
 
 
-    private closeContextMenu() {
-
-        this.contextMenuPosition = undefined;
-        this.contextMenuDocument = undefined;
-    }
-
-
     private selectedDocumentIsNew(): boolean {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
@@ -190,5 +193,24 @@ export class ResourcesMapComponent {
             .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
 
         return segment ? [segment.document] : [];
+    }
+
+
+    private handleClick(event: any) {
+
+        if (!this.contextMenuPosition) return;
+
+        let target = event.target;
+        let inside: boolean = false;
+
+        do {
+            if (target.id === 'context-menu') {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+
+        if (!inside) this.closeContextMenu();
     }
 }

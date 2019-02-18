@@ -16,7 +16,7 @@ export class ContextMenuComponent {
 
     @Input() position: { x: number, y: number };
 
-    @Output() onSelectAction = new EventEmitter<ContextMenuAction>();
+    @Output() onSelectAction: EventEmitter<ContextMenuAction> = new EventEmitter<ContextMenuAction>();
 
 
     public selectAction(action: ContextMenuAction) {

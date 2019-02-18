@@ -13,7 +13,6 @@ const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
 const expressPouchDB = require('express-pouchdb');
 const fs = require('fs');
-const path = require('path');
 const common = require('../common');
 
 /**
@@ -25,9 +24,8 @@ describe('syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
-    const configTemplate = browser.params.configTemplate;
 
-    let db, server, changes;
+    let db, server;
 
 
     function makeDoc(id, identifier, shortDescription) {
@@ -115,7 +113,6 @@ describe('syncing --', function() {
 
     afterEach(done => {
 
-        if (changes) changes.cancel();
         common.resetConfigJson().then(done);
     });
 
@@ -137,7 +134,8 @@ describe('syncing --', function() {
 
     function createAlternateDocument(nr) {
 
-        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr + '_alternative');
+        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr,
+            'Testfund' + nr + '_alternative');
         testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
 
         return db.put(testDocumentAlternative, { force: true })
@@ -170,47 +168,51 @@ describe('syncing --', function() {
 
     it('open conflict resolver via taskbar', async done => {
 
-        const nr = '8';
+        const number = '1';
 
-        await createEventualConflict(nr);
+        await createEventualConflict(number);
         await NavbarPage.clickConflictsButton();
         browser.sleep(delays.shortRest * 5);
-        NavbarPage.clickConflictResolverLink('testf' + nr);
+        NavbarPage.clickConflictResolverLink('testf' + number);
         await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+
         done();
     });
 
 
     it('open conflict resolver via conflict button in document view', async done => {
 
-        const nr = '9';
+        const number = '2';
 
-        await createEventualConflict(nr);
-        ResourcesPage.clickSelectResource('testf' + nr);
+        await createEventualConflict(number);
+        ResourcesPage.clickSelectResource('testf' + number);
         DetailSidebarPage.clickSolveConflicts();
         await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+
         done();
     });
 
 
     it('resolve a save conflict via conflict resolver', async done => {
 
-        const nr = '6';
-        let testDocument = await createOneDocument(nr);
+        const number = '3';
+
+        let testDocument = await createOneDocument(number);
         await NavbarPage.navigate('project');
         await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
-        ResourcesPage.clickSelectResource('testf' + nr);
+        ResourcesPage.clickSelectResource('testf' + number);
         await DetailSidebarPage.performEditDocument();
-        testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
+        testDocument.resource.shortDescription = 'Testfund' + number + '_alternative1';
         await updateTestDoc(testDocument);
-        DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
+        DoceditPage.typeInInputField('shortDescription', 'Testfund' + number
+            + '_alternative2');
         DoceditPage.clickSaveDocument(true, false);
         DoceditPage.clickChooseRightRevision();
         DoceditPage.clickSolveConflictButton();
         DoceditPage.clickSaveDocument(true, false);
-        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+        expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))
             .not.toContain('conflicted');
 
         done();
@@ -219,22 +221,24 @@ describe('syncing --', function() {
 
     it('resolve an eventual conflict via conflict resolver', done => {
 
-        const nr = '10';
+        const number = '4';
 
-        createEventualConflict(nr).then(() => {
+        createEventualConflict(number).then(() => {
 
-            ResourcesPage.clickSelectResource('testf' + nr);
-            ResourcesPage.clickSelectResource('testf' + nr);
+            ResourcesPage.clickSelectResource('testf' + number);
+            ResourcesPage.clickSelectResource('testf' + number);
             DetailSidebarPage.performEditDocument();
             DoceditPage.clickConflictsTab();
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();
             DoceditPage.clickSaveDocument();
             browser.sleep(delays.shortRest * 10);
-            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+            expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))
+                .not.toContain('conflicted');
 
-            db.get('tf' + nr).then(doc => {
-                expect(['Testfund' + nr, 'Testfund' + nr + '_alternative']).toContain(doc.resource.shortDescription);
+            db.get('tf' + number).then(doc => {
+                expect(['Testfund' + number, 'Testfund' + number + '_alternative'])
+                    .toContain(doc.resource.shortDescription);
                 done();
             });
 
@@ -247,16 +251,19 @@ describe('syncing --', function() {
 
     it('detect an eventual conflict and mark the corresponding resource list item', async done => {
 
-        const nr = '7';
+        const number = '5';
 
-        await createOneDocument(nr);
+        await createOneDocument(number);
         await NavbarPage.navigate('project');
         await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
-        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
-        await createAlternateDocument(nr);
-        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
+        expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))
+            .not.toContain('conflicted');
+        await createAlternateDocument(number);
+        expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))
+            .toContain('conflicted');
+
         done();
     });
 });

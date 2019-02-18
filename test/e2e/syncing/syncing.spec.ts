@@ -117,9 +117,10 @@ describe('syncing --', function() {
     });
 
 
-    function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
+    function createOneDocument(number, additionalFieldName?, additionalFieldValue?) {
 
-        const testDocument = makeDoc('test-' + nr, 'testf' + nr, 'Testfund' + nr);
+        const testDocument = makeDoc('test-' + number, 'testf' + number,
+            'Testfund' + number);
 
         if (additionalFieldName && additionalFieldValue) {
             testDocument.resource[additionalFieldName] = additionalFieldValue;
@@ -132,10 +133,10 @@ describe('syncing --', function() {
     }
 
 
-    function createAlternateDocument(nr) {
+    function createAlternateDocument(number) {
 
-        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr,
-            'Testfund' + nr + '_alternative');
+        const testDocumentAlternative = makeDoc('test-' + number, 'testf' + number,
+            'Testfund' + number + '_alternative');
         testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
 
         return db.put(testDocumentAlternative, { force: true })
@@ -148,13 +149,13 @@ describe('syncing --', function() {
     }
 
 
-    function createEventualConflict(nr) {
+    function createEventualConflict(number) {
 
-        return createOneDocument(nr)
+        return createOneDocument(number)
             .then(() => NavbarPage.navigate('project'))
             .then(() => ResourcesPage.clickHierarchyButton('S1'))
             .then(() => browser.sleep(delays.shortRest * 10))
-            .then(() => createAlternateDocument(nr));
+            .then(() => createAlternateDocument(number));
     }
 
 
@@ -236,7 +237,7 @@ describe('syncing --', function() {
             expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))
                 .not.toContain('conflicted');
 
-            db.get('tf' + number).then(doc => {
+            db.get('test-' + number).then(doc => {
                 expect(['Testfund' + number, 'Testfund' + number + '_alternative'])
                     .toContain(doc.resource.shortDescription);
                 done();

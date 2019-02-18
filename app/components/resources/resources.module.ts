@@ -39,6 +39,7 @@ import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
+import {ContextMenuComponent} from './map/context-menu.component';
 
 const remote = require('electron').remote;
 
@@ -70,6 +71,7 @@ const remote = require('electron').remote;
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,
         SearchSuggestionsComponent,
+        ContextMenuComponent,
         MoveModalComponent
     ],
     providers: [

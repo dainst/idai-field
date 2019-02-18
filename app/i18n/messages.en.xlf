@@ -1846,6 +1846,14 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.contextMenu.move" datatype="html">
+        <source>Verschieben</source>
+        <target state="final">Move</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">
         <source>Suchkriterien</source>
         <target state="final">Search criteria</target>

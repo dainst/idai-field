@@ -8,6 +8,7 @@ import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
 import {DoceditLauncher} from '../service/docedit-launcher';
+import {ContextMenuAction} from './context-menu.component';
 
 
 @Component({
@@ -28,6 +29,9 @@ export class ResourcesMapComponent {
     @Input() activeTab: string;
 
     public parentDocuments: Array<Document>;
+    public contextMenuPosition: { x: number, y: number }|undefined;
+
+    private contextMenuDocument: FieldDocument|undefined;
 
 
     // TODO Remove
@@ -86,6 +90,23 @@ export class ResourcesMapComponent {
     }
 
 
+    public openContextMenu(event: MouseEvent, document: FieldDocument) {
+
+        this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+        this.contextMenuDocument = document;
+    }
+
+
+    public async performContextMenuAction(action: ContextMenuAction) {
+
+        if (!this.contextMenuDocument) return;
+        const document: FieldDocument = this.contextMenuDocument;
+
+        this.closeContextMenu();
+        if (action === 'move') await this.resourcesComponent.moveDocument(document);
+    }
+
+
     /**
      * @param geometry
      *   <code>null</code> indicates geometry should get deleted.
@@ -138,6 +159,13 @@ export class ResourcesMapComponent {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         }
+    }
+
+
+    private closeContextMenu() {
+
+        this.contextMenuPosition = undefined;
+        this.contextMenuDocument = undefined;
     }
 
 

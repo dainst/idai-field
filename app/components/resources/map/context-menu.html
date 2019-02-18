@@ -1,0 +1,9 @@
+<div id="context-menu"
+     class="dropdown-menu show"
+     [style.left]="position.x + 'px'"
+     [style.top] = "position.y + 'px'">
+    <div id="move-button" class="dropdown-item" (click)="selectAction('move')">
+        <span class="mdi mdi-arrow-decision"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
+    </div>
+</div>

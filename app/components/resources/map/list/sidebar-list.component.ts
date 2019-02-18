@@ -5,6 +5,7 @@ import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
+import {ResourcesMapComponent} from '../resources-map.component';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class SidebarListComponent extends BaseList {
     constructor(resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                private navigationService: NavigationService) {
+                private navigationService: NavigationService,
+                private resourcesMapComponent: ResourcesMapComponent) {
 
         super(resourcesComponent, viewFacade, loading)
     }
@@ -36,9 +38,14 @@ export class SidebarListComponent extends BaseList {
 
     public jumpToView = (document: FieldDocument) => this.navigationService.jumpToView(document);
 
-    public showMoveIntoOption = (document: FieldDocument) => this.navigationService.showMoveIntoOption(document);
+    public showMoveIntoOption = (document: FieldDocument) =>
+        this.navigationService.showMoveIntoOption(document);
 
-    public showJumpToViewOption = (document: FieldDocument) => this.navigationService.showJumpToViewOption(document);
+    public showJumpToViewOption = (document: FieldDocument) =>
+        this.navigationService.showJumpToViewOption(document);
+
+    public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
+        this.resourcesMapComponent.openContextMenu(event, document);
 
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {

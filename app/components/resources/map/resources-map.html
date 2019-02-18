@@ -3,6 +3,10 @@
         <sidebar-list></sidebar-list>
     </div>
 
+    <context-menu *ngIf="contextMenuPosition"
+                  [position]="contextMenuPosition"
+                  (onSelectAction)="performContextMenuAction($event)"></context-menu>
+
     <div class="col px-0">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"

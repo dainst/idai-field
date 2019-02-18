@@ -335,7 +335,7 @@
         <target state="final">Keine Suchkriterien angegeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/document-picker.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
@@ -343,7 +343,7 @@
         <target state="final">Keine Ziele gefunden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/document-picker.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
@@ -821,7 +821,7 @@
         <target state="final">Matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.images" datatype="html">
@@ -829,7 +829,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
@@ -1409,7 +1409,7 @@
         <target state="final">Alle Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.unlinked" datatype="html">
@@ -1417,7 +1417,7 @@
         <target state="final">Unverknüpfte Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.linked" datatype="html">
@@ -1425,7 +1425,7 @@
         <target state="final">Verknüpfte Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1608,7 +1608,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.moveModal.chooseParentResource" datatype="html">
+      <trans-unit id="resources.moveModal.chooseParentResource" datatype="html">
         <source>
         Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
         <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:

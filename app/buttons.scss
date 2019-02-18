@@ -2,8 +2,12 @@ $greenbgr: #1b9519;
 $redbgr: #e00000;
 $lightgraybgr: #eeeeee;
 
+.btn {
+  cursor: default !important;
+}
+
 .circular-button {
-  cursor: pointer;
+  cursor: default;
   text-align: center;
   padding: 4px 0 0 1px;
   border-radius: 50%;
@@ -23,7 +27,6 @@ $lightgraybgr: #eeeeee;
 
 .small-circular-button {
   font-size: 17px;
-  cursor: pointer;
   text-align: center;
   padding: 8px 0 0 0;
   border-radius: 50%;
@@ -64,10 +67,6 @@ $lightgraybgr: #eeeeee;
   background-color: lighten($redbgr, 35%);
 }
 
-.btn {
-  cursor: pointer;
-}
-
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus {
   box-shadow: none !important;
 }
@@ -75,6 +74,7 @@ $lightgraybgr: #eeeeee;
 .nav-link {
   padding-right: 1rem !important;
   padding-left: 1rem !important;
+  cursor: default !important;
 }
 
 plus-button,

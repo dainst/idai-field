@@ -10,7 +10,6 @@
   user-select: none;
 
   .leaflet-overlay-pane path {
-
       &.templine {
         stroke: blue;
         stroke-width: 1px;
@@ -21,7 +20,12 @@
         stroke-width: 1px;
         stroke-dasharray: 5;
       }
-    }
+  }
+
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
+    cursor: default !important;
+  }
 }
 
 #mouse-position-coordinates-x,

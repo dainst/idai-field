@@ -207,7 +207,7 @@ html [type='button'],
 }
 
 .popover-item {
-  cursor: pointer;
+  cursor: default;
   border: 0 !important;
   border-radius: 0 !important;
 }
@@ -275,12 +275,6 @@ select.form-control:not([size]):not([multiple]) {
 .form-check .form-check-label {
   font-size: 15px;
   padding-left: 1.4rem;
-}
-
-.fieldcollapse {
-  font-size: 1em;
-  cursor: pointer;
-  font-weight: bold !important;
 }
 
 /* Relation Picker */

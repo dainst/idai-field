@@ -20,7 +20,6 @@
     padding: 12px;
     background-color: white;
     margin-bottom: 1px;
-    cursor: pointer;
 
     &.selected-suggestion {
       background-color: darken($list-item-hover-color, 5%);

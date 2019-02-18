@@ -119,7 +119,7 @@ describe('syncing --', function() {
 
     function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
 
-        const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
+        const testDocument = makeDoc('test-' + nr, 'testf' + nr, 'Testfund' + nr);
 
         if (additionalFieldName && additionalFieldValue) {
             testDocument.resource[additionalFieldName] = additionalFieldValue;

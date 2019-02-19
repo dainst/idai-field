@@ -984,7 +984,7 @@
         <source>Ressource löschen?</source>
         <target state="final">Ressource löschen?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -996,7 +996,7 @@
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
@@ -1010,7 +1010,7 @@
         ebenfalls entfernt werden.
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
@@ -1022,21 +1022,17 @@
         Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
-        <source>Löschen</source>
-        <target state="final">Löschen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
+        <source>
+        Löschen
+    </source>
+        <target state="final">
+        Löschen
+    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -1045,14 +1041,16 @@
           <context context-type="sourcefile">components/imageview/georeference-view.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
-        <source>Abbrechen</source>
-        <target state="final">Abbrechen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
+        <source>Abbrechen
+    </source>
+        <target state="final">Abbrechen
+    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
@@ -1084,6 +1082,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/move-modal.html</context>
           <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
@@ -1237,7 +1239,7 @@
         <target state="final">Metadaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.relations" datatype="html">
@@ -1245,7 +1247,7 @@
         <target state="final">Relationen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images" datatype="html">
@@ -1253,7 +1255,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -1261,7 +1263,7 @@
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1273,7 +1275,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1285,7 +1287,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1297,19 +1299,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.loadingInfo.delete" datatype="html">
-        <source>
-                        Ressource wird gelöscht...
-                    </source>
-        <target state="final">
-                        Ressource wird gelöscht...
-                    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -1860,6 +1850,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/context-menu.html</context>
           <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="final">Löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">

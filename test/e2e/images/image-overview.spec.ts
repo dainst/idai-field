@@ -88,6 +88,7 @@ describe('images --', function() {
         });
     });
 
+
     it('delete -- delete two images in the grid view', () => {
 
         ImageOverviewPage.getCellImageName(0).then(image1Identifier => {
@@ -104,6 +105,7 @@ describe('images --', function() {
             });
         });
     });
+
 
     it('delete -- cancel an image delete in the modal.', () => {
 

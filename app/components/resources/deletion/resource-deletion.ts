@@ -32,13 +32,8 @@ export class ResourceDeletion {
         ref.componentInstance.setDocument(document);
         ref.componentInstance.setCount(await this.fetchIsRecordedInCount(document));
 
-        try {
-            const decision: string = await ref.result;
-            if (decision === 'delete') await this.performDeletion(document);
-        } catch(err) {
-            if (Array.isArray(err)) throw err;
-            // Otherwise, the modal has been canceled.
-        }
+         const decision: string = await ref.result;
+         if (decision === 'delete') await this.performDeletion(document);
     }
 
 

@@ -171,7 +171,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             await this.viewFacade.populateDocumentList();
             this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
         } catch (msgWithParams) {
-            this.messages.add(msgWithParams);
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            // Otherwise, the delete modal has been canceled.
         }
     }
 

@@ -421,7 +421,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations -- delete inverse relations when deleting a resource', () => {
+    xit('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');

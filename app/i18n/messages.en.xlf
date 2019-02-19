@@ -975,7 +975,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.deleteModal.header" datatype="html">
+      <trans-unit id="resources.deleteModal.header" datatype="html">
         <source>
         Ressource <x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/> löschen?
     </source>
@@ -985,7 +985,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.deleteModal.warning.single" datatype="html">
+      <trans-unit id="resources.deleteModal.warning.single" datatype="html">
         <source>
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </source>
@@ -997,7 +997,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.deleteModal.warning.multiple" datatype="html">
+      <trans-unit id="resources.deleteModal.warning.multiple" datatype="html">
         <source>
         Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
@@ -1011,7 +1011,7 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.deleteModal.confirmDeleteInfo" datatype="html">
+      <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
         <source>
         Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
     </source>

@@ -1,20 +1,20 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@docedit.deleteModal.header">
+    <h5 class="modal-title" i18n="@@resources.deleteModal.header">
         Ressource {{document.resource.identifier}} löschen?
     </h5>
 </div>
 
 <div class="modal-body">
     <div *ngIf="isRecordedInResourcesCount === 1" class="text-center alert alert-warning"
-         i18n="@@docedit.deleteModal.warning.single">
+         i18n="@@resources.deleteModal.warning.single">
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </div>
     <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning"
-         i18n="@@docedit.deleteModal.warning.multiple">
+         i18n="@@resources.deleteModal.warning.multiple">
         Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </div>
-    <div id="confirm-delete-info" i18n="@@docedit.deleteModal.confirmDeleteInfo">
+    <div id="confirm-delete-info" i18n="@@resources.deleteModal.confirmDeleteInfo">
         Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
     </div>
     <div class="input-group">

@@ -976,8 +976,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.deleteModal.header" datatype="html">
-        <source>Ressource löschen?</source>
-        <target state="final">Delete resource?</target>
+        <source>
+        Ressource <x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/> löschen?
+    </source>
+        <target state="final">Delete resource <x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/>?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -992,7 +994,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.deleteModal.warning.multiple" datatype="html">
@@ -1006,7 +1008,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.deleteModal.confirmDeleteInfo" datatype="html">
@@ -1018,7 +1020,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
@@ -1036,7 +1038,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
@@ -1077,7 +1079,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>

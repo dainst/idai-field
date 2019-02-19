@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {DatastoreErrors, Document, NewDocument, ProjectConfiguration, IdaiType,
-    FieldDefinition} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -125,13 +124,6 @@ export class DocumentHolder {
     }
 
 
-    public async remove() {
-
-        await this.removeImageWithImageStore();
-        await this.removeWithPersistenceManager();
-    }
-
-
     private async performAssertions() {
 
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
@@ -179,30 +171,6 @@ export class DocumentHolder {
             return await this.datastore.get(id, { skipCache: true });
         } catch (e) {
             throw [M.DATASTORE_ERROR_NOT_FOUND];
-        }
-    }
-
-
-    private async removeImageWithImageStore(): Promise<any> {
-
-        if (!this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Image')) return undefined;
-
-        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-        try {
-            await this.imagestore.remove(this.clonedDocument.resource.id);
-        } catch (_) {
-            return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
-        }
-    }
-
-
-    private async removeWithPersistenceManager(): Promise<any> {
-
-        try {
-            await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
-        } catch (removeError) {
-            console.error('removeWithPersistenceManager', removeError);
-            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];
         }
     }
 

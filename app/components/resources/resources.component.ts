@@ -11,6 +11,7 @@ import {M} from '../m';
 import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../common/angular-utility';
+import {ResourceDeletion} from './deletion/resource-deletion';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
                 private typeUtility: TypeUtility,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private resourceDeletion: ResourceDeletion
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
@@ -154,9 +156,22 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
             await this.routingService.jumpToResource(document);
-        } catch(msgWithParams) {
+        } catch (msgWithParams) {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
             // Otherwise, the move modal has been canceled
+        }
+    }
+
+
+    public async deleteDocument(document: FieldDocument) {
+
+        try {
+            await this.viewFacade.deselect();
+            await this.resourceDeletion.delete(document);
+            await this.viewFacade.populateDocumentList();
+            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
         }
     }
 

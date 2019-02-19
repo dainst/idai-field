@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 
-export type ContextMenuAction = 'move';
+export type ContextMenuAction = 'move'|'delete';
 
 
 @Component({

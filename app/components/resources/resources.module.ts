@@ -40,6 +40,7 @@ import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './map/context-menu.component';
+import {ResourceDeletion} from './deletion/resource-deletion';
 
 const remote = require('electron').remote;
 
@@ -81,6 +82,7 @@ const remote = require('electron').remote;
         DoceditLauncher,
         LayerManager,
         LayerImageProvider,
+        ResourceDeletion,
         {
             provide: ResourcesStateManager,
             useFactory: (datastore: FieldReadDatastore,

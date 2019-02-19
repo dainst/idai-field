@@ -51,13 +51,6 @@
                                   class="dropdown-entry-label"
                                   i18n="@@buttons.duplicate">Vervielfältigen</span>
                         </span>
-                        <span id="document-edit-button-delete-document"
-                              *ngIf="showDeleteButton()"
-                              class="dropdown-item"
-                              (click)="openDeleteModal()">
-                            <span class="mdi mdi-delete"></span>
-                            <span class="dropdown-entry-label" i18n="@@buttons.delete">Löschen</span>
-                        </span>
                     </div>
                 </div>
                 <button class="btn btn-primary"
@@ -141,9 +134,6 @@
                     <span *ngIf="operationInProgress === 'duplicate' && documentHolder.clonedDocument.resource.id"
                           i18n="@@docedit.loadingInfo.duplicate">
                         Ressource wird vervielfältigt...
-                    </span>
-                    <span *ngIf="operationInProgress === 'delete'" i18n="@@docedit.loadingInfo.delete">
-                        Ressource wird gelöscht...
                     </span>
                 </div>
             </div>

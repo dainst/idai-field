@@ -102,7 +102,15 @@ export class ResourcesMapComponent {
         const document: FieldDocument = this.contextMenuDocument;
 
         this.closeContextMenu();
-        if (action === 'move') await this.resourcesComponent.moveDocument(document);
+
+        switch (action) {
+            case 'move':
+                await this.resourcesComponent.moveDocument(document);
+                break;
+            case 'delete':
+                await this.resourcesComponent.deleteDocument(document);
+                break;
+        }
     }
 
 

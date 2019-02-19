@@ -7,7 +7,6 @@ import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
@@ -42,7 +41,7 @@ export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
-    private operationInProgress: 'save'|'duplicate'|'delete'|'none' = 'none';
+    private operationInProgress: 'save'|'duplicate'|'none' = 'none';
     private escapeKeyPressed: boolean = false;
 
 
@@ -120,13 +119,6 @@ export class DoceditComponent {
     }
 
 
-    public showDeleteButton(): boolean {
-
-        return this.showDropdownButton()
-            && this.documentHolder.clonedDocument.resource.id !== undefined
-    }
-
-
     public async setDocument(document: FieldDocument|ImageDocument) {
 
         this.documentHolder.setDocument(document);
@@ -180,25 +172,6 @@ export class DoceditComponent {
         }
 
         if (numberOfDuplicates !== undefined) await this.save(numberOfDuplicates);
-    }
-
-
-    public async openDeleteModal() {
-
-        this.subModalOpened = true;
-
-        const ref: NgbModalRef = this.modalService.open(DeleteModalComponent, { keyboard: false });
-        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
-
-        try {
-            const decision: string = await ref.result;
-            if (decision === 'delete') await this.deleteDocument();
-        } catch(err) {
-            // DeleteModal has been canceled
-        } finally {
-            this.subModalOpened = false;
-        }
     }
 
 
@@ -314,16 +287,6 @@ export class DoceditComponent {
     }
 
 
-    private async fetchIsRecordedInCount(document: Document): Promise<number> {
-
-        return !document.resource.id
-            ? 0
-            : (await this.datastore.find(
-                    { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
-            ).documents.length;
-    }
-
-
     private showTypeChangeFieldsWarning(invalidFields: string[]) {
 
         if (invalidFields.length > 0) {
@@ -359,24 +322,6 @@ export class DoceditComponent {
             ? [M.DOCEDIT_SUCCESS_SAVE]
             : [M.DOCEDIT_SUCCESS_DUPLICATE]
         );
-    }
-
-
-    private async deleteDocument() {
-
-        this.operationInProgress = 'delete';
-        this.loading.start('docedit');
-
-        try {
-            await this.documentHolder.remove();
-            this.activeModal.dismiss('deleted');
-            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
-        } catch(err) {
-            this.messages.add(err);
-        }
-
-        this.loading.stop();
-        this.operationInProgress = 'none';
     }
 
 

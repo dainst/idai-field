@@ -13,7 +13,7 @@ import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.component';
 import {ImagePickerComponent} from './widgets/image-picker.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
-import {DeleteModalComponent} from './dialog/delete-modal.component';
+import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
 import {DocumentHolder} from './document-holder';
 import {EditFormComponent} from './core/edit-form.component';
 import {RelationsFormComponent} from './core/relations-form.component';

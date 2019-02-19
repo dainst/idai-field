@@ -19,7 +19,7 @@ import {SettingsService} from '../../../../core/settings/settings-service';
  */
 export class LayerMapComponent extends MapComponent {
 
-    @Input() mainTypeDocumentIds: string;
+    @Input() viewName: string;
 
     public layers: Array<ImageDocument> = [];
 
@@ -194,8 +194,8 @@ export class LayerMapComponent extends MapComponent {
         // Update layers after switching main type document.
         // Update layers after switching to another view with an existing main type document or coming from
         // a view with an existing main type document.
-        if (changes['mainTypeDocumentIds']
-            && (changes['mainTypeDocumentIds'].currentValue || changes['mainTypeDocumentIds'].previousValue)) {
+        if (changes['viewName']
+            && (changes['viewName'].currentValue || changes['viewName'].previousValue)) {
             return true;
         }
 

@@ -34,10 +34,6 @@ export class ResourcesMapComponent {
     private contextMenuDocument: FieldDocument|undefined;
 
 
-    // TODO Remove
-    private mainTypeIds = [];
-
-
     constructor(
         public loading: Loading,
         public viewFacade: ViewFacade,
@@ -60,13 +56,6 @@ export class ResourcesMapComponent {
 
 
     public getProjectDocument = () => this.settingsService.getProjectDocument();
-
-
-    // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1.
-    // this is ok because we do not offer the 'all'-selection if only one operation is available.
-    // TODO
-    public getMainTypeIds = () => /*this.viewFacade.getSelectedOperations()*/ this.mainTypeIds;
-        //.map(_ => _.resource.id).join(',');
 
 
     public async onKeyDown(event: KeyboardEvent) {

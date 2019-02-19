@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Document, Messages, FieldDocument, FieldGeometry} from 'idai-components-2';
+import {Messages, FieldDocument, FieldGeometry} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -28,7 +28,7 @@ export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 
-    public parentDocuments: Array<Document>;
+    public parentDocument: FieldDocument|undefined;
     public contextMenuPosition: { x: number, y: number }|undefined;
 
     private contextMenuDocument: FieldDocument|undefined;
@@ -48,11 +48,11 @@ export class ResourcesMapComponent {
         private messages: Messages,
         private doceditLauncher: DoceditLauncher
     ) {
-        this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
+        this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.closeContextMenu();
-            this.parentDocuments = this.getParentDocuments(path);
+            this.parentDocument = this.getParentDocument(path);
         });
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
@@ -181,18 +181,18 @@ export class ResourcesMapComponent {
     }
 
 
-    private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
+    private getParentDocument(navigationPath: NavigationPath): FieldDocument|undefined {
 
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
 
         if ((this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) && currentOperation) {
-            return [currentOperation];
+            return currentOperation;
         }
 
         const segment = navigationPath.segments
             .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
 
-        return segment ? [segment.document] : [];
+        return segment ? segment.document : undefined;
     }
 
 

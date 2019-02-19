@@ -1,13 +1,13 @@
-import {FieldDocument, DatastoreErrors, Messages, Document} from 'idai-components-2';
-import {M} from '../../m';
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {FieldDocument, DatastoreErrors, Messages, Document} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {UsernameProvider} from '../../../core/settings/username-provider';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
+import {M} from '../../m';
 
 
 /**
@@ -23,7 +23,7 @@ export class ResourceDeletion {
                 private typeUtility: TypeUtility,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,
-                private datastore: FieldReadDatastore) {}
+                private indexFacade: IndexFacade) {}
 
 
     public async delete(document: FieldDocument) {
@@ -68,13 +68,10 @@ export class ResourceDeletion {
     }
 
 
-    private async fetchIsRecordedInCount(document: Document): Promise<number> {
+    private fetchIsRecordedInCount(document: Document): number {
 
-        // TODO Use IndexFacade
         return !document.resource.id
             ? 0
-            : (await this.datastore.find(
-                    { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
-            ).documents.length;
+            : this.indexFacade.getCount('isRecordedIn:contain', document.resource.id);
     }
 }

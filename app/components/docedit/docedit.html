@@ -22,35 +22,36 @@
             </div>
 
             <div>
-                <button class="btn btn-success disabled pull-right"
-                        id="document-edit-button-save-document"
-                        [class.disabled]="!isChanged() || isLoading()"
-                        (click)="!isChanged() || isLoading() || save()">
-                    <span class="mdi mdi-content-save"></span>
-                    <span class="button-label" i18n="@@buttons.save">Speichern</span>
-                </button>
-                <div *ngIf="showDropdownButton()"
-                     ngbDropdown placement="bottom-right" class="d-inline-block">
-                    <button id="document-edit-button-dropdown"
-                            class="btn btn-primary"
-                            [class.disabled]="isLoading()"
-                            [disabled]="isLoading()"
-                            ngbDropdownToggle>
-                        <span class="mdi mdi-dots-vertical"></span>
+                <div class="btn-group">
+                    <button class="btn btn-success disabled pull-right"
+                            id="document-edit-button-save-document"
+                            [class.disabled]="!isChanged() || isLoading()"
+                            (click)="!isChanged() || isLoading() || save()">
+                        <span class="mdi mdi-content-save"></span>
+                        <span class="button-label" i18n="@@buttons.save">Speichern</span>
                     </button>
-                    <div ngbDropdownMenu id="document-edit-dropdown-menu">
-                        <span id="document-edit-button-duplicate-document"
-                              *ngIf="showDuplicateButton()"
-                              class="dropdown-item"
-                              (click)="openDuplicateModal()">
-                            <span class="mdi mdi-expand-all"></span>
-                            <span *ngIf="!documentHolder.clonedDocument.resource.id"
-                                  class="dropdown-entry-label"
-                                  i18n="@@buttons.createMultipleInstances">Mehrfach erstellen</span>
-                            <span *ngIf="documentHolder.clonedDocument.resource.id"
-                                  class="dropdown-entry-label"
-                                  i18n="@@buttons.duplicate">Vervielfältigen</span>
-                        </span>
+                    <div *ngIf="showDuplicateButton()"
+                         ngbDropdown placement="bottom-right"
+                         class="btn-group">
+                        <button id="document-edit-button-dropdown"
+                                class="btn btn-success dropdown-toggle-split"
+                                [class.disabled]="isLoading()"
+                                [disabled]="isLoading()"
+                                ngbDropdownToggle>
+                        </button>
+                        <div ngbDropdownMenu id="document-edit-dropdown-menu">
+                            <span id="document-edit-button-duplicate-document"
+                                  class="dropdown-item"
+                                  (click)="openDuplicateModal()">
+                                <span class="mdi mdi-expand-all"></span>
+                                <span *ngIf="!documentHolder.clonedDocument.resource.id"
+                                      class="dropdown-entry-label"
+                                      i18n="@@buttons.createMultipleInstances">Mehrfach erstellen</span>
+                                <span *ngIf="documentHolder.clonedDocument.resource.id"
+                                      class="dropdown-entry-label"
+                                      i18n="@@buttons.duplicate">Vervielfältigen</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-primary"

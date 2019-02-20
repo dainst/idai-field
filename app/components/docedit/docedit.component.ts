@@ -103,16 +103,10 @@ export class DoceditComponent {
     };
 
 
-    public showDropdownButton(): boolean {
-
-        return this.documentHolder.clonedDocument !== undefined
-            && this.documentHolder.clonedDocument.resource.type !== 'Project';
-    }
-
-
     public showDuplicateButton(): boolean {
 
-        return this.showDropdownButton()
+        return this.documentHolder.clonedDocument !== undefined
+            && this.documentHolder.clonedDocument.resource.type !== 'Project'
             && !this.typeUtility.isSubtype(
                 this.documentHolder.clonedDocument.resource.type, 'Image'
             );

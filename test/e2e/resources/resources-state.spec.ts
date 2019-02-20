@@ -455,16 +455,16 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath -- update navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.clickMainTypeDocumentNavigationButton();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('SE0');
-        DoceditPage.clickConfirmDeleteInModal();
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
+        ResourcesPage.clickConfirmDeleteInModal();
 
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {

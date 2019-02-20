@@ -54,6 +54,18 @@ export class ResourcesPage {
     }
 
 
+    public static clickOpenContextMenu(identifier: string) {
+
+        common.rightClick(this.getListItemEl(identifier));
+    }
+
+
+    public static clickContextMenuDeleteButton() {
+
+        common.click(element(by.id('context-menu-delete-button')));
+    }
+
+
     /**
      * @deprecated use selectObjectByIdentifier instead
      */
@@ -106,6 +118,12 @@ export class ResourcesPage {
 
         return common.click(element(by.id('choose-type-option-' + typeName)));
     }
+
+
+    public static clickConfirmDeleteInModal() {
+
+        common.click(element(by.id('delete-resource-confirm')));
+    };
 
 
     public static openEditByDoubleClickResource(identifier) {
@@ -171,6 +189,13 @@ export class ResourcesPage {
         browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.type-icon'))), delays.ECWaitTime);
         return element(by.css('.document-teaser div.type-icon')).getText();
     }
+
+
+    public static getConfirmDeletionInputField() {
+
+        return element(by.id('delete-resource-input'));
+    }
+
 
 
     // elements
@@ -239,6 +264,12 @@ export class ResourcesPage {
             delays.ECWaitTime);
         common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
+
+    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
+
+        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
     }
 
 

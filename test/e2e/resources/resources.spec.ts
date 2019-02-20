@@ -268,22 +268,19 @@ describe('resources --', () => {
     });
 
 
-    // TODO Use context menu
-    xit('delete a resource', () => {
+    it('delete a resource', () => {
 
         ResourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
-        DoceditPage.clickConfirmDeleteInModal();
+        ResourcesPage.clickOpenContextMenu('1');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
+        ResourcesPage.clickConfirmDeleteInModal();
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 
 
-    // TODO Use context menu
-    xit('delete an operation and update navbar', () => {
+    it('delete an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
         ResourcesPage.clickHierarchyButton('S1');
@@ -291,10 +288,10 @@ describe('resources --', () => {
 
         browser.wait(EC.presenceOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
 
-        ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('S1');
-        DoceditPage.clickConfirmDeleteInModal();
+        ResourcesPage.clickOpenContextMenu('1');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('S1');
+        ResourcesPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
         NavbarPage.clickCloseAllMessages();
 
@@ -421,13 +418,14 @@ describe('resources --', () => {
     });
 
 
-    xit('relations -- delete inverse relations when deleting a resource', () => {
+    it('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('2');
-        DoceditPage.clickConfirmDeleteInModal();
+        ResourcesPage.clickOpenContextMenu('2');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
+        ResourcesPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));

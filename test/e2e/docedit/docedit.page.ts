@@ -72,23 +72,10 @@ export class DoceditPage {
     };
 
 
-    public static clickDeleteDocument() {
-
-        common.click(element(by.id('document-edit-button-dropdown')));
-        common.click(element(by.id('document-edit-button-delete-document')));
-    };
-
-
     public static clickConfirmDuplicateInModal() {
 
         common.click(element(by.id('duplicate-confirm')));
         browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
-    };
-
-
-    public static clickConfirmDeleteInModal() {
-
-        common.click(element(by.id('delete-resource-confirm')));
     };
 
 
@@ -151,11 +138,6 @@ export class DoceditPage {
         return element(by.id('duplicate-input'));
     }
 
-    public static getConfirmDeletionInputField() {
-
-        return element(by.id('delete-resource-input'));
-    }
-
 
     // type in
 
@@ -170,11 +152,5 @@ export class DoceditPage {
     public static typeInNumberOfDuplicates(numberOfDuplicates: string) {
 
         return common.typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
-    }
-
-
-    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
-
-        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
     }
 }

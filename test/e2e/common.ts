@@ -19,10 +19,16 @@ function typeIn(inputField, text) {
 }
 
 
-function click(el) {
+function click(element) {
 
-    browser.wait(EC.visibilityOf(el), delays.ECWaitTime);
-    return el.click();
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
+    return element.click();
+}
+
+
+function rightClick(element) {
+
+    browser.actions().click(element, protractor.Button.RIGHT).perform();
 }
 
 

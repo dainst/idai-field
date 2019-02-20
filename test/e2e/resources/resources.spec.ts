@@ -536,4 +536,21 @@ describe('resources --', () => {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
     });
+
+
+    it('move a resource', () => {
+
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        ResourcesPage.clickResourceListItemInMoveModal('S2');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(6));
+
+        NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+    });
 });

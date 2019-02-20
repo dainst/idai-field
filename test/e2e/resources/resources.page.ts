@@ -60,6 +60,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuMoveButton() {
+
+        common.click(element(by.id('context-menu-move-button')));
+    }
+
+
     public static clickContextMenuDeleteButton() {
 
         common.click(element(by.id('context-menu-delete-button')));
@@ -136,6 +142,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickResourceListItemInMoveModal(identifier) {
+
+        common.click(element(by.id('resource-' + identifier)));
+    }
+
+
     // get text
 
     public static getListItemIdentifierText(itemNr) {
@@ -197,7 +209,6 @@ export class ResourcesPage {
     }
 
 
-
     // elements
 
     public static getListItemEl(identifier) {
@@ -250,6 +261,12 @@ export class ResourcesPage {
     }
 
 
+    public static getMoveModal() {
+
+        return element(by.id('move-modal'));
+    }
+
+
     // type in
 
     public static typeInListModeInputField(identifier: string, index: number, inputText: string) {
@@ -270,6 +287,12 @@ export class ResourcesPage {
     public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
 
         return common.typeIn(this.getConfirmDeletionInputField(), identifier);
+    }
+
+
+    public static typeInMoveModalSearchBarInput(identifier: string) {
+
+        return common.typeIn(this.getMoveModal().element(by.css('.search-bar-input')), identifier);
     }
 
 

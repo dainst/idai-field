@@ -59,6 +59,7 @@ function resetApp(): Promise<any> {
 module.exports = {
     typeIn: typeIn,
     click: click,
+    rightClick: rightClick,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp
 };

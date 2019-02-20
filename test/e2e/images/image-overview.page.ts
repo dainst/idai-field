@@ -2,7 +2,6 @@
 
 import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
-import {ResourcesPage} from '../resources/resources.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');

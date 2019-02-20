@@ -51,7 +51,7 @@ describe('settings --', function() {
     });
 
 
-    it('show warnings if an invalid imagestore path is set', () => {
+    xit('show warnings if an invalid imagestore path is set', () => {
 
         SettingsPage.get();
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');

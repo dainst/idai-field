@@ -288,7 +288,7 @@ describe('resources --', () => {
 
         browser.wait(EC.presenceOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
 
-        ResourcesPage.clickOpenContextMenu('1');
+        ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuDeleteButton();
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('S1');
         ResourcesPage.clickConfirmDeleteInModal();
@@ -421,7 +421,6 @@ describe('resources --', () => {
     it('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
-        ResourcesPage.openEditByDoubleClickResource('2');
         ResourcesPage.clickOpenContextMenu('2');
         ResourcesPage.clickContextMenuDeleteButton();
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');

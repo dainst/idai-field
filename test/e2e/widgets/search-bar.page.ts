@@ -13,7 +13,7 @@ export class SearchBarPage {
 
     public static getSelectedTypeFilterButton() {
 
-        return element(by.id('filter-button type-icon'));
+        return element(by.css('#filter-button type-icon'));
     }
 
 

@@ -166,8 +166,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public async deleteDocument(document: FieldDocument) {
 
         try {
-            await this.viewFacade.deselect();
             await this.resourceDeletion.delete(document);
+            await this.viewFacade.deselect();
             this.viewFacade.removeView(document.resource.id);
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();

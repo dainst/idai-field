@@ -20,10 +20,10 @@ image-overview-search-bar {
       width: calc(100% - 101px) !important;
     }
 
-    #filter-button {
+    #images-search-bar-filter-button {
       right: 26px !important;
 
-      #searchfilter {
+      .search-filter {
         height: 39px !important;
       }
     }

@@ -8,9 +8,8 @@
            class="form-control search-bar-input"
            placeholder="Suchen..." i18n-placeholder="@@widgets.searchBar.placeholder">
 
-    <span *ngIf="showFiltersMenu" id="filter-button">
-        <button id="searchfilter"
-                class="btn btn-primary"
+    <span *ngIf="showFiltersMenu" id="filter-button" class="filter-button">
+        <button class="btn btn-primary search-filter"
                 type="button"
                 [ngbPopover]="filterMenu"
                 [autoClose]="false"

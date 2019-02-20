@@ -13,9 +13,8 @@
     <image-overview-search-constraints [type]="getSelectedType()">
     </image-overview-search-constraints>
 
-    <div *ngIf="showFiltersMenu" id="filter-button">
-        <button id="searchfilter"
-                class="btn btn-primary"
+    <div *ngIf="showFiltersMenu" id="images-search-bar-filter-button" class="filter-button">
+        <button class="btn btn-primary search-filter"
                 type="button"
                 [ngbPopover]="filterMenu"
                 [autoClose]="false"

@@ -20,9 +20,8 @@
                                   [type]="getSelectedType()">
     </resources-search-constraints>
 
-    <div *ngIf="showFiltersMenu" id="filter-button">
-        <button id="searchfilter"
-                class="btn btn-primary"
+    <div *ngIf="showFiltersMenu" id="resources-search-bar-filter-button" class="filter-button">
+        <button class="btn btn-primary search-filter"
                 type="button"
                 (click)="hideSuggestions()"
                 [ngbPopover]="filterMenu"

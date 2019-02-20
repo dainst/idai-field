@@ -81,7 +81,7 @@ export class SearchBarComponent {
         let inside: boolean = false;
 
         do {
-            if (target.id === 'filter-button') {
+            if (target.id.includes('filter-button')) {
                 inside = true;
                 break;
             }

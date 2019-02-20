@@ -19,13 +19,13 @@ describe('images/state --', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 
-        SearchBarPage.clickChooseTypeFilter('image-drawing');
+        SearchBarPage.clickChooseTypeFilter('image-drawing', 'images');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
         NavbarPage.navigate('project');
         NavbarPage.navigate('images');
 
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
+        SearchBarPage.getSelectedTypeFilterCharacter('images').then(value => expect(value).toEqual('Z'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
     });
 

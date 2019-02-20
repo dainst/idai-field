@@ -5,11 +5,11 @@
     padding: 9px;
   }
 
-  #filter-button {
+  .filter-button {
     position: absolute;
     right: 16px;
 
-    #searchfilter {
+    .search-filter {
       z-index: 3;
       padding: 4px 1em;
       border: none;

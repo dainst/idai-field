@@ -47,6 +47,8 @@ export class SidebarListComponent extends BaseList {
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
         this.resourcesMapComponent.openContextMenu(event, document);
 
+    public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
+
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 

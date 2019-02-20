@@ -1,4 +1,4 @@
-<ul id="objectList" class="list-group object-list">
+<ul id="objectList" class="list-group object-list" (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
         (click)="select(document)"
         (dblclick)="resourcesComponent.editDocument(document, 'fields')"

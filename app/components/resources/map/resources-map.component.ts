@@ -104,6 +104,9 @@ export class ResourcesMapComponent {
         this.closeContextMenu();
 
         switch (action) {
+            case 'edit':
+                await this.resourcesComponent.editDocument(document);
+                break;
             case 'move':
                 await this.resourcesComponent.moveDocument(document);
                 break;

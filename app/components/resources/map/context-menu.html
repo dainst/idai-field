@@ -2,11 +2,15 @@
      class="dropdown-menu show"
      [style.left]="position.x + 'px'"
      [style.top] = "position.y + 'px'">
-    <div id="move-button" class="dropdown-item" (click)="selectAction('move')">
+    <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
+        <span class="mdi mdi-pencil"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+    </div>
+    <div id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
     </div>
-    <div id="delete-button" class="dropdown-item" (click)="selectAction('delete')">
+    <div id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
         <span class="mdi mdi-delete"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
     </div>

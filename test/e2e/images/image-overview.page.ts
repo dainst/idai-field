@@ -197,7 +197,7 @@ export module ImageOverviewPage {
 
     export function typeInIdentifierInLinkModal(identifier) {
 
-        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
+        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.css('.search-bar-input')), identifier);
     }
 
 

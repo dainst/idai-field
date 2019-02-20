@@ -1,8 +1,7 @@
 <form id="search-bar" class="form-inline">
     <span id="input-wrapper">
         <input #searchInput
-               id="object-search"
-               class="form-control"
+               class="form-control search-bar-input"
                [class.small-search-input]="extendedSearch"
                [(ngModel)]="q"
                (keyup)="onKeyUp($event)"

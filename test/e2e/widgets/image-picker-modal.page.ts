@@ -27,7 +27,7 @@ export class ImagePickerModalPage {
 
     public static typeInIdentifierInSearchField(identifier) {
 
-       common.typeIn(element(by.css('#image-picker-modal #object-search')), identifier);
+       common.typeIn(element(by.css('#image-picker-modal .search-bar-input')), identifier);
     }
 
 

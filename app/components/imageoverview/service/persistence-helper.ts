@@ -26,6 +26,8 @@ export class PersistenceHelper {
 
     public async deleteSelectedImageDocuments() {
 
+        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+
         for (let document of this.imageOverviewFacade.getSelected()) {
             if (!document.resource.id) continue;
             const resourceId: string = document.resource.id;

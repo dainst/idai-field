@@ -8,6 +8,7 @@ import {TypeUtility} from '../../../core/model/type-utility';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {M} from '../../m';
+import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 
 
 /**
@@ -28,19 +29,27 @@ export class ResourceDeletion {
 
     public async delete(document: FieldDocument) {
 
-        const ref: NgbModalRef = this.modalService.open(DeleteModalComponent, { keyboard: false });
-        ref.componentInstance.setDocument(document);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(document));
+        const modalRef: NgbModalRef = this.modalService.open(
+            DeleteModalComponent, { keyboard: false }
+        );
+        modalRef.componentInstance.setDocument(document);
+        modalRef.componentInstance.setCount(await this.fetchIsRecordedInCount(document));
 
-         const decision: string = await ref.result;
-         if (decision === 'delete') await this.performDeletion(document);
+        const decision: string = await modalRef.result;
+        if (decision === 'delete') await this.performDeletion(document);
     }
 
 
     private async performDeletion(document: FieldDocument) {
 
+        const modalRef: NgbModalRef = this.modalService.open(
+            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
+        );
+
         await this.deleteImageWithImageStore(document);
         await this.deleteWithPersistenceManager(document);
+
+        modalRef.close();
     }
 
 

@@ -1023,6 +1023,14 @@
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.deletionInProgressModal.info" datatype="html">
+        <source>Ressource wird gelöscht...</source>
+        <target state="final">Deleting resource...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/deletion/deletion-in-progress-modal.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
         <source>
         Löschen

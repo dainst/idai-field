@@ -41,6 +41,7 @@ import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './map/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
+import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 
 const remote = require('electron').remote;
 
@@ -73,7 +74,8 @@ const remote = require('electron').remote;
         ResourcesSearchConstraintsComponent,
         SearchSuggestionsComponent,
         ContextMenuComponent,
-        MoveModalComponent
+        MoveModalComponent,
+        DeletionInProgressModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -142,7 +144,8 @@ const remote = require('electron').remote;
         GeometryViewComponent
     ],
     entryComponents: [
-        MoveModalComponent
+        MoveModalComponent,
+        DeletionInProgressModalComponent
     ]
 })
 

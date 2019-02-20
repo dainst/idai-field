@@ -27,6 +27,7 @@ import {ResourceDeletion} from './deletion/resource-deletion';
 export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
+    public isModalOpened: boolean = false;
 
     public filterOptions: Array<IdaiType> = [];
     private scrollTarget: FieldDocument|undefined;
@@ -139,14 +140,18 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
+        this.isModalOpened = true;
 
         const editedDocument: FieldDocument|undefined
             = await this.doceditLauncher.editDocument(document, activeTabName);
         if (editedDocument) this.scrollTarget = editedDocument;
+        this.isModalOpened = false;
     }
 
 
     public async moveDocument(document: FieldDocument) {
+
+        this.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
         modalRef.componentInstance.initialize(document);
@@ -160,10 +165,14 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
             // Otherwise, the move modal has been canceled
         }
+
+        this.isModalOpened = false;
     }
 
 
     public async deleteDocument(document: FieldDocument) {
+
+        this.isModalOpened = true;
 
         try {
             await this.resourceDeletion.delete(document);
@@ -176,6 +185,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
             // Otherwise, the delete modal has been canceled.
         }
+
+        this.isModalOpened = false;
     }
 
 

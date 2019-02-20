@@ -474,6 +474,27 @@ describe('resources/state --', function() {
     });
 
 
+    it('update navigation path after moving a resource', () => {
+
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickMainTypeDocumentNavigationButton();
+
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        ResourcesPage.clickResourceListItemInMoveModal('S2');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(1);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+        });
+    });
+
+
     it('navpath/hierarchy - switch between modes', () => {
 
         ResourcesPage.clickHierarchyButton('S1');

@@ -168,6 +168,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         try {
             await this.viewFacade.deselect();
             await this.resourceDeletion.delete(document);
+            this.viewFacade.removeView(document.resource.id);
+            await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
             this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
         } catch (msgWithParams) {

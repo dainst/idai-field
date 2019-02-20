@@ -5,6 +5,7 @@ import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';
 
+
 @Injectable()
 /**
  * @author Daniel de Oliveira
@@ -39,8 +40,8 @@ export class DoceditLauncher {
         try {
             result = (await doceditRef.result)['document'];
             await this.handleSaveResult(result as FieldDocument);
-        } catch(closeReason) {
-            await this.handleClosed(closeReason, document.resource.id);
+        } catch (closeReason) {
+            if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
         } finally {
             this.isDoceditModalOpened = false;
         }
@@ -58,18 +59,5 @@ export class DoceditLauncher {
 
         await this.viewFacade.populateDocumentList();
         await this.viewFacade.setSelectedDocument(document.resource.id);
-    }
-
-
-    private async handleClosed(closeReason: string, resourceId: string|undefined) {
-
-        if (closeReason === 'deleted') {
-            this.viewFacade.deselect();
-            this.viewFacade.removeView(resourceId as string);
-            await this.viewFacade.rebuildNavigationPath();
-            await this.viewFacade.populateDocumentList();
-        } else if (closeReason === 'cancel') {
-            this.viewFacade.removeNewDocument();
-        }
     }
 }

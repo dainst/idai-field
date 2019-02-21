@@ -431,30 +431,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('navpath -- update navigation path after changing liesWithin relation', () => {
-
-        ResourcesPage.clickHierarchyButton('S1');
-
-        ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickHierarchyButton('SE0');
-
-        ResourcesPage.openEditByDoubleClickResource('testf1');
-        DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
-        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
-        DoceditPage.clickSaveDocument();
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('context2');
-        });
-    });
-
-
     it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.clickHierarchyButton('S1');

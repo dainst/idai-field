@@ -40,14 +40,14 @@
         <input #identifierInput [(ngModel)]="document.resource.identifier"
                (focus)="startEditing(document.resource.identifier)"
                (blur)="stopEditing(document.resource.identifier)"
-               (keyup)="onKeyup($event, document.resource.identifier)"
+               (keyup)="onKeyUp($event, document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
     <div class="input-field">
         <input [(ngModel)]="document.resource.shortDescription"
                (focus)="startEditing(document.resource.shortDescription)"
                (blur)="stopEditing(document.resource.shortDescription)"
-               (keyup)="onKeyup($event, document.resource.shortDescription)"
+               (keyup)="onKeyUp($event, document.resource.shortDescription)"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>

@@ -67,15 +67,15 @@ export class RowComponent implements AfterViewInit {
         : 'new-resource';
 
 
-    public onKeyup(event: KeyboardEvent, fieldValue: string) {
+    public async onKeyUp(event: KeyboardEvent, fieldValue: string) {
 
-        if (event.key === 'Enter') this.stopEditing(fieldValue);
+        if (event.key === 'Enter') await this.stopEditing(fieldValue);
     }
 
 
-    public stopEditing(fieldValue: string) {
+    public async stopEditing(fieldValue: string) {
 
-        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save();
+        if (this.initialValueOfCurrentlyEditedField != fieldValue) await this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;
     }
 
@@ -87,7 +87,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIsRecordedInTargetsExist(this.document);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
-            this.restoreIdentifier(this.document);
+            await this.restoreIdentifier(this.document);
             return;
         }
 

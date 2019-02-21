@@ -15,7 +15,8 @@ import {ContextMenuAction} from './context-menu.component';
     moduleId: module.id,
     templateUrl: './resources-map.html',
     host: {
-        '(window:keydown)': '(onKeyDown($event))'
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:contextmenu)': 'handleClick($event, true)'
     }
 })
 /**
@@ -196,7 +197,7 @@ export class ResourcesMapComponent {
     }
 
 
-    private handleClick(event: any) {
+    private handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenuPosition) return;
 
@@ -204,7 +205,8 @@ export class ResourcesMapComponent {
         let inside: boolean = false;
 
         do {
-            if (target.id === 'context-menu') {
+            if (target.id === 'context-menu'
+                    || (rightClick && target.id && target.id.startsWith('resource-'))) {
                 inside = true;
                 break;
             }

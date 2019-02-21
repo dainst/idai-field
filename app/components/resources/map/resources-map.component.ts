@@ -82,6 +82,8 @@ export class ResourcesMapComponent {
 
     public openContextMenu(event: MouseEvent, document: FieldDocument) {
 
+        if (!document.resource.id) return;
+
         this.contextMenuPosition = { x: event.clientX, y: event.clientY };
         this.contextMenuDocument = document;
     }

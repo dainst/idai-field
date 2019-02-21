@@ -239,7 +239,7 @@ describe('images --', function() {
         SearchBarPage.typeInSearchField('S');
         ImageOverviewPage.getLinkModalListEntries()
             .then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
-        SearchBarPage.clickChooseTypeFilter('operation-trench', 'images');
+        SearchBarPage.clickChooseTypeFilter('operation-trench', 'modal');
         ImageOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
         ImageOverviewPage.clickCancelLinkModalButton();

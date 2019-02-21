@@ -270,6 +270,12 @@ export class ResourcesPage {
     }
 
 
+    public static getContextMenu() {
+
+        return element(by.id('context-menu'));
+    }
+
+
     public static getMoveModal() {
 
         return element(by.id('move-modal'));

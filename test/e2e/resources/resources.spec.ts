@@ -621,4 +621,17 @@ describe('resources --', () => {
         });
         ResourcesPage.clickCancelInMoveModal();
     });
+
+
+    it('do not open context menu for new resources while creating geometry', () => {
+
+        ResourcesPage.clickCreateResource();
+        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectGeometryType('point');
+        ResourcesPage.clickOpenContextMenu('SE0');
+        browser.wait(EC.presenceOf(ResourcesPage.getContextMenu()), delays.ECWaitTime);
+        ResourcesPage.clickOpenContextMenu('undefined');
+        browser.wait(EC.stalenessOf(ResourcesPage.getContextMenu()), delays.ECWaitTime);
+        MapPage.clickMapOption('abort');
+    })
 });

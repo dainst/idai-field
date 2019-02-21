@@ -56,23 +56,23 @@ export module MoveUtility {
             ids.push(document.resource.relations.isRecordedIn[0]);
         }
 
-        return ids.concat(await getDescendentIds(document, datastore));
+        return ids.concat(await getDescendantIds(document, datastore));
     }
 
 
-    async function getDescendentIds(document: FieldDocument,
+    async function getDescendantIds(document: FieldDocument,
                                     datastore: FieldReadDatastore): Promise<string[]> {
 
-        const descendents: Array<FieldDocument> = (await datastore.find(
+        const descendants: Array<FieldDocument> = (await datastore.find(
             { constraints: { 'liesWithin:contain': document.resource.id } }
         )).documents;
 
-        let descendentIds: string[] = descendents.map(descendent => descendent.resource.id);
+        let descendantIds: string[] = descendants.map(descendant => descendant.resource.id);
 
-        for (let descendent of descendents) {
-            descendentIds = descendentIds.concat(await getDescendentIds(descendent, datastore));
+        for (let descendant of descendants) {
+            descendantIds = descendantIds.concat(await getDescendantIds(descendant, datastore));
         }
 
-        return descendentIds;
+        return descendantIds;
     }
 }

@@ -579,4 +579,25 @@ describe('resources --', () => {
         SearchBarPage.clickTypeFilterButton('modal');
         ResourcesPage.clickCancelInMoveModal();
     });
+
+
+    it('do not show current parent resource in suggestion list of move modal', () => {
+
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.clickChooseTypeFilter('trench', 'modal');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+           for (let label of labels) expect(label.getText()).not.toEqual('S1');
+        });
+        ResourcesPage.clickCancelInMoveModal();
+
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenContextMenu('testf1');
+        ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.clickChooseTypeFilter('feature', 'modal');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            for (let label of labels) expect(label.getText()).not.toEqual('SE0');
+        });
+        ResourcesPage.clickCancelInMoveModal();
+    });
 });

@@ -276,6 +276,12 @@ export class ResourcesPage {
     }
 
 
+    public static getResourceIdentifierLabelsInMoveModal() {
+
+        return element.all(by.css('#move-modal document-teaser .title'));
+    }
+
+
     // type in
 
     public static typeInListModeInputField(identifier: string, index: number, inputText: string) {

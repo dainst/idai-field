@@ -75,13 +75,15 @@ export class ResourcesStateManager {
         if (viewName !== 'project') {
             if (!this.resourcesState.operationViewStates[viewName]) {
                 this.resourcesState.operationViewStates[viewName] = ViewState.default();
-                this.resourcesState.operationViewStates[viewName].mode = currentMode;
             }
             if (!this.resourcesState.operationViewStates[viewName].operation) {
                 this.resourcesState.operationViewStates[viewName].operation =
                     await this.datastore.get(viewName);
             }
-            this.resourcesState.operationViewStates[viewName].active = true;
+            if (!this.resourcesState.operationViewStates[viewName].active) {
+                this.resourcesState.operationViewStates[viewName].mode = currentMode;
+                this.resourcesState.operationViewStates[viewName].active = true;
+            }
             this.serialize();
         }
 

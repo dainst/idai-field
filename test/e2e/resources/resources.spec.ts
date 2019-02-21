@@ -379,12 +379,12 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(8, 0, 0))
+        expect(DoceditRelationsTabPage.getRelationButtonText(6, 0, 0))
             .toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0))
+        expect(DoceditRelationsTabPage.getRelationButtonText(7, 0, 0))
             .toEqual('2');
         DoceditPage.clickCloseEdit();
     });
@@ -410,7 +410,7 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(8, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(6, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');

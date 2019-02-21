@@ -279,7 +279,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private quitGeometryEditing(document: Document = this.viewFacade.getSelectedDocument()) {
+    private quitGeometryEditing(document: Document|undefined = this.viewFacade.getSelectedDocument()) {
 
         if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
             delete document.resource.geometry;

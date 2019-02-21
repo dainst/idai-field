@@ -51,10 +51,15 @@
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>
-    <div>
-        <button class="btn btn-small btn-link float-right align-middle list-edit-button"
-                (click)="editDocument()">
+    <div class="btn-group align-middle">
+        <button class="btn btn-small btn-link float-right" (click)="editDocument()">
             <span class="mdi mdi-pencil mdi-18px"></span>
+        </button>
+        <button class="btn btn-small btn-link float-right" (click)="moveDocument()">
+            <span class="mdi mdi-file-tree mdi-18px"></span>
+        </button>
+        <button class="btn btn-small btn-link float-right" (click)="deleteDocument()">
+            <span class="mdi mdi-delete mdi-18px"></span>
         </button>
     </div>
 </div>

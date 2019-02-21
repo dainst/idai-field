@@ -49,6 +49,10 @@ export class RowComponent implements AfterViewInit {
 
     public editDocument = () => this.resourcesComponent.editDocument(this.document);
 
+    public moveDocument = () => this.resourcesComponent.moveDocument(this.document);
+
+    public deleteDocument = () => this.resourcesComponent.deleteDocument(this.document);
+
     public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
 
     public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
@@ -61,7 +65,9 @@ export class RowComponent implements AfterViewInit {
 
     public getLabel = () => this.typesMap[this.document.resource.type].label;
 
-    public makeId = () => this.document.resource.id ? 'resource-' + this.document.resource.identifier : 'new-resource';
+    public makeId = () => this.document.resource.id
+        ? 'resource-' + this.document.resource.identifier
+        : 'new-resource';
 
 
     public stopEditing(fieldValue: string) {

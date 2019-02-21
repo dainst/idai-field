@@ -1,6 +1,6 @@
 .row-wrapper {
   display: grid;
-  grid-template-columns: 4fr 6fr 9fr 1fr;
+  grid-template-columns: 4fr 6fr 9fr 130px;
   grid-gap: 1px;
   color: #444;
 
@@ -71,5 +71,9 @@
     position: relative;
     top: 1px;
     border: 0;
+  }
+
+  .mdi-delete {
+    color: #dc3545;
   }
 }

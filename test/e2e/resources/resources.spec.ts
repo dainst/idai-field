@@ -581,7 +581,7 @@ describe('resources --', () => {
     });
 
 
-    it('do not show current parent resource in suggestion list of move modal', () => {
+    it('do not suggest current parent resource in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();

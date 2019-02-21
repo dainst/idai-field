@@ -26,6 +26,7 @@ export class ResourcesPage {
     }
 
 
+    // TODO Move to DoceditPage
     public static clickSaveInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
@@ -33,12 +34,14 @@ export class ResourcesPage {
     }
 
 
+    // TODO Move to DoceditPage
     public static clickCancelInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
     }
 
 
+    // TODO Move to DoceditPage
     public static clickDiscardInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
@@ -70,7 +73,6 @@ export class ResourcesPage {
 
         common.click(element(by.id('context-menu-delete-button')));
     }
-
 
     /**
      * @deprecated use selectObjectByIdentifier instead
@@ -146,6 +148,12 @@ export class ResourcesPage {
     public static clickResourceListItemInMoveModal(identifier) {
 
         common.click(element(by.id('resource-' + identifier)));
+    }
+
+
+    public static clickCancelInMoveModal() {
+
+        common.click(element(by.id('move-modal-cancel-button')));
     }
 
 

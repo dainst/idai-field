@@ -4,7 +4,7 @@ const EC = protractor.ExpectedConditions;
 const common = require('../common.js');
 const delays = require('../config/delays');
 
-export type SearchBarContext = 'resources'|'images'|undefined;
+export type SearchBarContext = 'resources'|'images'|'modal';
 
 
 /**
@@ -27,12 +27,25 @@ export class SearchBarPage {
     }
 
 
+    public static getTypeFilterOptionLabels() {
+
+        browser.wait(EC.presenceOf(element(by.css('.type-picker'))), delays.ECWaitTime);
+        return element.all(by.css('.type-label'));
+    }
+
+
     // click
 
     public static clickChooseTypeFilter(typeName: string, context: SearchBarContext = 'resources') {
 
-        common.click(this.getFilterButton(context).element(by.css('.search-filter')));
+        this.clickTypeFilterButton(context);
         common.click(element(by.id('choose-type-option-' + typeName)));
+    }
+
+
+    public static clickTypeFilterButton(context: SearchBarContext = 'resources') {
+
+        common.click(this.getFilterButton(context).element(by.css('.search-filter')));
     }
 
 
@@ -54,7 +67,7 @@ export class SearchBarPage {
 
     private static getFilterButton(context: SearchBarContext) {
 
-        const prefix: string = context ? context + '-search-bar-' : '';
+        const prefix: string = context !== 'modal' ? context + '-search-bar-' : '';
         return element(by.id(prefix + 'filter-button'));
     }
 

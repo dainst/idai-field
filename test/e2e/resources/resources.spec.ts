@@ -553,4 +553,30 @@ describe('resources --', () => {
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
+
+
+    it('show correct type filter options in move modal', () => {
+
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.clickTypeFilterButton('modal');
+        SearchBarPage.getTypeFilterOptionLabels().then(labels => {
+            expect(labels.length).toBe(8);
+            expect(labels[0].getText()).toEqual('Schnitt');
+            expect(labels[1].getText()).toEqual('Stratigraphische Einheit');
+        });
+        SearchBarPage.clickTypeFilterButton('modal');
+        ResourcesPage.clickCancelInMoveModal();
+
+        NavbarPage.navigate('project');
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.clickTypeFilterButton('modal');
+        SearchBarPage.getTypeFilterOptionLabels().then(labels => {
+            expect(labels.length).toBe(1);
+            expect(labels[0].getText()).toEqual('Ort');
+        });
+        SearchBarPage.clickTypeFilterButton('modal');
+        ResourcesPage.clickCancelInMoveModal();
+    });
 });

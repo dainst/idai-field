@@ -10,9 +10,6 @@ import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 
 
-const RETURN_KEY = 13;
-
-
 @Component({
     selector: 'row',
     moduleId: module.id,
@@ -70,16 +67,16 @@ export class RowComponent implements AfterViewInit {
         : 'new-resource';
 
 
+    public onKeyup(event: KeyboardEvent, fieldValue: string) {
+
+        if (event.key === 'Enter') this.stopEditing(fieldValue);
+    }
+
+
     public stopEditing(fieldValue: string) {
 
         if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;
-    }
-
-
-    public onKeyup(event: KeyboardEvent, fieldValue: string) {
-
-        if (event.keyCode == RETURN_KEY) this.stopEditing(fieldValue);
     }
 
 

@@ -151,6 +151,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public async moveDocument(document: FieldDocument) {
 
+        this.quitGeometryEditing();
         this.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
@@ -172,6 +173,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public async deleteDocument(document: FieldDocument) {
 
+        this.quitGeometryEditing();
         this.isModalOpened = true;
 
         try {
@@ -277,10 +279,10 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private quitGeometryEditing(deselectedDocument: Document) {
+    private quitGeometryEditing(document: Document = this.viewFacade.getSelectedDocument()) {
 
-        if (deselectedDocument.resource.geometry && !deselectedDocument.resource.geometry.coordinates) {
-            delete deselectedDocument.resource.geometry;
+        if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
+            delete document.resource.geometry;
         }
 
         this.isEditingGeometry = false;

@@ -189,7 +189,7 @@ export module ImageOverviewPage {
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return ImageOverviewPage.getLinkModal().element(by.id('resource-' + identifier))
+        return ImageOverviewPage.getLinkModal().element(by.id('document-picker-resource-' + identifier))
     }
 
 

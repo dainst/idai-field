@@ -8,7 +8,7 @@
         <li *ngFor="let document of documents; let index = index"
             (click)="documentSelected.emit(document)"
             class="list-group-item"
-            [id]="'resource-' + document.resource.identifier">
+            [id]="'document-picker-resource-' + document.resource.identifier">
 
             <document-teaser [document]="document"></document-teaser>
         </li>

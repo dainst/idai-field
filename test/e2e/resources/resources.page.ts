@@ -147,7 +147,7 @@ export class ResourcesPage {
 
     public static clickResourceListItemInMoveModal(identifier) {
 
-        common.click(element(by.id('resource-' + identifier)));
+        common.click(element(by.id('document-picker-resource-' + identifier)));
     }
 
 

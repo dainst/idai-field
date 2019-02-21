@@ -474,7 +474,27 @@ describe('resources/state --', function() {
     });
 
 
-    it('update navigation path after moving a resource', () => {
+    it('update navigation path when moving a resource within the same operation', () => {
+
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performCreateResource('S-New', 'feature');
+
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenContextMenu('testf1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('S-New');
+        ResourcesPage.clickResourceListItemInMoveModal('S-New');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('S-New');
+        });
+    });
+
+
+    it('update navigation path when moving a resource to another operation', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -485,6 +505,11 @@ describe('resources/state --', function() {
         ResourcesPage.typeInMoveModalSearchBarInput('S2');
         ResourcesPage.clickResourceListItemInMoveModal('S2');
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(1);
+            expect(navigationButtons[0].getText()).toEqual('S2');
+        });
 
         NavbarPage.navigate('project');
         ResourcesPage.clickHierarchyButton('S1');

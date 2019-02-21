@@ -63,6 +63,11 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     right: -5px;
   }
 
+  &:focus {
+    color: #fff;
+    outline: none;
+  }
+
   &.active {
     background-color: $tab-bg-color;
     color: #000;

@@ -600,4 +600,25 @@ describe('resources --', () => {
         });
         ResourcesPage.clickCancelInMoveModal();
     });
+
+
+    it('do not suggest descendants of current resource in move modal', () => {
+
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performCreateResource('SE-D1', 'feature');
+        ResourcesPage.clickHierarchyButton('SE-D1');
+        ResourcesPage.performCreateResource('SE-D2', 'feature');
+
+        ResourcesPage.clickMainTypeDocumentNavigationButton();
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        SearchBarPage.clickChooseTypeFilter('feature', 'modal');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            for (let label of labels) {
+                expect(label.getText()).not.toEqual('SE-D1');
+                expect(label.getText()).not.toEqual('SE-D2');
+            }
+        });
+        ResourcesPage.clickCancelInMoveModal();
+    });
 });

@@ -555,7 +555,7 @@ describe('resources --', () => {
     });
 
 
-    it('show correct type filter options in move modal', () => {
+    it('show only type filter options for allowed parent types in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();

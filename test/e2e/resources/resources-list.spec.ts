@@ -1,6 +1,7 @@
 import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
+import {DoceditPage} from '../docedit/docedit.page';
 
 const delays = require('../config/delays');
 const common = require('../common');
@@ -52,6 +53,8 @@ describe('resources/list --', () => {
 
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
+
+        // TODO Missing expectation
     });
 
 
@@ -63,7 +66,8 @@ describe('resources/list --', () => {
         NavbarPage.navigate('project');
         ResourcesPage.clickHierarchyButton('S1');
 
-        ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));
+        ResourcesPage.getListModeInputFieldValue('child1', 0)
+            .then(inputValue => expect(inputValue).toEqual('child1'));
     });
 
 
@@ -78,8 +82,20 @@ describe('resources/list --', () => {
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 
-        ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
+        ResourcesPage.getListModeInputFieldValue('2', 0)
+            .then(inputValue => expect(inputValue).toEqual('2'));
         NavbarPage.clickCloseAllMessages();
+    });
 
+
+    it('edit a resource via editor modal', () => {
+
+       ResourcesPage.clickListEditButton('S1');
+       DoceditPage.typeInInputField('shortDescription', 'Test');
+       DoceditPage.clickSaveDocument();
+       ResourcesPage.getListModeInputFieldValue('S1', 0)
+           .then(inputValue => expect(inputValue).toEqual('S1'));
+       ResourcesPage.getListModeInputFieldValue('S1', 1)
+           .then(inputValue => expect(inputValue).toEqual('Test'));
     });
 });

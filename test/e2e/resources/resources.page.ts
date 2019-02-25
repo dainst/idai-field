@@ -135,7 +135,7 @@ export class ResourcesPage {
     };
 
 
-    public static openEditByDoubleClickResource(identifier) {
+    public static openEditByDoubleClickResource(identifier: string) {
 
         browser.wait(EC.visibilityOf(
             element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
@@ -145,7 +145,7 @@ export class ResourcesPage {
     }
 
 
-    public static clickResourceListItemInMoveModal(identifier) {
+    public static clickResourceListItemInMoveModal(identifier: string) {
 
         common.click(element(by.id('document-picker-resource-' + identifier)));
     }
@@ -157,9 +157,15 @@ export class ResourcesPage {
     }
 
 
+    public static clickListEditButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-edit-button')));
+    }
+
+
     // get text
 
-    public static getListItemIdentifierText(itemNr) {
+    public static getListItemIdentifierText(itemNr: number) {
 
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
             + (itemNr + 1) + ') .title'))), delays.ECWaitTime);

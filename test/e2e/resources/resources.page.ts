@@ -163,6 +163,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickListMoveButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-move-button')));
+    }
+
+
     // get text
 
     public static getListItemIdentifierText(itemNr: number) {
@@ -291,6 +297,12 @@ export class ResourcesPage {
     public static getResourceIdentifierLabelsInMoveModal() {
 
         return element.all(by.css('#move-modal document-teaser .title'));
+    }
+
+
+    public static getListRows() {
+
+        return element.all(by.css('.row-wrapper'));
     }
 
 

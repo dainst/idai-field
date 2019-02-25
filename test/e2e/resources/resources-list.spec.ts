@@ -1,9 +1,10 @@
-import {browser} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
+const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const common = require('../common');
 
@@ -106,4 +107,16 @@ describe('resources/list --', () => {
        ResourcesPage.getListModeInputFieldValue('SE0', 1)
            .then(inputValue => expect(inputValue).toEqual('Test'));
     });
+
+
+    it('move a resource', () => {
+
+        ResourcesPage.clickListMoveButton('SE0');
+        ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        ResourcesPage.clickResourceListItemInMoveModal('S2');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
+        ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(6));
+    })
 });

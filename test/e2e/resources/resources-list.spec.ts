@@ -118,5 +118,15 @@ describe('resources/list --', () => {
 
         NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
         ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(6));
-    })
+    });
+
+
+    it('delete a resource', () => {
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
+        ResourcesPage.clickListDeleteButton('SE0');
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
+        ResourcesPage.clickConfirmDeleteInModal();
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
+    });
 });

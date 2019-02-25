@@ -169,6 +169,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickListDeleteButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-delete-button')));
+    }
+
+
     // get text
 
     public static getListItemIdentifierText(itemNr: number) {

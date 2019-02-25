@@ -15,6 +15,8 @@ describe('resources/list --', () => {
     beforeAll(function() {
         ResourcesPage.get();
         browser.sleep(delays.shortRest);
+        ResourcesPage.clickHierarchyButton('S1');
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickListModeButton();
         browser.sleep(delays.shortRest);
     });
@@ -42,7 +44,8 @@ describe('resources/list --', () => {
     it('show newly created resource in list view', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.getListModeInputFieldValue('1', 0).then(inputValue => expect(inputValue).toEqual('1'));
+        ResourcesPage.getListModeInputFieldValue('1', 0)
+            .then(inputValue => expect(inputValue).toEqual('1'));
     });
 
 
@@ -90,12 +93,12 @@ describe('resources/list --', () => {
 
     it('edit a resource via editor modal', () => {
 
-       ResourcesPage.clickListEditButton('S1');
+       ResourcesPage.clickListEditButton('SE0');
        DoceditPage.typeInInputField('shortDescription', 'Test');
        DoceditPage.clickSaveDocument();
-       ResourcesPage.getListModeInputFieldValue('S1', 0)
-           .then(inputValue => expect(inputValue).toEqual('S1'));
-       ResourcesPage.getListModeInputFieldValue('S1', 1)
+       ResourcesPage.getListModeInputFieldValue('SE0', 0)
+           .then(inputValue => expect(inputValue).toEqual('SE0'));
+       ResourcesPage.getListModeInputFieldValue('SE0', 1)
            .then(inputValue => expect(inputValue).toEqual('Test'));
     });
 });

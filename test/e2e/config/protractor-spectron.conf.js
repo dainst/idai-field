@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const fileUrl = require('file-url');
 const failFast = require('protractor-fail-fast');
@@ -13,8 +12,7 @@ exports.config = {
     specs: [
         '../syncing/*.spec.js',
         '../project/*.spec.js',
-        '../resources/resources.spec.js',
-        '../resources/resources-state.spec.js',
+        '../resources/*.spec.js',
         '../images/*.spec.js',
         '../map/*.spec.js',
         '../matrix/*.spec.js',

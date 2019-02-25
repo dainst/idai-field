@@ -25,7 +25,7 @@ export class NavigationService {
 
     public async jumpToView(document: FieldDocument) {
 
-        await this.routingService.jumpToMainTypeHomeView(document);
+        await this.routingService.jumpToOperationView(document);
     }
 
 

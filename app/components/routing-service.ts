@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
+import {Document, DatastoreErrors} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
 import {TypeUtility} from '../core/model/type-utility';
 
@@ -37,9 +37,9 @@ export class RoutingService {
     }
 
 
-    public async jumpToMainTypeHomeView(document: Document) {
+    public async jumpToOperationView(operation: Document) {
 
-        await this.router.navigate(['resources', document.resource.id]);
+        await this.router.navigate(['resources', operation.resource.id]);
     }
 
 
@@ -121,8 +121,13 @@ export class RoutingService {
                 await this.viewFacade.selectView(params['view']);
                 observer.next(params);
             } catch (msgWithParams) {
-                if (msgWithParams) console.error(
-                    'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
+                if (msgWithParams) {
+                    if (msgWithParams.includes(DatastoreErrors.DOCUMENT_NOT_FOUND)) {
+                        await this.router.navigate(['resources', 'project']);
+                    } else {
+                        console.error('Got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
+                    }
+                }
             }
         });
     }

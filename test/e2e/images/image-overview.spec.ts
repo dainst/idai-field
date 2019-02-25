@@ -2,7 +2,7 @@ import {browser, protractor, by} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from "../navbar.page";
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {FieldsViewPage} from '../widgets/fields-view-page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';

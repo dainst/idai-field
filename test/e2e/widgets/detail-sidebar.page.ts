@@ -1,7 +1,7 @@
 'use strict';
 
 import {browser, protractor, element, by} from 'protractor';
-import {FieldsViewPage} from './fields-view-page';
+import {FieldsViewPage} from './fields-view.page';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;

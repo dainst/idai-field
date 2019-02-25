@@ -4,7 +4,7 @@ import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {FieldsViewPage} from '../widgets/fields-view-page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';

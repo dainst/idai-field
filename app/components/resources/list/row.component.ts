@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {FieldDocument, IdaiType, Messages} from 'idai-components-2';
+import {FieldDocument, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -8,6 +8,7 @@ import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
+import {MessagesConversion} from '../../docedit/messages-conversion';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class RowComponent implements AfterViewInit {
         private usernameProvider: UsernameProvider,
         private validator: Validator,
         private datastore: FieldReadDatastore,
-        private navigationService: NavigationService
+        private navigationService: NavigationService,
+        private projectConfiguration: ProjectConfiguration
     ) {}
 
 
@@ -86,7 +88,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIdentifierIsUnique(this.document);
             await this.validator.assertIsRecordedInTargetsExist(this.document);
         } catch(msgWithParams) {
-            this.messages.add(msgWithParams);
+            this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration));
             await this.restoreIdentifier(this.document);
             return;
         }

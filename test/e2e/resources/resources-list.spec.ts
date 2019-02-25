@@ -2,6 +2,7 @@ import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 const delays = require('../config/delays');
 const common = require('../common');
@@ -57,7 +58,11 @@ describe('resources/list --', () => {
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
 
-        // TODO Missing expectation
+        NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickMapModeButton();
+        ResourcesPage.clickSelectResource('1');
+        DetailSidebarPage.getShortDescription().then(value => expect(value).toEqual('Changed resource 1'));
     });
 
 

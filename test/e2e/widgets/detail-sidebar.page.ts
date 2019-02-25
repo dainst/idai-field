@@ -46,6 +46,13 @@ export class DetailSidebarPage {
     }
 
 
+    public static getShortDescription() {
+
+        browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .short-description .fieldvalue'))), delays.ECWaitTime);
+        return element(by.css('.detail-sidebar .short-description .fieldvalue')).getText();
+    }
+
+
     public static getTypeFromDocView() {
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .type .fieldvalue'))), delays.ECWaitTime);

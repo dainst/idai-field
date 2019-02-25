@@ -435,7 +435,7 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickMainTypeDocumentNavigationButton();
+        ResourcesPage.clickOperationNavigationButton();
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuDeleteButton();
@@ -474,7 +474,7 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickMainTypeDocumentNavigationButton();
+        ResourcesPage.clickOperationNavigationButton();
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();

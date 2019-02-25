@@ -16,7 +16,7 @@
 
     <div class="btn-group">
         <div *ngIf="!viewFacade.isInOverview() && viewFacade.getCurrentOperation()"
-             id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
+             id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             {{viewFacade.getCurrentOperation().resource.identifier}}

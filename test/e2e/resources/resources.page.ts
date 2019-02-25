@@ -116,10 +116,9 @@ export class ResourcesPage {
     }
 
 
-    // TODO Rename
-    public static clickMainTypeDocumentNavigationButton() {
+    public static clickOperationNavigationButton() {
 
-        common.click(element(by.id('selected-operation-type-document')));
+        common.click(element(by.id('selected-operation')));
     }
 
 

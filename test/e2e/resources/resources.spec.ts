@@ -609,7 +609,7 @@ describe('resources --', () => {
         ResourcesPage.clickHierarchyButton('SE-D1');
         ResourcesPage.performCreateResource('SE-D2', 'feature');
 
-        ResourcesPage.clickMainTypeDocumentNavigationButton();
+        ResourcesPage.clickOperationNavigationButton();
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseTypeFilter('feature', 'modal');

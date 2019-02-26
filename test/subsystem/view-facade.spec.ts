@@ -5,6 +5,7 @@ import {ResourcesStateManager} from '../../app/components/resources/view/resourc
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
+import {TabManager} from '../../app/components/tab-manager';
 
 
 /**
@@ -23,6 +24,7 @@ describe('ViewFacade/Subsystem', () => {
     let loading;
     let resourcesStateManager: ResourcesStateManager;
     let stateSerializer;
+    let tabManager: TabManager;
 
     let trenchDocument1: FieldDocument;
     let trenchDocument2: FieldDocument;
@@ -54,6 +56,7 @@ describe('ViewFacade/Subsystem', () => {
         viewFacade = result.viewFacade;
         resourcesStateManager = result.resourcesStateManager;
         stateSerializer = result.stateSerializer;
+        tabManager = result.tabManager;
 
         spyOn(console, 'debug'); // suppress console.debug
 
@@ -100,17 +103,24 @@ describe('ViewFacade/Subsystem', () => {
     it('reload view states on startup', async done => {
 
         resourcesStateManager.loaded = false;
-        stateSerializer.load.and.returnValue({
-            overviewState: {
-                mode: 'list',
-                layerIds: ['layerId1']
-            },
-            operationViewStates: {
-                t1: {
-                    layerIds: ['layerId2']
+        stateSerializer.load.and.returnValue(
+            Promise.resolve({
+                overviewState: {
+                    mode: 'list',
+                    layerIds: ['layerId1']
+                },
+                operationViewStates: {
+                    t1: {
+                        layerIds: ['layerId2']
+                    },
+                    t2: {
+                        mode: 'map'
+                    }
                 }
-            }
-        });
+            })
+        );
+
+        await tabManager.openTab('t2', 'trench2');
 
         await viewFacade.selectView('project');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
@@ -119,6 +129,9 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
         expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t2');
+        expect(viewFacade.getMode()).toEqual('map');
 
         done();
     });

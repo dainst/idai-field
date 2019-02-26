@@ -153,7 +153,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         idaiFieldImageDocumentDatastore,
         settingsService,
         resourcesStateManager,
-        stateSerializer
+        stateSerializer,
+        tabManager
     }
 }
 

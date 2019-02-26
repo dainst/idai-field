@@ -3,8 +3,8 @@ import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {NavigationPath} from './resources/view/state/navigation-path';
 import {ObserverUtil} from '../core/util/observer-util';
-import {PouchdbDatastore} from '../core/datastore/core/pouchdb-datastore';
 import {StateSerializer} from '../common/state-serializer';
+import {IndexFacade} from '../core/datastore/index/index-facade';
 
 
 export type Tab = {
@@ -23,10 +23,10 @@ export class TabManager {
     private observers: Array<Observer<Array<Tab>>> = [];
 
 
-    constructor(datastore: PouchdbDatastore,
+    constructor(indexFacade: IndexFacade,
                 private stateSerializer: StateSerializer) {
 
-        datastore.changesNotifications().subscribe(document => this.updateTabLabel(document));
+        indexFacade.changesNotifications().subscribe(document => this.updateTabLabel(document));
         this.deserialize().then(tabs => this.tabs = tabs);
     }
 

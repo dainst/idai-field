@@ -25,27 +25,29 @@ describe('ResourcesStateManager', () => {
     beforeEach(() => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['get']);
+        mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
 
         mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
         mockIndexFacade.getCount.and.callFake(getCount);
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
-        const mockTabManager = jasmine.createSpyObj('tabManager', []);
+        const mockTabManager
+            = jasmine.createSpyObj('tabManager', ['openTab', 'isOpen']);
 
         resourcesStateManager = new ResourcesStateManager(
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
-            mockTabManager,
             undefined,
+            mockTabManager,
             undefined
         );
 
         resourcesStateManager.loaded = true;
 
+
         trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
     });
-
 
 
     it('repair navigation path if a relation is changed', async done => {

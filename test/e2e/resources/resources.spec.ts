@@ -299,6 +299,24 @@ describe('resources --', () => {
     });
 
 
+    it('edit the identifier of an operation and update navbar', () => {
+
+        NavbarPage.navigate('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        NavbarPage.navigate('project');
+
+        browser.wait(EC.presenceOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
+        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('S1'));
+
+        ResourcesPage.openEditByDoubleClickResource('S1');
+        DoceditPage.typeInInputField('identifier', 'New identifier');
+        DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortRest);
+
+        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('New identifier'));
+    });
+
+
     it('find a resource by its identifier', () => {
 
         ResourcesPage.performCreateResource('1');

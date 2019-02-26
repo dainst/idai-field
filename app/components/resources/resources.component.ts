@@ -12,6 +12,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../common/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
@@ -48,7 +49,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private changeDetectorRef: ChangeDetectorRef,
                 private typeUtility: TypeUtility,
                 private modalService: NgbModal,
-                private resourceDeletion: ResourceDeletion
+                private resourceDeletion: ResourceDeletion,
+                private tabManager: TabManager
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
@@ -179,6 +181,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         try {
             await this.resourceDeletion.delete(document);
             await this.viewFacade.deselect();
+            this.tabManager.closeTab(document.resource.id);
             this.viewFacade.removeView(document.resource.id);
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();

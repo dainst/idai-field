@@ -50,6 +50,7 @@ import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
 import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
 import {FieldDatastore} from './core/datastore/field/field-datastore';
+import {TabManager} from './components/tab-manager';
 
 
 const remote = require('electron').remote;
@@ -210,7 +211,8 @@ registerLocaleData(localeDe, 'de');
         ImportValidator,
         { provide: MD, useClass: M},
         DoceditActiveTabService,
-        SynchronizationStatus
+        SynchronizationStatus,
+        TabManager
     ],
     entryComponents: [
         ProjectsModalComponent

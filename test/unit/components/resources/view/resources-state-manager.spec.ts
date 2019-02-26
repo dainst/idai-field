@@ -30,10 +30,13 @@ describe('ResourcesStateManager', () => {
         mockIndexFacade.getCount.and.callFake(getCount);
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
+        const mockTabManager = jasmine.createSpyObj('tabManager', []);
+
         resourcesStateManager = new ResourcesStateManager(
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
+            mockTabManager,
             undefined,
             undefined
         );

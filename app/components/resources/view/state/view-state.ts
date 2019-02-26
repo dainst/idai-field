@@ -9,8 +9,6 @@ import {ViewContext} from './view-context';
  */
 export interface ViewState {
 
-    active: boolean;
-
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
@@ -27,7 +25,6 @@ export class ViewState {
     public static default(): ViewState {
 
         return {
-            active: false,
             operation: undefined,
             bypassHierarchy: false,
             navigationPath: NavigationPath.empty(),

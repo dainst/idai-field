@@ -9,6 +9,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {clone} from '../../../core/util/object-util';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {TabManager} from '../../tab-manager';
 
 
 /**
@@ -46,6 +47,7 @@ export class ResourcesStateManager {
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private typeUtility: TypeUtility,
+        private tabManager: TabManager,
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
@@ -76,14 +78,15 @@ export class ResourcesStateManager {
             if (!this.resourcesState.operationViewStates[viewName]) {
                 this.resourcesState.operationViewStates[viewName] = ViewState.default();
             }
-            if (!this.resourcesState.operationViewStates[viewName].operation) {
-                this.resourcesState.operationViewStates[viewName].operation =
-                    await this.datastore.get(viewName);
+
+            const state: ViewState = this.resourcesState.operationViewStates[viewName];
+            if (!state.operation) state.operation = await this.datastore.get(viewName);
+
+            if (!this.tabManager.isOpen(viewName)) {
+                state.mode = currentMode;
+                this.tabManager.openTab(viewName, state.operation.resource.identifier);
             }
-            if (!this.resourcesState.operationViewStates[viewName].active) {
-                this.resourcesState.operationViewStates[viewName].mode = currentMode;
-                this.resourcesState.operationViewStates[viewName].active = true;
-            }
+
             this.serialize();
         }
 
@@ -106,26 +109,6 @@ export class ResourcesStateManager {
         delete this.resourcesState.operationViewStates[viewName];
         this.serialize();
         this.notifyNavigationPathObservers();
-    }
-
-
-    public getActiveOperationViews(): {[id: string]: string} {
-
-        return Object.keys(this.resourcesState.operationViewStates)
-            .filter(viewName => this.resourcesState.operationViewStates[viewName].active)
-            .reduce((acc, viewName) => {
-                const operation: FieldDocument|undefined
-                    = this.resourcesState.operationViewStates[viewName].operation;
-
-                if (!operation) console.warn('Missing operation document for view: ' + viewName);
-
-                acc[viewName] = !operation
-                    ?'MISSING'
-                    :operation.resource.identifier;
-
-                return acc;
-
-            }, {} as {[id: string]: string});
     }
 
 
@@ -322,11 +305,7 @@ export class ResourcesStateManager {
 
     private static createObjectToSerializeForViewState(viewState: ViewState): any {
 
-        const objectToSerialize: any = {
-            active: viewState.active,
-            mode: viewState.mode
-        };
-
+        const objectToSerialize: any = { mode: viewState.mode };
         if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
 
         return objectToSerialize;

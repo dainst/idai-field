@@ -12,7 +12,6 @@ import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
 import {RemoteChangesStream} from '../../app/core/datastore/core/remote-changes-stream';
-import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';
@@ -21,6 +20,7 @@ import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
+import {TabManager} from '../../app/components/tab-manager';
 
 
 class IdGenerator {
@@ -107,11 +107,14 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     stateSerializer.load.and.returnValue(Promise.resolve({}));
     stateSerializer.store.and.returnValue(Promise.resolve());
 
+    const tabManager = new TabManager();
+
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,
         createdIndexFacade,
         stateSerializer,
         typeUtility,
+        tabManager,
         projectName,
         true
     );

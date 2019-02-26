@@ -107,19 +107,16 @@ describe('ViewFacade/Subsystem', () => {
             },
             operationViewStates: {
                 t1: {
-                    active: true,
                     mode: 'map',
                     layerIds: ['layerId2']
                 },
                 t2: {
-                    active: false,
                     mode: 'map'
                 }
             }
         });
 
         await viewFacade.selectView('project');
-        expect(viewFacade.getActiveOperationViews()).toEqual({ 't1': 'trench1' });
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
         expect(viewFacade.getMode()).toEqual('list');
 

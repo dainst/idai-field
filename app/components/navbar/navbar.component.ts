@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
@@ -16,25 +17,20 @@ import {ViewFacade} from '../resources/view/view-facade';
 export class NavbarComponent {
 
     public activeRoute: string;
-    public operationViews: {[id: string]: string} = {};
 
 
     constructor(public router: Router,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private tabManager: TabManager) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
 
-        this.viewFacade.navigationPathNotifications().subscribe(() => {
-            this.operationViews = this.viewFacade.getActiveOperationViews();
-        });
 
-        this.viewFacade.populateDocumentsNotifications().subscribe(() => {
-            this.operationViews = this.viewFacade.getActiveOperationViews();
-        });
     }
 
 
-    public operationViewIds = () => Object.keys(this.operationViews);
+    public getTabs = () => this.tabManager.getTabs();
+
 
 
     public isActiveRoute(route: string) {
@@ -50,12 +46,13 @@ export class NavbarComponent {
     }
 
 
-    public async close(viewName: string) {
+    public async close(tabName: string) {
 
-        if (this.isActiveRoute('/resources/' + viewName)) {
+        if (this.isActiveRoute('/resources/' + tabName)) {
             await this.router.navigate(['resources', 'project']);
         }
 
-        this.viewFacade.deactivateView(viewName);
+        this.viewFacade.deactivateView(tabName);
+        this.tabManager.closeTab(tabName);
     }
 }

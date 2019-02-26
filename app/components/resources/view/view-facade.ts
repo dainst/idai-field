@@ -58,8 +58,6 @@ export class ViewFacade {
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
-    public getActiveOperationViews = () => this.resourcesStateManager.getActiveOperationViews();
-
     public getMode = () => this.resourcesStateManager.getMode();
 
     public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());

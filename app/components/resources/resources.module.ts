@@ -42,6 +42,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './map/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
+import {TabManager} from '../tab-manager';
 
 const remote = require('electron').remote;
 
@@ -92,7 +93,8 @@ const remote = require('electron').remote;
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService,
-                         typeUtility: TypeUtility) => {
+                         typeUtility: TypeUtility,
+                         tabManager: TabManager) => {
 
                 const projectName = settingsService.getSelectedProject();
                 if (!projectName) throw 'project not set';
@@ -102,13 +104,14 @@ const remote = require('electron').remote;
                     indexFacade,
                     stateSerializer,
                     typeUtility,
+                    tabManager,
                     projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
             deps: [
                 FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
-                TypeUtility
+                TypeUtility, TabManager
             ]
         },
         {

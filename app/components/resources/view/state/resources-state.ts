@@ -152,7 +152,6 @@ export module ResourcesState {
 
         return {
             overviewState: {
-                active: true,
                 operation: undefined,
                 layerIds: ['o25'],
                 mode: 'map',
@@ -163,7 +162,6 @@ export module ResourcesState {
             },
             operationViewStates: {
                 't1': {
-                    active: false,
                     operation: undefined,
                     layerIds: ['o25'],
                     mode: 'map',

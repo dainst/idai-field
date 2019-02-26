@@ -53,6 +53,6 @@ export class NavbarComponent {
         }
 
         this.viewFacade.deactivateView(tabName);
-        this.tabManager.closeTab(tabName);
+        await this.tabManager.closeTab(tabName);
     }
 }

@@ -4,6 +4,7 @@ import {Document} from 'idai-components-2';
 import {NavigationPath} from './resources/view/state/navigation-path';
 import {ObserverUtil} from '../core/util/observer-util';
 import {PouchdbDatastore} from '../core/datastore/core/pouchdb-datastore';
+import {StateSerializer} from '../common/state-serializer';
 
 
 export type Tab = {
@@ -22,9 +23,11 @@ export class TabManager {
     private observers: Array<Observer<Array<Tab>>> = [];
 
 
-    constructor(datastore: PouchdbDatastore) {
+    constructor(datastore: PouchdbDatastore,
+                private stateSerializer: StateSerializer) {
 
         datastore.changesNotifications().subscribe(document => this.updateTabLabel(document));
+        this.deserialize().then(tabs => this.tabs = tabs);
     }
 
 
@@ -39,21 +42,41 @@ export class TabManager {
     }
 
 
-    public openTab(name: string, label: string) {
+    public async openTab(name: string, label: string) {
 
         this.tabs.push({ name: name, label: label });
+        await this.serialize();
     }
 
 
-    public closeTab(name: string) {
+    public async closeTab(name: string) {
 
         this.tabs = this.tabs.filter(tab => tab.name !== name);
+        await this.serialize();
     }
 
 
-    public updateTabLabel(document: Document) {
+    public async updateTabLabel(document: Document) {
 
         const tab: Tab|undefined = this.tabs.find(tab => tab.name === document.resource.id);
         if (tab) tab.label = document.resource.identifier;
+
+        await this.serialize();
+    }
+
+
+    private async serialize() {
+
+        await this.stateSerializer.store({ tabs: this.tabs }, 'tabs-state');
+    }
+
+
+    private async deserialize(): Promise<Array<Tab>> {
+
+        const loadedState: any = await this.stateSerializer.load('tabs-state');
+
+        return loadedState && loadedState.tabs && Array.isArray(loadedState.tabs)
+            ? loadedState.tabs
+            : [];
     }
 }

@@ -6,7 +6,7 @@ import {SettingsService} from '../core/settings/settings-service';
 const remote = require('electron').remote;
 
 
-export type StateType = 'resources-state'|'matrix-state';
+export type StateType = 'resources-state'|'matrix-state'|'tabs-state';
 
 
 @Injectable()

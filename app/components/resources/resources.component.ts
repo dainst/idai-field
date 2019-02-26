@@ -181,7 +181,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         try {
             await this.resourceDeletion.delete(document);
             await this.viewFacade.deselect();
-            this.tabManager.closeTab(document.resource.id);
+            await this.tabManager.closeTab(document.resource.id);
             this.viewFacade.removeView(document.resource.id);
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();

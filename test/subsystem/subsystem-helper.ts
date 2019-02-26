@@ -107,7 +107,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     stateSerializer.load.and.returnValue(Promise.resolve({}));
     stateSerializer.store.and.returnValue(Promise.resolve());
 
-    const tabManager = new TabManager(datastore);
+    const tabManager = new TabManager(datastore, stateSerializer);
 
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,

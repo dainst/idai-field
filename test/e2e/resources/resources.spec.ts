@@ -299,24 +299,6 @@ describe('resources --', () => {
     });
 
 
-    it('edit the identifier of an operation and update navbar', () => {
-
-        NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        NavbarPage.navigate('project');
-
-        browser.wait(EC.presenceOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
-        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('S1'));
-
-        ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('identifier', 'New identifier');
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
-
-        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('New identifier'));
-    });
-
-
     it('find a resource by its identifier', () => {
 
         ResourcesPage.performCreateResource('1');
@@ -449,7 +431,7 @@ describe('resources --', () => {
     });
 
 
-    it('maintype -- create a new operation', () => {
+    it('operation -- create a new operation', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.performCreateOperation('newTrench');
@@ -459,9 +441,11 @@ describe('resources --', () => {
     });
 
 
-    it('maintype -- should edit a main type resource', () => {
+    it('operation -- should edit an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
+        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('S1'));
+
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();

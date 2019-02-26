@@ -107,11 +107,7 @@ describe('ViewFacade/Subsystem', () => {
             },
             operationViewStates: {
                 t1: {
-                    mode: 'map',
                     layerIds: ['layerId2']
-                },
-                t2: {
-                    mode: 'map'
                 }
             }
         });
@@ -122,7 +118,7 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
-        expect(viewFacade.getMode()).toEqual('map');
+        expect(viewFacade.getMode()).toEqual('list');
 
         done();
     });

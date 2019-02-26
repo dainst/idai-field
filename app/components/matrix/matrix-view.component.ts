@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {on, tripleEqual, isEmpty, is} from 'tsfun';
+import {on, isEmpty, is} from 'tsfun';
 import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';

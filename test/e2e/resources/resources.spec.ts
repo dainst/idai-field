@@ -286,7 +286,7 @@ describe('resources --', () => {
         ResourcesPage.clickHierarchyButton('S1');
         NavbarPage.navigate('project');
 
-        browser.wait(EC.presenceOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
 
         ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuDeleteButton();
@@ -295,7 +295,7 @@ describe('resources --', () => {
         browser.sleep(delays.shortRest);
         NavbarPage.clickCloseAllMessages();
 
-        browser.wait(EC.stalenessOf(element(by.id('navbar-t1'))), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
     });
 
 
@@ -551,6 +551,7 @@ describe('resources --', () => {
 
         NavbarPage.navigate('project');
         ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 

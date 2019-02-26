@@ -20,13 +20,13 @@ export class NavbarPage {
     };
 
 
-    public static clickConflictResolverLink(identifier) {
+    public static clickConflictResolverLink(identifier: string) {
 
         return common.click(element(by.id('taskbar-conflict-' + identifier)));
     };
 
 
-    public static clickSelectProject = function(option) {
+    public static clickSelectProject(option) {
 
         browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#projectSelectBox option')).get(option).click();
@@ -46,7 +46,7 @@ export class NavbarPage {
 
     // await
 
-    public static awaitAlert(text, matchExactly = true) {
+    public static awaitAlert(text: string, matchExactly: boolean = true) {
 
         if (matchExactly) {
             browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
@@ -55,6 +55,14 @@ export class NavbarPage {
             browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and contains(text(),'"+text+"')]"))), delays.ECWaitTime);
         }
     };
+
+
+    // elements
+
+    public static getTab(name: string) {
+
+        return element(by.id('navbar-' + name));
+    }
 
 
     // get text

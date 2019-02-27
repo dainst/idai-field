@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
+import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 
 
 export type Tab = {
@@ -23,10 +24,11 @@ export class TabManager {
 
 
     constructor(indexFacade: IndexFacade,
-                private stateSerializer: StateSerializer) {
+                private stateSerializer: StateSerializer,
+                private datastore: FieldReadDatastore) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
-        this.deserialize().then(tabs => this.tabs = tabs);
+        this.deserialize().then(async tabs => this.tabs = await this.validateTabs(tabs));
     }
 
 
@@ -79,5 +81,25 @@ export class TabManager {
         return loadedState && loadedState.tabs && Array.isArray(loadedState.tabs)
             ? loadedState.tabs
             : [];
+    }
+
+
+    private async validateTabs(tabs: Array<Tab>): Promise<Array<Tab>> {
+
+        const validatedTabs: Array<Tab> = [];
+
+        for (let tab of tabs) {
+            if (tab.resourceId) {
+                try {
+                    const document: FieldDocument = await this.datastore.get(tab.resourceId);
+                    tab.label = document.resource.identifier;
+                } catch (err) {
+                    continue;
+                }
+            }
+            validatedTabs.push(tab);
+        }
+
+        return validatedTabs;
     }
 }

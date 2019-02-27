@@ -128,7 +128,5 @@ const getTemplate = () => {
     return template;
 };
 
-electron.systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', true);
-
 
 module.exports = getTemplate;

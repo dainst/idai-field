@@ -82,7 +82,7 @@ export class NavbarPage {
     }
 
 
-    public static getNavLinkLabel(routeName: string, resourceIdentifier?: string) {
+    public static getTabLabel(routeName: string, resourceIdentifier?: string) {
 
         browser.wait(EC.visibilityOf(this.getTab(routeName, resourceIdentifier)), delays.ECWaitTime);
         return this.getTab(routeName, resourceIdentifier).getText();

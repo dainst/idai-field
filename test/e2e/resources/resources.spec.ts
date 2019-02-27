@@ -446,13 +446,13 @@ describe('resources --', () => {
     it('operation -- should edit an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
-        NavbarPage.getNavLinkLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
+        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
 
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-        NavbarPage.getNavLinkLabel('resources', 't1').then(label => {
+        NavbarPage.getTabLabel('resources', 't1').then(label => {
             expect(label).toEqual('newIdentifier');
         });
     });

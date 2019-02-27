@@ -24,8 +24,6 @@ export class NavbarComponent {
                 private tabManager: TabManager) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
-
-
     }
 
 
@@ -33,17 +31,11 @@ export class NavbarComponent {
 
     public getTabId = (tab: Tab) => 'navbar-' + tab.routeName + (tab.resourceId ? '-' + tab.resourceId : '');
 
-    public getTabRoute = (tab: Tab) => '/' + tab.routeName + '/' + (tab.resourceId ? tab.resourceId : '');
+    public getTabRoute = (tab: Tab) => '/' + tab.routeName + (tab.resourceId ? '/' + tab.resourceId : '');
 
     public getTabRouteArray = (tab: Tab) => tab.resourceId ? [tab.routeName, tab.resourceId] : [tab.routeName];
 
-
-
-    public isActiveRoute(route: string) {
-
-        if (!this.activeRoute) return;
-        return this.activeRoute.startsWith(route);
-    }
+    public isActiveRoute = (route: string) => this.activeRoute && this.activeRoute.startsWith(route);
 
 
     public isRunningOnMac() {

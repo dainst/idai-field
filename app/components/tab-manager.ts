@@ -6,12 +6,10 @@ import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 
 
 export type Tab = {
-    routeName: RouteName,
+    routeName: string,
     label: string
     resourceId?: string
 }
-
-type RouteName = 'resources'|'matrix';
 
 
 @Injectable()
@@ -35,7 +33,7 @@ export class TabManager {
     public getTabs = (): Array<Tab> => this.tabs;
 
 
-    public isOpen(routeName: RouteName, resourceId: string): boolean {
+    public isOpen(routeName: string, resourceId: string): boolean {
 
         return this.tabs.find(tab => {
             return tab.routeName === routeName && tab.resourceId === resourceId
@@ -43,14 +41,14 @@ export class TabManager {
     }
 
 
-    public async openTab(routeName: RouteName, label: string, resourceId?: string) {
+    public async openTab(routeName: string, label: string, resourceId?: string) {
 
         this.tabs.push({ routeName: routeName, label: label, resourceId: resourceId });
         await this.serialize();
     }
 
 
-    public async closeTab(routeName: RouteName, resourceId?: string) {
+    public async closeTab(routeName: string, resourceId?: string) {
 
         this.tabs = this.tabs.filter(tab => {
             return tab.routeName !== routeName || tab.resourceId !== resourceId;

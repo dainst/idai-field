@@ -33,15 +33,15 @@ export class TabManager {
     public getTabs = (): Array<Tab> => this.tabs;
 
 
-    public isOpen(routeName: string, resourceId: string): boolean {
+    public isOpen(routeName: string, resourceId?: string): boolean {
 
-        return this.tabs.find(tab => {
-            return tab.routeName === routeName && tab.resourceId === resourceId
-        }) !== undefined;
+        return this.getTab(routeName, resourceId) !== undefined;
     }
 
 
     public async openTab(routeName: string, label: string, resourceId?: string) {
+
+        if (this.isOpen(routeName, resourceId)) return;
 
         this.tabs.push({ routeName: routeName, label: label, resourceId: resourceId });
         await this.serialize();
@@ -99,5 +99,13 @@ export class TabManager {
         }
 
         return validatedTabs;
+    }
+
+
+    private getTab(routeName: string, resourceId?: string): Tab|undefined {
+
+        return this.tabs.find(tab => {
+            return tab.routeName === routeName && tab.resourceId === resourceId
+        });
     }
 }

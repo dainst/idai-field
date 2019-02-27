@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {NavigationPath} from './resources/view/state/navigation-path';
-import {ObserverUtil} from '../core/util/observer-util';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 
 
 export type Tab = {
-    name: string,
+    routeName: RouteName,
     label: string
+    resourceId?: string
 }
+
+type RouteName = 'resources'|'matrix';
 
 
 @Injectable()
@@ -20,46 +20,47 @@ export type Tab = {
 export class TabManager {
 
     private tabs: Array<Tab> = [];
-    private observers: Array<Observer<Array<Tab>>> = [];
 
 
     constructor(indexFacade: IndexFacade,
                 private stateSerializer: StateSerializer) {
 
-        indexFacade.changesNotifications().subscribe(document => this.updateTabLabel(document));
+        indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.deserialize().then(tabs => this.tabs = tabs);
     }
 
 
-    public notifications = (): Observable<NavigationPath> => ObserverUtil.register(this.observers);
-
     public getTabs = (): Array<Tab> => this.tabs;
 
 
-    public isOpen(name: string): boolean {
+    public isOpen(routeName: RouteName, resourceId: string): boolean {
 
-        return this.tabs.find(tab => tab.name === name) !== undefined;
+        return this.tabs.find(tab => {
+            return tab.routeName === routeName && tab.resourceId === resourceId
+        }) !== undefined;
     }
 
 
-    public async openTab(name: string, label: string) {
+    public async openTab(routeName: RouteName, label: string, resourceId?: string) {
 
-        this.tabs.push({ name: name, label: label });
+        this.tabs.push({ routeName: routeName, label: label, resourceId: resourceId });
         await this.serialize();
     }
 
 
-    public async closeTab(name: string) {
+    public async closeTab(routeName: RouteName, resourceId?: string) {
 
-        this.tabs = this.tabs.filter(tab => tab.name !== name);
+        this.tabs = this.tabs.filter(tab => {
+            return tab.routeName !== routeName || tab.resourceId !== resourceId;
+        });
         await this.serialize();
     }
 
 
-    public async updateTabLabel(document: Document) {
+    private async updateTabLabels(document: Document) {
 
-        const tab: Tab|undefined = this.tabs.find(tab => tab.name === document.resource.id);
-        if (tab) tab.label = document.resource.identifier;
+        this.tabs.filter(tab => tab.resourceId === document.resource.id)
+            .forEach(tab => tab.label = document.resource.identifier);
 
         await this.serialize();
     }

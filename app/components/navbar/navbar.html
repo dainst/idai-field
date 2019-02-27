@@ -19,12 +19,12 @@
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
-            <li *ngFor="let tab of getTabs()" id="navbar-{{tab.name}}" class="nav-item">
+            <li *ngFor="let tab of getTabs()" id="{{getTabId(tab)}}" class="nav-item">
                 <a class="nav-link operation-view-tab"
-                   [class.active]="isActiveRoute('/resources/' + tab.name)"
-                   (click)="router.navigate(['resources', tab.name])">
+                   [class.active]="isActiveRoute(getTabRoute(tab))"
+                   (click)="router.navigate(getTabRouteArray(tab))">
                     {{tab.label}}
-                    <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab.name);"></span>
+                    <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
                 </a>
             </li>
             <li class="nav-item">

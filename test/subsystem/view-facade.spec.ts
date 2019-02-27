@@ -120,7 +120,7 @@ describe('ViewFacade/Subsystem', () => {
             })
         );
 
-        await tabManager.openTab('t2', 'trench2');
+        await tabManager.openTab('resources', 'trench2', 't2');
 
         await viewFacade.selectView('project');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);

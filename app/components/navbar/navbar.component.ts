@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
-import {TabManager} from '../tab-manager';
+import {Tab, TabManager} from '../tab-manager';
 
 
 @Component({
@@ -31,6 +31,12 @@ export class NavbarComponent {
 
     public getTabs = () => this.tabManager.getTabs();
 
+    public getTabId = (tab: Tab) => 'navbar-' + tab.routeName + tab.resourceId ? '-' + tab.resourceId : '';
+
+    public getTabRoute = (tab: Tab) => '/' + tab.routeName + '/' + (tab.resourceId ? tab.resourceId : '');
+
+    public getTabRouteArray = (tab: Tab) => tab.resourceId ? [tab.routeName, tab.resourceId] : [tab.routeName];
+
 
 
     public isActiveRoute(route: string) {
@@ -46,13 +52,14 @@ export class NavbarComponent {
     }
 
 
-    public async close(tabName: string) {
+    public async close(tab: Tab) {
 
-        if (this.isActiveRoute('/resources/' + tabName)) {
+        if (this.isActiveRoute(this.getTabRoute(tab))) {
             await this.router.navigate(['resources', 'project']);
         }
 
-        this.viewFacade.deactivateView(tabName);
-        await this.tabManager.closeTab(tabName);
+        if (tab.routeName === 'resources') this.viewFacade.deactivateView(tab.resourceId as string);
+
+        await this.tabManager.closeTab(tab.routeName, tab.resourceId);
     }
 }

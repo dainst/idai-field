@@ -37,10 +37,10 @@ export class TaskbarComponent {
     public isConnected = (): boolean => this.synchronizationStatus.isConnected();
 
 
-    public async openTab(tabName: string) {
+    public async openTab(routeName: string) {
 
-        await this.tabManager.openTab(tabName, this.getTabLabel(tabName));
-        await this.router.navigate([tabName]);
+        await this.tabManager.openTab(routeName, this.getTabLabel(routeName));
+        await this.router.navigate([routeName]);
     }
 
 
@@ -59,9 +59,9 @@ export class TaskbarComponent {
     }
 
 
-    private getTabLabel(tabName: string): string {
+    private getTabLabel(routeName: string): string {
 
-        switch(tabName) {
+        switch(routeName) {
             case 'help':
                 return this.i18n({ id: 'navbar.taskbar.dropdown.help', value: 'Hilfe' });
             case 'import':

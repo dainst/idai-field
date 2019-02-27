@@ -286,7 +286,8 @@ describe('resources --', () => {
         ResourcesPage.clickHierarchyButton('S1');
         NavbarPage.navigate('project');
 
-        browser.wait(EC.presenceOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
+            delays.ECWaitTime);
 
         ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuDeleteButton();
@@ -295,7 +296,8 @@ describe('resources --', () => {
         browser.sleep(delays.shortRest);
         NavbarPage.clickCloseAllMessages();
 
-        browser.wait(EC.stalenessOf(NavbarPage.getTab('t1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')),
+            delays.ECWaitTime);
     });
 
 
@@ -444,13 +446,15 @@ describe('resources --', () => {
     it('operation -- should edit an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
-        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('S1'));
+        NavbarPage.getNavLinkLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
 
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-        NavbarPage.getNavLinkLabel('t1').then(label => expect(label).toEqual('newIdentifier'));
+        NavbarPage.getNavLinkLabel('resources', 't1').then(label => {
+            expect(label).toEqual('newIdentifier');
+        });
     });
 
 

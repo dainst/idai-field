@@ -59,9 +59,9 @@ export class NavbarPage {
 
     // elements
 
-    public static getTab(name: string) {
+    public static getTab(routeName: string, resourceIdentifier?: string) {
 
-        return element(by.id('navbar-' + name));
+        return element(by.id('navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : '')));
     }
 
 
@@ -76,15 +76,16 @@ export class NavbarPage {
 
     public static getActiveNavLinkLabel() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))),
+            delays.ECWaitTime);
         return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
     }
 
 
-    public static getNavLinkLabel(viewName: string) {
+    public static getNavLinkLabel(routeName: string, resourceIdentifier?: string) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#navbar-' + viewName))), delays.ECWaitTime);
-        return element(by.css('#navbar-' + viewName)).getText();
+        browser.wait(EC.visibilityOf(this.getTab(routeName, resourceIdentifier)), delays.ECWaitTime);
+        return this.getTab(routeName, resourceIdentifier).getText();
     }
 
 

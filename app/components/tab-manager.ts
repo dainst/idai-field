@@ -57,6 +57,12 @@ export class TabManager {
     }
 
 
+    public resetForE2E() {
+
+        this.tabs = [];
+    }
+
+
     private async updateTabLabels(document: Document) {
 
         this.tabs.filter(tab => tab.resourceId === document.resource.id)

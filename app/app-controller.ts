@@ -8,6 +8,7 @@ import {DocumentCache} from './core/datastore/core/document-cache';
 import {ImagesState} from './components/imageoverview/view/images-state';
 import {ResourcesStateManager} from './components/resources/view/resources-state-manager';
 import {IndexFacade} from './core/datastore/index/index-facade';
+import {TabManager} from './components/tab-manager';
 
 const remote = require('electron').remote;
 
@@ -23,7 +24,8 @@ export class AppController {
         private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
         private imagesState: ImagesState,
-        private indexFacade: IndexFacade) {
+        private indexFacade: IndexFacade,
+        private tabManager: TabManager) {
     }
     
 
@@ -39,6 +41,7 @@ export class AppController {
                 this.resourcesState.resetForE2E();
                 this.imagesState.resetForE2E();
 
+                this.tabManager.resetForE2E();
                 this.documentCache.resetForE2E();
                 await this.pouchdbManager.resetForE2E();
                 await this.pouchdbManager.reindex(this.indexFacade);

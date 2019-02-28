@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
@@ -23,7 +24,8 @@ export class TabManager {
 
     constructor(indexFacade: IndexFacade,
                 private stateSerializer: StateSerializer,
-                private datastore: FieldReadDatastore) {
+                private datastore: FieldReadDatastore,
+                private i18n: I18n) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.deserialize().then(async tabs => this.tabs = await this.validateTabs(tabs));
@@ -39,11 +41,16 @@ export class TabManager {
     }
 
 
-    public async openTab(routeName: string, label: string, resourceId?: string) {
+    public async openTab(routeName: string, operationId?: string, operationIdentifier?: string) {
 
-        if (this.isOpen(routeName, resourceId)) return;
+        if (this.isOpen(routeName, operationId)) return;
 
-        this.tabs.push({ routeName: routeName, label: label, resourceId: resourceId });
+        this.tabs.push({
+            routeName: routeName,
+            label: this.getLabel(routeName, operationIdentifier),
+            resourceId: operationId
+        });
+
         await this.serialize();
     }
 
@@ -113,5 +120,36 @@ export class TabManager {
         return this.tabs.find(tab => {
             return tab.routeName === routeName && tab.resourceId === resourceId
         });
+    }
+
+
+    private getLabel(routeName: string, operationIdentifier?: string): string {
+
+        switch(routeName) {
+            case 'resources':
+                return operationIdentifier as string;
+            case 'matrix':
+                return operationIdentifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
+            case 'help':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.help', value: 'Hilfe' });
+            case 'images':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.images', value: 'Bilder' });
+            case 'import':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.import', value: 'Import' });
+            case 'export':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.export', value: 'Export' });
+            case 'backup-creation':
+                return this.i18n(
+                    { id: 'navbar.taskbar.dropdown.createBackup', value: 'Backup erstellen' }
+                );
+            case 'backup-loading':
+                return this.i18n(
+                    { id: 'navbar.taskbar.dropdown.restoreBackup', value: 'Backup einlesen' }
+                );
+            case 'settings':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.settings', value: 'Einstellungen' });
+            default:
+                return '';
+        }
     }
 }

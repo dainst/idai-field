@@ -148,10 +148,7 @@ export class MatrixViewComponent implements OnInit {
             return await this.routingService.jumpToOverview();
         }
 
-        await this.tabManager.openTab(
-            'matrix', this.getTabLabel(this.trench.resource.identifier), trenchId
-        );
-
+        await this.tabManager.openTab('matrix', trenchId, this.trench.resource.identifier);
         await this.reset();
     }
 
@@ -193,12 +190,6 @@ export class MatrixViewComponent implements OnInit {
                 // TODO Remove this if deletion option is not reintroduced into docedit
                 reason => { if (reason === 'deleted') return this.reset(); }
             );
-    }
-
-
-    private getTabLabel(identifier: string): string {
-
-        return identifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
     }
 
 

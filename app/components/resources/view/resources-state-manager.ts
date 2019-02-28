@@ -85,7 +85,7 @@ export class ResourcesStateManager {
             if (!this.tabManager.isOpen('resources', viewName)) {
                 state.mode = currentMode;
                 await this.tabManager.openTab(
-                    'resources', state.operation.resource.identifier, viewName
+                    'resources', viewName, state.operation.resource.identifier
                 );
             }
 

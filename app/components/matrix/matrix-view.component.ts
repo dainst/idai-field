@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, isEmpty, is} from 'tsfun';
 import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
@@ -13,6 +14,7 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {TabManager} from '../tab-manager';
+import {RoutingService} from '../routing-service';
 
 
 @Component({
@@ -49,6 +51,8 @@ export class MatrixViewComponent implements OnInit {
                 private matrixState: MatrixState,
                 private loading: Loading,
                 private tabManager: TabManager,
+                private routingService: RoutingService,
+                private i18n: I18n,
                 route: ActivatedRoute) {
 
         route.params.subscribe(async params => {
@@ -137,15 +141,16 @@ export class MatrixViewComponent implements OnInit {
 
     private async initialize(trenchId: string) {
 
-        await this.tabManager.openTab('matrix', trenchId, trenchId);
-
         try {
             this.trench = await this.datastore.get(trenchId);
         } catch (err) {
             console.warn('Failed to load trench ' + trenchId + ' for matrix view', err);
-            await this.tabManager.closeTab('matrix', trenchId);
-            return;
+            return await this.routingService.jumpToOverview();
         }
+
+        await this.tabManager.openTab(
+            'matrix', this.getTabLabel(this.trench.resource.identifier), trenchId
+        );
 
         await this.reset();
     }
@@ -188,6 +193,12 @@ export class MatrixViewComponent implements OnInit {
                 // TODO Remove this if deletion option is not reintroduced into docedit
                 reason => { if (reason === 'deleted') return this.reset(); }
             );
+    }
+
+
+    private getTabLabel(identifier: string): string {
+
+        return identifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
     }
 
 

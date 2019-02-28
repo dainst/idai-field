@@ -37,6 +37,12 @@ export class RoutingService {
     }
 
 
+    public async jumpToOverview() {
+
+        await this.router.navigate(['resources', 'project']);
+    }
+
+
     public async jumpToOperationView(operation: Document) {
 
         await this.router.navigate(['resources', operation.resource.id]);

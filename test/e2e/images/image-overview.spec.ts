@@ -67,7 +67,7 @@ describe('images --', function() {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest * 3);
-            NavbarPage.clickTab('images');
+            NavbarPage.performNavigateToImages();
             ImageOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);
         }

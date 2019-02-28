@@ -52,7 +52,7 @@ export class MatrixViewComponent implements OnInit {
                 route: ActivatedRoute) {
 
         route.params.subscribe(async params => {
-            if (params['trenchId']) await this.loadTrench(params['trenchId']);
+            if (params['trenchId']) await this.initialize(params['trenchId']);
         });
     }
 
@@ -135,15 +135,23 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async loadTrench(id: string) {
+    private async initialize(trenchId: string) {
+
+        await this.tabManager.openTab('matrix', trenchId, trenchId);
 
         try {
-            this.trench = await this.datastore.get(id);
+            this.trench = await this.datastore.get(trenchId);
         } catch (err) {
-            console.warn('Failed to load trench ' + id + ' for matrix view', err);
-            await this.tabManager.closeTab('matrix', id);
+            console.warn('Failed to load trench ' + trenchId + ' for matrix view', err);
+            await this.tabManager.closeTab('matrix', trenchId);
             return;
         }
+
+        await this.reset();
+    }
+
+
+    private async reset() {
 
         this.selection.clear(false);
         this.matrixState.setSelectedTrenchId(this.trench.resource.id);
@@ -175,7 +183,7 @@ export class MatrixViewComponent implements OnInit {
         doceditRef.componentInstance.setDocument(docToEdit);
 
         const reset = async () => {
-            await this.loadTrench(this.trench.resource.id);
+            await this.reset();
         };
 
         await doceditRef.result

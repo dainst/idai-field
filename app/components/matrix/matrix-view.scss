@@ -32,14 +32,6 @@
     padding-left: 8px;
     margin-bottom: 4px;
   }
-
-  #selected-trench-label {
-    position: absolute;
-    left: 37px;
-    height: 39px;
-
-    @extend .btn-outline-primary:active;
-  }
 }
 
 #matrix-container {

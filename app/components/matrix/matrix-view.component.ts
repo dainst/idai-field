@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, isEmpty, is} from 'tsfun';
 import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
@@ -11,6 +12,7 @@ import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
@@ -30,34 +32,34 @@ export class MatrixViewComponent implements OnInit {
      */
     public graph: string|undefined;
 
+    public trench: FieldDocument;
+
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
-
-    public trenches: Array<FieldDocument> = [];
-    public selectedTrench: FieldDocument|undefined;
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private trenchesLoaded: boolean = false;
 
 
-    constructor(
-        private datastore: FieldReadDatastore,
-        private projectConfiguration: ProjectConfiguration,
-        private featureDatastore: FeatureReadDatastore,
-        private modalService: NgbModal,
-        private matrixState: MatrixState,
-        private loading: Loading
-    ) {}
+    constructor(private datastore: FieldReadDatastore,
+                private projectConfiguration: ProjectConfiguration,
+                private featureDatastore: FeatureReadDatastore,
+                private modalService: NgbModal,
+                private matrixState: MatrixState,
+                private loading: Loading,
+                private tabManager: TabManager,
+                route: ActivatedRoute) {
+
+        route.params.subscribe(async params => {
+            if (params['trenchId']) await this.loadTrench(params['trenchId']);
+        });
+    }
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
-
-    public showNoTrenchesWarning = () => this.trenchesLoaded && this.noTrenches();
-
-    public showTrenchSelector = () => !this.noTrenches();
+    public showNoResourcesWarning = () => this.noFeatures() && !this.loading.isLoading();
 
     public documentsSelected = () => this.selection.documentsSelected();
 
@@ -67,15 +69,12 @@ export class MatrixViewComponent implements OnInit {
 
     public clearSelection = () => this.selection.clear();
 
-    private noTrenches = () => isEmpty(this.trenches);
-
     private noFeatures = () => isEmpty(this.featureDocuments);
 
 
     async ngOnInit() {
 
         await this.matrixState.load();
-        await this.populateTrenches();
         this.trenchesLoaded = true;
     }
 
@@ -108,9 +107,9 @@ export class MatrixViewComponent implements OnInit {
 
     public async reloadGraph() {
 
-        if (!this.selectedTrench || !this.graphFromSelection) return;
+        if (!this.graphFromSelection) return;
 
-        await this.loadFeatureDocuments(this.selectedTrench);
+        await this.loadFeatureDocuments(this.trench);
         this.calculateGraph();
 
         this.graphFromSelection = false;
@@ -136,32 +135,23 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async populateTrenches(): Promise<void> {
+    private async loadTrench(id: string) {
 
-        this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
-        if (this.trenches.length === 0) return;
-
-        const previouslySelectedTrench = this.trenches
-            .find(on('resource.id', is(this.matrixState.getSelectedTrenchId())));
-        if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
-
-        await this.selectTrench(this.trenches[0]);
-    }
-
-
-    private async selectTrench(trench: FieldDocument) {
-
-        if (trench === this.selectedTrench) return;
+        try {
+            this.trench = await this.datastore.get(id);
+        } catch (err) {
+            console.warn('Failed to load trench ' + id + ' for matrix view', err);
+            await this.tabManager.closeTab('matrix', id);
+            return;
+        }
 
         this.selection.clear(false);
-
-        this.selectedTrench = trench;
-        this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
+        this.matrixState.setSelectedTrenchId(this.trench.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
         this.graph = undefined;
 
-        await this.loadFeatureDocuments(trench);
+        await this.loadFeatureDocuments(this.trench);
         this.calculateGraph();
     }
 
@@ -185,9 +175,7 @@ export class MatrixViewComponent implements OnInit {
         doceditRef.componentInstance.setDocument(docToEdit);
 
         const reset = async () => {
-            this.featureDocuments = [];
-            this.selectedTrench = undefined;
-            await this.populateTrenches();
+            await this.loadTrench(this.trench.resource.id);
         };
 
         await doceditRef.result

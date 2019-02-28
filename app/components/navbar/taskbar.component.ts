@@ -64,6 +64,8 @@ export class TaskbarComponent {
         switch(routeName) {
             case 'help':
                 return this.i18n({ id: 'navbar.taskbar.dropdown.help', value: 'Hilfe' });
+            case 'images':
+                return this.i18n({ id: 'navbar.taskbar.dropdown.images', value: 'Bilder' });
             case 'import':
                 return this.i18n({ id: 'navbar.taskbar.dropdown.import', value: 'Import' });
             case 'export':

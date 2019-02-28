@@ -820,16 +820,8 @@
         <source>Matrix</source>
         <target state="final">Matrix</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.images" datatype="html">
-        <source>Bilder</source>
-        <target state="final">Bilder</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="sourcefile">app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
@@ -864,12 +856,20 @@
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.import" datatype="html">
         <source>Import</source>
         <target state="final">Import</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.export" datatype="html">
@@ -877,7 +877,7 @@
         <target state="final">Export</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.createBackup" datatype="html">
@@ -885,7 +885,7 @@
         <target state="final">Backup erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.restoreBackup" datatype="html">
@@ -893,7 +893,7 @@
         <target state="final">Backup einlesen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.settings" datatype="html">
@@ -901,7 +901,7 @@
         <target state="final">Einstellungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">

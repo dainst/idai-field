@@ -3,6 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {ResourcesPage} from '../resources/resources.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -19,7 +20,8 @@ describe('matrix --', () => {
 
     beforeAll(() => {
 
-        MatrixPage.get();
+        NavbarPage.navigate('project');
+        ResourcesPage.performJumpToMatrixView('S2');
         browser.sleep(delays.shortRest * 4);
     });
 
@@ -30,7 +32,8 @@ describe('matrix --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.navigate('matrix');
+            NavbarPage.navigate('project');
+            ResourcesPage.performJumpToMatrixView('S2');
         }
 
         i++;

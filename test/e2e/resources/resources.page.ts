@@ -94,7 +94,7 @@ export class ResourcesPage {
         return common.click(element(by.id('jump-to-resources-view-button')));
     }
 
-    public static clickJumpMatrixViewButton() {
+    public static clickJumpToMatrixViewButton() {
 
         return common.click(element(by.id('jump-to-matrix-view-button')));
     }
@@ -411,6 +411,13 @@ export class ResourcesPage {
 
         this.clickHierarchyButton(identifier);
         this.clickJumpToResourcesViewButton();
+    }
+
+
+    public static performJumpToMatrixView(identifier: string) {
+
+        this.clickHierarchyButton(identifier);
+        this.clickJumpToMatrixViewButton();
     }
 
 

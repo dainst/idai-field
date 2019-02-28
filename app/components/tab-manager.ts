@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
@@ -9,7 +10,7 @@ import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 export type Tab = {
     routeName: string,
     label: string
-    resourceId?: string
+    operationId?: string
 }
 
 
@@ -25,14 +26,23 @@ export class TabManager {
     constructor(indexFacade: IndexFacade,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
+                private router: Router,
                 private i18n: I18n) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
-        this.deserialize().then(async tabs => this.tabs = await this.validateTabs(tabs));
+        this.initialize();
     }
 
 
     public getTabs = (): Array<Tab> => this.tabs;
+
+
+    async initialize() {
+
+        this.tabs = await this.deserialize();
+        await this.openTabForCurrentRoute();
+        await this.validateTabs();
+    }
 
 
     public isOpen(routeName: string, resourceId?: string): boolean {
@@ -48,17 +58,17 @@ export class TabManager {
         this.tabs.push({
             routeName: routeName,
             label: this.getLabel(routeName, operationIdentifier),
-            resourceId: operationId
+            operationId: operationId
         });
 
         await this.serialize();
     }
 
 
-    public async closeTab(routeName: string, resourceId?: string) {
+    public async closeTab(routeName: string, operationId?: string) {
 
         this.tabs = this.tabs.filter(tab => {
-            return tab.routeName !== routeName || tab.resourceId !== resourceId;
+            return tab.routeName !== routeName || tab.operationId !== operationId;
         });
         await this.serialize();
     }
@@ -72,7 +82,7 @@ export class TabManager {
 
     private async updateTabLabels(document: Document) {
 
-        this.tabs.filter(tab => tab.resourceId === document.resource.id)
+        this.tabs.filter(tab => tab.operationId === document.resource.id)
             .forEach(tab => tab.label = document.resource.identifier);
 
         await this.serialize();
@@ -95,14 +105,14 @@ export class TabManager {
     }
 
 
-    private async validateTabs(tabs: Array<Tab>): Promise<Array<Tab>> {
+    private async validateTabs() {
 
         const validatedTabs: Array<Tab> = [];
 
-        for (let tab of tabs) {
-            if (tab.resourceId) {
+        for (let tab of this.tabs) {
+            if (tab.operationId) {
                 try {
-                    const document: FieldDocument = await this.datastore.get(tab.resourceId);
+                    const document: FieldDocument = await this.datastore.get(tab.operationId);
                     tab.label = document.resource.identifier;
                 } catch (err) {
                     continue;
@@ -111,14 +121,26 @@ export class TabManager {
             validatedTabs.push(tab);
         }
 
-        return validatedTabs;
+        this.tabs = validatedTabs;
     }
 
 
-    private getTab(routeName: string, resourceId?: string): Tab|undefined {
+    private async openTabForCurrentRoute() {
+
+        const route: string[] = this.router.url.split('/');
+        const routeName: string = route[1];
+        const operationId: string|undefined = route.length > 2 ? route[2] : undefined;
+
+        if (!this.getTab(routeName, operationId)) {
+            await this.openTab(routeName, operationId, '');
+        }
+    }
+
+
+    private getTab(routeName: string, operationId?: string): Tab|undefined {
 
         return this.tabs.find(tab => {
-            return tab.routeName === routeName && tab.resourceId === resourceId
+            return tab.routeName === routeName && tab.operationId === operationId
         });
     }
 

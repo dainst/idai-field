@@ -108,7 +108,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     stateSerializer.store.and.returnValue(Promise.resolve());
 
     const tabManager = new TabManager(createdIndexFacade, stateSerializer, fieldDocumentDatastore,
-        () => '');
+        { url: '/project' } as any, () => '');
 
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,

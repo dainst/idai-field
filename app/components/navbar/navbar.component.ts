@@ -29,11 +29,13 @@ export class NavbarComponent {
 
     public getTabs = () => this.tabManager.getTabs();
 
-    public getTabId = (tab: Tab) => 'navbar-' + tab.routeName + (tab.resourceId ? '-' + tab.resourceId : '');
+    public getTabId = (tab: Tab) => 'navbar-' + tab.routeName + (tab.operationId ? '-' + tab.operationId : '');
 
-    public getTabRoute = (tab: Tab) => '/' + tab.routeName + (tab.resourceId ? '/' + tab.resourceId : '');
+    public getTabRoute = (tab: Tab) => '/' + tab.routeName + (tab.operationId ? '/' + tab.operationId : '');
 
-    public getTabRouteArray = (tab: Tab) => tab.resourceId ? [tab.routeName, tab.resourceId] : [tab.routeName];
+    public getTabRouteArray = (tab: Tab) => tab.operationId
+        ? [tab.routeName, tab.operationId]
+        : [tab.routeName];
 
     public isActiveRoute = (route: string) => this.activeRoute && this.activeRoute.startsWith(route);
 
@@ -50,8 +52,8 @@ export class NavbarComponent {
             await this.router.navigate(['resources', 'project']);
         }
 
-        if (tab.routeName === 'resources') this.viewFacade.deactivateView(tab.resourceId as string);
+        if (tab.routeName === 'resources') this.viewFacade.deactivateView(tab.operationId as string);
 
-        await this.tabManager.closeTab(tab.routeName, tab.resourceId);
+        await this.tabManager.closeTab(tab.routeName, tab.operationId);
     }
 }

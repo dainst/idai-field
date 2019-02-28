@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
-import {Document, DatastoreErrors} from 'idai-components-2';
+import {Document, DatastoreErrors, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
 import {TypeUtility} from '../core/model/type-utility';
 
@@ -40,6 +40,12 @@ export class RoutingService {
     public async jumpToOperationView(operation: Document) {
 
         await this.router.navigate(['resources', operation.resource.id]);
+    }
+
+
+    public async jumpToMatrix(trench: FieldDocument) {
+
+        await this.router.navigate(['matrix', trench.resource.id]);
     }
 
 

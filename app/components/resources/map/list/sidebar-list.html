@@ -27,7 +27,7 @@
                   [class.show-only-on-hover]="viewFacade.getChildrenCount(document) > 0"></span>
         </div>
 
-        <div *ngIf="showJumpToViewOption(document)"
+        <div *ngIf="showJumpToViewOption(document) && document.resource.type !== 'Trench'"
              class="hierarchy-button btn float-right"
              ngbTooltip="Zur Maßnahme wechseln"
              i18n-ngbTooltip="@@resources.jumpToView.tooltip"
@@ -39,6 +39,28 @@
              (mousedown)="tooltip.close()"
              (click)="jumpToView(document); $event.stopPropagation();">
             <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+        </div>
+
+        <div *ngIf="showJumpToViewOption(document) && document.resource.type === 'Trench'"
+             ngbDropdown placement="bottom-right"
+            (click)="$event.stopPropagation()">
+            <div class="hierarchy-button btn float-right" ngbDropdownToggle>
+                <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+            </div>
+            <div ngbDropdownMenu>
+                <div id="jump-to-view-resources-button"
+                     class="dropdown-item"
+                     (click)="jumpToView(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
+                </div>
+                <div id="jump-to-view-matrix-button"
+                     class="dropdown-item"
+                     (click)="jumpToMatrix(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.matrix">Matrix</span>
+                </div>
+            </div>
         </div>
 
         <div class="document-teaser-container">

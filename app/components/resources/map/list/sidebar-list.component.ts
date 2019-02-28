@@ -38,6 +38,8 @@ export class SidebarListComponent extends BaseList {
 
     public jumpToView = (document: FieldDocument) => this.navigationService.jumpToView(document);
 
+    public jumpToMatrix = (document: FieldDocument) => this.navigationService.jumpToMatrix(document);
+
     public showMoveIntoOption = (document: FieldDocument) =>
         this.navigationService.showMoveIntoOption(document);
 

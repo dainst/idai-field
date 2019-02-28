@@ -29,6 +29,12 @@ export class NavigationService {
     }
 
 
+    public async jumpToMatrix(document: FieldDocument) {
+
+        await this.routingService.jumpToMatrix(document);
+    }
+
+
     public showMoveIntoOption(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved

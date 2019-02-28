@@ -56,7 +56,7 @@ xdescribe('import --', function() {
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
@@ -72,7 +72,7 @@ xdescribe('import --', function() {
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
     });

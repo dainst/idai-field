@@ -163,7 +163,7 @@ describe('map --', function() {
         ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
         browser.sleep(750);
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
     });
 
 
@@ -175,7 +175,7 @@ describe('map --', function() {
             browser.sleep(delays.shortRest);
             NavbarPage.navigate('project');
             browser.sleep(delays.shortRest * 4);
-            ResourcesPage.clickHierarchyButton('S1');
+            ResourcesPage.performJumpToTrenchView('S1');
         }
 
         index++;

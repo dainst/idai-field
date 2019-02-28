@@ -127,7 +127,7 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a fulltext search', () => {
 
-        ResourcesPage.clickHierarchyButton('S2');
+        ResourcesPage.performJumpToTrenchView('S2');
         ResourcesPage.clickListModeButton();
 
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
@@ -138,7 +138,7 @@ describe('resources/state --', function() {
 
     it('search/list -- perform a type filter search', () => {
 
-        ResourcesPage.clickHierarchyButton('S2');
+        ResourcesPage.performJumpToTrenchView('S2');
         ResourcesPage.clickListModeButton();
 
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
@@ -149,7 +149,7 @@ describe('resources/state --', function() {
 
     it('search -- select all filter', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -164,7 +164,7 @@ describe('resources/state --', function() {
 
     it('search -- show correct types in plus type menu after choosing type filter', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         const checkTypeOptions = () => {
 
@@ -198,7 +198,7 @@ describe('resources/state --', function() {
 
     it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
 
         const checkTypeIcon = () => {
@@ -245,7 +245,7 @@ describe('resources/state --', function() {
 
     it('search -- filter by parent type', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -268,7 +268,7 @@ describe('resources/state --', function() {
         DoceditPage.clickSaveDocument();
 
         ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
@@ -412,7 +412,7 @@ describe('resources/state --', function() {
 
     it('navpath -- show correct navigation path after click on relation link', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.performCreateResource('c2', 'feature');
         ResourcesPage.clickHierarchyButton('c2');
@@ -433,7 +433,7 @@ describe('resources/state --', function() {
 
     it('navpath -- update navigation path after deleting resource', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.clickOperationNavigationButton();
 
@@ -452,7 +452,7 @@ describe('resources/state --', function() {
 
     it('update navigation path when moving a resource within the same operation', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
 
         ResourcesPage.clickHierarchyButton('SE0');
@@ -472,7 +472,7 @@ describe('resources/state --', function() {
 
     it('update navigation path when moving a resource to another operation', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.clickOperationNavigationButton();
 
@@ -488,7 +488,7 @@ describe('resources/state --', function() {
         });
 
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(1);
             expect(navigationButtons[0].getText()).toEqual('S1');
@@ -498,7 +498,7 @@ describe('resources/state --', function() {
 
     it('navpath/hierarchy - switch between modes', () => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.clickHierarchyButton('SE0');

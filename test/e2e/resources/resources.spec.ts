@@ -30,7 +30,7 @@ describe('resources --', () => {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 4);
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
     });
 
 
@@ -42,7 +42,7 @@ describe('resources --', () => {
             browser.sleep(delays.shortRest);
             NavbarPage.navigate('project');
             browser.sleep(delays.shortRest * 3);
-            ResourcesPage.clickHierarchyButton('S1');
+            ResourcesPage.performJumpToTrenchView('S1');
         }
 
         i++;
@@ -54,7 +54,7 @@ describe('resources --', () => {
 
         NavbarPage.navigate('images');
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickImagesTab();
     }
@@ -283,7 +283,7 @@ describe('resources --', () => {
     it('delete an operation and update navbar', () => {
 
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         NavbarPage.navigate('project');
 
         browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
@@ -556,7 +556,7 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(6));
 
         NavbarPage.navigate('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });

@@ -89,6 +89,17 @@ export class ResourcesPage {
     }
 
 
+    public static clickJumpToResourcesViewButton() {
+
+        return common.click(element(by.id('jump-to-resources-view-button')));
+    }
+
+    public static clickJumpMatrixViewButton() {
+
+        return common.click(element(by.id('jump-to-matrix-view-button')));
+    }
+
+
     public static clickSelectResource(identifier) {
 
         return common.click(element(by.id('resource-' + identifier)));
@@ -346,24 +357,24 @@ export class ResourcesPage {
                                         inputFieldText?: string, skipGeometry?: boolean,
                                         clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType(typeName);
+        this.clickCreateResource();
+        this.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
         DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
-        ResourcesPage.scrollUp();
+        this.scrollUp();
         DoceditPage.clickSaveDocument(clickMsgAway, waitForModalToClose);
     }
 
 
     public static performCreateResourceInList(identifier: string, typeName: string) {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType(typeName);
-        ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+        this.clickCreateResource();
+        this.clickSelectResourceType(typeName);
+        this.typeInNewResourceAndHitEnterInList(identifier);
     }
 
 
@@ -371,14 +382,14 @@ export class ResourcesPage {
 
         NavbarPage.navigate('project');
         this.performCreateResource(identifier, 'trench');
-        this.clickHierarchyButton(identifier);
+        this.performJumpToTrenchView(identifier);
     }
 
 
     public static performCreateRelation(identifier: string, targetIdentifier: string,
                                                    relationGroupIndex: number) {
 
-        ResourcesPage.openEditByDoubleClickResource(identifier);
+        this.openEditByDoubleClickResource(identifier);
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
         DoceditRelationsTabPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
@@ -390,9 +401,16 @@ export class ResourcesPage {
 
     public static performCreateLink() {
 
-        ResourcesPage.performCreateResource('1', "feature-architecture");
-        ResourcesPage.performCreateResource('2', "feature-architecture");
-        ResourcesPage.performCreateRelation('2', '1', 6);   //isBefore
+        this.performCreateResource('1', "feature-architecture");
+        this.performCreateResource('2', "feature-architecture");
+        this.performCreateRelation('2', '1', 6);   //isBefore
+    }
+
+
+    public static performJumpToTrenchView(identifier: string) {
+
+        this.clickHierarchyButton(identifier);
+        this.clickJumpToResourcesViewButton();
     }
 
 

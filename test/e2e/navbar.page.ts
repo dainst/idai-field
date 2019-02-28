@@ -4,6 +4,7 @@ const EC = protractor.ExpectedConditions;
 const delays = require('./config/delays');
 const common = require('./common');
 
+
 export class NavbarPage {
 
     // click
@@ -17,20 +18,20 @@ export class NavbarPage {
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));
-    };
+    }
 
 
     public static clickConflictResolverLink(identifier: string) {
 
         return common.click(element(by.id('taskbar-conflict-' + identifier)));
-    };
+    }
 
 
     public static clickSelectProject(option) {
 
         browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#projectSelectBox option')).get(option).click();
-    };
+    }
 
 
     public static clickCloseAllMessages() {
@@ -41,7 +42,7 @@ export class NavbarPage {
                 buttonEl.click();
             }
         })
-    };
+    }
 
 
     // await
@@ -71,7 +72,7 @@ export class NavbarPage {
 
         browser.sleep(200);
         return element(by.id('message-0')).getText();
-    };
+    }
 
 
     public static getActiveNavLinkLabel() {
@@ -95,14 +96,14 @@ export class NavbarPage {
 
         common.click(element(by.id('taskbar-dropdown')));
         return common.click(element(by.id('settings-button')));
-    };
+    }
 
 
     public static performNavigateToImport() {
 
         common.click(element(by.id('taskbar-dropdown')));
         common.click(element(by.id('import-button')));
-    };
+    }
 
 
     public static performNavigateToImages() {

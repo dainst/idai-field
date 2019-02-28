@@ -62,7 +62,7 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        NavbarPage.navigate('images');
+        NavbarPage.performNavigateToImages();
         browser.sleep(delays.shortRest * 5);
         ImageOverviewPage.createDepictsRelation('S1');
     }

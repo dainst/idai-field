@@ -103,4 +103,11 @@ export class NavbarPage {
         common.click(element(by.id('taskbar-dropdown')));
         common.click(element(by.id('import-button')));
     };
+
+
+    public static performNavigateToImages() {
+
+        common.click(element(by.id('taskbar-dropdown')));
+        common.click(element(by.id('images-button')));
+    }
 }

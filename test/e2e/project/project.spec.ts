@@ -92,7 +92,7 @@ describe('project --', function() {
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unknown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
-        NavbarPage.navigate('images');
+        NavbarPage.performNavigateToImages();
         browser.sleep(200);
         NavbarPage.navigate('project');
         //

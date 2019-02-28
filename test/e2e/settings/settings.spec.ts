@@ -58,7 +58,7 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
         NavbarPage.clickCloseAllMessages();
 
-        NavbarPage.navigate('images');
+        NavbarPage.performNavigateToImages();
         browser.sleep(delays.shortRest * 50);
         ImageOverviewPage.clickUploadArea();
         ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));

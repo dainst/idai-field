@@ -52,7 +52,7 @@ describe('resources --', () => {
 
     function gotoImageTab() {
 
-        NavbarPage.navigate('images');
+        NavbarPage.performNavigateToImages();
         NavbarPage.navigate('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');

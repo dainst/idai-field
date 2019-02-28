@@ -182,12 +182,11 @@ export class MatrixViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(docToEdit);
 
-        const reset = async () => {
-            await this.reset();
-        };
-
         await doceditRef.result
-            .then(reset, reason => { if (reason === 'deleted') return reset(); });
+            .then(
+                this.reset.bind(this),
+                reason => { if (reason === 'deleted') return this.reset(); }
+            );
     }
 
 

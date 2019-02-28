@@ -1,9 +1,9 @@
 <div id="{{makeId()}}"
      class="row-wrapper">
     <div class="label-field">
-        <div [class.text-info]="!document.resource.id">
-            <i>{{getLabel()}}</i>
-       </div>
+        <div class="type-label" [class.text-info]="!document.resource.id">
+            <i>{{getTypeLabel()}}</i>
+        </div>
         <button *ngIf="showMoveIntoOption()"
                 class="hierarchy-button move-into-button btn float-right align-middle"
                 ngbTooltip="Untergeordnete Ressourcen ansehen"
@@ -21,7 +21,7 @@
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px"
                   [class.show-only-on-hover]="viewFacade.getChildrenCount(document) > 0"></span>
         </button>
-        <button *ngIf="showJumpToViewOption()"
+        <button *ngIf="showJumpToViewOption() && document.resource.type !== 'Trench'"
                 class="hierarchy-button jump-to-view-button btn float-right align-middle"
                 ngbTooltip="Zur Maßnahme wechseln"
                 i18n-ngbTooltip="@@resources.jumpToView.tooltip"
@@ -35,6 +35,26 @@
                 (click)="jumpToView()">
             <span class="mdi mdi-arrow-top-right mdi-18px"></span>
         </button>
+        <span *ngIf="showJumpToViewOption() && document.resource.type === 'Trench'"
+             ngbDropdown placement="bottom-right">
+            <div class="hierarchy-button btn float-right" ngbDropdownToggle>
+                <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+            </div>
+            <div ngbDropdownMenu>
+                <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
+                     class="dropdown-item"
+                     (click)="jumpToView(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
+                </div>
+                <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
+                     class="dropdown-item"
+                     (click)="jumpToMatrix(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.matrix">Matrix</span>
+                </div>
+            </div>
+        </span>
     </div>
     <div class="input-field">
         <input #identifierInput [(ngModel)]="document.resource.identifier"

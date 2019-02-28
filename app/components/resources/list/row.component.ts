@@ -62,7 +62,9 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getLabel = () => this.typesMap[this.document.resource.type].label;
+    public jumpToMatrix = () => this.navigationService.jumpToMatrix(this.document);
+
+    public getTypeLabel = () => this.typesMap[this.document.resource.type].label;
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier

@@ -39,7 +39,6 @@ describe('matrix --', () => {
         i++;
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
-        MatrixPage.performSelectOperation(1);
 
         done();
     });
@@ -60,20 +59,6 @@ describe('matrix --', () => {
         browser.wait(EC.presenceOf(MatrixPage.getSameRankEdge('si3', 'si5')),
             delays.ECWaitTime);
     }
-
-
-    it('show matrix for different trenches', () => {
-
-        testDefaultMatrix();
-        MatrixPage.performSelectOperation(0);
-
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
-        browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
-
-        MatrixPage.performSelectOperation(1);
-        testDefaultMatrix();
-    });
 
 
     it('edit relations and show updated matrix', () => {
@@ -107,17 +92,6 @@ describe('matrix --', () => {
     });
 
 
-    it('clear selection when switching trenches', () => {
-
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-
-        MatrixPage.performSelectOperation(0);
-        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
-        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
-    });
-
-
     it('create matrix from selected resources', () => {
 
         MatrixPage.clickSingleSelectionModeButton();
@@ -140,6 +114,8 @@ describe('matrix --', () => {
 
 
     it('switch between spatial and temporal relations', () => {
+
+        testDefaultMatrix();
 
         MatrixPage.clickOptionsButton();
         MatrixPage.clickSpatialRelationsRadioButton();

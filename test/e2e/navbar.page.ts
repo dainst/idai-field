@@ -8,7 +8,7 @@ export class NavbarPage {
 
     // click
 
-    public static navigate(tabName: string) {
+    public static clickTab(tabName: string) {
 
         return common.click(element(by.id('navbar-' + tabName)));
     }

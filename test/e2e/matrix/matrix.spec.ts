@@ -20,7 +20,7 @@ describe('matrix --', () => {
 
     beforeAll(() => {
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToMatrixView('S2');
         browser.sleep(delays.shortRest * 4);
     });
@@ -32,7 +32,7 @@ describe('matrix --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.navigate('project');
+            NavbarPage.clickTab('project');
             ResourcesPage.performJumpToMatrixView('S2');
         }
 

@@ -37,7 +37,7 @@ describe('resources/state --', function() {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.navigate('project');
+            NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 3);
         }
 
@@ -118,7 +118,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
@@ -487,7 +487,7 @@ describe('resources/state --', function() {
             expect(navigationButtons[0].getText()).toEqual('S2');
         });
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(1);

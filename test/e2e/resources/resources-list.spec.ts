@@ -30,7 +30,7 @@ describe('resources/list --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.navigate('project');
+            NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 2);
             ResourcesPage.performJumpToTrenchView('S1');
             browser.sleep(delays.shortRest);
@@ -59,7 +59,7 @@ describe('resources/list --', () => {
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickMapModeButton();
         ResourcesPage.clickSelectResource('1');
@@ -72,7 +72,7 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
         ResourcesPage.clickHierarchyButton('5');
         ResourcesPage.performCreateResourceInList('child1', 'find');
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.getListModeInputFieldValue('child1', 0)

@@ -142,7 +142,7 @@ describe('syncing --', function() {
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
                 NavbarPage.performNavigateToSettings();
-                NavbarPage.navigate('project');
+                NavbarPage.clickTab('project');
                 ResourcesPage.performJumpToTrenchView('S1');
                 return browser.sleep(delays.shortRest * 10);
             });
@@ -152,7 +152,7 @@ describe('syncing --', function() {
     function createEventualConflict(number) {
 
         return createOneDocument(number)
-            .then(() => NavbarPage.navigate('project'))
+            .then(() => NavbarPage.clickTab('project'))
             .then(() => ResourcesPage.performJumpToTrenchView('S1'))
             .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => createAlternateDocument(number));
@@ -199,7 +199,7 @@ describe('syncing --', function() {
         const number = '3';
 
         let testDocument = await createOneDocument(number);
-        await NavbarPage.navigate('project');
+        await NavbarPage.clickTab('project');
         await ResourcesPage.performJumpToTrenchView('S1');
         await browser.sleep(delays.shortRest * 10);
 
@@ -255,7 +255,7 @@ describe('syncing --', function() {
         const number = '5';
 
         await createOneDocument(number);
-        await NavbarPage.navigate('project');
+        await NavbarPage.clickTab('project');
         await ResourcesPage.performJumpToTrenchView('S1');
         await browser.sleep(delays.shortRest * 10);
 

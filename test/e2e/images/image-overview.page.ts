@@ -212,8 +212,8 @@ export module ImageOverviewPage {
         ImageOverviewPage.clickLinkButton();
         ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
-        NavbarPage.navigate('project');
-        NavbarPage.navigate('images');
+        NavbarPage.clickTab('project');
+        NavbarPage.clickTab('images');
         browser.sleep(delays.shortRest * 5);
     }
 }

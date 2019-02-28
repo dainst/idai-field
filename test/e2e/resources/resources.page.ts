@@ -380,7 +380,7 @@ export class ResourcesPage {
 
     public static performCreateOperation(identifier: string) {
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         this.performCreateResource(identifier, 'trench');
         this.performJumpToTrenchView(identifier);
     }

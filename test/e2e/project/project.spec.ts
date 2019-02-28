@@ -94,7 +94,7 @@ describe('project --', function() {
         ResourcesPage.get();
         NavbarPage.performNavigateToImages();
         browser.sleep(200);
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         //
 
         browser.sleep(200);
@@ -111,7 +111,7 @@ describe('project --', function() {
         browser.sleep(delays.shortRest * 20);
 
         NavbarPage.performNavigateToSettings();
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
 
         browser.sleep(delays.shortRest * 5);

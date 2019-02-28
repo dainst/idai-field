@@ -40,7 +40,7 @@ describe('resources --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.navigate('project');
+            NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 3);
             ResourcesPage.performJumpToTrenchView('S1');
         }
@@ -53,7 +53,7 @@ describe('resources --', () => {
     function gotoImageTab() {
 
         NavbarPage.performNavigateToImages();
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickImagesTab();
@@ -282,9 +282,9 @@ describe('resources --', () => {
 
     it('delete an operation and update navbar', () => {
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
 
         browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
             delays.ECWaitTime);
@@ -445,7 +445,7 @@ describe('resources --', () => {
 
     it('operation -- should edit an operation and update navbar', () => {
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
 
         ResourcesPage.openEditByDoubleClickResource('S1');
@@ -555,7 +555,7 @@ describe('resources --', () => {
         NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(6));
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
@@ -575,7 +575,7 @@ describe('resources --', () => {
         SearchBarPage.clickTypeFilterButton('modal');
         ResourcesPage.clickCancelInMoveModal();
 
-        NavbarPage.navigate('project');
+        NavbarPage.clickTab('project');
         ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickTypeFilterButton('modal');

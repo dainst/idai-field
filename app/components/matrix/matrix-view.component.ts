@@ -185,6 +185,7 @@ export class MatrixViewComponent implements OnInit {
         await doceditRef.result
             .then(
                 this.reset.bind(this),
+                // TODO Remove this if deletion option is not reintroduced into docedit
                 reason => { if (reason === 'deleted') return this.reset(); }
             );
     }

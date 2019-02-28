@@ -83,24 +83,25 @@ export class ResourcesPage {
     }
 
 
-    public static clickHierarchyButton(identifier) {
+    public static clickHierarchyButton(identifier: string) {
 
         return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
     }
 
 
-    public static clickJumpToResourcesViewButton() {
+    public static clickJumpToResourcesViewButton(identifier: string) {
 
-        return common.click(element(by.id('jump-to-resources-view-button')));
-    }
-
-    public static clickJumpToMatrixViewButton() {
-
-        return common.click(element(by.id('jump-to-matrix-view-button')));
+        return common.click(element(by.id('jump-to-resources-view-button-' + identifier)));
     }
 
 
-    public static clickSelectResource(identifier) {
+    public static clickJumpToMatrixViewButton(identifier: string) {
+
+        return common.click(element(by.id('jump-to-matrix-view-button-' + identifier)));
+    }
+
+
+    public static clickSelectResource(identifier: string) {
 
         return common.click(element(by.id('resource-' + identifier)));
     }
@@ -410,14 +411,14 @@ export class ResourcesPage {
     public static performJumpToTrenchView(identifier: string) {
 
         this.clickHierarchyButton(identifier);
-        this.clickJumpToResourcesViewButton();
+        this.clickJumpToResourcesViewButton(identifier);
     }
 
 
     public static performJumpToMatrixView(identifier: string) {
 
         this.clickHierarchyButton(identifier);
-        this.clickJumpToMatrixViewButton();
+        this.clickJumpToMatrixViewButton(identifier);
     }
 
 

@@ -48,13 +48,13 @@
                 <span class="mdi mdi-arrow-top-right mdi-18px"></span>
             </div>
             <div ngbDropdownMenu>
-                <div id="jump-to-resources-view-button"
+                <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
                      class="dropdown-item"
                      (click)="jumpToView(document)">
                     <span class="dropdown-entry-label"
                           i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
                 </div>
-                <div id="jump-to-matrix-view-button"
+                <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
                      class="dropdown-item"
                      (click)="jumpToMatrix(document)">
                     <span class="dropdown-entry-label"

@@ -131,7 +131,7 @@ export class TabManager {
         const routeName: string = route[1];
         const operationId: string|undefined = route.length > 2 ? route[2] : undefined;
 
-        if (!this.getTab(routeName, operationId)) {
+        if (operationId !== 'project' && !this.getTab(routeName, operationId)) {
             await this.openTab(routeName, operationId, '');
         }
     }

@@ -74,8 +74,8 @@
         .move-into-icon {
           @extend .mdi;
           position: relative;
-          bottom: 8px;
-          font-size: 30px;
+          bottom: 7px;
+          font-size: 28px;
 
           &:not(:hover) {
             @extend .mdi-folder;
@@ -90,12 +90,11 @@
           }
 
           .children-count {
-            display: inline;
             position: absolute;
             left: 3px;
-            top: 9px;
-            width: 24px;
-            font-size: 12px;
+            top: 10px;
+            width: 22px;
+            font-size: 11px;
             text-align: center;
             color: white;
           }

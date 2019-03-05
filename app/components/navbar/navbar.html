@@ -20,7 +20,7 @@
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
             <li *ngFor="let tab of getTabs()" id="{{getTabId(tab)}}" class="nav-item">
-                <a class="nav-link operation-view-tab"
+                <a class="nav-link tab"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
                     {{tab.label}}

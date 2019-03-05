@@ -67,22 +67,37 @@
       }
 
       &.move-into-button {
-        .badge {
-          background-color: #8b96a0;
-        }
+        padding-left: 0;
+        padding-right: 0;
+        height: 40px;
 
-        &:not(:hover) {
-          padding-left: 0;
-          padding-right: 0;
+        .move-into-icon {
+          @extend .mdi;
+          position: relative;
+          bottom: 8px;
+          font-size: 30px;
 
-          .mdi.show-only-on-hover {
-            display: none;
+          &:not(:hover) {
+            @extend .mdi-folder;
           }
-        }
 
-        &:hover {
-          .badge {
-            display: none;
+          &:hover {
+            @extend .mdi-folder-open;
+
+            .children-count {
+              display: none;
+            }
+          }
+
+          .children-count {
+            display: inline;
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            width: 24px;
+            font-size: 12px;
+            text-align: center;
+            color: white;
           }
         }
       }

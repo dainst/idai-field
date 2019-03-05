@@ -16,10 +16,11 @@
                 (mouseleave)="moveIntoTooltip.close()"
                 (mousedown)="moveIntoTooltip.close()"
                 (click)="moveInto()">
-            <span *ngIf="viewFacade.getChildrenCount(document) > 0"
-                  class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
-            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"
-                  [class.show-only-on-hover]="viewFacade.getChildrenCount(document) > 0"></span>
+            <span class="move-into-icon">
+                <span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">
+                    {{viewFacade.getChildrenCount(document)}}
+                </span>
+            </span>
         </button>
         <button *ngIf="showJumpToViewOption() && document.resource.type !== 'Trench'"
                 class="hierarchy-button jump-to-view-button btn float-right align-middle"

@@ -6,23 +6,27 @@
   padding-left: 0;
   padding-right: 0;
 
-  .move-into-icon {
-    @extend .mdi;
-    position: relative;
-    bottom: 7px;
-    font-size: 28px;
-
-    &:not(:hover) {
+  &:not(:hover) {
+    .move-into-icon {
       @extend .mdi-folder;
     }
+  }
 
-    &:hover {
+  &:hover {
+    .move-into-icon {
       @extend .mdi-folder-open;
 
       .children-count {
         display: none;
       }
     }
+  }
+
+  .move-into-icon {
+    @extend .mdi;
+    position: relative;
+    bottom: 7px;
+    font-size: 28px;
 
     .children-count {
       position: absolute;

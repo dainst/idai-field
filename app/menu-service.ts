@@ -1,5 +1,5 @@
 import {Router} from '@angular/router';
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 
 const ipcRenderer = require('electron').ipcRenderer;
 
@@ -10,13 +10,13 @@ const ipcRenderer = require('electron').ipcRenderer;
  */
 export class MenuService {
 
-    constructor(private router: Router) {}
+    constructor(private router: Router,
+                private zone: NgZone) {}
 
 
     public initialize() {
 
         ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string) => {
-            console.log('Menu item clicked!', menuItem);
             await this.onMenuItemClicked(menuItem);
         });
     }
@@ -24,6 +24,6 @@ export class MenuService {
 
     private async onMenuItemClicked(menuItem: string) {
 
-        await this.router.navigate([menuItem]);
+        await this.zone.run(async () => await this.router.navigate([menuItem]));
     }
 }

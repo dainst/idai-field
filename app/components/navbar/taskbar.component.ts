@@ -1,8 +1,6 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {Router} from '@angular/router';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {SynchronizationStatus} from '../../core/settings/synchronization-status';
-import {TabManager} from '../tab-manager';
 
 
 @Component({
@@ -24,8 +22,6 @@ export class TaskbarComponent {
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private synchronizationStatus: SynchronizationStatus,
-                private router: Router,
-                private tabManager: TabManager,
                 remoteChangesStream: RemoteChangesStream) {
 
         this.listenToRemoteChanges(remoteChangesStream);
@@ -33,13 +29,6 @@ export class TaskbarComponent {
 
 
     public isConnected = (): boolean => this.synchronizationStatus.isConnected();
-
-
-    public async openTab(routeName: string) {
-
-        await this.tabManager.openTab(routeName);
-        await this.router.navigate([routeName]);
-    }
 
 
     private listenToRemoteChanges(remoteChangesStream: RemoteChangesStream) {

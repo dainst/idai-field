@@ -10,37 +10,8 @@
 
   .mdi-cloud,
   .mdi-cloud-outline-off,
-  .mdi-dots-vertical,
   .mdi-alert-outline {
     color: #fff;
-  }
-
-  .dropdown-menu {
-    z-index: 1050;
-  }
-
-  .dropdown-toggle {
-    cursor: default;
-  }
-
-  .dropdown-toggle::after {
-    display: none;
-  }
-
-  .dropdown-item {
-    font-size: 15px;
-
-    .mdi {
-      color: #5572a1;
-    }
-  }
-
-  .dropdown-entry-label {
-    position: relative;
-    display: inline-block;
-    top: -4px;
-    margin-left: 5px;
-    color: black;
   }
 
   .taskbar-badge {

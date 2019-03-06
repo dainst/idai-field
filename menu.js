@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 const messages = require('./messages');
 
 
-const getTemplate = () => {
+const getTemplate = mainWindow => {
 
     const template = [{
         label: 'iDAI.field',
@@ -13,11 +13,22 @@ const getTemplate = () => {
             role: 'about'
         }, {
             type: 'separator'
+        }, {
+            label: messages.get('menu.settings'),
+            click: () => mainWindow.webContents.send('menuItemClicked', 'settings')
         }]
     },{
         label: messages.get('menu.file'),
         submenu: [
             {
+                label: messages.get('menu.file.import'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'import')
+            }, {
+                label: messages.get('menu.file.export'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'export')
+            }, {
+                type: 'separator'
+            }, {
                 label: messages.get('menu.file.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: function () {
@@ -52,6 +63,21 @@ const getTemplate = () => {
             label: messages.get('menu.edit.selectAll'),
             accelerator: 'CmdOrCtrl+A',
             role: 'selectall'
+        }]
+    }, {
+        label: messages.get('menu.tools'),
+        submenu: [{
+            label: messages.get('menu.tools.images'),
+            accelerator: 'CmdOrCtrl+I',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'images')
+        }, {
+            type: 'separator'
+        }, {
+            label: messages.get('menu.tools.backupCreation'),
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation')
+        }, {
+            label: messages.get('menu.tools.backupLoading'),
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading')
         }]
     }, {
         label: messages.get('menu.view'),
@@ -120,6 +146,10 @@ const getTemplate = () => {
 
                 infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
             }
+        }, {
+            label: messages.get('menu.help'),
+            accelerator: 'CmdOrCtrl+H',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'help')
         }]
     }];
 

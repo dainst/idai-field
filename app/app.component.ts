@@ -3,6 +3,7 @@ import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2';
 import {AppController} from './app-controller';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
+import {MenuService} from './menu-service';
 
 const remote = require('electron').remote;
 
@@ -23,7 +24,8 @@ export class AppComponent {
     constructor(private router: Router,
                 private messages: Messages,
                 appController: AppController,
-                imagestore: ReadImagestore) {
+                imagestore: ReadImagestore,
+                menuService: MenuService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -39,6 +41,7 @@ export class AppComponent {
         });
 
         appController.setupServer();
+        menuService.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
     }

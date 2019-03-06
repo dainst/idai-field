@@ -155,7 +155,7 @@ const loadConfig = () => {
 
 const createMenu = () => {
 
-    const menu = electron.Menu.buildFromTemplate(require('./menu.js')());
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow));
     electron.Menu.setApplicationMenu(menu);
 };
 
@@ -163,7 +163,7 @@ const createMenu = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
-    const mainWindow = createWindow();
+    createWindow();
     loadConfig();
     createMenu();
 

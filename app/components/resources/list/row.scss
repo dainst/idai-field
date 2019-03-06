@@ -39,38 +39,7 @@
     }
 
     &.move-into-button {
-      padding-left: 0;
-      padding-right: 0;
       height: 33px;
-
-      .move-into-icon {
-        @extend .mdi;
-        position: relative;
-        bottom: 7px;
-        font-size: 28px;
-
-        &:not(:hover) {
-          @extend .mdi-folder;
-        }
-
-        &:hover {
-          @extend .mdi-folder-open;
-
-          .children-count {
-            display: none;
-          }
-        }
-
-        .children-count {
-          position: absolute;
-          left: 3px;
-          top: 10px;
-          width: 22px;
-          font-size: 11px;
-          text-align: center;
-          color: white;
-        }
-      }
     }
 
     &.jump-to-view-button {

@@ -815,7 +815,7 @@
         <source>Matrix</source>
         <target state="final">Matrix</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="sourcefile">app/components/tab-manager.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1244,12 +1244,20 @@
           <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.tabs.relations" datatype="html">
-        <source>Relationen</source>
-        <target state="final">Relations</target>
+      <trans-unit id="docedit.tabs.space" datatype="html">
+        <source>Räumliche Einordnung</source>
+        <target state="final">Spatial</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.time" datatype="html">
+        <source>Chronological</source>
+        <target state="final">Zeitliche Einordnung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images" datatype="html">
@@ -1257,7 +1265,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -1265,7 +1273,7 @@
         <target state="final">Conflicts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -1277,7 +1285,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1289,7 +1297,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1301,7 +1309,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -1742,11 +1750,11 @@
         <target state="final">Switch to operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
@@ -1754,7 +1762,7 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -1762,7 +1770,7 @@
         <target state="final">Move</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -1770,7 +1778,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.editMetadata" datatype="html">
@@ -1801,16 +1809,24 @@
         <source>Ressourcenansicht</source>
         <target state="final">Resources view</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.matrix" datatype="html">
         <source>Matrix</source>
         <target state="final">Matrix</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
@@ -1828,7 +1844,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">

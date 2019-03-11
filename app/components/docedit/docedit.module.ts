@@ -32,6 +32,8 @@ import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
+import {TimeFormComponent} from './core/time-form.component';
+import {SpaceFormComponent} from './core/space-form.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
         ImagePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,
-        RelationsFormComponent,
+        TimeFormComponent,
+        SpaceFormComponent,
         RelationPickerComponent,
         RelationPickerGroupComponent,
         CheckboxesComponent,

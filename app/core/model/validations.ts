@@ -157,7 +157,7 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
+        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition /* TODO remove cast*/];
 
         const fields: Array<any> = projectFields.concat(defaultFields);
 

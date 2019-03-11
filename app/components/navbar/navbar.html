@@ -14,7 +14,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav navbar-nav navbar-tabbed mr-auto">
+        <ul *ngIf="isActiveRoute('/resources')" class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
@@ -25,6 +25,16 @@
                    (click)="router.navigate(getTabRouteArray(tab))">
                     {{tab.label}}
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
+                </a>
+            </li>
+        </ul>
+
+        <ul *ngIf="!isActiveRoute('/resources')" class="nav navbar-nav navbar-tabbed mr-auto">
+            <li class="nav-item">
+                <a class="nav-link tab active">
+                    {{getActiveRouteLabel()}}
+                    <span class="mdi mdi-close"
+                          (click)="$event.stopPropagation(); leaveRoute();"></span>
                 </a>
             </li>
         </ul>

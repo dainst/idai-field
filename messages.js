@@ -45,7 +45,7 @@ const messageDictionary = {
         'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the ' +
             'application to install it.',
         'menu.about': 'About iDAI.field',
-        'menu.settings': 'Einstellungen',
+        'menu.settings': 'Settings',
         'menu.file': 'File',
         'menu.file.import': 'Import',
         'menu.file.export': 'Export',

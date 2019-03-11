@@ -1256,62 +1256,6 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.help" datatype="html">
-        <source>Hilfe</source>
-        <target state="final">Hilfe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.images" datatype="html">
-        <source>Bilder</source>
-        <target state="final">Bilder</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.import" datatype="html">
-        <source>Import</source>
-        <target state="final">Import</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.export" datatype="html">
-        <source>Export</source>
-        <target state="final">Export</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.createBackup" datatype="html">
-        <source>Backup erstellen</source>
-        <target state="final">Backup erstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.restoreBackup" datatype="html">
-        <source>Backup einlesen</source>
-        <target state="final">Backup einlesen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.dropdown.settings" datatype="html">
-        <source>Einstellungen</source>
-        <target state="final">Einstellungen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
         <target state="final">Konflikte</target>
@@ -2194,14 +2138,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/type-switcher-button.html</context>
           <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.relations" datatype="html">
-        <source>Relationen</source>
-        <target state="final">Relationen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/relations-form.html</context>
-          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
@@ -3734,6 +3670,62 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.tabs.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.import" datatype="html">
+        <source>Import</source>
+        <target state="final">Import</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.export" datatype="html">
+        <source>Export</source>
+        <target state="final">Export</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.backupCreation" datatype="html">
+        <source>Backup erstellen</source>
+        <target state="final">Backup erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.backupLoading" datatype="html">
+        <source>Backup einlesen</source>
+        <target state="final">Backup einlesen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.help" datatype="html">
+        <source>Hilfe</source>
+        <target state="final">Hilfe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.settings" datatype="html">
+        <source>Einstellungen</source>
+        <target state="final">Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
         <source>Erweiterten Suchmodus deaktivieren</source>
         <target state="final">Erweiterten Suchmodus deaktivieren</target>
@@ -3961,13 +3953,21 @@
           <context context-type="sourcefile">components/docedit/docedit.html</context>
           <context context-type="linenumber">103</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/space-form.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.time" datatype="html">
         <source>Zeitliche Einordnung</source>
         <target state="final">Zeitliche Einordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/time-form.html</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images" datatype="html">
@@ -3975,7 +3975,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts" datatype="html">
@@ -3983,7 +3983,7 @@
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -3995,7 +3995,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -4007,7 +4007,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -4019,7 +4019,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">

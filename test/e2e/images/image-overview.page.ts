@@ -2,6 +2,7 @@
 
 import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -213,7 +214,7 @@ export module ImageOverviewPage {
         ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
         NavbarPage.clickTab('project');
-        NavbarPage.clickTab('images');
+        MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 5);
     }
 }

@@ -2,6 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -25,12 +26,12 @@ xdescribe('import --', function() {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 4);
-            NavbarPage.performNavigateToImport();
+            MenuPage.navigateToImport();
         }
 
         index++;

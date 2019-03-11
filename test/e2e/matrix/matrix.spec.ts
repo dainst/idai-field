@@ -1,5 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
@@ -29,7 +30,7 @@ describe('matrix --', () => {
     beforeEach(async done => {
 
         if (i > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');

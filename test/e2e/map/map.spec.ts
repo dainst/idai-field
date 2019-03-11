@@ -3,6 +3,7 @@ import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {GeometryViewPage} from '../widgets/geometry-view.page';
 
 const EC = protractor.ExpectedConditions;
@@ -170,7 +171,7 @@ describe('map --', function() {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');

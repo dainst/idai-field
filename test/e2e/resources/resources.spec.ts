@@ -3,6 +3,7 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
@@ -37,7 +38,7 @@ describe('resources --', () => {
     beforeEach(async done => {
 
         if (i > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');
@@ -52,7 +53,7 @@ describe('resources --', () => {
 
     function gotoImageTab() {
 
-        NavbarPage.performNavigateToImages();
+        MenuPage.navigateToImages();
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');

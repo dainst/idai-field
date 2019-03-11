@@ -88,27 +88,4 @@ export class NavbarPage {
         browser.wait(EC.visibilityOf(this.getTab(routeName, resourceIdentifier)), delays.ECWaitTime);
         return this.getTab(routeName, resourceIdentifier).getText();
     }
-
-
-    // sequences
-
-    public static performNavigateToSettings() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        return common.click(element(by.id('settings-button')));
-    }
-
-
-    public static performNavigateToImport() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        common.click(element(by.id('import-button')));
-    }
-
-
-    public static performNavigateToImages() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        common.click(element(by.id('images-button')));
-    }
 }

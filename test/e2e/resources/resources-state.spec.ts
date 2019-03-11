@@ -1,10 +1,10 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
@@ -34,7 +34,7 @@ describe('resources/state --', function() {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');
@@ -62,7 +62,7 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        NavbarPage.performNavigateToImages();
+        MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 5);
         ImageOverviewPage.createDepictsRelation('S1');
     }

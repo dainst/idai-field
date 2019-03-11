@@ -4,6 +4,7 @@ import {ResourcesPage} from '../resources/resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SettingsPage} from '../settings/settings.page';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
@@ -141,7 +142,7 @@ xdescribe('syncing --', function() {
 
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
-                NavbarPage.performNavigateToSettings();
+                MenuPage.navigateToSettings();
                 NavbarPage.clickTab('project');
                 ResourcesPage.performJumpToTrenchView('S1');
                 return browser.sleep(delays.shortRest * 10);

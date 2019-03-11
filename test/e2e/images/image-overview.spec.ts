@@ -1,6 +1,6 @@
 import {browser, protractor, by} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
-import {NavbarPage} from "../navbar.page";
+import {MenuPage} from '../menu.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -64,10 +64,10 @@ describe('images --', function() {
     beforeEach(async done => {
 
         if (i > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest * 3);
-            NavbarPage.performNavigateToImages();
+            MenuPage.navigateToImages();
             ImageOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);
         }

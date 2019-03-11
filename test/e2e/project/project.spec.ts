@@ -1,5 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from './project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -92,7 +93,7 @@ describe('project --', function() {
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unknown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
-        NavbarPage.performNavigateToImages();
+        MenuPage.navigateToImages();
         browser.sleep(200);
         NavbarPage.clickTab('project');
         //
@@ -110,7 +111,7 @@ describe('project --', function() {
 
         browser.sleep(delays.shortRest * 20);
 
-        NavbarPage.performNavigateToSettings();
+        MenuPage.navigateToSettings();
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
 

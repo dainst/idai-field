@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
 import {Messages} from 'idai-components-2';
 import {AppController} from './app-controller';
@@ -23,9 +23,10 @@ export class AppComponent {
 
     constructor(private router: Router,
                 private messages: Messages,
+                private renderer: Renderer2,
+                private menuService: MenuService,
                 appController: AppController,
-                imagestore: ReadImagestore,
-                menuService: MenuService) {
+                imagestore: ReadImagestore) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -44,6 +45,8 @@ export class AppComponent {
         menuService.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
+
+        if (remote.getGlobal('mode') === 'test') this.enableMenuShortCutsForTests();
     }
 
 
@@ -51,5 +54,25 @@ export class AppComponent {
 
         document.addEventListener('dragover', event => event.preventDefault());
         document.addEventListener('drop', event => event.preventDefault());
+    }
+
+
+    private enableMenuShortCutsForTests() {
+
+        this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
+            if (!event.ctrlKey || event.metaKey) return;
+
+            switch(event.key) {
+                case 's':
+                    this.menuService.onMenuItemClicked('settings');
+                    break;
+                case 'b':
+                    this.menuService.onMenuItemClicked('images');
+                    break;
+                case 'i':
+                    this.menuService.onMenuItemClicked('import');
+                    break;
+            }
+        });
     }
 }

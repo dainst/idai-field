@@ -22,7 +22,7 @@ export class MenuService {
     }
 
 
-    private async onMenuItemClicked(menuItem: string) {
+    public async onMenuItemClicked(menuItem: string) {
 
         await this.zone.run(async () => await this.router.navigate([menuItem]));
     }

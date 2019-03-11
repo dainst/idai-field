@@ -1,5 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
@@ -27,7 +28,7 @@ describe('resources/list --', () => {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickTab('project');

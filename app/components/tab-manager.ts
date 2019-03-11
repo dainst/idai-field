@@ -83,7 +83,7 @@ export class TabManager {
     private async updateTabLabels(document: Document) {
 
         this.tabs.filter(tab => tab.operationId === document.resource.id)
-            .forEach(tab => tab.label = document.resource.identifier);
+            .forEach(tab => tab.label = this.getLabel(tab.routeName, document.resource.identifier));
 
         await this.serialize();
     }
@@ -113,7 +113,7 @@ export class TabManager {
             if (tab.operationId) {
                 try {
                     const document: FieldDocument = await this.datastore.get(tab.operationId);
-                    tab.label = document.resource.identifier;
+                    tab.label = this.getLabel(tab.routeName, document.resource.identifier);
                 } catch (err) {
                     continue;
                 }

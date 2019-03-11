@@ -1,5 +1,6 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef} from '@angular/core';
 import {FieldDefinition} from 'idai-components-2';
+import {is, isNot, on, undefinedOrEmpty, includedIn, isnt} from 'tsfun';
 
 
 @Component({
@@ -17,6 +18,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
 
+    public fieldsToShow: Array<FieldDefinition> = [];
+
+
     public types: string[];
 
 
@@ -32,6 +36,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     ngOnChanges() {
+
+        if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
+            this.fieldsToShow =
+                this.fieldDefinitions
+                    .filter(on('group', is(undefined)))
+                    .filter(on('name', isnt('period')))
+        }
 
         this.focusFirstInputElement();
     }

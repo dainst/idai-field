@@ -10,25 +10,29 @@
         "inputType": "input"
       },
       "spatialLocation": {
-        "inputType": "input"
+        "inputType": "input",
+        "group": "space"
       },
       "trenchComment": {
         "inputType": "text"
       },
       "dimensionLength": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]
       },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
       },
       "dimensionWidth": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]
@@ -44,6 +48,7 @@
       },
       "orientation": {
         "inputType": "dropdown",
+        "group": "space",
         "valuelist": [
           "N-S",
           "NNO - SSW",
@@ -1349,7 +1354,8 @@
     "color": "black",
     "fields": {
       "area": {
-        "inputType": "unsignedFloat"
+        "inputType": "unsignedFloat",
+        "group": "space"
       },
       "beginningDate": {
         "inputType": "date"
@@ -1358,6 +1364,7 @@
         "inputType": "date"
       },
       "dating": {
+        "group": "time",
         "inputType": "dating"
       },
       "comparison": {
@@ -1404,18 +1411,21 @@
       },
       "dimensionLength": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]
       },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
       },
       "dimensionWidth": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]
@@ -1605,19 +1615,23 @@
         ]
       },
       "period": {
-        "inputType": "dropdownRange"
+        "inputType": "dropdownRange",
+        "group": "time"
       },
       "dating": {
-        "inputType": "dating"
+        "inputType": "dating",
+        "group": "time"
       },
       "dimensionWidth": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]
       },
       "dimensionHeight": {
         "inputType": "dimension",
+        "group": "space",
         "positionValues": [
         "Maximale Ausdehnung",
         "Minimale Ausdehnung"]

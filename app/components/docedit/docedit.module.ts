@@ -16,7 +16,6 @@ import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
 import {DocumentHolder} from './document-holder';
 import {EditFormComponent} from './core/edit-form.component';
-import {RelationsFormComponent} from './core/relations-form.component';
 import {RelationPickerComponent} from './widgets/relationpicker/relation-picker.component';
 import {RelationPickerGroupComponent} from './widgets/relationpicker/relation-picker-group.component';
 import {CheckboxesComponent} from './core/forms/checkboxes.component';

@@ -29,7 +29,9 @@ export class NavbarComponent {
 
         this.router.events.subscribe(() => {
             this.activeRoute = this.router.url;
-            if (this.activeRoute.startsWith('/resources')) this.lastResourcesRoute = this.activeRoute;
+            if (this.activeRoute.startsWith('/resources') || this.activeRoute.startsWith('/matrix')) {
+                this.lastResourcesRoute = this.activeRoute;
+            }
         });
     }
 

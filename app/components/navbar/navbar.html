@@ -14,7 +14,8 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul *ngIf="isActiveRoute('/resources')" class="nav navbar-nav navbar-tabbed mr-auto">
+        <ul *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
+            class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
                 <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
@@ -29,7 +30,8 @@
             </li>
         </ul>
 
-        <ul *ngIf="!isActiveRoute('/resources')" class="nav navbar-nav navbar-tabbed mr-auto">
+        <ul *ngIf="!isActiveRoute('/resources') && !isActiveRoute('/matrix')"
+            class="nav navbar-nav navbar-tabbed mr-auto">
             <li class="nav-item">
                 <a class="nav-link tab active">
                     {{getActiveRouteLabel()}}

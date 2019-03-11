@@ -152,24 +152,6 @@ export class TabManager {
                 return operationIdentifier as string;
             case 'matrix':
                 return operationIdentifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
-            case 'help':
-                return this.i18n({ id: 'navbar.taskbar.dropdown.help', value: 'Hilfe' });
-            case 'images':
-                return this.i18n({ id: 'navbar.taskbar.dropdown.images', value: 'Bilder' });
-            case 'import':
-                return this.i18n({ id: 'navbar.taskbar.dropdown.import', value: 'Import' });
-            case 'export':
-                return this.i18n({ id: 'navbar.taskbar.dropdown.export', value: 'Export' });
-            case 'backup-creation':
-                return this.i18n(
-                    { id: 'navbar.taskbar.dropdown.createBackup', value: 'Backup erstellen' }
-                );
-            case 'backup-loading':
-                return this.i18n(
-                    { id: 'navbar.taskbar.dropdown.restoreBackup', value: 'Backup einlesen' }
-                );
-            case 'settings':
-                return this.i18n({ id: 'navbar.taskbar.dropdown.settings', value: 'Einstellungen' });
             default:
                 return '';
         }

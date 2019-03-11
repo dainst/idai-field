@@ -124,17 +124,18 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
   }
 
-  &:not(:hover) {
+  &:not(:hover):not(.active) {
     .mdi-close {
       opacity: 0;
     }
   }
 
   .mdi-close {
+    position: relative;
+    top: 1px;
     width: 18px;
     height: 18px;
     display: inline-block;
-    margin-top: -1px;
     padding-left: 1px;
     line-height: normal;
     border-radius: 4px;

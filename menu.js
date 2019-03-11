@@ -13,22 +13,26 @@ const getTemplate = mainWindow => {
             role: 'about'
         }, {
             type: 'separator'
-        }, {
-            label: messages.get('menu.settings'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'settings')
         }]
     },{
         label: messages.get('menu.file'),
         submenu: [
             {
                 label: messages.get('menu.file.import'),
+                accelerator: 'CmdOrCtrl+I',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'import')
             }, {
                 label: messages.get('menu.file.export'),
+                accelerator: 'CmdOrCtrl+E',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'export')
             }, {
                 type: 'separator'
             }, {
+                label: messages.get('menu.settings'),
+                accelerator: 'CmdOrCtrl+S',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'settings')
+            },
+            {
                 label: messages.get('menu.file.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: function () {
@@ -68,7 +72,7 @@ const getTemplate = mainWindow => {
         label: messages.get('menu.tools'),
         submenu: [{
             label: messages.get('menu.tools.images'),
-            accelerator: 'CmdOrCtrl+I',
+            accelerator: 'CmdOrCtrl+B',
             click: () => mainWindow.webContents.send('menuItemClicked', 'images')
         }, {
             type: 'separator'

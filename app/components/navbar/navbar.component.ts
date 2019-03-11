@@ -19,13 +19,18 @@ export class NavbarComponent {
 
     public activeRoute: string;
 
+    private lastResourcesRoute: string|undefined;
+
 
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
                 private i18n: I18n) {
 
-        this.router.events.subscribe(() => this.activeRoute = this.router.url);
+        this.router.events.subscribe(() => {
+            this.activeRoute = this.router.url;
+            if (this.activeRoute.startsWith('/resources')) this.lastResourcesRoute = this.activeRoute;
+        });
     }
 
 
@@ -84,9 +89,12 @@ export class NavbarComponent {
     }
 
 
-    public async leaveRoute() {
+    public async returnToLastResourcesRoute() {
 
-        // TODO Got to last selected tab
-        await this.router.navigate(['resources', 'project']);
+        if (this.lastResourcesRoute) {
+            await this.router.navigateByUrl(this.lastResourcesRoute);
+        } else {
+            await this.router.navigate(['resources', 'project']);
+        }
     }
 }

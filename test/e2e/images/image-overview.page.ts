@@ -213,6 +213,7 @@ export module ImageOverviewPage {
         ImageOverviewPage.clickLinkButton();
         ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        NavbarPage.clickReturnToResourcesTabs();
         NavbarPage.clickTab('project');
         MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 5);

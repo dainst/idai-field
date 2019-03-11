@@ -31,6 +31,7 @@ describe('resources/list --', () => {
             MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
+            NavbarPage.clickReturnToResourcesTabs();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 2);
             ResourcesPage.performJumpToTrenchView('S1');

@@ -27,6 +27,12 @@ export class NavbarPage {
     }
 
 
+    public static clickReturnToResourcesTabs() {
+
+        return common.click(element(by.css('#non-resources-tab .mdi-close')));
+    }
+
+
     public static clickSelectProject(option) {
 
         browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);

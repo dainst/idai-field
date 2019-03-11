@@ -31,7 +31,7 @@
         </ul>
 
         <ul *ngIf="!isActiveRoute('/resources') && !isActiveRoute('/matrix')"
-            class="nav navbar-nav navbar-tabbed mr-auto">
+            id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
             <li class="nav-item">
                 <a class="nav-link tab active">
                     {{getActiveRouteLabel()}}

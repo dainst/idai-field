@@ -38,12 +38,12 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   margin-top: 0.3em;
 }
 
-.navbar-dark .navbar-tabbed a.nav-link {
+.navbar-dark .navbar-tabbed a.nav-link.tab {
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   position: relative;
 
-  &.tab {
+  &.closable-tab {
     padding-right: 9px !important;
     padding-left: 33px !important;
   }

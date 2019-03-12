@@ -17,11 +17,11 @@
         <ul *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
-                <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
+                <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
             <li *ngFor="let tab of getTabs()" id="{{getTabId(tab)}}" class="nav-item">
-                <a class="nav-link tab"
+                <a class="nav-link tab closable-tab"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
                     {{tab.label}}
@@ -33,7 +33,7 @@
         <ul *ngIf="!isActiveRoute('/resources') && !isActiveRoute('/matrix')"
             id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
             <li class="nav-item">
-                <a class="nav-link tab active">
+                <a class="nav-link active">
                     {{getActiveRouteLabel()}}
                     <span class="mdi mdi-close"
                           (click)="$event.stopPropagation(); returnToLastResourcesRoute();"></span>

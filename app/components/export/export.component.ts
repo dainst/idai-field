@@ -12,13 +12,17 @@ import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastor
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
+import {TabManager} from '../tab-manager';
 
 const remote = require('electron').remote;
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './export.html'
+    templateUrl: './export.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -42,7 +46,8 @@ export class ExportComponent implements OnInit {
                 private i18n: I18n,
                 private viewFacade: ViewFacade,
                 private datastore: FieldReadDatastore,
-                private typeUtility: TypeUtility) {}
+                private typeUtility: TypeUtility,
+                private tabManager: TabManager) {}
 
 
     public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -54,6 +59,12 @@ export class ExportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
     }
 
 

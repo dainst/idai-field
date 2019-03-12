@@ -8,6 +8,7 @@ import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {DeleteModalComponent} from './delete-modal.component';
 
+
 @Component({
     selector: 'image-overview-taskbar',
     moduleId: module.id,

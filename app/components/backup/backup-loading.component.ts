@@ -7,11 +7,15 @@ import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './backup-loading.html'
+    templateUrl: './backup-loading.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -32,8 +36,15 @@ export class BackupLoadingComponent {
         private modalService: NgbModal,
         private messages: Messages,
         private settingsService: SettingsService,
-        private backupProvider: BackupProvider
+        private backupProvider: BackupProvider,
+        private tabManager: TabManager
     ) {}
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
+    }
 
 
     public async loadBackup() {

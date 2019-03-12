@@ -3,6 +3,7 @@ import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
 import {M} from '../m';
+import {TabManager} from '../tab-manager';
 
 const ip = require('ip');
 const remote = require('electron').remote;
@@ -10,7 +11,10 @@ const remote = require('electron').remote;
 
 @Component({
     moduleId: module.id,
-    templateUrl: './settings.html'
+    templateUrl: './settings.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -25,13 +29,20 @@ export class SettingsComponent implements OnInit {
 
 
     constructor(private settingsService: SettingsService,
-                private messages: Messages) {
+                private messages: Messages,
+                private tabManager: TabManager) {
     }
 
 
     ngOnInit() {
 
         this.settings = this.settingsService.getSettings();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
     }
 
 

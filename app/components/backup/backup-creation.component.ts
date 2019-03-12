@@ -6,11 +6,15 @@ import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './backup-creation.html'
+    templateUrl: './backup-creation.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -30,8 +34,15 @@ export class BackupCreationComponent {
         private modalService: NgbModal,
         private messages: Messages,
         private settingsService: SettingsService,
-        private backupProvider: BackupProvider
+        private backupProvider: BackupProvider,
+        private tabManager: TabManager
     ) {}
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
+    }
 
 
     public async createBackup() {

@@ -3,12 +3,16 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
     selector: 'help',
-    templateUrl: './help.html'
+    templateUrl: './help.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -27,7 +31,8 @@ export class HelpComponent implements OnInit {
 
     constructor(private domSanitizer: DomSanitizer,
                 private http: HttpClient,
-                private settingsService: SettingsService) {}
+                private settingsService: SettingsService,
+                private tabManager: TabManager) {}
 
 
     async ngOnInit() {
@@ -41,6 +46,12 @@ export class HelpComponent implements OnInit {
         this.html = html;
         this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
     }
 
 

@@ -21,11 +21,15 @@ import {ImportValidator} from '../../core/import/exec/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './import.html'
+    templateUrl: './import.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * Delegates calls to the Importer, waits for
@@ -62,7 +66,8 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-    ) {}
+        private tabManager: TabManager) {}
+
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
@@ -75,6 +80,12 @@ export class ImportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
     }
 
 

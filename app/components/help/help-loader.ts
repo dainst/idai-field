@@ -3,7 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Converter} from 'showdown';
 import {HttpReader} from '../../core/import/reader/http-reader';
 
+
 export type Chapter = { id: string, label: string };
+
 
 /**
  * @author Thomas Kleinke
@@ -20,6 +22,7 @@ export module HelpLoader {
             chapters: getChapters(htmlString)
         };
     }
+
 
     function adjustImageLinks(markdown: string): string {
 

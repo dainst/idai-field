@@ -8,11 +8,15 @@ import {RoutingService} from '../routing-service';
 import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
 import {ImageFilterOption} from './view/images-state';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-overview.html'
+    templateUrl: './image-overview.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -33,7 +37,8 @@ export class ImageOverviewComponent implements OnInit {
                 private imageOverviewFacade: ImageOverviewFacade,
                 private routingService: RoutingService,
                 private messages: Messages,
-                private projectConfiguration: ProjectConfiguration) {
+                private projectConfiguration: ProjectConfiguration,
+                private tabManager: TabManager) {
 
         this.imageOverviewFacade.initialize();
     }
@@ -67,6 +72,14 @@ export class ImageOverviewComponent implements OnInit {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
         this.filterOptions = [this.projectConfiguration.getTypesTree()['Image']];
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.imageOverviewFacade.getSelected().length === 0) {
+            await this.tabManager.returnToLastResourcesRoute();
+        }
     }
 
 

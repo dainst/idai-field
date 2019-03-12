@@ -15,6 +15,7 @@ describe('BackupLoadingComponent', () => {
     let messages: any;
     let settingsService: any;
     let backupProvider: any;
+    let tabManager: any;
 
 
     afterEach(done => new PouchDB(unittestdb).destroy().then(done));
@@ -29,12 +30,14 @@ describe('BackupLoadingComponent', () => {
         messages = jasmine.createSpyObj('messages', ['add']);
         settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
         backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
+        tabManager = jasmine.createSpyObj('tabManager', ['returnToLastResourcesRoute']);
 
         c = new BackupLoadingComponent(
             modalService,
             messages,
             settingsService,
-            backupProvider
+            backupProvider,
+            tabManager
         );
 
         settingsService.getSelectedProject.and.returnValue('selectedproject');

@@ -29,7 +29,7 @@ const getTemplate = mainWindow => {
                 type: 'separator'
             }, {
                 label: messages.get('menu.settings'),
-                accelerator: 'CmdOrCtrl+S',
+                accelerator: (process.platform === 'darwin') ? 'CmdOrCtrl+,' : 'CmdOrCtrl+Alt+S',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'settings')
             },
             {

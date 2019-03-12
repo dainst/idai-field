@@ -64,7 +64,12 @@ export class AppComponent {
 
             switch(event.key) {
                 case 's':
-                    this.menuService.onMenuItemClicked('settings');
+                    if (event.ctrlKey && event.altKey) {
+                        this.menuService.onMenuItemClicked('settings');
+                    }
+                    break;
+                case ',':
+                    if (event.metaKey) this.menuService.onMenuItemClicked('settings');
                     break;
                 case 'b':
                     this.menuService.onMenuItemClicked('images');

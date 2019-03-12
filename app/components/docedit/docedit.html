@@ -74,59 +74,12 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
+                                               [relationDefinitions]="getRelationDefinitions()"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
                                                     (documentHolder.clonedDocument.resource.type)">
                                     </edit-form>
                                 </ng-template>
                             </ngb-tab>
-
-                            <!--
-                            <ngb-tab *ngIf="getRelationDefinitions() && getRelationDefinitions().length > 0"
-                                     id="docedit-relations-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-sitemap"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.relations">Relationen</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
-                                    <relations-form
-                                            [(document)]="documentHolder.clonedDocument"
-                                            [primary]="'identifier'"
-                                            [relationDefinitions]="getRelationDefinitions()">
-                                    </relations-form>
-                                </ng-template>
-                            </ngb-tab>
-                            -->
-
-                            <ngb-tab id="docedit-space-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-cube-scan"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.space">Räumliche Einordnung</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
-                                    <space-form
-                                        [(document)]="documentHolder.clonedDocument"
-                                        [relationDefinitions]="getRelationDefinitions()"
-                                        [primary]="'identifier'"
-                                        [fieldDefinitions]="projectConfiguration.getFieldDefinitions(documentHolder.clonedDocument.resource.type)">
-                                    </space-form>
-                                </ng-template>
-                            </ngb-tab>
-
-                            <ngb-tab id="docedit-time-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-chart-timeline"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.time">Zeitliche Einordnung</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
-                                    <time-form
-                                        [(document)]="documentHolder.clonedDocument"
-                                        [relationDefinitions]="getRelationDefinitions()"
-                                        [primary]="'identifier'"
-                                        [fieldDefinitions]="projectConfiguration.getFieldDefinitions(documentHolder.clonedDocument.resource.type)">
-                                    </time-form>
-                                </ng-template>
-                            </ngb-tab>
-
                             <ngb-tab *ngIf="showDoceditImagesTab"
                                      id="docedit-images-tab">
                                 <ng-template ngbTabTitle>

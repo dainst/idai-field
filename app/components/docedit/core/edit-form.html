@@ -1,15 +1,142 @@
-<div *ngFor="let field of fieldsToShow" id="edit-form-element-{{field.name}}">
-    <div *ngIf="field && (field.editable === true)" class="form-group card">
-        <div class="card-header h4">
-            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
 
-            <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
-                  class="mdi mdi-information-outline float-right"></span>
-        </div>
+<div #ed class="help row" (scroll)="updateActiveGroup()">
 
-        <div class="card-block">
-            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+    <div class="col">
+
+        <div class="row">
+
+
+            <div id="table-of-contents-placeholder" class="col-md-2"></div>
+            <div class="col-md-1"></div>
+
+
+            <ul id="table-of-contents" class="col-md-2 nav flex-column">
+                <li *ngFor="let group of groups" class="nav nav-pills flex-column"
+                    (click)="scrollToGroup(group)">
+                    <a class="nav-link" [class.active]="group === activeGroup" href="javascript: void(0);">
+                        {{group}}
+                    </a>
+                </li>
+            </ul>
+
+
+
+
+            <div class="col-md-8">
+
+                <div id="basic-group">
+
+                    <!--<h3>Basiseigenschaften</h3>-->
+
+                    <div *ngFor="let field of fieldsToShow" id="edit-form-element-{{field.name}}">
+                        <div *ngIf="field && (field.editable === true)" class="form-group card">
+                            <div class="card-header h4">
+                                <span class="card-title" *ngIf="field.label">{{field.label}}</span>
+                                <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+
+                                <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
+                                      class="mdi mdi-information-outline float-right"></span>
+                            </div>
+
+                            <div class="card-block">
+                                <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="space-group">
+                    <hr>
+                    <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
+
+                    <div *ngFor="let field of spatialFieldsToShow" id="edit-form-element-{{field.name}}">
+                        <div *ngIf="field && (field.editable === true)" class="form-group card">
+                            <div class="card-header h4">
+                                <span class="card-title" *ngIf="field.label">{{field.label}}</span>
+                                <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+
+                                <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
+                                      class="mdi mdi-information-outline float-right"></span>
+                            </div>
+
+                            <div class="card-block">
+                                <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+
+                        <ng-template ngFor [ngForOf]="spatialRelationsToShow" let-relationDefinition="$implicit">
+                            <li class="list-group-item">
+                                <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
+                                <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>
+
+                                <ul>
+                                    <li style="list-style-type: none;">
+                                        <relation-picker-group [(document)]="document" [relationDefinition]="relationDefinition"
+                                                               [primary]="primary"></relation-picker-group>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ng-template>
+                    </ul>
+                </div>
+
+                <div id="time-group">
+
+                    <hr>
+                    <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
+
+                    <div *ngFor="let field of timeFieldsToShow" id="edit-form-element-{{field.name}}">
+                        <div *ngIf="field && (field.editable === true)" class="form-group card">
+                            <div class="card-header h4">
+                                <span class="card-title" *ngIf="field.label">{{field.label}}</span>
+                                <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+
+                                <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
+                                      class="mdi mdi-information-outline float-right"></span>
+                            </div>
+
+                            <div class="card-block">
+                                <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+
+                        <ng-template ngFor [ngForOf]="timeRelationsToShow" let-relationDefinition="$implicit">
+
+                            <li class="list-group-item">
+                                <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
+                                <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>
+
+                                <ul>
+                                    <li style="list-style-type: none;">
+                                        <relation-picker-group [(document)]="document" [relationDefinition]="relationDefinition"
+                                                               [primary]="primary"></relation-picker-group>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ng-template>
+                    </ul>
+                </div>
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+
+            </div>
         </div>
     </div>
 </div>
+
+

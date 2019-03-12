@@ -135,4 +135,38 @@
       cursor: default;
     }
   }
+
+
+  .edit-form {
+    position: relative;
+    height: calc(100vh - 51px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #eee;
+    z-index: 1001;
+
+    .list-group-item {
+      background-color: #eee;
+    }
+
+    #table-of-contents-placeholder {
+      border-right: 1px solid #eee;
+    }
+
+    #table-of-contents {
+      position: fixed;
+      margin-top: 10px;
+      user-select: none;
+
+      .nav {
+        margin: 5px 12px;
+
+        .nav-link {
+          &.active {
+            background-color: #5572a1;
+          }
+        }
+      }
+    }
+  }
 }

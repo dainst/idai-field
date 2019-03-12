@@ -11,8 +11,7 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
-
-const remote = require('electron').remote;
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -81,7 +80,7 @@ export class ImageViewComponent implements OnInit {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
-        remote.getGlobal('setMenuContext')('docedit');
+        MenuService.setContext('docedit');
 
         const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
@@ -95,7 +94,7 @@ export class ImageViewComponent implements OnInit {
             if (closeReason === 'deleted') await this.deselect();
         }
 
-        remote.getGlobal('setMenuContext')('default');
+        MenuService.setContext('default');
     }
 
 

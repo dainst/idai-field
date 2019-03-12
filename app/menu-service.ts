@@ -2,6 +2,10 @@ import {Router} from '@angular/router';
 import {Injectable, NgZone} from '@angular/core';
 
 const ipcRenderer = require('electron').ipcRenderer;
+const remote = require('electron').remote;
+
+
+type MenuContext = 'default'|'docedit';
 
 
 @Injectable()
@@ -25,5 +29,11 @@ export class MenuService {
     public async onMenuItemClicked(menuItem: string) {
 
         await this.zone.run(async () => await this.router.navigate([menuItem]));
+    }
+
+
+    public static setContext(context: MenuContext) {
+
+        remote.getGlobal('setMenuContext')(context);
     }
 }

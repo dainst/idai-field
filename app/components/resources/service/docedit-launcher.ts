@@ -4,8 +4,7 @@ import {Document, NewDocument, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';
-
-const remote = require('electron').remote;
+import {MenuService} from '../../../menu-service';
 
 
 @Injectable()
@@ -28,7 +27,7 @@ export class DoceditLauncher {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
-        remote.getGlobal('setMenuContext')('docedit');
+        MenuService.setContext('docedit');
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
@@ -43,7 +42,7 @@ export class DoceditLauncher {
             if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
         }
 
-        remote.getGlobal('setMenuContext')('default');
+        MenuService.setContext('default');
 
         return result;
     }

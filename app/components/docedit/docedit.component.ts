@@ -99,7 +99,11 @@ export class DoceditComponent {
 
     public changeActiveTab(event: any) {
 
-        this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
+        this.activeTabService.setActiveTab(
+            event.nextId
+                .replace('docedit-','')
+                .replace('-tab','')
+        );
     };
 
 

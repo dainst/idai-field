@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 const messages = require('./messages');
 
 
-const getTemplate = mainWindow => {
+const getTemplate = (mainWindow, context) => {
 
     const template = [{
         label: 'iDAI.field',
@@ -20,17 +20,20 @@ const getTemplate = mainWindow => {
             {
                 label: messages.get('menu.file.import'),
                 accelerator: 'CmdOrCtrl+I',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'import')
+                click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
+                enabled: context === 'default'
             }, {
                 label: messages.get('menu.file.export'),
                 accelerator: 'CmdOrCtrl+E',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'export')
+                click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
+                enabled: context === 'default'
             }, {
                 type: 'separator'
             }, {
                 label: messages.get('menu.settings'),
                 accelerator: (process.platform === 'darwin') ? 'CmdOrCtrl+,' : 'CmdOrCtrl+Alt+S',
-                click: () => mainWindow.webContents.send('menuItemClicked', 'settings')
+                click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
+                enabled: context === 'default'
             },
             {
                 label: messages.get('menu.file.exit'),
@@ -73,15 +76,18 @@ const getTemplate = mainWindow => {
         submenu: [{
             label: messages.get('menu.tools.images'),
             accelerator: 'CmdOrCtrl+B',
-            click: () => mainWindow.webContents.send('menuItemClicked', 'images')
+            click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
+            enabled: context === 'default'
         }, {
             type: 'separator'
         }, {
             label: messages.get('menu.tools.backupCreation'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation')
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
+            enabled: context === 'default'
         }, {
             label: messages.get('menu.tools.backupLoading'),
-            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading')
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
+            enabled: context === 'default'
         }]
     }, {
         label: messages.get('menu.view'),
@@ -153,7 +159,8 @@ const getTemplate = mainWindow => {
         }, {
             label: messages.get('menu.help'),
             accelerator: 'CmdOrCtrl+H',
-            click: () => mainWindow.webContents.send('menuItemClicked', 'help')
+            click: () => mainWindow.webContents.send('menuItemClicked', 'help'),
+            enabled: context === 'default'
         }]
     }];
 

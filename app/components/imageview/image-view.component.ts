@@ -12,6 +12,8 @@ import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
 
+const remote = require('electron').remote;
+
 
 @Component({
     moduleId: module.id,
@@ -79,6 +81,8 @@ export class ImageViewComponent implements OnInit {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
+        remote.getGlobal('setMenuContext')('docedit');
+
         const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.image.document);
@@ -90,6 +94,8 @@ export class ImageViewComponent implements OnInit {
         } catch (closeReason) {
             if (closeReason === 'deleted') await this.deselect();
         }
+
+        remote.getGlobal('setMenuContext')('default');
     }
 
 

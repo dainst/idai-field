@@ -5,6 +5,8 @@ const fs = require('fs');
 const os = require('os');
 const autoUpdate = require('./auto-update.js');
 
+let menuContext = 'default';
+
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
 electron.app.setAppUserModelId('org.dainst.field');
@@ -38,6 +40,14 @@ global.updateConfig = config => {
     const oldLocale = global.config.locale;
     global.config = config;
     if (global.config.locale !== oldLocale) createMenu();
+};
+
+
+global.setMenuContext = context => {
+
+    const oldContext = menuContext;
+    menuContext = context;
+    if (oldContext !== menuContext) createMenu();
 };
 
 
@@ -155,7 +165,7 @@ const loadConfig = () => {
 
 const createMenu = () => {
 
-    const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow));
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow, menuContext));
     electron.Menu.setApplicationMenu(menu);
 };
 

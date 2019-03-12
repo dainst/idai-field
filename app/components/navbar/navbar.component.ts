@@ -8,7 +8,10 @@ import {Tab, TabManager} from '../tab-manager';
 @Component({
     moduleId: module.id,
     selector: 'navbar',
-    templateUrl: './navbar.html'
+    templateUrl: './navbar.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Sebastian Cuy
@@ -44,6 +47,14 @@ export class NavbarComponent {
     public returnToLastResourcesRoute = () => this.tabManager.returnToLastResourcesRoute();
 
 
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if ((event.ctrlKey || event.metaKey) && event.key === 'w') {
+            await this.closeCurrentTab();
+        }
+    }
+
+
     public isRunningOnMac() {
 
         return navigator.appVersion.indexOf('Mac') !== -1;
@@ -59,6 +70,13 @@ export class NavbarComponent {
         if (tab.routeName === 'resources') this.viewFacade.deactivateView(tab.operationId as string);
 
         await this.tabManager.closeTab(tab.routeName, tab.operationId);
+    }
+
+
+    public async closeCurrentTab() {
+
+        const currentTab: Tab|undefined = this.getCurrentTab();
+        if (currentTab) await this.close(currentTab);
     }
 
 
@@ -83,5 +101,13 @@ export class NavbarComponent {
         } else {
             return '';
         }
+    }
+
+
+    public getCurrentTab(): Tab|undefined {
+
+        return this.tabManager.getTabs().find(tab => {
+            return this.activeRoute === '/' + tab.routeName + '/' + tab.operationId;
+        });
     }
 }

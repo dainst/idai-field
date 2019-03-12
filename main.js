@@ -5,7 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const autoUpdate = require('./auto-update.js');
 
-let menuContext = 'default';
+let menuContext = 'loading';
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864

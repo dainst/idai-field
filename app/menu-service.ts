@@ -5,7 +5,7 @@ const ipcRenderer = require('electron').ipcRenderer;
 const remote = require('electron').remote;
 
 
-type MenuContext = 'default'|'docedit';
+type MenuContext = 'loading'|'default'|'docedit';
 
 
 @Injectable()
@@ -23,6 +23,8 @@ export class MenuService {
         ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string) => {
             await this.onMenuItemClicked(menuItem);
         });
+
+        MenuService.setContext('default');
     }
 
 

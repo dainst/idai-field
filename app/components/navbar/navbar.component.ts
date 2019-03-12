@@ -19,20 +19,13 @@ export class NavbarComponent {
 
     public activeRoute: string;
 
-    private lastResourcesRoute: string|undefined;
-
 
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
                 private i18n: I18n) {
 
-        this.router.events.subscribe(() => {
-            this.activeRoute = this.router.url;
-            if (this.activeRoute.startsWith('/resources') || this.activeRoute.startsWith('/matrix')) {
-                this.lastResourcesRoute = this.activeRoute;
-            }
-        });
+        this.router.events.subscribe(() => this.activeRoute = this.router.url);
     }
 
 
@@ -47,6 +40,8 @@ export class NavbarComponent {
         : [tab.routeName];
 
     public isActiveRoute = (route: string) => this.activeRoute && this.activeRoute.startsWith(route);
+
+    public returnToLastResourcesRoute = () => this.tabManager.returnToLastResourcesRoute();
 
 
     public isRunningOnMac() {
@@ -87,16 +82,6 @@ export class NavbarComponent {
             return this.i18n({ id: 'navbar.tabs.settings', value: 'Einstellungen' });
         } else {
             return '';
-        }
-    }
-
-
-    public async returnToLastResourcesRoute() {
-
-        if (this.lastResourcesRoute) {
-            await this.router.navigateByUrl(this.lastResourcesRoute);
-        } else {
-            await this.router.navigate(['resources', 'project']);
         }
     }
 }

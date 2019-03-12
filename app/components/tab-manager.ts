@@ -21,6 +21,7 @@ export type Tab = {
 export class TabManager {
 
     private tabs: Array<Tab> = [];
+    private lastResourcesRoute: string|undefined;
 
 
     constructor(indexFacade: IndexFacade,
@@ -31,6 +32,12 @@ export class TabManager {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.initialize();
+
+        this.router.events.subscribe(() => {
+            if (this.router.url.startsWith('/resources') || this.router.url.startsWith('/matrix')) {
+                this.lastResourcesRoute = this.router.url;
+            }
+        });
     }
 
 
@@ -71,6 +78,16 @@ export class TabManager {
             return tab.routeName !== routeName || tab.operationId !== operationId;
         });
         await this.serialize();
+    }
+
+
+    public async returnToLastResourcesRoute() {
+
+        if (this.lastResourcesRoute) {
+            await this.router.navigateByUrl(this.lastResourcesRoute);
+        } else {
+            await this.router.navigate(['resources', 'project']);
+        }
     }
 
 

@@ -66,30 +66,21 @@
             <div *ngIf="documentHolder.clonedDocument && !isLoading()" class="container">
                 <div class="row">
                     <div class="col-md-12">
+                            <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
+                                       [relationDefinitions]="getRelationDefinitions()"
+                                       [fieldDefinitions]="projectConfiguration.getFieldDefinitions
+                                            (documentHolder.clonedDocument.resource.type)">
+                            </edit-form>
+                        <!--
                         <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
+
+
                             <ngb-tab id="docedit-fields-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-format-list-bulleted"></span>
                                     <span class="button-label" i18n="@@docedit.tabs.metadata">Metadaten</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
-                                               [relationDefinitions]="getRelationDefinitions()"
-                                               [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                                    (documentHolder.clonedDocument.resource.type)">
-                                    </edit-form>
-                                </ng-template>
-                            </ngb-tab>
-                            <ngb-tab *ngIf="showDoceditImagesTab"
-                                     id="docedit-images-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-image"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.images">Bilder</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
-                                    <docedit-image-tab
-                                            [(document)]="documentHolder.clonedDocument">
-                                    </docedit-image-tab>
                                 </ng-template>
                             </ngb-tab>
 
@@ -99,12 +90,11 @@
                                     <span class="button-label" i18n="@@docedit.tabs.conflicts">Konflikte</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <docedit-conflicts-tab [(document)]="documentHolder.clonedDocument"
-                                                       [(inspectedRevisions)]="documentHolder.inspectedRevisions">
-                                    </docedit-conflicts-tab>
+
                                 </ng-template>
                             </ngb-tab>
                         </ngb-tabset>
+                        -->
                     </div>
                 </div>
             </div>

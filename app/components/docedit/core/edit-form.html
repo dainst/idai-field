@@ -1,5 +1,5 @@
 
-<div #ed class="edit-form row" (scroll)="updateActiveGroup()">
+<div #ed class="edit-form row">
 
     <div class="col">
 
@@ -12,7 +12,7 @@
 
             <ul id="table-of-contents" class="col-md-2 nav flex-column">
                 <li *ngFor="let group of groups" class="nav nav-pills flex-column"
-                    (click)="scrollToGroup(group)">
+                    (click)="activateGroup(group)">
                     <a class="nav-link" [class.active]="group === activeGroup" href="javascript: void(0);">
                         {{group}}
                     </a>
@@ -21,10 +21,9 @@
 
 
 
-
             <div class="col-md-8">
 
-                <div id="basic-group">
+                <div id="basic-group" *ngIf="activeGroup === 'basic'">
 
                     <!--<h3>Basiseigenschaften</h3>-->
 
@@ -45,8 +44,7 @@
                     </div>
                 </div>
 
-                <div id="space-group">
-                    <hr>
+                <div id="space-group" *ngIf="activeGroup === 'space'">
                     <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
 
                     <div *ngFor="let field of spatialFieldsToShow" id="edit-form-element-{{field.name}}">
@@ -83,9 +81,9 @@
                     </ul>
                 </div>
 
-                <div id="time-group">
+                <div id="time-group" *ngIf="activeGroup === 'time'">
 
-                    <hr>
+
                     <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
 
                     <div *ngFor="let field of timeFieldsToShow" id="edit-form-element-{{field.name}}">
@@ -124,16 +122,28 @@
                 </div>
 
 
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
+
+                    <docedit-image-tab
+                            [(document)]="document">
+                    </docedit-image-tab>
+
+                    <!--
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-image"></span>
+                        <span class="button-label" i18n="@@docedit.tabs.images">Bilder</span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+
+                    </ng-template>
+                    -->
+                </div>
 
 
+                <div *ngIf="activeGroup === 'conflicts'">
+                    <docedit-conflicts-tab [(document)]="document" [(inspectedRevisions)]="documentHolder.inspectedRevisions">
+                    </docedit-conflicts-tab>
+                </div>
             </div>
         </div>
     </div>

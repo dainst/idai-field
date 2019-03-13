@@ -20,9 +20,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public activeGroup: string = 'basic';
 
-    private static headerTopOffset: number = -240;
-    private static scrollOffset: number = -20;
-
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
@@ -38,10 +35,14 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public types: string[];
 
-    public groups: string[] = ['basic', 'space', 'time'];
+    public groups: string[] = ['basic', 'properties', 'dimensions', 'space', 'time', 'images', 'conflicts'];
 
 
     constructor(private elementRef: ElementRef) {}
+
+
+    public activateGroup = (name: string) => this.activeGroup = name;
+
 
 
     ngAfterViewInit() {
@@ -85,40 +86,5 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement.getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
-    }
-
-
-    public scrollToGroup(g: string) {
-
-        const element: HTMLElement|null = document.getElementById(g + '-group');
-        if (!element) return;
-
-        element.scrollIntoView(true);
-        this.rootElement.nativeElement.scrollTop += EditFormComponent.scrollOffset;
-    }
-
-
-    public updateActiveGroup() {
-
-        let activeElementTop: number = 1;
-
-        this.groups.forEach(group => {
-            const top: number = EditFormComponent.getHeaderTop(group);
-            if (top <= 0 && (top > activeElementTop || activeElementTop === 1)) {
-                activeElementTop = top;
-                this.activeGroup = group;
-            }
-        });
-    }
-
-
-    private static getHeaderTop(group: string): number {
-
-        const element: HTMLElement|null = document.getElementById(group + '-group');
-        if (!element) return 1;
-
-        return element.getBoundingClientRect().top
-            + EditFormComponent.headerTopOffset
-            + EditFormComponent.scrollOffset;
     }
 }

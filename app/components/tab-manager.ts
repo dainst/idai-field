@@ -86,6 +86,9 @@ export class TabManager {
         this.tabs = this.tabs.filter(tab => {
             return tab.routeName !== routeName || tab.operationId !== operationId;
         });
+
+        this.showAsManyTabsAsPossible();
+
         await this.serialize();
     }
 
@@ -204,6 +207,17 @@ export class TabManager {
         }
 
         tab.shown = true;
+    }
+
+
+    private showAsManyTabsAsPossible() {
+
+        this.tabs.filter(tab => !tab.shown)
+            .forEach(tab => {
+                if (this.getAvailableTabSpaceWidth() >= TabManager.getApproximateTabWidth(tab)) {
+                    tab.shown = true;
+                }
+            });
     }
 
 

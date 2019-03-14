@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ViewFacade} from '../resources/view/view-facade';
@@ -20,7 +20,7 @@ import {TabUtil} from '../tab-util';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class NavbarComponent {
+export class NavbarComponent implements DoCheck {
 
     @ViewChild('tabSpace') tabSpaceElement: ElementRef;
 
@@ -47,6 +47,12 @@ export class NavbarComponent {
     public getTabRoute = (tab: Tab) => TabUtil.getTabRoute(tab);
 
     public getTabRouteArray = (tab: Tab) => TabUtil.getTabRouteArray(tab);
+
+
+    ngDoCheck() {
+
+        if (this.tabSpaceElement && !this.tabManager.getTabSpaceWidth()) this.onResize();
+    }
 
 
     public async onKeyDown(event: KeyboardEvent) {

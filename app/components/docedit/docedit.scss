@@ -7,6 +7,10 @@
 
 #document-edit-wrapper {
 
+  height: calc(100vh - 65px);
+  overflow-y: hidden;
+  background-color: #eee;
+
   .form-group.card {
     margin-bottom: 0;
   }
@@ -47,18 +51,7 @@
     margin-right: -3px;
   }
 
-  main {
-    padding: 25px;
-    background-color: #eee;
 
-    .tab-content {
-      height: calc(100vh - 238px);
-      border: 1px solid #ddd;
-      border-top: 0;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-  }
 
   #document-edit-button-save-document:active,
   #document-edit-button-save-document:focus,
@@ -137,37 +130,60 @@
     }
   }
 
+  main {
+    height: 86%;
+    padding: 0;
 
-  .edit-form {
     position: relative;
-    height: calc(100vh - 51px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: #eee;
+
     z-index: 1001;
 
-    .list-group-item {
-      background-color: #eee;
-    }
+    .container-fluid {
 
-    #table-of-contents-placeholder {
-      border-right: 1px solid #eee;
-    }
+      height: 100%;
 
-    #table-of-contents {
-      position: fixed;
-      margin-top: 10px;
-      user-select: none;
+      .row {
 
-      .nav {
-        margin: 5px 12px;
+        height: 100%;
 
-        .nav-link {
-          &.active {
-            background-color: #5572a1;
+        .forms-container {
+          padding-right: 45px;
+          height: 100%;
+
+          .scrollable-group {
+
+            height: 100%;
+            overflow-y: auto;
+          }
+        }
+
+        .list-group-item {
+          background-color: #eee;
+        }
+
+        #table-of-contents-placeholder {
+          border-right: 1px solid #eee;
+        }
+
+        #table-of-contents {
+
+          padding-left: 50px;
+
+          user-select: none;
+
+          .nav {
+            margin: 5px 12px;
+
+            .nav-link {
+              &.active {
+                background-color: #5572a1;
+              }
+            }
           }
         }
       }
     }
+
+
   }
 }

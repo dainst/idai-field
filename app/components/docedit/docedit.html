@@ -63,41 +63,41 @@
             </div>
         </header>
         <main>
-            <div *ngIf="documentHolder.clonedDocument && !isLoading()" class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                            <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
-                                       [relationDefinitions]="getRelationDefinitions()"
-                                       [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                            (documentHolder.clonedDocument.resource.type)">
-                            </edit-form>
-                        <!--
-                        <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
+
+            <edit-form
+                    *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
+                    [(document)]="documentHolder.clonedDocument"
+                    [relationDefinitions]="getRelationDefinitions()"
+                    [fieldDefinitions]="projectConfiguration.getFieldDefinitions
+                        (documentHolder.clonedDocument.resource.type)">
+            </edit-form>
+
+                <!--
+                <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
 
 
-                            <ngb-tab id="docedit-fields-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-format-list-bulleted"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.metadata">Metadaten</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
-                                </ng-template>
-                            </ngb-tab>
+                    <ngb-tab id="docedit-fields-tab">
+                        <ng-template ngbTabTitle>
+                            <span class="mdi mdi-format-list-bulleted"></span>
+                            <span class="button-label" i18n="@@docedit.tabs.metadata">Metadaten</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                        </ng-template>
+                    </ngb-tab>
 
-                            <ngb-tab *ngIf="documentHolder.clonedDocument._conflicts" id="docedit-conflicts-tab">
-                                <ng-template ngbTabTitle>
-                                    <span class="mdi mdi-alert-outline"></span>
-                                    <span class="button-label" i18n="@@docedit.tabs.conflicts">Konflikte</span>
-                                </ng-template>
-                                <ng-template ngbTabContent>
+                    <ngb-tab *ngIf="documentHolder.clonedDocument._conflicts" id="docedit-conflicts-tab">
+                        <ng-template ngbTabTitle>
+                            <span class="mdi mdi-alert-outline"></span>
+                            <span class="button-label" i18n="@@docedit.tabs.conflicts">Konflikte</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
 
-                                </ng-template>
-                            </ngb-tab>
-                        </ngb-tabset>
-                        -->
-                    </div>
-                </div>
-            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+                -->
+
+
             <div *ngIf="isLoading()" id="loading-icon-container">
                 <loading-icon [context]="'docedit'"></loading-icon>
                 <div id="operation-in-progress-info" class="alert alert-primary">

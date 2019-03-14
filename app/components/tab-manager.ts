@@ -185,7 +185,10 @@ export class TabManager {
             return tab.routeName === routeName && tab.operationId === operationId;
         });
 
-        if (tab) this.activeTab = tab;
+        if (tab) {
+            this.activeTab = tab;
+            this.showTab(tab);
+        }
     }
 
 

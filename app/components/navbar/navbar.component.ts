@@ -36,7 +36,9 @@ export class NavbarComponent implements DoCheck {
     }
 
 
-    public getTabs = () => this.tabManager.getTabs();
+    public getShownTabs = () => this.tabManager.getShownTabs();
+
+    public getHiddenTabs = () => this.tabManager.getHiddenTabs();
 
     public isActiveRoute = (route: string) => this.activeRoute && this.activeRoute.startsWith(route);
 
@@ -120,7 +122,7 @@ export class NavbarComponent implements DoCheck {
 
     public getCurrentTab(): Tab|undefined {
 
-        return this.tabManager.getTabs().find(tab => {
+        return this.tabManager.getShownTabs().find(tab => {
             return this.activeRoute === '/' + tab.routeName + '/' + tab.operationId;
         });
     }

@@ -10,6 +10,10 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     -webkit-app-region: no-drag;
     max-height: 51px;
   }
+
+  .dropdown-menu {
+    z-index: 1050;
+  }
 }
 
 .navbar.bg-primary {

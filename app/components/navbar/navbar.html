@@ -20,13 +20,24 @@
                 <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
             </li>
-            <li *ngFor="let tab of getTabs()" id="{{getTabId(tab)}}" class="nav-item">
+            <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}" class="nav-item">
                 <a class="nav-link tab closable-tab"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
                     {{tab.label}}
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
                 </a>
+            </li>
+            <li *ngIf="getHiddenTabs().length > 0" ngbDropdown class="nav-item">
+                <a id="tabs-dropdown" ngbDropdownToggle class="nav-link"></a>
+                <div ngbDropdownMenu>
+                    <a *ngFor="let tab of getHiddenTabs()"
+                       class="dropdown-item"
+                       (click)="router.navigate(getTabRouteArray(tab))">
+                        {{tab.label}}
+                    </a>
+                </div>
+
             </li>
         </ul>
 

@@ -45,7 +45,9 @@ export class TabManager {
     }
 
 
-    public getTabs = (): Array<Tab> => this.tabs.filter(tab => tab.shown);
+    public getShownTabs = (): Array<Tab> => this.tabs.filter(tab => tab.shown);
+
+    public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown);
 
 
     async initialize() {

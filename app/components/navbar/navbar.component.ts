@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ViewFacade} from '../resources/view/view-facade';
 import {Tab, TabManager} from '../tab-manager';
+import {TabUtil} from '../tab-util';
 
 
 @Component({
@@ -10,7 +11,8 @@ import {Tab, TabManager} from '../tab-manager';
     selector: 'navbar',
     templateUrl: './navbar.html',
     host: {
-        '(window:keydown)': 'onKeyDown($event)'
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:resize)': 'onResize()'
     }
 })
 /**
@@ -19,6 +21,8 @@ import {Tab, TabManager} from '../tab-manager';
  * @author Daniel de Oliveira
  */
 export class NavbarComponent {
+
+    @ViewChild('tabSpace') tabSpaceElement: ElementRef;
 
     public activeRoute: string;
 
@@ -34,17 +38,15 @@ export class NavbarComponent {
 
     public getTabs = () => this.tabManager.getTabs();
 
-    public getTabId = (tab: Tab) => 'navbar-' + tab.routeName + (tab.operationId ? '-' + tab.operationId : '');
-
-    public getTabRoute = (tab: Tab) => '/' + tab.routeName + (tab.operationId ? '/' + tab.operationId : '');
-
-    public getTabRouteArray = (tab: Tab) => tab.operationId
-        ? [tab.routeName, tab.operationId]
-        : [tab.routeName];
-
     public isActiveRoute = (route: string) => this.activeRoute && this.activeRoute.startsWith(route);
 
-    public returnToLastResourcesRoute = () => this.tabManager.returnToLastResourcesRoute();
+    public openActiveTab = () => this.tabManager.openActiveTab();
+
+    public getTabId = (tab: Tab) => TabUtil.getTabId(tab);
+
+    public getTabRoute = (tab: Tab) => TabUtil.getTabRoute(tab);
+
+    public getTabRouteArray = (tab: Tab) => TabUtil.getTabRouteArray(tab);
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -52,6 +54,12 @@ export class NavbarComponent {
         if ((event.ctrlKey || event.metaKey) && event.key === 'w') {
             await this.closeCurrentTab();
         }
+    }
+
+
+    public onResize() {
+
+        this.tabManager.setTabSpaceWidth(this.computeTabSpaceWidth());
     }
 
 
@@ -63,7 +71,7 @@ export class NavbarComponent {
 
     public async close(tab: Tab) {
 
-        if (this.isActiveRoute(this.getTabRoute(tab))) {
+        if (this.isActiveRoute(TabUtil.getTabRoute(tab))) {
             await this.router.navigate(['resources', 'project']);
         }
 
@@ -109,5 +117,15 @@ export class NavbarComponent {
         return this.tabManager.getTabs().find(tab => {
             return this.activeRoute === '/' + tab.routeName + '/' + tab.operationId;
         });
+    }
+
+
+    private computeTabSpaceWidth(): number {
+
+        return this.tabSpaceElement.nativeElement.offsetWidth
+            + parseInt(
+                ((window.getComputedStyle(this.tabSpaceElement.nativeElement).marginRight as string)
+                    .replace('px', ''))
+            );
     }
 }

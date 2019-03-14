@@ -64,7 +64,7 @@ export class ExportComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
+        if (event.key === 'Escape') await this.tabManager.openActiveTab();
     }
 
 

@@ -5,12 +5,14 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
+import {TabUtil} from './tab-util';
 
 
 export type Tab = {
     routeName: string,
     label: string
-    operationId?: string
+    operationId?: string,
+    shown: boolean
 }
 
 
@@ -21,7 +23,8 @@ export type Tab = {
 export class TabManager {
 
     private tabs: Array<Tab> = [];
-    private lastResourcesRoute: string|undefined;
+    private activeTab: Tab|undefined;
+    private tabSpaceWidth: number;
 
 
     constructor(indexFacade: IndexFacade,
@@ -34,9 +37,7 @@ export class TabManager {
         this.initialize();
 
         this.router.events.subscribe(() => {
-            if (this.router.url.startsWith('/resources') || this.router.url.startsWith('/matrix')) {
-                this.lastResourcesRoute = this.router.url;
-            }
+            this.updateActiveTab(this.router.url);
         });
     }
 
@@ -47,7 +48,7 @@ export class TabManager {
     async initialize() {
 
         this.tabs = await this.deserialize();
-        await this.openTabForCurrentRoute();
+        await this.openTabForRoute(this.router.url);
         await this.validateTabs();
     }
 
@@ -65,7 +66,8 @@ export class TabManager {
         this.tabs.push({
             routeName: routeName,
             label: this.getLabel(routeName, operationIdentifier),
-            operationId: operationId
+            operationId: operationId,
+            shown: true
         });
 
         await this.serialize();
@@ -81,13 +83,19 @@ export class TabManager {
     }
 
 
-    public async returnToLastResourcesRoute() {
+    public async openActiveTab() {
 
-        if (this.lastResourcesRoute) {
-            await this.router.navigateByUrl(this.lastResourcesRoute);
+        if (this.activeTab) {
+            await this.router.navigate([this.activeTab.routeName, this.activeTab.operationId]);
         } else {
             await this.router.navigate(['resources', 'project']);
         }
+    }
+
+
+    public setTabSpaceWidth(tabSpaceWidth: number) {
+
+        this.tabSpaceWidth = tabSpaceWidth;
     }
 
 
@@ -142,16 +150,26 @@ export class TabManager {
     }
 
 
-    private async openTabForCurrentRoute() {
+    private async openTabForRoute(route: string) {
 
-        const route: string[] = this.router.url.split('/');
-        const routeName: string = route[1];
-        const operationId: string|undefined = route.length > 2 ? route[2] : undefined;
+        const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
 
         if (operationId !== 'project' && !this.getTab(routeName, operationId)
                 && (routeName === 'resources' || routeName === 'matrix')) {
             await this.openTab(routeName, operationId, '');
         }
+    }
+
+
+    private updateActiveTab(route: string) {
+
+        const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
+
+        const tab: Tab|undefined = this.tabs.find(tab => {
+            return tab.routeName === routeName && tab.operationId === operationId;
+        });
+
+        if (tab) this.activeTab = tab;
     }
 
 

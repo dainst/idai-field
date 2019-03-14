@@ -30,7 +30,7 @@ describe('BackupLoadingComponent', () => {
         messages = jasmine.createSpyObj('messages', ['add']);
         settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
         backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
-        tabManager = jasmine.createSpyObj('tabManager', ['returnToLastResourcesRoute']);
+        tabManager = jasmine.createSpyObj('tabManager', ['openActiveTab']);
 
         c = new BackupLoadingComponent(
             modalService,

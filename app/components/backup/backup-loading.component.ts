@@ -43,7 +43,7 @@ export class BackupLoadingComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.returnToLastResourcesRoute();
+        if (event.key === 'Escape') await this.tabManager.openActiveTab();
     }
 
 

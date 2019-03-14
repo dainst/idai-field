@@ -14,7 +14,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
+        <ul #tabSpace *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
                 <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
@@ -36,7 +36,7 @@
                 <a class="nav-link active">
                     {{getActiveRouteLabel()}}
                     <span class="mdi mdi-close"
-                          (click)="$event.stopPropagation(); returnToLastResourcesRoute();"></span>
+                          (click)="$event.stopPropagation(); openActiveTab();"></span>
                 </a>
             </li>
         </ul>

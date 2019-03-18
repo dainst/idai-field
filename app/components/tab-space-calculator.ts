@@ -51,7 +51,7 @@ export class TabSpaceCalculator {
         const context: CanvasRenderingContext2D|null = this.canvas.getContext('2d');
         if (!context) {
             console.error('Error while trying to get canvas context');
-            return 0;
+            return 1000;
         }
 
         context.font = TabSpaceCalculator.FONT;

@@ -6,7 +6,7 @@ import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 import {TabUtil} from './tab-util';
-import {TabWidthCalculator} from './tab-width-calculator';
+import {TabSpaceCalculator} from './tab-space-calculator';
 
 
 export type Tab = {
@@ -28,7 +28,7 @@ export class TabManager {
 
 
     constructor(indexFacade: IndexFacade,
-                private tabWidthCalculator: TabWidthCalculator,
+                private tabWidthCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
                 private router: Router,
@@ -188,9 +188,7 @@ export class TabManager {
 
         if (tab.shown) return;
 
-        const tabWidth: number = this.tabWidthCalculator.getTabWidth(tab);
-
-        while (this.tabWidthCalculator.getAvailableTabSpaceWidth(this.tabs) < tabWidth) {
+        while (!this.tabWidthCalculator.isSpaceSufficient(tab, this.tabs)) {
             const lastShownTab: Tab|undefined = this.tabs.slice().reverse().find(tab => {
                 return tab.shown;
             });
@@ -211,7 +209,7 @@ export class TabManager {
 
         this.tabs.filter(tab => !tab.shown)
             .forEach(tab => {
-                if (this.tabWidthCalculator.getAvailableTabSpaceWidth(this.tabs) >= this.tabWidthCalculator.getTabWidth(tab)) {
+                if (this.tabWidthCalculator.isSpaceSufficient(tab, this.tabs)) {
                     tab.shown = true;
                 }
             });

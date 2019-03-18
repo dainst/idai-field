@@ -4,7 +4,7 @@ import {Tab} from './tab-manager';
 /**
  * @author Thomas Kleinke
  */
-export class TabWidthCalculator {
+export class TabSpaceCalculator {
 
     private canvas: HTMLCanvasElement = document.createElement('canvas');
     private tabSpaceWidth: number;
@@ -27,11 +27,17 @@ export class TabWidthCalculator {
     }
 
 
-    public getAvailableTabSpaceWidth(tabs: Array<Tab>): number {
+    public isSpaceSufficient(tabToShow: Tab, tabs: Array<Tab>): boolean {
+
+        return this.getAvailableTabSpaceWidth(tabs) >= this.getTabWidth(tabToShow);
+    }
+
+
+    private getAvailableTabSpaceWidth(tabs: Array<Tab>): number {
 
         return this.tabSpaceWidth
-            - TabWidthCalculator.OVERVIEW_TAB_WIDTH
-            - TabWidthCalculator.TABS_DROPDOWN_WIDTH
+            - TabSpaceCalculator.OVERVIEW_TAB_WIDTH
+            - TabSpaceCalculator.TABS_DROPDOWN_WIDTH
             - tabs
                 .filter(tab => tab.shown)
                 .reduce((totalTabsWidth: number, tab: Tab) => {
@@ -40,7 +46,7 @@ export class TabWidthCalculator {
     }
 
 
-    public getTabWidth(tab: Tab): number {
+    private getTabWidth(tab: Tab): number {
 
         const context: CanvasRenderingContext2D|null = this.canvas.getContext('2d');
         if (!context) {
@@ -48,8 +54,8 @@ export class TabWidthCalculator {
             return 0;
         }
 
-        context.font = TabWidthCalculator.FONT;
+        context.font = TabSpaceCalculator.FONT;
 
-        return Math.ceil(context.measureText(tab.label).width + TabWidthCalculator.BASIC_TAB_WIDTH);
+        return Math.ceil(context.measureText(tab.label).width + TabSpaceCalculator.BASIC_TAB_WIDTH);
     }
 }

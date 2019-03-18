@@ -27,6 +27,7 @@ export class TabManager {
     private tabSpaceWidth: number;
 
     private static OVERVIEW_TAB_WIDTH: number = 100;
+    private static TABS_DROPDOWN_WIDTH: number = 42;
     private static BASIC_TAB_WIDTH: number = 64;
 
 
@@ -251,6 +252,7 @@ export class TabManager {
 
         return this.tabSpaceWidth
             - TabManager.OVERVIEW_TAB_WIDTH
+            - TabManager.TABS_DROPDOWN_WIDTH
             - this.tabs
                 .filter(tab => tab.shown)
                 .reduce((totalTabsWidth: number, tab: Tab) => {

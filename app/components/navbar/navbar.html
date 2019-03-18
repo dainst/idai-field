@@ -28,7 +28,7 @@
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
                 </a>
             </li>
-            <li *ngIf="getHiddenTabs().length > 0" ngbDropdown class="nav-item">
+            <li *ngIf="getHiddenTabs().length > 0" ngbDropdown placement="bottom-right" class="nav-item">
                 <a id="tabs-dropdown" ngbDropdownToggle class="nav-link"></a>
                 <div ngbDropdownMenu>
                     <a *ngFor="let tab of getHiddenTabs()"

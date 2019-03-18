@@ -199,6 +199,8 @@ export class TabManager {
 
     private showTab(tab: Tab) {
 
+        if (tab.shown) return;
+
         const tabWidth: number = this.getTabWidth(tab);
 
         while (this.getAvailableTabSpaceWidth() < tabWidth) {
@@ -273,9 +275,6 @@ export class TabManager {
 
         context.font = TabManager.FONT;
 
-        console.log('tab width for tab ' + tab.label + ' :',
-            context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH);
-
-        return context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH;
+        return Math.ceil(context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH);
     }
 }

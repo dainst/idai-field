@@ -1,7 +1,13 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef, ViewChild} from '@angular/core';
 import {FieldDefinition, RelationDefinition} from 'idai-components-2';
 import {is, isNot, on, undefinedOrEmpty, includedIn, isnt, tripleEqual, filter} from 'tsfun';
-import {Chapter} from '../../help/help-loader';
+
+
+interface GroupDefinition {
+
+    name: string;
+    label: string;
+}
 
 
 @Component({
@@ -9,7 +15,6 @@ import {Chapter} from '../../help/help-loader';
     selector: 'edit-form',
     templateUrl: './edit-form.html'
 })
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -37,7 +42,14 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public types: string[];
 
-    public groups: string[] = ['basic', 'properties', 'dimension', 'space', 'time', 'images', 'conflicts'];
+    public groups: GroupDefinition[] = [
+        { name: 'basic', label: 'Stammdaten'},
+        { name: 'properties', label: 'Eigenschaften' },
+        { name: 'dimension', label: 'Maße' },
+        { name: 'space', label: 'Lage' },
+        { name: 'time', label: 'Zeit' },
+        { name: 'images', label: 'Bilder' },
+        { name: 'conflicts', label: 'Konflikte' }];
 
 
     constructor(private elementRef: ElementRef) {}

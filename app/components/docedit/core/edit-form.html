@@ -9,7 +9,7 @@
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group)">
                 <a class="nav-link" [class.active]="group === activeGroup" href="javascript: void(0);">
-                    {{group}}
+                    {{group.label}}
                 </a>
             </li>
         </ul>
@@ -17,7 +17,7 @@
 
         <div class="col-md-9 forms-container">
 
-            <div id="basic-group" class="scrollable-group" *ngIf="activeGroup === 'basic'">
+            <div id="basic-group" class="scrollable-group" *ngIf="activeGroup.name === 'basic'">
 
                 <!--<h3>Basiseigenschaften</h3>-->
 
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div id="properties-group" class="scrollable-group" *ngIf="activeGroup === 'properties'">
+            <div id="properties-group" class="scrollable-group" *ngIf="activeGroup.name === 'properties'">
 
                 <!--<h3>Basiseigenschaften</h3>-->
 
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div id="dimension-group" class="scrollable-group" *ngIf="activeGroup === 'dimension'">
+            <div id="dimension-group" class="scrollable-group" *ngIf="activeGroup.name === 'dimension'">
 
                 <div *ngFor="let field of dimensionFieldsToShow" id="edit-form-element-{{field.name}}">
                     <div *ngIf="field && (field.editable === true)" class="form-group card">
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div id="space-group" class="scrollable-group" *ngIf="activeGroup === 'space'">
+            <div id="space-group" class="scrollable-group" *ngIf="activeGroup.name === 'space'">
                 <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
 
                 <div *ngFor="let field of spatialFieldsToShow" id="edit-form-element-{{field.name}}">
@@ -115,7 +115,7 @@
                 </ul>
             </div>
 
-            <div id="time-group" class="scrollable-group" *ngIf="activeGroup === 'time'">
+            <div id="time-group" class="scrollable-group" *ngIf="activeGroup.name === 'time'">
 
 
                 <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
@@ -156,7 +156,7 @@
             </div>
 
 
-            <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
+            <div *ngIf="activeGroup.name === 'images'" id="docedit-images-tab">
 
                 <docedit-image-tab
                         [(document)]="document">
@@ -174,7 +174,7 @@
             </div>
 
 
-            <div *ngIf="activeGroup === 'conflicts'">
+            <div *ngIf="activeGroup.name === 'conflicts'">
                 <docedit-conflicts-tab [(document)]="document" [(inspectedRevisions)]="documentHolder.inspectedRevisions">
                 </docedit-conflicts-tab>
             </div>

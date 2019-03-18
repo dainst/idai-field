@@ -68,7 +68,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     ngOnChanges(changes: any) {
 
         const basicFields = ['identifier', 'shortDescription', 'diary', 'processor', 'beginningDate', 'endDate', 'date', 'description'];
-        const dimensionFields = ['dimensionThickness', 'dimensionVerticalExtent', 'dimensionWidth', 'dimensionHeight', 'dimensionLength']
+        const dimensionFields = ['dimensionThickness', 'dimensionVerticalExtent', 'dimensionWidth', 'dimensionHeight', 'dimensionLength'];
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
 

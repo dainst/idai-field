@@ -6,6 +6,7 @@ import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 import {TabUtil} from './tab-util';
+import {TabWidthCalculator} from './tab-width-calculator';
 
 
 export type Tab = {
@@ -24,16 +25,10 @@ export class TabManager {
 
     private tabs: Array<Tab> = [];
     private activeTab: Tab|undefined;
-    private tabSpaceWidth: number;
-    private canvas: HTMLCanvasElement = document.createElement('canvas');
-
-    private static OVERVIEW_TAB_WIDTH: number = 100;
-    private static TABS_DROPDOWN_WIDTH: number = 42;
-    private static BASIC_TAB_WIDTH: number = 64;
-    private static FONT: string = '16px Roboto';
 
 
     constructor(indexFacade: IndexFacade,
+                private tabWidthCalculator: TabWidthCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
                 private router: Router,
@@ -51,6 +46,10 @@ export class TabManager {
     public getShownTabs = (): Array<Tab> => this.tabs.filter(tab => tab.shown);
 
     public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown);
+
+    public setTabSpaceWidth = (width: number) => this.tabWidthCalculator.setTabSpaceWidth(width);
+
+    public getTabSpaceWidth = (): number => this.tabWidthCalculator.getTabSpaceWidth();
 
 
     async initialize() {
@@ -105,18 +104,6 @@ export class TabManager {
         } else {
             await this.router.navigate(['resources', 'project']);
         }
-    }
-
-
-    public setTabSpaceWidth(tabSpaceWidth: number) {
-
-        this.tabSpaceWidth = tabSpaceWidth;
-    }
-
-
-    public getTabSpaceWidth(): number {
-
-        return this.tabSpaceWidth;
     }
 
 
@@ -201,9 +188,9 @@ export class TabManager {
 
         if (tab.shown) return;
 
-        const tabWidth: number = this.getTabWidth(tab);
+        const tabWidth: number = this.tabWidthCalculator.getTabWidth(tab);
 
-        while (this.getAvailableTabSpaceWidth() < tabWidth) {
+        while (this.tabWidthCalculator.getAvailableTabSpaceWidth(this.tabs) < tabWidth) {
             const lastShownTab: Tab|undefined = this.tabs.slice().reverse().find(tab => {
                 return tab.shown;
             });
@@ -224,7 +211,7 @@ export class TabManager {
 
         this.tabs.filter(tab => !tab.shown)
             .forEach(tab => {
-                if (this.getAvailableTabSpaceWidth() >= this.getTabWidth(tab)) {
+                if (this.tabWidthCalculator.getAvailableTabSpaceWidth(this.tabs) >= this.tabWidthCalculator.getTabWidth(tab)) {
                     tab.shown = true;
                 }
             });
@@ -249,32 +236,5 @@ export class TabManager {
             default:
                 return '';
         }
-    }
-
-
-    private getAvailableTabSpaceWidth(): number {
-
-        return this.tabSpaceWidth
-            - TabManager.OVERVIEW_TAB_WIDTH
-            - TabManager.TABS_DROPDOWN_WIDTH
-            - this.tabs
-                .filter(tab => tab.shown)
-                .reduce((totalTabsWidth: number, tab: Tab) => {
-                    return totalTabsWidth + this.getTabWidth(tab);
-                }, 0);
-    }
-
-
-    private getTabWidth(tab: Tab): number {
-
-        const context: CanvasRenderingContext2D|null = this.canvas.getContext('2d');
-        if (!context) {
-            console.error('Error while trying to get canvas context');
-            return 0;
-        }
-
-        context.font = TabManager.FONT;
-
-        return Math.ceil(context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH);
     }
 }

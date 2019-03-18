@@ -52,6 +52,7 @@ import {ProjectsModalComponent} from './components/navbar/projects-modal.compone
 import {FieldDatastore} from './core/datastore/field/field-datastore';
 import {TabManager} from './components/tab-manager';
 import {MenuService} from './menu-service';
+import {TabWidthCalculator} from './components/tab-width-calculator';
 
 
 const remote = require('electron').remote;
@@ -214,6 +215,7 @@ registerLocaleData(localeDe, 'de');
         DoceditActiveTabService,
         SynchronizationStatus,
         TabManager,
+        TabWidthCalculator,
         MenuService
     ],
     entryComponents: [

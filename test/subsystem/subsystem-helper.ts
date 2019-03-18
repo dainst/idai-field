@@ -107,7 +107,12 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     stateSerializer.load.and.returnValue(Promise.resolve({}));
     stateSerializer.store.and.returnValue(Promise.resolve());
 
-    const tabManager = new TabManager(createdIndexFacade, stateSerializer, fieldDocumentDatastore,
+    const tabSpaceCalculator = jasmine.createSpyObj('tabSpaceCalculator',
+        ['isSpaceSufficient']);
+    tabSpaceCalculator.isSpaceSufficient.and.returnValue(true);
+
+    const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
+        fieldDocumentDatastore,
         { url: '/project', events: { subscribe: () => Promise.resolve() } } as any, () => '');
 
     const resourcesStateManager = new ResourcesStateManager(

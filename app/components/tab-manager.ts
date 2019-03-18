@@ -25,10 +25,12 @@ export class TabManager {
     private tabs: Array<Tab> = [];
     private activeTab: Tab|undefined;
     private tabSpaceWidth: number;
+    private canvas: HTMLCanvasElement = document.createElement('canvas');
 
     private static OVERVIEW_TAB_WIDTH: number = 100;
     private static TABS_DROPDOWN_WIDTH: number = 42;
-    private static BASIC_TAB_WIDTH: number = 64;
+    private static BASIC_TAB_WIDTH: number = 60;
+    private static FONT: string = '16px Roboto';
 
 
     constructor(indexFacade: IndexFacade,
@@ -197,7 +199,7 @@ export class TabManager {
 
     private showTab(tab: Tab) {
 
-        const tabWidth: number = TabManager.getApproximateTabWidth(tab);
+        const tabWidth: number = this.getTabWidth(tab);
 
         while (this.getAvailableTabSpaceWidth() < tabWidth) {
             const lastShownTab: Tab|undefined = this.tabs.slice().reverse().find(tab => {
@@ -220,7 +222,7 @@ export class TabManager {
 
         this.tabs.filter(tab => !tab.shown)
             .forEach(tab => {
-                if (this.getAvailableTabSpaceWidth() >= TabManager.getApproximateTabWidth(tab)) {
+                if (this.getAvailableTabSpaceWidth() >= this.getTabWidth(tab)) {
                     tab.shown = true;
                 }
             });
@@ -256,13 +258,21 @@ export class TabManager {
             - this.tabs
                 .filter(tab => tab.shown)
                 .reduce((totalTabsWidth: number, tab: Tab) => {
-                    return totalTabsWidth + TabManager.getApproximateTabWidth(tab);
+                    return totalTabsWidth + this.getTabWidth(tab);
                 }, 0);
     }
 
 
-    private static getApproximateTabWidth(tab: Tab): number {
+    private getTabWidth(tab: Tab): number {
 
-        return this.BASIC_TAB_WIDTH + tab.label.length * 14;
+        const context: CanvasRenderingContext2D|null = this.canvas.getContext('2d');
+        if (!context) {
+            console.error('Error while trying to get canvas context');
+            return 0;
+        }
+
+        context.font = TabManager.FONT;
+
+        return context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH;
     }
 }

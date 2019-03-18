@@ -31,6 +31,7 @@ import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
+import {GenericFormComponent} from './core/generic-form-component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
         EditFormComponent,
         EditFormFieldComponent,
         RelationPickerComponent,
+        GenericFormComponent,
         RelationPickerGroupComponent,
         CheckboxesComponent,
         BooleanComponent,

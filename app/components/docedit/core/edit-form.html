@@ -16,143 +16,44 @@
 
 
         <div class="col-md-9 forms-container">
+            <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
+            <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
 
             <div id="basic-group" class="scrollable-group" *ngIf="activeGroup === 'basic'">
-
-                <!--<h3>Basiseigenschaften</h3>-->
-
-                <div *ngFor="let field of basicFieldsToShow" id="edit-form-element-{{field.name}}">
-                    <div *ngIf="field && (field.editable === true)" class="form-group card">
-                        <div class="card-header h4">
-                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
-
-                            <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
-                                  class="mdi mdi-information-outline float-right"></span>
-                        </div>
-
-                        <div class="card-block">
-                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
-                        </div>
-                    </div>
-                </div>
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="basicFieldsToShow">
+                </generic-form>
             </div>
 
             <div id="properties-group" class="scrollable-group" *ngIf="activeGroup === 'properties'">
-
-                <!--<h3>Basiseigenschaften</h3>-->
-
-                <div *ngFor="let field of propertiesFieldsToShow" id="edit-form-element-{{field.name}}">
-                    <div *ngIf="field && (field.editable === true)" class="form-group card">
-                        <div class="card-header h4">
-                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
-
-                            <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
-                                  class="mdi mdi-information-outline float-right"></span>
-                        </div>
-
-                        <div class="card-block">
-                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
-                        </div>
-                    </div>
-                </div>
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="propertiesFieldsToShow">
+                </generic-form>
             </div>
 
             <div id="dimension-group" class="scrollable-group" *ngIf="activeGroup === 'dimension'">
-
-                <div *ngFor="let field of dimensionFieldsToShow" id="edit-form-element-{{field.name}}">
-                    <div *ngIf="field && (field.editable === true)" class="form-group card">
-                        <div class="card-header h4">
-                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
-
-                            <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
-                                  class="mdi mdi-information-outline float-right"></span>
-                        </div>
-
-                        <div class="card-block">
-                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
-                        </div>
-                    </div>
-                </div>
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="dimensionFieldsToShow">
+                </generic-form>
             </div>
 
             <div id="space-group" class="scrollable-group" *ngIf="activeGroup === 'space'">
-                <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
-
-                <div *ngFor="let field of spatialFieldsToShow" id="edit-form-element-{{field.name}}">
-                    <div *ngIf="field && (field.editable === true)" class="form-group card">
-                        <div class="card-header h4">
-                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
-
-                            <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
-                                  class="mdi mdi-information-outline float-right"></span>
-                        </div>
-
-                        <div class="card-block">
-                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="list-group list-group-flush">
-
-                    <ng-template ngFor [ngForOf]="spatialRelationsToShow" let-relationDefinition="$implicit">
-                        <li class="list-group-item">
-                            <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
-                            <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>
-
-                            <ul>
-                                <li style="list-style-type: none;">
-                                    <relation-picker-group [(document)]="document" [relationDefinition]="relationDefinition"
-                                                           [primary]="primary"></relation-picker-group>
-                                </li>
-                            </ul>
-                        </li>
-                    </ng-template>
-                </ul>
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="spatialFieldsToShow"
+                        [relationDefinitions]="spatialRelationsToShow">
+                </generic-form>
             </div>
 
             <div id="time-group" class="scrollable-group" *ngIf="activeGroup === 'time'">
-
-
-                <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
-
-                <div *ngFor="let field of timeFieldsToShow" id="edit-form-element-{{field.name}}">
-                    <div *ngIf="field && (field.editable === true)" class="form-group card">
-                        <div class="card-header h4">
-                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
-
-                            <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
-                                  class="mdi mdi-information-outline float-right"></span>
-                        </div>
-
-                        <div class="card-block">
-                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="list-group list-group-flush">
-
-                    <ng-template ngFor [ngForOf]="timeRelationsToShow" let-relationDefinition="$implicit">
-
-                        <li class="list-group-item">
-                            <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
-                            <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>
-
-                            <ul>
-                                <li style="list-style-type: none;">
-                                    <relation-picker-group [(document)]="document" [relationDefinition]="relationDefinition"
-                                                           [primary]="primary"></relation-picker-group>
-                                </li>
-                            </ul>
-                        </li>
-                    </ng-template>
-                </ul>
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="timeFieldsToShow"
+                        [relationDefinitions]="timeRelationsToShow">
+                </generic-form>
             </div>
 
 

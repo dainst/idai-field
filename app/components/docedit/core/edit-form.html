@@ -21,7 +21,47 @@
 
                 <!--<h3>Basiseigenschaften</h3>-->
 
-                <div *ngFor="let field of fieldsToShow" id="edit-form-element-{{field.name}}">
+                <div *ngFor="let field of basicFieldsToShow" id="edit-form-element-{{field.name}}">
+                    <div *ngIf="field && (field.editable === true)" class="form-group card">
+                        <div class="card-header h4">
+                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
+                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+
+                            <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
+                                  class="mdi mdi-information-outline float-right"></span>
+                        </div>
+
+                        <div class="card-block">
+                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="properties-group" class="scrollable-group" *ngIf="activeGroup === 'properties'">
+
+                <!--<h3>Basiseigenschaften</h3>-->
+
+                <div *ngFor="let field of propertiesFieldsToShow" id="edit-form-element-{{field.name}}">
+                    <div *ngIf="field && (field.editable === true)" class="form-group card">
+                        <div class="card-header h4">
+                            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
+                            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+
+                            <span *ngIf="field.description" placement="left" container="basic-group" ngbTooltip="{{field.description}}"
+                                  class="mdi mdi-information-outline float-right"></span>
+                        </div>
+
+                        <div class="card-block">
+                            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dimension-group" class="scrollable-group" *ngIf="activeGroup === 'dimension'">
+
+                <div *ngFor="let field of dimensionFieldsToShow" id="edit-form-element-{{field.name}}">
                     <div *ngIf="field && (field.editable === true)" class="form-group card">
                         <div class="card-header h4">
                             <span class="card-title" *ngIf="field.label">{{field.label}}</span>

@@ -1,6 +1,6 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef, ViewChild} from '@angular/core';
 import {FieldDefinition, RelationDefinition} from 'idai-components-2';
-import {is, isNot, on, undefinedOrEmpty, includedIn, isnt} from 'tsfun';
+import {is, isNot, on, undefinedOrEmpty, includedIn, isnt, tripleEqual, filter} from 'tsfun';
 import {Chapter} from '../../help/help-loader';
 
 
@@ -24,7 +24,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
 
-    public fieldsToShow: Array<FieldDefinition> = [];
+    public basicFieldsToShow: Array<FieldDefinition> = [];
+    public propertiesFieldsToShow: Array<FieldDefinition> = [];
+    public dimensionFieldsToShow: Array<FieldDefinition> = [];
 
     public spatialFieldsToShow: Array<FieldDefinition> = [];
     public spatialRelationsToShow: Array<RelationDefinition> = [];
@@ -35,7 +37,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public types: string[];
 
-    public groups: string[] = ['basic', 'properties', 'dimensions', 'space', 'time', 'images', 'conflicts'];
+    public groups: string[] = ['basic', 'properties', 'dimension', 'space', 'time', 'images', 'conflicts'];
 
 
     constructor(private elementRef: ElementRef) {}
@@ -51,14 +53,23 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     }
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: any) {
+
+        const basicFields = ['identifier', 'shortDescription', 'diary', 'processor', 'beginningDate', 'endDate', 'date', 'description'];
+        const dimensionFields = ['dimensionThickness', 'dimensionVerticalExtent', 'dimensionWidth', 'dimensionHeight', 'dimensionLength']
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
 
-            this.fieldsToShow =
+            this.basicFieldsToShow = this.fieldDefinitions.filter(on('name', includedIn(basicFields)));
+            this.dimensionFieldsToShow = this.fieldDefinitions.filter(on('name', includedIn(dimensionFields)));
+
+            this.propertiesFieldsToShow =
                 this.fieldDefinitions
                     .filter(on('group', is(undefined)))
-                    .filter(on('name', isnt('period')));
+                    .filter(on('name', isnt('period')))
+                    .filter(on('name', isnt('shortDescription')))
+                    .filter(on('name', isNot(includedIn(basicFields))))
+                    .filter(on('name', isNot(includedIn(dimensionFields))));
 
             this.spatialFieldsToShow =
                 this.fieldDefinitions.filter(on('group', is('space')));
@@ -72,7 +83,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
 
             this.spatialRelationsToShow = this.relationDefinitions
-                .filter(on('name', isNot(includedIn(['isAfter', 'isBefore', 'isContemporaryWith']))));
+                .filter(on('name', isNot(includedIn(['isAfter', 'isBefore', 'isContemporaryWith', 'includes', 'liesWithin']))));
 
             this.timeRelationsToShow = this.relationDefinitions
                 .filter(on('name', isNot(includedIn(['includes', 'borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow']))));

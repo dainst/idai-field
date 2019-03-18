@@ -29,7 +29,7 @@ export class TabManager {
 
     private static OVERVIEW_TAB_WIDTH: number = 100;
     private static TABS_DROPDOWN_WIDTH: number = 42;
-    private static BASIC_TAB_WIDTH: number = 60;
+    private static BASIC_TAB_WIDTH: number = 64;
     private static FONT: string = '16px Roboto';
 
 
@@ -272,6 +272,9 @@ export class TabManager {
         }
 
         context.font = TabManager.FONT;
+
+        console.log('tab width for tab ' + tab.label + ' :',
+            context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH);
 
         return context.measureText(tab.label).width + TabManager.BASIC_TAB_WIDTH;
     }

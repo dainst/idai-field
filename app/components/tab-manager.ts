@@ -28,7 +28,7 @@ export class TabManager {
 
 
     constructor(indexFacade: IndexFacade,
-                private tabWidthCalculator: TabSpaceCalculator,
+                private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
                 private router: Router,
@@ -39,6 +39,7 @@ export class TabManager {
 
         this.router.events.subscribe(() => {
             this.updateActiveTab(this.router.url);
+            this.validateTabSpace();
         });
     }
 
@@ -47,9 +48,7 @@ export class TabManager {
 
     public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown);
 
-    public setTabSpaceWidth = (width: number) => this.tabWidthCalculator.setTabSpaceWidth(width);
-
-    public getTabSpaceWidth = (): number => this.tabWidthCalculator.getTabSpaceWidth();
+    public getTabSpaceWidth = (): number => this.tabSpaceCalculator.getTabSpaceWidth();
 
 
     async initialize() {
@@ -57,6 +56,14 @@ export class TabManager {
         this.tabs = await this.deserialize();
         await this.openTabForRoute(this.router.url);
         await this.validateTabs();
+        this.validateTabSpace();
+    }
+
+
+    public setTabSpaceWidth(width: number) {
+
+        this.tabSpaceCalculator.setTabSpaceWidth(width);
+        this.validateTabSpace();
     }
 
 
@@ -75,12 +82,12 @@ export class TabManager {
                 routeName: routeName,
                 label: this.getLabel(routeName, operationIdentifier),
                 operationId: operationId,
-                shown: false
+                shown: true
             };
             this.tabs.push(tab);
         }
 
-        this.showTab(tab);
+        this.validateTabSpace(tab);
         await this.serialize();
     }
 
@@ -91,7 +98,7 @@ export class TabManager {
             return tab.routeName !== routeName || tab.operationId !== operationId;
         });
 
-        this.showAsManyTabsAsPossible();
+        this.validateTabSpace(undefined);
 
         await this.serialize();
     }
@@ -158,6 +165,20 @@ export class TabManager {
     }
 
 
+    private validateTabSpace(activeTab: Tab|undefined = this.activeTab) {
+
+        let usedTabSpaceWidth: number = activeTab ? this.tabSpaceCalculator.getTabWidth(activeTab) : 0;
+        let tabSpaceWidth: number = this.tabSpaceCalculator.getTabSpaceWidth();
+
+        this.tabs
+            .filter(tab => tab !== activeTab)
+            .forEach(tab => {
+                usedTabSpaceWidth += this.tabSpaceCalculator.getTabWidth(tab);
+                tab.shown = usedTabSpaceWidth <= tabSpaceWidth;
+            });
+    }
+
+
     private async openTabForRoute(route: string) {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
@@ -179,40 +200,9 @@ export class TabManager {
 
         if (tab) {
             this.activeTab = tab;
-            this.showTab(tab);
+            this.activeTab.shown = true;
+            this.validateTabSpace();
         }
-    }
-
-
-    private showTab(tab: Tab) {
-
-        if (tab.shown) return;
-
-        while (!this.tabWidthCalculator.isSpaceSufficient(tab, this.tabs)) {
-            const lastShownTab: Tab|undefined = this.tabs.slice().reverse().find(tab => {
-                return tab.shown;
-            });
-
-            if (!lastShownTab) {
-                console.warn('Failed to show tab', tab);
-                return;
-            }
-
-            lastShownTab.shown = false;
-        }
-
-        tab.shown = true;
-    }
-
-
-    private showAsManyTabsAsPossible() {
-
-        this.tabs.filter(tab => !tab.shown)
-            .forEach(tab => {
-                if (this.tabWidthCalculator.isSpaceSufficient(tab, this.tabs)) {
-                    tab.shown = true;
-                }
-            });
     }
 
 

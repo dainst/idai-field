@@ -23,30 +23,13 @@ export class TabSpaceCalculator {
 
     public getTabSpaceWidth(): number {
 
-        return this.tabSpaceWidth;
-    }
-
-
-    public isSpaceSufficient(tabToShow: Tab, tabs: Array<Tab>): boolean {
-
-        return this.getAvailableTabSpaceWidth(tabs) >= this.getTabWidth(tabToShow);
-    }
-
-
-    private getAvailableTabSpaceWidth(tabs: Array<Tab>): number {
-
         return this.tabSpaceWidth
             - TabSpaceCalculator.OVERVIEW_TAB_WIDTH
-            - TabSpaceCalculator.TABS_DROPDOWN_WIDTH
-            - tabs
-                .filter(tab => tab.shown)
-                .reduce((totalTabsWidth: number, tab: Tab) => {
-                    return totalTabsWidth + this.getTabWidth(tab);
-                }, 0);
+            - TabSpaceCalculator.TABS_DROPDOWN_WIDTH;
     }
 
 
-    private getTabWidth(tab: Tab): number {
+    public getTabWidth(tab: Tab): number {
 
         const context: CanvasRenderingContext2D|null = this.canvas.getContext('2d');
         if (!context) {

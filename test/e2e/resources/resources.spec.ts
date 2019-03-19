@@ -484,12 +484,13 @@ describe('resources --', () => {
     });
 
 
-    xit('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
+    it('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
 
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickSelectOption('wallType', 1);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
@@ -506,7 +507,7 @@ describe('resources --', () => {
     });
 
 
-    xit('hide the new resource button while creating a new resource', () => {
+    it('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -516,7 +517,7 @@ describe('resources --', () => {
     });
 
 
-    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

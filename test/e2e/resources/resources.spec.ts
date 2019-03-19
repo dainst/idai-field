@@ -81,7 +81,7 @@ describe('resources --', () => {
     }
 
 
-    xit('docview -- show the relations present in the object', () => {
+    it('docview -- show the relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');

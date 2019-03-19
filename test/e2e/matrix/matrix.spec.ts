@@ -14,14 +14,14 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-describe('matrix --', () => {
+xdescribe('matrix --', () => {
 
     let i = 0;
 
 
     beforeAll(() => {
 
-        NavbarPage.clickTab('project');
+        // NavbarPage.clickTab('project');
         ResourcesPage.performJumpToMatrixView('S2');
         browser.sleep(delays.shortRest * 4);
     });

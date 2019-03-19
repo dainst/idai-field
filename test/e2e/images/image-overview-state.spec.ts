@@ -1,15 +1,19 @@
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {MenuPage} from '../menu.page';
 
 const common = require('../common');
 
 /**
  * @author Thomas Kleinke
  */
-xdescribe('images/state --', () => {
+describe('images/state --', () => {
 
-    beforeEach(() => ImageOverviewPage.getAndWaitForImageCells());
+    beforeEach(() => {
+        // MenuPage.navigateToImages();
+        ImageOverviewPage.getAndWaitForImageCells()
+    });
 
 
     afterEach(done => common.resetConfigJson().then(done));
@@ -22,8 +26,8 @@ xdescribe('images/state --', () => {
         SearchBarPage.clickChooseTypeFilter('image-drawing', 'images');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickTab('project');
-        NavbarPage.clickTab('images');
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
         SearchBarPage.getSelectedTypeFilterCharacter('images').then(value => expect(value).toEqual('Z'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
@@ -37,8 +41,8 @@ xdescribe('images/state --', () => {
         SearchBarPage.typeInSearchField('Layer 1');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickTab('project');
-        NavbarPage.clickTab('images');
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('Layer 1'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
@@ -50,8 +54,8 @@ xdescribe('images/state --', () => {
         ImageOverviewPage.clickIncreaseGridSizeButton();
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
 
-        NavbarPage.clickTab('project');
-        NavbarPage.clickTab('images');
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });

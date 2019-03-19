@@ -11,7 +11,7 @@ const common = require('../common');
 describe('images/state --', () => {
 
     beforeEach(() => {
-        // MenuPage.navigateToImages();
+
         ImageOverviewPage.getAndWaitForImageCells()
     });
 

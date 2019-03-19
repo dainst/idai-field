@@ -57,15 +57,19 @@ describe('resources --', () => {
         MenuPage.navigateToImages();
         NavbarPage.clickReturnToResourcesTabs();
         NavbarPage.clickTab('project');
+
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickImagesTab();
+        // DoceditPage.clickImagesTab(); TODO remove
+        DoceditPage.clickGotoImagesTab();
     }
 
 
     function addTwoImages() {
 
-        gotoImageTab();
+        // gotoImageTab();
+        ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.clickInsertImage();
 
         DoceditImageTabPage.waitForCells();
@@ -222,7 +226,7 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- create links for images', done => {
+    it('docedit/images -- create links for images', done => {
 
         addTwoImages();
         ThumbnailViewPage.getThumbs().then(thumbs => {
@@ -232,9 +236,10 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- delete links to one image', done => {
+    it('docedit/images -- delete links to one image', done => {
 
         addTwoImages();
+
         gotoImageTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
@@ -251,7 +256,7 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- delete links to two images', done => {
+    it('docedit/images -- delete links to two images', done => {
 
         addTwoImages();
         gotoImageTab();

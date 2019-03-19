@@ -260,11 +260,12 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search/suggestions -- show suggestion for extended search query', done => {
+    it('search/suggestions -- show suggestion for extended search query', done => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -308,11 +309,12 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search/extended -- perform constraint search for dropdown field', () => {
+    it('search/extended -- perform constraint search for dropdown field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -327,14 +329,16 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search/extended -- perform constraint search for boolean field', () => {
+    it('search/extended -- perform constraint search for boolean field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 

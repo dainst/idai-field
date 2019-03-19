@@ -66,14 +66,15 @@ describe('matrix --', () => {
     }
 
 
-    xit('edit relations and show updated matrix', () => {
+    it('edit relations and show updated matrix', () => {
 
         MatrixPage.clickNode('si1');
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(7, 1);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(7);
-        DoceditRelationsTabPage.typeInRelationByIndices(7, 1, 'SE4');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(7, 1, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(2, 1);
+
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
+        DoceditRelationsTabPage.typeInRelationByIndices(2, 1, 'SE4');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(2, 1, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);

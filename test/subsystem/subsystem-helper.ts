@@ -108,8 +108,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     stateSerializer.store.and.returnValue(Promise.resolve());
 
     const tabSpaceCalculator = jasmine.createSpyObj('tabSpaceCalculator',
-        ['isSpaceSufficient']);
-    tabSpaceCalculator.isSpaceSufficient.and.returnValue(true);
+        ['getTabSpaceWidth', 'getTabWidth']);
+    tabSpaceCalculator.getTabSpaceWidth.and.returnValue(1000);
+    tabSpaceCalculator.getTabWidth.and.returnValue(0);
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
         fieldDocumentDatastore,

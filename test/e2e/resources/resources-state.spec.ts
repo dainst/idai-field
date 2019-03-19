@@ -163,7 +163,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- show correct types in plus type menu after choosing type filter', () => {
+    it('search -- show correct types in plus type menu after choosing type filter', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -197,7 +197,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
@@ -289,7 +289,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for simple input field', () => {
+    xit('search/extended -- perform constraint search for simple input field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -378,7 +378,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('switch from image to map view after click on depicts relation link', () => {
+    it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();
         clickDepictsRelationLink();
@@ -386,7 +386,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('place');
@@ -398,7 +398,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('xyz');
@@ -411,7 +411,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath -- show correct navigation path after click on relation link', () => {
+    it('navpath -- show correct navigation path after click on relation link', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -432,7 +432,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath -- update navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -451,7 +451,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('update navigation path when moving a resource within the same operation', () => {
+    it('update navigation path when moving a resource within the same operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
@@ -471,7 +471,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('update navigation path when moving a resource to another operation', () => {
+    it('update navigation path when moving a resource to another operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -497,7 +497,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath/hierarchy - switch between modes', () => {
+    it('navpath/hierarchy - switch between modes', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 

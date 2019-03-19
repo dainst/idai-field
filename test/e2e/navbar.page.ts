@@ -15,6 +15,12 @@ export class NavbarPage {
     }
 
 
+    public static clickCloseNonResourcesTab() {
+
+        return common.click(element(by.css('#non-resources-tab .mdi-close')));
+    }
+
+
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));

@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('import --', function() {
+describe('import --', function() {
 
     let index = 0;
 
@@ -57,8 +57,9 @@ xdescribe('import --', function() {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
-        NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
+
+        NavbarPage.clickCloseNonResourcesTab();
+        ResourcesPage.performJumpToTrenchView('importedTrench');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
@@ -67,7 +68,7 @@ xdescribe('import --', function() {
     });
 
 
-    it('err case', () => {
+    xit('err case', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 

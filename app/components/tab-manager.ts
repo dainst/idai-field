@@ -39,7 +39,6 @@ export class TabManager {
 
         this.router.events.subscribe(() => {
             this.updateActiveTab(this.router.url);
-            this.validateTabSpace();
         });
     }
 
@@ -54,6 +53,8 @@ export class TabManager {
     async initialize() {
 
         this.tabs = await this.deserialize();
+        this.validateTabSpace();
+
         await this.openTabForRoute(this.router.url);
         await this.validateTabs();
         this.validateTabSpace();
@@ -88,6 +89,7 @@ export class TabManager {
         }
 
         this.validateTabSpace(tab);
+
         await this.serialize();
     }
 

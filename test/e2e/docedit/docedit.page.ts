@@ -24,9 +24,9 @@ export class DoceditPage {
     };
 
 
-    public static clickRelationsTab() {
+    public static clickGotoTimeTab() {
 
-        common.click(element(by.id('docedit-relations-tab')));
+        common.click(element(by.id('edit-form-goto-time')));
     };
 
 

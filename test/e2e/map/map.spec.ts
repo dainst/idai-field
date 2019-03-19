@@ -11,7 +11,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-describe('map --', function() {
+xdescribe('map --', function() {
 
     let index = 0;
 

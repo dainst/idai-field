@@ -361,12 +361,10 @@ export class ResourcesPage {
         this.clickCreateResource();
         this.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
-        DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
-        this.scrollUp();
         DoceditPage.clickSaveDocument(clickMsgAway, waitForModalToClose);
     }
 
@@ -391,7 +389,7 @@ export class ResourcesPage {
                                                    relationGroupIndex: number) {
 
         this.openEditByDoubleClickResource(identifier);
-        DoceditPage.clickRelationsTab();
+        DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
         DoceditRelationsTabPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
         DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
@@ -404,7 +402,7 @@ export class ResourcesPage {
 
         this.performCreateResource('1', "feature-architecture");
         this.performCreateResource('2', "feature-architecture");
-        this.performCreateRelation('2', '1', 6);   //isBefore
+        this.performCreateRelation('2', '1', 1);   //isBefore
     }
 
 

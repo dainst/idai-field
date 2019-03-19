@@ -66,7 +66,7 @@ describe('matrix --', () => {
     it('edit relations and show updated matrix', () => {
 
         MatrixPage.clickNode('si1');
-        DoceditPage.clickRelationsTab();
+        DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(7, 1);
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(7);
         DoceditRelationsTabPage.typeInRelationByIndices(7, 1, 'SE4');

@@ -38,7 +38,7 @@ export class DoceditRelationsTabPage {
 
     public static getRelationButtonText = function(groupIndex, pickerIndex, relationIndex) {
 
-        DoceditPage.clickRelationsTab();
+        DoceditPage.clickGotoTimeTab();
         return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
     };
 

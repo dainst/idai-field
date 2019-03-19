@@ -385,26 +385,30 @@ describe('resources --', () => {
     });
 
 
-    xit('relations -- create a new relation and the corresponding inverse relation', () => {
+    it('relations -- create a new relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(6, 0, 0))
+        DoceditPage.clickGotoTimeTab();
+        expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0))
             .toEqual('1');
         DoceditPage.clickCloseEdit();
+
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(7, 0, 0))
+
+        DoceditPage.clickGotoTimeTab();
+        expect(DoceditRelationsTabPage.getRelationButtonText(2, 0, 0))
             .toEqual('2');
         DoceditPage.clickCloseEdit();
     });
 
 
-    xit('relations -- edit a resource that contains a relation', () => {
+    it('relations -- edit a resource that contains a relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        DoceditPage.clickFieldsTab();
+        //DoceditPage.clickFieldsTab(); TODO remove function
         DoceditPage.typeInInputField('identifier', '123');
         DoceditPage.clickSaveDocument();
         // TODO expectation?
@@ -420,7 +424,7 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(6, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(0, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');

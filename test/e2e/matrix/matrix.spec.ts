@@ -14,16 +14,19 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-xdescribe('matrix --', () => {
+describe('matrix --', () => {
 
     let i = 0;
 
 
-    beforeAll(() => {
+    beforeAll(async done => {
 
-        // NavbarPage.clickTab('project');
+        browser.sleep(delays.shortRest * 10);
         ResourcesPage.performJumpToMatrixView('S2');
-        browser.sleep(delays.shortRest * 4);
+        browser.sleep(delays.shortRest * 3);
+        done();
+        // NavbarPage.clickTab('project');
+        // browser.sleep(delays.shortRest * 4);
     });
 
 
@@ -63,7 +66,7 @@ xdescribe('matrix --', () => {
     }
 
 
-    it('edit relations and show updated matrix', () => {
+    xit('edit relations and show updated matrix', () => {
 
         MatrixPage.clickNode('si1');
         DoceditPage.clickGotoTimeTab();

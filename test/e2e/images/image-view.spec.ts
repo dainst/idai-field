@@ -2,7 +2,7 @@ import {ImageViewPage} from './image-view.page';
 import {ImageOverviewPage} from './image-overview.page';
 
 
-xdescribe('image view --', function() {
+describe('image view --', function() {
 
     it('navigate to image overview if the image document could not be found', () => {
 

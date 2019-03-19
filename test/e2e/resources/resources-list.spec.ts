@@ -10,7 +10,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-xdescribe('resources/list --', () => {
+describe('resources/list --', () => {
 
     let index = 0;
 

@@ -19,7 +19,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('resources/state --', function() {
+describe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -163,7 +163,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search -- show correct types in plus type menu after choosing type filter', () => {
+    xit('search -- show correct types in plus type menu after choosing type filter', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -197,7 +197,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    xit('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
@@ -260,7 +260,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for extended search query', done => {
+    xit('search/suggestions -- show suggestion for extended search query', done => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -308,7 +308,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for dropdown field', () => {
+    xit('search/extended -- perform constraint search for dropdown field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -327,7 +327,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for boolean field', () => {
+    xit('search/extended -- perform constraint search for boolean field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -361,7 +361,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('search/extended -- remove field from dropdown after adding constraint', () => {
+    xit('search/extended -- remove field from dropdown after adding constraint', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -378,7 +378,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('switch from image to map view after click on depicts relation link', () => {
+    xit('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();
         clickDepictsRelationLink();
@@ -386,7 +386,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    xit('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('place');
@@ -398,7 +398,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    xit('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('xyz');
@@ -411,7 +411,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('navpath -- show correct navigation path after click on relation link', () => {
+    xit('navpath -- show correct navigation path after click on relation link', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -432,7 +432,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('navpath -- update navigation path after deleting resource', () => {
+    xit('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -451,7 +451,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('update navigation path when moving a resource within the same operation', () => {
+    xit('update navigation path when moving a resource within the same operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
@@ -471,7 +471,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('update navigation path when moving a resource to another operation', () => {
+    xit('update navigation path when moving a resource to another operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -497,7 +497,7 @@ xdescribe('resources/state --', function() {
     });
 
 
-    it('navpath/hierarchy - switch between modes', () => {
+    xit('navpath/hierarchy - switch between modes', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 

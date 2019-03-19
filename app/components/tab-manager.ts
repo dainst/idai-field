@@ -169,15 +169,26 @@ export class TabManager {
 
     private validateTabSpace(activeTab: Tab|undefined = this.activeTab) {
 
-        let usedTabSpaceWidth: number = activeTab ? this.tabSpaceCalculator.getTabWidth(activeTab) : 0;
+        const usedTabSpaceWidth: number = this.updateTabVisibility(
+            activeTab ? this.tabSpaceCalculator.getTabWidth(activeTab) : 0,
+            activeTab, true
+        );
+        this.updateTabVisibility(usedTabSpaceWidth, activeTab, false);
+    }
+
+
+    private updateTabVisibility(usedTabSpaceWidth: number, activeTab: Tab|undefined, shown: boolean): number {
+
         let tabSpaceWidth: number = this.tabSpaceCalculator.getTabSpaceWidth();
 
         this.tabs
-            .filter(tab => tab !== activeTab)
+            .filter(tab => tab !== activeTab && tab.shown === shown)
             .forEach(tab => {
                 usedTabSpaceWidth += this.tabSpaceCalculator.getTabWidth(tab);
                 tab.shown = usedTabSpaceWidth <= tabSpaceWidth;
             });
+
+        return usedTabSpaceWidth;
     }
 
 
@@ -203,6 +214,9 @@ export class TabManager {
         if (tab) {
             this.activeTab = tab;
             this.activeTab.shown = true;
+            this.validateTabSpace();
+        } else if (route === '/resources/project') {
+            this.activeTab = undefined;
             this.validateTabSpace();
         }
     }

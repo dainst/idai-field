@@ -415,7 +415,7 @@ describe('resources --', () => {
     });
 
 
-    xit('relations -- delete a relation and the corresponding inverse relation', () => {
+    it('relations -- delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -424,7 +424,8 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(0, 0);
+
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
@@ -432,7 +433,7 @@ describe('resources --', () => {
     });
 
 
-    xit('relations -- delete inverse relations when deleting a resource', () => {
+    it('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickOpenContextMenu('2');

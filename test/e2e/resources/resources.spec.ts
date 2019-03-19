@@ -558,7 +558,7 @@ describe('resources --', () => {
     });
 
 
-    xit('move a resource', () => {
+    it('move a resource', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -576,7 +576,7 @@ describe('resources --', () => {
     });
 
 
-    xit('show only type filter options for allowed parent types in move modal', () => {
+    it('show only type filter options for allowed parent types in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -602,7 +602,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not suggest current parent resource in move modal', () => {
+    it('do not suggest current parent resource in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -623,7 +623,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not suggest descendants of current resource in move modal', () => {
+    it('do not suggest descendants of current resource in move modal', () => {
 
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.performCreateResource('SE-D1', 'feature');
@@ -644,7 +644,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not open context menu for new resources while creating geometry', () => {
+    it('do not open context menu for new resources while creating geometry', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

@@ -5,7 +5,7 @@ export class MenuPage {
 
     public static navigateToSettings() {
 
-        hotkeys.trigger('ctrl+s');
+        hotkeys.trigger('ctrl+,');
     }
 
 

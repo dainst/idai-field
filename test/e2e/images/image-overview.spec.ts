@@ -12,7 +12,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-xdescribe('images --', function() {
+describe('images --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';

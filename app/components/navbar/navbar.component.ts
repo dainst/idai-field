@@ -80,7 +80,7 @@ export class NavbarComponent implements DoCheck {
     public async close(tab: Tab) {
 
         if (this.isActiveRoute(TabUtil.getTabRoute(tab))) {
-            await this.router.navigate(['resources', 'project']);
+            await this.tabManager.openTabToTheLeftOfActiveTab();
         }
 
         if (tab.routeName === 'resources') this.viewFacade.deactivateView(tab.operationId as string);

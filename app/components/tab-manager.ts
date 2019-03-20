@@ -49,6 +49,13 @@ export class TabManager {
 
     public getTabSpaceWidth = (): number => this.tabSpaceCalculator.getTabSpaceWidth();
 
+    public openActiveTab = async () => await this.navigateToTabRoute(this.activeTab);
+
+    public openTabToTheLeftOfActiveTab = async () => await this.navigateToTabRoute(
+        this.getTabToTheLeftOfActiveTab()
+    );
+
+
 
     async initialize() {
 
@@ -103,16 +110,6 @@ export class TabManager {
         this.validateTabSpace(undefined);
 
         await this.serialize();
-    }
-
-
-    public async openActiveTab() {
-
-        if (this.activeTab) {
-            await this.router.navigate([this.activeTab.routeName, this.activeTab.operationId]);
-        } else {
-            await this.router.navigate(['resources', 'project']);
-        }
     }
 
 
@@ -192,6 +189,16 @@ export class TabManager {
     }
 
 
+    private async navigateToTabRoute(tab: Tab|undefined) {
+
+        if (tab) {
+            await this.router.navigate([tab.routeName, tab.operationId]);
+        } else {
+            await this.router.navigate(['resources', 'project']);
+        }
+    }
+
+
     private async openTabForRoute(route: string) {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
@@ -239,6 +246,22 @@ export class TabManager {
                 return operationIdentifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
             default:
                 return '';
+        }
+    }
+
+
+    private getTabToTheLeftOfActiveTab(): Tab|undefined {
+
+        if (!this.activeTab) return undefined;
+
+        const index: number = this.tabs
+            .filter(tab => tab.shown)
+            .indexOf(this.activeTab);
+
+        if (index === 0) {
+            return undefined;
+        } else {
+            return this.tabs[index - 1];
         }
     }
 }

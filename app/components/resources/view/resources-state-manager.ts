@@ -81,13 +81,7 @@ export class ResourcesStateManager {
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
             if (!state.operation) state.operation = await this.datastore.get(viewName);
-
-            if (!this.tabManager.isOpen('resources', viewName)) {
-                state.mode = currentMode;
-                await this.tabManager.openTab(
-                    'resources', viewName, state.operation.resource.identifier
-                );
-            }
+            if (!this.tabManager.isOpen('resources', viewName)) state.mode = currentMode;
 
             this.serialize();
         }

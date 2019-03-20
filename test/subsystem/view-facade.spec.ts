@@ -292,13 +292,18 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewState -- restore mode when switching views', async done => {
 
         await viewFacade.selectView('t1');
+        await tabManager.openTab('resources', 't1', 'trench1');
         expect(viewFacade.getMode()).toEqual('map');
         viewFacade.setMode('list');
+
         await viewFacade.selectView('t2');
+        await tabManager.openTab('resources', 't2', 'trench2');
         expect(viewFacade.getMode()).toEqual('list');
         viewFacade.setMode('map');
+
         await viewFacade.selectView('t1');
         expect(viewFacade.getMode()).toEqual('list');
+
         await viewFacade.selectView('t2');
         expect(viewFacade.getMode()).toEqual('map');
 

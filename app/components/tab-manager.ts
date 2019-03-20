@@ -12,7 +12,7 @@ import {TabSpaceCalculator} from './tab-space-calculator';
 export type Tab = {
     routeName: string,
     label: string
-    operationId?: string,
+    operationId: string,
     shown: boolean
 }
 
@@ -37,7 +37,8 @@ export class TabManager {
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.initialize();
 
-        this.router.events.subscribe(() => {
+        this.router.events.subscribe(async () => {
+            await this.openTabForRoute(this.router.url);
             this.updateActiveTab(this.router.url);
         });
     }
@@ -75,33 +76,28 @@ export class TabManager {
     }
 
 
-    public isOpen(routeName: string, resourceId?: string): boolean {
+    public isOpen(routeName: string, resourceId: string): boolean {
 
         return this.getTab(routeName, resourceId) !== undefined;
     }
 
 
-    public async openTab(routeName: string, operationId?: string, operationIdentifier?: string) {
+    public async openTab(routeName: string, operationId: string, operationIdentifier: string) {
 
-        let tab: Tab|undefined = this.getTab(routeName, operationId);
+        if (this.getTab(routeName, operationId)) return;
 
-        if (!tab) {
-            tab = {
-                routeName: routeName,
-                label: this.getLabel(routeName, operationIdentifier),
-                operationId: operationId,
-                shown: true
-            };
-            this.tabs.push(tab);
-        }
-
-        this.validateTabSpace(tab);
+        this.tabs.push({
+            routeName: routeName,
+            label: this.getLabel(routeName, operationIdentifier),
+            operationId: operationId,
+            shown: true
+        });
 
         await this.serialize();
     }
 
 
-    public async closeTab(routeName: string, operationId?: string) {
+    public async closeTab(routeName: string, operationId: string) {
 
         this.tabs = this.tabs.filter(tab => {
             return tab.routeName !== routeName || tab.operationId !== operationId;
@@ -203,9 +199,10 @@ export class TabManager {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
 
-        if (operationId !== 'project' && !this.getTab(routeName, operationId)
+        if (operationId && operationId !== 'project' && !this.getTab(routeName, operationId)
                 && (routeName === 'resources' || routeName === 'matrix')) {
-            await this.openTab(routeName, operationId, '');
+            const document: FieldDocument = await this.datastore.get(operationId);
+            await this.openTab(routeName, operationId, document.resource.identifier);
         }
     }
 
@@ -229,7 +226,7 @@ export class TabManager {
     }
 
 
-    private getTab(routeName: string, operationId?: string): Tab|undefined {
+    private getTab(routeName: string, operationId: string): Tab|undefined {
 
         return this.tabs.find(tab => {
             return tab.routeName === routeName && tab.operationId === operationId
@@ -237,7 +234,7 @@ export class TabManager {
     }
 
 
-    private getLabel(routeName: string, operationIdentifier?: string): string {
+    private getLabel(routeName: string, operationIdentifier: string): string {
 
         switch(routeName) {
             case 'resources':

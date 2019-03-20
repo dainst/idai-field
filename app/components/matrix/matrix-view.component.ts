@@ -148,7 +148,6 @@ export class MatrixViewComponent implements OnInit {
             return await this.routingService.jumpToOverview();
         }
 
-        await this.tabManager.openTab('matrix', trenchId, this.trench.resource.identifier);
         await this.reset();
     }
 

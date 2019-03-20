@@ -81,6 +81,67 @@ describe('resources --', () => {
     }
 
 
+    it('messages -- create a new resource of first listed type ', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
+    it('messages -- show the success message after saving via modal', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.openEditByDoubleClickResource('12');
+        DoceditPage.typeInInputField('identifier', '34');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickSaveInModal();
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        NavbarPage.clickCloseAllMessages();
+    });
+
+
+    it('messages -- warn if identifier is missing', () => {
+
+        browser.sleep(5000);
+
+        ResourcesPage.performCreateResource('', 'feature',
+            'processor', 'p', undefined,
+            false, false);
+
+        NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
+        NavbarPage.awaitAlert('Bezeichner', false);
+        NavbarPage.clickCloseAllMessages();
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    it('messages -- warn if an existing identifier is used', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false, false);
+
+        NavbarPage.awaitAlert('existiert bereits', false);
+        NavbarPage.clickCloseAllMessages();
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    it('messages -- do not warn if two different identifiers start with the same string', () => {
+
+        ResourcesPage.performCreateResource('120',undefined,undefined,
+            undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false, false);
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
     it('docview -- show the relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
@@ -162,67 +223,6 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(1);
         });
-    });
-
-
-    it('messages -- create a new resource of first listed type ', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-    });
-
-
-    it('messages -- show the success message after saving via modal', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        ResourcesPage.openEditByDoubleClickResource('12');
-        DoceditPage.typeInInputField('identifier', '34');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
-
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
-    });
-
-
-    it('messages -- warn if identifier is missing', () => {
-
-        browser.sleep(5000);
-
-        ResourcesPage.performCreateResource('', 'feature',
-            'processor', 'p', undefined,
-            false, false);
-
-        NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
-        NavbarPage.awaitAlert('Bezeichner', false);
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-    });
-
-
-    it('messages -- warn if an existing identifier is used', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,undefined,false);
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,undefined,false, false);
-
-        NavbarPage.awaitAlert('existiert bereits', false);
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-    });
-
-
-    it('messages -- do not warn if two different identifiers start with the same string', () => {
-
-        ResourcesPage.performCreateResource('120',undefined,undefined,
-            undefined,undefined,false);
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,undefined,false, false);
-
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
 

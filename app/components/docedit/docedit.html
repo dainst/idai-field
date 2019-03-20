@@ -67,6 +67,7 @@
             <edit-form
                     *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
                     [(document)]="documentHolder.clonedDocument"
+                    [(inspectedRevisions)]="documentHolder.inspectedRevisions"
                     [relationDefinitions]="getRelationDefinitions()"
                     [fieldDefinitions]="projectConfiguration.getFieldDefinitions
                         (documentHolder.clonedDocument.resource.type)">

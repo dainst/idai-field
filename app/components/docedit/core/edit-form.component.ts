@@ -1,5 +1,5 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef, ViewChild} from '@angular/core';
-import {FieldDefinition, RelationDefinition} from 'idai-components-2';
+import {Document, FieldDefinition, RelationDefinition} from 'idai-components-2';
 import {is, isNot, on, undefinedOrEmpty, includedIn, isnt, tripleEqual, filter} from 'tsfun';
 
 
@@ -28,6 +28,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
+    @Input() inspectedRevisions: Document[];
 
     public basicFieldsToShow: Array<FieldDefinition> = [];
     public propertiesFieldsToShow: Array<FieldDefinition> = [];

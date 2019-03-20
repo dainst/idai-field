@@ -1,0 +1,64 @@
+#document-edit-wrapper {
+
+  main {
+
+    .container-fluid {
+
+      height: 100%;
+
+      .row {
+
+        height: 100%;
+
+        #table-of-contents {
+
+          padding-left: 50px;
+          padding-top: 20px;
+
+          user-select: none;
+
+          .nav {
+            margin: 5px 12px;
+
+            .nav-link {
+              &.active {
+                background-color: #5572a1;
+              }
+            }
+          }
+        }
+
+
+        .forms-container {
+          padding-right: 53px;
+          height: 100%;
+
+          .scrollable-group {
+
+            height: 100%;
+            overflow-y: auto;
+          }
+        }
+
+        .list-group-item {
+          background-color: #eee;
+        }
+
+        #table-of-contents-placeholder {
+          border-right: 1px solid #eee;
+        }
+
+        .choose-geometry-icon {
+          margin-right: 10px;
+          position: relative;
+          top: 2px;
+        }
+
+        #docedit-conflicts-tab {
+          color: red !important;
+        }
+      }
+    }
+  }
+}
+

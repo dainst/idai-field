@@ -4,6 +4,7 @@
 @import 'widgets/image-picker';
 @import 'widgets/relationpicker/relation-picker';
 @import 'widgets/relationpicker/relation-picker-group';
+@import 'core/edit-form';
 
 #document-edit-wrapper {
 
@@ -73,115 +74,56 @@
     }
   }
 
+  #document-edit-button-save-document:active,
+  #document-edit-button-save-document:focus,
+  #document-edit-button-goto-view:active,
+  #document-edit-button-goto-view:focus,
+  #document-edit-button-dropdown:active,
+  #document-edit-button-dropdown:focus,
+  #document-view-button-edit-document:active,
+  #document-view-button-edit-document:focus,
+  #document-view-button-back-to-map:active,
+  #document-view-button-back-to-map:focus {
+    outline: none;
+  }
+
+  #document-edit-button-save-document,
+  #document-edit-button-goto-view,
+  #document-edit-button-dropdown {
+    position: relative;
+    top: 8px;
+    height: 39px;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+  }
+
+  #document-edit-button-goto-view {
+    margin-left: 7px;
+  }
+
+  #document-edit-button-dropdown {
+    margin-left: 1px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  #document-edit-dropdown-menu {
+    .dropdown-entry-label {
+      margin-left: 5px;
+    }
+  }
+
+  .mdi-expand-all {
+    color: #28a745;
+  }
+
   main {
     height: 86%;
     padding: 0;
 
     position: relative;
-
-
-
-    .container-fluid {
-
-      height: 100%;
-
-      .row {
-
-        height: 100%;
-
-        .forms-container {
-          padding-right: 45px;
-          height: 100%;
-
-          .scrollable-group {
-
-            height: 100%;
-            overflow-y: auto;
-          }
-        }
-
-        .list-group-item {
-          background-color: #eee;
-        }
-
-        #table-of-contents-placeholder {
-          border-right: 1px solid #eee;
-        }
-
-        #table-of-contents {
-
-          padding-left: 50px;
-
-          user-select: none;
-
-          .nav {
-            margin: 5px 12px;
-
-            .nav-link {
-              &.active {
-                background-color: #5572a1;
-              }
-            }
-          }
-        }
-
-
-        #document-edit-button-save-document:active,
-        #document-edit-button-save-document:focus,
-        #document-edit-button-goto-view:active,
-        #document-edit-button-goto-view:focus,
-        #document-edit-button-dropdown:active,
-        #document-edit-button-dropdown:focus,
-        #document-view-button-edit-document:active,
-        #document-view-button-edit-document:focus,
-        #document-view-button-back-to-map:active,
-        #document-view-button-back-to-map:focus {
-          outline: none;
-        }
-
-        #document-edit-button-save-document,
-        #document-edit-button-goto-view,
-        #document-edit-button-dropdown {
-          position: relative;
-          top: 8px;
-          height: 39px;
-          border: 0;
-          border-radius: 2px;
-          color: #fff;
-        }
-
-        #document-edit-button-goto-view {
-          margin-left: 7px;
-        }
-
-        #document-edit-button-dropdown {
-          margin-left: 1px;
-
-          &:focus {
-            box-shadow: none;
-          }
-        }
-
-        #document-edit-dropdown-menu {
-          .dropdown-entry-label {
-            margin-left: 5px;
-          }
-        }
-
-        .mdi-expand-all {
-          color: #28a745;
-        }
-
-        .choose-geometry-icon {
-          margin-right: 10px;
-          position: relative;
-          top: 2px;
-        }
-
-        #docedit-conflicts-tab {
-          color: red !important;
-        }
-      }
-    }
   }
 }

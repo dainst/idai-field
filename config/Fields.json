@@ -2,10 +2,8 @@
   "Trench": {
     "color": "blue",
     "parent": "Operation",
+    "commons": ["diary", "dimensionLength", "dimensionWidth"],
     "fields": {
-      "diary": {
-        "inputType": "input"
-      },
       "researchQuestion": {
         "inputType": "input"
       },
@@ -16,26 +14,12 @@
       "trenchComment": {
         "inputType": "text"
       },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "group": "space",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
         "group": "space",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "group": "space",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "excavationType": {
         "inputType": "radio",
@@ -714,13 +698,8 @@
   },
   "Building": {
     "parent": "Operation",
+    "commons": ["period", "dating", "dimensionWidth", "dimensionLength"],
     "fields": {
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "buildingHistory": {
         "inputType": "input"
       },
@@ -870,18 +849,6 @@
           "Nekropole",
           "Wohnviertel"
         ]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "material": {
         "inputType": "checkboxes",
@@ -1177,24 +1144,10 @@
     }
   },
   "Operation": {
+    "commons": ["beginningDate", "endDate", "processor", "description", "area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
       "diaryAbstract": {
         "inputType": "text"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "supervisor": {
         "inputType": "input"
@@ -1206,10 +1159,8 @@
   },
   "Place": {
     "color": "#5572A1",
+    "commons": ["dating", "description"],
     "fields": {
-      "dating": {
-        "inputType": "dating"
-      },
       "placeName": {
         "inputType": "input"
       },
@@ -1217,9 +1168,6 @@
         "inputType": "text"
       },
       "buildingResearchHistory": {
-        "inputType": "text"
-      },
-      "description": {
         "inputType": "text"
       },
       "excavationHistory": {
@@ -1352,37 +1300,15 @@
   },
   "Feature": {
     "color": "black",
+    "commons": ["beginningDate", "endDate", "dating", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat",
-        "group": "space"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "group": "time",
-        "inputType": "dating"
-      },
       "comparison": {
-        "inputType": "text"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "description": {
         "inputType": "text"
       },
       "hasDisturbance": {
         "inputType": "boolean"
       },
       "featureAmount": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       },
       "color": {
@@ -1409,23 +1335,11 @@
           "weiß"
         ]
       },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1574,6 +1488,7 @@
     }
   },
   "Inscription": {
+    "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
     "fields": {
       "comparison": {
         "inputType": "text"
@@ -1584,13 +1499,7 @@
       "content": {
         "inputType": "text"
       },
-      "description": {
-        "inputType": "text"
-      },
       "language": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       },
       "condition": {
@@ -1611,28 +1520,6 @@
           "Vollständig zerstört"
         ]
       },
-      "period": {
-        "inputType": "dropdownRange",
-        "group": "time"
-      },
-      "dating": {
-        "inputType": "dating",
-        "group": "time"
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "group": "space",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "group": "space",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "objectType": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -1652,14 +1539,12 @@
     }
   },
   "Image": {
+    "commons": ["processor"],
     "fields": {
       "description": {
         "inputType": "text"
       },
       "draughtsmen": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       }
     }
@@ -2482,17 +2367,12 @@
     }
   },
   "Room": {
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth"],
     "fields": {
       "area": {
         "inputType": "unsignedFloat"
       },
       "conditionComment": {
-        "inputType": "input"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
         "inputType": "input"
       },
       "campaign": {
@@ -2519,35 +2399,11 @@
           "Vollständig zerstört"
         ]
       },
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       }
     }
   },
@@ -3633,6 +3489,7 @@
   },
   "Find": {
     "color": "black",
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth"],
     "fields": {
       "amount": {
         "inputType": "unsignedInt"
@@ -3654,12 +3511,6 @@
       },
       "date": {
         "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "publicationMaterialSummary": {
         "inputType": "input"
@@ -3694,25 +3545,7 @@
           "Vollständig zerstört"
         ]
       },
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "dimensionDiameter": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionLength": {
         "inputType": "dimension",
         "positionValues": [
         "Maximale Ausdehnung",
@@ -3735,12 +3568,6 @@
         "positionValues": [
         "Oberkante",
         "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "dimensionOther": {
         "inputType": "dimension",
@@ -3766,10 +3593,8 @@
   "PlasterFragment": {
     "color": "#737373",
     "parent": "Find",
+    "commons": ["area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
       "composition": {
         "inputType": "input"
       },

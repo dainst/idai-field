@@ -68,29 +68,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     ngOnChanges(changes: any) {
 
-        const basicFields = ['identifier', 'shortDescription', 'diary', 'processor', 'beginningDate', 'endDate', 'date', 'description'];
-        const dimensionFields = ['dimensionThickness', 'dimensionVerticalExtent', 'dimensionWidth', 'dimensionHeight', 'dimensionLength'];
-
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
 
-            this.basicFieldsToShow = this.fieldDefinitions.filter(on('name', includedIn(basicFields)));
-            this.dimensionFieldsToShow = this.fieldDefinitions.filter(on('name', includedIn(dimensionFields)));
-
-            this.propertiesFieldsToShow =
-                this.fieldDefinitions
-                    .filter(on('group', is(undefined)))
-                    .filter(on('name', isnt('period')))
-                    .filter(on('name', isnt('shortDescription')))
-                    .filter(on('name', isNot(includedIn(basicFields))))
-                    .filter(on('name', isNot(includedIn(dimensionFields))));
-
-            this.spatialFieldsToShow =
-                this.fieldDefinitions.filter(on('group', is('space')));
-
-            this.timeFieldsToShow =
-                this.fieldDefinitions.filter(on('group', is('time'))).concat(
-                    this.fieldDefinitions.filter(on('name', is('period')))
-                );
+            this.basicFieldsToShow = this.fieldDefinitions.filter(on('group', is('stem')));
+            this.dimensionFieldsToShow = this.fieldDefinitions.filter(on('group', is('dimension')));
+            this.propertiesFieldsToShow = this.fieldDefinitions.filter(on('group', is(undefined)));
+            this.spatialFieldsToShow = this.fieldDefinitions.filter(on('group', is('space')));
+            this.timeFieldsToShow = this.fieldDefinitions.filter(on('group', is('time')));
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {

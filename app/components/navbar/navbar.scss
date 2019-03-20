@@ -20,10 +20,6 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   background-color: $navbar-default-bg !important;
 }
 
-.navbar.navbar-fixed-top .navbar-brand {
-  font-weight: 700;
-}
-
 .navbar a {
   color: #fff;
   cursor: default;
@@ -147,37 +143,12 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   }
 }
 
-#idai-field-brand {
-  padding: 0;
-  margin-right: 20px;
-  user-select: none;
-
-  &.navbar-brand-mac {
-    margin-left: 70px;
-  }
-
-  #brand-text {
-    display: inline-block;
-    cursor: default;
-
-    #brand-text-idai {
-      color: #ccc;
-      font-size: 90%;
-      font-weight: 300;
-    }
-
-    #brand-text-field {
-      color: #fff;
-    }
-
-    #brand-text-number {
-      color: #ccc;
-    }
-  }
-}
-
 #navbarSupportedContent {
   cursor: default;
+
+  &.mac-margin {
+    margin-left: 70px;
+  }
 }
 
 .navbar-nav {

@@ -1,19 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"
      (dragover)="false" (dragleave)="false" (drop)="false">
-    <div class="navbar-brand" id="idai-field-brand"
-            [class.navbar-brand-mac]="isRunningOnMac()">
-        <div id="brand-text">
-            <span id="brand-text-idai">iDAI.</span><span id="brand-text-field">field</span>
-        </div>
-    </div>
-
     <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div id="navbarSupportedContent" class="collapse navbar-collapse" [class.mac-margin]="isRunningOnMac()">
         <ul #tabSpace *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">

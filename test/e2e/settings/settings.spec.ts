@@ -5,6 +5,7 @@ import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {ImageViewPage} from '../images/image-view.page';
+import Menu = Electron.Menu;
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
@@ -16,7 +17,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('settings --', function() {
+describe('settings --', function() {
 
     beforeAll(done => {
 
@@ -35,6 +36,7 @@ xdescribe('settings --', function() {
         SettingsPage.get();
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
+        NavbarPage.clickReturnToResourcesTabs();
 
         NavbarPage.clickTab('project')
             .then(() => {

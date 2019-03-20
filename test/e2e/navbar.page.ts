@@ -21,6 +21,12 @@ export class NavbarPage {
     }
 
 
+    public static clickReturnToResourcesTabs() {
+
+        return common.click(element(by.css('#non-resources-tab .mdi-close')));
+    }
+
+
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));
@@ -30,12 +36,6 @@ export class NavbarPage {
     public static clickConflictResolverLink(identifier: string) {
 
         return common.click(element(by.id('taskbar-conflict-' + identifier)));
-    }
-
-
-    public static clickReturnToResourcesTabs() {
-
-        return common.click(element(by.css('#non-resources-tab .mdi-close')));
     }
 
 

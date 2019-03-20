@@ -53,7 +53,7 @@ export class DoceditComponent {
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
-        private projectConfiguration: ProjectConfiguration,
+        public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {
     }

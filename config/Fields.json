@@ -543,15 +543,13 @@
     }
   },
   "Project": {
+    "commons": ["description"],
     "fields": {
       "contactMail": {
         "inputType": "input"
       },
       "contactPerson": {
         "inputType": "input"
-      },
-      "description": {
-        "inputType": "text"
       },
       "epsgId": {
         "inputType": "unsignedInt"
@@ -1539,11 +1537,8 @@
     }
   },
   "Image": {
-    "commons": ["processor"],
+    "commons": ["processor", "description"],
     "fields": {
-      "description": {
-        "inputType": "text"
-      },
       "draughtsmen": {
         "inputType": "input"
       }
@@ -2367,11 +2362,8 @@
     }
   },
   "Room": {
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth"],
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
       "conditionComment": {
         "inputType": "input"
       },
@@ -3885,30 +3877,13 @@
     "fields": {}
   },
   "Area": {
+    "commons": ["description", "area", "dimensionLength", "dimensionWidth"],
     "fields": {
-      "description": {
-        "inputType": "text"
-      },
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
         "positionValues": [
           "Oberkante",
           "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
       }
     }
   },

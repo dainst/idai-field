@@ -7,6 +7,9 @@ interface GroupDefinition {
 
     name: string;
     label: string;
+    fields: any[];
+    relations: any[];
+    widget: string|undefined;
 }
 
 
@@ -30,35 +33,26 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() inspectedRevisions: Document[];
 
-    public basicFieldsToShow: Array<FieldDefinition> = [];
-    public propertiesFieldsToShow: Array<FieldDefinition> = [];
-    public dimensionFieldsToShow: Array<FieldDefinition> = [];
-
-    public spatialFieldsToShow: Array<FieldDefinition> = [];
-    public spatialRelationsToShow: Array<RelationDefinition> = [];
-
-    public timeFieldsToShow: Array<FieldDefinition> = [];
-    public timeRelationsToShow: Array<RelationDefinition> = [];
-
-
     public types: string[];
 
     public groups: GroupDefinition[] = [
-        { name: 'basic', label: 'Stammdaten'},
-        { name: 'properties', label: 'Eigenschaften' },
-        { name: 'dimension', label: 'Maße' },
-        { name: 'space', label: 'Lage' },
-        { name: 'time', label: 'Zeit' },
-        { name: 'images', label: 'Bilder' },
-        { name: 'conflicts', label: 'Konflikte' }];
+        { name: 'basic', label: 'Stammdaten', fields: [], relations: [], widget: 'generic'},
+        { name: 'properties', label: 'Eigenschaften', fields: [], relations: [], widget: 'generic'},
+        { name: 'dimension', label: 'Maße', fields: [], relations: [], widget: 'generic'},
+        { name: 'space', label: 'Lage', fields: [], relations: [], widget: 'generic'},
+        { name: 'time', label: 'Zeit', fields: [], relations: [], widget: 'generic'},
+        { name: 'images', label: 'Bilder', fields: [], relations: [], widget: undefined},
+        { name: 'conflicts', label: 'Konflikte', fields: [], relations: [], widget: undefined}];
 
 
     constructor(private elementRef: ElementRef) {}
 
 
+    public getFieldDefinitions = () => (this.groups.find((g: GroupDefinition) => g.name === this.activeGroup) as any).fields;
+
+    public getRelationDefinitions = () => (this.groups.find((g: GroupDefinition) => g.name === this.activeGroup) as any).relations;
+
     public activateGroup = (name: string) => this.activeGroup = name;
-
-
 
     ngAfterViewInit() {
 
@@ -70,22 +64,20 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
 
-            this.basicFieldsToShow = this.fieldDefinitions.filter(on('group', is('stem')));
-            this.dimensionFieldsToShow = this.fieldDefinitions.filter(on('group', is('dimension')));
-            this.propertiesFieldsToShow = this.fieldDefinitions.filter(on('group', is(undefined)));
-            this.spatialFieldsToShow = this.fieldDefinitions.filter(on('group', is('space')));
-            this.timeFieldsToShow = this.fieldDefinitions.filter(on('group', is('time')));
+            this.groups[0].fields = this.fieldDefinitions.filter(on('group', is('stem')));
+            this.groups[1].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+            this.groups[2].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
+            this.groups[3].fields = this.fieldDefinitions.filter(on('group', is('space')));
+            this.groups[4].fields = this.fieldDefinitions.filter(on('group', is('time')));
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
 
-            this.spatialRelationsToShow = this.relationDefinitions
+            this.groups[3].relations = this.relationDefinitions
                 .filter(on('name', isNot(includedIn(['isAfter', 'isBefore', 'isContemporaryWith', 'includes', 'liesWithin']))));
-
-            this.timeRelationsToShow = this.relationDefinitions
+            this.groups[4].relations = this.relationDefinitions
                 .filter(on('name', isNot(includedIn(['includes', 'borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow']))));
         }
-
         // this.focusFirstInputElement();
     }
 

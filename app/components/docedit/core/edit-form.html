@@ -20,46 +20,15 @@
 
         <div class="col-md-9 forms-container">
 
-
             <div style="height: 22px"></div>
 
-            <div id="basic-group" class="scrollable-group" *ngIf="activeGroup === 'basic'">
+            <div id="{{activeGroup}}-group" class="scrollable-group" *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <generic-form
                         [document]="document"
-                        [fieldDefinitions]="basicFieldsToShow">
+                        [fieldDefinitions]="getFieldDefinitions()"
+                        [relationDefinitions]="getRelationDefinitions()">
                 </generic-form>
             </div>
-
-            <div id="properties-group" class="scrollable-group" *ngIf="activeGroup === 'properties'">
-                <generic-form
-                        [document]="document"
-                        [fieldDefinitions]="propertiesFieldsToShow">
-                </generic-form>
-            </div>
-
-            <div id="dimension-group" class="scrollable-group" *ngIf="activeGroup === 'dimension'">
-                <generic-form
-                        [document]="document"
-                        [fieldDefinitions]="dimensionFieldsToShow">
-                </generic-form>
-            </div>
-
-            <div id="space-group" class="scrollable-group" *ngIf="activeGroup === 'space'">
-                <generic-form
-                        [document]="document"
-                        [fieldDefinitions]="spatialFieldsToShow"
-                        [relationDefinitions]="spatialRelationsToShow">
-                </generic-form>
-            </div>
-
-            <div id="time-group" class="scrollable-group" *ngIf="activeGroup === 'time'">
-                <generic-form
-                        [document]="document"
-                        [fieldDefinitions]="timeFieldsToShow"
-                        [relationDefinitions]="timeRelationsToShow">
-                </generic-form>
-            </div>
-
 
             <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
                 <docedit-image-tab

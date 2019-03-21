@@ -48,9 +48,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     constructor(private elementRef: ElementRef) {}
 
 
-    public getFieldDefinitions = () => (this.groups.find((g: GroupDefinition) => g.name === this.activeGroup) as any).fields;
+    public getFieldDefinitions = (groupName: string) => (this.groups.find((g: GroupDefinition) => g.name === groupName) as any).fields;
 
-    public getRelationDefinitions = () => (this.groups.find((g: GroupDefinition) => g.name === this.activeGroup) as any).relations;
+    public getRelationDefinitions = (groupName: string) => (this.groups.find((g: GroupDefinition) => g.name === groupName) as any).relations;
 
     public activateGroup = (name: string) => this.activeGroup = name;
 

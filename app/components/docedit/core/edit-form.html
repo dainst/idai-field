@@ -6,7 +6,7 @@
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group.name)">
 
-                <a *ngIf="group.name !== 'conflicts' || document._conflicts"
+                <a *ngIf="group.name === 'images' || ((group.name !== 'conflicts' && (getFieldDefinitions(group.name).length > 0 || getRelationDefinitions(group.name).length > 0)) || document._conflicts)"
                         class="nav-link" id="edit-form-goto-{{group.name}}"
                         [class.active]="group.name === activeGroup"
                         [class.conflicted]="group.name === 'conflicts' && document._conflicts"
@@ -22,11 +22,12 @@
 
             <div style="height: 22px"></div>
 
-            <div id="{{activeGroup}}-group" class="scrollable-group" *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
+            <div id="{{activeGroup}}-group" class="scrollable-group"
+                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <generic-form
                         [document]="document"
-                        [fieldDefinitions]="getFieldDefinitions()"
-                        [relationDefinitions]="getRelationDefinitions()">
+                        [fieldDefinitions]="getFieldDefinitions(activeGroup)"
+                        [relationDefinitions]="getRelationDefinitions(activeGroup)">
                 </generic-form>
             </div>
 

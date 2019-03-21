@@ -21,7 +21,7 @@ interface GroupDefinition {
  */
 export class EditFormComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild('ed') rootElement: ElementRef;
+    @ViewChild('editor') rootElement: ElementRef;
 
     public activeGroup: string = 'basic';
 

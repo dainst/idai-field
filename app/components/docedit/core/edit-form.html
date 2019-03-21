@@ -1,14 +1,17 @@
 <div class="container-fluid">
 
-    <div #ed class="row">
-
-        <!--<div id="table-of-contents-placeholder" class="col-md-2"></div>-->
-        <!--<div class="col-md-1"></div>-->
+    <div #editor class="row">
 
         <ul id="table-of-contents" class="col-md-3 flex-column nav">
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group.name)">
-                <a class="nav-link" id="edit-form-goto-{{group.name}}" [class.active]="group.name === activeGroup" href="javascript: void(0);">
+
+                <a *ngIf="group.name !== 'conflicts' || document._conflicts"
+                        class="nav-link" id="edit-form-goto-{{group.name}}"
+                        [class.active]="group.name === activeGroup"
+                        [class.conflicted]="group.name === 'conflicts' && document._conflicts"
+                        href="javascript: void(0);">
+
                     {{group.label}}
                 </a>
             </li>
@@ -19,9 +22,6 @@
 
 
             <div style="height: 22px"></div>
-
-            <!--<h3 i18n="@@docedit.tabs.space">Räumliche Einordnung</h3>-->
-            <!--<h3 i18n="@@docedit.tabs.time">Zeitliche Einordnung</h3>-->
 
             <div id="basic-group" class="scrollable-group" *ngIf="activeGroup === 'basic'">
                 <generic-form
@@ -62,20 +62,9 @@
 
 
             <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
-
                 <docedit-image-tab
                         [(document)]="document">
                 </docedit-image-tab>
-
-                <!--
-                <ng-template ngbTabTitle>
-                    <span class="mdi mdi-image"></span>
-                    <span class="button-label" i18n="@@docedit.tabs.images">Bilder</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-
-                </ng-template>
-                -->
             </div>
 
 

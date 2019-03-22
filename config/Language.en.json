@@ -1,12 +1,49 @@
 {
+  "commons": {
+    "dimensionLength": {
+      "label": "Length"
+    },
+    "dimensionWidth": {
+      "label": "Width"
+    },
+    "dimensionHeight": {
+      "label": "Height"
+    },
+    "area": {
+      "label": "Area in m2"
+    },
+    "processor": {
+      "label": "Processor"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "period": {
+      "label": "Period"
+    },
+    "dating": {
+      "label": "Dating"
+    },
+    "diary": {
+      "label": "Diary",
+      "description": "Reference to excavation diary"
+    },
+    "beginningDate": {
+      "label": "Beginning date",
+      "description": "Date on which the recording of the resource was started"
+    },
+    "endDate": {
+      "label": "End date",
+      "description": "Date on which the recording of the resource was finished"
+    },
+    "date": {
+      "label": "Find date"
+    }
+  },
   "types": {
     "Trench": {
       "label": "Trench",
       "fields": {
-        "diary": {
-          "label": "Diary",
-          "description": "Reference to excavation diary"
-        },
         "researchQuestion": {
           "label": "Research question"
         },
@@ -16,14 +53,8 @@
         "trenchComment": {
           "label": "Trench comment"
         },
-        "dimensionLength": {
-          "label": "Length"
-        },
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         },
         "excavationType": {
           "label": "Excavation type"
@@ -79,17 +110,8 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         },
         "horizontalLocation": {
           "label": "Horizontal location"
@@ -299,12 +321,6 @@
         "context": {
           "label": "Context"
         },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
         "material": {
           "label": "Material"
         },
@@ -444,9 +460,6 @@
     "Operation": {
       "label": "Operation",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
         "beginningDate": {
           "label": "Beginning date",
           "description": "Date on which the recording of the operation was started"
@@ -460,9 +473,6 @@
         },
         "diaryAbstract": {
           "label": "Diary abstract"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "supervisor": {
           "label": "Supervisor",
@@ -542,52 +552,20 @@
     "Feature": {
       "label": "Stratigraphical unit",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the stratigraphical unit was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the stratigraphical unit was finished"
-        },
-        "comparison": {
-          "label": "Comparison"
-        },
-        "diary": {
-          "label": "Diary"
-        },
-        "description": {
-          "label": "Description"
-        },
         "hasDisturbance": {
           "label": "Disturbance"
         },
         "featureAmount": {
           "label": "Feature amount"
         },
-        "processor": {
-          "label": "Processor"
+        "comparison": {
+          "label": "Comparison"
         },
         "color": {
           "label": "Color and intensity"
         },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         },
         "featureBorders": {
           "label": "Borders of the stratigraphical unit"
@@ -931,45 +909,21 @@
     "Room": {
       "label": "Room",
       "fields": {
-        "area": {
-          "label": "Area in m2"
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
         },
         "conditionComment": {
           "label": "Condition comment"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "campaign": {
           "label": "Campaign"
         },
         "condition": {
           "label": "Condition"
-        },
-        "conditionAmount": {
-          "label": "Preservation assessment",
-          "description": "Preserved amount in comparison to the original"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         }
       }
     },
@@ -1207,15 +1161,6 @@
         "conditionPercent": {
           "label": "Condition in percent"
         },
-        "date": {
-          "label": "Find date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
         "publicationMaterialSummary": {
           "label": "Material summary"
         },
@@ -1234,27 +1179,15 @@
         "condition": {
           "label": "Condition"
         },
-        "conditionAmount": {
-          "label": "Preservation assessment",
-          "description": "Preserved amount in comparison to the original"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
+        "dimensionPerimeter": {
+          "label": "Perimeter"
         },
         "dimensionDiameter": {
           "label": "Diameter"
         },
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionPerimeter": {
-          "label": "Perimeter"
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
         },
         "dimensionThickness": {
           "label": "Thickness"
@@ -1306,9 +1239,6 @@
     "Profile": {
       "label": "Profile",
       "fields": {
-        "dimensionHeight": {
-          "label": "Height"
-        },
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
         },

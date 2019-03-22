@@ -1,4 +1,44 @@
 {
+  "commons": {
+    "dimensionLength": {
+      "label": "Länge",
+      "description": "Angabe der Länge"
+    },
+    "dimensionWidth": {
+      "label": "Breite",
+      "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+    },
+    "area": {
+      "label": "Fläche in m2",
+      "description": "Flächenangabe in Quadratmetern"
+    },
+    "description": {
+      "label": "Beschreibung",
+      "description": "Freies Beschreibungsfeld"
+    },
+    "beginningDate": {
+      "label": "Startdatum",
+      "description": "Datum, an dem die Aufnahme der Resource begonnen wurde"
+    },
+    "endDate": {
+      "label": "Enddatum",
+      "description": "Datum, an dem die Aufnahme der Resource abgeschlossen wurde"
+    },
+    "processor": {
+      "label": "Bearbeiter/Bearbeiterin",
+      "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme"
+    },
+    "period": {
+      "label": "Grobdatierung"
+    },
+    "dating": {
+      "label": "Datierung"
+    },
+    "dimensionHeight": {
+      "label": "Höhe",
+      "description": "Angabe der Objekthöhe"
+    }
+  },
   "types": {
     "Trench": {
       "label": "Schnitt",
@@ -19,17 +59,9 @@
           "label": "Schnittkommentar",
           "description": "Schnittkommentar zur Auswertung und Dokumentation, Bericht für die Grabungsleitung"
         },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
         "excavationType": {
           "label": "Ausgrabungsart",
@@ -96,21 +128,9 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
         "horizontalLocation": {
           "label": "Horizontallage",
@@ -185,10 +205,6 @@
         "contactPerson": {
           "label": "Kontaktperson",
           "description": "Kontaktperson des Projekts"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
         },
         "epsgId": {
           "label": "EPSG-Code",
@@ -345,14 +361,6 @@
           "label": "Kontext",
           "description": "In welchem Kontext liegt das Bauwerk?"
         },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite"
-        },
         "material": {
           "label": "Material"
         },
@@ -366,20 +374,7 @@
     },
     "SurveyUnit": {
       "label": "Planquadrat",
-      "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        }
-      }
+      "fields": {}
     },
     "Wood": {
       "label": "Holz",
@@ -518,29 +513,9 @@
     "Operation": {
       "label": "Maßnahme",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der Maßnahme begonnen wurde"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der Maßnahme abgeschlossen wurde"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
         "diaryAbstract": {
           "label": "Projektverlauf",
           "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme"
         },
         "supervisor": {
           "label": "Leiter/Leiterin",
@@ -671,23 +646,9 @@
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
         "featureBorders": {
           "label": "Grenzen der stratigraphischen Einheit",
@@ -1069,10 +1030,6 @@
     "Room": {
       "label": "Raum",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
         },
@@ -1095,27 +1052,9 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         }
       }
     },

@@ -111,9 +111,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
 
             this.groups[SPACE].relations = this.relationDefinitions
-                .filter(on('name', isNot(includedIn(['isAfter', 'isBefore', 'isContemporaryWith', 'includes', 'liesWithin']))));
+                .filter(on('name', includedIn(['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'])));
             this.groups[TIME].relations = this.relationDefinitions
-                .filter(on('name', isNot(includedIn(['includes', 'borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow']))));
+                .filter(on('name', includedIn(['isAfter', 'isBefore', 'isContemporaryWith'])));
         }
         // this.focusFirstInputElement();
     }

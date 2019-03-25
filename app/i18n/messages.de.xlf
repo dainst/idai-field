@@ -897,7 +897,7 @@
         <target state="final">Übersicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.matrix" datatype="html">
@@ -2662,6 +2662,62 @@
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.group.stem" datatype="html">
+        <source>Stammdaten</source>
+        <target state="final">Stammdaten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.properties" datatype="html">
+        <source>Eigenschaften</source>
+        <target state="final">Eigenschaften</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.dimensions" datatype="html">
+        <source>Maße</source>
+        <target state="final">Maße</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.time" datatype="html">
+        <source>Zeit</source>
+        <target state="final">Zeit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.space" datatype="html">
+        <source>Lage</source>
+        <target state="final">Lage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.conflicts" datatype="html">
+        <source>Konflikte</source>
+        <target state="final">Konflikte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.parentLabel.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Projekt</target>
@@ -3939,7 +3995,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -3951,7 +4007,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -3963,7 +4019,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">

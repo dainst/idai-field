@@ -58,12 +58,30 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     constructor(private elementRef: ElementRef, private i18n: I18n) {}
 
-
-    public getFieldDefinitions = (groupName: string) => (this.groups.find((g: GroupDefinition) => g.name === groupName) as any).fields;
-
-    public getRelationDefinitions = (groupName: string) => (this.groups.find((g: GroupDefinition) => g.name === groupName) as any).relations;
-
     public activateGroup = (name: string) => this.activeGroup = name;
+
+
+    public shouldShow(groupName: string) {
+
+        return groupName === 'images'
+            || (groupName === 'conflicts' && this.document._conflicts)
+            || this.getFieldDefinitions(groupName).length > 0
+            || this.getRelationDefinitions(groupName).length > 0;
+    }
+
+
+    public getFieldDefinitions = (groupName: string) => {
+
+        return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).fields;
+    };
+
+
+    public getRelationDefinitions = (groupName: string) => {
+
+        return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).relations;
+    };
+
+
 
     ngAfterViewInit() {
 

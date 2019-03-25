@@ -6,7 +6,7 @@
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group.name)">
 
-                <a *ngIf="group.name === 'images' || ((group.name !== 'conflicts' && (getFieldDefinitions(group.name).length > 0 || getRelationDefinitions(group.name).length > 0)) || document._conflicts)"
+                <a *ngIf="shouldShow(group.name)"
                         class="nav-link" id="edit-form-goto-{{group.name}}"
                         [class.active]="group.name === activeGroup"
                         [class.conflicted]="group.name === 'conflicts' && document._conflicts"

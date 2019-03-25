@@ -2694,7 +2694,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.group.space" datatype="html">
+      <trans-unit id="docedit.group.position" datatype="html">
         <source>Lage</source>
         <target state="final">Lage</target>
         <context-group purpose="location">

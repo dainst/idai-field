@@ -7,7 +7,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 const STEM = 0;
 const PROPERTIES = 1;
 const DIMENSIONS = 2;
-const SPACE = 3;
+const POSITION = 3;
 const TIME = 4;
 const IMAGES = 5;
 const CONFLICTS = 6;
@@ -50,7 +50,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         { name: 'stem', label: 'Stammdaten', fields: [], relations: [], widget: 'generic'},
         { name: 'properties', label: 'Eigenschaften', fields: [], relations: [], widget: 'generic'},
         { name: 'dimensions', label: 'Maße', fields: [], relations: [], widget: 'generic'},
-        { name: 'space', label: 'Lage', fields: [], relations: [], widget: 'generic'},
+        { name: 'position', label: 'Lage', fields: [], relations: [], widget: 'generic'},
         { name: 'time', label: 'Zeit', fields: [], relations: [], widget: 'generic'},
         { name: 'images', label: 'Bilder', fields: [], relations: [], widget: undefined},
         { name: 'conflicts', label: 'Konflikte', fields: [], relations: [], widget: undefined}];
@@ -94,7 +94,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[STEM].label = this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' });
         this.groups[PROPERTIES].label = this.i18n({ id: 'docedit.group.properties', value: 'Eigenschaften' });
         this.groups[DIMENSIONS].label = this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' });
-        this.groups[SPACE].label = this.i18n({ id: 'docedit.group.space', value: 'Lage' });
+        this.groups[POSITION].label = this.i18n({ id: 'docedit.group.position', value: 'Lage' });
         this.groups[TIME].label = this.i18n({ id: 'docedit.group.time', value: 'Zeit' });
         this.groups[IMAGES].label = this.i18n({ id: 'docedit.group.images', value: 'Bilder' });
         this.groups[CONFLICTS].label = this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' });
@@ -104,13 +104,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
             this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
             this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
-            this.groups[SPACE].fields = this.fieldDefinitions.filter(on('group', is('space')));
+            this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
             this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
 
-            this.groups[SPACE].relations = this.relationDefinitions
+            this.groups[POSITION].relations = this.relationDefinitions
                 .filter(on('name', includedIn(['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'])));
             this.groups[TIME].relations = this.relationDefinitions
                 .filter(on('name', includedIn(['isAfter', 'isBefore', 'isContemporaryWith'])));

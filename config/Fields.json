@@ -9,14 +9,14 @@
       },
       "spatialLocation": {
         "inputType": "input",
-        "group": "space"
+        "group": "position"
       },
       "trenchComment": {
         "inputType": "text"
       },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
-        "group": "space",
+        "group": "position",
         "positionValues": [
         "Oberkante",
         "Unterkante"]
@@ -32,7 +32,7 @@
       },
       "orientation": {
         "inputType": "dropdown",
-        "group": "space",
+        "group": "position",
         "valuelist": [
           "N-S",
           "NNO - SSW",

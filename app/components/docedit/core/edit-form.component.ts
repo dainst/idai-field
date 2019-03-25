@@ -1,6 +1,6 @@
-import {Component, Input, AfterViewInit, OnChanges, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {Document, FieldDefinition, RelationDefinition} from 'idai-components-2';
-import {is, isNot, on, undefinedOrEmpty, includedIn, isnt, tripleEqual, filter} from 'tsfun';
+import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 
 

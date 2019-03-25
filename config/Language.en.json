@@ -37,7 +37,7 @@
       "description": "Date on which the recording of the resource was finished"
     },
     "date": {
-      "label": "Find date"
+      "label": "Date"
     }
   },
   "types": {
@@ -323,28 +323,12 @@
         },
         "material": {
           "label": "Material"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
         }
       }
     },
     "SurveyUnit": {
       "label": "Survey unit",
-      "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        }
-      }
+      "fields": {}
     },
     "Wood": {
       "label": "Wood",
@@ -460,17 +444,6 @@
     "Operation": {
       "label": "Operation",
       "fields": {
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the operation was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the operation was finished"
-        },
-        "description": {
-          "label": "Description"
-        },
         "diaryAbstract": {
           "label": "Diary abstract"
         },
@@ -513,9 +486,6 @@
         },
         "findspotClassification": {
           "label": "Findspot classification"
-        },
-        "dating": {
-          "label": "Dating"
         },
         "siteClassification": {
           "label": "Site classification"
@@ -617,14 +587,8 @@
         "content": {
           "label": "Transcription"
         },
-        "description": {
-          "label": "Description"
-        },
         "language": {
           "label": "Language"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "condition": {
           "label": "Condition"
@@ -632,18 +596,6 @@
         "conditionAmount": {
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
-        "dimensionHeight": {
-          "label": "Height"
         },
         "objectType": {
           "label": "Designation or type of inscription"
@@ -930,15 +882,6 @@
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {
-        "date": {
-          "label": "Date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
         "operationClassification": {
           "label": "Operation classification"
         }
@@ -1195,9 +1138,6 @@
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
         },
-        "dimensionWidth": {
-          "label": "Width"
-        },
         "dimensionOther": {
           "label": "Other dimensions",
           "description": "Other dimensions can be entered here; please comment"
@@ -1210,9 +1150,6 @@
     "PlasterFragment": {
       "label": "Plaster fragment",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
         "composition": {
           "label": "Composition"
         },
@@ -1286,20 +1223,8 @@
     "Area": {
       "label": "Area",
       "fields": {
-        "description": {
-          "label": "Description"
-        },
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
         "dimensionVerticalExtent": {
           "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         }
       }
     },

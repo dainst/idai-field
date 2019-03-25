@@ -34,19 +34,23 @@
     "dating": {
       "label": "Datierung"
     },
+    "diary": {
+      "label": "Tagebuch",
+      "description": "Verweis auf Grabungstagebuch"
+    },
     "dimensionHeight": {
       "label": "Höhe",
-      "description": "Angabe der Objekthöhe"
+      "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+    },
+    "date": {
+      "label": "Datum",
+      "description": "Datum der Aufnahme/Durchführung"
     }
   },
   "types": {
     "Trench": {
       "label": "Schnitt",
       "fields": {
-        "diary": {
-          "label": "Tagebuch",
-          "description": "Verweis auf Grabungstagebuch"
-        },
         "researchQuestion": {
           "label": "Fragestellung",
           "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z. B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
@@ -363,12 +367,6 @@
         },
         "material": {
           "label": "Material"
-        },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
         }
       }
     },
@@ -564,9 +562,6 @@
         "findspotClassification": {
           "label": "Klassifikation Fundstelle"
         },
-        "dating": {
-          "label": "Datierung"
-        },
         "siteClassification": {
           "label": "Klassifikation Fundplatz"
         }
@@ -606,29 +601,9 @@
     "Feature": {
       "label": "Stratigraphische Einheit",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
-        },
         "comparison": {
           "label": "Vergleich(e)",
           "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
-        },
-        "diary": {
-          "label": "Tagebuch",
-          "description": "Verweis auf Grabungstagebuch"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
         },
         "hasDisturbance": {
           "label": "Störung",
@@ -703,61 +678,31 @@
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
         },
-        "content": {
-          "label": "Abschrift der Inschrift"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "language": {
-          "label": "Sprache"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Inschrift"
-        },
         "condition": {
           "label": "Erhaltungszustand",
           "description": "Beschreibung des Erhaltungszustands"
         },
-        "conditionAmount": {
-          "label": "Erhaltener Anteil",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+        "language": {
+          "label": "Sprache"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+        "content": {
+          "label": "Abschrift der Inschrift"
         },
         "objectType": {
           "label": "Ansprache bzw. Art der Inschrift"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original"
         }
       }
     },
     "Image": {
       "label": "Abbildung",
       "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
         "draughtsmen": {
           "label": "Bildersteller/Bilderstellerin",
           "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Abbildung, falls nach der Aufnahme Änderungen erfolgten"
         }
       }
     },
@@ -1033,14 +978,6 @@
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
         },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Raumes"
-        },
         "campaign": {
           "label": "Kampagne"
         },
@@ -1061,18 +998,6 @@
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {
-        "date": {
-          "label": "Datum",
-          "description": "Datum der Durchführung"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs"
-        },
         "operationClassification": {
           "label": "Klassifikation Arbeitsgang"
         }
@@ -1327,18 +1252,6 @@
           "label": "Erhaltung in Prozent",
           "description": "Erhaltene Menge in Prozent"
         },
-        "date": {
-          "label": "Funddatum",
-          "description": "Datum der Aufnahme des Fundes"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Fundbearbeiter/Fundbearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Fundes"
-        },
         "publicationMaterialSummary": {
           "label": "Material",
           "description": "Ausführliche Beschreibung zur Publikation"
@@ -1367,23 +1280,9 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
         "dimensionDiameter": {
           "label": "Durchmesser",
           "description": "Angabe des Objektdurchmessers"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
         },
         "dimensionPerimeter": {
           "label": "Umfang",
@@ -1396,10 +1295,6 @@
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
         "dimensionOther": {
           "label": "Andere Maße",
@@ -1504,25 +1399,9 @@
     "Area": {
       "label": "Bereich",
       "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
         "dimensionVerticalExtent": {
           "label": "Niveau",
           "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         }
       }
     },

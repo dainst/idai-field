@@ -85,7 +85,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
             this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
             this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
-            this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimensions')));
+            this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
             this.groups[SPACE].fields = this.fieldDefinitions.filter(on('group', is('space')));
             this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
         }

@@ -2,7 +2,7 @@
   "Trench": {
     "color": "blue",
     "parent": "Operation",
-    "commons": ["diary", "dimensionLength", "dimensionWidth"],
+    "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent"],
     "fields": {
       "researchQuestion": {
         "inputType": "input"
@@ -14,13 +14,6 @@
       "trenchComment": {
         "inputType": "text"
       },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "group": "position",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
       "excavationType": {
         "inputType": "radio",
         "valuelist": [
@@ -29,26 +22,13 @@
           "künstliche Schichten",
           "natürliche Schichten"
         ]
-      },
-      "orientation": {
-        "inputType": "dropdown",
-        "group": "position",
-        "valuelist": [
-          "N-S",
-          "NNO - SSW",
-          "NNW-SSO",
-          "NO-SW",
-          "NW-SO",
-          "W-O",
-          "WNW-OSO",
-          "WSW-ONO"
-        ]
       }
     }
   },
   "Glass": {
     "color": "#99CC33",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "decorationDescription": {
         "inputType": "input"
@@ -160,52 +140,6 @@
           "Weinheber"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "transparency": {
         "inputType": "radio",
         "valuelist": [
@@ -288,6 +222,7 @@
   "Brick": {
     "color": "#CC0000",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "featureText": {
         "inputType": "input"
@@ -455,52 +390,6 @@
           "gegossen",
           "gepresst",
           "handgeformt"
-        ]
-      },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
         ]
       },
       "specificType": {
@@ -929,6 +818,7 @@
   "Architecture": {
     "color": "#707070",
     "parent": "Feature",
+    "commons": ["orientation"],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -1096,19 +986,6 @@
           "sandig"
         ]
       },
-      "orientation": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "N-S",
-          "NNO - SSW",
-          "NNW-SSO",
-          "NO-SW",
-          "NW-SO",
-          "W-O",
-          "WNW-OSO",
-          "WSW-ONO"
-        ]
-      },
       "wallClassification": {
         "inputType": "dropdown",
         "valuelist": [
@@ -1207,6 +1084,7 @@
   "Layer": {
     "color": "#663300",
     "parent": "Feature",
+    "commons": ["dimensionThickness"],
     "fields": {
       "appearance": {
         "inputType": "input"
@@ -1242,12 +1120,6 @@
           "steif",
           "weich"
         ]
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "distinguishingCriteria": {
         "inputType": "radio",
@@ -1298,7 +1170,7 @@
   },
   "Feature": {
     "color": "black",
-    "commons": ["beginningDate", "endDate", "dating", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "area"],
+    "commons": ["beginningDate", "endDate", "dating", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent","area"],
     "fields": {
       "comparison": {
         "inputType": "text"
@@ -1332,12 +1204,6 @@
           "violett",
           "weiß"
         ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1546,6 +1412,7 @@
   },
   "Pottery": {
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "amountSherdsWall": {
         "inputType": "unsignedInt"
@@ -1916,52 +1783,6 @@
           "Terra sigilata"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "temper": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -2077,21 +1898,10 @@
   },
   "DrillCoreLayer": {
     "parent": "Feature",
+    "commons": ["dimensionThickness", "dimensionVerticalExtent"],
     "fields": {
       "hasFinds": {
         "inputType": "boolean"
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
       },
       "soilType": {
         "inputType": "dropdown",
@@ -2362,7 +2172,7 @@
     }
   },
   "Room": {
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "area"],
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
       "conditionComment": {
         "inputType": "input"
@@ -2390,18 +2200,13 @@
           "Vollständig",
           "Vollständig zerstört"
         ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
       }
     }
   },
   "Terracotta": {
     "color": "#FF6600",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -2576,52 +2381,6 @@
           "handgeformt",
           "in Form gedreht",
           "nachgedreht (überdreht)"
-        ]
-      },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
         ]
       },
       "surfaceCondition": {
@@ -2809,6 +2568,7 @@
   "Stone": {
     "color": "#5c5c8a",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "purpose": {
         "inputType": "input"
@@ -2968,52 +2728,6 @@
           "Sizilien"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "temperAmount": {
         "inputType": "radio",
         "valuelist": [
@@ -3031,6 +2745,7 @@
   "Coin": {
     "color": "#cc9900",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "frontSideDescription": {
         "inputType": "input"
@@ -3414,52 +3129,6 @@
           "Valentianus III"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "stampPositioning": {
         "inputType": "dropdown",
         "valuelist": [
@@ -3481,7 +3150,7 @@
   },
   "Find": {
     "color": "black",
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth"],
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther"],
     "fields": {
       "amount": {
         "inputType": "unsignedInt"
@@ -3536,36 +3205,6 @@
           "Vollständig",
           "Vollständig zerstört"
         ]
-      },
-      "dimensionDiameter": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionPerimeter": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "dimensionOther": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "storagePlace": {
         "inputType": "radio",
@@ -3648,6 +3287,7 @@
   "Metal": {
     "color": "#995f25",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "materialDescription": {
         "inputType": "input"
@@ -3772,52 +3412,6 @@
           "Weinheber",
           "Werkzeug",
           "Zierbeschlag"
-        ]
-      },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
         ]
       },
       "vesselForm": {

@@ -9,6 +9,22 @@
     "dimensionHeight": {
       "label": "Height"
     },
+    "dimensionThickness": {
+      "label": "Thickness"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Vertical extent"
+    },
+    "dimensionPerimeter": {
+      "label": "Perimeter"
+    },
+    "dimensionDiameter": {
+      "label": "Diameter"
+    },
+    "dimensionOther": {
+      "label": "Other dimensions",
+      "description": "Other dimensions can be entered here; please comment"
+    },
     "area": {
       "label": "Area in m2"
     },
@@ -38,6 +54,12 @@
     },
     "date": {
       "label": "Date"
+    },
+    "orientation": {
+      "label": "Orientation"
+    },
+    "provenance": {
+      "label": "Provenance"
     }
   },
   "types": {
@@ -53,14 +75,8 @@
         "trenchComment": {
           "label": "Trench comment"
         },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
         "excavationType": {
           "label": "Excavation type"
-        },
-        "orientation": {
-          "label": "Orientation"
         }
       }
     },
@@ -85,9 +101,6 @@
         "objectType": {
           "label": "Designation or type of the object"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "transparency": {
           "label": "Transparency"
         },
@@ -110,14 +123,8 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
         "horizontalLocation": {
           "label": "Horizontal location"
-        },
-        "orientation": {
-          "label": "Orientation"
         },
         "planumForm": {
           "label": "Planum form"
@@ -157,9 +164,6 @@
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
-        },
-        "provenance": {
-          "label": "Provenance"
         },
         "specificType": {
           "label": "Format"
@@ -430,9 +434,6 @@
         "mortarConsistency": {
           "label": "Mortar consistency"
         },
-        "orientation": {
-          "label": "Orientation"
-        },
         "wallClassification": {
           "label": "Wall classification"
         },
@@ -505,9 +506,6 @@
         "consistency": {
           "label": "Consistency"
         },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
         "distinguishingCriteria": {
           "label": "Distinguishing criteria"
         },
@@ -533,9 +531,6 @@
         },
         "color": {
           "label": "Color and intensity"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
         },
         "featureBorders": {
           "label": "Borders of the stratigraphical unit"
@@ -739,9 +734,6 @@
         "specificType": {
           "label": "Pottery type, ware"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "temper": {
           "label": "Temper"
         },
@@ -767,12 +759,6 @@
       "fields": {
         "hasFinds": {
           "label": "Finds"
-        },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
         },
         "soilType": {
           "label": "Soil type"
@@ -861,9 +847,6 @@
     "Room": {
       "label": "Room",
       "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
         "conditionAmount": {
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
@@ -916,9 +899,6 @@
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
-        },
-        "provenance": {
-          "label": "Provenance"
         },
         "surfaceCondition": {
           "label": "Surface condition"
@@ -1036,9 +1016,6 @@
         "origin": {
           "label": "Origin of material"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "temperAmount": {
           "label": "Number of inclusions"
         }
@@ -1073,9 +1050,6 @@
         "mintingRuler": {
           "label": "Minting ruler",
           "description": "Person or corporate body responsible for the coinage"
-        },
-        "provenance": {
-          "label": "Provenance"
         },
         "stampPositioning": {
           "label": "Stamp positioning",
@@ -1122,25 +1096,9 @@
         "condition": {
           "label": "Condition"
         },
-        "dimensionPerimeter": {
-          "label": "Perimeter"
-        },
-        "dimensionDiameter": {
-          "label": "Diameter"
-        },
         "conditionAmount": {
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
-        },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionOther": {
-          "label": "Other dimensions",
-          "description": "Other dimensions can be entered here; please comment"
         },
         "storagePlace": {
           "label": "Storage place"
@@ -1175,14 +1133,7 @@
     },
     "Profile": {
       "label": "Profile",
-      "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "orientation": {
-          "label": "Orientation"
-        }
-      }
+      "fields": {}
     },
     "Metal": {
       "label": "Metal",
@@ -1205,9 +1156,6 @@
         "objectType": {
           "label": "Designation or type of the object"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "vesselForm": {
           "label": "Basic vessel form"
         },
@@ -1222,11 +1170,7 @@
     },
     "Area": {
       "label": "Area",
-      "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        }
-      }
+      "fields": {}
     },
     "Excavation": {
       "label": "Excavation",

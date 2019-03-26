@@ -8,6 +8,30 @@
       "label": "Breite",
       "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
     },
+    "dimensionHeight": {
+      "label": "Höhe",
+      "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+    },
+    "dimensionThickness": {
+      "label": "Stärke",
+      "description": "Dicke bzw. Stärke des Objekts"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Niveau",
+      "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+    },
+    "dimensionDiameter": {
+      "label": "Durchmesser",
+      "description": "Angabe des Objektdurchmessers"
+    },
+    "dimensionPerimeter": {
+      "label": "Umfang",
+      "description": "Angabe des Umfangs des Objekts"
+    },
+    "dimensionOther": {
+      "label": "Andere Maße",
+      "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
+    },
     "area": {
       "label": "Fläche in m2",
       "description": "Flächenangabe in Quadratmetern"
@@ -38,13 +62,17 @@
       "label": "Tagebuch",
       "description": "Verweis auf Grabungstagebuch"
     },
-    "dimensionHeight": {
-      "label": "Höhe",
-      "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
-    },
     "date": {
       "label": "Datum",
       "description": "Datum der Aufnahme/Durchführung"
+    },
+    "orientation": {
+      "label": "Orientierung",
+      "description": "Ausrichtung nach Himmelsrichtung"
+    },
+    "provenance": {
+      "label": "Provenienz",
+      "description": "Herkunftsort"
     }
   },
   "types": {
@@ -63,17 +91,9 @@
           "label": "Schnittkommentar",
           "description": "Schnittkommentar zur Auswertung und Dokumentation, Bericht für die Grabungsleitung"
         },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
         "excavationType": {
           "label": "Ausgrabungsart",
           "description": "Art der durchgeführten Ausgrabung"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
         }
       }
     },
@@ -103,10 +123,6 @@
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "transparency": {
           "label": "Transparenz",
           "description": "Wie durchscheinend ist das Objekt?"
@@ -132,17 +148,9 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
         "horizontalLocation": {
           "label": "Horizontallage",
           "description": "Ausrichtung des Planums"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
         },
         "planumForm": {
           "label": "Form Planum",
@@ -184,10 +192,6 @@
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
-        },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
         },
         "specificType": {
           "label": "Format",
@@ -495,10 +499,6 @@
         "mortarConsistency": {
           "label": "Mörtelkonsistenz"
         },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
-        },
         "wallClassification": {
           "label": "Klassifikation Mauer"
         },
@@ -581,10 +581,6 @@
         "consistency": {
           "label": "Konsistenz"
         },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
         "distinguishingCriteria": {
           "label": "Unterscheidungskriterium",
           "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
@@ -620,10 +616,6 @@
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
         },
         "featureBorders": {
           "label": "Grenzen der stratigraphischen Einheit",
@@ -835,10 +827,6 @@
         "specificType": {
           "label": "Keramikart Ware"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "temper": {
           "label": "Magerungsart",
           "description": "Grundsätzliche Art der Magerung, z. B. 'Organische Partikel'"
@@ -868,14 +856,6 @@
         "hasFinds": {
           "label": "Fundmaterial",
           "description": "Ist Fundmaterial vorhanden?"
-        },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
         },
         "soilType": {
           "label": "Bodenart",
@@ -988,10 +968,6 @@
         "conditionAmount": {
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
         }
       }
     },
@@ -1034,10 +1010,6 @@
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
-        },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
         },
         "surfaceCondition": {
           "label": "Oberflächenzustand",
@@ -1175,10 +1147,6 @@
           "label": "Materialherkunft",
           "description": "Herkunftsort des Materials"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "temperAmount": {
           "label": "Menge der Einschlüsse"
         }
@@ -1216,10 +1184,6 @@
         "mintingRuler": {
           "label": "Prägeherr",
           "description": "Person oder Körperschaft, die für die Prägung der Münze verantwortlich ist"
-        },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
         },
         "stampPositioning": {
           "label": "Stempelstellung",
@@ -1280,26 +1244,6 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
         },
-        "dimensionDiameter": {
-          "label": "Durchmesser",
-          "description": "Angabe des Objektdurchmessers"
-        },
-        "dimensionPerimeter": {
-          "label": "Umfang",
-          "description": "Angabe des Umfangs des Objekts"
-        },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionOther": {
-          "label": "Andere Maße",
-          "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
-        },
         "storagePlace": {
           "label": "Aufbewahrungsort",
           "description": "Aufbewahrungsort des Fundes"
@@ -1341,20 +1285,7 @@
     },
     "Profile": {
       "label": "Profil",
-      "fields": {
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
-        }
-      }
+      "fields": {}
     },
     "Metal": {
       "label": "Metall",
@@ -1379,10 +1310,6 @@
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "vesselForm": {
           "label": "Gefäß-Grundform"
         },
@@ -1398,12 +1325,7 @@
     },
     "Area": {
       "label": "Bereich",
-      "fields": {
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        }
-      }
+      "fields": {}
     },
     "Excavation": {
       "label": "Ausgrabung",

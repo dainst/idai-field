@@ -600,9 +600,6 @@
     "Image": {
       "label": "Image",
       "fields": {
-        "description": {
-          "label": "Description"
-        },
         "draughtsmen": {
           "label": "Creator",
           "description": "Creator of the image, photographer respectively draughtsman"

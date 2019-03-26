@@ -49,8 +49,7 @@
       "description": "Datum, an dem die Aufnahme der Resource abgeschlossen wurde"
     },
     "processor": {
-      "label": "Bearbeiter/Bearbeiterin",
-      "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme"
+      "label": "Bearbeiterin/Bearbeiter"
     },
     "period": {
       "label": "Grobdatierung"
@@ -608,10 +607,6 @@
         "featureAmount": {
           "label": "Befundanteil",
           "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
         },
         "color": {
           "label": "Farbe und Intensität",

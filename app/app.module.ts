@@ -165,8 +165,8 @@ registerLocaleData(localeDe, 'de');
             provide: FulltextIndex,
             useFactory: () => {
                 if (!fulltextIndex) {
-                    console.error('fulltext indexer has not yet been provided');
-                    throw 'fulltext indexer has not yet been provided';
+                    console.error('fulltext index has not yet been provided');
+                    throw 'fulltext index has not yet been provided';
                 }
                 return fulltextIndex;
             },
@@ -176,8 +176,8 @@ registerLocaleData(localeDe, 'de');
             provide: ConstraintIndex,
             useFactory: () => {
                 if (!constraintIndex) {
-                    console.error('constraint indexer has not yet been provided');
-                    throw 'constraint indexer has not yet been provided';
+                    console.error('constraint index has not yet been provided');
+                    throw 'constraint index has not yet been provided';
                 }
                 return constraintIndex;
             },

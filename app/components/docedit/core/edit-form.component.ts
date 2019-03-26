@@ -91,6 +91,44 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     ngOnChanges(changes: any) {
 
+        this.setLabels();
+
+        if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
+
+            this.setFields();
+            this.sortGroups();
+        }
+
+        if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
+
+            this.setRelations();
+        }
+        // this.focusFirstInputElement();
+    }
+
+
+    private setRelations() {
+
+        this.groups[POSITION].relations = this.relationDefinitions
+            .filter(on('name', includedIn(['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'])));
+        this.groups[TIME].relations = this.relationDefinitions
+            .filter(on('name', includedIn(['isAfter', 'isBefore', 'isContemporaryWith'])));
+    }
+
+
+    private setFields() {
+
+        this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
+        this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+        this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
+        this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
+        this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
+    }
+
+
+
+    private setLabels() {
+
         this.groups[STEM].label = this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' });
         this.groups[PROPERTIES].label = this.i18n({ id: 'docedit.group.properties', value: 'Eigenschaften' });
         this.groups[DIMENSIONS].label = this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' });
@@ -98,24 +136,33 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[TIME].label = this.i18n({ id: 'docedit.group.time', value: 'Zeit' });
         this.groups[IMAGES].label = this.i18n({ id: 'docedit.group.images', value: 'Bilder' });
         this.groups[CONFLICTS].label = this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' });
+    }
 
-        if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
 
-            this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
-            this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
-            this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
-            this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
-            this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
+    private sortGroups() {
+
+        this.sortGroup(this.groups[STEM].fields, ['identifier', 'shortDescription',
+            'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
+        this.sortGroup(this.groups[DIMENSIONS].fields, ['dimensionHeight',
+            'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
+            'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
+    }
+
+
+    /**
+     * Fields not defined via 'order' are not considered
+     */
+    private sortGroup(fds: Array<FieldDefinition>, order: string[]) {
+
+        const temp = fds;
+        const l = temp.length;
+        for (let fieldName of order) {
+
+            const got = temp.find((fd: FieldDefinition) => fd.name === fieldName);
+            if (got) temp.push(got);
+
         }
-
-        if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
-
-            this.groups[POSITION].relations = this.relationDefinitions
-                .filter(on('name', includedIn(['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'])));
-            this.groups[TIME].relations = this.relationDefinitions
-                .filter(on('name', includedIn(['isAfter', 'isBefore', 'isContemporaryWith'])));
-        }
-        // this.focusFirstInputElement();
+        fds.splice(0, l);
     }
 
 

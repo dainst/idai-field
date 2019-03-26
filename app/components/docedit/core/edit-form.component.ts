@@ -6,11 +6,12 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 
 const STEM = 0;
 const PROPERTIES = 1;
-const DIMENSIONS = 2;
-const POSITION = 3;
-const TIME = 4;
-const IMAGES = 5;
-const CONFLICTS = 6;
+const CHILD_PROPERTIES = 2;
+const DIMENSIONS = 3;
+const POSITION = 4;
+const TIME = 5;
+const IMAGES = 6;
+const CONFLICTS = 7;
 
 
 interface GroupDefinition {
@@ -39,6 +40,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public activeGroup: string = 'stem';
 
     @Input() document: any;
+    @Input() label: string;
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() inspectedRevisions: Document[];
@@ -49,6 +51,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public groups: GroupDefinition[] = [
         { name: 'stem', label: 'Stammdaten', fields: [], relations: [], widget: 'generic'},
         { name: 'properties', label: 'Eigenschaften', fields: [], relations: [], widget: 'generic'},
+        { name: 'childProperties', label: 'Eigenschaften speziell', fields: [], relations: [], widget: 'generic'},
         { name: 'dimensions', label: 'Maße', fields: [], relations: [], widget: 'generic'},
         { name: 'position', label: 'Lage', fields: [], relations: [], widget: 'generic'},
         { name: 'time', label: 'Zeit', fields: [], relations: [], widget: 'generic'},
@@ -120,6 +123,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
         this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+        this.groups[CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
         this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
@@ -131,6 +135,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         this.groups[STEM].label = this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' });
         this.groups[PROPERTIES].label = this.i18n({ id: 'docedit.group.properties', value: 'Eigenschaften' });
+        if (this.label) this.groups[CHILD_PROPERTIES].label = this.label;
         this.groups[DIMENSIONS].label = this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' });
         this.groups[POSITION].label = this.i18n({ id: 'docedit.group.position', value: 'Lage' });
         this.groups[TIME].label = this.i18n({ id: 'docedit.group.time', value: 'Zeit' });

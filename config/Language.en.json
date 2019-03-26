@@ -58,6 +58,9 @@
     "orientation": {
       "label": "Orientation"
     },
+    "spatialLocation": {
+      "label": "Spatial location"
+    },
     "provenance": {
       "label": "Provenance"
     }
@@ -68,9 +71,6 @@
       "fields": {
         "researchQuestion": {
           "label": "Research question"
-        },
-        "spatialLocation": {
-          "label": "Spatial location"
         },
         "trenchComment": {
           "label": "Trench comment"
@@ -182,9 +182,6 @@
         },
         "contactPerson": {
           "label": "Contact person"
-        },
-        "description": {
-          "label": "Description"
         },
         "epsgId": {
           "label": "EPSG Code",
@@ -399,9 +396,6 @@
         },
         "publicationRemark": {
           "label": "Publication remark"
-        },
-        "spatialLocation": {
-          "label": "Spatial location"
         },
         "blockProcessing": {
           "label": "Block processing"
@@ -786,9 +780,6 @@
         },
         "publicationRemark": {
           "label": "Publication remark"
-        },
-        "spatialLocation": {
-          "label": "Spatial location"
         },
         "condition": {
           "label": "Condition"

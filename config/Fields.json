@@ -2,14 +2,10 @@
   "Trench": {
     "color": "blue",
     "parent": "Operation",
-    "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent"],
+    "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent", "spatialLocation"],
     "fields": {
       "researchQuestion": {
         "inputType": "input"
-      },
-      "spatialLocation": {
-        "inputType": "input",
-        "group": "position"
       },
       "trenchComment": {
         "inputType": "text"
@@ -818,7 +814,7 @@
   "Architecture": {
     "color": "#707070",
     "parent": "Feature",
-    "commons": ["orientation"],
+    "commons": ["orientation", "spatialLocation"],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -866,9 +862,6 @@
         "inputType": "text"
       },
       "publicationRemark": {
-        "inputType": "input"
-      },
-      "spatialLocation": {
         "inputType": "input"
       },
       "blockProcessing": {
@@ -1934,6 +1927,7 @@
   "Grave": {
     "color": "#339900",
     "parent": "Feature",
+    "commons": ["spatialLocation"],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -1954,9 +1948,6 @@
         "inputType": "text"
       },
       "publicationRemark": {
-        "inputType": "input"
-      },
-      "spatialLocation": {
         "inputType": "input"
       },
       "condition": {
@@ -3150,7 +3141,7 @@
   },
   "Find": {
     "color": "black",
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther"],
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
     "fields": {
       "amount": {
         "inputType": "unsignedInt"
@@ -3169,10 +3160,6 @@
       },
       "conditionPercent": {
         "inputType": "unsignedFloat"
-      },
-      "date": {
-        "inputType": "date",
-        "group": "stem"
       },
       "publicationMaterialSummary": {
         "inputType": "input"

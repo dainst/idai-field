@@ -69,6 +69,10 @@
       "label": "Orientierung",
       "description": "Ausrichtung nach Himmelsrichtung"
     },
+    "spatialLocation": {
+      "label": "Lage",
+      "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+    },
     "provenance": {
       "label": "Provenienz",
       "description": "Herkunftsort"
@@ -81,10 +85,6 @@
         "researchQuestion": {
           "label": "Fragestellung",
           "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z. B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
-        },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
         },
         "trenchComment": {
           "label": "Schnittkommentar",
@@ -457,10 +457,6 @@
         "publicationRemark": {
           "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
-        },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
         },
         "blockProcessing": {
           "label": "Art der Steinblöcke"
@@ -886,10 +882,6 @@
         "publicationRemark": {
           "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
-        },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
         },
         "condition": {
           "label": "Erhaltungszustand",

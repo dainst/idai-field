@@ -3171,7 +3171,8 @@
         "inputType": "unsignedFloat"
       },
       "date": {
-        "inputType": "date"
+        "inputType": "date",
+        "group": "stem"
       },
       "publicationMaterialSummary": {
         "inputType": "input"

@@ -53,10 +53,17 @@
       }
     }
 
+    .link-button {
+      position: relative;
+      top: 5px;
+      right: -4px;
+      width: 24px;
+    }
+
     .hierarchy-button {
       position: relative;
       top: 3px;
-      right: 7px;
+      right: -14px;
       width: 44px;
       color: #868e96;
 

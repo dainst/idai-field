@@ -1,3 +1,19 @@
+<div *ngIf="popoverOpened"
+     (mouseleave)="closePopover()"
+     (mouseover)="openPopover()"
+     style="position: absolute; left: 300px;  height: 100%; width: 300px; z-index: 1002;
+    background-color: rgba(255, 255, 255, 0.9); padding: 10px">
+
+
+    <relations-view style="opacity: 1.0"
+            *ngIf="hasVisibleRelations(highlightedDocument)" [resource]="highlightedDocument.resource"
+                    (onRelationTargetClicked)="jumpToResource($event)"
+                    [hideRelations]="relationsToHide">
+    </relations-view>
+
+</div>
+
+
 <ul id="objectList" class="list-group object-list" (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
         (click)="select(document)"
@@ -10,6 +26,14 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
+        <div class="link-button btn float-right">
+            <span (mouseover)="openPopover(document)"
+                    (mouseleave)="closePopover()"
+                    *ngIf="hasVisibleRelations(document)" class="mdi mdi-menu-right">
+
+            </span>
+        </div>
+
         <div *ngIf="showMoveIntoOption(document)"
              class="hierarchy-button move-into-button btn float-right"
              ngbTooltip="Untergeordnete Ressourcen ansehen"
@@ -17,8 +41,8 @@
              placement="left"
              triggers="manual"
              #tooltip="ngbTooltip"
-             (mouseover)="tooltip.open()"
-             (mouseleave)="tooltip.close()"
+             (mouseover)="tooltip.open();"
+             (mouseleave)="tooltip.close();"
              (mousedown)="tooltip.close()"
              (click)="moveInto(document); $event.stopPropagation();">
             <span class="move-into-icon">

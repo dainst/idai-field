@@ -31,7 +31,7 @@ export class ResourcesMapComponent {
     public parentDocument: FieldDocument|undefined;
     public contextMenuPosition: { x: number, y: number }|undefined;
 
-    private contextMenuDocument: FieldDocument|undefined;
+    public contextMenuDocument: FieldDocument|undefined;
 
 
     constructor(
@@ -113,6 +113,23 @@ export class ResourcesMapComponent {
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(document);
+                break;
+            case 'edit-geometry':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.isEditingGeometry = true;
+                break;
+            case 'create-polygon':
+                console.log("here")
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('Polygon');
+                break;
+            case 'create-line-string':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('LineString');
+                break;
+            case 'create-point':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('Point');
                 break;
         }
     }

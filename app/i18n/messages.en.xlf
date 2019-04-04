@@ -258,20 +258,12 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.geometry" datatype="html">
-        <source>Geometrie</source>
-        <target state="final">Geometry</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
         <source>Polygon</source>
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
@@ -279,7 +271,7 @@
         <target state="final">Multipolygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
@@ -287,7 +279,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
@@ -295,7 +287,7 @@
         <target state="final">Multipolyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
@@ -303,7 +295,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
@@ -311,7 +303,7 @@
         <target state="final">Multipoint</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
@@ -319,15 +311,7 @@
         <target state="final">None</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.coordinates" datatype="html">
-        <source>Koordinaten</source>
-        <target state="final">Coordinates</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
@@ -1189,7 +1173,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1201,7 +1185,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1213,7 +1197,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -1646,7 +1630,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.tooltip" datatype="html">
@@ -1658,7 +1642,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
@@ -1718,7 +1702,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.matrix" datatype="html">
@@ -1730,7 +1714,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
@@ -1748,7 +1732,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">

@@ -1,5 +1,4 @@
 <div class="document-view-field" id="document-view-field-geometry">
-    <div class="fieldname" i18n="@@resources.detailSidebar.geometryView.geometry">Geometrie</div>
     <div *ngIf="document.resource.geometry">
         <span *ngIf="document.resource.geometry.type === 'Polygon'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.polygon">Polygon</span>
@@ -33,9 +32,4 @@
             <span class="mdi mdi-map-marker-plus mdi-18px"></span>
         </button>
     </div>
-
-    <div *ngIf="document.resource.geometry && document.resource.geometry.coordinates" class="fieldname">
-        <span i18n="@@resources.detailSidebar.geometryView.coordinates">Koordinaten</span>
-    </div>
-    <pre *ngIf="document.resource.geometry && document.resource.geometry.coordinates">{{document.resource.geometry.coordinates | json}}</pre>
 </div>

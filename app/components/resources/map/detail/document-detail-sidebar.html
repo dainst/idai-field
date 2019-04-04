@@ -13,19 +13,17 @@
             <span class="mdi mdi-close"></span>
         </button>
 
-        <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
-                    (tabChange)="onTabChange($event)">
+        <!--<ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"-->
+                    <!--(tabChange)="onTabChange($event)">-->
 
-            <ngb-tab id="document-view-fields-tab">
-                <ng-template ngbTabTitle>
-                    <span class="mdi mdi-format-list-bulleted"></span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <div class="btn btn-light btn-block edit-button"
-                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
-                        <span class="button-label"
-                              i18n="@@resources.detailSidebar.editMetadata">Metadaten bearbeiten</span>
-                    </div>
+            <!--<ngb-tab id="document-view-fields-tab">-->
+
+                <!--<ng-template ngbTabTitle>-->
+                    <!--<span class="mdi mdi-format-list-bulleted"></span>-->
+                <!--</ng-template>-->
+                <!---->
+                <!--<ng-template ngbTabContent>-->
+
 
                     <div class="tab-view-container">
                         <description-view
@@ -35,9 +33,10 @@
                         </description-view>
                         <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
                     </div>
-                </ng-template>
-            </ngb-tab>
+                <!--</ng-template>-->
+            <!--</ngb-tab>-->
 
+            <!--
             <ngb-tab *ngIf="viewFacade.getSelectedDocument().resource.type !== 'Inscription'" id="document-view-geometry-tab">
                 <ng-template ngbTabTitle>
                     <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
@@ -92,6 +91,7 @@
                     </div>
                 </ng-template>
             </ngb-tab>
-        </ngb-tabset>
+            -->
+        <!--</ngb-tabset>-->
     </div>
 </div>

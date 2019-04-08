@@ -2,15 +2,39 @@
      (mouseleave)="closePopover()"
      (mouseover)="openPopover()"
      style="position: absolute; left: 300px;  height: 100%; width: 300px; z-index: 1002;
-    background-color: rgba(255, 255, 255, 0.9); padding: 10px">
+    background-color: rgba(255, 255, 255, 0.8); padding: 10px">
 
 
+    <!--
     <relations-view style="opacity: 1.0"
             *ngIf="hasVisibleRelations(highlightedDocument)" [resource]="highlightedDocument.resource"
                     (onRelationTargetClicked)="jumpToResource($event)"
                     [hideRelations]="relationsToHide">
     </relations-view>
+    -->
 
+    <div *ngIf="children" class="float-right" style="opacity: 0.8;">
+        {{children.length}} Ressource(n)</div>
+
+    <ul *ngIf="children"
+            class="list-group object-list" style="opacity: 0.8; background-color:transparent">
+        <li *ngFor="let document of children" style="opacity: 0.8; background-color: transparent"
+            (click)="select(document)"
+            (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+            (contextmenu)="openContextMenu($event, document)"
+            class="list-group-item"
+            [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
+            [class.conflicted]="document['_conflicts']"
+            [class.selected]="viewFacade.getSelectedDocument()
+                    && viewFacade.getSelectedDocument().resource.id === document.resource.id"
+            [id]="'resource-' + document.resource.identifier">
+
+
+            <div class="document-teaser-container" style="opacity: 0.8; background-color: transparent">
+                <document-teaser [document]="document"></document-teaser>
+            </div>
+        </li>
+    </ul>
 </div>
 
 
@@ -26,14 +50,32 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <div class="link-button btn float-right">
+        <div *ngIf="showMoveIntoOption(document)" class="link-button btn float-right">
             <span (mouseover)="openPopover(document)"
-                    (mouseleave)="closePopover()"
-                    *ngIf="hasVisibleRelations(document)" class="mdi mdi-menu-right" style="color: gray">
+                  (mouseleave)="closePopover()"
+                  (click)="moveInto(document); $event.stopPropagation();"
+                  class="mdi mdi-menu-right" style="color: gray">
+            </span>
+        </div>
+
+
+        <div *ngIf="hasVisibleRelations(document)"
+             class="hierarchy-button move-into-button btn float-right"
+             ngbTooltip="Untergeordnete Ressourcen ansehen"
+             i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
+             placement="left"
+             triggers="manual"
+             #tooltip="ngbTooltip"
+             (mouseover)="tooltip.open();"
+             (mouseleave)="tooltip.close();"
+             (mousedown)="tooltip.close()"
+             (click)="openRelationsMenu($event, document); $event.stopPropagation();">
+            <span class="mdi mdi-link">
 
             </span>
         </div>
 
+        <!--
         <div *ngIf="showMoveIntoOption(document)"
              class="hierarchy-button move-into-button btn float-right"
              ngbTooltip="Untergeordnete Ressourcen ansehen"
@@ -51,6 +93,7 @@
                 </span>
             </span>
         </div>
+        -->
 
         <div *ngIf="showJumpToViewOption(document) && document.resource.type !== 'Trench'"
              class="hierarchy-button btn float-right"

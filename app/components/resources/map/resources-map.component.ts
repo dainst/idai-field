@@ -30,8 +30,10 @@ export class ResourcesMapComponent {
 
     public parentDocument: FieldDocument|undefined;
     public contextMenuPosition: { x: number, y: number }|undefined;
+    public relationsMenuPosition: { x: number, y: number }|undefined;
 
     public contextMenuDocument: FieldDocument|undefined;
+    public relationsMenuDocument: FieldDocument|undefined;
 
 
     constructor(
@@ -90,10 +92,26 @@ export class ResourcesMapComponent {
     }
 
 
+    public openRelationsMenu(event: MouseEvent, document: FieldDocument) {
+
+        if (!document.resource.id) return this.closeRelationsMenu();
+
+        this.relationsMenuPosition = { x: event.clientX, y: event.clientY };
+        this.relationsMenuDocument = document;
+    }
+
+
     public closeContextMenu() {
 
         this.contextMenuPosition = undefined;
         this.contextMenuDocument = undefined;
+    }
+
+
+    public closeRelationsMenu() {
+
+        this.relationsMenuPosition = undefined;
+        this.relationsMenuDocument = undefined;
     }
 
 
@@ -216,7 +234,7 @@ export class ResourcesMapComponent {
 
     private handleClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenuPosition) return;
+        if (!this.contextMenuPosition && !this.relationsMenuPosition) return;
 
         let target = event.target;
         let inside: boolean = false;
@@ -230,6 +248,9 @@ export class ResourcesMapComponent {
             target = target.parentNode;
         } while (target);
 
-        if (!inside) this.closeContextMenu();
+        if (!inside) {
+            this.closeRelationsMenu();
+            this.closeContextMenu();
+        }
     }
 }

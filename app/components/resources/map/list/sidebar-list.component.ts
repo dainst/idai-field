@@ -8,6 +8,7 @@ import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
 import {isEmpty} from 'tsfun';
 import {RoutingService} from '../../../routing-service';
+import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 
 
 @Component({
@@ -31,14 +32,17 @@ export class SidebarListComponent extends BaseList {
     public highlightedDocument: FieldDocument|undefined = undefined;
     public timeoutRunning = false;
 
+    public children: Array<FieldDocument>|undefined = [];
+
 
     constructor(resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
+                private fieldDatastore: FieldReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private routingService: RoutingService,) {
+                private routingService: RoutingService) {
 
         super(resourcesComponent, viewFacade, loading)
     }
@@ -55,7 +59,26 @@ export class SidebarListComponent extends BaseList {
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
         this.resourcesMapComponent.openContextMenu(event, document);
 
+    public openRelationsMenu = (event: MouseEvent, document: FieldDocument) =>
+        this.resourcesMapComponent.openRelationsMenu(event, document);
+
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
+
+    public closeRelationsMenu = () => this.resourcesMapComponent.closeRelationsMenu();
+
+
+    public async getChildren(document: FieldDocument) {
+
+        if (!document) return [];
+        console.log("here", document.resource.identifier)
+
+        const children = await this.fieldDatastore.find({constraints: {
+                'liesWithin:contain' : document.resource.id
+            }});
+
+        console.log("children", children)
+        this.children = children.documents;
+    }
 
 
     public moveInto(document: FieldDocument) {
@@ -99,6 +122,7 @@ export class SidebarListComponent extends BaseList {
 
     public openPopover(document: FieldDocument) {
 
+        this.getChildren(document);
         if (document) this.highlightedDocument = document;
         this.popoverOpened = true;
         this.timeoutRunning = false;

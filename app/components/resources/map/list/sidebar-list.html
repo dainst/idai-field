@@ -2,16 +2,7 @@
      (mouseleave)="closePopover()"
      (mouseover)="openPopover()"
      style="position: absolute; left: 300px;  height: 100%; width: 300px; z-index: 1002;
-    background-color: rgba(255, 255, 255, 0.8); padding: 10px">
-
-
-    <!--
-    <relations-view style="opacity: 1.0"
-            *ngIf="hasVisibleRelations(highlightedDocument)" [resource]="highlightedDocument.resource"
-                    (onRelationTargetClicked)="jumpToResource($event)"
-                    [hideRelations]="relationsToHide">
-    </relations-view>
-    -->
+    background-color: rgba(255, 255, 255, 0.8); padding: 10px; overflow: hidden">
 
     <div *ngIf="children" class="float-right" style="opacity: 0.8;">
         {{children.length}} Ressource(n)</div>
@@ -87,6 +78,7 @@
              (mouseleave)="tooltip.close();"
              (mousedown)="tooltip.close()"
              (click)="moveInto(document); $event.stopPropagation();">
+
             <span class="move-into-icon">
                 <span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">
                     {{viewFacade.getChildrenCount(document)}}

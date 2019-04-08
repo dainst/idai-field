@@ -69,14 +69,12 @@ export class SidebarListComponent extends BaseList {
 
     public async getChildren(document: FieldDocument) {
 
-        if (!document) return [];
-        console.log("here", document.resource.identifier)
+        // TODO remove viewFacade.getChildrenCount
 
+        if (!document) return [];
         const children = await this.fieldDatastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
             }});
-
-        console.log("children", children)
         this.children = children.documents;
     }
 

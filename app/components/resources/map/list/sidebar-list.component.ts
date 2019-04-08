@@ -118,9 +118,11 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public openPopover(document: FieldDocument) {
+    public async openPopover(document: FieldDocument|undefined) {
 
-        this.getChildren(document);
+        if (!document) return;
+
+        await this.getChildren(document);
         if (document) this.highlightedDocument = document;
         this.popoverOpened = true;
         this.timeoutRunning = false;

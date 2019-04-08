@@ -12,7 +12,7 @@
     border-radius: 0;
     margin: 0 0 1px 0 !important;
     font-size: 1em;
-    padding: 10px 5px 10px 10px;
+    padding: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -53,34 +53,53 @@
       }
     }
 
-    .link-button {
+    .object-list-button-group {
+
       position: relative;
-      top: 5px;
-      right: -4px;
-      width: 24px;
+      height: 66px;
+
+      .object-list-button-group-inner {
+        position: relative;
+        top: 14px;
+      }
+
+      .hierarchy-arrow {
+
+        position: relative;
+        right: -2px;
+        width: 24px;
+        height: 66px;
+
+        &:hover {
+          color: darken(#868e96, 10%);
+          background-color: darken($list-item-hover-color, 10%);
+          transition: background-color .2s ease;
+        }
+      }
+
+      .link-button {
+        position: relative;
+        right: -14px;
+        width: 44px;
+        height: 66px;
+        color: #868e96;
+
+        &:hover {
+          color: darken(#868e96, 10%);
+          background-color: darken($list-item-hover-color, 10%);
+          transition: background-color .2s ease;
+        }
+
+        &.move-into-button {
+          height: 66px;
+        }
+
+        &.dropdown-toggle::after {
+          display: none;
+        }
+      }
     }
 
-    .hierarchy-button {
-      position: relative;
-      top: 3px;
-      right: -14px;
-      width: 44px;
-      color: #868e96;
-
-      &:hover {
-        color: darken(#868e96, 10%);
-        background-color: darken($list-item-hover-color, 10%);
-        transition: background-color .2s ease;
-      }
-
-      &.move-into-button {
-        height: 40px;
-      }
-
-      &.dropdown-toggle::after {
-        display: none;
-      }
-    }
   }
 
   .list-group-item:hover {

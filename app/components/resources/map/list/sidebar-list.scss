@@ -24,10 +24,10 @@
       display: flex;
       align-items: center;
       position: absolute;
+      width: 232px;
       top: 0;
-      left: 9px;
-      width: calc(100% - 70px);
       height: 66px;
+      padding-left: 9px;
 
       .document-teaser {
         display: flex;
@@ -56,7 +56,9 @@
     .object-list-button-group {
 
       position: relative;
+      left: 232px;
       height: 66px;
+      width: 68px;
 
       .object-list-button-group-inner {
         position: relative;
@@ -82,8 +84,7 @@
       }
 
       .link-button {
-        position: relative;
-        right: -14px;
+        position: absolute;
         width: 44px;
         height: 66px;
         color: #868e96;

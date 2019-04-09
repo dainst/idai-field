@@ -56,13 +56,18 @@
     .object-list-button-group {
 
       position: relative;
-      left: 232px;
+      left: 238px;
       height: 66px;
-      width: 68px;
+      width: 72px;
       color: gray;
+
+      .btn {
+        border: 0;
+      }
 
       .object-list-button-group-inner {
         position: relative;
+        width: 24px;
         top: 14px;
       }
 
@@ -72,15 +77,21 @@
 
       .hierarchy-arrow {
 
-        position: relative;
-        right: -2px;
-        width: 24px;
+        position: absolute;
+        left: 48px;
+        width: 14px;
         height: 66px;
 
         &:hover {
           color: darken(#868e96, 10%);
           background-color: darken($list-item-hover-color, 10%);
           transition: background-color .2s ease;
+        }
+
+        span {
+          position: absolute;
+          top: 20px;
+          left: -2px;
         }
       }
 
@@ -90,7 +101,8 @@
 
       .link-button {
         position: absolute;
-        width: 44px;
+        width: 24px;
+        left: 24px;
         height: 66px;
         color: #868e96;
 
@@ -106,6 +118,27 @@
 
         &.dropdown-toggle::after {
           display: none;
+        }
+      }
+
+
+      .info-button {
+        position: absolute;
+        width: 24px;
+        height: 66px;
+        left: 0;
+        color: #868e96;
+
+        &:hover {
+          color: darken(#868e96, 10%);
+          background-color: darken($list-item-hover-color, 10%);
+          transition: background-color .2s ease;
+        }
+
+        span {
+          position: absolute;
+          left: 0px;
+          top: 20px;
         }
       }
     }

@@ -34,6 +34,7 @@ export class SidebarListComponent extends BaseList {
 
     public relationsMenuOpened = false;
     public childrenMenuOpened = false;
+    public infoMenuOpened = false;
 
     public children: Array<FieldDocument> = [];
 
@@ -63,6 +64,27 @@ export class SidebarListComponent extends BaseList {
         this.resourcesMapComponent.openContextMenu(event, document);
 
 
+    public async toggleInfoMenu(document: FieldDocument) {
+
+        if (this.infoMenuOpened && this.isSelected(document)) {
+
+            this.infoMenuOpened = false;
+            this.listPopoverOpened = false;
+        } else {
+
+            this.childrenMenuOpened = false;
+            this.children = [];
+            this.relationsMenuOpened = false;
+
+            if (!this.isSelected(document)) await this.select(document);
+
+            this.infoMenuOpened = true;
+            this.listPopoverOpened = true;
+        }
+    };
+
+
+
     public async toggleRelationsMenu(document: FieldDocument) {
 
         if (this.relationsMenuOpened && this.isSelected(document)) {
@@ -73,6 +95,7 @@ export class SidebarListComponent extends BaseList {
 
             this.childrenMenuOpened = false;
             this.children = [];
+            this.infoMenuOpened = false;
 
             if (!this.isSelected(document)) await this.select(document);
 
@@ -88,11 +111,10 @@ export class SidebarListComponent extends BaseList {
 
             this.childrenMenuOpened = false;
             this.listPopoverOpened = false;
-
-            console.log("1")
         } else {
 
             this.relationsMenuOpened = false;
+            this.infoMenuOpened = false;
 
             if (!this.isSelected(document) || this.children.length === 0) {
                 await this.select(document);
@@ -135,6 +157,13 @@ export class SidebarListComponent extends BaseList {
     public isChildrenOpened(document: FieldDocument) {
 
         if (!this.childrenMenuOpened) return false;
+        return this.isSelected(document);
+    }
+
+
+    public isInfoOpened(document: FieldDocument) {
+
+        if (!this.infoMenuOpened) return false;
         return this.isSelected(document);
     }
 

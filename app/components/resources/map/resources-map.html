@@ -23,9 +23,4 @@
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
-
-    <div *ngIf="isDocumentSelected()"
-         class="col px-0 detail-sidebar-container">
-        <document-view-sidebar></document-view-sidebar>
-    </div>
 </div>

@@ -34,6 +34,11 @@
                         [hideRelations]="relationsToHide">
         </relations-view>
     </div>
+
+
+    <div *ngIf="infoMenuOpened">
+        <document-view-sidebar></document-view-sidebar>
+    </div>
 </div>
 
 
@@ -51,7 +56,7 @@
 
         <div class="object-list-button-group">
 
-            <div class="btn float-right hierarchy-arrow"
+            <div class="btn hierarchy-arrow"
                  [class.object-list-button-group-active-button]="listPopoverOpened && !relationsMenuOpened && isChildrenOpened(document)"
                  *ngIf="showMoveIntoOption(document) "
                  (click)="toggleChildrenMenu(document); $event.stopPropagation();"
@@ -63,7 +68,8 @@
             </div>
             <!-- moveInto(document); $event.stopPropagation(); -->
 
-            <div class="link-button move-into-button btn float-right"
+
+            <div class="btn link-button move-into-button"
                  [class.object-list-button-group-active-button]="listPopoverOpened && isRelationsOpened(document)"
                  ngbTooltip="Untergeordnete Ressourcen ansehen"
                  i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
@@ -75,6 +81,16 @@
 
                 <span [class.object-list-button-no-items]="!hasVisibleRelations(document)"
                         class="mdi mdi-link object-list-button-group-inner">
+                </span>
+            </div>
+
+
+            <div class="btn info-button"
+                 [class.object-list-button-group-active-button]="listPopoverOpened && isInfoOpened(document)"
+                 (click)="toggleInfoMenu(document); $event.stopPropagation();">
+
+                <span
+                      class="mdi mdi-information-outline object-list-button-group-inner">
                 </span>
             </div>
 

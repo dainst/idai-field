@@ -292,6 +292,18 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     },
     {
         'resource': {
+            'id': 'si6',
+            'identifier': locale === 'de' ? 'SE6' : 'SU6',
+            'hasPeriod': 'Bronzezeitlich',
+            'shortDescription': locale === 'de' ? 'Noch ein Erdbefund' : 'Another Layer',
+            'relations': {
+                'isRecordedIn': ['t2'],
+            },
+            'type': 'Layer'
+        }
+    },
+    {
+        'resource': {
             'id': 'si0',
             'identifier': locale === 'de' ? 'SE0' : 'SU0',
             'shortDescription': locale === 'de' ? 'Stratigraphische Einheit' : 'Stratigraphical unit',

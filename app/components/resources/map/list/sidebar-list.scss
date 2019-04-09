@@ -56,13 +56,14 @@
     .object-list-button-group {
 
       position: relative;
-      left: 238px;
+      left: 228px;
       height: 66px;
       width: 72px;
       color: gray;
 
       .btn {
         border: 0;
+        color: #868e96;
       }
 
       .object-list-button-group-inner {
@@ -75,11 +76,12 @@
         color: lightgray;
       }
 
-      .hierarchy-arrow {
+      .hierarchy-button {
+
 
         position: absolute;
         left: 48px;
-        width: 14px;
+        width: 24px;
         height: 66px;
 
         &:hover {
@@ -90,8 +92,8 @@
 
         span {
           position: absolute;
-          top: 20px;
-          left: -2px;
+          top: 21px;
+          left: 0;
         }
       }
 
@@ -104,7 +106,6 @@
         width: 24px;
         left: 24px;
         height: 66px;
-        color: #868e96;
 
         &:hover {
           color: darken(#868e96, 10%);
@@ -127,7 +128,6 @@
         width: 24px;
         height: 66px;
         left: 0;
-        color: #868e96;
 
         &:hover {
           color: darken(#868e96, 10%);

@@ -77,6 +77,10 @@
         }
       }
 
+      .object-list-button-group-active-button {
+        background-color: darken($list-item-hover-color, 10%);
+      }
+
       .link-button {
         position: relative;
         right: -14px;

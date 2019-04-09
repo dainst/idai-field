@@ -28,15 +28,18 @@ export class SidebarListComponent extends BaseList {
 
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
 
-    public popoverOpened = false;
+    public listPopoverOpened = false;
     public highlightedDocument: FieldDocument|undefined = undefined;
     public timeoutRunning = false;
 
-    public children: Array<FieldDocument>|undefined = [];
+    public relationsMenuOpened = false;
+    public childrenMenuOpened = false;
+
+    public children: Array<FieldDocument> = [];
 
 
     constructor(resourcesComponent: ResourcesComponent,
-                viewFacade: ViewFacade,
+                public viewFacade: ViewFacade,
                 loading: Loading,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
@@ -59,8 +62,82 @@ export class SidebarListComponent extends BaseList {
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
         this.resourcesMapComponent.openContextMenu(event, document);
 
-    public openRelationsMenu = (event: MouseEvent, document: FieldDocument) =>
-        this.resourcesMapComponent.openRelationsMenu(event, document);
+
+    public async toggleRelationsMenu(document: FieldDocument) {
+
+        if (this.relationsMenuOpened && this.isSelected(document)) {
+
+            this.relationsMenuOpened = false;
+            this.listPopoverOpened = false;
+        } else {
+
+            this.childrenMenuOpened = false;
+            this.children = [];
+
+            if (!this.isSelected(document)) await this.select(document);
+
+            this.relationsMenuOpened = true;
+            this.listPopoverOpened = true;
+        }
+    };
+
+
+    public async toggleChildrenMenu(document: FieldDocument) {
+
+        if (this.childrenMenuOpened && this.isSelected(document)) {
+
+            this.childrenMenuOpened = false;
+            this.listPopoverOpened = false;
+
+            console.log("1")
+        } else {
+
+            this.relationsMenuOpened = false;
+
+            if (!this.isSelected(document) || this.children.length === 0) {
+                await this.select(document);
+                await this.getChildren(document);
+            }
+
+            this.listPopoverOpened = true;
+            this.childrenMenuOpened = true;
+        }
+    }
+
+
+    private isSelected(document: FieldDocument) {
+
+        if (!this.viewFacade.getSelectedDocument()) return false;
+        return (this.viewFacade.getSelectedDocument() as FieldDocument).resource.id === document.resource.id;
+    }
+
+
+    public highlightDocument(document: FieldDocument) {
+
+        this.highlightedDocument = document;
+    };
+
+
+    public isHighlighted(document: FieldDocument) {
+
+        if (!this.highlightedDocument) return false;
+        return this.highlightedDocument.resource.id === document.resource.id;
+    }
+
+
+    public isRelationsOpened(document: FieldDocument) {
+
+        if (!this.relationsMenuOpened) return false;
+        return this.isSelected(document);
+    }
+
+
+    public isChildrenOpened(document: FieldDocument) {
+
+        if (!this.childrenMenuOpened) return false;
+        return this.isSelected(document);
+    }
+
 
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
 
@@ -81,14 +158,14 @@ export class SidebarListComponent extends BaseList {
 
     public moveInto(document: FieldDocument) {
 
-        this.closePopover();
+        this.closeListPopover();
         this.navigationService.moveInto(document);
     }
 
 
     public jumpToView(document: FieldDocument) {
 
-        this.closePopover();
+        this.closeListPopover();
         this.navigationService.jumpToView(document);
     }
 
@@ -112,7 +189,7 @@ export class SidebarListComponent extends BaseList {
 
     public async jumpToResource(documentToSelect: FieldDocument) {
 
-        this.closePopover();
+        this.closeListPopover();
         await this.routingService.jumpToResource(documentToSelect, 'relations');
         this.resourcesComponent.setScrollTarget(documentToSelect);
     }
@@ -122,24 +199,34 @@ export class SidebarListComponent extends BaseList {
 
         if (!document) return;
 
-        await this.getChildren(document);
-        if (document) this.highlightedDocument = document;
-        this.popoverOpened = true;
-        this.timeoutRunning = false;
+        if (this.relationsMenuOpened) {
+
+            this.timeoutRunning = false;
+
+        } else {
+
+            // if (document) this.highlightedDocument = document;
+            this.listPopoverOpened = true;
+            this.timeoutRunning = false;
+        }
     }
 
-    public closePopover() {
+    public closeListPopover() {
+
+        console.log("will close")
 
         this.timeoutRunning = true;
         setTimeout(async () => {
 
             if (this.timeoutRunning) {
-                this.popoverOpened = false;
+                this.listPopoverOpened = false;
                 this.highlightedDocument = undefined;
+                this.relationsMenuOpened = false;
                 this.timeoutRunning = false;
             }
         }, 50);
     };
+
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 

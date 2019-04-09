@@ -70,6 +70,7 @@
 
 
             <div class="btn link-button move-into-button"
+                 *ngIf="hasVisibleRelations(document)"
                  [class.object-list-button-group-active-button]="listPopoverOpened && isRelationsOpened(document)"
                  ngbTooltip="Untergeordnete Ressourcen ansehen"
                  i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
@@ -79,7 +80,8 @@
                  (click)="toggleRelationsMenu(document); $event.stopPropagation();"
                  >
 
-                <span [class.object-list-button-no-items]="!hasVisibleRelations(document)"
+                <span *ngIf="isHighlighted(document) || isRelationsOpened(document)"
+                        [class.object-list-button-no-items]="!hasVisibleRelations(document)"
                         class="mdi mdi-link object-list-button-group-inner">
                 </span>
             </div>
@@ -89,7 +91,7 @@
                  [class.object-list-button-group-active-button]="listPopoverOpened && isInfoOpened(document)"
                  (click)="toggleInfoMenu(document); $event.stopPropagation();">
 
-                <span
+                <span *ngIf="isHighlighted(document) || isInfoOpened(document)"
                       class="mdi mdi-information-outline object-list-button-group-inner">
                 </span>
             </div>

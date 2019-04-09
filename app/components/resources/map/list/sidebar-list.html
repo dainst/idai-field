@@ -80,7 +80,7 @@
                  (click)="toggleRelationsMenu(document); $event.stopPropagation();"
                  >
 
-                <span *ngIf="isHighlighted(document) || isRelationsOpened(document)"
+                <span *ngIf="isHighlighted(document) || isSelected(document) || isRelationsOpened(document)"
                         [class.object-list-button-no-items]="!hasVisibleRelations(document)"
                         class="mdi mdi-link object-list-button-group-inner">
                 </span>
@@ -91,7 +91,7 @@
                  [class.object-list-button-group-active-button]="listPopoverOpened && isInfoOpened(document)"
                  (click)="toggleInfoMenu(document); $event.stopPropagation();">
 
-                <span *ngIf="isHighlighted(document) || isInfoOpened(document)"
+                <span *ngIf="isHighlighted(document) || isSelected(document) || isInfoOpened(document)"
                       class="mdi mdi-information-outline object-list-button-group-inner">
                 </span>
             </div>

@@ -42,7 +42,9 @@
 </div>
 
 
-<ul id="objectList" class="list-group object-list" (scroll)="closeContextMenu()">
+<ul id="objectList" class="list-group object-list"
+    (mouseleave)="highlightedDocument = undefined"
+    (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
         (mouseover)="highlightDocument(document)"
         (contextmenu)="openContextMenu($event, document)"

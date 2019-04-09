@@ -59,10 +59,15 @@
       left: 232px;
       height: 66px;
       width: 68px;
+      color: gray;
 
       .object-list-button-group-inner {
         position: relative;
         top: 14px;
+      }
+
+      .object-list-button-no-items {
+        color: lightgray;
       }
 
       .hierarchy-arrow {

@@ -57,15 +57,14 @@
                  (click)="toggleChildrenMenu(document); $event.stopPropagation();"
                  (dblclick)="moveInto(document); $event.stopPropagation();">
 
-                <span class="mdi mdi-menu-right object-list-button-group-inner"
-                       style="color: gray">
+                <span [class.object-list-button-no-items]="viewFacade.getChildrenCount(document) === 0"
+                        class="mdi mdi-menu-right object-list-button-group-inner">
                 </span>
             </div>
             <!-- moveInto(document); $event.stopPropagation(); -->
 
             <div class="link-button move-into-button btn float-right"
                  [class.object-list-button-group-active-button]="listPopoverOpened && isRelationsOpened(document)"
-                 *ngIf="hasVisibleRelations(document) && (isHighlighted(document) || isRelationsOpened(document))"
                  ngbTooltip="Untergeordnete Ressourcen ansehen"
                  i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
                  placement="left"
@@ -74,7 +73,8 @@
                  (click)="toggleRelationsMenu(document); $event.stopPropagation();"
                  >
 
-                <span class="mdi mdi-link object-list-button-group-inner">
+                <span [class.object-list-button-no-items]="!hasVisibleRelations(document)"
+                        class="mdi mdi-link object-list-button-group-inner">
                 </span>
             </div>
 

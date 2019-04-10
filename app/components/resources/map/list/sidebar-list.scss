@@ -1,5 +1,6 @@
 @import 'sidebar-list-button-group';
 
+
 $teaser-width: 232px;
 $item-height: 66px;
 $item-padding-top: 14px;
@@ -58,7 +59,9 @@ $item-padding-left: 9px;
 
 .resources-listing {
 
-  .list-group-item {
+  .resources-listing-item {
+
+    position: relative;
     display: block;
     cursor: default;
     border: 0;
@@ -81,39 +84,25 @@ $item-padding-left: 9px;
     }
   }
 
-
-  .relation-target {
-    display: block;
-    cursor: default;
-    border: 0;
-    border-radius: 0;
-    margin: 0 0 1px 0 !important;
-    font-size: 1em;
-    user-select: none;
+  .resources-listing-item-slim {
     width: $teaser-width;
+  }
 
-    padding-left: $item-padding-left;
-    padding-top: $item-padding-top;
-    min-height: $item-height;
-
-    &:hover {
-      background-color: darken($list-item-hover-colour, 5%);
-      transition: background-color .65s ease;
-    }
+  .resources-listing-item-wide {
+    width: 300px;
   }
 
 
-  .document-teaser-container {
+  @import 'relations-view';
+
+
+  document-teaser {
     position: absolute;
     width: $teaser-width;
     top: 0;
     height: $item-height;
     padding-left: $item-padding-left;
     padding-top: $item-padding-top;
-  }
-
-
-  .document-teaser {
 
     .title {
       display: -webkit-box;

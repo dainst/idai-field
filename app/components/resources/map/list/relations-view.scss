@@ -1,0 +1,21 @@
+.relation-target {
+
+  display: block;
+  cursor: default;
+  border: 0;
+  border-radius: 0;
+  margin: 0 0 1px 0 !important;
+  font-size: 1em;
+  padding: 10px 5px 10px 10px;
+  user-select: none;
+
+  &:hover {
+    background-color: darken($list-item-hover-colour, 5%);
+    transition: background-color .65s ease;
+  }
+
+  width: $teaser-width;
+  padding-left: $item-padding-left;
+  padding-top: $item-padding-top;
+  min-height: $item-height;
+}

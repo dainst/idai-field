@@ -5,36 +5,32 @@
         {{children.length}} Ressource(n)</div>
 
     <ul *ngIf="childrenMenuOpened"
-            class="list-group overlay-list resources-listing document-view-field">
+        class="list-group overlay-list resources-listing document-view-field">
 
         <li *ngFor="let document of children"
             (click)="select(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"
             (contextmenu)="openContextMenu($event, document)"
-            class="relation-target"
+            class="resources-listing-item resources-listing-item-slim"
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"
             [class.selected]="viewFacade.getSelectedDocument()
                     && viewFacade.getSelectedDocument().resource.id === document.resource.id"
             [id]="'resource-' + document.resource.identifier">
 
-                <document-teaser [document]="document"></document-teaser>
+            <document-teaser [document]="document"></document-teaser>
         </li>
     </ul>
 
+    <relations-view
+            *ngIf="relationsMenuOpened && viewFacade.getSelectedDocument()"
+            class="resources-listing"
+            [resource]="viewFacade.getSelectedDocument().resource"
+            (onRelationTargetClicked)="jumpToResource($event)"
+            [hideRelations]="relationsToHide">
+    </relations-view>
 
-    <div *ngIf="relationsMenuOpened && viewFacade.getSelectedDocument()" class="resources-listing">
-
-        <relations-view [resource]="viewFacade.getSelectedDocument().resource"
-                        (onRelationTargetClicked)="jumpToResource($event)"
-                        [hideRelations]="relationsToHide">
-        </relations-view>
-    </div>
-
-
-    <div *ngIf="infoMenuOpened">
-        <document-view-sidebar></document-view-sidebar>
-    </div>
+    <document-view-sidebar *ngIf="infoMenuOpened"></document-view-sidebar>
 </div>
 
 
@@ -44,22 +40,19 @@
     <li *ngFor="let document of viewFacade.getDocuments()"
         (mouseover)="highlightDocument(document)"
         (contextmenu)="openContextMenu($event, document)"
-        class="list-group-item"
+        class="resources-listing-item resources-listing-item-wide"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
         [class.selected]="viewFacade.getSelectedDocument()
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-
         <sidebar-list-button-group [document]="document"></sidebar-list-button-group>
 
-
-        <div class="document-teaser-container"
-             (click)="select(document)"
-             (dblclick)="resourcesComponent.editDocument(document, 'fields')">
-            <document-teaser [document]="document"></document-teaser>
-        </div>
+        <document-teaser
+                (click)="select(document)"
+                (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+                [document]="document"></document-teaser>
     </li>
 
     <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info" i18n="@@resources.sidebarList.resourceLimitInfo">

@@ -63,6 +63,8 @@ $item-padding-left: 9px;
 
 .resources-listing {
 
+  @import 'relations-view';
+
   .resources-listing-item {
 
     position: relative;
@@ -95,10 +97,6 @@ $item-padding-left: 9px;
   .resources-listing-item-wide {
     width: 300px;
   }
-
-
-  @import 'relations-view';
-
 
   document-teaser {
     position: absolute;

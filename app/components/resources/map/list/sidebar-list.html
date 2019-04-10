@@ -1,35 +1,31 @@
 <div *ngIf="listPopoverOpened" id="sidebar-popover">
 
-    <div *ngIf="childrenMenuOpened" class="float-right" style="opacity: 0.8; font-size: 12px; color: gray">
+    <div *ngIf="childrenMenuOpened" class="float-right"
+         style="opacity: 0.8; font-size: 12px; color: gray">
         {{children.length}} Ressource(n)</div>
 
     <ul *ngIf="childrenMenuOpened"
-            class="list-group object-list overlay-list" style="background-color:transparent">
+            class="list-group overlay-list resources-listing document-view-field">
 
-        <li *ngFor="let document of children" style="background-color: transparent"
+        <li *ngFor="let document of children"
             (click)="select(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"
             (contextmenu)="openContextMenu($event, document)"
-            class="list-group-item"
+            class="relation-target"
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"
             [class.selected]="viewFacade.getSelectedDocument()
                     && viewFacade.getSelectedDocument().resource.id === document.resource.id"
             [id]="'resource-' + document.resource.identifier">
 
-
-            <div class="document-teaser-container"
-                 style="opacity: 0.8; background-color: transparent">
                 <document-teaser [document]="document"></document-teaser>
-            </div>
         </li>
     </ul>
 
 
-    <div *ngIf="relationsMenuOpened && viewFacade.getSelectedDocument()" class="object-list">
+    <div *ngIf="relationsMenuOpened && viewFacade.getSelectedDocument()" class="resources-listing">
 
-        <relations-view style="opacity: 1.0"
-                        [resource]="viewFacade.getSelectedDocument().resource"
+        <relations-view [resource]="viewFacade.getSelectedDocument().resource"
                         (onRelationTargetClicked)="jumpToResource($event)"
                         [hideRelations]="relationsToHide">
         </relations-view>
@@ -42,7 +38,7 @@
 </div>
 
 
-<ul id="objectList" class="list-group object-list"
+<ul id="sidebar" class="list-group resources-listing"
     (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
@@ -62,7 +58,6 @@
         <div class="document-teaser-container"
              (click)="select(document)"
              (dblclick)="resourcesComponent.editDocument(document, 'fields')">
-
             <document-teaser [document]="document"></document-teaser>
         </div>
     </li>

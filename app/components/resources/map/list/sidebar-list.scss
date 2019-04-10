@@ -1,3 +1,5 @@
+@import 'sidebar-list-button-group';
+
 #objectList {
 
   height: calc(100vh - 103px);
@@ -20,8 +22,6 @@
 }
 
 
-
-
 .object-list {
 
   .list-group-item {
@@ -38,97 +38,6 @@
     user-select: none;
     min-height: 66px;
     height: 66px;
-
-    .object-list-button-group {
-
-      position: relative;
-      left: 228px;
-      height: 66px;
-      width: 72px;
-      color: gray;
-
-      .btn {
-        border: 0;
-        color: #868e96;
-      }
-
-      .object-list-button-group-inner {
-        position: relative;
-        width: 24px;
-        top: 14px;
-      }
-
-      .object-list-button-no-items {
-        color: lightgray;
-      }
-
-      .hierarchy-button {
-
-
-        position: absolute;
-        left: 48px;
-        width: 24px;
-        height: 66px;
-
-        &:hover {
-          color: darken(#868e96, 10%);
-          background-color: darken($list-item-hover-color, 10%);
-          transition: background-color .2s ease;
-        }
-
-        span {
-          position: absolute;
-          top: 21px;
-          left: 0;
-        }
-      }
-
-      .object-list-button-group-active-button {
-        background-color: darken($list-item-hover-color, 10%);
-      }
-
-      .link-button {
-        position: absolute;
-        width: 24px;
-        left: 24px;
-        height: 66px;
-
-        &:hover {
-          color: darken(#868e96, 10%);
-          background-color: darken($list-item-hover-color, 10%);
-          transition: background-color .2s ease;
-        }
-
-        &.move-into-button {
-          height: 66px;
-        }
-
-        &.dropdown-toggle::after {
-          display: none;
-        }
-      }
-
-
-      .info-button {
-        position: absolute;
-        width: 24px;
-        height: 66px;
-        left: 0;
-
-        &:hover {
-          color: darken(#868e96, 10%);
-          background-color: darken($list-item-hover-color, 10%);
-          transition: background-color .2s ease;
-        }
-
-        span {
-          position: absolute;
-          left: 0px;
-          top: 20px;
-        }
-      }
-    }
-
   }
 
   .list-group-item:hover {
@@ -173,8 +82,6 @@
   .document-view-field {
     margin-bottom: 10px;
   }
-
-
 }
 
 
@@ -210,6 +117,7 @@
     }
   }
 }
+
 
 #create-document-button .circular-button {
   left: 45%;

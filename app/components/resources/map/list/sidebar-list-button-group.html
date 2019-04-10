@@ -1,0 +1,105 @@
+<div class="object-list-button-group">
+
+    <div class="btn hierarchy-button"
+         [class.object-list-button-group-active-button]="listPopoverOpened && !relationsMenuOpened && isChildrenOpened(document)"
+         *ngIf="sidebarList.showMoveIntoOption(document) "
+         (click)="sidebarList.toggleChildrenMenu(document); $event.stopPropagation();"
+         (dblclick)="sidebarList.moveInto(document); $event.stopPropagation();">
+
+                <span [class.object-list-button-no-items]="viewFacade.getChildrenCount(document) === 0"
+                      class="mdi mdi-subdirectory-arrow-right object-list-button-group-inner">
+                </span>
+    </div>
+    <!-- moveInto(document); $event.stopPropagation(); -->
+
+
+    <div class="btn link-button move-into-button"
+         *ngIf="sidebarList.hasVisibleRelations(document)"
+         [class.object-list-button-group-active-button]="listPopoverOpened && isRelationsOpened(document)"
+         ngbTooltip="Untergeordnete Ressourcen ansehen"
+         i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
+         placement="left"
+         triggers="manual"
+         #tooltip="ngbTooltip"
+         (click)="sidebarList.toggleRelationsMenu(document); $event.stopPropagation();"
+    >
+
+                <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isRelationsOpened(document)"
+                      [class.object-list-button-no-items]="!sidebarList.hasVisibleRelations(document)"
+                      class="mdi mdi-link object-list-button-group-inner">
+                </span>
+    </div>
+
+
+    <div class="btn info-button"
+         [class.object-list-button-group-active-button]="sidebarList.listPopoverOpened && sidebarList.isInfoOpened(document)"
+         (click)="sidebarList.toggleInfoMenu(document); $event.stopPropagation();">
+
+                <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isInfoOpened(document)"
+                      class="mdi mdi-information-outline object-list-button-group-inner">
+                </span>
+    </div>
+
+
+    <!-- (mouseover)="tooltip.open();"
+         (mouseleave)="tooltip.close();"
+         (mousedown)="tooltip.close()" -->
+
+
+    <div *ngIf="sidebarList.showJumpToViewOption(document) && document.resource.type !== 'Trench'"
+         class="link-button btn float-right"
+         ngbTooltip="Zur Maßnahme wechseln"
+         i18n-ngbTooltip="@@resources.jumpToView.tooltip"
+         placement="left"
+         triggers="manual"
+         #tooltip="ngbTooltip"
+         (mouseover)="tooltip.open()"
+         (mouseleave)="tooltip.close()"
+         (mousedown)="tooltip.close()"
+         (click)="sidebarList.jumpToView(document); $event.stopPropagation();">
+        <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+    </div>
+
+    <div *ngIf="sidebarList.showJumpToViewOption(document) && document.resource.type === 'Trench'"
+         ngbDropdown placement="bottom-right"
+         (click)="$event.stopPropagation()">
+        <div class="link-button btn float-right" ngbDropdownToggle>
+            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+        </div>
+        <div ngbDropdownMenu>
+            <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
+                 class="dropdown-item"
+                 (click)="sidebarList.jumpToView(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
+            </div>
+            <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
+                 class="dropdown-item"
+                 (click)="sidebarList.jumpToMatrix(document)">
+                    <span class="dropdown-entry-label"
+                          i18n="@@resources.jumpToView.matrix">Matrix</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div *ngIf="showMoveIntoOption(document)"
+     class="hierarchy-button move-into-button btn float-right"
+     ngbTooltip="Untergeordnete Ressourcen ansehen"
+     i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
+     placement="left"
+     triggers="manual"
+     #tooltip="ngbTooltip"
+     (mouseover)="tooltip.open();"
+     (mouseleave)="tooltip.close();"
+     (mousedown)="tooltip.close()"
+     (click)="moveInto(document); $event.stopPropagation();">
+
+    <span class="move-into-icon">
+        <span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">
+            {{viewFacade.getChildrenCount(document)}}
+        </span>
+    </span>
+</div>
+-->

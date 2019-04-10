@@ -44,6 +44,7 @@ import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import {TabManager} from '../tab-manager';
 import {RelationsMenuComponent} from './map/relations-menu.component';
+import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 
 const remote = require('electron').remote;
 
@@ -71,6 +72,7 @@ const remote = require('electron').remote;
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
         SidebarListComponent,
+        SidebarListButtonGroupComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,

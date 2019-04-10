@@ -1,7 +1,8 @@
 @import 'sidebar-list-button-group';
 
-
-$teaser-width: 232px;
+$resources-listing-item-wide-width: 300px;
+$resources-listing-item-slim-width: 232px;
+$teaser-width: $resources-listing-item-slim-width;
 $item-height: 66px;
 $item-padding-top: 14px;
 $item-padding-left: 9px;
@@ -49,7 +50,7 @@ $item-padding-left: 9px;
 
   background-color: rgba(255, 255, 255, 0.8);
   position: absolute;
-  left: 300px;
+  left: $resources-listing-item-wide-width;
   height: 100%;
   width: $teaser-width;
   z-index: 1002;
@@ -95,7 +96,7 @@ $item-padding-left: 9px;
   }
 
   .resources-listing-item-wide {
-    width: 300px;
+    width: $resources-listing-item-wide-width;
   }
 
   document-teaser {

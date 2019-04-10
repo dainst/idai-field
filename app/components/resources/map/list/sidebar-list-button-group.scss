@@ -2,7 +2,7 @@
 
   position: relative;
   left: 228px;
-  height: 66px;
+  height: $item-height;
   width: 72px;
   color: gray;
 
@@ -26,7 +26,7 @@
     position: absolute;
     left: 48px;
     width: 24px;
-    height: 66px;
+    height: $item-height;
 
     &:hover {
       color: darken(#868e96, 10%);
@@ -49,7 +49,7 @@
     position: absolute;
     width: 24px;
     left: 24px;
-    height: 66px;
+    height: $item-height;
 
     &:hover {
       color: darken(#868e96, 10%);
@@ -58,7 +58,7 @@
     }
 
     &.move-into-button {
-      height: 66px;
+      height: $item-height;
     }
 
     &.dropdown-toggle::after {
@@ -70,7 +70,7 @@
   .info-button {
     position: absolute;
     width: 24px;
-    height: 66px;
+    height: $item-height;
     left: 0;
 
     &:hover {

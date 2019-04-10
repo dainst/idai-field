@@ -1,6 +1,7 @@
 @import 'sidebar-list-button-group';
 
 $teaser-width: 232px;
+$item-height: 66px;
 
 #sidebar {
 
@@ -69,8 +70,8 @@ $teaser-width: 232px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    min-height: 66px;
-    height: 66px;
+    min-height: $item-height;
+    height: $item-height;
 
     &:hover {
       background-color: darken($list-item-hover-colour, 5%);
@@ -90,7 +91,7 @@ $teaser-width: 232px;
     width: $teaser-width;
 
     padding: 10px 5px 10px 10px;
-    min-height: 62px;
+    min-height: $item-height;
 
     &:hover {
       background-color: darken($list-item-hover-colour, 5%);
@@ -103,7 +104,7 @@ $teaser-width: 232px;
     position: absolute;
     width: $teaser-width;
     top: 0;
-    height: 66px;
+    height: $item-height;
     padding-left: 9px;
     padding-top: 14px;
   }

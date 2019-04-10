@@ -5,7 +5,7 @@
         {{children.length}} Ressource(n)</div>
 
     <ul *ngIf="childrenMenuOpened"
-        class="list-group overlay-list resources-listing document-view-field">
+        class="overlay-list resources-listing document-view-field">
 
         <li *ngFor="let document of children"
             (click)="select(document)"
@@ -34,7 +34,7 @@
 </div>
 
 
-<ul id="sidebar" class="list-group resources-listing"
+<ul id="sidebar" class="resources-listing"
     (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"

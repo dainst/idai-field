@@ -2,6 +2,8 @@
 
 $teaser-width: 232px;
 $item-height: 66px;
+$item-padding-top: 14px;
+$item-padding-left: 9px;
 
 #sidebar {
 
@@ -90,7 +92,8 @@ $item-height: 66px;
     user-select: none;
     width: $teaser-width;
 
-    padding: 10px 5px 10px 10px;
+    padding-left: $item-padding-left;
+    padding-top: $item-padding-top;
     min-height: $item-height;
 
     &:hover {
@@ -105,8 +108,8 @@ $item-height: 66px;
     width: $teaser-width;
     top: 0;
     height: $item-height;
-    padding-left: 9px;
-    padding-top: 14px;
+    padding-left: $item-padding-left;
+    padding-top: $item-padding-top;
   }
 
 

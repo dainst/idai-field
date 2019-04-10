@@ -64,7 +64,11 @@ $item-padding-left: 9px;
 
 .resources-listing {
 
-  @import 'relations-view';
+  .relation-name {
+    padding-left: $item-padding-left;
+    font-size: 12px;
+    color: gray;
+  }
 
   .resources-listing-item {
 

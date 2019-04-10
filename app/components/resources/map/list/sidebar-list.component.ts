@@ -38,6 +38,8 @@ export class SidebarListComponent extends BaseList {
 
     public children: Array<FieldDocument> = [];
 
+    // TODO remove relations view component from components
+
 
     constructor(resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,

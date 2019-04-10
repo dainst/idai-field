@@ -38,9 +38,9 @@
     (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
+        class="resources-listing-item resources-listing-item-wide"
         (mouseover)="highlightDocument(document)"
         (contextmenu)="openContextMenu($event, document)"
-        class="resources-listing-item resources-listing-item-wide"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
         [class.selected]="viewFacade.getSelectedDocument()

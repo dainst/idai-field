@@ -1,8 +1,6 @@
-<div *ngIf="relations.length > 0" class="document-view-field">
-    <div *ngFor="let relation of relations">
-        <div class="relation-name">{{relation.name}}</div>
-        <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="clickRelation(target)">
-            <document-teaser [document]="target"></document-teaser>
-        </div>
+<div *ngFor="let relation of relations">
+    <div class="relation-name">{{relation.name}}</div>
+    <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="clickRelation(target)">
+        <document-teaser [document]="target"></document-teaser>
     </div>
 </div>

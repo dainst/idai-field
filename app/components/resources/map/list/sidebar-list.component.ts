@@ -244,8 +244,6 @@ export class SidebarListComponent extends BaseList {
 
     public closeListPopover() {
 
-        console.log("will close")
-
         this.timeoutRunning = true;
         setTimeout(async () => {
 

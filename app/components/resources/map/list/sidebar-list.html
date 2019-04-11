@@ -1,16 +1,16 @@
 <div *ngIf="listPopoverOpened" id="sidebar-popover">
 
     <div *ngIf="childrenMenuOpened"
-         (click)="closeListPopover(); viewFacade.moveInto(viewFacade.getSelectedDocument());"
+         (click)="openChildCollection()"
          class="btn btn-light"
          style="opacity: 0.8; font-size: 12px; color: gray">
         <span class="mdi mdi-chevron-double-left"></span>Kollektion öffnen
     </div>
 
-    <div *ngIf="childrenMenuOpened && children.length > 0" class=""
+    <div *ngIf="childrenMenuOpened" class=""
          style="opacity: 0.8; font-size: 12px; color: gray; position: absolute; top: 7px; right: 9px;">
         <span *ngIf="children.length === 1">1 Ressource</span>
-        <span *ngIf="children.length > 1">{{children.length}} Ressourcen</span>
+        <span *ngIf="children.length !== 1">{{children.length}} Ressourcen</span>
     </div>
 
     <ul *ngIf="childrenMenuOpened"

@@ -48,7 +48,10 @@ export class SidebarListComponent extends BaseList {
                 private routingService: RoutingService) {
 
         super(resourcesComponent, viewFacade, loading);
-        this.navigationService.moveIntoNotifications().subscribe(() => this.closeListPopover());
+        this.navigationService.moveIntoNotifications().subscribe(async () => {
+            await this.viewFacade.deselect();
+            this.closeListPopover();
+        });
     }
 
 
@@ -249,23 +252,27 @@ export class SidebarListComponent extends BaseList {
     public async openPopover(document: FieldDocument|undefined) {
 
         if (!document) return;
-
-        if (this.relationsMenuOpened) {
-
-
-        } else {
-
-            // if (document) this.highlightedDocument = document;
-            this.listPopoverOpened = true;
-        }
+        if (!this.relationsMenuOpened) this.listPopoverOpened = true;
     }
+
 
     public closeListPopover() {
 
         this.listPopoverOpened = false;
         this.highlightedDocument = undefined;
         this.relationsMenuOpened = false;
+        this.childrenMenuOpened = false;
+        this.infoMenuOpened = false;
+        this.children = [];
     };
+
+
+    public async openChildCollection() {
+
+        await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument());
+        await this.viewFacade.deselect();
+        this.closeListPopover();
+    }
 
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {

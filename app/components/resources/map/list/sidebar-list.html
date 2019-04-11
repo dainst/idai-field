@@ -8,7 +8,7 @@
         class="overlay-list resources-listing document-view-field">
 
         <li *ngFor="let document of children"
-            (click)="select(document)"
+            (click)="moveIntoAndSelect(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"
             (contextmenu)="openContextMenu($event, document)"
             class="resources-listing-item resources-listing-item-slim"

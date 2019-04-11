@@ -226,6 +226,16 @@ export class SidebarListComponent extends BaseList {
     }
 
 
+    public async moveIntoAndSelect(document: FieldDocument) {
+
+        this.closeListPopover();
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+        await this.routingService.jumpToResource(selectedDocument);
+        await this.viewFacade.setSelectedDocument(document.resource.id);
+    }
+
+
     public async openPopover(document: FieldDocument|undefined) {
 
         if (!document) return;

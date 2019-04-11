@@ -5,7 +5,7 @@
         {{children.length}} Ressource(n)</div>
 
     <ul *ngIf="childrenMenuOpened"
-        class="overlay-list resources-listing document-view-field">
+        class="overlay-list resources-listing">
 
         <li *ngFor="let document of children"
             (click)="moveIntoAndSelect(document)"

@@ -1,7 +1,7 @@
 <div *ngIf="listPopoverOpened" id="sidebar-popover">
 
     <div *ngIf="childrenMenuOpened"
-         (click)="viewFacade.moveInto(viewFacade.getSelectedDocument())"
+         (click)="closeListPopover(); viewFacade.moveInto(viewFacade.getSelectedDocument());"
          class="btn btn-light"
          style="opacity: 0.8; font-size: 12px; color: gray">
         <span class="mdi mdi-chevron-double-left"></span>Kollektion öffnen

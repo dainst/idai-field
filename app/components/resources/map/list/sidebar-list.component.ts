@@ -30,7 +30,6 @@ export class SidebarListComponent extends BaseList {
 
     public listPopoverOpened = false;
     public highlightedDocument: FieldDocument|undefined = undefined;
-    public timeoutRunning = false;
 
     public relationsMenuOpened = false;
     public childrenMenuOpened = false;
@@ -253,28 +252,19 @@ export class SidebarListComponent extends BaseList {
 
         if (this.relationsMenuOpened) {
 
-            this.timeoutRunning = false;
 
         } else {
 
             // if (document) this.highlightedDocument = document;
             this.listPopoverOpened = true;
-            this.timeoutRunning = false;
         }
     }
 
     public closeListPopover() {
 
-        this.timeoutRunning = true;
-        setTimeout(async () => {
-
-            if (this.timeoutRunning) {
-                this.listPopoverOpened = false;
-                this.highlightedDocument = undefined;
-                this.relationsMenuOpened = false;
-                this.timeoutRunning = false;
-            }
-        }, 50);
+        this.listPopoverOpened = false;
+        this.highlightedDocument = undefined;
+        this.relationsMenuOpened = false;
     };
 
 

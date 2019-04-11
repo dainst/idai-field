@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration, RelationDefinition, FieldDocument, IdaiType} from 'idai-components-2';
+import {ProjectConfiguration, RelationDefinition, FieldDocument, IdaiType, Document} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
+import {ObserverUtil} from '../../../core/util/observer-util';
+import {Observable, Observer} from 'rxjs';
 
 
 @Injectable()
@@ -11,15 +13,22 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class NavigationService {
 
+    private moveIntoObservers: Array<Observer<any>> = [];
+
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
                 private viewFacade: ViewFacade) {
     }
 
 
-    public async moveInto(document: FieldDocument) {
+    public moveIntoNotifications = (): Observable<Array<Document>> =>
+        ObserverUtil.register(this.moveIntoObservers);
+
+
+    public async moveInto(document: FieldDocument|undefined) {
 
         await this.viewFacade.moveInto(document);
+        ObserverUtil.notify(this.moveIntoObservers, undefined);
     }
 
 

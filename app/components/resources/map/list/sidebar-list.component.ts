@@ -38,8 +38,6 @@ export class SidebarListComponent extends BaseList {
 
     public children: Array<FieldDocument> = [];
 
-    // TODO remove relations view component from components
-
 
     constructor(resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
@@ -50,7 +48,8 @@ export class SidebarListComponent extends BaseList {
                 private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService) {
 
-        super(resourcesComponent, viewFacade, loading)
+        super(resourcesComponent, viewFacade, loading);
+        this.navigationService.moveIntoNotifications().subscribe(() => this.closeListPopover());
     }
 
 
@@ -231,11 +230,11 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public moveInto(document: FieldDocument) {
-
-        this.closeListPopover();
-        this.navigationService.moveInto(document);
-    }
+    // public moveInto(document: FieldDocument) {
+    //
+    //     this.closeListPopover();
+    //     this.navigationService.moveInto(document);
+    // }
 
 
     public async moveIntoAndSelect(document: FieldDocument) {

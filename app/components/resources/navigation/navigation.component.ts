@@ -5,6 +5,7 @@ import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
+import {NavigationService} from './navigation-service';
 
 
 type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string, shortened: boolean } };
@@ -30,6 +31,7 @@ export class NavigationComponent {
     constructor(
         public viewFacade: ViewFacade,
         public projectConfiguration: ProjectConfiguration,
+        private navigationService: NavigationService,
         private loading: Loading,
         private i18n: I18n) {
 
@@ -46,7 +48,7 @@ export class NavigationComponent {
 
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
-    public moveInto = (document: FieldDocument|undefined) => this.viewFacade.moveInto(document);
+    public moveInto = (document: FieldDocument|undefined) => this.navigationService.moveInto(document);
 
     public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 

@@ -119,6 +119,18 @@ export class SidebarListComponent extends BaseList {
             this.infoMenuOpened = false;
 
             if (!this.isSelected(document) || this.children.length === 0) {
+
+                const currentParent = this.viewFacade.getNavigationPath()
+                    .segments.find((segment) =>
+                        segment.document.resource.id === this.viewFacade.getNavigationPath().selectedSegmentId);
+
+                if (currentParent) {
+                    await this.viewFacade.moveInto(document);
+                    await this.viewFacade.moveInto(currentParent.document);
+                } else {
+                    await this.viewFacade.moveInto(document);
+                    await this.viewFacade.moveInto(undefined);
+                }
                 await this.select(document);
                 await this.getChildren(document);
             }
@@ -187,13 +199,6 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public moveInto(document: FieldDocument) {
-
-        this.closeListPopover();
-        this.navigationService.moveInto(document);
-    }
-
-
     public jumpToView(document: FieldDocument) {
 
         this.closeListPopover();
@@ -223,6 +228,13 @@ export class SidebarListComponent extends BaseList {
         this.closeListPopover();
         await this.routingService.jumpToResource(documentToSelect, 'relations');
         this.resourcesComponent.setScrollTarget(documentToSelect);
+    }
+
+
+    public moveInto(document: FieldDocument) {
+
+        this.closeListPopover();
+        this.navigationService.moveInto(document);
     }
 
 

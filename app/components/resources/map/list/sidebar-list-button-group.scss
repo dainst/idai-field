@@ -1,9 +1,14 @@
+$deactivated-button-color: lightgray;
+$button-width: 24px;
+$button-group-width: 3 * $button-width;
+
+
 .object-list-button-group {
 
   position: relative;
-  left: 228px;
+  left: $resources-listing-item-wide-width - $button-group-width;
   height: $item-height;
-  width: 72px;
+  width: $button-group-width;
   color: gray;
 
   .btn {
@@ -13,19 +18,18 @@
 
   .object-list-button-group-inner {
     position: relative;
-    width: 24px;
+    width: $button-width;
     top: 14px;
   }
 
   .object-list-button-no-items {
-    color: lightgray;
+    color: $deactivated-button-color;
   }
 
-  .hierarchy-button {
-
-    position: absolute;
-    left: 48px;
-    width: 24px;
+  .hierarchy-button,
+  .link-button,
+  .info-button {
+    width: $button-width;
     height: $item-height;
 
     &:hover {
@@ -33,6 +37,11 @@
       background-color: darken($list-item-hover-color, 10%);
       transition: background-color .2s ease;
     }
+  }
+
+  .hierarchy-button {
+    position: absolute;
+    left: 2 * $button-width;
 
     span {
       position: absolute;
@@ -47,15 +56,7 @@
 
   .link-button {
     position: absolute;
-    width: 24px;
-    left: 24px;
-    height: $item-height;
-
-    &:hover {
-      color: darken(#868e96, 10%);
-      background-color: darken($list-item-hover-color, 10%);
-      transition: background-color .2s ease;
-    }
+    left: 1 * $button-width;
 
     &.move-into-button {
       height: $item-height;
@@ -66,18 +67,9 @@
     }
   }
 
-
   .info-button {
     position: absolute;
-    width: 24px;
-    height: $item-height;
-    left: 0;
-
-    &:hover {
-      color: darken(#868e96, 10%);
-      background-color: darken($list-item-hover-color, 10%);
-      transition: background-color .2s ease;
-    }
+    left: 0 * $button-width;
 
     span {
       position: absolute;

@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule, IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
-import {GeometryViewComponent} from './map/detail/geometry-view.component';
+import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
 import {ResourcesMapComponent} from './map/resources-map.component';
 import {ListComponent} from './list/list.component';
@@ -12,9 +12,8 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ThumbnailViewComponent} from './map/detail/thumbnail-view.component';
+import {ThumbnailViewComponent} from './map/list/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
-import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar.component';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
@@ -71,7 +70,6 @@ const remote = require('electron').remote;
         RowComponent,
         PlusButtonComponent,
         ThumbnailViewComponent,
-        DocumentViewSidebarComponent,
         SidebarListComponent,
         SidebarListButtonGroupComponent,
         RelationsViewComponent,

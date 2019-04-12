@@ -126,10 +126,8 @@ export class SidebarListComponent extends BaseList {
                         segment.document.resource.id === this.viewFacade.getNavigationPath().selectedSegmentId);
 
                 if (currentParent) {
-                    await this.viewFacade.moveInto(document);
                     await this.viewFacade.moveInto(currentParent.document);
                 } else {
-                    await this.viewFacade.moveInto(document);
                     await this.viewFacade.moveInto(undefined);
                 }
                 await this.select(document);

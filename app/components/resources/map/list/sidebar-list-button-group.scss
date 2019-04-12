@@ -26,9 +26,10 @@ $button-group-width: 3 * $button-width;
     color: $deactivated-button-color;
   }
 
-  .hierarchy-button,
+  .info-button,
   .link-button,
-  .info-button {
+  .hierarchy-button {
+    position: absolute;
     width: $button-width;
     height: $item-height;
 
@@ -39,36 +40,7 @@ $button-group-width: 3 * $button-width;
     }
   }
 
-  .hierarchy-button {
-    position: absolute;
-    left: 2 * $button-width;
-
-    span {
-      position: absolute;
-      top: 21px;
-      left: 0;
-    }
-  }
-
-  .object-list-button-group-active-button {
-    background-color: darken($list-item-hover-color, 10%);
-  }
-
-  .link-button {
-    position: absolute;
-    left: 1 * $button-width;
-
-    &.move-into-button {
-      height: $item-height;
-    }
-
-    &.dropdown-toggle::after {
-      display: none;
-    }
-  }
-
   .info-button {
-    position: absolute;
     left: 0 * $button-width;
 
     span {
@@ -76,5 +48,41 @@ $button-group-width: 3 * $button-width;
       left: 0;
       top: 20px;
     }
+  }
+
+  .info-button-middle-position {
+    left: 1 * $button-width;
+  }
+
+  .link-button {
+    left: 1 * $button-width;
+
+    &.move-into-button {
+      height: $item-height;
+    }
+  }
+
+  .hierarchy-button {
+    left: 2 * $button-width;
+
+    span {
+      position: absolute;
+      top: 21px;
+      left: 0;
+    }
+
+    &.hierarchy-button-overview span {
+      top: 20px;
+      left: 2px;
+    }
+
+    &.dropdown-toggle::after {
+      display: none;
+    }
+  }
+
+
+  .object-list-button-group-active-button {
+    background-color: darken($list-item-hover-color, 10%);
   }
 }

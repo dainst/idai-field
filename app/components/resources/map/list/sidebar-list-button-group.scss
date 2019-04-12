@@ -1,3 +1,4 @@
+$activated-color: #868e96;
 $deactivated-button-color: lightgray;
 $button-width: 24px;
 $button-group-width: 3 * $button-width;
@@ -13,7 +14,7 @@ $button-group-width: 3 * $button-width;
 
   .btn {
     border: 0;
-    color: #868e96;
+    color: $activated-color;
   }
 
   .object-list-button-group-inner {
@@ -34,7 +35,7 @@ $button-group-width: 3 * $button-width;
     height: $item-height;
 
     &:hover {
-      color: darken(#868e96, 10%);
+      color: darken($activated-color, 10%);
       background-color: darken($list-item-hover-color, 10%);
       transition: background-color .2s ease;
     }

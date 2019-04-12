@@ -4,6 +4,7 @@
 logs
 *.log
 log.txt
+test.html
 
 # Runtime data
 pids

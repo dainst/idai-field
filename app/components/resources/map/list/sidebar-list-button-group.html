@@ -12,7 +12,6 @@
     <!-- moveInto(document); $event.stopPropagation(); -->
 
     <div class="btn link-button move-into-button"
-         *ngIf="sidebarList.hasVisibleRelations(document)"
          [class.object-list-button-group-active-button]="sidebarList.listPopoverOpened && sidebarList.isRelationsOpened(document)"
          ngbTooltip="Untergeordnete Ressourcen ansehen"
          i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"

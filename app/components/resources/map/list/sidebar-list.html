@@ -39,7 +39,30 @@
             [hideRelations]="relationsToHide">
     </relations-view>
 
-    <document-view-sidebar *ngIf="infoMenuOpened"></document-view-sidebar>
+    <div *ngIf="infoMenuOpened">
+        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
+                class="btn btn-link btn-xs solve-button"
+                id="document-view-button-solve-conflicts"
+                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
+            <span class="mdi mdi-alert-outline"></span>
+        </button>
+
+        <button id="back-to-map"
+                class="close-button btn btn-link btn-xs"
+                style="position: absolute; right: 2px; top: 2px;"
+                (click)="viewFacade.deselect()">
+            <span class="mdi mdi-close"></span>
+        </button>
+
+        <div class="tab-view-container">
+            <description-view
+                    [identifier]="viewFacade.getSelectedDocument().resource.identifier"
+                    [shortDescription]="viewFacade.getSelectedDocument().resource.shortDescription"
+                    [type]="viewFacade.getSelectedDocument().resource.type">
+            </description-view>
+            <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
+        </div>
+    </div>
 </div>
 
 

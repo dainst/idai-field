@@ -3,7 +3,10 @@ $resources-listing-item-slim-width: 232px;
 $teaser-width: $resources-listing-item-slim-width;
 $item-height: 58px;
 $item-padding-top: 8px;
-$item-padding-left: 9px;
+$item-horizontal-padding: 9px;
+$font-size-bigger: 14px;
+$font-size-smaller: 12px;
+$font-size-even-smaller: 10px;
 
 @import 'sidebar-list-button-group';
 
@@ -55,16 +58,34 @@ $item-padding-left: 9px;
   ul {
     padding: 0;
   }
+
+  .fieldname,
+  .fieldvalue,
+  .relation-name {
+    padding-left: $item-horizontal-padding;
+  }
+
+  .fieldname,
+  .relation-name {
+    font-weight: normal;
+    font-size: $font-size-smaller;
+    color: gray;
+  }
+
+  .fieldname {
+    margin-bottom: 4px;
+  }
+
+  .fieldvalue {
+    padding-right: $item-horizontal-padding;
+    font-size: $font-size-bigger;
+    margin-bottom: 10px;
+    color: black;
+  }
 }
 
 
 .resources-listing {
-
-  .relation-name {
-    padding-left: $item-padding-left;
-    font-size: 12px;
-    color: gray;
-  }
 
   .resources-listing-item {
 
@@ -74,7 +95,6 @@ $item-padding-left: 9px;
     border: 0;
     border-radius: 0;
     margin: 0 0 1px 0 !important;
-    font-size: 1em;
     user-select: none;
     background-color: transparent;
 
@@ -104,7 +124,7 @@ $item-padding-left: 9px;
     width: $teaser-width;
     top: 0;
     height: $item-height;
-    padding-left: $item-padding-left;
+    padding-left: $item-horizontal-padding;
     padding-top: $item-padding-top;
 
     .title {
@@ -113,7 +133,7 @@ $item-padding-left: 9px;
       text-overflow: ellipsis;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
-      font-size: 14px;
+      font-size: $font-size-bigger;
     }
 
     .subtitle {
@@ -122,6 +142,7 @@ $item-padding-left: 9px;
       text-overflow: ellipsis;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      font-size: $font-size-even-smaller;
     }
   }
 }

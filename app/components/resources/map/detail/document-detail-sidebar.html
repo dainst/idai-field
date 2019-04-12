@@ -1,38 +1,6 @@
 <div id="document-detail-sidebar" class="detail-sidebar">
-    <div *ngIf="viewFacade.getSelectedDocument()" class="card-block">
-        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
-                class="btn btn-link btn-xs solve-button"
-                id="document-view-button-solve-conflicts"
-                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
-            <span class="mdi mdi-alert-outline"></span>
-        </button>
+    <div *ngIf="viewFacade.getSelectedDocument()">
 
-        <button class="close-button btn btn-link btn-xs"
-                id="back-to-map"
-                (click)="viewFacade.deselect()">
-            <span class="mdi mdi-close"></span>
-        </button>
-
-        <!--<ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"-->
-                    <!--(tabChange)="onTabChange($event)">-->
-
-            <!--<ngb-tab id="document-view-fields-tab">-->
-
-                <!--<ng-template ngbTabTitle>-->
-                    <!--<span class="mdi mdi-format-list-bulleted"></span>-->
-                <!--</ng-template>-->
-                <!---->
-                <!--<ng-template ngbTabContent>-->
-
-
-                    <div class="tab-view-container">
-                        <description-view
-                                [identifier]="viewFacade.getSelectedDocument().resource.identifier"
-                                [shortDescription]="viewFacade.getSelectedDocument().resource.shortDescription"
-                                [type]="viewFacade.getSelectedDocument().resource.type">
-                        </description-view>
-                        <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
-                    </div>
                 <!--</ng-template>-->
             <!--</ngb-tab>-->
 

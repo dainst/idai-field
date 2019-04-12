@@ -14,7 +14,7 @@
     </div>
 
     <ul *ngIf="childrenMenuOpened"
-        class="overlay-list resources-listing">
+        class="resources-listing">
 
         <li *ngFor="let document of children"
             (click)="moveIntoAndSelect(document)"

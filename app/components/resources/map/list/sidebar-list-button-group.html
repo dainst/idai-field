@@ -11,7 +11,6 @@
     </div>
     <!-- moveInto(document); $event.stopPropagation(); -->
 
-
     <div class="btn link-button move-into-button"
          *ngIf="sidebarList.hasVisibleRelations(document)"
          [class.object-list-button-group-active-button]="sidebarList.listPopoverOpened && sidebarList.isRelationsOpened(document)"
@@ -20,13 +19,12 @@
          placement="left"
          triggers="manual"
          #tooltip="ngbTooltip"
-         (click)="sidebarList.toggleRelationsMenu(document); $event.stopPropagation();"
-    >
+         (click)="sidebarList.toggleRelationsMenu(document); $event.stopPropagation();">
 
-                <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isRelationsOpened(document)"
-                      [class.object-list-button-no-items]="!sidebarList.hasVisibleRelations(document)"
-                      class="mdi mdi-link object-list-button-group-inner">
-                </span>
+        <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isRelationsOpened(document)"
+              [class.object-list-button-no-items]="!sidebarList.hasVisibleRelations(document)"
+              class="mdi mdi-link object-list-button-group-inner">
+        </span>
     </div>
 
 
@@ -34,16 +32,14 @@
          [class.object-list-button-group-active-button]="sidebarList.listPopoverOpened && sidebarList.isInfoOpened(document)"
          (click)="sidebarList.toggleInfoMenu(document); $event.stopPropagation();">
 
-                <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isInfoOpened(document)"
-                      class="mdi mdi-information-outline object-list-button-group-inner">
-                </span>
+        <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document) || sidebarList.isInfoOpened(document)"
+              class="mdi mdi-information-outline object-list-button-group-inner">
+        </span>
     </div>
-
 
     <!-- (mouseover)="tooltip.open();"
          (mouseleave)="tooltip.close();"
          (mousedown)="tooltip.close()" -->
-
 
     <div *ngIf="sidebarList.showJumpToViewOption(document) && document.resource.type !== 'Trench'"
          class="link-button btn float-right"

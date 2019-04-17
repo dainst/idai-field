@@ -57,7 +57,6 @@ export class TabManager {
     );
 
 
-
     async initialize() {
 
         this.tabs = await this.deserialize();

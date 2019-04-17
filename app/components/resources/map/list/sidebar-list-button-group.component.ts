@@ -4,7 +4,6 @@ import {SidebarListComponent} from './sidebar-list.component';
 import {ViewFacade} from '../../view/view-facade';
 
 
-
 @Component({
     selector: 'sidebar-list-button-group',
     moduleId: module.id,
@@ -13,7 +12,6 @@ import {ViewFacade} from '../../view/view-facade';
 /**
  * @author Daniel de Oliveira
  */
-
 export class SidebarListButtonGroupComponent {
 
     @Input() document: FieldDocument;

@@ -66,6 +66,8 @@ export class SidebarListComponent extends BaseList {
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
         this.resourcesMapComponent.openContextMenu(event, document);
 
+    public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
+
 
     public async toggleInfoMenu(document: FieldDocument) {
 
@@ -85,7 +87,6 @@ export class SidebarListComponent extends BaseList {
             this.listPopoverOpened = true;
         }
     };
-
 
 
     public async toggleRelationsMenu(document: FieldDocument) {
@@ -179,11 +180,6 @@ export class SidebarListComponent extends BaseList {
         if (!this.infoMenuOpened) return false;
         return this.isSelected(document);
     }
-
-
-    public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
-
-    public closeRelationsMenu = () => this.resourcesMapComponent.closeRelationsMenu();
 
 
     public async getChildren(document: FieldDocument) {

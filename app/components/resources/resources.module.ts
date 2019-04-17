@@ -42,7 +42,6 @@ import {ContextMenuComponent} from './map/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import {TabManager} from '../tab-manager';
-import {RelationsMenuComponent} from './map/relations-menu.component';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {RelationsViewComponent} from './map/list/relations-view.component';
 
@@ -78,7 +77,6 @@ const remote = require('electron').remote;
         ResourcesSearchConstraintsComponent,
         SearchSuggestionsComponent,
         ContextMenuComponent,
-        RelationsMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent
     ],

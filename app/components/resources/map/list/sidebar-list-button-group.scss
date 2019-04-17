@@ -42,7 +42,7 @@ $button-group-width: 3 * $button-width;
   }
 
   .info-button {
-    left: 0 * $button-width;
+    left: 0;
 
     span {
       position: absolute;
@@ -52,11 +52,11 @@ $button-group-width: 3 * $button-width;
   }
 
   .info-button-middle-position {
-    left: 1 * $button-width;
+    left: $button-width;
   }
 
   .link-button {
-    left: 1 * $button-width;
+    left: $button-width;
 
     &.move-into-button {
       height: $item-height;
@@ -82,6 +82,9 @@ $button-group-width: 3 * $button-width;
     }
   }
 
+  .dropdown {
+    height: 0;
+  }
 
   .object-list-button-group-active-button {
     background-color: darken($list-item-hover-color, 10%);

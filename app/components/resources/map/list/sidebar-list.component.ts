@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {ResourcesComponent} from '../../resources.component';
+import {isEmpty} from 'tsfun';
 import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
-import {isEmpty} from 'tsfun';
 import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 
@@ -72,19 +72,9 @@ export class SidebarListComponent extends BaseList {
     public async toggleInfoMenu(document: FieldDocument) {
 
         if (this.infoMenuOpened && this.isSelected(document)) {
-
-            this.infoMenuOpened = false;
-            this.listPopoverOpened = false;
+            this.closePopover();
         } else {
-
-            this.childrenMenuOpened = false;
-            this.children = [];
-            this.relationsMenuOpened = false;
-
-            if (!this.isSelected(document)) await this.select(document);
-
-            this.infoMenuOpened = true;
-            this.listPopoverOpened = true;
+            await this.openInfoMenu(document);
         }
     };
 
@@ -92,19 +82,9 @@ export class SidebarListComponent extends BaseList {
     public async toggleRelationsMenu(document: FieldDocument) {
 
         if (this.relationsMenuOpened && this.isSelected(document)) {
-
-            this.relationsMenuOpened = false;
-            this.listPopoverOpened = false;
+            this.closePopover();
         } else {
-
-            this.childrenMenuOpened = false;
-            this.children = [];
-            this.infoMenuOpened = false;
-
-            if (!this.isSelected(document)) await this.select(document);
-
-            this.relationsMenuOpened = true;
-            this.listPopoverOpened = true;
+            await this.openRelationsMenu(document);
         }
     };
 
@@ -112,17 +92,9 @@ export class SidebarListComponent extends BaseList {
     public async toggleChildrenMenu(document: FieldDocument) {
 
         if (this.childrenMenuOpened && this.isSelected(document)) {
-            this.childrenMenuOpened = false;
-            this.listPopoverOpened = false;
+            this.closePopover();
         } else {
-            this.relationsMenuOpened = false;
-            this.infoMenuOpened = false;
-
-            await this.select(document);
-            await this.getChildren(document);
-
-            this.listPopoverOpened = true;
-            this.childrenMenuOpened = true;
+            await this.openChildrenMenu(document);
         }
     }
 
@@ -212,13 +184,6 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    // public moveInto(document: FieldDocument) {
-    //
-    //     this.closeListPopover();
-    //     this.navigationService.moveInto(document);
-    // }
-
-
     public async moveIntoAndSelect(document: FieldDocument) {
 
         this.closeListPopover();
@@ -226,13 +191,6 @@ export class SidebarListComponent extends BaseList {
         if (!selectedDocument) return;
         await this.routingService.jumpToResource(selectedDocument);
         await this.viewFacade.setSelectedDocument(document.resource.id);
-    }
-
-
-    public async openPopover(document: FieldDocument|undefined) {
-
-        if (!document) return;
-        if (!this.relationsMenuOpened) this.listPopoverOpened = true;
     }
 
 
@@ -266,5 +224,53 @@ export class SidebarListComponent extends BaseList {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
+    }
+
+
+    private async openChildrenMenu(document: FieldDocument) {
+
+        this.relationsMenuOpened = false;
+        this.infoMenuOpened = false;
+
+        await this.select(document);
+        await this.getChildren(document);
+
+        this.listPopoverOpened = true;
+        this.childrenMenuOpened = true;
+    }
+
+
+    private async openInfoMenu(document: FieldDocument) {
+
+        this.childrenMenuOpened = false;
+        this.children = [];
+        this.relationsMenuOpened = false;
+
+        if (!this.isSelected(document)) await this.select(document);
+
+        this.infoMenuOpened = true;
+        this.listPopoverOpened = true;
+    }
+
+
+    private async openRelationsMenu(document: FieldDocument) {
+
+        this.childrenMenuOpened = false;
+        this.children = [];
+        this.infoMenuOpened = false;
+
+        if (!this.isSelected(document)) await this.select(document);
+
+        this.relationsMenuOpened = true;
+        this.listPopoverOpened = true;
+    }
+
+
+    private closePopover() {
+
+        this.childrenMenuOpened = false;
+        this.relationsMenuOpened = false;
+        this.infoMenuOpened = false;
+        this.listPopoverOpened = false;
     }
 }

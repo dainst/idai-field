@@ -140,7 +140,7 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    private isSelected(document: FieldDocument) {
+    public isSelected(document: FieldDocument) {
 
         if (!this.viewFacade.getSelectedDocument()) return false;
         return (this.viewFacade.getSelectedDocument() as FieldDocument).resource.id === document.resource.id;

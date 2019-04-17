@@ -112,28 +112,14 @@ export class SidebarListComponent extends BaseList {
     public async toggleChildrenMenu(document: FieldDocument) {
 
         if (this.childrenMenuOpened && this.isSelected(document)) {
-
             this.childrenMenuOpened = false;
             this.listPopoverOpened = false;
         } else {
-
             this.relationsMenuOpened = false;
             this.infoMenuOpened = false;
 
-            if (!this.isSelected(document) || this.children.length === 0) {
-
-                const currentParent = this.viewFacade.getNavigationPath()
-                    .segments.find((segment) =>
-                        segment.document.resource.id === this.viewFacade.getNavigationPath().selectedSegmentId);
-
-                if (currentParent) {
-                    await this.viewFacade.moveInto(currentParent.document);
-                } else {
-                    await this.viewFacade.moveInto(undefined);
-                }
-                await this.select(document);
-                await this.getChildren(document);
-            }
+            await this.select(document);
+            await this.getChildren(document);
 
             this.listPopoverOpened = true;
             this.childrenMenuOpened = true;

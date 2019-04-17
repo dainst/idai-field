@@ -11,6 +11,9 @@ import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 
 
+type PopoverMenu = 'none'|'info'|'relations'|'children';
+
+
 @Component({
     selector: 'sidebar-list',
     moduleId: module.id,
@@ -27,14 +30,8 @@ export class SidebarListComponent extends BaseList {
     @Input() activeTab: string;
 
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
-
-    public listPopoverOpened = false;
     public highlightedDocument: FieldDocument|undefined = undefined;
-
-    public relationsMenuOpened = false;
-    public childrenMenuOpened = false;
-    public infoMenuOpened = false;
-
+    public activePopoverMenu: PopoverMenu = 'none';
     public children: Array<FieldDocument> = [];
 
 
@@ -50,7 +47,7 @@ export class SidebarListComponent extends BaseList {
         super(resourcesComponent, viewFacade, loading);
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
-            this.closeListPopover();
+            this.closePopover();
         });
     }
 
@@ -71,7 +68,7 @@ export class SidebarListComponent extends BaseList {
 
     public async toggleInfoMenu(document: FieldDocument) {
 
-        if (this.infoMenuOpened && this.isSelected(document)) {
+        if (this.activePopoverMenu === 'info' && this.isSelected(document)) {
             this.closePopover();
         } else {
             await this.openInfoMenu(document);
@@ -81,7 +78,7 @@ export class SidebarListComponent extends BaseList {
 
     public async toggleRelationsMenu(document: FieldDocument) {
 
-        if (this.relationsMenuOpened && this.isSelected(document)) {
+        if (this.activePopoverMenu === 'relations' && this.isSelected(document)) {
             this.closePopover();
         } else {
             await this.openRelationsMenu(document);
@@ -91,7 +88,7 @@ export class SidebarListComponent extends BaseList {
 
     public async toggleChildrenMenu(document: FieldDocument) {
 
-        if (this.childrenMenuOpened && this.isSelected(document)) {
+        if (this.activePopoverMenu === 'children' && this.isSelected(document)) {
             this.closePopover();
         } else {
             await this.openChildrenMenu(document);
@@ -112,31 +109,17 @@ export class SidebarListComponent extends BaseList {
     };
 
 
-    public isHighlighted(document: FieldDocument) {
+    public isHighlighted(document: FieldDocument): boolean {
 
         if (!this.highlightedDocument) return false;
         return this.highlightedDocument.resource.id === document.resource.id;
     }
 
 
-    public isRelationsOpened(document: FieldDocument) {
+    public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
 
-        if (!this.relationsMenuOpened) return false;
-        return this.isSelected(document);
-    }
-
-
-    public isChildrenOpened(document: FieldDocument) {
-
-        if (!this.childrenMenuOpened) return false;
-        return this.isSelected(document);
-    }
-
-
-    public isInfoOpened(document: FieldDocument) {
-
-        if (!this.infoMenuOpened) return false;
-        return this.isSelected(document);
+        return ((!popoverMenu && this.activePopoverMenu !== 'none') || this.activePopoverMenu === popoverMenu)
+            && (!document || this.isSelected(document));
     }
 
 
@@ -154,9 +137,10 @@ export class SidebarListComponent extends BaseList {
 
     public jumpToView(document: FieldDocument) {
 
-        this.closeListPopover();
+        this.closePopover();
         this.navigationService.jumpToView(document);
     }
+
 
     public hasVisibleRelations(document: FieldDocument|undefined) {
 
@@ -178,7 +162,7 @@ export class SidebarListComponent extends BaseList {
 
     public async jumpToResource(documentToSelect: FieldDocument) {
 
-        this.closeListPopover();
+        this.closePopover();
         await this.routingService.jumpToResource(documentToSelect, 'relations');
         this.resourcesComponent.setScrollTarget(documentToSelect);
     }
@@ -186,7 +170,7 @@ export class SidebarListComponent extends BaseList {
 
     public async moveIntoAndSelect(document: FieldDocument) {
 
-        this.closeListPopover();
+        this.closePopover();
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;
         await this.routingService.jumpToResource(selectedDocument);
@@ -194,13 +178,10 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public closeListPopover() {
+    public closePopover() {
 
-        this.listPopoverOpened = false;
+        this.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
-        this.relationsMenuOpened = false;
-        this.childrenMenuOpened = false;
-        this.infoMenuOpened = false;
         this.children = [];
     };
 
@@ -209,7 +190,7 @@ export class SidebarListComponent extends BaseList {
 
         await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument());
         await this.viewFacade.deselect();
-        this.closeListPopover();
+        this.closePopover();
     }
 
 
@@ -229,48 +210,29 @@ export class SidebarListComponent extends BaseList {
 
     private async openChildrenMenu(document: FieldDocument) {
 
-        this.relationsMenuOpened = false;
-        this.infoMenuOpened = false;
-
         await this.select(document);
         await this.getChildren(document);
 
-        this.listPopoverOpened = true;
-        this.childrenMenuOpened = true;
+        this.activePopoverMenu = 'children';
     }
 
 
     private async openInfoMenu(document: FieldDocument) {
 
-        this.childrenMenuOpened = false;
         this.children = [];
-        this.relationsMenuOpened = false;
 
         if (!this.isSelected(document)) await this.select(document);
 
-        this.infoMenuOpened = true;
-        this.listPopoverOpened = true;
+        this.activePopoverMenu = 'info';
     }
 
 
     private async openRelationsMenu(document: FieldDocument) {
 
-        this.childrenMenuOpened = false;
         this.children = [];
-        this.infoMenuOpened = false;
 
         if (!this.isSelected(document)) await this.select(document);
 
-        this.relationsMenuOpened = true;
-        this.listPopoverOpened = true;
-    }
-
-
-    private closePopover() {
-
-        this.childrenMenuOpened = false;
-        this.relationsMenuOpened = false;
-        this.infoMenuOpened = false;
-        this.listPopoverOpened = false;
+        this.activePopoverMenu = 'relations';
     }
 }

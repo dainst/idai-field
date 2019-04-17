@@ -1,19 +1,19 @@
-<div *ngIf="listPopoverOpened" id="sidebar-popover">
+<div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
 
-    <div *ngIf="childrenMenuOpened"
+    <div *ngIf="isPopoverMenuOpened('children')"
          (click)="openChildCollection()"
          class="btn btn-light"
          style="opacity: 0.8; font-size: 12px; color: gray">
         <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
     </div>
 
-    <div *ngIf="childrenMenuOpened" class=""
+    <div *ngIf="isPopoverMenuOpened('children')" class=""
          style="opacity: 0.8; font-size: 12px; color: gray; position: absolute; top: 7px; right: 9px;">
         <span *ngIf="children.length === 1">1 Ressource</span>
         <span *ngIf="children.length !== 1">{{children.length}} Ressourcen</span>
     </div>
 
-    <ul *ngIf="childrenMenuOpened"
+    <ul *ngIf="isPopoverMenuOpened('children')"
         class="resources-listing">
 
         <li *ngFor="let document of children"
@@ -32,14 +32,14 @@
     </ul>
 
     <relations-view
-            *ngIf="relationsMenuOpened && viewFacade.getSelectedDocument()"
+            *ngIf="isPopoverMenuOpened('relations') && viewFacade.getSelectedDocument()"
             class="resources-listing"
             [resource]="viewFacade.getSelectedDocument().resource"
             (onRelationTargetClicked)="jumpToResource($event)"
             [hideRelations]="relationsToHide">
     </relations-view>
 
-    <div *ngIf="infoMenuOpened">
+    <div *ngIf="isPopoverMenuOpened('info')">
         <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
                 class="btn btn-link btn-xs solve-button"
                 id="document-view-button-solve-conflicts"

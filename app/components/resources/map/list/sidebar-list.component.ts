@@ -66,32 +66,12 @@ export class SidebarListComponent extends BaseList {
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
 
 
-    public async toggleInfoMenu(document: FieldDocument) {
+    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
-        if (this.activePopoverMenu === 'info' && this.isSelected(document)) {
+        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
             this.closePopover();
         } else {
-            await this.openInfoMenu(document);
-        }
-    };
-
-
-    public async toggleRelationsMenu(document: FieldDocument) {
-
-        if (this.activePopoverMenu === 'relations' && this.isSelected(document)) {
-            this.closePopover();
-        } else {
-            await this.openRelationsMenu(document);
-        }
-    };
-
-
-    public async toggleChildrenMenu(document: FieldDocument) {
-
-        if (this.activePopoverMenu === 'children' && this.isSelected(document)) {
-            this.closePopover();
-        } else {
-            await this.openChildrenMenu(document);
+            await this.openPopoverMenu(popoverMenu, document);
         }
     }
 
@@ -208,31 +188,16 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    private async openChildrenMenu(document: FieldDocument) {
-
-        await this.select(document);
-        await this.getChildren(document);
-
-        this.activePopoverMenu = 'children';
-    }
-
-
-    private async openInfoMenu(document: FieldDocument) {
-
-        this.children = [];
+    private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
         if (!this.isSelected(document)) await this.select(document);
 
-        this.activePopoverMenu = 'info';
-    }
+        if (popoverMenu === 'children') {
+            await this.getChildren(document);
+        } else {
+            this.children = [];
+        }
 
-
-    private async openRelationsMenu(document: FieldDocument) {
-
-        this.children = [];
-
-        if (!this.isSelected(document)) await this.select(document);
-
-        this.activePopoverMenu = 'relations';
+        this.activePopoverMenu = popoverMenu;
     }
 }

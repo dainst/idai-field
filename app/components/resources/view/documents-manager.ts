@@ -132,7 +132,7 @@ export class DocumentsManager {
 
     public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true): Promise<any> {
 
-        this.documents = this.documents.filter(hasId);
+        this.removeNewDocument();
 
         try {
             const documentToSelect: FieldDocument = await this.datastore.get(resourceId);

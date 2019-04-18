@@ -153,7 +153,6 @@ export class SidebarListComponent extends BaseList {
 
         this.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
-        this.resetChildren();
     };
 
 
@@ -181,12 +180,13 @@ export class SidebarListComponent extends BaseList {
 
     private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
-        if (!this.isSelected(document)) await this.select(document);
-
         this.activePopoverMenu = popoverMenu;
 
-        this.resetChildren();
-        if (popoverMenu === 'children') await this.updateChildren(document);
+        if (!this.isSelected(document)) {
+            await this.select(document);
+            this.resetChildren();
+            if (popoverMenu === 'children') await this.updateChildren(document);
+        }
     }
 
 

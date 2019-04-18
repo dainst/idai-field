@@ -9,6 +9,7 @@ import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
 import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
+import {AngularUtility} from '../../../../common/angular-utility';
 
 
 type PopoverMenu = 'none'|'info'|'relations'|'children';
@@ -104,18 +105,6 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public async getChildren(document: FieldDocument) {
-
-        // TODO remove viewFacade.getChildrenCount
-
-        if (!document) return [];
-        const children = await this.fieldDatastore.find({constraints: {
-                'liesWithin:contain' : document.resource.id
-            }});
-        this.children = children.documents;
-    }
-
-
     public jumpToView(document: FieldDocument) {
 
         this.closePopover();
@@ -193,12 +182,32 @@ export class SidebarListComponent extends BaseList {
 
         if (!this.isSelected(document)) await this.select(document);
 
-        if (popoverMenu === 'children') {
-            await this.getChildren(document);
-        } else {
-            this.children = [];
-        }
-
         this.activePopoverMenu = popoverMenu;
+
+        this.children = [];
+        if (popoverMenu === 'children') await this.updateChildren(document);
+    }
+
+
+    private async updateChildren(document: FieldDocument) {
+
+        this.loading.start('sidebar-children');
+        await AngularUtility.refresh();
+
+        this.children = await this.getChildren(document);
+
+        this.loading.stop();
+    }
+
+
+    private async getChildren(document: FieldDocument): Promise<Array<FieldDocument>> {
+
+        // TODO remove viewFacade.getChildrenCount
+
+        if (!document) return [];
+
+        return (await this.fieldDatastore.find({constraints: {
+                'liesWithin:contain' : document.resource.id
+            }})).documents;
     }
 }

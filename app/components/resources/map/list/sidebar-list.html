@@ -13,9 +13,8 @@
         <span *ngIf="children.length !== 1">{{children.length}} Ressourcen</span>
     </div>
 
-    <ul *ngIf="isPopoverMenuOpened('children')"
-        class="resources-listing">
-
+    <ul *ngIf="isPopoverMenuOpened('children')" id="children-list" class="resources-listing">
+        <loading-icon [context]="'sidebar-children'"></loading-icon>
         <li *ngFor="let document of children"
             (click)="moveIntoAndSelect(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"

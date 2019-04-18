@@ -17,7 +17,7 @@ export class BaseList {
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
-        private loading: Loading
+        protected loading: Loading
     ) {
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;

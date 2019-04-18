@@ -44,9 +44,7 @@ $font-size-even-smaller: 10px;
   }
 }
 
-
 #sidebar-popover {
-
   background-color: rgba(255, 255, 255, 0.8);
   position: absolute;
   left: $resources-listing-item-wide-width;
@@ -84,11 +82,8 @@ $font-size-even-smaller: 10px;
   }
 }
 
-
 .resources-listing {
-
   .resources-listing-item {
-
     position: relative;
     display: block;
     cursor: default;
@@ -147,6 +142,12 @@ $font-size-even-smaller: 10px;
   }
 }
 
+#children-list {
+  loading-icon {
+    position: relative;
+    top: 49px;
+  }
+}
 
 #create-document-button .circular-button {
   left: 45%;

@@ -34,6 +34,7 @@ export class SidebarListComponent extends BaseList {
     public highlightedDocument: FieldDocument|undefined = undefined;
     public activePopoverMenu: PopoverMenu = 'none';
     public children: Array<FieldDocument> = [];
+    public childrenCount: number = 0;
 
 
     constructor(resourcesComponent: ResourcesComponent,
@@ -152,7 +153,7 @@ export class SidebarListComponent extends BaseList {
 
         this.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
-        this.children = [];
+        this.resetChildren();
     };
 
 
@@ -184,12 +185,21 @@ export class SidebarListComponent extends BaseList {
 
         this.activePopoverMenu = popoverMenu;
 
-        this.children = [];
+        this.resetChildren();
         if (popoverMenu === 'children') await this.updateChildren(document);
     }
 
 
+    private resetChildren() {
+
+        this.children = [];
+        this.childrenCount = 0;
+    }
+
+
     private async updateChildren(document: FieldDocument) {
+
+        this.childrenCount = this.viewFacade.getChildrenCount(document);
 
         this.loading.start('sidebar-children');
         await AngularUtility.refresh();
@@ -201,8 +211,6 @@ export class SidebarListComponent extends BaseList {
 
 
     private async getChildren(document: FieldDocument): Promise<Array<FieldDocument>> {
-
-        // TODO remove viewFacade.getChildrenCount
 
         if (!document) return [];
 

@@ -98,7 +98,8 @@ export class SidebarListComponent extends BaseList {
 
     public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
 
-        return ((!popoverMenu && this.activePopoverMenu !== 'none') || this.activePopoverMenu === popoverMenu)
+        return this.viewFacade.getSelectedDocument() !== undefined
+            && ((!popoverMenu && this.activePopoverMenu !== 'none') || this.activePopoverMenu === popoverMenu)
             && (!document || this.isSelected(document));
     }
 

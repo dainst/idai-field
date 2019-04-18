@@ -190,8 +190,10 @@ export module ResourcesState {
 
     export function complete(state: ResourcesState): ResourcesState {
 
+        ViewState.complete(state.overviewState);
         Object.keys(state.operationViewStates)
             .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
+
         return state;
     }
 

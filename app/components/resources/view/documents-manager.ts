@@ -144,7 +144,6 @@ export class DocumentsManager {
             }
 
             this.selectAndNotify(documentToSelect);
-
         } catch (e) {
             console.error('documentToSelect undefined in DocumentsManager.setSelected()');
         }

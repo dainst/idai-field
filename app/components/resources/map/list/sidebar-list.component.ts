@@ -175,6 +175,7 @@ export class SidebarListComponent extends BaseList {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
+        if (this.activePopoverMenu === 'children') await this.updateChildren(document);
     }
 
 
@@ -199,6 +200,7 @@ export class SidebarListComponent extends BaseList {
 
     private async updateChildren(document: FieldDocument) {
 
+        this.children = [];
         this.childrenCount = this.viewFacade.getChildrenCount(document);
 
         this.loading.start('sidebar-children');

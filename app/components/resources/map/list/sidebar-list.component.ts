@@ -175,6 +175,7 @@ export class SidebarListComponent extends BaseList {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
+        this.resetChildren();
         if (this.activePopoverMenu === 'children') await this.updateChildren(document);
     }
 
@@ -183,11 +184,8 @@ export class SidebarListComponent extends BaseList {
 
         this.activePopoverMenu = popoverMenu;
 
-        if (!this.isSelected(document)) {
-            await this.select(document);
-            this.resetChildren();
-            if (popoverMenu === 'children') await this.updateChildren(document);
-        }
+        if (!this.isSelected(document)) await this.select(document);
+        if (popoverMenu === 'children' && this.children.length === 0) await this.updateChildren(document);
     }
 
 
@@ -202,6 +200,11 @@ export class SidebarListComponent extends BaseList {
 
         this.children = [];
         this.childrenCount = this.viewFacade.getChildrenCount(document);
+
+        if (this.childrenCount === 0) {
+            this.children = [];
+            return;
+        }
 
         this.loading.start('sidebar-children');
         await AngularUtility.refresh();

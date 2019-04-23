@@ -137,6 +137,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
         }
 
+        // Wrap asynchronously in order to make the app more responsive
         return new Promise<string[]>((resolve: any, reject: any) => {
             let orderedResult;
             try {

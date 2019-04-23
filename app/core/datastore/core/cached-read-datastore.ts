@@ -137,8 +137,14 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
         }
 
-        return new Promise<string[]>((resolve: any) => {
-            resolve(IndexItem.generateOrderedResultList(result));
+        return new Promise<string[]>((resolve: any, reject: any) => {
+            let orderedResult;
+            try {
+                orderedResult = IndexItem.generateOrderedResultList(result);
+                resolve(orderedResult);
+            } catch (err) {
+                reject([DatastoreErrors.GENERIC_ERROR, err]);
+            }
         });
     }
 

@@ -44,13 +44,17 @@ export module ResultSets {
     export function combine(resultSets: ResultSets,
                             indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
 
-        const indexItemsMap = intoObject(indexItems);
-        resultSets.map = uniteObj(indexItemsMap)(resultSets.map);
+
+        const keys = [];
+        for (let item of indexItems) {
+            resultSets.map[item.id] = item;
+            keys.push(item.id)
+        }
 
         if (mode !== 'subtract') {
-            resultSets.addSets.push(Object.keys(indexItemsMap));
+            resultSets.addSets.push(keys);
         }  else {
-            resultSets.subtractSets.push(Object.keys(indexItemsMap));
+            resultSets.subtractSets.push(keys);
         }
     }
 
@@ -76,13 +80,6 @@ export module ResultSets {
     function pickFromMap(resultSets: ResultSets, ids: string[]) {
 
         return ids.map(id => resultSets.map[id]);
-    }
-
-
-    function intoObject(indexItems: Array<SimpleIndexItem>) {
-
-        return indexItems
-            .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
     }
 
 

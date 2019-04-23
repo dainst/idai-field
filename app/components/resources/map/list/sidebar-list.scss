@@ -1,6 +1,7 @@
 $resources-listing-item-wide-width: 300px;
 $resources-listing-item-wide-width-with-scrollbar: 293px;
 $resources-listing-item-slim-width: 232px;
+$resources-listing-item-slim-width-with-scrollbar: 225px;
 $teaser-width: $resources-listing-item-slim-width;
 $item-height: 58px;
 $item-padding-top: 8px;
@@ -115,8 +116,16 @@ $font-size-even-smaller: 10px;
   }
 
   &.scrollbar-visible {
+    .resources-listing-item-slim {
+      width: $resources-listing-item-slim-width-with-scrollbar;
+    }
+
     .resources-listing-item-wide {
       width: $resources-listing-item-wide-width-with-scrollbar;
+    }
+
+    document-teaser {
+      width: $resources-listing-item-slim-width-with-scrollbar;
     }
   }
 
@@ -149,6 +158,9 @@ $font-size-even-smaller: 10px;
 }
 
 #children-list {
+  height: calc(100% - 32px);
+  overflow-y: auto;
+
   loading-icon {
     position: relative;
     top: 49px;

@@ -30,8 +30,6 @@ export class SidebarListComponent extends BaseList {
 
     @Input() activeTab: string;
 
-    @ViewChild('sidebar') sidebarElement: ElementRef;
-
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
     public highlightedDocument: FieldDocument|undefined = undefined;
     public activePopoverMenu: PopoverMenu = 'none';
@@ -70,9 +68,8 @@ export class SidebarListComponent extends BaseList {
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
 
 
-    public isScrollbarVisible(): boolean {
+    public isScrollbarVisible(element: HTMLElement): boolean {
 
-        const element: HTMLElement = this.sidebarElement.nativeElement;
         return element.scrollHeight > element.clientHeight;
     }
 

@@ -13,7 +13,10 @@
         <span *ngIf="childrenCount !== 1">{{childrenCount}} Ressourcen</span>
     </div>
 
-    <ul *ngIf="isPopoverMenuOpened('children')" id="children-list" class="resources-listing">
+    <ul #childrenList *ngIf="isPopoverMenuOpened('children')"
+        id="children-list"
+        class="resources-listing"
+        [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
         <loading-icon [context]="'sidebar-children'"></loading-icon>
         <li *ngFor="let document of children"
             (click)="moveIntoAndSelect(document)"
@@ -64,7 +67,7 @@
     </div>
 </div>
 
-<ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible()"
+<ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
     (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"

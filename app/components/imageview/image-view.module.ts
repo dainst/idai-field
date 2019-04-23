@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2';
 import {IdaiWidgetsModule} from 'idai-components-2';
 import {ImageViewComponent} from './image-view.component';
 import {GeoreferenceViewComponent} from './georeference-view.component';
@@ -17,14 +16,13 @@ import {PersistenceHelper} from '../imageoverview/service/persistence-helper';
         BrowserModule,
         NgbModule,
         WidgetsModule,
-        IdaiDocumentsModule,
         IdaiWidgetsModule,
         ImageGridModule,
         imageViewRouting
     ],
     declarations: [
         ImageViewComponent,
-        GeoreferenceViewComponent
+        GeoreferenceViewComponent,
     ],
     providers: [
         ImageDocumentsManager,

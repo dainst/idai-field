@@ -1,0 +1,23 @@
+<div *ngFor="let field of fields">
+    <div *ngIf="field.isArray && field.value.length > 0" class="document-view-field">
+        <h3 class="fieldname">{{field.name}}</h3>
+        <ul>
+	        <li *ngFor="let array_item of field.value" class="fieldvalue">
+	        	<span *ngIf="array_item.lang">
+	        		<b>{{array_item.lang}}:</b> {{array_item.content.join(", ")}}
+	        	</span>
+	        	<span *ngIf="!array_item.lang">
+	        		{{array_item.label ? array_item.label : array_item}}
+	        	</span>
+	        </li>
+	    </ul>
+    </div>
+    <div *ngIf="!field.isArray" class="document-view-field">
+        <h3 class="fieldname">{{field.name}}</h3>
+        <div class="fieldvalue" *ngIf="isBoolean(field.value)">
+			<span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>
+			<span *ngIf="field.value === false" i18n="@@boolean.no">Nein</span>
+		</div>
+		<div class="fieldvalue" *ngIf="!isBoolean(field.value)" [innerHTML]="field.value"></div>
+    </div>
+</div>

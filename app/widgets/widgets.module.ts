@@ -11,6 +11,7 @@ import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
 import {TypePickerComponent} from './type-picker.component';
 import {ZoomButtonsComponent} from './zoom-buttons.component';
+import {FieldsViewComponent} from './fields-view.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {ZoomButtonsComponent} from './zoom-buttons.component';
     declarations: [
         DocumentPickerComponent,
         DescriptionViewComponent,
+        FieldsViewComponent,
         LoadingIconComponent,
         SearchBarComponent,
         TypePickerComponent,
@@ -36,6 +38,7 @@ import {ZoomButtonsComponent} from './zoom-buttons.component';
     exports: [
         DocumentPickerComponent,
         DescriptionViewComponent,
+        FieldsViewComponent,
         LoadingIconComponent,
         SearchBarComponent,
         TypePickerComponent,

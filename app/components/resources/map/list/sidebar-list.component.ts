@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {isEmpty} from 'tsfun';
 import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
@@ -29,6 +29,8 @@ type PopoverMenu = 'none'|'info'|'relations'|'children';
 export class SidebarListComponent extends BaseList {
 
     @Input() activeTab: string;
+
+    @ViewChild('sidebar') sidebarElement: ElementRef;
 
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
     public highlightedDocument: FieldDocument|undefined = undefined;
@@ -66,6 +68,13 @@ export class SidebarListComponent extends BaseList {
         this.resourcesMapComponent.openContextMenu(event, document);
 
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
+
+
+    public isScrollbarVisible(): boolean {
+
+        const element: HTMLElement = this.sidebarElement.nativeElement;
+        return element.scrollHeight > element.clientHeight;
+    }
 
 
     public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {

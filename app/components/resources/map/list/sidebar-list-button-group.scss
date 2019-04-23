@@ -5,9 +5,8 @@ $button-group-width: 3 * $button-width;
 
 
 .object-list-button-group {
-
-  position: relative;
-  left: $resources-listing-item-wide-width - $button-group-width;
+  position: absolute;
+  right: 0;
   height: $item-height;
   width: $button-group-width;
   color: gray;
@@ -69,12 +68,12 @@ $button-group-width: 3 * $button-width;
     span {
       position: absolute;
       top: 21px;
-      left: -2px;
+      left: 1px;
     }
 
     &.hierarchy-button-overview span {
       top: 20px;
-      left: 2px;
+      left: 3px;
     }
 
     &.dropdown-toggle::after {

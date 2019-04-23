@@ -64,8 +64,7 @@
     </div>
 </div>
 
-
-<ul id="sidebar" class="resources-listing"
+<ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible()"
     (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"

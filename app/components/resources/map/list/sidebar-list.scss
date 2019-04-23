@@ -1,4 +1,5 @@
 $resources-listing-item-wide-width: 300px;
+$resources-listing-item-wide-width-with-scrollbar: 293px;
 $resources-listing-item-slim-width: 232px;
 $teaser-width: $resources-listing-item-slim-width;
 $item-height: 58px;
@@ -92,7 +93,6 @@ $font-size-even-smaller: 10px;
     margin: 0 0 1px 0 !important;
     user-select: none;
     background-color: transparent;
-
     padding: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -112,6 +112,12 @@ $font-size-even-smaller: 10px;
 
   .resources-listing-item-wide {
     width: $resources-listing-item-wide-width;
+  }
+
+  &.scrollbar-visible {
+    .resources-listing-item-wide {
+      width: $resources-listing-item-wide-width-with-scrollbar;
+    }
   }
 
   document-teaser {

@@ -59,7 +59,7 @@ describe('CachedDatastore', () => {
         mockIndexFacade.perform.and.callFake(function() {
             const d = Static.doc('sd1');
             d.resource.id = '1';
-            return['1'];
+            return [{id: '1'}];
         });
         mockIndexFacade.put.and.callFake(function(doc) {
             return Promise.resolve(doc);
@@ -173,7 +173,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
              {
                 resource: {
@@ -196,7 +196,7 @@ describe('CachedDatastore', () => {
             id: '1',
             relations: {}
         }} as any, 'u');
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
@@ -217,7 +217,7 @@ describe('CachedDatastore', () => {
             relations: {}
         }} as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues(['1', '2']);
+        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
 
         const { documents, totalCount } = await ds.find({ 'limit': 1 });
         expect(documents.length).toBe(1);
@@ -229,7 +229,7 @@ describe('CachedDatastore', () => {
 
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
@@ -241,7 +241,7 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1', '2']);
+        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
             {

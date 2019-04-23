@@ -4,6 +4,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
+import {IndexItem} from '../index/index-item';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -96,7 +97,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
-        const {documents, totalCount} = await this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
+        const {documents, totalCount} = await this.getDocumentsForIds(await this.findIds(clonedQuery), clonedQuery.limit);
 
         return {
             documents: documents,
@@ -127,13 +128,18 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      *   if two or more documents have the same last modifed date, their sort order is unspecified.
      *   the modified date is taken from document.modified[document.modified.length-1].date
      */
-    private findIds(query: Query): string[] {
+    private async findIds(query: Query): Promise<string[]> {
 
+        let result: any;
         try {
-            return this.indexFacade.perform(query);
+            result = this.indexFacade.perform(query);
         } catch (err) {
-            throw [DatastoreErrors.GENERIC_ERROR, err];
+            return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
         }
+
+        return new Promise<string[]>((resolve: any) => {
+            resolve(IndexItem.generateOrderedResultList(result));
+        });
     }
 
 

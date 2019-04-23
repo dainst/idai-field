@@ -3,7 +3,7 @@ import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {IndexItem} from './index-item';
+import {IndexItem, SimpleIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 
 
@@ -24,7 +24,7 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    public perform(query: Query): any {
+    public perform(query: Query): Array<SimpleIndexItem> {
 
         let resultSets = query.constraints ?
             IndexFacade.performConstraints(this.constraintIndex, query.constraints) :
@@ -35,7 +35,7 @@ export class IndexFacade {
             ? resultSets
             : IndexFacade.performFulltext(this.fulltextIndex, query, resultSets);
 
-        return IndexItem.generateOrderedResultList(ResultSets.collapse(resultSets));
+        return ResultSets.collapse(resultSets);
     }
 
 

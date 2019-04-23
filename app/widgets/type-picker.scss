@@ -39,12 +39,12 @@
 
   li:hover > ul li,
   .selected-type {
-    background-color: $list-item-hover-colour !important;
+    background-color: $list-item-hover-color !important;
     transition: background-color .65s ease;
   }
 
   li ul li:hover,
   .selected-child-type {
-    background-color: darken($list-item-hover-colour, 5%) !important;
+    background-color: darken($list-item-hover-color, 5%) !important;
   }
 }

@@ -102,7 +102,7 @@ $font-size-even-smaller: 10px;
     height: $item-height;
 
     &:hover {
-      background-color: darken($list-item-hover-colour, 5%);
+      background-color: darken($list-item-hover-color, 5%);
       transition: background-color .65s ease;
     }
   }

@@ -78,11 +78,11 @@ export class DocumentsManager {
     }
 
 
-    public async setTypeFilters(types: string[]) {
+    public async setTypeFilters(types: string[], populate: boolean = true) {
 
         this.resourcesStateManager.setTypeFilters(types);
         this.resourcesStateManager.setCustomConstraints({});
-        await this.populateAndDeselectIfNecessary();
+        if (populate) await this.populateAndDeselectIfNecessary();
     }
 
 
@@ -100,10 +100,18 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: FieldDocument|undefined) {
+    public async moveInto(document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) {
 
         await this.resourcesStateManager.moveInto(document);
-        await this.populateAndDeselectIfNecessary();
+
+        if (resetFiltersAndSelection) {
+            await this.setTypeFilters([], false);
+            await this.setQueryString('', false);
+            await this.deselect();
+            await this.populateDocumentList();
+        } else {
+            await this.populateAndDeselectIfNecessary();
+        }
     }
 
 

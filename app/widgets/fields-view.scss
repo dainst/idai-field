@@ -18,24 +18,24 @@ fields-view {
       padding: 0;
     }
 
-    .fieldname,
-    .fieldvalue,
+    .field-label,
+    .field-value,
     .relation-name {
       padding-left: $item-horizontal-padding;
     }
 
-    .fieldname,
+    .field-label,
     .relation-name {
       font-weight: normal;
       font-size: $font-size-smaller;
       color: gray;
     }
 
-    .fieldname {
+    .field-label {
       margin-bottom: 4px;
     }
 
-    .fieldvalue {
+    .field-value {
       padding-right: $item-horizontal-padding;
       font-size: $font-size-bigger;
       margin-bottom: 10px;

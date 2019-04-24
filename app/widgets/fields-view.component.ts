@@ -56,7 +56,9 @@ export class FieldsViewComponent implements OnChanges {
 
     public getGroups(): Array<FieldViewGroupDefinition> {
 
-        return this.groups.filter(group => this.fields[group.name] !== undefined);
+        return this.groups.filter(group => {
+            return this.fields[group.name] !== undefined && this.fields[group.name].length > 0;
+        });
     }
 
 

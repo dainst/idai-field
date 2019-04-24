@@ -839,6 +839,30 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="widgets.fieldsView.period" datatype="html">
+        <source>Grobdatierung</source>
+        <target state="final">Period</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.fieldsView.period.from" datatype="html">
+        <source> (von)</source>
+        <target state="final"> (from)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.fieldsView.period.to" datatype="html">
+        <source>Grobdatierung (bis)</source>
+        <target state="final">Period (to)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
         <source>Synchronisation ist aktiv</source>
         <target state="final">Synchronization is active</target>
@@ -1744,7 +1768,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">
@@ -1971,8 +1995,8 @@
         <source>Ja</source>
         <target state="final">Yes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/idai-components-2/src/documents/docview/fields-view.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="sourcefile">widgets/fields-view.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
@@ -1991,8 +2015,8 @@
         <source>Nein</source>
         <target state="final">No</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/idai-components-2/src/documents/docview/fields-view.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="sourcefile">widgets/fields-view.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
@@ -2789,12 +2813,20 @@
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.properties" datatype="html">
         <source>Eigenschaften</source>
         <target state="final">Properties</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -2805,6 +2837,10 @@
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.time" datatype="html">
         <source>Zeit</source>
@@ -2813,12 +2849,20 @@
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.position" datatype="html">
         <source>Lage</source>
         <target state="final">Position</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3939,30 +3983,6 @@
         <target state="final">Type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/configuration/config-loader.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="components.documents.docView.fieldsView.period" datatype="html">
-        <source>Grobdatierung</source>
-        <target state="final">Period</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="components.documents.docView.fieldsView.period.from" datatype="html">
-        <source> (von)</source>
-        <target state="final"> (from)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="components.documents.docView.fieldsView.period.to" datatype="html">
-        <source>Grobdatierung (bis)</source>
-        <target state="final">Period (to)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

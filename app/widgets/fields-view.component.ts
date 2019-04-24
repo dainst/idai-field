@@ -81,11 +81,11 @@ export class FieldsViewComponent implements OnChanges {
             if (field.name === 'period') {
                 this.fields[group].push({
                     name: this.i18n({
-                        id: 'components.documents.docView.fieldsView.period',
+                        id: 'widgets.fieldsView.period',
                         value: 'Grobdatierung'
                     }) + (!isUndefinedOrEmpty(resource['periodEnd'])
                         ? this.i18n({
-                            id: 'components.documents.docView.fieldsView.period.from',
+                            id: 'widgets.fieldsView.period.from',
                             value: ' (von)'
                         }) : ''),
                     value: FieldsViewComponent.getValue(resource, field.name),
@@ -95,7 +95,7 @@ export class FieldsViewComponent implements OnChanges {
                 if (!isUndefinedOrEmpty(resource['periodEnd'])) {
                     this.fields[group].push({
                         name: this.i18n({
-                            id: 'components.documents.docView.fieldsView.period.to',
+                            id: 'widgets.fieldsView.period.to',
                             value: 'Grobdatierung (bis)'
                         }),
                         value: FieldsViewComponent.getValue(resource, 'periodEnd'),

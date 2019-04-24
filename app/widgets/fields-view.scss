@@ -13,5 +13,33 @@ fields-view {
 
   .card-body {
     padding: 10px 0 0 0;
+
+    ul {
+      padding: 0;
+    }
+
+    .fieldname,
+    .fieldvalue,
+    .relation-name {
+      padding-left: $item-horizontal-padding;
+    }
+
+    .fieldname,
+    .relation-name {
+      font-weight: normal;
+      font-size: $font-size-smaller;
+      color: gray;
+    }
+
+    .fieldname {
+      margin-bottom: 4px;
+    }
+
+    .fieldvalue {
+      padding-right: $item-horizontal-padding;
+      font-size: $font-size-bigger;
+      margin-bottom: 10px;
+      color: black;
+    }
   }
 }

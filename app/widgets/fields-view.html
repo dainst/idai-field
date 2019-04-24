@@ -5,7 +5,7 @@
 	<div *ngIf="shownGroupName === group.name" class="collapse show">
 		<div class="card-body">
 			<div *ngFor="let field of fields[group.name]">
-				<div *ngIf="field.isArray && field.value.length > 0" class="document-view-field">
+				<div *ngIf="field.isArray && field.value.length > 0" class="field">
 					<h3 class="field-label">{{field.label}}</h3>
 					<ul>
 						<li *ngFor="let item of field.value" class="field-value">
@@ -13,7 +13,7 @@
 						</li>
 					</ul>
 				</div>
-				<div *ngIf="!field.isArray" class="document-view-field">
+				<div *ngIf="!field.isArray" class="field">
 					<h3 class="field-label">{{field.label}}</h3>
 					<div class="field-value" *ngIf="isBoolean(field.value)">
 						<span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>

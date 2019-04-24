@@ -152,20 +152,14 @@ export class SidebarListComponent extends BaseList {
     };
 
 
-    public async openChildCollection() {
+    public async openChildCollection(documentToSelect: FieldDocument|undefined) {
 
         this.closePopover();
-        await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
-    }
-
-
-    public async openChildCollectionAndSelect(document: FieldDocument) {
-
-        this.closePopover();
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-        await this.routingService.jumpToResource(selectedDocument);
-        await this.viewFacade.setSelectedDocument(document.resource.id);
+        if (documentToSelect) {
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
+        } else {
+            await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
+        }
     }
 
 

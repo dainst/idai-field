@@ -70,6 +70,8 @@ export class FieldsViewComponent implements OnChanges {
 
     private processFields(resource: Resource) {
 
+        this.addBaseFields(resource);
+
         const fields: Array<FieldDefinition> = this.projectConfiguration
             .getFieldDefinitions(resource.type);
 
@@ -83,7 +85,7 @@ export class FieldsViewComponent implements OnChanges {
 
             if (field.name === 'period') {
                 this.fields[group].push({
-                    name: this.i18n({
+                    label: this.i18n({
                         id: 'widgets.fieldsView.period',
                         value: 'Grobdatierung'
                     }) + (!isUndefinedOrEmpty(resource['periodEnd'])
@@ -97,7 +99,7 @@ export class FieldsViewComponent implements OnChanges {
 
                 if (!isUndefinedOrEmpty(resource['periodEnd'])) {
                     this.fields[group].push({
-                        name: this.i18n({
+                        label: this.i18n({
                             id: 'widgets.fieldsView.period.to',
                             value: 'Grobdatierung (bis)'
                         }),
@@ -111,11 +113,39 @@ export class FieldsViewComponent implements OnChanges {
             if (!this.projectConfiguration.isVisible(resource.type, field.name)) continue;
 
             this.fields[group].push({
-                name: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
+                label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
                 value: FieldsViewComponent.getValue(resource, field.name),
                 isArray: Array.isArray(resource[field.name])
             });
         }
+    }
+
+
+    private addBaseFields(resource: Resource) {
+
+        this.fields['stem'] = [
+            {
+                label: this.getLabel(resource.type, 'identifier'),
+                value: FieldsViewComponent.getValue(resource, 'identifier'),
+                isArray: false
+            }, {
+                label: this.getLabel(resource.type, 'shortDescription'),
+                value: FieldsViewComponent.getValue(resource, 'shortDescription'),
+                isArray: false
+            }, {
+                label: this.getLabel(resource.type, 'type'),
+                value: this.projectConfiguration.getLabelForType(resource.type),
+                isArray: false
+            }
+        ];
+    }
+
+
+    private getLabel(type: string, fieldName: string): string {
+
+        return this.projectConfiguration
+            .getTypesMap()[type].fields
+            .find((field: FieldDefinition) => field.name == fieldName).label;
     }
 
 

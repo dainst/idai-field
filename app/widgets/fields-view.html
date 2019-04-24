@@ -6,7 +6,7 @@
 		<div class="card-body">
 			<div *ngFor="let field of fields[group.name]">
 				<div *ngIf="field.isArray && field.value.length > 0" class="document-view-field">
-					<h3 class="fieldname">{{field.name}}</h3>
+					<h3 class="fieldname">{{field.label}}</h3>
 					<ul>
 						<li *ngFor="let array_item of field.value" class="fieldvalue">
 					<span *ngIf="array_item.lang">
@@ -19,7 +19,7 @@
 					</ul>
 				</div>
 				<div *ngIf="!field.isArray" class="document-view-field">
-					<h3 class="fieldname">{{field.name}}</h3>
+					<h3 class="fieldname">{{field.label}}</h3>
 					<div class="fieldvalue" *ngIf="isBoolean(field.value)">
 						<span *ngIf="field.value === true" i18n="@@boolean.yes">Ja</span>
 						<span *ngIf="field.value === false" i18n="@@boolean.no">Nein</span>

@@ -55,11 +55,6 @@
         </button>
 
         <div class="tab-view-container">
-            <description-view
-                    [identifier]="viewFacade.getSelectedDocument().resource.identifier"
-                    [shortDescription]="viewFacade.getSelectedDocument().resource.shortDescription"
-                    [type]="viewFacade.getSelectedDocument().resource.type">
-            </description-view>
             <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
         </div>
     </div>

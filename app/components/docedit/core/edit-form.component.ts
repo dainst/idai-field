@@ -130,7 +130,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     }
 
 
-
     private setLabels() {
 
         this.groups[STEM].label = this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' });

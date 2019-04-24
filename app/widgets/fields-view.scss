@@ -14,24 +14,15 @@ fields-view {
   .card-body {
     padding: 10px 0 0 0;
 
-    ul {
-      padding: 0;
-    }
-
     .field-label,
-    .field-value,
-    .relation-name {
+    .field-value {
       padding-left: $item-horizontal-padding;
     }
 
-    .field-label,
-    .relation-name {
+    .field-label {
       font-weight: normal;
       font-size: $font-size-smaller;
       color: gray;
-    }
-
-    .field-label {
       margin-bottom: 4px;
     }
 

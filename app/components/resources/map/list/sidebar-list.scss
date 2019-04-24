@@ -54,6 +54,11 @@ $font-size-even-smaller: 10px;
   width: $teaser-width;
   z-index: 1002;
   overflow: hidden;
+
+  ul {
+    padding: 0;
+  }
+
 }
 
 .resources-listing {

@@ -1,4 +1,14 @@
 #relations-view {
   height: 100%;
   overflow-y: auto;
+
+  .relation-name {
+    padding-left: $item-horizontal-padding;
+  }
+
+  .relation-name {
+    font-weight: normal;
+    font-size: $font-size-smaller;
+    color: gray;
+  }
 }

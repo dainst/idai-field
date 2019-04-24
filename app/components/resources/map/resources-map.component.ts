@@ -118,7 +118,6 @@ export class ResourcesMapComponent {
                 this.resourcesComponent.isEditingGeometry = true;
                 break;
             case 'create-polygon':
-                console.log("here")
                 await this.viewFacade.setSelectedDocument(document.resource.id);
                 this.resourcesComponent.createGeometry('Polygon');
                 break;

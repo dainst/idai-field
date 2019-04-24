@@ -77,13 +77,19 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     /**
      * Implements {@link ReadDatastore#find}
      *
+     *
      * Additional specs:
      *
      * Find sorts the documents by identifier ascending
      *
+     * @param query
+     * @param ignoreTypes to make queries faster, the facility to return only the
+     *   types the datastore is supposed to return, can be turned off. This can make sense if
+     *   one performs constraint queries, where one knows that all documents returned are of
+     *   allowed types, due to the nature of the relations to which the constraints refer.
      * @throws if query contains types incompatible with T
      */
-    public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
+    public async find(query: Query, ignoreTypes: boolean = false): Promise<IdaiFieldFindResult<T>> {
 
         if (!this.suppressWait) await this.datastore.ready();
 
@@ -93,7 +99,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.types.forEach(type => {
                 this.typeConverter.assertTypeToBeOfClass(type, this.typeClass);
             });
-        } else {
+        } else if (!ignoreTypes) {
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
@@ -139,10 +145,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         // Wrap asynchronously in order to make the app more responsive
         return new Promise<string[]>((resolve: any, reject: any) => {
-            let orderedResult;
             try {
-                orderedResult = IndexItem.generateOrderedResultList(result);
-                resolve(orderedResult);
+                resolve(IndexItem.generateOrderedResultList(result));
             } catch (err) {
                 reject([DatastoreErrors.GENERIC_ERROR, err]);
             }

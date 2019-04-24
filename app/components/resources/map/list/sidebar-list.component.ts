@@ -227,6 +227,6 @@ export class SidebarListComponent extends BaseList {
 
         return (await this.fieldDatastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
-            }})).documents;
+            }}, true)).documents;
     }
 }

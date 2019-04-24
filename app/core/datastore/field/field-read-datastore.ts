@@ -12,8 +12,8 @@ export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocume
  */
 export abstract class FieldReadDatastore extends CachedReadDatastore<FieldDocument> {
 
-    public async find(query: Query): Promise<FieldDocumentFindResult> {
+    public async find(query: Query, ignoreTypes: boolean = false): Promise<FieldDocumentFindResult> {
 
-        return super.find(query);
+        return super.find(query, ignoreTypes);
     }
 }

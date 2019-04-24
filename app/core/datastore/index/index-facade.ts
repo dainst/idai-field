@@ -24,6 +24,11 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
+    /**
+     * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
+     *
+     * @param query
+     */
     public perform(query: Query): Array<SimpleIndexItem> {
 
         let resultSets = query.constraints ?

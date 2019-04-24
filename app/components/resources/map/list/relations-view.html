@@ -1,6 +1,10 @@
-<div *ngFor="let relation of relations">
-    <div class="relation-name">{{relation.name}}</div>
-    <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="clickRelation(target)">
-        <document-teaser [document]="target"></document-teaser>
+<div #relationsView id="relations-view"
+     class="resources-listing"
+     [class.scrollbar-visible]="isScrollbarVisible(relationsView)">
+    <div *ngFor="let relation of relations">
+        <div class="relation-name">{{relation.name}}</div>
+        <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="clickRelation(target)">
+            <document-teaser [document]="target"></document-teaser>
+        </div>
     </div>
 </div>

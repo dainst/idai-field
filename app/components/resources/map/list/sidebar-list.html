@@ -33,15 +33,13 @@
         </li>
     </ul>
 
-    <relations-view
-            *ngIf="isPopoverMenuOpened('relations') && viewFacade.getSelectedDocument()"
-            class="resources-listing"
+    <relations-view *ngIf="isPopoverMenuOpened('relations') && viewFacade.getSelectedDocument()"
             [resource]="viewFacade.getSelectedDocument().resource"
             (onRelationTargetClicked)="jumpToResource($event)"
             [hideRelations]="relationsToHide">
     </relations-view>
 
-    <div *ngIf="isPopoverMenuOpened('info')">
+    <div *ngIf="isPopoverMenuOpened('info')" id="document-info">
         <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
                 class="btn btn-link btn-xs solve-button"
                 id="document-view-button-solve-conflicts"

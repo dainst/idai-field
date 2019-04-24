@@ -53,8 +53,7 @@ $font-size-even-smaller: 10px;
   height: 100%;
   width: $teaser-width;
   z-index: 1002;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 
   ul {
     padding: 0;
@@ -159,10 +158,19 @@ $font-size-even-smaller: 10px;
 }
 
 #children-list {
+  height: calc(100% - 32px);
+  overflow-y: auto;
+
   loading-icon {
     position: relative;
     top: 49px;
   }
+}
+
+#document-info,
+#relations-view-container {
+  height: 100%;
+  overflow-y: auto;
 }
 
 #create-document-button .circular-button {

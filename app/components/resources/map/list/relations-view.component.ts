@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {Resource} from 'idai-components-2';
-import {ReadDatastore} from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
+import {Document, Resource, ReadDatastore, ProjectConfiguration} from 'idai-components-2';
+import {SidebarListComponent} from './sidebar-list.component';
 
 
 @Component({
@@ -26,7 +24,13 @@ export class RelationsViewComponent implements OnChanges {
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
 
-    constructor(private datastore: ReadDatastore, private projectConfiguration: ProjectConfiguration) {}
+    constructor(private datastore: ReadDatastore,
+                private projectConfiguration: ProjectConfiguration,
+                private sidebarListComponent: SidebarListComponent) {}
+
+
+    public isScrollbarVisible = (element: HTMLElement) =>
+        this.sidebarListComponent.isScrollbarVisible(element);
 
 
     async ngOnChanges() {

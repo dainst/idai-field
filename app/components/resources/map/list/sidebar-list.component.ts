@@ -145,16 +145,6 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public async moveIntoAndSelect(document: FieldDocument) {
-
-        this.closePopover();
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-        await this.routingService.jumpToResource(selectedDocument);
-        await this.viewFacade.setSelectedDocument(document.resource.id);
-    }
-
-
     public closePopover() {
 
         this.activePopoverMenu = 'none';
@@ -164,9 +154,18 @@ export class SidebarListComponent extends BaseList {
 
     public async openChildCollection() {
 
-        await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument());
-        await this.viewFacade.deselect();
         this.closePopover();
+        await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
+    }
+
+
+    public async openChildCollectionAndSelect(document: FieldDocument) {
+
+        this.closePopover();
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+        await this.routingService.jumpToResource(selectedDocument);
+        await this.viewFacade.setSelectedDocument(document.resource.id);
     }
 
 

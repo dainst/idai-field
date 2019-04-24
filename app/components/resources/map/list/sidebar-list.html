@@ -19,7 +19,7 @@
         [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
         <loading-icon [context]="'sidebar-children'"></loading-icon>
         <li *ngFor="let document of children"
-            (click)="moveIntoAndSelect(document)"
+            (click)="openChildCollectionAndSelect(document)"
             (dblclick)="resourcesComponent.editDocument(document, 'fields')"
             (contextmenu)="openContextMenu($event, document)"
             class="resources-listing-item resources-listing-item-slim"

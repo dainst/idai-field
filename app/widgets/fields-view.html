@@ -8,13 +8,8 @@
 				<div *ngIf="field.isArray && field.value.length > 0" class="document-view-field">
 					<h3 class="fieldname">{{field.label}}</h3>
 					<ul>
-						<li *ngFor="let array_item of field.value" class="fieldvalue">
-					<span *ngIf="array_item.lang">
-						<b>{{array_item.lang}}:</b> {{array_item.content.join(", ")}}
-					</span>
-							<span *ngIf="!array_item.lang">
-						{{array_item.label ? array_item.label : array_item}}
-					</span>
+						<li *ngFor="let item of field.value" class="fieldvalue">
+						    {{item.label ? item.label : item}}
 						</li>
 					</ul>
 				</div>

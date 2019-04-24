@@ -1,6 +1,6 @@
 <div *ngFor="let group of getGroups()" class="card">
 	<div class="card-header">
-		<button class="btn btn-link" (click)="toggleGroup(group)">{{group.label}}</button>
+		<button class="btn btn-block" (click)="toggleGroup(group)">{{group.label}}</button>
 	</div>
 	<div *ngIf="group.shown" class="collapse show">
 		<div class="card-body">

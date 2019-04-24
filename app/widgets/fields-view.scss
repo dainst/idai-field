@@ -4,6 +4,11 @@
 fields-view {
   .card-header {
     padding: 0;
+
+    .btn {
+      text-align: left;
+      font-size: 14px;
+    }
   }
 
   .card-body {

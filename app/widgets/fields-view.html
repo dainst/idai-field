@@ -2,7 +2,7 @@
 	<div class="card-header">
 		<button class="btn btn-block" (click)="toggleGroup(group)">{{group.label}}</button>
 	</div>
-	<div *ngIf="group.shown" class="collapse show">
+	<div *ngIf="shownGroupName === group.name" class="collapse show">
 		<div class="card-body">
 			<div *ngFor="let field of fields[group.name]">
 				<div *ngIf="field.isArray && field.value.length > 0" class="document-view-field">

@@ -25,6 +25,7 @@ export class FieldsViewComponent implements OnChanges {
     @Input() resource: Resource;
 
     public fields: { [groupName: string]: Array<any> };
+    public shownGroupName: string|undefined = 'stem';
 
     private groups: Array<FieldViewGroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
@@ -61,7 +62,9 @@ export class FieldsViewComponent implements OnChanges {
 
     public toggleGroup(group: FieldViewGroupDefinition) {
 
-        group.shown = !group.shown;
+        this.shownGroupName = this.shownGroupName === group.name
+            ? undefined
+            : this.shownGroupName = group.name;
     }
 
 

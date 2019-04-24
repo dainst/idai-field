@@ -12,6 +12,9 @@ import {ResourcesState} from './state/resources-state';
 import {AngularUtility} from '../../../common/angular-utility';
 
 
+const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
+
+
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -218,7 +221,7 @@ export class DocumentsManager {
 
         for (let document of documents) {
            this.childrenCountMap[document.resource.id] = this.getIndexMatchTermCount(
-               'liesWithin:contain', document.resource.id
+               LIES_WITHIN_CONTAIN, document.resource.id
            );
         }
     }
@@ -298,7 +301,12 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         try {
-            return await this.datastore.find(query);
+            const ignoreTypes = !query.types
+                && query.constraints
+                && (Object.keys(query.constraints).includes(LIES_WITHIN_CONTAIN));
+
+            return await this.datastore.find(query, ignoreTypes);
+
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], totalCount: 0 };
@@ -341,7 +349,7 @@ export class DocumentsManager {
 
         if (addLiesWithinConstraints) {
             if (liesWithinId) {
-                constraints['liesWithin:contain'] = liesWithinId;
+                constraints[LIES_WITHIN_CONTAIN] = liesWithinId;
             } else {
                 constraints['liesWithin:exist'] = 'UNKNOWN';
             }

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {isEmpty} from 'tsfun';
-import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument, ProjectConfiguration, Document} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
@@ -10,6 +10,8 @@ import {ResourcesMapComponent} from '../resources-map.component';
 import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {AngularUtility} from '../../../../common/angular-utility';
+import {BlobMaker} from '../../../../core/imagestore/blob-maker';
+import {Imagestore} from '../../../../core/imagestore/imagestore';
 
 
 type PopoverMenu = 'none'|'info'|'relations'|'children';
@@ -35,6 +37,7 @@ export class SidebarListComponent extends BaseList {
     public activePopoverMenu: PopoverMenu = 'none';
     public children: Array<FieldDocument> = [];
     public childrenCount: number = 0;
+    public selectedDocumentThumbnailUrl: string|undefined;
 
 
     constructor(resourcesComponent: ResourcesComponent,
@@ -44,7 +47,8 @@ export class SidebarListComponent extends BaseList {
                 private resourcesMapComponent: ResourcesMapComponent,
                 private fieldDatastore: FieldReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private routingService: RoutingService) {
+                private routingService: RoutingService,
+                private imagestore: Imagestore) {
 
         super(resourcesComponent, viewFacade, loading);
         this.navigationService.moveIntoNotifications().subscribe(async () => {
@@ -171,6 +175,7 @@ export class SidebarListComponent extends BaseList {
             this.viewFacade.deselect();
         } else {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
+            this.selectedDocumentThumbnailUrl = await this.getThumbnailUrl(document);
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
@@ -221,5 +226,19 @@ export class SidebarListComponent extends BaseList {
         return (await this.fieldDatastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
             }}, true)).documents;
+    }
+
+
+    private async getThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
+
+        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+
+        try {
+            return this.imagestore.read(
+                document.resource.relations['isDepictedIn'][0], false, true
+            );
+        } catch (e) {
+            return BlobMaker.blackImg;
+        }
     }
 }

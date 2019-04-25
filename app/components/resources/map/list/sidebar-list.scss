@@ -191,6 +191,17 @@ $teaser-width: $resources-listing-item-slim-width;
   overflow-y: auto;
 }
 
+#sidebar-popover-thumbnail-container {
+  width: $resources-listing-item-slim-width;
+  height: 150px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: scale-down;
+  }
+}
+
 #create-document-button .circular-button {
   left: 45%;
   margin: -45px auto auto auto;

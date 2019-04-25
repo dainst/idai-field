@@ -6,10 +6,16 @@
   position: fixed;
   z-index: 1002;
   margin: 0;
+  padding: 5px 0;
   min-width: 120px;
+
+  .dropdown-item {
+    padding: 0 10px;
+  }
 
   .dropdown-entry-label {
     margin-left: 5px;
+    font-size: 13px;
   }
 
   .mdi-pencil,
@@ -19,5 +25,9 @@
 
   .mdi-delete {
     color: #dc3545;
+  }
+
+  hr {
+    margin: 3px 0;
   }
 }

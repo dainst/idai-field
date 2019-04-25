@@ -1,14 +1,14 @@
 import {intersection, NestedArray, union, subtract} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
-
+type ResourceId = string;
 type IndexItemMap = {[id: string]: SimpleIndexItem};
 
 
 export interface ResultSets {
 
-    addSets: NestedArray<string>,
-    subtractSets: NestedArray<string>,
+    addSets: NestedArray<ResourceId>,
+    subtractSets: NestedArray<ResourceId>,
     map: IndexItemMap
 }
 

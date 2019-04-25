@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
+import {FieldDocument} from 'idai-components-2';
 import {AngularUtility} from '../../../../common/angular-utility';
 import {ViewFacade} from '../../view/view-facade';
 import {Loading} from '../../../../widgets/loading';

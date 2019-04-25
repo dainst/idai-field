@@ -53,6 +53,35 @@ $teaser-width: $resources-listing-item-slim-width;
     padding: 0;
   }
 
+  .sidebar-popover-page {
+    height: 100%;
+
+    .sidebar-popover-header {
+      height: 40px;
+      padding: 10px;
+      background-color: transparent;
+      border-bottom: 1px solid #ced4da;
+      text-align: center;
+      font-size: 15px;
+      user-select: none;
+      cursor: default;
+
+      .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 39px;
+        background-color: transparent;
+        border: none;
+
+        .mdi-close {
+          position: relative;
+          top: 3px;
+          color: #000;
+        }
+      }
+    }
+  }
 }
 
 .resources-listing {
@@ -129,7 +158,7 @@ $teaser-width: $resources-listing-item-slim-width;
 }
 
 #children-list {
-  height: calc(100% - 32px);
+  height: calc(100% - 72px);
   overflow-y: auto;
 
   loading-icon {
@@ -138,9 +167,8 @@ $teaser-width: $resources-listing-item-slim-width;
   }
 }
 
-#document-info,
-#relations-view-container {
-  height: 100%;
+#document-info {
+  height: calc(100% - 40px);
   overflow-y: auto;
 }
 

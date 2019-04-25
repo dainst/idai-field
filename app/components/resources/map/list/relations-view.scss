@@ -1,5 +1,5 @@
 #relations-view {
-  height: 100%;
+  height: calc(100% - 40px);
   overflow-y: auto;
 
   .relation-name {

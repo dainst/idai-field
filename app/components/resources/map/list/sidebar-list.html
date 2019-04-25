@@ -1,60 +1,69 @@
 <div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
 
-    <div *ngIf="isPopoverMenuOpened('children')"
-         (click)="openChildCollection()"
-         class="btn btn-light"
-         style="opacity: 0.8; font-size: 12px; color: gray">
-        <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
-    </div>
+    <div *ngIf="isPopoverMenuOpened('children')" class="sidebar-popover-page">
+        <div class="sidebar-popover-header">
+            <div>Kind-Ressourcen</div>
+            <div class="btn btn-light" (click)="closePopover()">
+                <span class="mdi mdi-close"></span>
+            </div>
+        </div>
 
-    <div *ngIf="isPopoverMenuOpened('children')" class=""
-         style="opacity: 0.8; font-size: 12px; color: gray; position: absolute; top: 7px; right: 9px;">
-        <span *ngIf="childrenCount === 1">1 Ressource</span>
-        <span *ngIf="childrenCount !== 1">{{childrenCount}} Ressourcen</span>
-    </div>
+        <div (click)="openChildCollection()"
+             class="btn btn-light"
+             style="opacity: 0.8; font-size: 12px; color: gray">
+            <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
+        </div>
 
-    <ul #childrenList *ngIf="isPopoverMenuOpened('children')"
-        id="children-list"
-        class="resources-listing"
-        [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
-        <loading-icon [context]="'sidebar-children'"></loading-icon>
-        <li *ngFor="let document of children"
-            (click)="openChildCollection(document)"
-            (dblclick)="resourcesComponent.editDocument(document, 'fields')"
-            (contextmenu)="openContextMenu($event, document)"
-            class="resources-listing-item resources-listing-item-slim"
-            [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-            [class.conflicted]="document['_conflicts']"
-            [class.selected]="viewFacade.getSelectedDocument()
+        <div style="opacity: 0.8; font-size: 12px; color: gray; position: absolute; top: 47px; right: 9px;">
+            <span *ngIf="childrenCount === 1">1 Ressource</span>
+            <span *ngIf="childrenCount !== 1">{{childrenCount}} Ressourcen</span>
+        </div>
+
+        <ul #childrenList
+            id="children-list"
+            class="resources-listing"
+            [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
+            <loading-icon [context]="'sidebar-children'"></loading-icon>
+            <li *ngFor="let document of children"
+                (click)="openChildCollection(document)"
+                (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+                (contextmenu)="openContextMenu($event, document)"
+                class="resources-listing-item resources-listing-item-slim"
+                [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
+                [class.conflicted]="document['_conflicts']"
+                [class.selected]="viewFacade.getSelectedDocument()
                     && viewFacade.getSelectedDocument().resource.id === document.resource.id"
-            [id]="'resource-' + document.resource.identifier">
+                [id]="'resource-' + document.resource.identifier">
 
-            <document-teaser [document]="document"></document-teaser>
-        </li>
-    </ul>
+                <document-teaser [document]="document"></document-teaser>
+            </li>
+        </ul>
+    </div>
 
-    <relations-view *ngIf="isPopoverMenuOpened('relations') && viewFacade.getSelectedDocument()"
-            [resource]="viewFacade.getSelectedDocument().resource"
-            (onRelationTargetClicked)="jumpToResource($event)"
-            [hideRelations]="relationsToHide">
-    </relations-view>
+    <div *ngIf="isPopoverMenuOpened('relations')" class="sidebar-popover-page">
+        <div class="sidebar-popover-header">
+            <div>Relationen</div>
+            <div class="btn btn-light" (click)="closePopover()">
+                <span class="mdi mdi-close"></span>
+            </div>
+        </div>
 
-    <div *ngIf="isPopoverMenuOpened('info')" id="document-info">
-        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
-                class="btn btn-link btn-xs solve-button"
-                id="document-view-button-solve-conflicts"
-                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
-            <span class="mdi mdi-alert-outline"></span>
-        </button>
+        <relations-view
+                [resource]="viewFacade.getSelectedDocument().resource"
+                (onRelationTargetClicked)="jumpToResource($event)"
+                [hideRelations]="relationsToHide">
+        </relations-view>
+    </div>
 
-        <button id="back-to-map"
-                class="close-button btn btn-link btn-xs"
-                style="position: absolute; right: 2px; top: 2px;"
-                (click)="viewFacade.deselect()">
-            <span class="mdi mdi-close"></span>
-        </button>
+    <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
+        <div class="sidebar-popover-header">
+            <div>Daten</div>
+            <div class="btn btn-light" (click)="closePopover()">
+                <span class="mdi mdi-close"></span>
+            </div>
+        </div>
 
-        <div class="tab-view-container">
+        <div id="document-info">
             <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
         </div>
     </div>

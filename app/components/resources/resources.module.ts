@@ -44,6 +44,7 @@ import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-
 import {TabManager} from '../tab-manager';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {RelationsViewComponent} from './map/list/relations-view.component';
+import {ThumbnailComponent} from './map/list/thumbnail.component';
 
 const remote = require('electron').remote;
 
@@ -78,7 +79,8 @@ const remote = require('electron').remote;
         SearchSuggestionsComponent,
         ContextMenuComponent,
         MoveModalComponent,
-        DeletionInProgressModalComponent
+        DeletionInProgressModalComponent,
+        ThumbnailComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

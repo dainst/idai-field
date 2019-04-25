@@ -153,6 +153,7 @@ export class SidebarListComponent extends BaseList {
 
         this.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
+        this.selectedDocumentThumbnailUrl = undefined;
     };
 
 
@@ -170,12 +171,12 @@ export class SidebarListComponent extends BaseList {
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
+        this.selectedDocumentThumbnailUrl = undefined;
 
         if (!document) {
             this.viewFacade.deselect();
         } else {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
-            this.selectedDocumentThumbnailUrl = await this.getThumbnailUrl(document);
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
@@ -226,19 +227,5 @@ export class SidebarListComponent extends BaseList {
         return (await this.fieldDatastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
             }}, true)).documents;
-    }
-
-
-    private async getThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
-
-        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
-
-        try {
-            return this.imagestore.read(
-                document.resource.relations['isDepictedIn'][0], false, true
-            );
-        } catch (e) {
-            return BlobMaker.blackImg;
-        }
     }
 }

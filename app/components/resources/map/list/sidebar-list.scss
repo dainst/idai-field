@@ -74,6 +74,10 @@ $teaser-width: $resources-listing-item-slim-width;
         background-color: transparent;
         border: none;
 
+        &:hover {
+          background-color: rgba(226, 230, 234, 0.8);
+        }
+
         .mdi-close {
           position: relative;
           top: 3px;

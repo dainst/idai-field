@@ -1,4 +1,4 @@
-import {NestedArray, union, uniteObj, includedIn, isNot} from 'tsfun';
+import {includedIn, isNot, NestedArray, union, intersection} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
 
@@ -61,7 +61,7 @@ export module ResultSets {
 
     export function collapse(resultSets: ResultSets): Array<SimpleIndexItem> {
 
-        const addSetIds: string[] = getIntersecting(resultSets.addSets);
+        const addSetIds: string[] = intersection(resultSets.addSets);
 
         return pickFromMap(resultSets,
             resultSets.subtractSets.length === 0
@@ -86,22 +86,5 @@ export module ResultSets {
     function subtract(ids: string[], idsToSubtract: string[]) {
 
         return ids.filter(isNot(includedIn(idsToSubtract)));
-    }
-
-
-    function getIntersecting(idSets: string[][]) {
-
-        let result: string[] = idSets[0];
-
-        if (idSets.length > 1) {
-            result = result.filter(id => {
-                for (let idSet of idSets.slice(1)) {
-                    if (!idSet.includes(id)) return false;
-                }
-                return true;
-            });
-        }
-
-        return result;
     }
 }

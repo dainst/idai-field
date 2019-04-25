@@ -63,4 +63,29 @@ describe('ResultSets', () => {
 
         expect(ResultSets.collapse(r)).toEqual([{ id: '2' }]);
     });
+
+
+    /**
+     * x_max = 30, y_max = 10000
+     * -> ~25ms
+     *
+     * Should be in the order of magnitude of 10 to 100,
+     */
+    it('collapse performance', () => {
+
+        const r: ResultSets = ResultSets.make();
+
+        for (let x = 0; x < 30; x ++) {
+            const indexItems = [];
+            for (let y = 0; y < 10000; y++) {
+                indexItems.push({id: (x + y).toString()})
+            }
+            ResultSets.combine(r, indexItems);
+        }
+
+        const begin = new Date();
+        ResultSets.collapse(r);
+        const elapsed = (new Date() as any) - (begin as any);
+        if (elapsed > 100) fail();
+    });
 });

@@ -1,4 +1,4 @@
-import {includedIn, isNot, NestedArray, union, intersection} from 'tsfun';
+import {intersection, NestedArray, union, subtract} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
 
@@ -66,7 +66,7 @@ export module ResultSets {
         return pickFromMap(resultSets,
             resultSets.subtractSets.length === 0
                 ? addSetIds
-                : subtract(addSetIds, union(resultSets.subtractSets))
+                : subtract(union(resultSets.subtractSets))(addSetIds)
         );
     }
 
@@ -80,11 +80,5 @@ export module ResultSets {
     function pickFromMap(resultSets: ResultSets, ids: string[]) {
 
         return ids.map(id => resultSets.map[id]);
-    }
-
-
-    function subtract(ids: string[], idsToSubtract: string[]) {
-
-        return ids.filter(isNot(includedIn(idsToSubtract)));
     }
 }

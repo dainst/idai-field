@@ -1,6 +1,6 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {isEmpty} from 'tsfun';
-import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';

@@ -3,7 +3,7 @@ import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {IndexItem, SimpleIndexItem} from './index-item';
+import {SimpleIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 
 

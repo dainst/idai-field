@@ -12,7 +12,10 @@ import {ResourcesState} from './state/resources-state';
 import {AngularUtility} from '../../../common/angular-utility';
 
 
+const LIES_WITHIN_EXIST = 'liesWithin:exist';
 const LIES_WITHIN_CONTAIN = 'liesWithin:contain';
+const RECORDED_IN_CONTAIN = 'isRecordedIn:contain';
+const UNKNOWN = 'UNKNOWN';
 
 
 /**
@@ -301,10 +304,7 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         try {
-            const ignoreTypes = !query.types
-                && query.constraints
-                && (Object.keys(query.constraints).includes(LIES_WITHIN_CONTAIN));
-
+            const ignoreTypes = !query.types;
             return await this.datastore.find(query, ignoreTypes);
 
         } catch (errWithParams) {
@@ -351,11 +351,11 @@ export class DocumentsManager {
             if (liesWithinId) {
                 constraints[LIES_WITHIN_CONTAIN] = liesWithinId;
             } else {
-                constraints['liesWithin:exist'] = 'UNKNOWN';
+                constraints[LIES_WITHIN_EXIST] = UNKNOWN;
             }
         }
 
-        if (operationId) constraints['isRecordedIn:contain'] = operationId;
+        if (operationId) constraints[RECORDED_IN_CONTAIN] = operationId;
 
         return constraints;
     }

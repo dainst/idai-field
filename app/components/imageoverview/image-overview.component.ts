@@ -86,7 +86,7 @@ export class ImageOverviewComponent implements OnInit {
     public async jumpToResource(document: ImageDocument) {
 
         this.imageOverviewFacade.select(document);
-        await this.routingService.jumpToResource(document, undefined, true);
+        await this.routingService.jumpToResource(document, undefined);
     }
 
 

@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },
     { path: 'resources/:view', component: ResourcesComponent },
     { path: 'resources/:view/:id', component: ResourcesComponent },
-    { path: 'resources/:view/:id/:menu/:tab', component: ResourcesComponent },
+    { path: 'resources/:view/:id/:menu', component: ResourcesComponent },
     { path: 'matrix/:trenchId', component: MatrixViewComponent },
     { path: 'help', component: HelpComponent },
     { path: 'import', component: ImportComponent },

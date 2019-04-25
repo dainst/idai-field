@@ -34,7 +34,7 @@ export class ImageViewComponent implements OnInit {
 
     // for clean and refactor safe template, and to help find usages
     public jumpToResource = (documentToJumpTo: FieldDocument) => this.routingService.jumpToResource(
-        documentToJumpTo, undefined, true);
+        documentToJumpTo, undefined);
 
 
     constructor(

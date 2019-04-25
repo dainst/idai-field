@@ -55,7 +55,7 @@ export class RoutingService {
     }
 
 
-    public async jumpToResource(documentToSelect: Document, tab?: string,
+    public async jumpToResource(documentToSelect: Document,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
@@ -63,7 +63,7 @@ export class RoutingService {
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
             await this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            await this.jumpToFieldTypeResource(documentToSelect, tab, comingFromOutsideResourcesComponent);
+            await this.jumpToFieldTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         }
     }
 
@@ -103,15 +103,13 @@ export class RoutingService {
     }
 
 
-    private async jumpToFieldTypeResource(documentToSelect: Document, tab?: string,
+    private async jumpToFieldTypeResource(documentToSelect: Document,
                                           comingFromOutsideResourcesComponent: boolean = false) {
 
         const viewName: 'project'|string = this.getViewName(documentToSelect);
 
         if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
-            await this.router.navigate(tab
-                ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
-                : ['resources', viewName, documentToSelect.resource.id]);
+            await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
         }

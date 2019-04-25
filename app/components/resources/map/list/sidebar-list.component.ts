@@ -140,7 +140,7 @@ export class SidebarListComponent extends BaseList {
     public async jumpToResource(documentToSelect: FieldDocument) {
 
         this.closePopover();
-        await this.routingService.jumpToResource(documentToSelect, 'relations');
+        await this.routingService.jumpToResource(documentToSelect);
         this.resourcesComponent.setScrollTarget(documentToSelect);
     }
 

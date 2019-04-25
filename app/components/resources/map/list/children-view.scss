@@ -1,0 +1,29 @@
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
+
+#children-list {
+  height: calc(100% - 72px);
+  overflow-y: auto;
+
+  loading-icon {
+    position: relative;
+    top: 49px;
+  }
+}
+
+#open-child-collection-button,
+#child-resources-count {
+  opacity: 0.8;
+  color: gray;
+  font-size: 12px;
+}
+
+#child-resources-count {
+  position: absolute;
+  top: 47px;
+  right: 9px;
+  user-select: none;
+  cursor: default;
+}

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {isEmpty} from 'tsfun';
-import {FieldDocument, ProjectConfiguration, Document} from 'idai-components-2';
+import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
@@ -9,8 +9,6 @@ import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
 import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
-import {AngularUtility} from '../../../../common/angular-utility';
-import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 
 
@@ -35,8 +33,6 @@ export class SidebarListComponent extends BaseList {
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
     public highlightedDocument: FieldDocument|undefined = undefined;
     public activePopoverMenu: PopoverMenu = 'none';
-    public children: Array<FieldDocument> = [];
-    public childrenCount: number = 0;
     public selectedDocumentThumbnailUrl: string|undefined;
 
 
@@ -157,17 +153,6 @@ export class SidebarListComponent extends BaseList {
     };
 
 
-    public async openChildCollection(documentToSelect: FieldDocument|undefined) {
-
-        this.closePopover();
-        if (documentToSelect) {
-            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
-        } else {
-            await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
-        }
-    }
-
-
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
@@ -180,8 +165,6 @@ export class SidebarListComponent extends BaseList {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
-        this.resetChildren();
-        if (this.activePopoverMenu === 'children') await this.updateChildren(document);
     }
 
 
@@ -190,42 +173,5 @@ export class SidebarListComponent extends BaseList {
         this.activePopoverMenu = popoverMenu;
 
         if (!this.isSelected(document)) await this.select(document);
-        if (popoverMenu === 'children' && this.children.length === 0) await this.updateChildren(document);
-    }
-
-
-    private resetChildren() {
-
-        this.children = [];
-        this.childrenCount = 0;
-    }
-
-
-    private async updateChildren(document: FieldDocument) {
-
-        this.children = [];
-        this.childrenCount = this.viewFacade.getChildrenCount(document);
-
-        if (this.childrenCount === 0) {
-            this.children = [];
-            return;
-        }
-
-        this.loading.start('sidebar-children');
-        await AngularUtility.refresh();
-
-        this.children = await this.getChildren(document);
-
-        this.loading.stop();
-    }
-
-
-    private async getChildren(document: FieldDocument): Promise<Array<FieldDocument>> {
-
-        if (!document) return [];
-
-        return (await this.fieldDatastore.find({constraints: {
-                'liesWithin:contain' : document.resource.id
-            }}, true)).documents;
     }
 }

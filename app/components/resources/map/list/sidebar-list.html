@@ -8,36 +8,7 @@
             </div>
         </div>
 
-        <div id="open-child-collection-button"
-             class="btn btn-light"
-             (click)="openChildCollection()">
-            <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
-        </div>
-
-        <div id="child-resources-count">
-            <span *ngIf="childrenCount === 1">1 Ressource</span>
-            <span *ngIf="childrenCount !== 1">{{childrenCount}} Ressourcen</span>
-        </div>
-
-        <ul #childrenList
-            id="children-list"
-            class="resources-listing"
-            [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
-            <loading-icon [context]="'sidebar-children'"></loading-icon>
-            <li *ngFor="let document of children"
-                (click)="openChildCollection(document)"
-                (dblclick)="resourcesComponent.editDocument(document, 'fields')"
-                (contextmenu)="openContextMenu($event, document)"
-                class="resources-listing-item resources-listing-item-slim"
-                [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-                [class.conflicted]="document['_conflicts']"
-                [class.selected]="viewFacade.getSelectedDocument()
-                    && viewFacade.getSelectedDocument().resource.id === document.resource.id"
-                [id]="'resource-' + document.resource.identifier">
-
-                <document-teaser [document]="document"></document-teaser>
-            </li>
-        </ul>
+        <children-view [document]="viewFacade.getSelectedDocument()"></children-view>
     </div>
 
     <div *ngIf="isPopoverMenuOpened('relations')" class="sidebar-popover-page">

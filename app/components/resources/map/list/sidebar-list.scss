@@ -178,6 +178,8 @@ $teaser-width: $resources-listing-item-slim-width;
   position: absolute;
   top: 47px;
   right: 9px;
+  user-select: none;
+  cursor: default;
 }
 
 #document-info {

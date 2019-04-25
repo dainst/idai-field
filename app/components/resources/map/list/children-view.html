@@ -1,0 +1,25 @@
+<div id="open-child-collection-button"
+     class="btn btn-light"
+     (click)="openChildCollection()">
+    <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
+</div>
+
+<div id="child-resources-count">
+    <span *ngIf="childrenCount === 1">1 Ressource</span>
+    <span *ngIf="childrenCount !== 1">{{childrenCount}} Ressourcen</span>
+</div>
+
+<ul #childrenList
+    id="children-list"
+    class="resources-listing"
+    [class.scrollbar-visible]="isScrollbarVisible(childrenList)">
+    <loading-icon [context]="'sidebar-children'"></loading-icon>
+    <li *ngFor="let document of children"
+        (click)="openChildCollection(document)"
+        class="resources-listing-item resources-listing-item-slim"
+        [class.conflicted]="document['_conflicts']"
+        [id]="'resource-' + document.resource.identifier">
+
+        <document-teaser [document]="document"></document-teaser>
+    </li>
+</ul>

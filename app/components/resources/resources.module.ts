@@ -45,6 +45,7 @@ import {TabManager} from '../tab-manager';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {RelationsViewComponent} from './map/list/relations-view.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
+import {ChildrenViewComponent} from './map/list/children-view.component';
 
 const remote = require('electron').remote;
 
@@ -80,7 +81,8 @@ const remote = require('electron').remote;
         ContextMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent,
-        ThumbnailComponent
+        ThumbnailComponent,
+        ChildrenViewComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

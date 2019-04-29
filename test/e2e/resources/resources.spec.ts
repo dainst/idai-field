@@ -22,7 +22,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('resources --', () => {
+describe('resources --', () => {
 
     let i = 0;
 
@@ -142,7 +142,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docview -- show the relations present in the object', () => {
+    xit('docview -- show the relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -164,7 +164,7 @@ xdescribe('resources --', () => {
     /**
      * Addresses an issue where relations were shown double.
      */
-    it('docview -- show only relations present in the object', () => {
+    xit('docview -- show only relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -174,7 +174,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docview -- show the fields present in the object', () => {
+    xit('docview -- show the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
@@ -191,7 +191,7 @@ xdescribe('resources --', () => {
     /**
      * Addresses an issue where fields were shown double.
      */
-    it('docview -- show only the fields present in the object', () => {
+    xit('docview -- show only the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
@@ -206,7 +206,7 @@ xdescribe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('docview -- do not show new relations after cancelling edit', () => {
+    xit('docview -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -226,7 +226,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/images -- create links for images', done => {
+    xit('docedit/images -- create links for images', done => {
 
         addTwoImages();
         ThumbnailViewPage.getThumbs().then(thumbs => {
@@ -236,7 +236,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/images -- delete links to one image', done => {
+    xit('docedit/images -- delete links to one image', done => {
 
         addTwoImages();
 
@@ -256,7 +256,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/images -- delete links to two images', done => {
+    xit('docedit/images -- delete links to two images', done => {
 
         addTwoImages();
         gotoImageTab();
@@ -276,7 +276,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('delete a resource', () => {
+    xit('delete a resource', () => {
 
         ResourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
@@ -288,7 +288,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('delete an operation and update navbar', () => {
+    xit('delete an operation and update navbar', () => {
 
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
@@ -317,7 +317,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('do not reflect changes in list while editing resource', () => {
+    xit('do not reflect changes in list while editing resource', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
@@ -331,7 +331,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/savedialog -- save changes via dialog modal', () => {
+    xit('docedit/savedialog -- save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -346,7 +346,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/savedialog -- discard changes via dialog modal', () => {
+    xit('docedit/savedialog -- discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -361,7 +361,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('docedit/savedialog -- cancel dialog modal', () => {
+    xit('docedit/savedialog -- cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -375,7 +375,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('relations -- create links for relations', () => {
+    xit('relations -- create links for relations', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -385,7 +385,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('relations -- create a new relation and the corresponding inverse relation', () => {
+    xit('relations -- create a new relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
@@ -404,7 +404,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('relations -- edit a resource that contains a relation', () => {
+    xit('relations -- edit a resource that contains a relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
@@ -415,7 +415,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('relations -- delete a relation and the corresponding inverse relation', () => {
+    xit('relations -- delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -433,7 +433,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('relations -- delete inverse relations when deleting a resource', () => {
+    xit('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickOpenContextMenu('2');
@@ -446,7 +446,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('operation -- create a new operation', () => {
+    xit('operation -- create a new operation', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.performCreateOperation('newTrench');
@@ -456,7 +456,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('operation -- should edit an operation and update navbar', () => {
+    xit('operation -- should edit an operation and update navbar', () => {
 
         NavbarPage.clickTab('project');
         NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
@@ -471,7 +471,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('typechange -- should change the type of a resource to a child type', () => {
+    xit('typechange -- should change the type of a resource to a child type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
         ResourcesPage.clickSelectResource('1');
@@ -484,7 +484,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
+    xit('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
@@ -507,7 +507,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('hide the new resource button while creating a new resource', () => {
+    xit('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -517,7 +517,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -529,7 +529,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('duplicate a resource', () => {
+    xit('duplicate a resource', () => {
 
         ResourcesPage.performCreateResource('resource1', 'feature');
         ResourcesPage.openEditByDoubleClickResource('resource1');
@@ -543,7 +543,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('create two instances of a new resource', () => {
+    xit('create two instances of a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -558,7 +558,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('move a resource', () => {
+    xit('move a resource', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -576,7 +576,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('show only type filter options for allowed parent types in move modal', () => {
+    xit('show only type filter options for allowed parent types in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -602,7 +602,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('do not suggest current parent resource in move modal', () => {
+    xit('do not suggest current parent resource in move modal', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -623,7 +623,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('do not suggest descendants of current resource in move modal', () => {
+    xit('do not suggest descendants of current resource in move modal', () => {
 
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.performCreateResource('SE-D1', 'feature');
@@ -644,7 +644,7 @@ xdescribe('resources --', () => {
     });
 
 
-    it('do not open context menu for new resources while creating geometry', () => {
+    xit('do not open context menu for new resources while creating geometry', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

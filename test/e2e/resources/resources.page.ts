@@ -149,9 +149,9 @@ export class ResourcesPage {
     public static openEditByDoubleClickResource(identifier: string) {
 
         browser.wait(EC.visibilityOf(
-            element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
+            element(by.xpath('//*[@id="sidebar"]//div[@class="title" and normalize-space(text())="'
                 + identifier + '"]'))), delays.ECWaitTime);
-        return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="title" and ' +
+        return browser.actions().doubleClick(element(by.xpath('//*[@id="sidebar"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]'))).perform();
     }
 

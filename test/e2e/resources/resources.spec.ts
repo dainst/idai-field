@@ -430,7 +430,7 @@ describe('resources --', () => {
     });
 
 
-    xit('relations -- delete inverse relations when deleting a resource', () => {
+    it('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickOpenContextMenu('2');
@@ -438,12 +438,13 @@ describe('resources --', () => {
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
         ResourcesPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        ResourcesPage.clickSelectResource('1', 'links');
+        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 
-    xit('operation -- create a new operation', () => {
+    it('operation -- create a new operation', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.performCreateOperation('newTrench');

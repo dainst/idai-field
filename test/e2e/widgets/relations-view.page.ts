@@ -41,9 +41,8 @@ export class RelationsViewPage {
      */
     public static getRelationValue(index) {
 
-        this.clickRelationsTab();
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view .title')).get(index)), delays.ECWaitTime);
-        return element.all(by.css('relations-view .title')).get(index).getText();
+        browser.wait(EC.visibilityOf(element.all(by.css('#relations-view .title')).get(index)), delays.ECWaitTime);
+        return element.all(by.css('#relations-view .title')).get(index).getText();
     };
 
 

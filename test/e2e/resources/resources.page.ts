@@ -101,7 +101,7 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectResource(identifier: string, tab?: 'info'|'links'|'children') {
+    public static clickSelectResource(identifier: string, tab?: 'info' | 'links' | 'children') {
 
         let buttonClass = '';
         if (tab) {

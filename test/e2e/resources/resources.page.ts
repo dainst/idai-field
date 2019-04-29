@@ -101,9 +101,15 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectResource(identifier: string) {
+    public static clickSelectResource(identifier: string, tab?: 'info'|'links'|'children') {
 
-        return common.click(element(by.id('resource-' + identifier)));
+        let buttonClass = '';
+        if (tab) {
+            if (tab === 'info') buttonClass = '.info-button';
+            if (tab === 'links') buttonClass = '.link-button';
+            if (tab === 'children') buttonClass = '.hierarchy-button';
+        }
+        return common.click(element(by.css('#resource-' + identifier + ' ' + buttonClass)));
     }
 
 

@@ -164,25 +164,25 @@ describe('resources --', () => {
     /**
      * Addresses an issue where relations were shown double.
      */
-    xit('docview -- show only relations present in the object', () => {
+    it('sidebar/relations -- show only relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
+        ResourcesPage.clickSelectResource('1', 'links');
         RelationsViewPage.getRelations().then(relations => {
-            expect(relations.length).toBe(2);
+            expect(relations.length).toBe(1);
         });
     });
 
 
-    xit('docview -- show the fields present in the object', () => {
+    it('sidebar/info -- show the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
-        ResourcesPage.clickSelectResource('1');
-        FieldsViewPage.getFieldName(0).then(value => {
-            expect(value).toBe('Bearbeiter/Bearbeiterin'); // with the correct field label
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFieldName(0, 3).then(value => {
+            expect(value).toBe('Bearbeiterin/Bearbeiter'); // with the correct field label
         });
-        FieldsViewPage.getFieldValue(0).then(value => {
+        FieldsViewPage.getFieldValue(0, 3).then(value => {
             expect(value).toBe('100');
         });
     });
@@ -191,13 +191,13 @@ describe('resources --', () => {
     /**
      * Addresses an issue where fields were shown double.
      */
-    xit('docview -- show only the fields present in the object', () => {
+    it('docview -- show only the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
-        ResourcesPage.clickSelectResource('1');
-        FieldsViewPage.getFields().then(items => {
-            expect(items.length).toBe(1);
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFields(1).then(items => {
+            expect(items.length).toBe(4);
         });
     });
 
@@ -484,27 +484,27 @@ describe('resources --', () => {
     });
 
 
-    xit('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
-
-        DoceditPage.clickGotoPropertiesTab();
-        DoceditPage.clickSelectOption('wallType', 1);
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
-        FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickTypeSwitcherButton();
-        DoceditPage.clickTypeSwitcherOption('feature');
-        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
-            'gehen: Mauertyp');
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickSaveDocument();
-        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigraphische Einheit'));
-        browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
-    });
+    // xit('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
+    //
+    //     ResourcesPage.performCreateResource('1', 'feature-architecture');
+    //     ResourcesPage.clickSelectResource('1');
+    //     DetailSidebarPage.performEditDocument();
+    //
+    //     DoceditPage.clickGotoPropertiesTab();
+    //     DoceditPage.clickSelectOption('wallType', 1);
+    //     DoceditPage.clickSaveDocument();
+    //     browser.sleep(delays.shortRest);
+    //     FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+    //     DetailSidebarPage.performEditDocument();
+    //     DoceditPage.clickTypeSwitcherButton();
+    //     DoceditPage.clickTypeSwitcherOption('feature');
+    //     NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
+    //         'gehen: Mauertyp');
+    //     NavbarPage.clickCloseAllMessages();
+    //     DoceditPage.clickSaveDocument();
+    //     DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigraphische Einheit'));
+    //     browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
+    // });
 
 
     xit('hide the new resource button while creating a new resource', () => {

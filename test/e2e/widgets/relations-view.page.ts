@@ -32,9 +32,7 @@ export class RelationsViewPage {
 
     public static getRelations() {
 
-        this.clickRelationsTab();
-        browser.sleep(delays.shortRest);
-        return element.all(by.css('relations-view .relation-target'));
+        return element.all(by.css('#relations-view .resources-listing-item'));
     };
 
 

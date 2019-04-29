@@ -1,6 +1,7 @@
 'use strict';
 
 import {browser, protractor, element, by} from 'protractor';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
@@ -18,31 +19,39 @@ export class FieldsViewPage {
 
 
     /**
+     * @param cardIndex counting from 0 for the first card
      * @param index counting from 0 for the first field
      */
-    public static getFieldValue(index) {
+    public static getFieldValue(cardIndex, index) {
 
-        browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'))),
-            delays.ECWaitTime);
-        return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue')).getText();
+        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
+            'div:nth-child(' + (index + 1) + ') .field-value';
+
+        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
+        return element(by.css(elDescriptor)).getText();
     };
 
 
     /**
+     * @param cardIndex counting from 0 for the first card
      * @param index counting from 0 for the first field
      */
-    public static getFieldName(index) {
+    public static getFieldName(cardIndex, index) {
 
-        browser.wait(EC.visibilityOf(element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname'))),
-            delays.ECWaitTime);
-        return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname')).getText();
+        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
+            'div:nth-child(' + (index + 1) + ') .field-label';
+
+        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
+        return element(by.css(elDescriptor)).getText();
     };
 
 
-    public static getFields() {
+    public static getFields(cardIndex) {
 
-        browser.wait(EC.visibilityOf(element(by.css('fields-view > div'))), delays.ECWaitTime);
-        return element.all(by.css('fields-view > div'))
+        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div';
+
+        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
+        return element.all(by.css(elDescriptor))
     };
 
 

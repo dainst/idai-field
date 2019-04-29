@@ -390,6 +390,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
+
         // DoceditPage.clickGotoTimeTab();
         // expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0))
         //     .toEqual('1');
@@ -559,8 +560,9 @@ describe('resources --', () => {
     });
 
 
-    xit('move a resource', () => {
+    it('contextMenu - move a resource', () => {
 
+        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         ResourcesPage.typeInMoveModalSearchBarInput('S2');
@@ -568,17 +570,17 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
         NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(6));
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(7));
 
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
 
-    xit('show only type filter options for allowed parent types in move modal', () => {
+    it('contextMenu - show only type filter options for allowed parent types in move modal', () => {
 
+        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickTypeFilterButton('modal');
@@ -603,8 +605,9 @@ describe('resources --', () => {
     });
 
 
-    xit('do not suggest current parent resource in move modal', () => {
+    xit('contextMenu/moveModal - do not suggest current parent resource', () => {
 
+        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseTypeFilter('trench', 'modal');
@@ -624,7 +627,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not suggest descendants of current resource in move modal', () => {
+    xit('contextMenu/moveModal - do not suggest descendants of current resource', () => {
 
         ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.performCreateResource('SE-D1', 'feature');

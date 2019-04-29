@@ -263,7 +263,7 @@ export class ResourcesPage {
 
     public static getListItemEls() {
 
-        return element.all(by.css('.list-group-item'));
+        return element.all(by.css('#sidebar .resources-listing-item'));
     }
 
 

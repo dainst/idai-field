@@ -8,7 +8,7 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-describe('images/state --', () => {
+xdescribe('images/state --', () => {
 
     beforeEach(() => {
 

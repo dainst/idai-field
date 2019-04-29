@@ -22,7 +22,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+xdescribe('resources --', () => {
 
     let i = 0;
 

@@ -174,7 +174,7 @@ xdescribe('map --', function() {
             MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickReturnToResourcesTabs();
+            NavbarPage.clickCloseNonResourcesTab();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 4);
             ResourcesPage.performJumpToTrenchView('S1');

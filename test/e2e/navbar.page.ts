@@ -17,13 +17,7 @@ export class NavbarPage {
 
     public static clickCloseNonResourcesTab() {
 
-        return common.click(element(by.css('#non-resources-tab .mdi-close')));
-    }
-
-
-    public static clickReturnToResourcesTabs() {
-
-        return common.click(element(by.css('#non-resources-tab .mdi-close')));
+        return common.click(element(by.css('#non-resources-tab .mdi')));
     }
 
 

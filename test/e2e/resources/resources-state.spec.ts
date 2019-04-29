@@ -37,7 +37,7 @@ xdescribe('resources/state --', function() {
             MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickReturnToResourcesTabs();
+            NavbarPage.clickCloseNonResourcesTab();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 3);
         }

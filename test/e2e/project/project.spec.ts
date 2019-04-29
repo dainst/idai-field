@@ -95,7 +95,7 @@ xdescribe('project --', function() {
         ResourcesPage.get();
         MenuPage.navigateToImages();
         browser.sleep(200);
-        NavbarPage.clickReturnToResourcesTabs();
+        NavbarPage.clickCloseNonResourcesTab();
         NavbarPage.clickTab('project');
         //
 
@@ -113,7 +113,7 @@ xdescribe('project --', function() {
         browser.sleep(delays.shortRest * 20);
 
         MenuPage.navigateToSettings();
-        NavbarPage.clickReturnToResourcesTabs();
+        NavbarPage.clickCloseNonResourcesTab();
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
 

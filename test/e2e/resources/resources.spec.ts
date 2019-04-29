@@ -41,7 +41,7 @@ describe('resources --', () => {
             MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickReturnToResourcesTabs();
+            NavbarPage.clickCloseNonResourcesTab();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 3);
             ResourcesPage.performJumpToTrenchView('S1');
@@ -55,7 +55,7 @@ describe('resources --', () => {
     function gotoImageTab() {
 
         MenuPage.navigateToImages();
-        NavbarPage.clickReturnToResourcesTabs();
+        NavbarPage.clickCloseNonResourcesTab();
         NavbarPage.clickTab('project');
 
         ResourcesPage.performJumpToTrenchView('S1');

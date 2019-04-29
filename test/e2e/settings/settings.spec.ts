@@ -17,7 +17,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('settings --', function() {
+describe('settings --', function() {
 
     beforeAll(done => {
 
@@ -36,7 +36,7 @@ xdescribe('settings --', function() {
         SettingsPage.get();
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
-        NavbarPage.clickReturnToResourcesTabs();
+        NavbarPage.clickCloseNonResourcesTab();
 
         NavbarPage.clickTab('project')
             .then(() => {
@@ -53,7 +53,7 @@ xdescribe('settings --', function() {
     });
 
 
-    it('show warnings if an invalid imagestore path is set', () => {
+    xit('show warnings if an invalid imagestore path is set', () => {
 
         SettingsPage.get();
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');

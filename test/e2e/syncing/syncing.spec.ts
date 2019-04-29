@@ -143,7 +143,7 @@ xdescribe('syncing --', function() {
         return db.put(testDocumentAlternative, { force: true })
             .then(() => {
                 MenuPage.navigateToSettings();
-                NavbarPage.clickReturnToResourcesTabs();
+                NavbarPage.clickCloseNonResourcesTab();
                 NavbarPage.clickTab('project');
                 ResourcesPage.performJumpToTrenchView('S1');
                 return browser.sleep(delays.shortRest * 10);

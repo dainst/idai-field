@@ -251,7 +251,7 @@ xdescribe('images --', function() {
     it('perform constraint search', () => {
 
         ImageOverviewPage.doubleClickCell(0);
-        DetailSidebarPage.performEditDocument();
+        // DetailSidebarPage.doubleClickEditDocument();
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
         DetailSidebarPage.clickBackToGridButton();

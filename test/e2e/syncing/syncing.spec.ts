@@ -205,8 +205,8 @@ xdescribe('syncing --', function() {
         await ResourcesPage.performJumpToTrenchView('S1');
         await browser.sleep(delays.shortRest * 10);
 
-        ResourcesPage.clickSelectResource('testf' + number);
-        await DetailSidebarPage.performEditDocument();
+        // ResourcesPage.clickSelectResource();
+        await DetailSidebarPage.doubleClickEditDocument('testf' + number);
         testDocument.resource.shortDescription = 'Testfund' + number + '_alternative1';
         await updateTestDoc(testDocument);
         DoceditPage.typeInInputField('shortDescription', 'Testfund' + number
@@ -229,8 +229,8 @@ xdescribe('syncing --', function() {
         createEventualConflict(number).then(() => {
 
             ResourcesPage.clickSelectResource('testf' + number);
-            ResourcesPage.clickSelectResource('testf' + number);
-            DetailSidebarPage.performEditDocument();
+            // ResourcesPage.clickSelectResource();
+            DetailSidebarPage.doubleClickEditDocument('testf' + number);
             DoceditPage.clickConflictsTab();
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();

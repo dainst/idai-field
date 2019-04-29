@@ -210,8 +210,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
         DoceditRelationsTabPage.typeInRelationByIndices(0, 0, '2');
@@ -320,8 +319,7 @@ describe('resources --', () => {
     xit('do not reflect changes in list while editing resource', () => {
 
         ResourcesPage.performCreateResource('1a');
-        ResourcesPage.clickSelectResource('1a');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1a');
         DoceditPage.typeInInputField('identifier', '1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
             expect(identifier).toBe('1a');
@@ -334,8 +332,7 @@ describe('resources --', () => {
     xit('docedit/savedialog -- save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
@@ -349,8 +346,7 @@ describe('resources --', () => {
     xit('docedit/savedialog -- discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
@@ -364,8 +360,7 @@ describe('resources --', () => {
     xit('docedit/savedialog -- cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
@@ -397,7 +392,7 @@ describe('resources --', () => {
         // DoceditPage.clickCloseEdit();
         //
         // ResourcesPage.clickSelectResource('1');
-        // DetailSidebarPage.performEditDocument();
+        // DetailSidebarPage.doubleClickEditDocument();
         //
         // DoceditPage.clickGotoTimeTab();
         // expect(DoceditRelationsTabPage.getRelationButtonText(2, 0, 0))
@@ -424,14 +419,14 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         ResourcesPage.clickSelectResource('2');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickGotoTimeTab();
-
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
-        DoceditPage.clickSaveDocument();
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        // DetailSidebarPage.doubleClickEditDocument();
+        // DoceditPage.clickGotoTimeTab();
+        //
+        // DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
+        // DoceditPage.clickSaveDocument();
+        // RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        // ResourcesPage.clickSelectResource('1');
+        // RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 
@@ -473,16 +468,16 @@ describe('resources --', () => {
     });
 
 
-    xit('typechange -- should change the type of a resource to a child type', () => {
+    it('typechange -- should change the type of a resource to a child type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.performEditDocument();
+        DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
-        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFieldValue(0, 2).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
     });
 
 
@@ -490,14 +485,14 @@ describe('resources --', () => {
     //
     //     ResourcesPage.performCreateResource('1', 'feature-architecture');
     //     ResourcesPage.clickSelectResource('1');
-    //     DetailSidebarPage.performEditDocument();
+    //     DetailSidebarPage.doubleClickEditDocument();
     //
     //     DoceditPage.clickGotoPropertiesTab();
     //     DoceditPage.clickSelectOption('wallType', 1);
     //     DoceditPage.clickSaveDocument();
     //     browser.sleep(delays.shortRest);
     //     FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-    //     DetailSidebarPage.performEditDocument();
+    //     DetailSidebarPage.doubleClickEditDocument();
     //     DoceditPage.clickTypeSwitcherButton();
     //     DoceditPage.clickTypeSwitcherOption('feature');
     //     NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +

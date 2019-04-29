@@ -1,7 +1,6 @@
 'use strict';
 
-import {browser, protractor, element, by} from 'protractor';
-import {FieldsViewPage} from './fields-view.page';
+import {browser, by, element, protractor} from 'protractor';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
@@ -30,10 +29,9 @@ export class DetailSidebarPage {
     };
 
 
-    public static performEditDocument() {
+    public static doubleClickEditDocument(identifier) {
 
-        FieldsViewPage.clickFieldsTab();
-        return common.click(element(by.css('.detail-sidebar .edit-button')));
+        return common.doubleClick(element(by.id('resource-' + identifier)));
     };
 
 

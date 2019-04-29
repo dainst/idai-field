@@ -32,6 +32,12 @@ function rightClick(element) {
 }
 
 
+function doubleClick(element) {
+
+    browser.actions().doubleClick(element).perform();
+}
+
+
 function resetConfigJson(): Promise<any> {
 
     const configPath = browser.params.configPath;
@@ -60,6 +66,7 @@ module.exports = {
     typeIn: typeIn,
     click: click,
     rightClick: rightClick,
+    doubleClick: doubleClick,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp
 };

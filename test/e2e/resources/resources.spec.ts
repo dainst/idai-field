@@ -288,7 +288,7 @@ describe('resources --', () => {
     });
 
 
-    xit('delete an operation and update navbar', () => {
+    it('delete an operation and update navbar', () => {
 
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');

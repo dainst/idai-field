@@ -530,7 +530,7 @@ describe('resources --', () => {
     });
 
 
-    xit('duplicate a resource', () => {
+    it('duplicate a resource', () => {
 
         ResourcesPage.performCreateResource('resource1', 'feature');
         ResourcesPage.openEditByDoubleClickResource('resource1');
@@ -544,7 +544,7 @@ describe('resources --', () => {
     });
 
 
-    xit('create two instances of a new resource', () => {
+    it('create two instances of a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

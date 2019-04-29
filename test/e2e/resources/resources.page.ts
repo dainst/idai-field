@@ -275,7 +275,7 @@ export class ResourcesPage {
 
     public static getListItemMarkedNewEls() {
 
-        return element.all(by.css('#objectList .list-group-item .new'));
+        return element.all(by.css('#sidebar .resources-listing-item .new'));
     }
 
 

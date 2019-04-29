@@ -504,7 +504,7 @@ describe('resources --', () => {
     // });
 
 
-    xit('hide the new resource button while creating a new resource', () => {
+    it('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -514,7 +514,7 @@ describe('resources --', () => {
     });
 
 
-    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

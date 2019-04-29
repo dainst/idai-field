@@ -648,7 +648,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not open context menu for new resources while creating geometry', () => {
+    it('do not open context menu for new resources while creating geometry', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

@@ -57,9 +57,11 @@ export class SidebarListComponent extends BaseList {
 
     public jumpToMatrix = (document: FieldDocument) => this.navigationService.jumpToMatrix(document);
 
+    // TODO refactor - make consistent across usages
     public showMoveIntoOption = (document: FieldDocument) =>
         this.navigationService.showMoveIntoOption(document);
 
+    // TODO refactor - make consistent across usages
     public showJumpToViewOption = (document: FieldDocument) =>
         this.navigationService.showJumpToViewOption(document);
 
@@ -143,6 +145,13 @@ export class SidebarListComponent extends BaseList {
         this.closePopover();
         await this.routingService.jumpToResource(documentToSelect);
         this.resourcesComponent.setScrollTarget(documentToSelect);
+    }
+
+
+    public async jumpToResourceFromInsideOperation(document: FieldDocument) {
+
+        await this.viewFacade.setBypassHierarchy(false);
+        await this.routingService.jumpToResource(document);
     }
 
 

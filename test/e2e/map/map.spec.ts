@@ -155,7 +155,7 @@ describe('map --', function() {
     function createDocThenReedit(identifier, geometryType, mapClickCallback) {
 
         createDoc(identifier, geometryType, mapClickCallback);
-        GeometryViewPage.clickReeditGeometry();
+        GeometryViewPage.performReeditGeometry(identifier);
     }
 
 
@@ -235,36 +235,30 @@ describe('map --', function() {
     });
 
 
-    xit('delete a point geometry', () => {
+    it('delete a point geometry', () => {
 
         createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
-    xit('delete a polyline geometry', () => {
+    it('delete a polyline geometry', () => {
 
         createDocThenReedit('doc', 'polyline', setPolyline);
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
-    xit('delete a polygon geometry', () => {
+    it('delete a polygon geometry', () => {
 
         createDocThenReedit('doc', 'polygon', setPolygon);
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
@@ -277,12 +271,11 @@ describe('map --', function() {
             expect(text).toEqual('Polygon');
         });
 
-        GeometryViewPage.clickReeditGeometry();
+        NavbarPage.clickTab('project');
+        GeometryViewPage.performReeditGeometry();
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        })
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
@@ -295,12 +288,11 @@ describe('map --', function() {
             expect(text).toEqual('Polyline');
         });
 
-        GeometryViewPage.clickReeditGeometry();
+        NavbarPage.clickTab('project');
+        GeometryViewPage.performReeditGeometry();
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
@@ -313,12 +305,11 @@ describe('map --', function() {
             expect(text).toEqual('Punkt');
         });
 
-        GeometryViewPage.clickReeditGeometry();
+        NavbarPage.clickTab('project');
+        GeometryViewPage.performReeditGeometry();
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 

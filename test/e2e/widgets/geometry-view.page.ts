@@ -1,6 +1,8 @@
 import {browser, protractor, element, by} from 'protractor';
 import {ResourcesPage} from '../resources/resources.page';
 
+type Identifier = string;
+
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -23,17 +25,27 @@ export class GeometryViewPage {
     };
 
 
-    public static clickReeditGeometry() {
+    public static performReeditGeometry(identifier?: Identifier) { // TODO remove question mark
 
-        this.clickGeometryTab();
-        common.click(element(by.id('document-view-button-edit-geometry')));
+        if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
+        common.click(element(by.css('#context-menu #context-menu-edit-geo-button')));
     };
 
 
-    public static getSelectedGeometryTypeText(identifier?) {
+    public static getSelectedGeometryTypeText(identifier?: Identifier) { // TODO remove question mark
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
         return element(by.css('#context-menu #context-menu-edit-geo-button')).element(by.css('.fieldvalue')).getText();
+    };
+
+
+    public static waitForCreateGeoButtons(identifier?: Identifier) { // TODO remove question mark
+
+        if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-1-button'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-2-button'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-3-button'))), delays.ECWaitTime);
     };
 }

@@ -380,37 +380,31 @@ describe('map --', function() {
     });
 
 
-    xit('cancel creating a point geometry', () => {
+    it('cancel creating a point geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('doc', 'point');
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
-    xit('cancel creating a polyline geometry', () => {
+    it('cancel creating a polyline geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
         MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
-    xit('cancel creating a polygon geometry', () => {
+    it('cancel creating a polygon geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
         MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
@@ -422,13 +416,11 @@ describe('map --', function() {
         MapPage.setMarker(100, 100);
         ResourcesPage.clickSelectResource('doc1');
         ResourcesPage.clickSelectResource('doc2');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Keine');
-        });
+        GeometryViewPage.waitForCreateGeoButtons('doc');
     });
 
 
-    xit('cancel deleting a point geometry', () => {
+    it('cancel deleting a point geometry', () => {
 
         createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('delete');
@@ -439,7 +431,7 @@ describe('map --', function() {
     });
 
 
-    xit('cancel deleting a polyline geometry', () => {
+    it('cancel deleting a polyline geometry', () => {
 
         createDocThenReedit('doc', 'polyline', setPolyline);
         MapPage.clickMapOption('delete');
@@ -450,7 +442,7 @@ describe('map --', function() {
     });
 
 
-    xit('cancel deleting a polygon geometry', () => {
+    it('cancel deleting a polygon geometry', () => {
 
         createDocThenReedit('doc', 'polygon', setPolygon);
         MapPage.clickMapOption('delete');

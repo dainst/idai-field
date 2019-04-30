@@ -18,6 +18,7 @@ export class SidebarListButtonGroupComponent {
     @Input() document: FieldDocument;
 
     constructor(public sidebarList: SidebarListComponent,
-                public viewFacade: ViewFacade) {
+                public viewFacade: ViewFacade,
+                public typeUtility: TypeUtility) {
     }
 }

@@ -26,7 +26,7 @@ export class GeometryViewPage {
     };
 
 
-    public static performReeditGeometry(identifier?: Identifier) { // TODO remove question mark
+    public static performReeditGeometry(identifier?: Identifier) {
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
@@ -34,7 +34,7 @@ export class GeometryViewPage {
     };
 
 
-    public static getSelectedGeometryTypeText(identifier?: Identifier) { // TODO remove question mark
+    public static getSelectedGeometryTypeText(identifier: Identifier) {
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
@@ -42,7 +42,7 @@ export class GeometryViewPage {
     };
 
 
-    public static waitForCreateGeoButtons(identifier?: Identifier) { // TODO remove question mark
+    public static waitForCreateGeoButtons(identifier: Identifier) {
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-1-button'))), delays.ECWaitTime);

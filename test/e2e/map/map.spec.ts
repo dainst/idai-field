@@ -453,7 +453,7 @@ describe('map --', function() {
     });
 
 
-    xit('abort item creation completely when aborting geometry editing', () => {
+    it('abort item creation completely when aborting geometry editing', () => {
 
         beginCreateDocWithGeometry('point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('abort');
@@ -463,7 +463,7 @@ describe('map --', function() {
     });
 
 
-    xit('autofinish polyline geometry', () => {
+    it('autofinish polyline geometry', () => {
 
         createDoc('doc', 'polyline', setUnfinishedPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
@@ -472,7 +472,7 @@ describe('map --', function() {
     });
 
 
-    xit('autofinish multipolyline geometry', () => {
+    it('autofinish multipolyline geometry', () => {
 
         createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
@@ -481,7 +481,7 @@ describe('map --', function() {
     });
 
 
-    xit('show layer menu', () => {
+    it('show layer menu', () => {
 
         browser.wait(EC.presenceOf(MapPage.getLayerButton()));
     });

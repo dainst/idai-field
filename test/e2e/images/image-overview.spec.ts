@@ -12,7 +12,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-xdescribe('images --', function() {
+describe('images --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';
@@ -158,7 +158,7 @@ xdescribe('images --', function() {
     });
 
 
-    it('navigate from overview to view, and back to overview', async done => {
+    xit('navigate from overview to view, and back to overview', async done => {
 
         const imageName = await ImageOverviewPage.getCellImageName(0);
 
@@ -248,7 +248,7 @@ xdescribe('images --', function() {
     });
 
 
-    it('perform constraint search', () => {
+    xit('perform constraint search', () => {
 
         ImageOverviewPage.doubleClickCell(0);
         // DetailSidebarPage.doubleClickEditDocument();

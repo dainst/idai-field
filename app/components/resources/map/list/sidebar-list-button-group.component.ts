@@ -29,11 +29,15 @@ export class SidebarListButtonGroupComponent {
     }
 
 
+    public shouldShowArrowUp = () => this.navigationService.shouldShowArrowUp(this.document);
+
     public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
+
+    public jumpToResourceInSameView =() => this.navigationService.jumpToResourceInSameView(this.document);
 
 
     public jumpToViewFromOverview() { // arrow top right
@@ -49,13 +53,6 @@ export class SidebarListButtonGroupComponent {
     }
 
 
-    public async jumpToResourceInSameView() { // arrow up
-
-        await this.viewFacade.setBypassHierarchy(false);
-        await this.routingService.jumpToResource(this.document);
-    }
-
-
     public async jumpToResourceFromOverviewToOperation() { // arrow top right, when in search
 
         this.sidebarList.closePopover();
@@ -66,10 +63,5 @@ export class SidebarListButtonGroupComponent {
     }
 
 
-    public shouldShowArrowUp() {
 
-        return (!this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy())
-            || (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
-                && (this.typeUtility.isSubtype(this.document.resource.type, 'Operation') || this.document.resource.type === 'Place'))
-    }
 }

@@ -22,6 +22,10 @@
                 </span>
             </span>
         </button>
+        <div *ngIf="shouldShowArrowUp()" class="hierarchy-button jump-to-view-button btn float-right align-middle"
+             (click)="jumpToResourceInSameView(); $event.stopPropagation();">
+            <span class="arrow-up mdi-16px"></span>
+        </div>
         <button *ngIf="shouldShowArrowTopRightForSearchMode()"
              class="hierarchy-button jump-to-view-button btn float-right align-middle"
              (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">

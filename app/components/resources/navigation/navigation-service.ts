@@ -36,6 +36,13 @@ export class NavigationService {
     }
 
 
+    public async jumpToResourceInSameView(document: FieldDocument) { // arrow up
+
+        await this.viewFacade.setBypassHierarchy(false);
+        await this.routingService.jumpToResource(document);
+    }
+
+
     public async jumpToView(document: FieldDocument) {
 
         await this.routingService.jumpToOperationView(document);
@@ -76,6 +83,14 @@ export class NavigationService {
 
         return (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
             && (!this.typeUtility.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
+    }
+
+
+    public shouldShowArrowUp(document: FieldDocument) {
+
+        return (!this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy())
+            || (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
+                && (this.typeUtility.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))
     }
 
 

@@ -42,7 +42,7 @@
         <span class="mdi mdi-arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && document.resource.relations['liesWithin']"
+    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getBypassHierarchy()"
         class="btn hierarchy-button hierarchy-button-overview"
         (click)="sidebarList.jumpToResourceFromInsideOperation(document); $event.stopPropagation();">
         <span class="mdi mdi-arrow-up mdi-16px"></span>

@@ -146,7 +146,7 @@ export class SidebarListComponent extends BaseList {
         this.closePopover();
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Operation')) {
             await this.jumpToView(documentToSelect);
-            await this.viewFacade.moveInto(undefined);
+            await this.viewFacade.moveInto(undefined); // TODO review behaviour of this (and of the same button in non search mode of overview)
         } else {
             await this.routingService.jumpToResource(documentToSelect);
             this.resourcesComponent.setScrollTarget(documentToSelect);

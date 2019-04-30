@@ -34,7 +34,7 @@ export class ContextMenuComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.orientation = this.computeOrientation(this.position.y);
+        this.orientation = ContextMenuComponent.computeOrientation(this.position.y);
     }
 
 
@@ -50,7 +50,7 @@ export class ContextMenuComponent implements OnChanges {
     }
 
 
-    private computeOrientation(yPosition: number): ContextMenuOrientation {
+    private static computeOrientation(yPosition: number): ContextMenuOrientation {
 
         return yPosition <= window.innerHeight * 0.6
             ? 'top'

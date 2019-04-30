@@ -149,7 +149,17 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public async jumpToResourceFromInsideOperation(document: FieldDocument) {
+    public async jumpToResourceFromOverviewToOperation(documentToSelect: FieldDocument) {
+
+        this.closePopover();
+        await this.routingService.jumpToResource(documentToSelect);
+        await this.viewFacade.setBypassHierarchy(false);
+        await this.routingService.jumpToResource(documentToSelect);
+        this.resourcesComponent.setScrollTarget(documentToSelect);
+    }
+
+
+    public async jumpToResourceInSameView(document: FieldDocument) {
 
         await this.viewFacade.setBypassHierarchy(false);
         await this.routingService.jumpToResource(document);

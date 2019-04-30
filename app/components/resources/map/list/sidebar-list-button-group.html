@@ -38,13 +38,13 @@
 
     <div *ngIf="viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && !this.typeUtility.isSubtype(document.resource.type, 'Operation')"
          class="btn hierarchy-button hierarchy-button-overview"
-         (click)="sidebarList.jumpToResource(document); $event.stopPropagation();">
+         (click)="sidebarList.jumpToResourceFromOverviewToOperation(document); $event.stopPropagation();">
         <span class="mdi mdi-arrow-top-right mdi-18px"></span>
     </div>
 
     <div *ngIf="(!viewFacade.isInOverview() && viewFacade.getBypassHierarchy()) || (viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && (this.typeUtility.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))"
         class="btn hierarchy-button hierarchy-button-overview"
-        (click)="sidebarList.jumpToResourceFromInsideOperation(document); $event.stopPropagation();">
+        (click)="sidebarList.jumpToResourceInSameView(document); $event.stopPropagation();">
         <span class="mdi mdi-arrow-up mdi-16px"></span>
     </div>
 

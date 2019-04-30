@@ -45,7 +45,8 @@ export class SidebarListComponent extends BaseList {
                 private fieldDatastore: FieldReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
-                private imagestore: Imagestore) {
+                private imagestore: Imagestore,
+                public typeUtility: TypeUtility) {
 
         super(resourcesComponent, viewFacade, loading);
         this.navigationService.moveIntoNotifications().subscribe(async () => {
@@ -115,10 +116,10 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public jumpToView(document: FieldDocument) {
+    public async jumpToView(document: FieldDocument) {
 
         this.closePopover();
-        this.navigationService.jumpToView(document);
+        await this.navigationService.jumpToView(document);
     }
 
 
@@ -143,8 +144,13 @@ export class SidebarListComponent extends BaseList {
     public async jumpToResource(documentToSelect: FieldDocument) {
 
         this.closePopover();
-        await this.routingService.jumpToResource(documentToSelect);
-        this.resourcesComponent.setScrollTarget(documentToSelect);
+        if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Operation')) {
+            await this.jumpToView(documentToSelect);
+            await this.viewFacade.moveInto(undefined);
+        } else {
+            await this.routingService.jumpToResource(documentToSelect);
+            this.resourcesComponent.setScrollTarget(documentToSelect);
+        }
     }
 
 

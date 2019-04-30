@@ -36,7 +36,7 @@
         </span>
     </div>
 
-    <div *ngIf="viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && !typeUtility.isSubtype(document.resource.type, 'Operation')"
+    <div *ngIf="viewFacade.isInOverview() && viewFacade.getBypassHierarchy()"
          class="btn hierarchy-button hierarchy-button-overview"
          (click)="sidebarList.jumpToResource(document); $event.stopPropagation();">
         <span class="mdi mdi-arrow-top-right mdi-18px"></span>

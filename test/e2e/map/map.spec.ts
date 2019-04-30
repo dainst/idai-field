@@ -313,10 +313,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a point geometry later', () => {
+    it('create a point geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('point');
+        GeometryViewPage.clickCreateGeometry('doc', 'point');
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
@@ -325,10 +325,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a multipoint geometry later', () => {
+    it('create a multipoint geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('point').then(setMultiPoint);
+        GeometryViewPage.clickCreateGeometry('doc', 'point').then(setMultiPoint);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipunkt');
@@ -336,10 +336,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a polyline geometry later', () => {
+    it('create a polyline geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polyline').then(setPolyline);
+        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Polyline');
@@ -347,10 +347,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a multipolyline geometry later', () => {
+    it('create a multipolyline geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polyline').then(setMultiPolyline);
+        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setMultiPolyline);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipolyline');
@@ -358,10 +358,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a polygon geometry later', () => {
+    it('create a polygon geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polygon').then(setPolygon);
+        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Polygon');
@@ -369,10 +369,10 @@ describe('map --', function() {
     });
 
 
-    xit('create a multipolygon geometry later', () => {
+    it('create a multipolygon geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polygon').then(setMultiPolygon);
+        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setMultiPolygon);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipolygon');
@@ -383,7 +383,7 @@ describe('map --', function() {
     xit('cancel creating a point geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('point');
+        GeometryViewPage.clickCreateGeometry('doc', 'point');
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
@@ -395,7 +395,7 @@ describe('map --', function() {
     xit('cancel creating a polyline geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polyline').then(setPolyline);
+        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Keine');
@@ -406,7 +406,7 @@ describe('map --', function() {
     xit('cancel creating a polygon geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('polygon').then(setPolygon);
+        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Keine');
@@ -418,7 +418,7 @@ describe('map --', function() {
 
         ResourcesPage.performCreateResource('doc1');
         ResourcesPage.performCreateResource('doc2');
-        GeometryViewPage.clickCreateGeometry('point');
+        GeometryViewPage.clickCreateGeometry('doc', 'point');
         MapPage.setMarker(100, 100);
         ResourcesPage.clickSelectResource('doc1');
         ResourcesPage.clickSelectResource('doc2');

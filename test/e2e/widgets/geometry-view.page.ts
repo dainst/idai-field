@@ -12,16 +12,17 @@ const delays = require('../config/delays');
  */
 export class GeometryViewPage {
 
-    public static clickGeometryTab() {
 
-        return common.click(element(by.id('document-view-geometry-tab')));
-    }
+    public static clickCreateGeometry(identifier, type) {
 
+        let number = '0';
+        if (type === 'polygon') number = '1';
+        if (type === 'polyline') number = '2';
+        if (type === 'point') number = '3';
 
-    public static clickCreateGeometry(type) {
-
-        this.clickGeometryTab();
-        return common.click(element(by.id('document-view-button-create-' + type)));
+        ResourcesPage.clickOpenContextMenu(identifier);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-' + number + '-button'))), delays.ECWaitTime);
+        return common.click(element(by.css('#context-menu #context-menu-create-geo-' + number + '-button')));
     };
 
 

@@ -10,6 +10,7 @@ import {ResourcesMapComponent} from '../resources-map.component';
 import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
+import {TypeUtility} from '../../../../core/model/type-utility';
 
 
 type PopoverMenu = 'none'|'info'|'relations'|'children';

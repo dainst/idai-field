@@ -207,16 +207,15 @@ export class DocumentsManager {
             ? undefined
             : this.resourcesStateManager.get().view;
 
-        return (await this.fetchDocuments(
-                DocumentsManager.buildQuery(
-                    operationId,
-                    this.resourcesStateManager.get(),
-                    this.resourcesStateManager.isInOverview(),
-                    this.resourcesStateManager.getOverviewTypeNames(),
-                    queryId
-                )
-            )
+        const query = DocumentsManager.buildQuery(
+            operationId,
+            this.resourcesStateManager.get(),
+            this.resourcesStateManager.isInOverview(),
+            this.resourcesStateManager.getOverviewTypeNames(),
+            queryId
         );
+
+        return (await this.fetchDocuments(query));
     }
 
 
@@ -304,7 +303,8 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         try {
-            const ignoreTypes = !query.types;
+            const ignoreTypes = !query.types
+                && !(this.resourcesStateManager.isInOverview() && ResourcesState.getBypassHierarchy(this.resourcesStateManager.get()));
             return await this.datastore.find(query, ignoreTypes);
 
         } catch (errWithParams) {

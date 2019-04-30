@@ -1,4 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
+import {ResourcesPage} from '../resources/resources.page';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
@@ -29,11 +30,10 @@ export class GeometryViewPage {
     };
 
 
-    public static getSelectedGeometryTypeText() {
+    public static getSelectedGeometryTypeText(identifier?) {
 
-        GeometryViewPage.clickGeometryTab();
-        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))),
-            delays.ECWaitTime);
-        return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
+        if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
+        browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
+        return element(by.css('#context-menu #context-menu-edit-geo-button')).element(by.css('.fieldvalue')).getText();
     };
 }

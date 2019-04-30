@@ -11,7 +11,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-xdescribe('map --', function() {
+describe('map --', function() {
 
     let index = 0;
 
@@ -162,8 +162,7 @@ xdescribe('map --', function() {
     beforeAll(() => {
 
         ResourcesPage.get();
-        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
-        browser.sleep(750);
+        browser.sleep(delays.shortRest * 4);
         ResourcesPage.performJumpToTrenchView('S1');
     });
 
@@ -188,7 +187,8 @@ xdescribe('map --', function() {
     it('create a new item with point geometry', () => {
 
         createDoc('doc','point', function() { return MapPage.setMarker(100, 100); });
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Punkt');
         });
     });
@@ -197,7 +197,7 @@ xdescribe('map --', function() {
     it('create a new item with multipoint geometry', () => {
 
         createDoc('doc','point', setMultiPoint);
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipunkt');
         });
     });
@@ -205,7 +205,7 @@ xdescribe('map --', function() {
 
     it('create a new item with polyline geometry', () => {
         createDoc('doc', 'polyline', setPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Polyline');
         });
     });
@@ -213,7 +213,7 @@ xdescribe('map --', function() {
 
     it('create a new item with multipolyline geometry', () => {
         createDoc('doc', 'polyline', setMultiPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipolyline');
         });
     });
@@ -221,7 +221,7 @@ xdescribe('map --', function() {
 
     it('create a new item with polygon geometry', () => {
         createDoc('doc', 'polygon', setPolygon);
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Polygon');
         });
     });
@@ -229,13 +229,13 @@ xdescribe('map --', function() {
 
     it('create a new item with multipolygon geometry', () => {
         createDoc('doc', 'polygon', setMultiPolygon);
-        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toEqual('Multipolygon');
         });
     });
 
 
-    it('delete a point geometry', () => {
+    xit('delete a point geometry', () => {
 
         createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('delete');
@@ -246,7 +246,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('delete a polyline geometry', () => {
+    xit('delete a polyline geometry', () => {
 
         createDocThenReedit('doc', 'polyline', setPolyline);
         MapPage.clickMapOption('delete');
@@ -257,7 +257,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('delete a polygon geometry', () => {
+    xit('delete a polygon geometry', () => {
 
         createDocThenReedit('doc', 'polygon', setPolygon);
         MapPage.clickMapOption('delete');
@@ -268,7 +268,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('delete single polygons of a multipolygon', () => {
+    xit('delete single polygons of a multipolygon', () => {
 
         createDocThenReedit('doc', 'polygon', setMultiPolygon);
         MapPage.clickMapOption('delete');
@@ -286,7 +286,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('delete single polylines of a multipolyline', () => {
+    xit('delete single polylines of a multipolyline', () => {
 
         createDocThenReedit('doc', 'polyline', setMultiPolyline);
         MapPage.clickMapOption('delete');
@@ -304,7 +304,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('delete single points of a multipoint', () => {
+    xit('delete single points of a multipoint', () => {
 
         createDocThenReedit('doc', 'point', setMultiPoint);
         MapPage.clickMapOption('delete');
@@ -322,7 +322,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a point geometry later', () => {
+    xit('create a point geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('point');
@@ -334,7 +334,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a multipoint geometry later', () => {
+    xit('create a multipoint geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('point').then(setMultiPoint);
@@ -345,7 +345,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a polyline geometry later', () => {
+    xit('create a polyline geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polyline').then(setPolyline);
@@ -356,7 +356,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a multipolyline geometry later', () => {
+    xit('create a multipolyline geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polyline').then(setMultiPolyline);
@@ -367,7 +367,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a polygon geometry later', () => {
+    xit('create a polygon geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polygon').then(setPolygon);
@@ -378,7 +378,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('create a multipolygon geometry later', () => {
+    xit('create a multipolygon geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polygon').then(setMultiPolygon);
@@ -389,7 +389,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel creating a point geometry', () => {
+    xit('cancel creating a point geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('point');
@@ -401,7 +401,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel creating a polyline geometry', () => {
+    xit('cancel creating a polyline geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polyline').then(setPolyline);
@@ -412,7 +412,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel creating a polygon geometry', () => {
+    xit('cancel creating a polygon geometry', () => {
 
         ResourcesPage.performCreateResource('doc');
         GeometryViewPage.clickCreateGeometry('polygon').then(setPolygon);
@@ -423,7 +423,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel creating a geometry by deselecting the resource', () => {
+    xit('cancel creating a geometry by deselecting the resource', () => {
 
         ResourcesPage.performCreateResource('doc1');
         ResourcesPage.performCreateResource('doc2');
@@ -437,7 +437,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel deleting a point geometry', () => {
+    xit('cancel deleting a point geometry', () => {
 
         createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('delete');
@@ -448,7 +448,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel deleting a polyline geometry', () => {
+    xit('cancel deleting a polyline geometry', () => {
 
         createDocThenReedit('doc', 'polyline', setPolyline);
         MapPage.clickMapOption('delete');
@@ -459,7 +459,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('cancel deleting a polygon geometry', () => {
+    xit('cancel deleting a polygon geometry', () => {
 
         createDocThenReedit('doc', 'polygon', setPolygon);
         MapPage.clickMapOption('delete');
@@ -470,7 +470,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('abort item creation completely when aborting geometry editing', () => {
+    xit('abort item creation completely when aborting geometry editing', () => {
 
         beginCreateDocWithGeometry('point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('abort');
@@ -480,7 +480,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('autofinish polyline geometry', () => {
+    xit('autofinish polyline geometry', () => {
 
         createDoc('doc', 'polyline', setUnfinishedPolyline);
         GeometryViewPage.getSelectedGeometryTypeText().then(text => {
@@ -489,7 +489,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('autofinish multipolyline geometry', () => {
+    xit('autofinish multipolyline geometry', () => {
 
         createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
         GeometryViewPage.getSelectedGeometryTypeText().then(text => {
@@ -498,7 +498,7 @@ xdescribe('map --', function() {
     });
 
 
-    it('show layer menu', () => {
+    xit('show layer menu', () => {
 
         browser.wait(EC.presenceOf(MapPage.getLayerButton()));
     });

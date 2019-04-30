@@ -21,6 +21,17 @@
 @import 'deletion/delete-modal';
 
 
+.arrow-up {
+  @extend .mdi;
+  @extend .mdi-arrow-up;
+}
+
+.arrow-top-right {
+  @extend .mdi;
+  @extend .mdi-arrow-top-right;
+}
+
+
 .resources-nav {
   position: relative;
   z-index: 1001;

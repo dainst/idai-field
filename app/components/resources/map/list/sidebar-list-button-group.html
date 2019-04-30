@@ -39,12 +39,12 @@
     <div *ngIf="shouldShowArrowTopRightForSearchMode()"
          class="btn hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">
-        <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+        <span class="arrow-top-right mdi-18px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowUp()" class="btn hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceInSameView(); $event.stopPropagation();">
-        <span class="mdi mdi-arrow-up mdi-16px"></span>
+        <span class="arrow-up mdi-16px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowTopRight()"
@@ -58,7 +58,7 @@
          (mouseleave)="tooltip.close()"
          (mousedown)="tooltip.close()"
          (click)="sidebarList.jumpToView(document); $event.stopPropagation();">
-        <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+        <span class="arrow-top-right mdi-18px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowTopRightForTrench()"
@@ -66,7 +66,7 @@
          (click)="$event.stopPropagation()">
 
         <div class="btn hierarchy-button hierarchy-button-overview" ngbDropdownToggle>
-            <span class="mdi mdi-arrow-top-right"></span>
+            <span class="arrow-top-right"></span>
         </div>
 
         <div ngbDropdownMenu>

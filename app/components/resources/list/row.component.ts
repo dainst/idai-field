@@ -9,6 +9,7 @@ import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
+import {RoutingService} from '../../routing-service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class RowComponent implements AfterViewInit {
         private validator: Validator,
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
-        private projectConfiguration: ProjectConfiguration
+        private projectConfiguration: ProjectConfiguration,
+        private routingService: RoutingService
     ) {}
 
 
@@ -55,6 +57,8 @@ export class RowComponent implements AfterViewInit {
     public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
 
     public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
+
+    public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
     public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
 
@@ -76,6 +80,15 @@ export class RowComponent implements AfterViewInit {
     public async onKeyUp(event: KeyboardEvent, fieldValue: string) {
 
         if (event.key === 'Enter') await this.stopEditing(fieldValue);
+    }
+
+
+    public async jumpToResourceFromOverviewToOperation() { // arrow top right, when in search
+        // TODO remove code duplicated with sidebarlistbuttongroup, get rid of dependency to routing service
+        await this.routingService.jumpToResource(this.document);
+        await this.viewFacade.setBypassHierarchy(false);
+        await this.routingService.jumpToResource(this.document);
+        this.resourcesComponent.setScrollTarget(this.document); // <- does it work?
     }
 
 

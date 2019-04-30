@@ -22,7 +22,12 @@
                 </span>
             </span>
         </button>
-        <button *ngIf="shouldShowArrowTopRight(document)"
+        <button *ngIf="shouldShowArrowTopRightForSearchMode()"
+             class="hierarchy-button jump-to-view-button btn float-right align-middle"
+             (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">
+            <span class="arrow-top-right mdi-18px"></span>
+        </button>
+        <button *ngIf="shouldShowArrowTopRight()"
                 class="hierarchy-button jump-to-view-button btn float-right align-middle"
                 ngbTooltip="Zur Maßnahme wechseln"
                 i18n-ngbTooltip="@@resources.jumpToView.tooltip"
@@ -34,12 +39,12 @@
                 (mouseleave)="jumpToViewTooltip.close()"
                 (mousedown)="jumpToViewTooltip.close()"
                 (click)="jumpToView()">
-            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+            <span class="arrow-top-right mdi-18px"></span>
         </button>
-        <span *ngIf="shouldShowArrowTopRightForTrench(document)"
+        <span *ngIf="shouldShowArrowTopRightForTrench()"
              ngbDropdown placement="bottom-right">
             <div class="hierarchy-button btn float-right" ngbDropdownToggle>
-                <span class="mdi mdi-arrow-top-right mdi-18px"></span>
+                <span class="arrow-top-right mdi-18px"></span>
             </div>
             <div ngbDropdownMenu>
                 <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"

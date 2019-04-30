@@ -4,10 +4,13 @@ import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Observable, Observer} from 'rxjs';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 @Injectable()
 /**
+ * This serves to centralize the behaviour of navigation buttons of both the sidebar as well as the full scale list.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -17,7 +20,8 @@ export class NavigationService {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private typeUtility: TypeUtility) {
     }
 
 
@@ -65,6 +69,13 @@ export class NavigationService {
     public shouldShowArrowTopRight(document: FieldDocument) {
 
         return this.showJumpToViewOption(document) && document.resource.type !== 'Trench';
+    }
+
+
+    public shouldShowArrowTopRightForSearchMode(document: FieldDocument) {
+
+        return (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
+            && (!this.typeUtility.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
     }
 
 

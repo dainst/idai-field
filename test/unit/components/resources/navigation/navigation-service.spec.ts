@@ -20,7 +20,7 @@ describe('NavigationService', () => {
             ['getRelationDefinitions', 'getTypesMap']
         );
 
-        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
+        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade, undefined);
 
         viewFacade.isInOverview.and.returnValue(false);
         viewFacade.getBypassHierarchy.and.returnValue(false);

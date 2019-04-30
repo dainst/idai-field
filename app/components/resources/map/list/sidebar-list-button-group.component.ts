@@ -33,6 +33,8 @@ export class SidebarListButtonGroupComponent {
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
+    public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
+
 
     public jumpToViewFromOverview() { // arrow top right
 
@@ -69,12 +71,5 @@ export class SidebarListButtonGroupComponent {
         return (!this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy())
             || (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
                 && (this.typeUtility.isSubtype(this.document.resource.type, 'Operation') || this.document.resource.type === 'Place'))
-    }
-
-
-    public shouldShowArrowTopRightForSearchMode() {
-
-        return (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
-            && (!this.typeUtility.isSubtype(this.document.resource.type, 'Operation') && this.document.resource.type !== 'Place'));
     }
 }

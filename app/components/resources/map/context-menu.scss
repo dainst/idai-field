@@ -9,6 +9,14 @@
   padding: 5px 0;
   min-width: 120px;
 
+  &.orientation-top {
+    bottom: initial !important;
+  }
+
+  &.orientation-bottom {
+    top: initial !important;
+  }
+
   .dropdown-item {
     padding: 0 10px;
   }

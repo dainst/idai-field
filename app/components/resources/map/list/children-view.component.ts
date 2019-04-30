@@ -32,6 +32,8 @@ export class ChildrenViewComponent implements OnChanges {
     public isScrollbarVisible = (element: HTMLElement) =>
         this.sidebarListComponent.isScrollbarVisible(element);
 
+    public closePopover = () => this.sidebarListComponent.closePopover();
+
 
     async ngOnChanges() {
 
@@ -39,7 +41,7 @@ export class ChildrenViewComponent implements OnChanges {
     }
 
 
-    public async openChildCollection(documentToSelect: FieldDocument|undefined) {
+    public async openChildCollection(documentToSelect?: FieldDocument) {
 
         this.sidebarListComponent.closePopover();
 

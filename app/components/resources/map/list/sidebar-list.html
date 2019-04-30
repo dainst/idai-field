@@ -1,13 +1,6 @@
 <div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
 
     <div *ngIf="isPopoverMenuOpened('children')" class="sidebar-popover-page">
-        <div class="sidebar-popover-header">
-            <div>Kind-Ressourcen</div>
-            <div class="btn btn-light" (click)="closePopover()">
-                <span class="mdi mdi-close"></span>
-            </div>
-        </div>
-
         <children-view [document]="viewFacade.getSelectedDocument()"></children-view>
     </div>
 

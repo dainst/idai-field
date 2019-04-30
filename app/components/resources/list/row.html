@@ -22,7 +22,7 @@
                 </span>
             </span>
         </button>
-        <button *ngIf="showJumpToViewOption() && document.resource.type !== 'Trench'"
+        <button *ngIf="shouldShowArrowTopRight(document)"
                 class="hierarchy-button jump-to-view-button btn float-right align-middle"
                 ngbTooltip="Zur Maßnahme wechseln"
                 i18n-ngbTooltip="@@resources.jumpToView.tooltip"
@@ -36,7 +36,7 @@
                 (click)="jumpToView()">
             <span class="mdi mdi-arrow-top-right mdi-18px"></span>
         </button>
-        <span *ngIf="showJumpToViewOption() && document.resource.type === 'Trench'"
+        <span *ngIf="shouldShowArrowTopRightForTrench(document)"
              ngbDropdown placement="bottom-right">
             <div class="hierarchy-button btn float-right" ngbDropdownToggle>
                 <span class="mdi mdi-arrow-top-right mdi-18px"></span>

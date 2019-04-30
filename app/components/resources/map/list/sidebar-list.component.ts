@@ -40,7 +40,7 @@ export class SidebarListComponent extends BaseList {
     constructor(resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
                 loading: Loading,
-                private navigationService: NavigationService,
+                private navigationService: NavigationService, // TODO remove reference, since sidebar-list-button-group gets it
                 private resourcesMapComponent: ResourcesMapComponent,
                 private fieldDatastore: FieldReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
@@ -56,15 +56,11 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public jumpToMatrix = (document: FieldDocument) => this.navigationService.jumpToMatrix(document);
-
     // TODO refactor - make consistent across usages
     public showMoveIntoOption = (document: FieldDocument) =>
         this.navigationService.showMoveIntoOption(document);
 
-    // TODO refactor - make consistent across usages
-    public showJumpToViewOption = (document: FieldDocument) =>
-        this.navigationService.showJumpToViewOption(document);
+
 
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
         this.resourcesMapComponent.openContextMenu(event, document);
@@ -116,13 +112,6 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public async jumpToView(document: FieldDocument) {
-
-        this.closePopover();
-        await this.navigationService.jumpToView(document);
-    }
-
-
     public hasVisibleRelations(document: FieldDocument|undefined) {
 
         const selectedDoc = document;
@@ -141,28 +130,11 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public async jumpToResource(documentToSelect: FieldDocument) {
+    public async jumpToResource(documentToSelect: FieldDocument) { // TODO move to sidebarlistbuttongroup
 
         this.closePopover();
         await this.routingService.jumpToResource(documentToSelect);
         this.resourcesComponent.setScrollTarget(documentToSelect);
-    }
-
-
-    public async jumpToResourceFromOverviewToOperation(documentToSelect: FieldDocument) {
-
-        this.closePopover();
-        await this.routingService.jumpToResource(documentToSelect);
-        await this.viewFacade.setBypassHierarchy(false);
-        await this.routingService.jumpToResource(documentToSelect);
-        this.resourcesComponent.setScrollTarget(documentToSelect);
-    }
-
-
-    public async jumpToResourceInSameView(document: FieldDocument) {
-
-        await this.viewFacade.setBypassHierarchy(false);
-        await this.routingService.jumpToResource(document);
     }
 
 

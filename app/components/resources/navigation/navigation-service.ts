@@ -56,7 +56,19 @@ export class NavigationService {
     }
 
 
-    public showJumpToViewOption(document: FieldDocument): boolean {
+    public shouldShowArrowTopRightForTrench(document: FieldDocument) {
+
+        return this.showJumpToViewOption(document) && document.resource.type === 'Trench';
+    }
+
+
+    public shouldShowArrowTopRight(document: FieldDocument) {
+
+        return this.showJumpToViewOption(document) && document.resource.type !== 'Trench';
+    }
+
+
+    private showJumpToViewOption(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.getBypassHierarchy()) return false;

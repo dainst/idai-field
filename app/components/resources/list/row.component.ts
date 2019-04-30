@@ -56,7 +56,9 @@ export class RowComponent implements AfterViewInit {
 
     public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
 
-    public showJumpToViewOption = () => this.navigationService.showJumpToViewOption(this.document);
+    public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
+
+    public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
     public moveInto = () => this.navigationService.moveInto(this.document);
 

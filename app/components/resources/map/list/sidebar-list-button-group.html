@@ -36,19 +36,18 @@
         </span>
     </div>
 
-    <div *ngIf="viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && (!this.typeUtility.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place')"
+    <div *ngIf="shouldShowArrowTopRightForSearchMode()"
          class="btn hierarchy-button hierarchy-button-overview"
-         (click)="sidebarList.jumpToResourceFromOverviewToOperation(document); $event.stopPropagation();">
+         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">
         <span class="mdi mdi-arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="(!viewFacade.isInOverview() && viewFacade.getBypassHierarchy()) || (viewFacade.isInOverview() && viewFacade.getBypassHierarchy() && (this.typeUtility.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))"
-        class="btn hierarchy-button hierarchy-button-overview"
-        (click)="sidebarList.jumpToResourceInSameView(document); $event.stopPropagation();">
+    <div *ngIf="shouldShowArrowUp()" class="btn hierarchy-button hierarchy-button-overview"
+         (click)="jumpToResourceInSameView(); $event.stopPropagation();">
         <span class="mdi mdi-arrow-up mdi-16px"></span>
     </div>
 
-    <div *ngIf="sidebarList.showJumpToViewOption(document) && document.resource.type !== 'Trench'"
+    <div *ngIf="shouldShowArrowTopRight()"
          class="btn hierarchy-button hierarchy-button-overview"
          ngbTooltip="Zur Maßnahme wechseln"
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
@@ -62,7 +61,7 @@
         <span class="mdi mdi-arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="sidebarList.showJumpToViewOption(document) && document.resource.type === 'Trench'"
+    <div *ngIf="shouldShowArrowTopRightForTrench()"
          ngbDropdown placement="bottom-right"
          (click)="$event.stopPropagation()">
 
@@ -73,13 +72,13 @@
         <div ngbDropdownMenu>
             <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
                  class="dropdown-item"
-                 (click)="sidebarList.jumpToView(document)">
+                 (click)="jumpToViewFromOverview()">
                     <span class="dropdown-entry-label"
                           i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
             </div>
             <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
                  class="dropdown-item"
-                 (click)="sidebarList.jumpToMatrix(document)">
+                 (click)="jumpToMatrix()">
                     <span class="dropdown-entry-label"
                           i18n="@@resources.jumpToView.matrix">Matrix</span>
             </div>

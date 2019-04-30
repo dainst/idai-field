@@ -10,7 +10,7 @@ const delays = require('../config/delays');
 const common = require('../common');
 
 
-xdescribe('resources/list --', () => {
+describe('resources/list --', () => {
 
     let index = 0;
 
@@ -53,7 +53,7 @@ xdescribe('resources/list --', () => {
     });
 
 
-    it('save changes on input field blur', () => {
+    xit('save changes on input field blur', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
@@ -111,7 +111,7 @@ xdescribe('resources/list --', () => {
     });
 
 
-    it('move a resource', () => {
+    xit('move a resource', () => {
 
         ResourcesPage.clickListMoveButton('SE0');
         ResourcesPage.typeInMoveModalSearchBarInput('S2');

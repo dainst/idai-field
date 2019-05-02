@@ -13,9 +13,13 @@
   }
 }
 
-#open-child-collection-button,
-#child-resources-count {
-  opacity: 0.8;
+#open-child-collection-button {
+  background-color: transparent;
   color: gray;
   font-size: 12px;
+  border: none;
+
+  &:hover {
+    background-color: darken($list-item-hover-color, 5%);
+  }
 }

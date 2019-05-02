@@ -75,7 +75,7 @@ $teaser-width: $resources-listing-item-slim-width;
         border: none;
 
         &:hover {
-          background-color: rgba(226, 230, 234, 0.8);
+          background-color: darken($list-item-hover-color, 5%);
         }
 
         .mdi-close {

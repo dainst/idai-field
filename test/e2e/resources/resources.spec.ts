@@ -99,18 +99,15 @@ describe('resources --', () => {
     }
 
 
-    it('creation/messages -- create a new resource of first listed type ', () => {
+
+    it('messages - everything fine / missing identifier', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-    });
 
+        browser.sleep(2500);
 
-
-    it('creation/messages -- warn if identifier is missing', () => {
-
-        browser.sleep(5000);
-
+        // warn if identifier is missing
         ResourcesPage.performCreateResource('', 'feature',
             'processor', 'p', undefined,
             false, false);
@@ -123,10 +120,18 @@ describe('resources --', () => {
     });
 
 
-    it('creation/messages -- warn if an existing identifier is used', () => {
+    it('messages - same identifier', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,
             undefined,undefined,false);
+
+        // do not warn if two different identifiers start with the same string
+        ResourcesPage.performCreateResource('120',undefined,undefined,
+            undefined,undefined,false);
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        NavbarPage.clickCloseAllMessages();
+
+        // same identifier
         ResourcesPage.performCreateResource('12',undefined,undefined,
             undefined,undefined,false, false);
 
@@ -134,17 +139,6 @@ describe('resources --', () => {
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
-    });
-
-
-    it('creation/messages -- do not warn if two different identifiers start with the same string', () => {
-
-        ResourcesPage.performCreateResource('120',undefined,undefined,
-            undefined,undefined,false);
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,undefined,false, false);
-
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
 

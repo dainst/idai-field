@@ -19,6 +19,11 @@ const common = require('../common');
 
 
 /**
+ * resources
+ *   creation
+ *   creation with relations
+ * deletion
+ *   including relations
  * messages
  *   after docedit closed, under various conditions
  * operations
@@ -100,18 +105,6 @@ describe('resources --', () => {
     });
 
 
-    it('messages -- show the success message after saving via modal', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        ResourcesPage.openEditByDoubleClickResource('12');
-        DoceditPage.typeInInputField('identifier', '34');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
-
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
-    });
-
 
     it('messages -- warn if identifier is missing', () => {
 
@@ -154,6 +147,97 @@ describe('resources --', () => {
     });
 
 
+    xit('docedit/savedialog -- save changes via dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickSaveInModal();
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('2');
+        });
+    });
+
+
+    xit('docedit/savedialog -- discard changes via dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('1');
+        });
+    });
+
+
+    xit('docedit/savedialog -- cancel dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickCancelInModal();
+        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    it('create/edit/delete an operation and update navbar', () => {
+
+        // edit
+        NavbarPage.clickTab('project');
+        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
+
+        ResourcesPage.openEditByDoubleClickResource('S1');
+        DoceditPage.typeInInputField('identifier', 'newIdentifier');
+        DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortRest * 2);
+        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('newIdentifier'));
+
+        // delete
+        ResourcesPage.clickOpenContextMenu('newIdentifier');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newIdentifier');
+        ResourcesPage.clickConfirmDeleteInModal();
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickCloseAllMessages();
+
+        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')), delays.ECWaitTime);
+
+        // create
+        ResourcesPage.performCreateOperation('newTrench');
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('newTrench'));
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+    });
+
+
+    it('messages -- show the success message after saving via modal', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.openEditByDoubleClickResource('12');
+        DoceditPage.typeInInputField('identifier', '34');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickSaveInModal();
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        NavbarPage.clickCloseAllMessages();
+    });
+
+
+    it('find a resource by its identifier', () => { // TODO move to another test suite
+
+        ResourcesPage.performCreateResource('1');
+        SearchBarPage.typeInSearchField('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
     it('sidebar/info -- show the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
@@ -171,7 +255,6 @@ describe('resources --', () => {
             expect(items.length).toBe(3);
         });
     });
-
 
 
     it('relations', () => {
@@ -220,7 +303,7 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('sidebar/relations -- do not show new relations after cancelling edit', () => {
+    it('relations -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -240,99 +323,21 @@ describe('resources --', () => {
     });
 
 
-    it('relations -- delete inverse relations when deleting a resource', () => {
+    it('deletion', () => {
 
         ResourcesPage.performCreateLink();
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         ResourcesPage.clickOpenContextMenu('2');
         ResourcesPage.clickContextMenuDeleteButton();
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
         ResourcesPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+
+        // relations
         ResourcesPage.clickSelectResource('1', 'links');
         // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-    });
-
-
-    xit('delete a resource', () => {
-
-        ResourcesPage.performCreateResource('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    it('delete an operation and update navbar', () => {
-
-        NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
-        NavbarPage.clickTab('project');
-
-        browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
-            delays.ECWaitTime);
-
-        ResourcesPage.clickOpenContextMenu('S1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('S1');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickCloseAllMessages();
-
-        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')),
-            delays.ECWaitTime);
-    });
-
-
-    it('find a resource by its identifier', () => {
-
-        ResourcesPage.performCreateResource('1');
-        SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    xit('docedit/savedialog -- save changes via dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
-
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('2');
-        });
-    });
-
-
-    xit('docedit/savedialog -- discard changes via dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('1');
-        });
-    });
-
-
-    xit('docedit/savedialog -- cancel dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickCancelInModal();
-        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
     });
 
 
@@ -346,31 +351,6 @@ describe('resources --', () => {
         });
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
-    });
-
-
-    it('operation -- create a new operation', () => {
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-        ResourcesPage.performCreateOperation('newTrench');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('newTrench'));
-    });
-
-
-    xit('operation -- should edit an operation and update navbar', () => {
-
-        NavbarPage.clickTab('project');
-        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
-
-        ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('identifier', 'newIdentifier');
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
-        NavbarPage.getTabLabel('resources', 't1').then(label => {
-            expect(label).toEqual('newIdentifier');
-        });
     });
 
 

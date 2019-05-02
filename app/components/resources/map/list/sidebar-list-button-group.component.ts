@@ -29,7 +29,7 @@ export class SidebarListButtonGroupComponent {
     }
 
 
-    public shouldShowArrowUp = () => this.navigationService.shouldShowArrowUp(this.document);
+    public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);
 
     public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
 

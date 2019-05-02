@@ -64,7 +64,7 @@ export class RowComponent implements AfterViewInit {
 
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
-    public shouldShowArrowUp = () => this.navigationService.shouldShowArrowUp(this.document);
+    public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);
 
     public jumpToResourceInSameView =() => this.navigationService.jumpToResourceInSameView(this.document);
 

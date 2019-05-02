@@ -39,12 +39,12 @@
          (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
          placement="right"
          container="body"
-         ngbTooltip="Im Kontext anzeigen"
-         i18n-ngbTooltip="@@resources.navigation.arrowup">
+         ngbTooltip="Im Kontext der Maßnahme anzeigen"
+         i18n-ngbTooltip="@@resources.navigation.arrowtopright.search">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowUp()" class="btn hierarchy-button hierarchy-button-overview"
+    <div *ngIf="shouldShowArrowUpForSearchMode()" class="btn hierarchy-button hierarchy-button-overview"
          (click)="jumpToResourceInSameView(); $event.stopPropagation();"
          placement="right"
          container="body"

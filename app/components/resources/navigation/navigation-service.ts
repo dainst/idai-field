@@ -86,7 +86,7 @@ export class NavigationService {
     }
 
 
-    public shouldShowArrowUp(document: FieldDocument) {
+    public shouldShowArrowUpForSearchMode(document: FieldDocument) {
 
         return (!this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy())
             || (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()

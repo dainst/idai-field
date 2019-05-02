@@ -1863,11 +1863,11 @@
         <target state="final">Zur Maßnahme wechseln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.resources" datatype="html">
@@ -1875,11 +1875,11 @@
         <target state="final">Ressourcenansicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.matrix" datatype="html">
@@ -1887,11 +1887,11 @@
         <target state="final">Matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
@@ -1899,7 +1899,7 @@
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -1907,7 +1907,7 @@
         <target state="final">Verschieben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -1915,7 +1915,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
@@ -1936,12 +1936,28 @@
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.navigation.arrowtopright.search" datatype="html">
+        <source>Im Kontext der Maßnahme anzeigen</source>
+        <target state="final">Im Kontext der Maßnahme anzeigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.navigation.arrowup" datatype="html">
         <source>Im Kontext anzeigen</source>
         <target state="final">Im Kontext anzeigen</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.relationsView.oneRelation" datatype="html">

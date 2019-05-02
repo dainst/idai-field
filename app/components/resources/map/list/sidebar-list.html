@@ -5,13 +5,6 @@
     </div>
 
     <div *ngIf="isPopoverMenuOpened('relations')" class="sidebar-popover-page">
-        <div class="sidebar-popover-header">
-            <div>Relationen</div>
-            <div class="btn btn-light" (click)="closePopover()">
-                <span class="mdi mdi-close"></span>
-            </div>
-        </div>
-
         <relations-view
                 [resource]="viewFacade.getSelectedDocument().resource"
                 (onRelationTargetClicked)="jumpToResource($event)"

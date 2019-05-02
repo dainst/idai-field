@@ -1,7 +1,6 @@
 #relations-view {
   height: calc(100% - 40px);
   overflow-y: auto;
-  margin-top: 7px;
 
   .relation-name {
     padding-left: $item-horizontal-padding;
@@ -12,4 +11,8 @@
     font-size: $font-size-smaller;
     color: gray;
   }
+
+  .sidebar-popover-header {
+    margin-bottom: 7px;
+  };
 }

@@ -18,6 +18,7 @@ import {SidebarListComponent} from './sidebar-list.component';
 export class RelationsViewComponent implements OnChanges {
 
     public relations: Array<any>;
+    public relationsCount: number = 0;
 
     @Input() resource: Resource;
     @Input() hideRelations: Array<string> = [];
@@ -32,11 +33,18 @@ export class RelationsViewComponent implements OnChanges {
     public isScrollbarVisible = (element: HTMLElement) =>
         this.sidebarListComponent.isScrollbarVisible(element);
 
+    public closePopover = () => this.sidebarListComponent.closePopover();
+
 
     async ngOnChanges() {
 
         this.relations = [];
-        if (this.resource) await this.processRelations(this.resource);
+
+        if (this.resource) {
+            await this.processRelations(this.resource);
+        } else {
+            this.relationsCount = 0;
+        }
     }
 
 
@@ -48,12 +56,18 @@ export class RelationsViewComponent implements OnChanges {
 
     private async processRelations(resource: Resource) {
 
-        Object.keys(resource.relations)
+        const relationNames: string[] = await Object.keys(resource.relations)
             .filter(name => this.projectConfiguration.isVisibleRelation(name, this.resource.type))
-            .filter(name => this.hideRelations.indexOf(name) === -1)
-            .forEach(name =>
-                this.addRel(resource, name, this.projectConfiguration.getRelationDefinitionLabel(name))
-            );
+            .filter(name => this.hideRelations.indexOf(name) === -1);
+
+        for (let name of relationNames) {
+            await this.addRel(resource, name, this.projectConfiguration.getRelationDefinitionLabel(name))
+        }
+
+        this.relationsCount = this.relations.reduce(
+            (totalCount: number, relation: any) => {
+                console.log(relation); return totalCount + relation.targets.length; }, 0
+        );
     }
 
 

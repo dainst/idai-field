@@ -54,15 +54,21 @@ export class ImageViewComponent implements OnInit {
     }
 
 
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.activeModal.close();
+    }
+
+
     public async setDocument(document: ImageDocument) {
 
         await this.fetchImage(document);
     }
 
 
-    public async onKeyDown(event: KeyboardEvent) {
+    public close() {
 
-        if (event.key === 'Escape') await this.activeModal.close();
+        this.activeModal.close();
     }
 
 

@@ -16,8 +16,6 @@
          ngbTooltip="Untergeordnete Ressourcen ansehen"
          i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
          placement="left"
-         triggers="manual"
-         #tooltip="ngbTooltip"
          (click)="sidebarList.togglePopoverMenu('relations', document); $event.stopPropagation();">
 
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
@@ -38,12 +36,21 @@
 
     <div *ngIf="shouldShowArrowTopRightForSearchMode()"
          class="btn hierarchy-button hierarchy-button-overview"
-         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">
+         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+         placement="right"
+         container="body"
+         ngbTooltip="Im Kontext anzeigen"
+         i18n-ngbTooltip="@@resources.navigation.arrowup">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowUp()" class="btn hierarchy-button hierarchy-button-overview"
-         (click)="jumpToResourceInSameView(); $event.stopPropagation();">
+         (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+         placement="right"
+         container="body"
+         ngbTooltip="Im Kontext anzeigen"
+         i18n-ngbTooltip="@@resources.navigation.arrowup">
+
         <span class="arrow-up mdi-16px"></span>
     </div>
 
@@ -51,9 +58,8 @@
          class="btn hierarchy-button hierarchy-button-overview"
          ngbTooltip="Zur Maßnahme wechseln"
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
-         placement="left"
-         triggers="manual"
-         #tooltip="ngbTooltip"
+         placement="right"
+         container="body"
          (mouseover)="tooltip.open()"
          (mouseleave)="tooltip.close()"
          (mousedown)="tooltip.close()"

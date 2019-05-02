@@ -27,6 +27,8 @@ $button-group-width: 3 * $button-width;
     position: absolute;
     width: $button-width;
     height: $item-height;
+    padding-left: 0;
+    padding-right: 0;
 
     &:hover {
       color: darken($activated-color, 10%);

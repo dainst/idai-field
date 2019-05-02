@@ -26,19 +26,27 @@
         </button>
 
         <div *ngIf="shouldShowArrowUp()" class="hierarchy-button jump-to-view-button btn float-right align-middle"
-             (click)="jumpToResourceInSameView(); $event.stopPropagation();">
+             (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+             placement="right"
+             container="body"
+             ngbTooltip="Im Kontext anzeigen"
+             i18n-ngbTooltip="@@resources.navigation.arrowup">
             <span class="arrow-up mdi-16px"></span>
         </div>
         <button *ngIf="shouldShowArrowTopRightForSearchMode()"
              class="hierarchy-button jump-to-view-button btn float-right align-middle"
-             (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();">
+             (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+             placement="right"
+             container="body"
+             ngbTooltip="Im Kontext anzeigen"
+             i18n-ngbTooltip="@@resources.navigation.arrowup">
             <span class="arrow-top-right mdi-18px"></span>
         </button>
         <button *ngIf="shouldShowArrowTopRight()"
                 class="hierarchy-button jump-to-view-button btn float-right align-middle"
                 ngbTooltip="Zur Maßnahme wechseln"
                 i18n-ngbTooltip="@@resources.jumpToView.tooltip"
-                placement="left"
+                placement="right"
                 container="body"
                 triggers="manual"
                 #jumpToViewTooltip="ngbTooltip"

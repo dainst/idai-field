@@ -332,7 +332,7 @@ describe('resources --', () => {
     });
 
 
-    xit('do not reflect changes in list while editing resource', () => {
+    it('do not reflect changes in list while editing resource', () => {
 
         ResourcesPage.performCreateResource('1a');
         DetailSidebarPage.doubleClickEditDocument('1a');

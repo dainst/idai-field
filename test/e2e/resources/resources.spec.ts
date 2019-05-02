@@ -179,10 +179,10 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldName(0, 3).then(value => {
+        FieldsViewPage.getFieldName(0, 2).then(value => {
             expect(value).toBe('Bearbeiterin/Bearbeiter'); // with the correct field label
         });
-        FieldsViewPage.getFieldValue(0, 3).then(value => {
+        FieldsViewPage.getFieldValue(0, 2).then(value => {
             expect(value).toBe('100');
         });
     });
@@ -478,7 +478,7 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 2).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+        FieldsViewPage.getFieldValue(0, 1).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
     });
 
 

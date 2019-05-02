@@ -169,33 +169,30 @@ describe('resources --', () => {
 
 
 
-    it('sidebar/relations -- show relations present in the object', () => {
+    it('relations', () => {
 
         ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1', 'links');
 
+        // sidebar
+        ResourcesPage.clickSelectResource('1', 'links');
         RelationsViewPage.getRelationName(0).then(value => {
             expect(value).toBe('Zeitlich nach');
         });
         RelationsViewPage.getRelationValue(0).then(value => {
             expect(value).toBe('2');
         });
-
         // Make sure there are only so much as expected
         RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(1);
         });
-    });
 
-
-    it('relations -- create links for relations', () => { // TODO duplicate?
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1', 'links');
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
         ResourcesPage.clickSelectResource('2', 'links');
-        // RelationsViewPage.clickRelation(1); TODO test that click selects the other resource
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+        RelationsViewPage.getRelationName(0).then(value => {
+            expect(value).toBe('Zeitlich vor');
+        });
+        RelationsViewPage.getRelationValue(0).then(value => {
+            expect(value).toBe('1');
+        });
     });
 
 
@@ -203,7 +200,7 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('sidebar/relations -- do not show new relations after cancelling edit', () => {
+    xit('sidebar/relations -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');

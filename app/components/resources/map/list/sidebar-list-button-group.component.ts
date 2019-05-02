@@ -61,7 +61,4 @@ export class SidebarListButtonGroupComponent {
         await this.routingService.jumpToResource(this.document);
         this.resourcesComponent.setScrollTarget(this.document);
     }
-
-
-
 }

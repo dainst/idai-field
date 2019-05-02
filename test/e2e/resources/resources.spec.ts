@@ -19,6 +19,13 @@ const common = require('../common');
 
 
 /**
+ * messages
+ * operations
+ * sidebar/info
+ * sidebar/relations
+ * contextMenu/moveModal
+ * docedit/images
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -181,11 +188,22 @@ describe('resources --', () => {
     });
 
 
+    it('relations -- create links for relations', () => { // TODO duplicate?
+
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1', 'links');
+        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
+        ResourcesPage.clickSelectResource('2', 'links');
+        // RelationsViewPage.clickRelation(1); TODO test that click selects the other resource
+        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+    });
+
+
     /**
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    xit('docview -- do not show new relations after cancelling edit', () => {
+    it('sidebar/relations -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -197,166 +215,11 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
-        browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
-        RelationsViewPage.getRelations().then(relations => {
-            expect(relations.length).toBe(1);
-        });
-    });
-
-
-    xit('docedit/images -- create links for images', done => {
-
-        addTwoImages();
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(2);
-            done();
-        });
-    });
-
-
-    xit('docedit/images -- delete links to one image', done => {
-
-        addTwoImages();
-
-        gotoImageTab();
-        DoceditImageTabPage.waitForCells();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
-            expect(cells.length).toBe(1);
-        });
-        DoceditPage.clickSaveDocument();
-
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(1);
-            done();
-        });
-    });
-
-
-    xit('docedit/images -- delete links to two images', done => {
-
-        addTwoImages();
-        gotoImageTab();
-        DoceditImageTabPage.waitForCells();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.getCells().get(1).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
-            expect(cells.length).toBe(0);
-        });
-        DoceditPage.clickSaveDocument();
-
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(0);
-            done();
-        });
-    });
-
-
-    xit('delete a resource', () => {
-
-        ResourcesPage.performCreateResource('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    it('delete an operation and update navbar', () => {
-
-        NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
-        NavbarPage.clickTab('project');
-
-        browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
-            delays.ECWaitTime);
-
-        ResourcesPage.clickOpenContextMenu('S1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('S1');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickCloseAllMessages();
-
-        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')),
-            delays.ECWaitTime);
-    });
-
-
-    it('find a resource by its identifier', () => {
-
-        ResourcesPage.performCreateResource('1');
-        SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    xit('do not reflect changes in list while editing resource', () => {
-
-        ResourcesPage.performCreateResource('1a');
-        DetailSidebarPage.doubleClickEditDocument('1a');
-        DoceditPage.typeInInputField('identifier', '1b');
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('1a');
-        });
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-    });
-
-
-    xit('docedit/savedialog -- save changes via dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
-
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('2');
-        });
-    });
-
-
-    xit('docedit/savedialog -- discard changes via dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('1');
-        });
-    });
-
-
-    xit('docedit/savedialog -- cancel dialog modal', () => {
-
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickCancelInModal();
-        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
-    });
-
-
-    it('relations -- create links for relations', () => {
-
-        ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1', 'links');
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
-        ResourcesPage.clickSelectResource('2', 'links');
-        // RelationsViewPage.clickRelation(1); TODO test that click selects the other resource
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+        // browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
+        RelationsViewPage.getRelations().then(relations => {
+            expect(relations.length).toBe(0);
+        });
     });
 
 
@@ -420,6 +283,101 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1', 'links');
         // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+    });
+
+
+    xit('delete a resource', () => {
+
+        ResourcesPage.performCreateResource('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        ResourcesPage.clickOpenContextMenu('1');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('1');
+        ResourcesPage.clickConfirmDeleteInModal();
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
+    it('delete an operation and update navbar', () => {
+
+        NavbarPage.clickTab('project');
+        ResourcesPage.performJumpToTrenchView('S1');
+        NavbarPage.clickTab('project');
+
+        browser.wait(EC.presenceOf(NavbarPage.getTab('resources', 't1')),
+            delays.ECWaitTime);
+
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('S1');
+        ResourcesPage.clickConfirmDeleteInModal();
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickCloseAllMessages();
+
+        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')),
+            delays.ECWaitTime);
+    });
+
+
+    it('find a resource by its identifier', () => {
+
+        ResourcesPage.performCreateResource('1');
+        SearchBarPage.typeInSearchField('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
+    xit('docedit/savedialog -- save changes via dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickSaveInModal();
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('2');
+        });
+    });
+
+
+    xit('docedit/savedialog -- discard changes via dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('1');
+        });
+    });
+
+
+    xit('docedit/savedialog -- cancel dialog modal', () => {
+
+        ResourcesPage.performCreateResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.typeInInputField('identifier', '2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickCancelInModal();
+        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    xit('do not reflect changes in list while editing resource', () => {
+
+        ResourcesPage.performCreateResource('1a');
+        DetailSidebarPage.doubleClickEditDocument('1a');
+        DoceditPage.typeInInputField('identifier', '1b');
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
+            expect(identifier).toBe('1a');
+        });
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
     });
 
 
@@ -535,7 +493,7 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu - move a resource', () => {
+    it('contextMenu/moveModal - move a resource', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
@@ -553,7 +511,7 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu - show only type filter options for allowed parent types in move modal', () => {
+    it('contextMenu/moveModal - show only type filter options for allowed parent types in move modal', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
@@ -633,5 +591,56 @@ describe('resources --', () => {
         ResourcesPage.clickOpenContextMenu('undefined');
         browser.wait(EC.stalenessOf(ResourcesPage.getContextMenu()), delays.ECWaitTime);
         MapPage.clickMapOption('abort');
-    })
+    });
+
+
+    xit('docedit/images -- create links for images', done => {
+
+        addTwoImages();
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(2);
+            done();
+        });
+    });
+
+
+    xit('docedit/images -- delete links to one image', done => {
+
+        addTwoImages();
+
+        gotoImageTab();
+        DoceditImageTabPage.waitForCells();
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
+            expect(cells.length).toBe(1);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(1);
+            done();
+        });
+    });
+
+
+    xit('docedit/images -- delete links to two images', done => {
+
+        addTwoImages();
+        gotoImageTab();
+        DoceditImageTabPage.waitForCells();
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.getCells().get(1).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
+            expect(cells.length).toBe(0);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(0);
+            done();
+        });
+    });
+
 });

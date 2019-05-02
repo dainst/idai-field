@@ -16,6 +16,11 @@ const EC = protractor.ExpectedConditions;
 const common = require('../common');
 
 /**
+ * search/suggestions
+ * search/list
+ * filter
+ * navpath
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

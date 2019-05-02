@@ -382,7 +382,7 @@ describe('resources --', () => {
 
         FieldsViewPage.clickAccordionTab(0);
         FieldsViewPage.getFieldValue(0, 1).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
-        // TODO reenable
+        // TODO uncomment
         // the children tab should not appear anymore
         // FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         // browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));

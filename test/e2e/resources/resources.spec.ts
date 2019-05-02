@@ -19,9 +19,10 @@ const common = require('../common');
 
 
 /**
- * resources
- *   creation
+ * creation
  *   creation with relations
+ *   /messages
+ *   /docedit form messages
  * deletion
  *   including relations
  * messages
@@ -98,7 +99,7 @@ describe('resources --', () => {
     }
 
 
-    it('messages -- create a new resource of first listed type ', () => {
+    it('creation/messages -- create a new resource of first listed type ', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
@@ -106,7 +107,7 @@ describe('resources --', () => {
 
 
 
-    it('messages -- warn if identifier is missing', () => {
+    it('creation/messages -- warn if identifier is missing', () => {
 
         browser.sleep(5000);
 
@@ -122,7 +123,7 @@ describe('resources --', () => {
     });
 
 
-    it('messages -- warn if an existing identifier is used', () => {
+    it('creation/messages -- warn if an existing identifier is used', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,
             undefined,undefined,false);
@@ -136,7 +137,7 @@ describe('resources --', () => {
     });
 
 
-    it('messages -- do not warn if two different identifiers start with the same string', () => {
+    it('creation/messages -- do not warn if two different identifiers start with the same string', () => {
 
         ResourcesPage.performCreateResource('120',undefined,undefined,
             undefined,undefined,false);
@@ -147,7 +148,7 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/savedialog -- save changes via dialog modal', () => {
+    it('creation/docedit/savedialog -- save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');
@@ -155,13 +156,11 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
 
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('2');
-        });
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('2'));
     });
 
 
-    xit('docedit/savedialog -- discard changes via dialog modal', () => {
+    it('creation/docedit/savedialog -- discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');
@@ -169,13 +168,11 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('1');
-        });
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('1'));
     });
 
 
-    xit('docedit/savedialog -- cancel dialog modal', () => {
+    it('creation/docedit/savedialog -- cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');

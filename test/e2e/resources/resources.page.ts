@@ -204,9 +204,9 @@ export class ResourcesPage {
 
     public static getSelectedListItemIdentifierText() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .title'))),
+        browser.wait(EC.visibilityOf(element(by.css('#sidebar .resources-listing-item.selected .title'))),
             delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item.selected .title')).getText();
+        return element(by.css('#sidebar .resources-listing-item.selected .title')).getText();
     }
 
 

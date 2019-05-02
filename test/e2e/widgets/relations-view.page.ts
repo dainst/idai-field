@@ -51,9 +51,8 @@ export class RelationsViewPage {
      */
     public static getRelationName(index) {
 
-        this.clickRelationsTab();
-        browser.wait(EC.visibilityOf(element.all(by.css('relations-view .fieldname'))
+        browser.wait(EC.visibilityOf(element.all(by.css('#relations-view .relation-name'))
             .get(index)), delays.ECWaitTime);
-        return element.all(by.css('relations-view .fieldname')).get(index).getText();
+        return element.all(by.css('#relations-view .relation-name')).get(index).getText();
     };
 }

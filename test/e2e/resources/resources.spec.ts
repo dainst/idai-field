@@ -142,38 +142,6 @@ describe('resources --', () => {
     });
 
 
-    xit('docview -- show the relations present in the object', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelationName(0).then(value => {
-            expect(value).toBe('Aufgenommen in Maßnahme');
-        });
-        RelationsViewPage.getRelationValue(0).then(value => {
-            expect(value).toBe('S1');
-        });
-        RelationsViewPage.getRelationName(1).then(value => {
-            expect(value).toBe('Zeitlich nach');
-        });
-        RelationsViewPage.getRelationValue(1).then(value => {
-            expect(value).toBe('2');
-        });
-    });
-
-
-    /**
-     * Addresses an issue where relations were shown double.
-     */
-    it('sidebar/relations -- show only relations present in the object', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1', 'links');
-        RelationsViewPage.getRelations().then(relations => {
-            expect(relations.length).toBe(1);
-        });
-    });
-
-
     it('sidebar/info -- show the fields present in the object', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
@@ -185,19 +153,30 @@ describe('resources --', () => {
         FieldsViewPage.getFieldValue(0, 2).then(value => {
             expect(value).toBe('100');
         });
+
+        // Make sure there are only so much as expected
+        FieldsViewPage.getFields(1).then(items => {
+            expect(items.length).toBe(3);
+        });
     });
 
 
-    /**
-     * Addresses an issue where fields were shown double.
-     */
-    it('docview -- show only the fields present in the object', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture',
-            'processor', '100');
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFields(1).then(items => {
-            expect(items.length).toBe(4);
+    it('sidebar/relations -- show relations present in the object', () => {
+
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1', 'links');
+
+        RelationsViewPage.getRelationName(0).then(value => {
+            expect(value).toBe('Zeitlich nach');
+        });
+        RelationsViewPage.getRelationValue(0).then(value => {
+            expect(value).toBe('2');
+        });
+
+        // Make sure there are only so much as expected
+        RelationsViewPage.getRelations().then(relations => {
+            expect(relations.length).toBe(1);
         });
     });
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty} from 'tsfun';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -23,6 +23,7 @@ import {MenuService} from '../../menu-service';
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ImageViewComponent implements OnInit {
 
@@ -30,15 +31,9 @@ export class ImageViewComponent implements OnInit {
     public activeTab: string;
     public originalNotFound: boolean = false;
 
-    private comingFrom: Array<any>|undefined = undefined;
-
-    // for clean and refactor safe template, and to help find usages
-    public jumpToResource = (documentToJumpTo: FieldDocument) => this.routingService.jumpToResource(
-        documentToJumpTo, undefined);
-
 
     constructor(
-        private route: ActivatedRoute,
+        private activeModal: NgbActiveModal,
         private datastore: ImageReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
@@ -46,33 +41,28 @@ export class ImageViewComponent implements OnInit {
         private modalService: NgbModal,
         private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService
-    ) {
-        this.route.queryParams.subscribe(queryParams => {
-            if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
-        });
-    }
+    ) {}
+
+
+    public jumpToResource = (documentToJumpTo: FieldDocument) => this.routingService.jumpToResource(
+        documentToJumpTo, undefined);
 
 
     ngOnInit() {
 
-        this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
+    }
+
+
+    public async setDocument(document: ImageDocument) {
+
+        await this.fetchImage(document);
     }
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.deselect();
-    }
-
-
-    public async deselect() {
-
-        if (this.comingFrom) {
-            await this.router.navigate(this.comingFrom);
-        } else {
-            await this.router.navigate(['images']);
-        }
+        if (event.key === 'Escape') await this.activeModal.close();
     }
 
 
@@ -82,7 +72,10 @@ export class ImageViewComponent implements OnInit {
 
         MenuService.setContext('docedit');
 
-        const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const doceditModalRef = this.modalService.open(
+            DoceditComponent,
+            { size: 'lg', backdrop: 'static' }
+            );
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.image.document);
 
@@ -91,7 +84,7 @@ export class ImageViewComponent implements OnInit {
             if (result.document) this.image.document = result.document;
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
-            if (closeReason === 'deleted') await this.deselect();
+            if (closeReason === 'deleted') await this.activeModal.close();
         }
 
         MenuService.setContext('default');
@@ -110,43 +103,25 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    protected fetchDocAndImage() {
+    private async fetchImage(document: ImageDocument) {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(async (id: string, menu: string, tab?: string) => {
+        this.image.document = document;
 
-            let document: ImageDocument;
+        try {
+            // read original (empty if not present)
+            let url = await this.imagestore.read(document.resource.id, false, false);
+            if (!url || url == '') this.originalNotFound = true;
+            this.image.imgSrc = url;
 
-            try {
-                document = await this.datastore.get(id);
-                if (!document.resource.id) return await this.router.navigate(['images']);
-            } catch (e) {
-                return await this.router.navigate(['images']);
-            }
-
-            this.image.document = document;
-
-            try {
-                // read original (empty if not present)
-                let url = await this.imagestore.read(document.resource.id, false, false);
-                if (!url || url == '') this.originalNotFound = true;
-                this.image.imgSrc = url;
-
-                // read thumb
-                url = await this.imagestore.read(document.resource.id, false, true);
-                this.image.thumbSrc = url;
-
-                if (menu === 'edit') {
-                    await this.startEdit(tab);
-                } else if (tab) {
-                    this.activeTab = tab;
-                }
-            } catch (e) {
-                this.image.imgSrc = BlobMaker.blackImg;
-                this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
-            }
-        });
+            // read thumb
+            url = await this.imagestore.read(document.resource.id, false, true);
+            this.image.thumbSrc = url;
+        } catch (e) {
+            this.image.imgSrc = BlobMaker.blackImg;
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+        }
     }
 
 
@@ -156,13 +131,5 @@ export class ImageViewComponent implements OnInit {
         if (['relations', 'fields'].indexOf(nextActiveTab) != -1) {
             this.activeTab = nextActiveTab;
         }
-    }
-
-
-    private getRouteParams(callback: Function) {
-
-        this.route.params.forEach((params: Params) => {
-            callback(params['id'], params['menu'], params['tab']);
-        });
     }
 }

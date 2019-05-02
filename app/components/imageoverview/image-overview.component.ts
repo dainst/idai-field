@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument, Messages, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
@@ -9,6 +10,7 @@ import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
 import {ImageFilterOption} from './view/images-state';
 import {TabManager} from '../tab-manager';
+import {ImageViewComponent} from '../imageview/image-view.component';
 
 
 @Component({
@@ -38,7 +40,8 @@ export class ImageOverviewComponent implements OnInit {
                 private routingService: RoutingService,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
-                private tabManager: TabManager) {
+                private tabManager: TabManager,
+                private modalService: NgbModal) {
 
         this.imageOverviewFacade.initialize();
     }
@@ -83,10 +86,16 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async jumpToResource(document: ImageDocument) {
+    public async showImage(document: ImageDocument) {
 
         this.imageOverviewFacade.select(document);
-        await this.routingService.jumpToResource(document, undefined);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ImageViewComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        await modalRef.componentInstance.setDocument(document);
+        await modalRef.result;
     }
 
 

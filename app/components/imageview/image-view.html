@@ -1,81 +1,83 @@
-<div class="row flex-nowrap image-view bg-light">
-    <div *ngIf="image.document" id="image-container" class="col px-0">
-        <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
-            <img id="original-image" [src]="image.imgSrc">
-        </div>
-        <div *ngIf="originalNotFound && image.thumbSrc" id="thumbnail-image-container">
-            <div class="alert alert-info" role="alert"
-                 i18n="@@imageView.originalNotFoundWarning">
-                Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+<div id="image-view-modal" class="modal-body px-0">
+    <div class="row flex-nowrap bg-light">
+        <div *ngIf="image.document" id="image-container" class="col px-0">
+            <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
+                <img id="original-image" [src]="image.imgSrc">
             </div>
-            <div class="d-flex align-items-center justify-content-center">
-                <img [src]="image.thumbSrc" id="thumb-image">
+            <div *ngIf="originalNotFound && image.thumbSrc" id="thumbnail-image-container">
+                <div class="alert alert-info" role="alert"
+                     i18n="@@imageView.originalNotFoundWarning">
+                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <img [src]="image.thumbSrc" id="thumb-image">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar-container">
-        <div class="card-block detail-sidebar">
-            <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
-                    id="document-view-button-solve-conflicts"
-                    (click)="startEdit('conflicts')">
-                <span class="mdi mdi-alert-outline"></span>
-            </button>
+        <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar-container">
+            <div class="card-block detail-sidebar">
+                <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
+                        id="document-view-button-solve-conflicts"
+                        (click)="startEdit('conflicts')">
+                    <span class="mdi mdi-alert-outline"></span>
+                </button>
 
-            <button class="close-button btn btn-link btn-xs"
-                    id="close-button"
-                    (click)="deselect()">
-                <span class="mdi mdi-close"></span>
-            </button>
+                <button class="close-button btn btn-link btn-xs"
+                        id="close-button"
+                        (click)="deselect()">
+                    <span class="mdi mdi-close"></span>
+                </button>
 
-            <ngb-tabset activeId="document-view-{{activeTab}}-tab">
-                <ngb-tab id="document-view-fields-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-format-list-bulleted"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <div id="document-view-button-edit-document"
-                                class="btn btn-light btn-block edit-button"
-                                (click)="startEdit()">
-                            <span class="button-label" i18n="@@imageView.editMetadata">Metadaten bearbeiten</span>
-                        </div>
+                <ngb-tabset activeId="document-view-{{activeTab}}-tab">
+                    <ngb-tab id="document-view-fields-tab">
+                        <ng-template ngbTabTitle>
+                            <span class="mdi mdi-format-list-bulleted"></span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <div id="document-view-button-edit-document"
+                                    class="btn btn-light btn-block edit-button"
+                                    (click)="startEdit()">
+                                <span class="button-label" i18n="@@imageView.editMetadata">Metadaten bearbeiten</span>
+                            </div>
 
-                        <div class="tab-view-container">
-                            <fields-view [resource]="image.document.resource"></fields-view>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
+                            <div class="tab-view-container">
+                                <fields-view [resource]="image.document.resource"></fields-view>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
 
-                <ngb-tab id="document-view-georeference-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-map"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <georeference-view [document]="image.document"></georeference-view>
-                    </ng-template>
-                </ngb-tab>
+                    <ngb-tab id="document-view-georeference-tab">
+                        <ng-template ngbTabTitle>
+                            <span class="mdi mdi-map"></span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <georeference-view [document]="image.document"></georeference-view>
+                        </ng-template>
+                    </ngb-tab>
 
-                <ngb-tab id="document-view-relations-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <div id="document-view-button-edit-document"
-                                class="btn btn-light btn-block edit-button"
-                                (click)="startEdit('relations')">
-                            <span class="button-label" i18n="@@imageView.editRelations">Relationen bearbeiten</span>
-                        </div>
+                    <ngb-tab id="document-view-relations-tab">
+                        <ng-template ngbTabTitle>
+                            <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <div id="document-view-button-edit-document"
+                                    class="btn btn-light btn-block edit-button"
+                                    (click)="startEdit('relations')">
+                                <span class="button-label" i18n="@@imageView.editRelations">Relationen bearbeiten</span>
+                            </div>
 
-                        <div class="tab-view-container">
-                            <!--
-                            <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
-                                            (onRelationTargetClicked)="jumpToResource($event)">
-                            </relations-view>
-                            -->
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
+                            <div class="tab-view-container">
+                                <!--
+                                <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
+                                                (onRelationTargetClicked)="jumpToResource($event)">
+                                </relations-view>
+                                -->
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
         </div>
     </div>
 </div>

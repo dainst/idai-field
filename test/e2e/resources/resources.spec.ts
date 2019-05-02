@@ -20,9 +20,14 @@ const common = require('../common');
 
 /**
  * messages
+ *   after docedit closed, under various conditions
  * operations
+ *   creation in overview
+ * relations
+ *   creation
+ *   showing in sidebar
+ *   showing in docedit afterwards
  * sidebar/info
- * sidebar/relations
  * contextMenu/moveModal
  * docedit/images
  *
@@ -193,6 +198,14 @@ describe('resources --', () => {
         RelationsViewPage.getRelationValue(0).then(value => {
             expect(value).toBe('1');
         });
+
+        // docedit
+        ResourcesPage.openEditByDoubleClickResource('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(2)).toEqual('2'); // TODO make available via name of the relation as first parameter
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.openEditByDoubleClickResource('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(1)).toEqual('1'); // TODO make available via name of the relation as first parameter
+        DoceditPage.clickCloseEdit();
     });
 
 
@@ -200,7 +213,7 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    xit('sidebar/relations -- do not show new relations after cancelling edit', () => {
+    it('sidebar/relations -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -217,37 +230,6 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(0);
         });
-    });
-
-
-    xit('relations -- create a new relation and the corresponding inverse relation', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.openEditByDoubleClickResource('2');
-
-        // DoceditPage.clickGotoTimeTab();
-        // expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0))
-        //     .toEqual('1');
-        // DoceditPage.clickCloseEdit();
-        //
-        // ResourcesPage.clickSelectResource('1');
-        // DetailSidebarPage.doubleClickEditDocument();
-        //
-        // DoceditPage.clickGotoTimeTab();
-        // expect(DoceditRelationsTabPage.getRelationButtonText(2, 0, 0))
-        //     .toEqual('2');
-        // DoceditPage.clickCloseEdit();
-    });
-
-
-    xit('relations -- edit a resource that contains a relation', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.openEditByDoubleClickResource('2');
-        //DoceditPage.clickFieldsTab(); TODO remove function
-        DoceditPage.typeInInputField('identifier', '123');
-        DoceditPage.clickSaveDocument();
-        // TODO expectation?
     });
 
 

@@ -21,20 +21,21 @@ const common = require('../common');
 /**
  * creation
  *   creation with relations
- *   /messages
- *   /docedit form messages
+ *   messages
+ *     after docedit closed, under various conditions
  * deletion
  *   including relations
- * messages
- *   after docedit closed, under various conditions
  * operations
- *   creation in overview
+ *   creation, deletion, editing
+ *   update of navbar
  * relations
  *   creation
  *   showing in sidebar
  *   showing in docedit afterwards
+ * move
+ *   contextMenu/moveModal
+ * typechange
  * sidebar/info
- * contextMenu/moveModal
  * docedit/images
  *
  * @author Daniel de Oliveira
@@ -345,7 +346,7 @@ describe('resources --', () => {
     });
 
 
-    it('typechange -- should change the type of a resource to a child type', () => {
+    it('typechange -- should change the type of a resource to a child type', () => { // TODO merge both of the typechange tests
 
         ResourcesPage.performCreateResource('1', 'feature');
         DetailSidebarPage.doubleClickEditDocument('1');
@@ -358,27 +359,34 @@ describe('resources --', () => {
     });
 
 
-    // xit('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
-    //
-    //     ResourcesPage.performCreateResource('1', 'feature-architecture');
-    //     ResourcesPage.clickSelectResource('1');
-    //     DetailSidebarPage.doubleClickEditDocument();
-    //
-    //     DoceditPage.clickGotoPropertiesTab();
-    //     DoceditPage.clickSelectOption('wallType', 1);
-    //     DoceditPage.clickSaveDocument();
-    //     browser.sleep(delays.shortRest);
-    //     FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-    //     DetailSidebarPage.doubleClickEditDocument();
-    //     DoceditPage.clickTypeSwitcherButton();
-    //     DoceditPage.clickTypeSwitcherOption('feature');
-    //     NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
-    //         'gehen: Mauertyp');
-    //     NavbarPage.clickCloseAllMessages();
-    //     DoceditPage.clickSaveDocument();
-    //     DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigraphische Einheit'));
-    //     browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
-    // });
+    it('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.clickSelectResource('1');
+        DetailSidebarPage.doubleClickEditDocument('1');
+
+        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickSelectOption('wallType', 1);
+        DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortRest);
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.clickAccordionTab(1);
+        FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        DetailSidebarPage.doubleClickEditDocument('1');
+        DoceditPage.clickTypeSwitcherButton();
+        DoceditPage.clickTypeSwitcherOption('feature');
+        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
+            'gehen: Mauertyp');
+        NavbarPage.clickCloseAllMessages();
+        DoceditPage.clickSaveDocument();
+
+        FieldsViewPage.clickAccordionTab(0);
+        FieldsViewPage.getFieldValue(0, 1).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
+        // TODO reenable
+        // the children tab should not appear anymore
+        // FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        // browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
+    });
 
 
     it('hide the new resource button while creating a new resource', () => {

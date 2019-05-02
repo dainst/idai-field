@@ -35,6 +35,13 @@ export class DoceditPage {
         common.click(element(by.id('edit-form-goto-properties')));
     }
 
+
+    public static clickGotoChildPropertiesTab() {
+
+        common.click(element(by.id('edit-form-goto-childProperties')));
+    }
+
+
     public static clickGotoImagesTab() {
 
         common.click(element(by.id('edit-form-goto-images')));

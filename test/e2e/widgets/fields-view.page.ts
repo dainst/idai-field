@@ -20,6 +20,16 @@ export class FieldsViewPage {
 
     /**
      * @param cardIndex counting from 0 for the first card
+     */
+    public static clickAccordionTab(cardIndex) {
+
+        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-header';
+        return common.click(element(by.css(elDescriptor)));
+    };
+
+
+    /**
+     * @param cardIndex counting from 0 for the first card
      * @param index counting from 0 for the first field
      */
     public static getFieldValue(cardIndex, index) {

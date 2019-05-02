@@ -57,8 +57,8 @@ export class SidebarListComponent extends BaseList {
 
 
     // TODO refactor - make consistent across usages
-    public showMoveIntoOption = (document: FieldDocument) =>
-        this.navigationService.showMoveIntoOption(document);
+    // public showMoveIntoOption = (document: FieldDocument) =>
+    //     this.navigationService.showMoveIntoOption(document);
 
 
 

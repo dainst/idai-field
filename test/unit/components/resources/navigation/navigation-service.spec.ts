@@ -46,7 +46,7 @@ describe('NavigationService', () => {
             [{name: 'liesWithin'}]
         );
 
-        expect(navigationService.showMoveIntoOption(
+        expect(navigationService.shouldShowArrowBottomRight(
             Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(true);
     });
@@ -58,7 +58,7 @@ describe('NavigationService', () => {
             [{name: 'abc'}]
         );
 
-        expect(navigationService.showMoveIntoOption(
+        expect(navigationService.shouldShowArrowBottomRight(
             Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
     });
@@ -70,7 +70,7 @@ describe('NavigationService', () => {
             [{name: 'liesWithin'}]
         );
 
-        expect(navigationService.showMoveIntoOption(
+        expect(navigationService.shouldShowArrowBottomRight(
             Static.ifDoc('abc', 'def', 'ghi'))
         ).toEqual(false);
     });
@@ -85,7 +85,7 @@ describe('NavigationService', () => {
             Operation: { children: [ { name: 'operationSubtype' } ] }
         });
 
-        expect(navigationService.showMoveIntoOption(
+        expect(navigationService.shouldShowArrowBottomRight(
             Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
 

@@ -56,7 +56,7 @@ export class RowComponent implements AfterViewInit {
 
     public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
 
-    public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
+    public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 

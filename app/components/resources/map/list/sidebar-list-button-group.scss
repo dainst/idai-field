@@ -1,5 +1,4 @@
 $activated-color: #868e96;
-$deactivated-button-color: lightgray;
 $button-width: 24px;
 $button-group-width: 3 * $button-width;
 
@@ -20,10 +19,6 @@ $button-group-width: 3 * $button-width;
     position: relative;
     width: $button-width;
     top: 14px;
-  }
-
-  .object-list-button-no-items {
-    color: $deactivated-button-color;
   }
 
   .info-button,

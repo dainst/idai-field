@@ -37,7 +37,11 @@ export class SidebarListButtonGroupComponent {
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
-    public jumpToResourceInSameView =() => this.navigationService.jumpToResourceInSameView(this.document);
+    public jumpToResourceInSameView = () => this.navigationService.jumpToResourceInSameView(this.document);
+
+    public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
+
+    public jumpToView = () => this.navigationService.jumpToView(this.document);
 
 
     public jumpToViewFromOverview() { // arrow top right

@@ -21,6 +21,8 @@
 @import 'deletion/delete-modal';
 
 
+$deactivated-button-color: lightgray;
+
 .arrow-up {
   @extend .mdi;
   @extend .mdi-arrow-up;
@@ -29,6 +31,15 @@
 .arrow-top-right {
   @extend .mdi;
   @extend .mdi-arrow-top-right;
+}
+
+.arrow-bottom-right {
+  @extend .mdi;
+  @extend .mdi-subdirectory-arrow-right;
+}
+
+.arrow-deactivated {
+  color: $deactivated-button-color;
 }
 
 

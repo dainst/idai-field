@@ -4,7 +4,8 @@
         <div class="type-label" [class.text-info]="!document.resource.id">
             <i>{{getTypeLabel()}}</i>
         </div>
-        <button *ngIf="showMoveIntoOption()"
+
+        <button *ngIf="shouldShowArrowBottomRight()"
                 class="hierarchy-button move-into-button btn float-right align-middle"
                 ngbTooltip="Untergeordnete Ressourcen ansehen"
                 i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
@@ -16,12 +17,14 @@
                 (mouseleave)="moveIntoTooltip.close()"
                 (mousedown)="moveIntoTooltip.close()"
                 (click)="moveInto()">
-            <span class="move-into-icon">
-                <span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">
-                    {{viewFacade.getChildrenCount(document)}}
-                </span>
+            <span class="arrow-bottom-right"
+                  [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0">
+                <!--<span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">-->
+                    <!--{{viewFacade.getChildrenCount(document)}}-->
+                <!--</span>-->
             </span>
         </button>
+
         <div *ngIf="shouldShowArrowUp()" class="hierarchy-button jump-to-view-button btn float-right align-middle"
              (click)="jumpToResourceInSameView(); $event.stopPropagation();">
             <span class="arrow-up mdi-16px"></span>

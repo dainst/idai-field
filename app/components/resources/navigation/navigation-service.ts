@@ -55,7 +55,7 @@ export class NavigationService {
     }
 
 
-    public showMoveIntoOption(document: FieldDocument): boolean {
+    public shouldShowArrowBottomRight(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.getBypassHierarchy()) return false;

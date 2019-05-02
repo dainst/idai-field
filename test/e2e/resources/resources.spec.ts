@@ -205,7 +205,14 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit();
         ResourcesPage.openEditByDoubleClickResource('2');
         expect(DoceditRelationsTabPage.getRelationButtonText(1)).toEqual('1'); // TODO make available via name of the relation as first parameter
-        DoceditPage.clickCloseEdit();
+
+        // deletion
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1);
+        DoceditPage.clickSaveDocument();
+        ResourcesPage.clickSelectResource('1', 'links');
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        ResourcesPage.clickSelectResource('2', 'links');
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 
@@ -230,24 +237,6 @@ describe('resources --', () => {
         RelationsViewPage.getRelations().then(relations => {
             expect(relations.length).toBe(0);
         });
-    });
-
-
-    xit('relations -- delete a relation and the corresponding inverse relation', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        // DetailSidebarPage.doubleClickEditDocument();
-        // DoceditPage.clickGotoTimeTab();
-        //
-        // DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
-        // DoceditPage.clickSaveDocument();
-        // RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        // ResourcesPage.clickSelectResource('1');
-        // RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 

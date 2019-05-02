@@ -27,7 +27,8 @@ import {MenuService} from '../../menu-service';
  */
 export class ImageViewComponent implements OnInit {
 
-    public image: ImageContainer = {};
+    public images: Array<ImageContainer> = [];
+    public selectedImage: ImageContainer;
     public activeTab: string;
     public originalNotFound: boolean = false;
 
@@ -60,9 +61,27 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public async setDocument(document: ImageDocument) {
+    public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument) {
 
-        await this.fetchImage(document);
+        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+
+        this.images = [];
+        for (let document of documents) {
+            this.images.push(await this.fetchImage(document));
+        }
+
+        await this.select(this.images.find(image => {
+            return image.document !== undefined && image.document ===  selectedDocument;
+        }) as ImageContainer);
+    }
+
+
+    public async select(image: ImageContainer) {
+
+        if (!image.imgSrc) await this.addOriginal(image);
+
+        this.selectedImage = image;
+        if (!this.selectedImage.imgSrc || this.selectedImage.imgSrc === '') this.originalNotFound = true;
     }
 
 
@@ -83,11 +102,11 @@ export class ImageViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static' }
             );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.image.document);
+        doceditModalComponent.setDocument(this.selectedImage.document);
 
         try {
             const result = await doceditModalRef.result;
-            if (result.document) this.image.document = result.document;
+            if (result.document) this.selectedImage.document = result.document;
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
             if (closeReason === 'deleted') await this.activeModal.close();
@@ -99,33 +118,41 @@ export class ImageViewComponent implements OnInit {
 
     public hasRelations() {
 
-        if (!this.image) return false;
-        if (!this.image.document) return false;
+        if (!this.selectedImage) return false;
+        if (!this.selectedImage.document) return false;
 
-        const relations: any = this.image.document.resource.relations;
+        const relations: any = this.selectedImage.document.resource.relations;
         if (isEmpty(relations)) return false;
 
         return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
     }
 
 
-    private async fetchImage(document: ImageDocument) {
+    private async fetchImage(document: ImageDocument): Promise<ImageContainer> {
 
-        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
-
-        this.image.document = document;
+        const image: ImageContainer = { document: document };
 
         try {
-            // read original (empty if not present)
-            let url = await this.imagestore.read(document.resource.id, false, false);
-            if (!url || url == '') this.originalNotFound = true;
-            this.image.imgSrc = url;
-
             // read thumb
-            url = await this.imagestore.read(document.resource.id, false, true);
-            this.image.thumbSrc = url;
+            let url: string = await this.imagestore.read(document.resource.id, false, true);
+            image.thumbSrc = url;
         } catch (e) {
-            this.image.imgSrc = BlobMaker.blackImg;
+            image.thumbSrc = BlobMaker.blackImg;
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+        }
+
+        return image;
+    }
+
+
+    private async addOriginal(image: ImageContainer) {
+
+        if (!image.document) return;
+
+        try {
+            image.imgSrc = await this.imagestore.read(image.document.resource.id, false, false);
+        } catch (e) {
+            image.imgSrc = BlobMaker.blackImg;
             this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
     }

@@ -94,7 +94,10 @@ export class ImageOverviewComponent implements OnInit {
             ImageViewComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        await modalRef.componentInstance.setDocument(document);
+        await modalRef.componentInstance.initialize(
+            this.getDocuments().filter(document => document.id !== 'droparea'),
+            document
+        );
         await modalRef.result;
     }
 

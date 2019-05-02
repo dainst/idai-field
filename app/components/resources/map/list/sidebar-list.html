@@ -14,7 +14,7 @@
 
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
-            <div>Daten</div>
+            <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>
             <div class="btn btn-light" (click)="closePopover()">
                 <span class="mdi mdi-close"></span>
             </div>

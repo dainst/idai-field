@@ -127,10 +127,6 @@ export class FieldsViewComponent implements OnChanges {
 
         this.fields['stem'] = [
             {
-                label: this.getLabel(resource.type, 'identifier'),
-                value: FieldsViewComponent.getValue(resource, 'identifier'),
-                isArray: false
-            }, {
                 label: this.getLabel(resource.type, 'shortDescription'),
                 value: FieldsViewComponent.getValue(resource, 'shortDescription'),
                 isArray: false

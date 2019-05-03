@@ -450,12 +450,12 @@ describe('resources/state --', function() {
     });
 
 
-    xit('update navigation path when moving a resource within the same operation', () => {
+    it('update navigation path when moving a resource within the same operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
 
-        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchy('SE0');
         ResourcesPage.clickOpenContextMenu('testf1');
         ResourcesPage.clickContextMenuMoveButton();
         ResourcesPage.typeInMoveModalSearchBarInput('S-New');
@@ -470,10 +470,10 @@ describe('resources/state --', function() {
     });
 
 
-    xit('update navigation path when moving a resource to another operation', () => {
+    it('update navigation path when moving a resource to another operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
-        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchy('SE0');
         ResourcesPage.clickOperationNavigationButton();
 
         ResourcesPage.clickOpenContextMenu('SE0');
@@ -496,12 +496,12 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath/hierarchy - switch between modes', () => {
+    it('navpath/hierarchy - switch between modes', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchy('SE0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
         ResourcesPage.clickSwitchHierarchyMode();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));

@@ -188,9 +188,9 @@ export class ResourcesPage {
 
     public static getListItemIdentifierText(itemNr: number) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
+        browser.wait(EC.visibilityOf(element(by.css('#sidebar .resources-listing-item:nth-child('
             + (itemNr + 1) + ') .title'))), delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
+        return element(by.css('#sidebar .resources-listing-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
     }
 
 
@@ -367,7 +367,7 @@ export class ResourcesPage {
     }
 
 
-    public static performDescendHierarchyButton(identifier: string) {
+    public static performDescendHierarchy(identifier: string) {
 
         this.clickHierarchyButton(identifier);
         return common.click(element(by.id('open-child-collection-button')));

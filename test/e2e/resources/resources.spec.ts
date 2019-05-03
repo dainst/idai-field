@@ -482,7 +482,7 @@ describe('resources --', () => {
         });
         ResourcesPage.clickCancelInMoveModal();
 
-        ResourcesPage.performDescendHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchy('SE0');
 
         ResourcesPage.clickOpenContextMenu('testf1');
         browser.sleep(delays.shortRest * 2);
@@ -497,9 +497,9 @@ describe('resources --', () => {
 
     it('contextMenu/moveModal - do not suggest descendants of current resource', () => {
 
-        ResourcesPage.performDescendHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchy('SE0');
         ResourcesPage.performCreateResource('SE-D1', 'feature');
-        ResourcesPage.performDescendHierarchyButton('SE-D1');
+        ResourcesPage.performDescendHierarchy('SE-D1');
         ResourcesPage.performCreateResource('SE-D2', 'feature');
 
         ResourcesPage.clickOperationNavigationButton();

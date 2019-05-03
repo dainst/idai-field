@@ -24,7 +24,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+fdescribe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -79,6 +79,15 @@ describe('resources/state --', function() {
         ImageOverviewPage.doubleClickCell(0);
         RelationsViewPage.clickRelation(0);
     }
+
+
+    it('find a resource by its identifier', () => {
+
+        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.performCreateResource('1');
+        SearchBarPage.typeInSearchField('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
 
 
     it('search/suggestions -- show suggestion for resource from different context', done => {

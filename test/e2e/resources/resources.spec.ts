@@ -221,14 +221,6 @@ describe('resources --', () => {
     });
 
 
-    it('find a resource by its identifier', () => { // TODO move to another test suite
-
-        ResourcesPage.performCreateResource('1');
-        SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
     it('fields', () => { // formerly sidebar/info
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',

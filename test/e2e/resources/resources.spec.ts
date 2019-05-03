@@ -346,8 +346,9 @@ describe('resources --', () => {
     });
 
 
-    it('typechange -- should change the type of a resource to a child type', () => { // TODO merge both of the typechange tests
+    it('typechange', () => {
 
+        // change to child type
         ResourcesPage.performCreateResource('1', 'feature');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickTypeSwitcherButton();
@@ -356,20 +357,17 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
         ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.getFieldValue(0, 1).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
-    });
 
 
-    it('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.clickSelectResource('1');
+        // delete invalid fields when changing the type of a resource to its parent type
         DetailSidebarPage.doubleClickEditDocument('1');
 
         DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickSelectOption('wallType', 1);
         DoceditPage.clickSaveDocument();
+
         browser.sleep(delays.shortRest);
-        ResourcesPage.clickSelectResource('1', 'info');
+        // ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.clickAccordionTab(1);
         FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
         DetailSidebarPage.doubleClickEditDocument('1');
@@ -382,10 +380,7 @@ describe('resources --', () => {
 
         FieldsViewPage.clickAccordionTab(0);
         FieldsViewPage.getFieldValue(0, 1).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
-        // TODO uncomment
-        // the children tab should not appear anymore
-        // FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-        // browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
+        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
     });
 
 

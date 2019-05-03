@@ -18,6 +18,13 @@ export class FieldsViewPage {
     }
 
 
+    public static getTabs() {
+
+        const elDescriptor = 'fields-view div .card-header';
+        return element.all(by.css(elDescriptor));
+    }
+
+
     /**
      * @param cardIndex counting from 0 for the first card
      */

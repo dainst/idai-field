@@ -126,22 +126,18 @@ fdescribe('resources/state --', function() {
     });
 
 
-    it('search/list -- perform a fulltext search', () => {
+    it('search/list', () => {
 
         ResourcesPage.performJumpToTrenchView('S2');
         ResourcesPage.clickListModeButton();
 
+        // fulltext
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('SE1');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-    });
 
-
-    it('search/list -- perform a type filter search', () => {
-
-        ResourcesPage.performJumpToTrenchView('S2');
-        ResourcesPage.clickListModeButton();
-
+        // filter
+        SearchBarPage.typeInSearchField(' ');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('feature-architecture');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);

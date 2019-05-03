@@ -360,7 +360,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search/extended -- remove field from dropdown after adding constraint', () => {
+    it('search/extended -- remove field from dropdown after adding constraint', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 

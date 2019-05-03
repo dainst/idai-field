@@ -431,7 +431,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath -- update navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickHierarchyButton('SE0');

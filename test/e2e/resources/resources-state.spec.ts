@@ -9,6 +9,7 @@ import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -193,7 +194,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
@@ -232,7 +233,8 @@ describe('resources/state --', function() {
 
         checkTypeIcon();
         createResourceWithPresetType('1', false);
-        DetailSidebarPage.getTypeFromDocView().then(character => expect(character).toEqual('Erdbefund'));
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFieldValue(0, 1).then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
 
         ResourcesPage.clickListModeButton();
         checkTypeIcon();

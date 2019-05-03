@@ -74,24 +74,16 @@ export class ResourcesPage {
         common.click(element(by.id('context-menu-delete-button')));
     }
 
-    /**
-     * @deprecated use selectObjectByIdentifier instead
-     */
-    public static clickSelectObjectByIndex(listIndex) {
 
-        return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
+    public static clickJumpToResourcesViewButton(identifier: string) {
+
+        return common.click(element(by.id('jump-to-resources-view-button-' + identifier)));
     }
 
 
     public static clickHierarchyButton(identifier: string) {
 
         return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
-    }
-
-
-    public static clickJumpToResourcesViewButton(identifier: string) {
-
-        return common.click(element(by.id('jump-to-resources-view-button-' + identifier)));
     }
 
 
@@ -375,6 +367,13 @@ export class ResourcesPage {
     }
 
 
+    public static performDescendHierarchyButton(identifier: string) {
+
+        this.clickHierarchyButton(identifier);
+        return common.click(element(by.id('open-child-collection-button')));
+    }
+
+
     public static performCreateResourceInList(identifier: string, typeName: string) {
 
         this.clickCreateResource();
@@ -438,5 +437,4 @@ export class ResourcesPage {
 
         return browser.executeScript('window.scrollTo(0,0);');
     }
-
 }

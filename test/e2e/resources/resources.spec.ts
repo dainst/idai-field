@@ -35,7 +35,6 @@ const common = require('../common');
  * move
  *   contextMenu/moveModal
  * typechange
- * sidebar/info
  * docedit/images
  *
  * @author Daniel de Oliveira
@@ -230,7 +229,7 @@ describe('resources --', () => {
     });
 
 
-    it('sidebar/info -- show the fields present in the object', () => {
+    it('fields', () => { // formerly sidebar/info
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
@@ -480,7 +479,7 @@ describe('resources --', () => {
     });
 
 
-    xit('contextMenu/moveModal - do not suggest current parent resource', () => {
+    it('contextMenu/moveModal - do not suggest current parent resource', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
@@ -491,8 +490,10 @@ describe('resources --', () => {
         });
         ResourcesPage.clickCancelInMoveModal();
 
-        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchyButton('SE0');
+
         ResourcesPage.clickOpenContextMenu('testf1');
+        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseTypeFilter('feature', 'modal');
         ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
@@ -502,11 +503,11 @@ describe('resources --', () => {
     });
 
 
-    xit('contextMenu/moveModal - do not suggest descendants of current resource', () => {
+    it('contextMenu/moveModal - do not suggest descendants of current resource', () => {
 
-        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.performDescendHierarchyButton('SE0');
         ResourcesPage.performCreateResource('SE-D1', 'feature');
-        ResourcesPage.clickHierarchyButton('SE-D1');
+        ResourcesPage.performDescendHierarchyButton('SE-D1');
         ResourcesPage.performCreateResource('SE-D2', 'feature');
 
         ResourcesPage.clickOperationNavigationButton();

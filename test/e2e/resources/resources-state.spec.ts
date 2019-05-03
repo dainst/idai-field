@@ -324,16 +324,16 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search/extended -- perform constraint search for boolean field', () => {
+    it('search/extended -- perform constraint search for boolean field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 

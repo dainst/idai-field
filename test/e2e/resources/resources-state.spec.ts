@@ -24,7 +24,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('resources/state --', function() {
+describe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -256,12 +256,12 @@ fdescribe('resources/state --', function() {
     });
 
 
-    xit('search/suggestions -- show suggestion for extended search query', done => {
+    it('search/suggestions -- show suggestion for extended search query', done => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -285,8 +285,7 @@ fdescribe('resources/state --', function() {
         done();
     });
 
-
-    xit('search/extended -- perform constraint search for simple input field', () => {
+    it('search/extended -- perform constraint search for simple input field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -305,12 +304,12 @@ fdescribe('resources/state --', function() {
     });
 
 
-    xit('search/extended -- perform constraint search for dropdown field', () => {
+    it('search/extended -- perform constraint search for dropdown field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -330,11 +329,11 @@ fdescribe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 

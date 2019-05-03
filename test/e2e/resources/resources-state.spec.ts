@@ -16,7 +16,7 @@ const EC = protractor.ExpectedConditions;
 const common = require('../common');
 
 /**
- * search/suggestions
+ * suggestions
  * search/list
  * filter
  * navpath
@@ -90,8 +90,9 @@ fdescribe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for resource from different context', done => {
+    it('suggestions', async done => {
 
+        // show suggestion for resource from different context
         SearchBarPage.typeInSearchField('SE0');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
@@ -99,23 +100,13 @@ fdescribe('resources/state --', function() {
             expect(suggestions[0].getText()).toEqual('SE0');
         });
 
-        done();
-    });
-
-
-    it('search/suggestions -- do not show suggestions if any resources in current context are found', done => {
-
+        // do not show suggestions if any resources in current context are found
         SearchBarPage.typeInSearchField('S');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
 
-        done();
-    });
-
-
-    it('search/suggestions -- do not suggest project document', done => {
-
+        // do not suggest project document
         SearchBarPage.typeInSearchField('te');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
@@ -123,12 +114,7 @@ fdescribe('resources/state --', function() {
             expect(suggestions[0].getText()).toEqual('testf1');
         });
 
-        done();
-    });
-
-
-    it('search/suggestions -- delete query string after following suggestion link', async done => {
-
+        // delete query string after following suggestion link
         SearchBarPage.typeInSearchField('SE0');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();

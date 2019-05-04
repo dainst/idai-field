@@ -52,7 +52,7 @@
         }
 
         #thumbnail-image-container {
-          height: calc(100% - 66px);
+          overflow: hidden;
         }
 
         .align-items-center {
@@ -63,6 +63,7 @@
       #thumbnail-slider-container {
         height: 150px;
         overflow-x: auto;
+        background-color: #f8f9fa;
 
         #thumbnail-slider {
           height: 100%;

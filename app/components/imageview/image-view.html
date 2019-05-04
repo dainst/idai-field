@@ -1,21 +1,33 @@
 <div id="image-view-modal" class="modal-body px-0">
-    <div class="row flex-nowrap bg-light">
-        <div *ngIf="selectedImage" id="image-container" class="col px-0">
-            <div *ngIf="selectedImage.imgSrc" class="d-flex align-items-center justify-content-center">
-                <img id="original-image" [src]="selectedImage.imgSrc">
-            </div>
-            <div *ngIf="originalNotFound && selectedImage.thumbSrc" id="thumbnail-image-container">
-                <div class="alert alert-info" role="alert"
-                     i18n="@@imageView.originalNotFoundWarning">
-                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+    <div id="image-view" class="flex-nowrap bg-light">
+        <div id="images-container" class="px-0">
+            <div *ngIf="selectedImage" id="image-container">
+                <div *ngIf="selectedImage.imgSrc" class="d-flex align-items-center justify-content-center">
+                    <img id="original-image" [src]="selectedImage.imgSrc">
                 </div>
-                <div class="d-flex align-items-center justify-content-center">
-                    <img [src]="selectedImage.thumbSrc" id="thumb-image">
+                <div *ngIf="originalNotFound && selectedImage.thumbSrc" id="thumbnail-image-container">
+                    <div class="alert alert-info" role="alert"
+                         i18n="@@imageView.originalNotFoundWarning">
+                        Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img [src]="selectedImage.thumbSrc" id="thumb-image">
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="images" id="thumbnail-slider-container">
+                <div id="thumbnail-slider">
+                    <div *ngFor="let image of images"
+                         class="thumbnail-container d-flex align-items-center justify-content-center"
+                         (click)="select(image)">
+                        <img [src]="image.thumbSrc">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="selectedImage" class="col-md-3 px-0 detail-sidebar-container">
+        <div *ngIf="selectedImage" class="px-0 detail-sidebar-container">
             <div class="card-block detail-sidebar">
                 <button *ngIf="selectedImage.document._conflicts" class="btn btn-link btn-xs"
                         id="document-view-button-solve-conflicts"
@@ -77,15 +89,6 @@
                         </ng-template>
                     </ngb-tab>
                 </ngb-tabset>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="images" id="thumbnail-slider-container">
-        <div id="thumbnail-slider">
-            <div *ngFor="let image of images"
-                 class="thumbnail-container d-flex align-items-center justify-content-center"
-                (click)="select(image)">
-                <img [src]="image.thumbSrc">
             </div>
         </div>
     </div>

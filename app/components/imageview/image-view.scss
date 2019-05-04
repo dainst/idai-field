@@ -38,7 +38,7 @@
       float: left;
 
       #image-container {
-        height: calc(100% - 150px);
+        height: calc(100% - 174px);
         width: 100%;
         background-color: #000;
 
@@ -61,18 +61,23 @@
       }
 
       #thumbnail-slider-container {
-        height: 150px;
+        height: 174px;
         overflow-x: auto;
         background-color: #f8f9fa;
 
         #thumbnail-slider {
           height: 100%;
           width: max-content;
+          padding: 8px;
 
           .thumbnail-container {
             width: 200px;
             height: 100%;
             float: left;
+
+            &.selected {
+              box-shadow: 0 0 10px 2px #37588e !important;
+            }
 
             img {
               max-width: 100%;

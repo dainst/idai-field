@@ -20,6 +20,7 @@
                 <div id="thumbnail-slider">
                     <div *ngFor="let image of images"
                          class="thumbnail-container d-flex align-items-center justify-content-center"
+                         [class.selected]="image === selectedImage"
                          (click)="select(image)">
                         <img [src]="image.thumbSrc">
                     </div>

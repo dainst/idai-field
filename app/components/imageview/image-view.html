@@ -1,95 +1,40 @@
 <div id="image-view-modal" class="modal-body px-0">
-    <div id="image-view" class="flex-nowrap bg-light">
-        <div id="images-container" class="px-0">
-            <div *ngIf="selectedImage" id="image-container">
-                <div *ngIf="selectedImage.imgSrc" class="d-flex align-items-center justify-content-center">
-                    <img id="original-image" [src]="selectedImage.imgSrc">
-                </div>
-                <div *ngIf="originalNotFound && selectedImage.thumbSrc" id="thumbnail-image-container">
-                    <div class="alert alert-info" role="alert"
-                         i18n="@@imageView.originalNotFoundWarning">
-                        Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center">
-                        <img [src]="selectedImage.thumbSrc" id="thumb-image">
-                    </div>
+    <div id="image-view" class="flex-nowrap bg-light px-0">
+        <div *ngIf="selectedImage" id="popover">
+            <div id="popover-header">
+                <div>{{selectedImage.document.resource.identifier}}</div>
+                <div class="btn btn-light" (click)="closePopover()">
+                    <span class="mdi mdi-close"></span>
                 </div>
             </div>
 
-            <div *ngIf="images" id="thumbnail-slider-container">
-                <div id="thumbnail-slider">
-                    <div *ngFor="let image of images"
-                         class="thumbnail-container d-flex align-items-center justify-content-center"
-                         [class.selected]="image === selectedImage"
-                         (click)="select(image)">
-                        <img [src]="image.thumbSrc">
-                    </div>
+            <div id="document-info">
+                <fields-view [resource]="selectedImage.document.resource"></fields-view>
+            </div>
+        </div>
+        <div *ngIf="selectedImage" id="image-container">
+            <div *ngIf="selectedImage.imgSrc" class="d-flex align-items-center justify-content-center">
+                <img id="original-image" [src]="selectedImage.imgSrc">
+            </div>
+            <div *ngIf="originalNotFound && selectedImage.thumbSrc" id="thumbnail-image-container">
+                <div class="alert alert-info" role="alert"
+                     i18n="@@imageView.originalNotFoundWarning">
+                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <img [src]="selectedImage.thumbSrc" id="thumb-image">
                 </div>
             </div>
         </div>
 
-        <div *ngIf="selectedImage" class="px-0 detail-sidebar-container">
-            <div class="card-block detail-sidebar">
-                <button *ngIf="selectedImage.document._conflicts" class="btn btn-link btn-xs"
-                        id="document-view-button-solve-conflicts"
-                        (click)="startEdit('conflicts')">
-                    <span class="mdi mdi-alert-outline"></span>
-                </button>
-
-                <button class="close-button btn btn-link btn-xs"
-                        id="close-button"
-                        (click)="close()">
-                    <span class="mdi mdi-close"></span>
-                </button>
-
-                <ngb-tabset activeId="document-view-{{activeTab}}-tab">
-                    <ngb-tab id="document-view-fields-tab">
-                        <ng-template ngbTabTitle>
-                            <span class="mdi mdi-format-list-bulleted"></span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <div id="document-view-button-edit-document"
-                                    class="btn btn-light btn-block edit-button"
-                                    (click)="startEdit()">
-                                <span class="button-label" i18n="@@imageView.editMetadata">Metadaten bearbeiten</span>
-                            </div>
-
-                            <div class="tab-view-container">
-                                <fields-view [resource]="selectedImage.document.resource"></fields-view>
-                            </div>
-                        </ng-template>
-                    </ngb-tab>
-
-                    <ngb-tab id="document-view-georeference-tab">
-                        <ng-template ngbTabTitle>
-                            <span class="mdi mdi-map"></span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <georeference-view [document]="selectedImage.document"></georeference-view>
-                        </ng-template>
-                    </ngb-tab>
-
-                    <ngb-tab id="document-view-relations-tab">
-                        <ng-template ngbTabTitle>
-                            <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <div id="document-view-button-edit-document"
-                                    class="btn btn-light btn-block edit-button"
-                                    (click)="startEdit('relations')">
-                                <span class="button-label" i18n="@@imageView.editRelations">Relationen bearbeiten</span>
-                            </div>
-
-                            <div class="tab-view-container">
-                                <!--
-                                <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
-                                                (onRelationTargetClicked)="jumpToResource($event)">
-                                </relations-view>
-                                -->
-                            </div>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
+        <div *ngIf="images" id="thumbnail-slider-container">
+            <div id="thumbnail-slider">
+                <div *ngFor="let image of images"
+                     class="thumbnail-container d-flex align-items-center justify-content-center"
+                     [class.selected]="image === selectedImage"
+                     (click)="select(image)">
+                    <img [src]="image.thumbSrc">
+                </div>
             </div>
         </div>
     </div>

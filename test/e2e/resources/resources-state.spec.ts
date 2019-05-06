@@ -412,23 +412,30 @@ describe('resources/state --', function() {
     });
 
 
-    xit('navpath -- show correct navigation path after click on relation link', () => {
+    it('navpath -- show correct navigation path after click on relation link', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
         ResourcesPage.performCreateResource('c2', 'feature');
-        ResourcesPage.clickHierarchyButton('c2');
-        ResourcesPage.performCreateResource('i1', 'inscription',
-            undefined, undefined, true);
-        ResourcesPage.performCreateRelation('i1', 'testf1', 0);
+        ResourcesPage.performDescendHierarchy('c2');
+        ResourcesPage.performCreateResource('c3', 'feature');
+        ResourcesPage.getNavigationButtons().get(0).click();
 
-        RelationsViewPage.clickRelation(2);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
+        ResourcesPage.performCreateResource('c4', 'feature');
+        ResourcesPage.performDescendHierarchy('c4');
+        ResourcesPage.performCreateResource('c5', 'feature');
+        ResourcesPage.performCreateRelation('c5', 'c3', 0);
+
+        ResourcesPage.clickSelectResource('c5', 'links');
+        RelationsViewPage.clickRelation(0);
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('c3')), delays.ECWaitTime);
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('c3'));
+
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
             expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
+            expect(navigationButtons[1].getText()).toEqual('c2');
         });
     });
 
@@ -452,7 +459,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('update navigation path when moving a resource within the same operation', () => {
+    it('navpath - update when moving a resource within the same operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
@@ -472,7 +479,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('update navigation path when moving a resource to another operation', () => {
+    it('navpath - update when moving a resource to another operation', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performDescendHierarchy('SE0');

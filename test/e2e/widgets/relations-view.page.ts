@@ -25,8 +25,7 @@ export class RelationsViewPage {
 
     public static clickRelation(relationIndex) {
 
-        this.clickRelationsTab();
-        return element.all(by.css('#document-view-relations-tab-panel .relation-target')).get(relationIndex).click();
+        return element.all(by.css('#relations-view .resources-listing-item')).get(relationIndex).click();
     };
 
 

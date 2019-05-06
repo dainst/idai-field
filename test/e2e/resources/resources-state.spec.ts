@@ -287,6 +287,47 @@ describe('resources/state --', function() {
         done();
     });
 
+
+    it('search - jump into right context', () => {
+
+        // map - stay in overview
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('S1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('S1'));
+
+        // list - stay in overview
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('S1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
+
+        // map - goto other tab and into navpath
+        ResourcesPage.clickMapModeButton();
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('testf1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('testf1'));
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+
+        // list - goto other tab and into navpath
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.clickHierarchyButton('testf1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+    });
+
+
     it('search/extended -- perform constraint search for simple input field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();

@@ -17,6 +17,7 @@ const EC = protractor.ExpectedConditions;
 const common = require('../common');
 
 /**
+ * filter
  * suggestions
  * search/list
  * filter
@@ -82,16 +83,33 @@ describe('resources/state --', function() {
     }
 
 
-    it('find a resource by its identifier', () => {
+    it('filter', () => {
 
+        // map
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.performCreateResource('1');
         SearchBarPage.typeInSearchField('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+
+        // list
+        NavbarPage.clickTab('project');
+        ResourcesPage.performJumpToTrenchView('S2');
+        ResourcesPage.clickListModeButton();
+
+        // fulltext
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        SearchBarPage.typeInSearchField('SE1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+
+        // filter
+        SearchBarPage.typeInSearchField(' ');
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
     });
 
 
-    it('suggestions', async done => {
+    it('filter - suggestions', async done => {
 
         // show suggestion for resource from different context
         SearchBarPage.typeInSearchField('SE0');
@@ -127,25 +145,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/list', () => {
-
-        ResourcesPage.performJumpToTrenchView('S2');
-        ResourcesPage.clickListModeButton();
-
-        // fulltext
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('SE1');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-
-        // filter
-        SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-    });
-
-
-    it('search -- select all filter', () => {
+    it('filter -- select all', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -160,7 +160,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- show correct types in plus type menu after choosing type filter', () => {
+    it('filter -- show correct types in plus type menu after choosing type filter', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
 
@@ -194,7 +194,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('filter -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
@@ -242,7 +242,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- filter by parent type', () => {
+    it('filter -- by parent type', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         browser.sleep(delays.shortRest * 3);
@@ -258,7 +258,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for extended search query', done => {
+    it('search -- show suggestion for extended search query', done => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -288,7 +288,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search - jump into right context', () => {
+    it('filter - jump into right context', () => {
 
         // map - stay in overview
         NavbarPage.clickTab('project');
@@ -328,7 +328,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for simple input field', () => {
+    it('search -- perform constraint search for simple input field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -347,7 +347,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for dropdown field', () => {
+    it('search -- perform constraint search for dropdown field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -367,7 +367,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for boolean field', () => {
+    it('search -- perform constraint search for boolean field', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -403,7 +403,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- remove field from dropdown after adding constraint', () => {
+    it('search -- remove field from dropdown after adding constraint', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 

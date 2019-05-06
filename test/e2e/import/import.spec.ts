@@ -68,13 +68,13 @@ describe('import --', function() {
     });
 
 
-    xit('err case', () => {
+    it('err case', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
-        NavbarPage.clickTab('project');
+        NavbarPage.clickCloseNonResourcesTab();
         ResourcesPage.performJumpToTrenchView('S1');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);

@@ -14,13 +14,14 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-xdescribe('matrix --', () => {
+describe('matrix --', () => {
 
     let i = 0;
 
 
     beforeAll(async done => {
 
+        ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);
         ResourcesPage.performJumpToMatrixView('S2');
         browser.sleep(delays.shortRest * 3);
@@ -51,8 +52,8 @@ xdescribe('matrix --', () => {
 
     function testDefaultMatrix() {
 
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(5));
-        for (let i = 1; i <= 5; i++) {
+        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(6));
+        for (let i = 1; i <= 6; i++) {
             browser.wait(EC.presenceOf(MatrixPage.getNode('si' + i)), delays.ECWaitTime);
         }
 

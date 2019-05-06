@@ -3,7 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {MenuPage} from '../menu.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -53,7 +53,7 @@ describe('resources/list --', () => {
     });
 
 
-    xit('save changes on input field blur', () => {
+    it('save changes on input field blur', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
@@ -64,8 +64,8 @@ describe('resources/list --', () => {
         NavbarPage.clickTab('project');
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.clickMapModeButton();
-        ResourcesPage.clickSelectResource('1');
-        DetailSidebarPage.getShortDescription().then(value => expect(value).toEqual('Changed resource 1'));
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Changed resource 1'));
     });
 
 

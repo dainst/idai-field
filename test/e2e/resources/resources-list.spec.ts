@@ -111,7 +111,7 @@ describe('resources/list --', () => {
     });
 
 
-    xit('move a resource', () => {
+    it('move a resource', () => {
 
         ResourcesPage.clickListMoveButton('SE0');
         ResourcesPage.typeInMoveModalSearchBarInput('S2');
@@ -119,7 +119,7 @@ describe('resources/list --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
         NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
-        ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(6));
+        ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(7));
     });
 
 

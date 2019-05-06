@@ -86,7 +86,7 @@ describe('project --', function() {
     });
 
 
-    xit('create & switch project', () => {
+    it('create & switch project', () => {
 
         performCreateProject();
 

@@ -5,7 +5,7 @@ import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {ImageViewPage} from '../images/image-view.page';
-import Menu = Electron.Menu;
+
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
@@ -53,7 +53,7 @@ describe('settings --', function() {
     });
 
 
-    xit('show warnings if an invalid imagestore path is set', () => {
+    it('show warnings if an invalid imagestore path is set', () => {
 
         SettingsPage.get();
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');

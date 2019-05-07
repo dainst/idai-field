@@ -15,9 +15,6 @@
         <div *ngIf="selectedImage" id="popover">
             <div id="popover-header">
                 <div>{{selectedImage.document.resource.identifier}}</div>
-                <div class="btn btn-light" (click)="closePopover()">
-                    <span class="mdi mdi-close"></span>
-                </div>
             </div>
 
             <div id="document-info">

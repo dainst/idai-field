@@ -31,6 +31,7 @@ export class ImageViewComponent implements OnInit {
     public selectedImage: ImageContainer;
     public activeTab: string;
     public originalNotFound: boolean = false;
+    public openSection: string|undefined = 'stem';
 
 
     constructor(

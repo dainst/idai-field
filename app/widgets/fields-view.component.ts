@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input} from '@angular/core';
+import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
 import {Resource, ProjectConfiguration, FieldDefinition} from 'idai-components-2';
@@ -23,9 +23,11 @@ type FieldViewGroupDefinition = {
 export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
+    @Input() openSection: string|undefined = 'stem';
+
+    @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
 
     public fields: { [groupName: string]: Array<any> };
-    public shownGroupName: string|undefined = 'stem';
 
     private groups: Array<FieldViewGroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
@@ -62,11 +64,13 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    public toggleGroup(group: FieldViewGroupDefinition) {
+    public toggleGroupSection(group: FieldViewGroupDefinition) {
 
-        this.shownGroupName = this.shownGroupName === group.name
+        this.openSection = this.openSection === group.name
             ? undefined
-            : this.shownGroupName = group.name;
+            : this.openSection = group.name;
+
+        this.onSectionToggled.emit(this.openSection);
     }
 
 

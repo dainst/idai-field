@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Document, Resource, ReadDatastore, ProjectConfiguration} from 'idai-components-2';
+import {Document, Resource, ReadDatastore, ProjectConfiguration, FieldDocument} from 'idai-components-2';
 import {SidebarListComponent} from './sidebar-list.component';
+import {ResourcesComponent} from '../../resources.component';
+import {RoutingService} from '../../../routing-service';
 
 
 @Component({
@@ -27,6 +29,8 @@ export class RelationsViewComponent implements OnChanges {
 
     constructor(private datastore: ReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
+                private resourcesComponent: ResourcesComponent,
+                private routingService: RoutingService,
                 private sidebarListComponent: SidebarListComponent) {}
 
 
@@ -48,9 +52,11 @@ export class RelationsViewComponent implements OnChanges {
     }
 
 
-    public clickRelation(document: Document) {
+    public async jumpToResource(document: FieldDocument) {
 
-        this.onRelationTargetClicked.emit(document);
+        this.closePopover();
+        await this.routingService.jumpToResource(document);
+        this.resourcesComponent.setScrollTarget(document);
     }
 
 

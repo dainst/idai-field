@@ -7,7 +7,6 @@
     <div *ngIf="isPopoverMenuOpened('relations')" class="sidebar-popover-page">
         <relations-view
                 [resource]="viewFacade.getSelectedDocument().resource"
-                (onRelationTargetClicked)="jumpToResource($event)"
                 [hideRelations]="relationsToHide">
         </relations-view>
     </div>

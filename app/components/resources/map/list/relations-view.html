@@ -11,7 +11,7 @@
 
     <div *ngFor="let relation of relations">
         <div class="relation-name">{{relation.name}}</div>
-        <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="clickRelation(target)">
+        <div *ngFor="let target of relation.targets" class="resources-listing-item" (click)="jumpToResource(target)">
             <document-teaser [document]="target"></document-teaser>
         </div>
     </div>

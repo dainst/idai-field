@@ -7,9 +7,7 @@ import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
-import {RoutingService} from '../../../routing-service';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
-import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {TypeUtility} from '../../../../core/model/type-utility';
 
 
@@ -40,12 +38,10 @@ export class SidebarListComponent extends BaseList {
     constructor(resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
                 loading: Loading,
-                private navigationService: NavigationService, // TODO remove reference, since sidebar-list-button-group gets it
+                private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
                 private fieldDatastore: FieldReadDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private routingService: RoutingService,
-                private imagestore: Imagestore,
                 public typeUtility: TypeUtility) {
 
         super(resourcesComponent, viewFacade, loading);
@@ -54,12 +50,6 @@ export class SidebarListComponent extends BaseList {
             this.closePopover();
         });
     }
-
-
-    // TODO refactor - make consistent across usages
-    // public showMoveIntoOption = (document: FieldDocument) =>
-    //     this.navigationService.showMoveIntoOption(document);
-
 
 
     public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
@@ -127,14 +117,6 @@ export class SidebarListComponent extends BaseList {
                     && relations[name].length > 0;
             })
             .length > 0;
-    }
-
-
-    public async jumpToResource(documentToSelect: FieldDocument) { // TODO move to sidebarlistbuttongroup
-
-        this.closePopover();
-        await this.routingService.jumpToResource(documentToSelect);
-        this.resourcesComponent.setScrollTarget(documentToSelect);
     }
 
 

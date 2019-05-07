@@ -43,17 +43,13 @@ export class SidebarListButtonGroupComponent {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
+    public jumpToMatrix = () => this.navigationService.jumpToMatrix(this.document);
+
 
     public jumpToViewFromOverview() { // arrow top right
 
         this.sidebarList.closePopover();
         this.navigationService.jumpToView(this.document)
-    }
-
-
-    public jumpToMatrix() {
-
-        this.navigationService.jumpToMatrix(this.document);
     }
 
 

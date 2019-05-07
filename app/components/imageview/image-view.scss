@@ -28,7 +28,7 @@
     position: relative;
     z-index: 1001;
     width: 100%;
-    height: calc(100% - 174px);
+    height: calc(100% - 169px);
     margin: 0;
 
     #image-container {
@@ -54,7 +54,7 @@
     }
 
     #thumbnail-slider-container {
-      height: 174px;
+      height: 169px;
       overflow-x: auto;
       background-color: #f8f9fa;
 
@@ -64,11 +64,12 @@
         padding: 8px;
 
         .thumbnail-container {
-          width: 200px;
-          height: 100%;
+          height: 151px;
+          line-height: 151px;
           float: left;
+          margin-right: 10px;
 
-          &.selected {
+          &.selected img {
             box-shadow: 0 0 10px 2px #37588e !important;
           }
 

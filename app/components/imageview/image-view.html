@@ -1,4 +1,16 @@
-<div id="image-view-modal" class="modal-body px-0">
+<div id="image-view-modal-header" class="d-flex justify-content-between">
+    <div class="text-truncate">
+        <strong>Bilder</strong>
+    </div>
+
+    <button class="btn btn-primary"
+            id="close-button"
+            (click)="close()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+
+<div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view" class="flex-nowrap bg-light px-0">
         <div *ngIf="selectedImage" id="popover">
             <div id="popover-header">

@@ -3,8 +3,26 @@
 /**
  * @author Thomas Kleinke
  */
-#image-view-modal {
-  height: calc(100vh - 65px);
+#image-view-modal-header {
+  height: 54px;
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  user-select: none;
+  background-color: #5572a1;
+
+  div {
+    height: 40px;
+    font-size: 1.5em;
+    line-height: 40px;
+    margin-left: 7px;
+    color: #fff;
+  }
+}
+
+
+#image-view-modal-body {
+  height: calc(100vh - 119px);
+  padding: 0;
 
   #image-view {
     position: relative;

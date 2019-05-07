@@ -114,11 +114,11 @@ export class ImageViewComponent implements OnInit {
 
     public async jumpToResource(documentToJumpTo: FieldDocument) {
 
-        this.activeModal.close();
-
         await this.routingService.jumpToResource(
-            documentToJumpTo, undefined
+            documentToJumpTo, true
         );
+
+        this.activeModal.close();
     }
 
 

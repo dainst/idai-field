@@ -60,8 +60,6 @@ export class RowComponent implements AfterViewInit {
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
 
-    public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
-
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
     public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);

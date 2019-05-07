@@ -56,26 +56,6 @@
                 (click)="jumpToView()">
             <span class="arrow-top-right mdi-18px"></span>
         </button>
-        <span *ngIf="shouldShowArrowTopRightForTrench()"
-             ngbDropdown placement="bottom-right">
-            <div class="hierarchy-button btn float-right" ngbDropdownToggle>
-                <span class="arrow-top-right mdi-18px"></span>
-            </div>
-            <div ngbDropdownMenu>
-                <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
-                     class="dropdown-item"
-                     (click)="jumpToView(document)">
-                    <span class="dropdown-entry-label"
-                          i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
-                </div>
-                <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
-                     class="dropdown-item"
-                     (click)="jumpToMatrix(document)">
-                    <span class="dropdown-entry-label"
-                          i18n="@@resources.jumpToView.matrix">Matrix</span>
-                </div>
-            </div>
-        </span>
     </div>
     <div class="input-field">
         <input #identifierInput [(ngModel)]="document.resource.identifier"

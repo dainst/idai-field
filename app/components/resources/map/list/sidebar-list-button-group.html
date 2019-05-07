@@ -13,8 +13,6 @@
     <div *ngIf="!viewFacade.isInOverview() && !viewFacade.getBypassHierarchy()"
          class="btn link-button"
          [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('relations', document)"
-         ngbTooltip="Untergeordnete Ressourcen ansehen"
-         i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
          placement="left"
          (click)="sidebarList.togglePopoverMenu('relations', document); $event.stopPropagation();">
 

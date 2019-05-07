@@ -1566,30 +1566,14 @@
       </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
         <source>
-                Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-            </source>
+                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                </source>
         <target state="final">
-                Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-            </target>
+                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageView.editMetadata" datatype="html">
-        <source>Metadaten bearbeiten</source>
-        <target state="final">Metadaten bearbeiten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageView.editRelations" datatype="html">
-        <source>Relationen bearbeiten</source>
-        <target state="final">Relationen bearbeiten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -1853,10 +1837,6 @@
           <context context-type="sourcefile">components/resources/list/row.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.tooltip" datatype="html">
         <source>Zur Maßnahme wechseln</source>
@@ -1867,7 +1847,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.resources" datatype="html">
@@ -1879,7 +1859,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.jumpToView.matrix" datatype="html">
@@ -1891,7 +1871,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
@@ -1933,15 +1913,19 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.arrowtopright.search" datatype="html">
         <source>Im Kontext der Maßnahme anzeigen</source>
         <target state="final">Im Kontext der Maßnahme anzeigen</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/row.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.arrowup" datatype="html">
@@ -1952,12 +1936,8 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/list/row.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.relationsView.oneRelation" datatype="html">

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
@@ -25,6 +25,8 @@ import {MenuService} from '../../menu-service';
  * @author Thomas Kleinke
  */
 export class ImageViewComponent implements OnInit {
+
+    @ViewChild('thumbnailSliderContainer') thumbnailSliderContainer: ElementRef;
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
@@ -122,9 +124,11 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isScrollbarVisible(element: HTMLElement): boolean {
+    public isScrollbarVisible(): boolean {
 
-        return element && element.scrollWidth > element.clientWidth;
+        return this.thumbnailSliderContainer
+            && this.thumbnailSliderContainer.nativeElement.scrollWidth
+            > this.thumbnailSliderContainer.nativeElement.clientWidth;
     }
 
 

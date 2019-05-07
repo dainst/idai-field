@@ -13,7 +13,7 @@
 <div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view"
          class="flex-nowrap bg-light px-0"
-         [class.scrollbar-visible]="isScrollbarVisible(thumbnailSliderContainer)">
+         [class.scrollbar-visible]="isScrollbarVisible()">
         <div *ngIf="selectedImage" id="popover">
             <div id="popover-header">
                 <div>{{selectedImage.document.resource.identifier}}</div>
@@ -47,8 +47,8 @@
             </div>
         </div>
 
-        <div *ngIf="images" #thumbnailSliderContainer id="thumbnail-slider-container"
-             [class.scrollbar-visible]="isScrollbarVisible(thumbnailSliderContainer)">
+        <div #thumbnailSliderContainer id="thumbnail-slider-container"
+             [class.scrollbar-visible]="isScrollbarVisible()">
             <div id="thumbnail-slider">
                 <div *ngFor="let image of images"
                      class="thumbnail-container"

@@ -128,6 +128,12 @@ export class ImageViewComponent implements OnInit {
     }
 
 
+    public isScrollbarVisible(element: HTMLElement): boolean {
+
+        return element && element.scrollWidth > element.clientWidth;
+    }
+
+
     private async fetchImage(document: ImageDocument): Promise<ImageContainer> {
 
         const image: ImageContainer = { document: document };

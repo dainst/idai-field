@@ -31,6 +31,10 @@
     height: calc(100% - 169px);
     margin: 0;
 
+    &.scrollbar-visible {
+      height: calc(100% - 176px);
+    }
+
     #image-container {
       height: 100%;
       background-color: #000;
@@ -58,10 +62,14 @@
       overflow-x: auto;
       background-color: #f8f9fa;
 
+      &.scrollbar-visible {
+        height: 176px;
+      }
+
       #thumbnail-slider {
         height: 100%;
         width: max-content;
-        padding: 8px;
+        padding: 8px 0 8px 8px;
 
         .thumbnail-container {
           height: 151px;

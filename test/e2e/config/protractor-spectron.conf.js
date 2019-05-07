@@ -11,11 +11,11 @@ exports.config = {
 
     specs: [
         '../syncing/*.spec.js',
+        '../matrix/*.spec.js',
         '../project/*.spec.js',
         '../resources/*.spec.js',
         '../images/*.spec.js',
         '../map/*.spec.js',
-        '../matrix/*.spec.js',
         '../import/*.spec.js',
         '../settings/*.spec.js'
     ],

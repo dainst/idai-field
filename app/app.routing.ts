@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'resources/:view', component: ResourcesComponent },
     { path: 'resources/:view/:id', component: ResourcesComponent },
     { path: 'resources/:view/:id/:menu', component: ResourcesComponent },
-    { path: 'matrix/:trenchId', component: MatrixViewComponent },
+    { path: 'matrix', component: MatrixViewComponent },
     { path: 'help', component: HelpComponent },
     { path: 'import', component: ImportComponent },
     { path: 'export', component: ExportComponent },

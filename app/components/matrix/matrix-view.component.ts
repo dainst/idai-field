@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {on, isEmpty, is} from 'tsfun';
-import {FieldDocument, ProjectConfiguration, FeatureDocument} from 'idai-components-2';
+import {isEmpty, on} from 'tsfun';
+import {FeatureDocument, FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -13,8 +11,6 @@ import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
-import {TabManager} from '../tab-manager';
-import {RoutingService} from '../routing-service';
 
 
 @Component({
@@ -34,36 +30,34 @@ export class MatrixViewComponent implements OnInit {
      */
     public graph: string|undefined;
 
-    public trench: FieldDocument;
-
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
+
+    public trenches: Array<FieldDocument> = [];
+    public selectedTrench: FieldDocument|undefined;
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private trenchesLoaded: boolean = false;
 
 
-    constructor(private datastore: FieldReadDatastore,
-                private projectConfiguration: ProjectConfiguration,
-                private featureDatastore: FeatureReadDatastore,
-                private modalService: NgbModal,
-                private matrixState: MatrixState,
-                private loading: Loading,
-                private tabManager: TabManager,
-                private routingService: RoutingService,
-                private i18n: I18n,
-                route: ActivatedRoute) {
-
-        route.params.subscribe(async params => {
-            if (params['trenchId']) await this.initialize(params['trenchId']);
-        });
-    }
+    constructor(
+        private datastore: FieldReadDatastore,
+        private projectConfiguration: ProjectConfiguration,
+        private featureDatastore: FeatureReadDatastore,
+        private modalService: NgbModal,
+        private matrixState: MatrixState,
+        private loading: Loading
+    ) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    public showNoResourcesWarning = () => this.noFeatures() && !this.loading.isLoading();
+    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
+
+    public showNoTrenchesWarning = () => this.trenchesLoaded && this.noTrenches();
+
+    public showTrenchSelector = () => !this.noTrenches();
 
     public documentsSelected = () => this.selection.documentsSelected();
 
@@ -73,12 +67,15 @@ export class MatrixViewComponent implements OnInit {
 
     public clearSelection = () => this.selection.clear();
 
+    private noTrenches = () => isEmpty(this.trenches);
+
     private noFeatures = () => isEmpty(this.featureDocuments);
 
 
     async ngOnInit() {
 
         await this.matrixState.load();
+        await this.populateTrenches();
         this.trenchesLoaded = true;
     }
 
@@ -86,7 +83,7 @@ export class MatrixViewComponent implements OnInit {
     public async edit(resourceId: string) {
 
         await this.openEditorModal(
-            this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
+            this.featureDocuments.find(on('resource.id:')(resourceId)) as FeatureDocument
         );
     }
 
@@ -111,9 +108,9 @@ export class MatrixViewComponent implements OnInit {
 
     public async reloadGraph() {
 
-        if (!this.graphFromSelection) return;
+        if (!this.selectedTrench || !this.graphFromSelection) return;
 
-        await this.loadFeatureDocuments(this.trench);
+        await this.loadFeatureDocuments(this.selectedTrench);
         this.calculateGraph();
 
         this.graphFromSelection = false;
@@ -139,28 +136,32 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private async initialize(trenchId: string) {
+    private async populateTrenches(): Promise<void> {
 
-        try {
-            this.trench = await this.datastore.get(trenchId);
-        } catch (err) {
-            console.warn('Failed to load trench ' + trenchId + ' for matrix view', err);
-            return await this.routingService.jumpToOverview();
-        }
+        this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
+        if (this.trenches.length === 0) return;
 
-        await this.reset();
+        const previouslySelectedTrench = this.trenches
+            .find(on('resource.id:')(this.matrixState.getSelectedTrenchId()));
+        if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
+
+        await this.selectTrench(this.trenches[0]);
     }
 
 
-    private async reset() {
+    private async selectTrench(trench: FieldDocument) {
+
+        if (trench === this.selectedTrench) return;
 
         this.selection.clear(false);
-        this.matrixState.setSelectedTrenchId(this.trench.resource.id);
+
+        this.selectedTrench = trench;
+        this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
         this.graph = undefined;
 
-        await this.loadFeatureDocuments(this.trench);
+        await this.loadFeatureDocuments(trench);
         this.calculateGraph();
     }
 
@@ -183,17 +184,19 @@ export class MatrixViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(docToEdit);
 
+        const reset = async () => {
+            this.featureDocuments = [];
+            this.selectedTrench = undefined;
+            await this.populateTrenches();
+        };
+
         await doceditRef.result
-            .then(
-                this.reset.bind(this),
-                // TODO Remove this if deletion option is not reintroduced into docedit
-                reason => { if (reason === 'deleted') return this.reset(); }
-            );
+            .then(reset, reason => { if (reason === 'deleted') return reset(); });
     }
 
 
     private static getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
-            : { [period: string]: Array<FeatureDocument> } {
+        : { [period: string]: Array<FeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 

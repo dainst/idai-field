@@ -14,7 +14,6 @@ export class MatrixPage {
         return browser.get('#/matrix');
     }
 
-
     // click
 
     public static clickNode(id: string) {
@@ -118,6 +117,17 @@ export class MatrixPage {
     public static getSelectedNodes() {
 
         return element.all(by.css('.node .selected'));
+    }
+
+
+    public static performSelectOperation(index) {
+
+        browser.wait(EC.presenceOf(element(by.css('.dropdown'))), delays.ECWaitTime);
+        element.all(by.css('.dropdown .dropdown-toggle-split')).click();
+        browser.wait(EC.presenceOf(element(by.css('.dropdown .dropdown-menu'))),
+            delays.ECWaitTime);
+        element.all(by.css('.dropdown .dropdown-menu button')).get(index).click();
+        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
     }
 
 

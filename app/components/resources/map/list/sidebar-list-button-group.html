@@ -60,28 +60,4 @@
          (click)="jumpToView(); $event.stopPropagation();">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
-
-    <div *ngIf="shouldShowArrowTopRightForTrench()"
-         ngbDropdown placement="bottom-right"
-         (click)="$event.stopPropagation()">
-
-        <div class="btn hierarchy-button hierarchy-button-overview" ngbDropdownToggle>
-            <span class="arrow-top-right"></span>
-        </div>
-
-        <div ngbDropdownMenu>
-            <div [id]="'jump-to-resources-view-button-' + document.resource.identifier"
-                 class="dropdown-item"
-                 (click)="jumpToViewFromOverview()">
-                    <span class="dropdown-entry-label"
-                          i18n="@@resources.jumpToView.resources">Ressourcenansicht</span>
-            </div>
-            <div [id]="'jump-to-matrix-view-button-' + document.resource.identifier"
-                 class="dropdown-item"
-                 (click)="jumpToMatrix()">
-                    <span class="dropdown-entry-label"
-                          i18n="@@resources.jumpToView.matrix">Matrix</span>
-            </div>
-        </div>
-    </div>
 </div>

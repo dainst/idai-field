@@ -21,10 +21,11 @@ describe('matrix --', () => {
 
     beforeAll(async done => {
 
-        ResourcesPage.get();
-        browser.sleep(delays.shortRest * 10);
-        ResourcesPage.performJumpToMatrixView('S2');
-        browser.sleep(delays.shortRest * 3);
+        MatrixPage.get();
+        // browser.sleep(delays.shortRest * 10);
+        // ResourcesPage.performJumpToMatrixView('S2');
+        // browser.sleep(delays.shortRest * 3);
+        MatrixPage.performSelectOperation(1);
         done();
         // NavbarPage.clickTab('project');
         // browser.sleep(delays.shortRest * 4);
@@ -38,8 +39,10 @@ describe('matrix --', () => {
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            ResourcesPage.performJumpToMatrixView('S2');
+            // NavbarPage.clickTab('project');
+            // ResourcesPage.performJumpToMatrixView('S2');
+            MatrixPage.get();
+            MatrixPage.performSelectOperation(1);
         }
 
         i++;
@@ -77,6 +80,8 @@ describe('matrix --', () => {
         DoceditRelationsTabPage.typeInRelationByIndices(2, 1, 'SE4');
         DoceditRelationsTabPage.clickChooseRelationSuggestion(2, 1, 0);
         DoceditPage.clickSaveDocument();
+
+        MatrixPage.performSelectOperation(1); // TODO remove
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si4')), delays.ECWaitTime);
@@ -141,5 +146,30 @@ describe('matrix --', () => {
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(0));
         MatrixPage.clickPeriodCheckbox();
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
+    });
+
+
+    it('show matrix for different trenches', () => {
+
+        testDefaultMatrix();
+        MatrixPage.performSelectOperation(0);
+
+        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
+        browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
+        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
+
+        MatrixPage.performSelectOperation(1);
+        testDefaultMatrix();
+    });
+
+
+    it('clear selection when switching trenches', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+
+        MatrixPage.performSelectOperation(0);
+        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
+        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 });

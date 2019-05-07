@@ -7,7 +7,7 @@
     </button>
 
     <div id="navbarSupportedContent" class="collapse navbar-collapse" [class.mac-margin]="isRunningOnMac()">
-        <ul #tabSpace *ngIf="isActiveRoute('/resources') || isActiveRoute('/matrix')"
+        <ul #tabSpace *ngIf="isActiveRoute('/resources')"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
                 <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
@@ -34,7 +34,7 @@
             </li>
         </ul>
 
-        <ul *ngIf="!isActiveRoute('/resources') && !isActiveRoute('/matrix')"
+        <ul *ngIf="!isActiveRoute('/resources')"
             id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
             <li class="nav-item">
                 <a class="nav-link active">

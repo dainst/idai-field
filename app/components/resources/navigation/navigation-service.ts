@@ -67,15 +67,9 @@ export class NavigationService {
     }
 
 
-    public shouldShowArrowTopRightForTrench(document: FieldDocument) {
-
-        return this.showJumpToViewOption(document) && document.resource.type === 'Trench';
-    }
-
-
     public shouldShowArrowTopRight(document: FieldDocument) {
 
-        return this.showJumpToViewOption(document) && document.resource.type !== 'Trench';
+        return this.showJumpToViewOption(document);
     }
 
 

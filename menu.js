@@ -79,6 +79,11 @@ const getTemplate = (mainWindow, context) => {
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
             enabled: context === 'default'
         }, {
+            label: messages.get('menu.tools.matrix'),
+            accelerator: 'CmdOrCtrl+Y',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),
+            enabled: context === 'default'
+        }, {
             type: 'separator'
         }, {
             label: messages.get('menu.tools.backupCreation'),

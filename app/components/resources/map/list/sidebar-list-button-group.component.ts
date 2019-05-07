@@ -31,8 +31,6 @@ export class SidebarListButtonGroupComponent {
 
     public shouldShowArrowUpForSearchMode = () => this.navigationService.shouldShowArrowUpForSearchMode(this.document);
 
-    public shouldShowArrowTopRightForTrench = () => this.navigationService.shouldShowArrowTopRightForTrench(this.document);
-
     public shouldShowArrowTopRight = () => this.navigationService.shouldShowArrowTopRight(this.document);
 
     public shouldShowArrowTopRightForSearchMode = () => this.navigationService.shouldShowArrowTopRightForSearchMode(this.document);
@@ -42,15 +40,6 @@ export class SidebarListButtonGroupComponent {
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
-
-    public jumpToMatrix = () => this.navigationService.jumpToMatrix(this.document);
-
-
-    public jumpToViewFromOverview() { // arrow top right
-
-        this.sidebarList.closePopover();
-        this.navigationService.jumpToView(this.document)
-    }
 
 
     public async jumpToResourceFromOverviewToOperation() { // arrow top right, when in search

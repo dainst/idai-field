@@ -198,8 +198,7 @@ export class TabManager {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
 
-        if (operationId && operationId !== 'project' && !this.getTab(routeName, operationId)
-                && (routeName === 'resources' || routeName === 'matrix')) {
+        if (operationId && operationId !== 'project' && !this.getTab(routeName, operationId) && routeName === 'resources') {
             const document: FieldDocument = await this.datastore.get(operationId);
             await this.openTab(routeName, operationId, document.resource.identifier);
         }
@@ -238,8 +237,6 @@ export class TabManager {
         switch(routeName) {
             case 'resources':
                 return operationIdentifier as string;
-            case 'matrix':
-                return operationIdentifier + ' – ' + this.i18n({ id: 'navbar.matrix', value: 'Matrix'});
             default:
                 return '';
         }

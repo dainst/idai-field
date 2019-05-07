@@ -1,18 +1,18 @@
-<div class="object-list-button-group">
+<div class="sidebar-list-button-group">
 
     <div class="btn info-button"
          [class.info-button-middle-position]="viewFacade.isInOverview() || viewFacade.getBypassHierarchy()"
-         [class.object-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('info', document)"
+         [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('info', document)"
          (click)="sidebarList.togglePopoverMenu('info', document); $event.stopPropagation();">
 
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
-              class="mdi mdi-information-outline object-list-button-group-inner">
+              class="mdi mdi-information-outline sidebar-list-button-group-inner">
         </span>
     </div>
 
     <div *ngIf="!viewFacade.isInOverview() && !viewFacade.getBypassHierarchy()"
          class="btn link-button"
-         [class.object-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('relations', document)"
+         [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('relations', document)"
          ngbTooltip="Untergeordnete Ressourcen ansehen"
          i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
          placement="left"
@@ -20,17 +20,17 @@
 
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
               [class.arrow-deactivated]="!sidebarList.hasVisibleRelations(document)"
-              class="mdi mdi-link object-list-button-group-inner">
+              class="mdi mdi-link sidebar-list-button-group-inner">
         </span>
     </div>
 
     <div *ngIf="shouldShowArrowBottomRight()"
             class="btn hierarchy-button"
-         [class.object-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('children', document)"
+         [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('children', document)"
          (click)="sidebarList.togglePopoverMenu('children', document); $event.stopPropagation();">
 
         <span [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
-              class="arrow-bottom-right object-list-button-group-inner">
+              class="arrow-bottom-right sidebar-list-button-group-inner">
         </span>
     </div>
 

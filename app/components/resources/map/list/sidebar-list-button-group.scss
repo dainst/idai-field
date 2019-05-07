@@ -3,7 +3,7 @@ $button-width: 24px;
 $button-group-width: 3 * $button-width;
 
 
-.object-list-button-group {
+.sidebar-list-button-group {
   position: absolute;
   right: 0;
   height: $item-height;
@@ -15,7 +15,7 @@ $button-group-width: 3 * $button-width;
     color: $activated-color;
   }
 
-  .object-list-button-group-inner {
+  .sidebar-list-button-group-inner {
     position: relative;
     width: $button-width;
     top: 14px;
@@ -82,7 +82,7 @@ $button-group-width: 3 * $button-width;
     height: 0;
   }
 
-  .object-list-button-group-active-button {
+  .siderbar-list-button-group-active-button {
     background-color: darken($list-item-hover-color, 10%);
   }
 }

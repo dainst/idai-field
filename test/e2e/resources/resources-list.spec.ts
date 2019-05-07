@@ -45,7 +45,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('show newly created resource in list view', () => {
+    fit('show newly created resource in list view', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         ResourcesPage.getListModeInputFieldValue('1', 0)

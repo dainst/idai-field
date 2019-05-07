@@ -387,14 +387,13 @@ export class ResourcesPage {
     }
 
 
-    public static performJumpToTrenchView(identifier: string) {
+    public static performJumpToTrenchView(identifier: string) { // TODO remove
 
         this.clickHierarchyButton(identifier);
-        this.clickJumpToResourcesViewButton(identifier);
     }
 
 
-    public static performJumpToMatrixView(identifier: string) {
+    public static performJumpToMatrixView(identifier: string) { // TODO remvoe
 
         this.clickHierarchyButton(identifier);
         this.clickJumpToMatrixViewButton(identifier);

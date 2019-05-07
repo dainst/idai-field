@@ -19,7 +19,6 @@
   }
 }
 
-
 #image-view-modal-body {
   height: calc(100vh - 119px);
   padding: 0;
@@ -131,6 +130,11 @@
             color: #000;
           }
         }
+      }
+
+      #image-info {
+        height: calc(100% - 40px);
+        overflow-y: auto;
       }
     }
   }

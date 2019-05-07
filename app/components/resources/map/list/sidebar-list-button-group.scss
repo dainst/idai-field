@@ -72,14 +72,6 @@ $button-group-width: 3 * $button-width;
       top: 20px;
       left: 3px;
     }
-
-    &.dropdown-toggle::after {
-      display: none;
-    }
-  }
-
-  .dropdown {
-    height: 0;
   }
 
   .siderbar-list-button-group-active-button {

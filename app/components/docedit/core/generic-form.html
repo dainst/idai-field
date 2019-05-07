@@ -17,11 +17,13 @@
 <ul class="list-group list-group-flush">
 
     <ng-template ngFor [ngForOf]="relationDefinitions" let-relationDefinition="$implicit">
-        <li class="list-group-item">
-            <label *ngIf="relationDefinition.label">{{relationDefinition.label}}</label>
-            <label *ngIf="!relationDefinition.label">{{relationDefinition.name}}</label>
+        <li class="card">
+            <div class="card-header h4">
+                <span class="card-title" *ngIf="relationDefinition.label">{{relationDefinition.label}}</span>
+                <span class="card-title" *ngIf="!relationDefinition.label">{{relationDefinition.name}}</span>
+            </div>
 
-            <ul>
+            <ul class="card-body">
                 <li style="list-style-type: none;">
                     <relation-picker-group [(document)]="document" [relationDefinition]="relationDefinition"
                                            [primary]="'identifier'"></relation-picker-group>

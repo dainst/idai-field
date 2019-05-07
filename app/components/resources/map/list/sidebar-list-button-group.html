@@ -48,7 +48,6 @@
          container="body"
          ngbTooltip="Im Kontext anzeigen"
          i18n-ngbTooltip="@@resources.navigation.arrowup">
-
         <span class="arrow-up mdi-16px"></span>
     </div>
 
@@ -58,9 +57,6 @@
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
          placement="right"
          container="body"
-         (mouseover)="tooltip.open()"
-         (mouseleave)="tooltip.close()"
-         (mousedown)="tooltip.close()"
          (click)="jumpToView(); $event.stopPropagation();">
         <span class="arrow-top-right mdi-18px"></span>
     </div>

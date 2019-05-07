@@ -4,6 +4,10 @@ $delete-georeference-color: #d9534f;
 georeference-view {
     .card-body {
         padding: 0 !important;
+
+        .field {
+            margin-bottom: 0 !important;
+        }
     }
 
     #worldfile-upload {

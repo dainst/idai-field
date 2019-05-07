@@ -33,8 +33,6 @@ describe('matrix --', () => {
             await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickCloseNonResourcesTab();
-            // NavbarPage.clickTab('project');
-            // ResourcesPage.performJumpToMatrixView('S2');
             MatrixPage.get();
             MatrixPage.performSelectOperation(1);
         }

@@ -142,7 +142,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id', is(this.matrixState.getSelectedTrenchId())));
+            .find(on('resource.id', is(this.matrixState.getSelectedTrenchId()))); // TODO remove this from matrix state. make this a param to populateTrenches instead
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         await this.selectTrench(this.trenches[0]);

@@ -17,35 +17,11 @@ export class ResourcesPage {
         return browser.get('#/resources/' + view);
     }
 
-
     // click
 
     public static clickCreateResource() {
 
         common.click(ResourcesPage.getCreateDocumentButton());
-    }
-
-
-    // TODO Move to DoceditPage
-    public static clickSaveInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-save-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
-    }
-
-
-    // TODO Move to DoceditPage
-    public static clickCancelInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
-    }
-
-
-    // TODO Move to DoceditPage
-    public static clickDiscardInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 

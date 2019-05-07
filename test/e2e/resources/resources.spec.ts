@@ -115,8 +115,7 @@ describe('resources --', () => {
         NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
         NavbarPage.awaitAlert('Bezeichner', false);
         NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
     });
 
 
@@ -137,8 +136,7 @@ describe('resources --', () => {
 
         NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
     });
 
 
@@ -147,8 +145,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
+        DoceditPage.clickCloseEdit('save');
 
         ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('2'));
     });
@@ -159,8 +156,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
 
         ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('1'));
     });
@@ -171,11 +167,9 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickCancelInModal();
+        DoceditPage.clickCloseEdit('cancel');
         expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
     });
 
 
@@ -213,8 +207,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         ResourcesPage.openEditByDoubleClickResource('12');
         DoceditPage.typeInInputField('identifier', '34');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickSaveInModal();
+        DoceditPage.clickCloseEdit('save');
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         NavbarPage.clickCloseAllMessages();
@@ -295,8 +288,7 @@ describe('resources --', () => {
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
         DoceditRelationsTabPage.typeInRelationByIndices(0, 0, '2');
         DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
 
         ResourcesPage.clickSelectResource('1', 'links');
         // browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
@@ -332,8 +324,7 @@ describe('resources --', () => {
         ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
             expect(identifier).toBe('1a');
         });
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.clickDiscardInModal();
+        DoceditPage.clickCloseEdit('discard');
     });
 
 

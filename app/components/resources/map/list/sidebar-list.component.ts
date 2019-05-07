@@ -58,6 +58,12 @@ export class SidebarListComponent extends BaseList {
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
 
 
+    public async editDocument(document: FieldDocument) {
+
+        await this.resourcesComponent.editDocument(document, 'fields');
+    }
+
+
     public isScrollbarVisible(element: HTMLElement): boolean {
 
         return element.scrollHeight > element.clientHeight;

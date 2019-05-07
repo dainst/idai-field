@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Document, FieldDocument} from 'idai-components-2';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 
@@ -13,7 +12,7 @@ import {Imagestore} from '../../../../core/imagestore/imagestore';
  */
 export class ThumbnailComponent implements OnChanges {
 
-    @Input() document: FieldDocument;
+    @Input() depictedInRelations: any[]|undefined;
 
     public thumbnailUrl: string|undefined;
 
@@ -23,17 +22,17 @@ export class ThumbnailComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.document);
+        this.thumbnailUrl = await this.getThumbnailUrl(this.depictedInRelations);
     }
 
 
-    private async getThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
+    private async getThumbnailUrl(relations: any|undefined): Promise<string|undefined> {
 
-        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+        if (!relations || relations.length === 0) return undefined;
 
         try {
             return this.imagestore.read(
-                document.resource.relations['isDepictedIn'][0], false, true
+                relations[0], false, true
             );
         } catch (e) {
             return BlobMaker.blackImg;

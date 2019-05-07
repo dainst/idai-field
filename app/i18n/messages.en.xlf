@@ -2708,6 +2708,20 @@
           <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
+
+
+      <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
+         <source>
+             Legen Sie eine Ressource vom Typ 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
+             an, um hier mit ihr arbeiten zu können.
+         </source>
+         <target state="final">
+              Please create a resource of type 'Trench' in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
+              in order to work with it here.
+          </target>
+        </trans-unit>
+
+
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
         <source>Bearbeitungsmodus</source>
         <target state="final">Edit mode</target>

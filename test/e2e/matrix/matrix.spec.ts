@@ -22,13 +22,8 @@ describe('matrix --', () => {
     beforeAll(async done => {
 
         MatrixPage.get();
-        // browser.sleep(delays.shortRest * 10);
-        // ResourcesPage.performJumpToMatrixView('S2');
-        // browser.sleep(delays.shortRest * 3);
         MatrixPage.performSelectOperation(1);
         done();
-        // NavbarPage.clickTab('project');
-        // browser.sleep(delays.shortRest * 4);
     });
 
 

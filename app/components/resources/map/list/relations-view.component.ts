@@ -71,9 +71,7 @@ export class RelationsViewComponent implements OnChanges {
         }
 
         this.relationsCount = this.relations.reduce(
-            (totalCount: number, relation: any) => {
-                console.log(relation); return totalCount + relation.targets.length; }, 0
-        );
+            (totalCount: number, relation: any) => totalCount + relation.targets.length, 0);
     }
 
 

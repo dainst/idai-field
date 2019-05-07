@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="card-header">
+        <button class="btn btn-block"
+                i18n="@@imageView.depictsRelationsView.depicts"
+                (click)="toggle()">Zeigt</button>
+    </div>
+    <div *ngIf="openSection === 'depicts-relations'" class="collapse show">
+        <div class="card-body resources-listing">
+            <div *ngFor="let target of relationTargets" class="resources-listing-item"
+                 (click)="jumpToResource(target)">
+                <document-teaser [document]="target"></document-teaser>
+            </div>
+        </div>
+    </div>
+</div>

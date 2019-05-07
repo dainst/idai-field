@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty} from 'tsfun';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -44,10 +43,6 @@ export class ImageViewComponent implements OnInit {
         private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService
     ) {}
-
-
-    public jumpToResource = (documentToJumpTo: FieldDocument) => this.routingService.jumpToResource(
-        documentToJumpTo, undefined);
 
 
     ngOnInit() {
@@ -117,15 +112,13 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public hasRelations() {
+    public async jumpToResource(documentToJumpTo: FieldDocument) {
 
-        if (!this.selectedImage) return false;
-        if (!this.selectedImage.document) return false;
+        this.activeModal.close();
 
-        const relations: any = this.selectedImage.document.resource.relations;
-        if (isEmpty(relations)) return false;
-
-        return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
+        await this.routingService.jumpToResource(
+            documentToJumpTo, undefined
+        );
     }
 
 

@@ -26,6 +26,10 @@
                 <georeference-view [document]="selectedImage.document"
                                    [openSection]="openSection"
                                    (onSectionToggled)="openSection = $event"></georeference-view>
+                <depicts-relations-view [resource]="selectedImage.document.resource"
+                                        [openSection]="openSection"
+                                        (onSectionToggled)="openSection = $event"
+                                        (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
             </div>
         </div>
         <div *ngIf="selectedImage" id="image-container">

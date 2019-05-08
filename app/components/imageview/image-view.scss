@@ -116,6 +116,10 @@
         #identifier-label {
           position: relative;
           top: -1px;
+          width: calc(100% - 30px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .btn {

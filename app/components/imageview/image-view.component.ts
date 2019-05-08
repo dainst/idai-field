@@ -57,6 +57,8 @@ export class ImageViewComponent implements OnInit {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') await this.activeModal.close();
+        if (event.key === 'ArrowLeft') await this.selectPrevious();
+        if (event.key === 'ArrowRight') await this.selectNext();
     }
 
 
@@ -168,6 +170,32 @@ export class ImageViewComponent implements OnInit {
             image.imgSrc = BlobMaker.blackImg;
             this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
+    }
+
+
+    private async selectPrevious() {
+
+        if (this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === 0
+            ? this.images.length - 1
+            : index - 1;
+
+        await this.select(this.images[index]);
+    }
+
+
+    private async selectNext() {
+
+        if (this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === this.images.length - 1
+            ? 0
+            : index + 1;
+
+        await this.select(this.images[index]);
     }
 
 

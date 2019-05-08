@@ -119,7 +119,7 @@ export class ImageViewComponent implements OnInit {
         }
 
         this.subModalOpened = false;
-        MenuService.setContext('default');
+        MenuService.setContext('image-view');
     }
 
 

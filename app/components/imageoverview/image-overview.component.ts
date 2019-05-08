@@ -11,6 +11,7 @@ import {M} from '../m';
 import {ImageFilterOption} from './view/images-state';
 import {TabManager} from '../tab-manager';
 import {ImageViewComponent} from '../imageview/image-view.component';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -91,6 +92,7 @@ export class ImageOverviewComponent implements OnInit {
     public async showImage(document: ImageDocument) {
 
         this.modalOpened = true;
+        MenuService.setContext('image-view');
 
         this.imageOverviewFacade.select(document);
 
@@ -105,6 +107,7 @@ export class ImageOverviewComponent implements OnInit {
         await modalRef.result;
 
         this.modalOpened = false;
+        MenuService.setContext('default');
     }
 
 

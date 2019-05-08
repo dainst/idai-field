@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule, IdaiWidgetsModule} from 'idai-components-2';
+import {IdaiWidgetsModule} from 'idai-components-2';
 import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
@@ -22,7 +22,6 @@ import {DeleteModalComponent} from './delete-modal.component';
         NgbModule,
         imagesRouting,
         WidgetsModule,
-        IdaiDocumentsModule,
         IdaiWidgetsModule,
         ImageGridModule
     ],

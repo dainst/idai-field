@@ -6,7 +6,7 @@ import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
+import {ConfigLoader, ConfigReader, IdaiMessagesModule, MD, Messages,
     ProjectConfiguration, IdaiWidgetsModule, AppConfigurator, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
@@ -76,7 +76,6 @@ registerLocaleData(localeDe, 'de');
         FormsModule,
         HttpClientModule,
         NgbModule.forRoot(),
-        IdaiDocumentsModule,
         IdaiMessagesModule,
         routing,
         IdaiWidgetsModule,

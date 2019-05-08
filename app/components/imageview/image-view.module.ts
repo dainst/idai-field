@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiWidgetsModule, IdaiDocumentsModule} from 'idai-components-2';
+import {IdaiWidgetsModule} from 'idai-components-2';
 import {ImageViewComponent} from './image-view.component';
 import {GeoreferenceViewComponent} from './georeference-view.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
@@ -17,8 +17,7 @@ import {DepictsRelationsViewComponent} from './depicts-relations-view.component'
         NgbModule,
         WidgetsModule,
         IdaiWidgetsModule,
-        ImageGridModule,
-        IdaiDocumentsModule
+        ImageGridModule
     ],
     declarations: [
         ImageViewComponent,

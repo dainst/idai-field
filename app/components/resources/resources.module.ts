@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule, IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
+import {IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -54,7 +54,6 @@ const remote = require('electron').remote;
         BrowserModule,
         FormsModule,
         NgbModule,
-        IdaiDocumentsModule,
         WidgetsModule,
         ImageGridModule,
         IdaiWidgetsModule,

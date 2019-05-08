@@ -35,6 +35,8 @@ export class ImageViewComponent implements OnInit {
     public originalNotFound: boolean = false;
     public openSection: string|undefined = 'stem';
 
+    private subModalOpened: boolean = false;
+
 
     constructor(
         private activeModal: NgbActiveModal,
@@ -56,7 +58,7 @@ export class ImageViewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.activeModal.close();
+        if (event.key === 'Escape' && !this.subModalOpened) await this.activeModal.close();
         if (event.key === 'ArrowLeft') await this.selectPrevious();
         if (event.key === 'ArrowRight') await this.selectNext();
     }
@@ -98,6 +100,7 @@ export class ImageViewComponent implements OnInit {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
+        this.subModalOpened = true;
         MenuService.setContext('docedit');
 
         const doceditModalRef = this.modalService.open(
@@ -115,6 +118,7 @@ export class ImageViewComponent implements OnInit {
             if (closeReason === 'deleted') await this.activeModal.close();
         }
 
+        this.subModalOpened = false;
         MenuService.setContext('default');
     }
 

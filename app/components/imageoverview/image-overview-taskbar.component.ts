@@ -7,6 +7,7 @@ import {ViewFacade} from '../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {DeleteModalComponent} from './delete-modal.component';
+import {ImageOverviewComponent} from './image-overview.component';
 
 
 @Component({
@@ -29,14 +30,14 @@ export class ImageOverviewTaskbarComponent {
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
-    private modalOpenend: boolean = false;
 
     constructor(
         public viewFacade: ViewFacade,
         private modalService: NgbModal,
         private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,
-        private persistenceHelper: PersistenceHelper
+        private persistenceHelper: PersistenceHelper,
+        private imageOverviewComponent: ImageOverviewComponent
     ) {
         this.imageOverviewFacade.initialize();
     }
@@ -44,13 +45,13 @@ export class ImageOverviewTaskbarComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpenend) this.clearSelection();
+        if (event.key === 'Escape' && !this.imageOverviewComponent.modalOpened) this.clearSelection();
     }
 
 
     public async openLinkModal() {
 
-        this.modalOpenend = true;
+        this.imageOverviewComponent.modalOpened = true;
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
@@ -70,14 +71,14 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // LinkModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.imageOverviewComponent.modalOpened = false;
         }
     }
 
 
     public async openDeleteModal() {
 
-        this.modalOpenend = true;
+        this.imageOverviewComponent.modalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -89,14 +90,14 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // DeleteModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.imageOverviewComponent.modalOpened = false;
         }
     }
 
 
     public async openRemoveLinkModal() {
 
-        this.modalOpenend = true;
+        this.imageOverviewComponent.modalOpened = true;
 
         try {
             await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
@@ -107,7 +108,7 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // RemoveLinkModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.imageOverviewComponent.modalOpened = false;
         }
     }
 

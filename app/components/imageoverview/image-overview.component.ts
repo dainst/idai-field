@@ -33,6 +33,7 @@ export class ImageOverviewComponent implements OnInit {
     public maxGridSize: number = 12;
     public minGridSize: number = 2;
     public filterOptions: Array<IdaiType> = [];
+    public modalOpened: boolean = false;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -80,13 +81,16 @@ export class ImageOverviewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.imageOverviewFacade.getSelected().length === 0) {
+        if (event.key === 'Escape' && !this.modalOpened
+            && this.imageOverviewFacade.getSelected().length === 0) {
             await this.tabManager.openActiveTab();
         }
     }
 
 
     public async showImage(document: ImageDocument) {
+
+        this.modalOpened = true;
 
         this.imageOverviewFacade.select(document);
 
@@ -99,6 +103,8 @@ export class ImageOverviewComponent implements OnInit {
             document
         );
         await modalRef.result;
+
+        this.modalOpened = false;
     }
 
 

@@ -31,7 +31,7 @@
     height: calc(100% - 169px);
     margin: 0;
 
-    &.scrollbar-visible {
+    &.thumbnail-slider-scrollbar-visible {
       height: calc(100% - 176px);
     }
 
@@ -136,6 +136,12 @@
       #image-info {
         height: calc(100% - 40px);
         overflow-y: auto;
+
+        &.scrollbar-visible {
+          document-teaser {
+            width: $resources-listing-item-slim-width-with-scrollbar;
+          }
+        }
       }
     }
   }

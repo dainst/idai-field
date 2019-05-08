@@ -13,20 +13,24 @@
 <div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view"
          class="flex-nowrap bg-light px-0"
-         [class.scrollbar-visible]="isScrollbarVisible()">
-        <div *ngIf="selectedImage" id="popover">
+         [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+        <div id="popover">
             <div id="popover-header">
-                <div>{{selectedImage.document.resource.identifier}}</div>
+                <div *ngIf="selectedImage">{{selectedImage.document.resource.identifier}}</div>
             </div>
 
-            <div id="image-info">
-                <fields-view [resource]="selectedImage.document.resource"
+            <div #imageInfo id="image-info"
+                 [class.scrollbar-visible]="isImageInfoScrollbarVisible()">
+                <fields-view *ngIf="selectedImage"
+                             [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
                              (onSectionToggled)="openSection = $event"></fields-view>
-                <georeference-view [document]="selectedImage.document"
+                <georeference-view *ngIf="selectedImage"
+                                   [document]="selectedImage.document"
                                    [openSection]="openSection"
                                    (onSectionToggled)="openSection = $event"></georeference-view>
-                <depicts-relations-view [resource]="selectedImage.document.resource"
+                <depicts-relations-view *ngIf="selectedImage"
+                                        [resource]="selectedImage.document.resource"
                                         [openSection]="openSection"
                                         (onSectionToggled)="openSection = $event"
                                         (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
@@ -48,7 +52,7 @@
         </div>
 
         <div #thumbnailSliderContainer id="thumbnail-slider-container"
-             [class.scrollbar-visible]="isScrollbarVisible()">
+             [class.scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
             <div id="thumbnail-slider">
                 <div *ngFor="let image of images"
                      class="thumbnail-container"

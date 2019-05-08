@@ -27,6 +27,7 @@ import {MenuService} from '../../menu-service';
 export class ImageViewComponent implements OnInit {
 
     @ViewChild('thumbnailSliderContainer') thumbnailSliderContainer: ElementRef;
+    @ViewChild('imageInfo') imageInfo: ElementRef;
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
@@ -124,11 +125,19 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isScrollbarVisible(): boolean {
+    public isThumbnailSliderScrollbarVisible(): boolean {
 
         return this.thumbnailSliderContainer
             && this.thumbnailSliderContainer.nativeElement.scrollWidth
             > this.thumbnailSliderContainer.nativeElement.clientWidth;
+    }
+
+
+    public isImageInfoScrollbarVisible(): boolean {
+
+        return this.imageInfo
+            && this.imageInfo.nativeElement.scrollHeight
+            > this.imageInfo.nativeElement.clientHeight;
     }
 
 

@@ -55,6 +55,7 @@
              [class.scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
             <div id="thumbnail-slider">
                 <div *ngFor="let image of images"
+                     id="thumbnail-{{image.document.resource.id}}"
                      class="thumbnail-container"
                      [class.selected]="image === selectedImage">
                     <img [src]="image.thumbSrc" (click)="select(image)">

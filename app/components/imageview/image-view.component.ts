@@ -83,6 +83,8 @@ export class ImageViewComponent implements OnInit {
 
         this.selectedImage = image;
         if (!this.selectedImage.imgSrc || this.selectedImage.imgSrc === '') this.originalNotFound = true;
+
+        this.scrollToThumbnail(image);
     }
 
 
@@ -196,6 +198,16 @@ export class ImageViewComponent implements OnInit {
             : index + 1;
 
         await this.select(this.images[index]);
+    }
+
+
+    private scrollToThumbnail(image: ImageContainer) {
+
+        const element: HTMLElement|null = document.getElementById(
+            'thumbnail-' + (image.document as ImageDocument).resource.id
+        );
+
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
 

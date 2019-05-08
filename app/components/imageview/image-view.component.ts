@@ -207,7 +207,7 @@ export class ImageViewComponent implements OnInit {
             'thumbnail-' + (image.document as ImageDocument).resource.id
         );
 
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
+        if (element) element.scrollIntoView({ inline: 'center' });
     }
 
 

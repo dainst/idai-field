@@ -1,4 +1,8 @@
 .document-teaser {
+  @extend .d-flex;
+  @extend .align-items-center;
+
+  height: 100%;
 
   type-icon {
     margin-top: 2px;

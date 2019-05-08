@@ -67,7 +67,7 @@ export class NavbarComponent implements DoCheck {
 
     public onResize() {
 
-        this.tabManager.setTabSpaceWidth(this.computeTabSpaceWidth());
+        if (this.tabSpaceElement) this.tabManager.setTabSpaceWidth(this.computeTabSpaceWidth());
     }
 
 

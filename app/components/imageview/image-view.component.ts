@@ -32,7 +32,6 @@ export class ImageViewComponent implements OnInit {
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
     public activeTab: string;
-    public originalNotFound: boolean = false;
     public openSection: string|undefined = 'stem';
 
     private subModalOpened: boolean = false;
@@ -84,8 +83,6 @@ export class ImageViewComponent implements OnInit {
         if (!image.imgSrc) await this.addOriginal(image);
 
         this.selectedImage = image;
-        if (!this.selectedImage.imgSrc || this.selectedImage.imgSrc === '') this.originalNotFound = true;
-
         this.scrollToThumbnail(image);
     }
 
@@ -146,6 +143,12 @@ export class ImageViewComponent implements OnInit {
         return this.imageInfo
             && this.imageInfo.nativeElement.scrollHeight
             > this.imageInfo.nativeElement.clientHeight;
+    }
+
+
+    public containsOriginal(image: ImageContainer): boolean {
+
+        return image.imgSrc !== undefined && image.imgSrc !== '';
     }
 
 

@@ -41,18 +41,14 @@
                                         (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
             </div>
         </div>
+
         <div *ngIf="selectedImage" id="image-container">
-            <div *ngIf="selectedImage.imgSrc" class="d-flex align-items-center justify-content-center">
-                <img id="original-image" [src]="selectedImage.imgSrc">
-            </div>
-            <div *ngIf="originalNotFound && selectedImage.thumbSrc" id="thumbnail-image-container">
-                <div class="alert alert-info" role="alert"
+            <div class="d-flex align-items-center justify-content-center">
+                <div *ngIf="!containsOriginal(selectedImage)" class="alert alert-info" role="alert"
                      i18n="@@imageView.originalNotFoundWarning">
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
                 </div>
-                <div class="d-flex align-items-center justify-content-center">
-                    <img [src]="selectedImage.thumbSrc" id="thumb-image">
-                </div>
+                <img [src]="containsOriginal(selectedImage) ? selectedImage.imgSrc : selectedImage.thumbSrc">
             </div>
         </div>
 

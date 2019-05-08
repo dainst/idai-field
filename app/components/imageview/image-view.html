@@ -16,7 +16,12 @@
          [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
         <div id="popover">
             <div id="popover-header">
-                <div *ngIf="selectedImage">{{selectedImage.document.resource.identifier}}</div>
+                <div *ngIf="selectedImage" id="identifier-label">
+                    {{selectedImage.document.resource.identifier}}
+                </div>
+                <button class="btn btn-light" (click)="startEdit()">
+                    <span class="mdi mdi-pencil"></span>
+                </button>
             </div>
 
             <div #imageInfo id="image-info"

@@ -113,10 +113,15 @@
         user-select: none;
         cursor: default;
 
+        #identifier-label {
+          position: relative;
+          top: -1px;
+        }
+
         .btn {
-          position: absolute;
-          top: 0;
-          right: 0;
+          position: relative;
+          top: -32px;
+          left: 96px;
           height: 39px;
           background-color: transparent;
           border: none;
@@ -125,10 +130,8 @@
             background-color: darken($list-item-hover-color, 5%);
           }
 
-          .mdi-close {
-            position: relative;
-            top: 3px;
-            color: #000;
+          &:active:focus {
+            box-shadow: none;
           }
         }
       }

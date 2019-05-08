@@ -11,11 +11,15 @@ import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './matrix-view.html'
+    templateUrl: './matrix-view.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * Responsible for the calculation of the graph.
@@ -47,7 +51,8 @@ export class MatrixViewComponent implements OnInit {
         private featureDatastore: FeatureReadDatastore,
         private modalService: NgbModal,
         private matrixState: MatrixState,
-        private loading: Loading
+        private loading: Loading,
+        private tabManager: TabManager
     ) {}
 
 
@@ -77,6 +82,12 @@ export class MatrixViewComponent implements OnInit {
         await this.matrixState.load();
         await this.populateTrenches();
         this.trenchesLoaded = true;
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.openActiveTab();
     }
 
 

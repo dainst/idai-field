@@ -3,6 +3,7 @@ import {Query, ImageDocument} from 'idai-components-2';
 import {ImageFilterOption, ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {clone} from '../../../core/util/object-util';
 
 
 @Injectable()
@@ -166,7 +167,7 @@ export class ImageOverviewFacade {
 
         const query: Query = this.imagesState.getQuery();
 
-        query.constraints = this.getCustomConstraints();
+        query.constraints = clone(this.getCustomConstraints());
 
         switch(this.imagesState.getLinkFilter()) {
             case 'UNLINKED':

@@ -11,18 +11,6 @@ const delays = require('../config/delays');
  */
 export class RelationsViewPage {
 
-    public static getRelationsTab() {
-
-        return element(by.id('document-view-relations-tab'));
-    }
-
-
-    public static clickRelationsTab() {
-
-        return common.click(RelationsViewPage.getRelationsTab());
-    }
-
-
     public static clickRelation(relationIndex) {
 
         return element.all(by.css('#relations-view .resources-listing-item')).get(relationIndex).click();

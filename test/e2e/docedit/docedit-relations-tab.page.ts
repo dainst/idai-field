@@ -13,18 +13,16 @@ export class DoceditRelationsTabPage {
 
     // click
 
-    public static clickChooseRelationSuggestion = function(groupIndex, pickerIndex, suggestionIndex) {
+    public static clickChooseRelationSuggestion = function(groupName, pickerIndex, suggestionIndex) {
 
         browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
-        this.getRelationEl(groupIndex, pickerIndex)
-            .all(by.css('.suggestion')).get(suggestionIndex).click();
+        element(by.id(groupName)).all(by.css('.suggestion')).get(suggestionIndex).click();
     };
 
 
-    public static clickAddRelationForGroupWithIndex = function(groupIndex) {
+    public static clickAddRelationForGroupWithIndex = function(groupName) {
 
-        element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .element(by.css('.circular-button.add-relation')).click();
+        element(by.id(groupName)).element(by.css('.circular-button.add-relation')).click();
     };
 
 
@@ -39,19 +37,12 @@ export class DoceditRelationsTabPage {
     public static getRelationButtonText = function(groupName, pickerIndex = 0, relationIndex = 0) {
 
         DoceditPage.clickGotoTimeTab();
-        return this.getRelationElByName(groupName, pickerIndex, relationIndex)
+        return this.getRelationElByName(groupName, pickerIndex)
             .element(by.className('badge')).getText();
     };
 
 
     // elements
-
-    public static getRelationEl = function(groupIndex, pickerIndex) {
-
-        return element.all(by.tagName('relation-picker-group')).get(groupIndex)
-            .all(by.tagName('relation-picker')).get(pickerIndex);
-    };
-
 
     public static getRelationElByName = function(groupName, pickerIndex) {
 
@@ -61,9 +52,8 @@ export class DoceditRelationsTabPage {
 
     // type in
 
-    public static typeInRelationByIndices = function(groupIndex, pickerIndex, input) {
+    public static typeInRelationByIndices = function(groupName, pickerIndex, input) {
 
-        common.typeIn(this.getRelationEl(groupIndex, pickerIndex)
-            .element(by.tagName('input')), input);
+        common.typeIn(element(by.id(groupName)).element(by.tagName('input')), input);
     };
 }

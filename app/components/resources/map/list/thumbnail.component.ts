@@ -6,6 +6,7 @@ import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {MenuService} from '../../../../menu-service';
 import {ImageViewComponent} from '../../../imageview/image-view.component';
 import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
+import {ResourcesComponent} from '../../resources.component';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class ThumbnailComponent implements OnChanges {
 
     constructor(private imagestore: Imagestore,
                 private datastore: ImageDatastore,
-                private modalService: NgbModal) {}
+                private modalService: NgbModal,
+                private resourcesComponent: ResourcesComponent) {}
 
 
     async ngOnChanges() {
@@ -40,6 +42,7 @@ export class ThumbnailComponent implements OnChanges {
     public async openImageModal() {
 
         MenuService.setContext('image-view');
+        this.resourcesComponent.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(
             ImageViewComponent,
@@ -53,6 +56,7 @@ export class ThumbnailComponent implements OnChanges {
         await modalRef.result;
 
         MenuService.setContext('default');
+        this.resourcesComponent.isModalOpened = false;
     }
 
 

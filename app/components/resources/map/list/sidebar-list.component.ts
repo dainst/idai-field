@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {isEmpty} from 'tsfun';
 import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';

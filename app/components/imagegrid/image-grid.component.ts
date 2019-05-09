@@ -22,6 +22,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() nrOfColumns: number = 1;
     @Input() documents: ImageDocument[];
     @Input() selected: ImageDocument[] = [];
+    @Input() main: ImageDocument|undefined;
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;

@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {ImageDocument} from 'idai-components-2';
 
 @Component({
     selector: 'image-grid-cell',
@@ -13,6 +14,7 @@ import {Component, Input} from '@angular/core';
 export class ImageGridCellComponent {
 
     @Input() cell: any;
+    @Input() main: ImageDocument;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;

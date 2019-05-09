@@ -99,6 +99,12 @@ export class DoceditImageTabComponent {
     }
 
 
+    public getMainImage(): ImageDocument|undefined {
+
+        return this.documents.find(document => this.isMainImage(document));
+    }
+
+
     public setMainImage() {
 
         if (this.selected.length !== 1) return;

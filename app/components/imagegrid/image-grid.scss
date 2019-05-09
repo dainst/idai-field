@@ -42,6 +42,10 @@
       border: 3px solid white;
     }
 
+    .identifier {
+      width: calc(100% - 1px);
+    }
+
     .title {
       background-color: white;
       overflow: hidden;

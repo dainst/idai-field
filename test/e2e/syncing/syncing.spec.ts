@@ -145,7 +145,7 @@ xdescribe('syncing --', function() {
                 MenuPage.navigateToSettings();
                 NavbarPage.clickCloseNonResourcesTab();
                 NavbarPage.clickTab('project');
-                ResourcesPage.performJumpToTrenchView('S1');
+                ResourcesPage.clickHierarchyButton('S1');
                 return browser.sleep(delays.shortRest * 10);
             });
     }
@@ -155,7 +155,7 @@ xdescribe('syncing --', function() {
 
         return createOneDocument(number)
             .then(() => NavbarPage.clickTab('project'))
-            .then(() => ResourcesPage.performJumpToTrenchView('S1'))
+            .then(() => ResourcesPage.clickHierarchyButton('S1'))
             .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => createAlternateDocument(number));
     }
@@ -202,7 +202,7 @@ xdescribe('syncing --', function() {
 
         let testDocument = await createOneDocument(number);
         await NavbarPage.clickTab('project');
-        await ResourcesPage.performJumpToTrenchView('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
         // ResourcesPage.clickSelectResource();
@@ -258,7 +258,7 @@ xdescribe('syncing --', function() {
 
         await createOneDocument(number);
         await NavbarPage.clickTab('project');
-        await ResourcesPage.performJumpToTrenchView('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
         await browser.sleep(delays.shortRest * 10);
 
         expect(ResourcesPage.getListItemEl('testf' + number).getAttribute('class'))

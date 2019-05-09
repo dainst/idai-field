@@ -362,7 +362,7 @@ export class ResourcesPage {
 
         NavbarPage.clickTab('project');
         this.performCreateResource(identifier, 'trench');
-        this.performJumpToTrenchView(identifier);
+        this.clickHierarchyButton(identifier);
     }
 
 
@@ -386,27 +386,7 @@ export class ResourcesPage {
         this.performCreateRelation('2', '1', 'zeitlich-vor');
     }
 
-
-    public static performJumpToTrenchView(identifier: string) { // TODO remove
-
-        this.clickHierarchyButton(identifier);
-    }
-
-
-    public static performJumpToMatrixView(identifier: string) { // TODO remvoe
-
-        this.clickHierarchyButton(identifier);
-        this.clickJumpToMatrixViewButton(identifier);
-    }
-
-
     // script
-
-    public static scrollDown() {
-
-        return browser.executeScript('window.scrollTo(0,200);');
-    }
-
 
     public static scrollUp() {
 

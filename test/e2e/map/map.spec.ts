@@ -163,7 +163,7 @@ describe('map --', function() {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 4);
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
     });
 
 
@@ -176,7 +176,7 @@ describe('map --', function() {
             NavbarPage.clickCloseNonResourcesTab();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 4);
-            ResourcesPage.performJumpToTrenchView('S1');
+            ResourcesPage.clickHierarchyButton('S1');
         }
 
         index++;

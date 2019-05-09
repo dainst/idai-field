@@ -59,7 +59,7 @@ describe('import --', function() {
         browser.sleep(delays.shortRest * 4);
 
         NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.performJumpToTrenchView('importedTrench');
+        ResourcesPage.clickHierarchyButton('importedTrench');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
@@ -75,7 +75,7 @@ describe('import --', function() {
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
         NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
     });

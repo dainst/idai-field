@@ -18,7 +18,7 @@ describe('resources/list --', () => {
     beforeAll(function() {
         ResourcesPage.get();
         browser.sleep(delays.shortRest);
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest);
         ResourcesPage.clickListModeButton();
         browser.sleep(delays.shortRest);
@@ -34,7 +34,7 @@ describe('resources/list --', () => {
             NavbarPage.clickCloseNonResourcesTab();
             NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 2);
-            ResourcesPage.performJumpToTrenchView('S1');
+            ResourcesPage.clickHierarchyButton('S1');
             browser.sleep(delays.shortRest);
             ResourcesPage.clickListModeButton();
             browser.sleep(delays.shortRest);
@@ -62,7 +62,7 @@ describe('resources/list --', () => {
         ResourcesPage.getListModeInputField('2', 0).click();
 
         NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickMapModeButton();
         ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Changed resource 1'));
@@ -75,7 +75,7 @@ describe('resources/list --', () => {
         ResourcesPage.clickHierarchyButton('5');
         ResourcesPage.performCreateResourceInList('child1', 'find');
         NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.getListModeInputFieldValue('child1', 0)
             .then(inputValue => expect(inputValue).toEqual('child1'));

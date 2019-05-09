@@ -75,7 +75,7 @@ describe('project --', function() {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 15);
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
 
@@ -115,7 +115,7 @@ describe('project --', function() {
         MenuPage.navigateToSettings();
         NavbarPage.clickCloseNonResourcesTab();
         NavbarPage.clickTab('project');
-        ResourcesPage.performJumpToTrenchView('S1');
+        ResourcesPage.clickHierarchyButton('S1');
 
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');

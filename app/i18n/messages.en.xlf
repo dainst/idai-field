@@ -1342,6 +1342,26 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageView.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.linkedImages" datatype="html">
+        <source>
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
+    </source>
+        <target state="final">
+        Images linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageOverview.filter.all" datatype="html">
         <source>Alle Bilder</source>
         <target state="final">All images</target>
@@ -1470,12 +1490,12 @@
         <source>
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
                 </source>
-        <target state="translated">
-                The original version of the image could not be found in the image directory.
+        <target state="final">
+                    The original version of the image could not be found in the image directory.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -2689,9 +2709,9 @@
             Legen Sie eine Ressource vom Typ 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
             an, um hier mit ihr arbeiten zu können.
         </source>
-        <target state="translated">
-              Please create a resource of type 'Trench' in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-              in order to work with it here.
+        <target state="final">
+            Please create a resource of type 'Trench' in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
+            in order to work with it here.
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/matrix/matrix-view.html</context>

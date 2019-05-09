@@ -1565,7 +1565,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -4230,6 +4230,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.linkedImages" datatype="html">
+        <source>
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
+    </source>
+        <target state="final">
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.all" datatype="html">

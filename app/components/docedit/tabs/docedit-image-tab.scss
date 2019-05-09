@@ -15,7 +15,10 @@
   .image-grid-container {
     height: calc(100vh - 223px);
     overflow-y: auto;
-    margin: 10px;
-    padding: 0 !important;
+    margin: 10px 0;
+
+    .image-grid {
+      margin-top: 0;
+    }
   }
 }

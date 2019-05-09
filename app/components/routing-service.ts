@@ -49,12 +49,6 @@ export class RoutingService {
     }
 
 
-    public async jumpToMatrix(trench: FieldDocument) {
-
-        await this.router.navigate(['matrix', trench.resource.id]);
-    }
-
-
     public async jumpToResource(documentToSelect: Document,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 

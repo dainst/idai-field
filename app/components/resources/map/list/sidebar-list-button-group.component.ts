@@ -42,12 +42,10 @@ export class SidebarListButtonGroupComponent {
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
 
-    public async jumpToResourceFromOverviewToOperation() { // arrow top right, when in search
+    public async jumpToResourceFromOverviewToOperation() {
 
         this.sidebarList.closePopover();
-        await this.routingService.jumpToResource(this.document);
-        await this.viewFacade.setBypassHierarchy(false);
-        await this.routingService.jumpToResource(this.document);
+        await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
         this.resourcesComponent.setScrollTarget(this.document);
     }
 }

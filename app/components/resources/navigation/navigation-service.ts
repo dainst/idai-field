@@ -29,6 +29,18 @@ export class NavigationService {
         ObserverUtil.register(this.moveIntoObservers);
 
 
+    public async jumpToView(document: FieldDocument) {
+
+        await this.routingService.jumpToOperationView(document);
+    }
+
+
+    public shouldShowArrowTopRight(document: FieldDocument) {
+
+        return this.showJumpToViewOption(document);
+    }
+
+
     public async moveInto(document: FieldDocument|undefined) {
 
         await this.viewFacade.moveInto(document);
@@ -43,15 +55,11 @@ export class NavigationService {
     }
 
 
-    public async jumpToView(document: FieldDocument) {
+    public async jumpToResourceFromOverviewToOperation(document: FieldDocument) { // arrow top right, when in search
 
-        await this.routingService.jumpToOperationView(document);
-    }
-
-
-    public async jumpToMatrix(document: FieldDocument) {
-
-        await this.routingService.jumpToMatrix(document);
+        await this.routingService.jumpToResource(document);
+        await this.viewFacade.setBypassHierarchy(false);
+        await this.routingService.jumpToResource(document);
     }
 
 
@@ -64,12 +72,6 @@ export class NavigationService {
             .getRelationDefinitions(document.resource.type, true) as any)
             .map((_: RelationDefinition) => _.name)
             .indexOf('liesWithin') !== -1);
-    }
-
-
-    public shouldShowArrowTopRight(document: FieldDocument) {
-
-        return this.showJumpToViewOption(document);
     }
 
 

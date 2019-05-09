@@ -9,7 +9,6 @@ import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
-import {RoutingService} from '../../routing-service';
 
 
 @Component({
@@ -41,8 +40,7 @@ export class RowComponent implements AfterViewInit {
         private validator: Validator,
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
-        private projectConfiguration: ProjectConfiguration,
-        private routingService: RoutingService
+        private projectConfiguration: ProjectConfiguration
     ) {}
 
 
@@ -70,8 +68,6 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public jumpToMatrix = () => this.navigationService.jumpToMatrix(this.document);
-
     public getTypeLabel = () => this.typesMap[this.document.resource.type].label;
 
     public makeId = () => this.document.resource.id
@@ -85,12 +81,10 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async jumpToResourceFromOverviewToOperation() { // arrow top right, when in search
-        // TODO remove code duplicated with sidebarlistbuttongroup, get rid of dependency to routing service
-        await this.routingService.jumpToResource(this.document);
-        await this.viewFacade.setBypassHierarchy(false);
-        await this.routingService.jumpToResource(this.document);
-        this.resourcesComponent.setScrollTarget(this.document); // <- does it work?
+    public async jumpToResourceFromOverviewToOperation() {
+
+        await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
+        this.resourcesComponent.setScrollTarget(this.document);
     }
 
 

@@ -1,6 +1,12 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ImageDocument} from 'idai-components-2';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
+import {MenuService} from '../../../../menu-service';
+import {ImageViewComponent} from '../../../imageview/image-view.component';
+import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
+
 
 @Component({
     selector: 'thumbnail',
@@ -12,21 +18,44 @@ import {Imagestore} from '../../../../core/imagestore/imagestore';
  */
 export class ThumbnailComponent implements OnChanges {
 
-    @Input() depictedInRelations: any[]|undefined;
+    @Input() depictedInRelations: string[]|undefined;
 
     public thumbnailUrl: string|undefined;
 
+    private images: Array<ImageDocument> = [];
 
-    constructor(private imagestore: Imagestore) {}
+
+    constructor(private imagestore: Imagestore,
+                private datastore: ImageDatastore,
+                private modalService: NgbModal) {}
 
 
     async ngOnChanges() {
 
         this.thumbnailUrl = await this.getThumbnailUrl(this.depictedInRelations);
+        this.images = await this.getImageDocuments(this.depictedInRelations);
     }
 
 
-    private async getThumbnailUrl(relations: any|undefined): Promise<string|undefined> {
+    public async openImageModal() {
+
+        MenuService.setContext('image-view');
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ImageViewComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        await modalRef.componentInstance.initialize(
+            this.images,
+            this.images[0]
+        );
+        await modalRef.result;
+
+        MenuService.setContext('default');
+    }
+
+
+    private async getThumbnailUrl(relations: string[]|undefined): Promise<string|undefined> {
 
         if (!relations || relations.length === 0) return undefined;
 
@@ -37,5 +66,13 @@ export class ThumbnailComponent implements OnChanges {
         } catch (e) {
             return BlobMaker.blackImg;
         }
+    }
+
+
+    private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
+
+        return relations
+            ? this.datastore.getMultiple(relations)
+            : [];
     }
 }

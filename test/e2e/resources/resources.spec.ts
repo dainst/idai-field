@@ -232,7 +232,7 @@ describe('resources --', () => {
     });
 
 
-    fit('relations', () => {
+    it('relations', () => {
 
         ResourcesPage.performCreateLink();
 

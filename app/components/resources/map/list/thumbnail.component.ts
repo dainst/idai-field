@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument, FieldDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {MenuService} from '../../../../menu-service';
@@ -19,7 +19,8 @@ import {ResourcesComponent} from '../../resources.component';
  */
 export class ThumbnailComponent implements OnChanges {
 
-    @Input() document: FieldDocument;
+    @Input() identifier: string;
+    @Input() isDepictedInRelations: string[]|undefined;
 
     public thumbnailUrl: string|undefined;
 
@@ -34,8 +35,8 @@ export class ThumbnailComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.document.resource.relations['isDepictedIn']);
-        this.images = await this.getImageDocuments(this.document.resource.relations['isDepictedIn']);
+        this.thumbnailUrl = await this.getThumbnailUrl(this.isDepictedInRelations);
+        this.images = await this.getImageDocuments(this.isDepictedInRelations);
     }
 
 
@@ -51,7 +52,7 @@ export class ThumbnailComponent implements OnChanges {
         await modalRef.componentInstance.initialize(
             this.images,
             this.images[0],
-            this.document
+            this.identifier
         );
         await modalRef.result;
 

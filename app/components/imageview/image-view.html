@@ -1,7 +1,7 @@
 <div id="image-view-modal-header" class="d-flex justify-content-between">
-    <div *ngIf="!linkedDocument" class="text-truncate" i18n="@@imageView.images">Bilder</div>
-    <div *ngIf="linkedDocument" class="text-truncate" i18n="@@imageView.linkedImages">
-        Mit <strong>{{linkedDocument.resource.identifier}}</strong> verknüpfte Bilder
+    <div *ngIf="!linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.images">Bilder</div>
+    <div *ngIf="linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.linkedImages">
+        Mit <strong>{{linkedResourceIdentifier}}</strong> verknüpfte Bilder
     </div>
 
     <button class="btn btn-primary"

@@ -19,7 +19,9 @@
             </div>
         </div>
 
-        <thumbnail [document]="viewFacade.getSelectedDocument()"></thumbnail>
+        <thumbnail [identifier]="viewFacade.getSelectedDocument().resource.identifier"
+                   [isDepictedInRelations]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
+        </thumbnail>
 
         <div id="document-info">
             <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>

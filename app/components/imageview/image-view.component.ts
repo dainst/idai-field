@@ -31,7 +31,7 @@ export class ImageViewComponent implements OnInit {
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
-    public linkedDocument: FieldDocument|undefined;
+    public linkedResourceIdentifier: string|undefined;
     public activeTab: string;
     public openSection: string|undefined = 'stem';
 
@@ -65,11 +65,11 @@ export class ImageViewComponent implements OnInit {
 
 
     public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
-                            linkedDocument?: FieldDocument) {
+                            linkedResourceIdentifier?: string) {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.linkedDocument = linkedDocument;
+        this.linkedResourceIdentifier = linkedResourceIdentifier;
 
         this.images = [];
         await this.select(await this.fetchThumbnail(selectedDocument), false);

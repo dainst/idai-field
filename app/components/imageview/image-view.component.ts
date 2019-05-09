@@ -72,13 +72,13 @@ export class ImageViewComponent implements OnInit {
         this.linkedDocument = linkedDocument;
 
         this.images = [];
-        await this.select(await this.fetchImage(selectedDocument), false);
+        await this.select(await this.fetchThumbnail(selectedDocument), false);
 
         for (let document of documents) {
             if (document === selectedDocument) {
                 this.images.push(this.selectedImage);
             } else {
-                this.images.push(await this.fetchImage(document));
+                this.images.push(await this.fetchThumbnail(document));
             }
         }
 
@@ -160,14 +160,12 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    private async fetchImage(document: ImageDocument): Promise<ImageContainer> {
+    private async fetchThumbnail(document: ImageDocument): Promise<ImageContainer> {
 
         const image: ImageContainer = { document: document };
 
         try {
-            // read thumb
-            let url: string = await this.imagestore.read(document.resource.id, false, true);
-            image.thumbSrc = url;
+            image.thumbSrc = await this.imagestore.read(document.resource.id, false, true);
         } catch (e) {
             image.thumbSrc = BlobMaker.blackImg;
             this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
@@ -182,7 +180,9 @@ export class ImageViewComponent implements OnInit {
         if (!image.document) return;
 
         try {
-            image.imgSrc = await this.imagestore.read(image.document.resource.id, false, false);
+            image.imgSrc = await this.imagestore.read(
+                image.document.resource.id, false, false
+            );
         } catch (e) {
             image.imgSrc = BlobMaker.blackImg;
             this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);

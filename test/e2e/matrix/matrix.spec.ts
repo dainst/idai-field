@@ -68,8 +68,8 @@ describe('matrix --', () => {
         DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
 
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
-        DoceditRelationsTabPage.typeInRelationByIndices(2, 1, 'SE4');
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
+        DoceditRelationsTabPage.typeInRelationByIndices('zeitlich-nach', 1, 'SE4');
         DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
         DoceditPage.clickSaveDocument();
 

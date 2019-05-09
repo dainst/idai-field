@@ -1889,7 +1889,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.arrowtopright.search" datatype="html">
@@ -2000,12 +2000,20 @@
           <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
+        <source>Als Hauptbild festlegen</source>
+        <target state="final">Als Hauptbild festlegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
@@ -4242,10 +4250,10 @@
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
         <source>
-        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
     </source>
         <target state="final">
-        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>

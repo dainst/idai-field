@@ -78,7 +78,6 @@ describe('resources --', () => {
 
         ResourcesPage.performJumpToTrenchView('S1');
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        // DoceditPage.clickImagesTab(); TODO remove
         DoceditPage.clickGotoImagesTab();
     }
 

@@ -11,8 +11,6 @@ const CHILD_PROPERTIES = 2;
 const DIMENSIONS = 3;
 const POSITION = 4;
 const TIME = 5;
-const IMAGES = 6;
-const CONFLICTS = 7;
 
 
 interface GroupDefinition {
@@ -49,14 +47,20 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public types: string[];
 
     public groups: GroupDefinition[] = [
-        { name: 'stem', label: 'Stammdaten', fields: [], relations: [], widget: 'generic' },
+        { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), fields: [],
+            relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimensions', label: 'Maße', fields: [], relations: [], widget: 'generic' },
-        { name: 'position', label: 'Lage', fields: [], relations: [], widget: 'generic' },
-        { name: 'time', label: 'Zeit', fields: [], relations: [], widget: 'generic' },
-        { name: 'images', label: 'Bilder', fields: [], relations: [], widget: undefined },
-        { name: 'conflicts', label: 'Konflikte', fields: [], relations: [], widget: undefined } ];
+        { name: 'dimensions', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
+            fields: [], relations: [], widget: 'generic' },
+        { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
+            fields: [], relations: [], widget: 'generic' },
+        { name: 'time', label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), fields: [],
+            relations: [], widget: 'generic' },
+        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [],
+            relations: [], widget: undefined },
+        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }),
+            fields: [], relations: [], widget: undefined } ];
 
 
     constructor(private elementRef: ElementRef,
@@ -133,13 +137,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     private setLabels() {
-
-        this.groups[STEM].label = this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' });
-        this.groups[DIMENSIONS].label = this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' });
-        this.groups[POSITION].label = this.i18n({ id: 'docedit.group.position', value: 'Lage' });
-        this.groups[TIME].label = this.i18n({ id: 'docedit.group.time', value: 'Zeit' });
-        this.groups[IMAGES].label = this.i18n({ id: 'docedit.group.images', value: 'Bilder' });
-        this.groups[CONFLICTS].label = this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' });
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[this.document.resource.type];
         if (type.parentType) {

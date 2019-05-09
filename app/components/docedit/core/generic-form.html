@@ -17,7 +17,9 @@
 <ul class="list-group list-group-flush">
 
     <ng-template ngFor [ngForOf]="relationDefinitions" let-relationDefinition="$implicit">
-        <li class="card">
+        <li id="{{(relationDefinition.label ? relationDefinition.label : relationDefinition.name).replace(' ', '-').toLowerCase()}}"
+            class="card">
+
             <div class="card-header h4">
                 <span class="card-title" *ngIf="relationDefinition.label">{{relationDefinition.label}}</span>
                 <span class="card-title" *ngIf="!relationDefinition.label">{{relationDefinition.name}}</span>

@@ -232,7 +232,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations', () => {
+    fit('relations', () => {
 
         ResourcesPage.performCreateLink();
 
@@ -259,10 +259,10 @@ describe('resources --', () => {
 
         // docedit
         ResourcesPage.openEditByDoubleClickResource('1');
-        expect(DoceditRelationsTabPage.getRelationButtonText(2)).toEqual('2'); // TODO make available via name of the relation as first parameter
+        expect(DoceditRelationsTabPage.getRelationButtonText('zeitlich-nach')).toEqual('2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(1)).toEqual('1'); // TODO make available via name of the relation as first parameter
+        expect(DoceditRelationsTabPage.getRelationButtonText('zeitlich-vor')).toEqual('1');
 
         // deletion
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1);

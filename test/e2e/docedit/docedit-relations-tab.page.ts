@@ -36,10 +36,11 @@ export class DoceditRelationsTabPage {
 
     // get text
 
-    public static getRelationButtonText = function(groupIndex, pickerIndex = 0, relationIndex = 0) {
+    public static getRelationButtonText = function(groupName, pickerIndex = 0, relationIndex = 0) {
 
         DoceditPage.clickGotoTimeTab();
-        return this.getRelationButtonEl(groupIndex, pickerIndex, relationIndex).element(by.tagName('span')).getText();
+        return this.getRelationElByName(groupName, pickerIndex, relationIndex)
+            .element(by.className('badge')).getText();
     };
 
 
@@ -52,16 +53,9 @@ export class DoceditRelationsTabPage {
     };
 
 
-    public static getRelationSuggestionEl = function(groupIndex, pickerIndex, suggestionIndex) {
+    public static getRelationElByName = function(groupName, pickerIndex) {
 
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.suggestion')).get(suggestionIndex);
-    };
-
-
-    public static getRelationButtonEl = function(groupIndex, pickerIndex, relationIndex) {
-
-        browser.wait(EC.visibilityOf(element(by.css('relation-picker-group relation-picker'))), delays.ECWaitTime);
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.tagName('button')).get(relationIndex);
+        return element(by.id(groupName)).all(by.id('relation-picker')).get(pickerIndex);
     };
 
 

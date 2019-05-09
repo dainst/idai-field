@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
-import {Document, DatastoreErrors, FieldDocument} from 'idai-components-2';
+import {DatastoreErrors, Document} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
 import {TypeUtility} from '../core/model/type-utility';
 
@@ -34,12 +34,6 @@ export class RoutingService {
         return Observable.create((observer: Observer<any>) => {
             this.setRoute(route, observer);
         });
-    }
-
-
-    public async jumpToOverview() {
-
-        await this.router.navigate(['resources', 'project']);
     }
 
 

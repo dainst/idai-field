@@ -11,6 +11,10 @@ type FieldViewGroupDefinition = {
 }
 
 
+const PROPERTIES = 1;
+const CHILD_PROPERTIES = 2;
+
+
 @Component({
     selector: 'fields-view',
     moduleId: module.id,
@@ -81,10 +85,10 @@ export class FieldsViewComponent implements OnChanges {
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
         if (type.parentType) {
-            this.groups[1].label = type.parentType.label;
-            this.groups[2].label = type.label;
+            this.groups[PROPERTIES].label = type.parentType.label;
+            this.groups[CHILD_PROPERTIES].label = type.label;
         } else {
-            this.groups[1].label = type.label;
+            this.groups[PROPERTIES].label = type.label;
         }
     }
 

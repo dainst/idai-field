@@ -250,12 +250,8 @@ describe('resources --', () => {
         });
 
         ResourcesPage.clickSelectResource('2', 'links');
-        RelationsViewPage.getRelationName(0).then(value => {
-            expect(value).toBe('Zeitlich vor');
-        });
-        RelationsViewPage.getRelationValue(0).then(value => {
-            expect(value).toBe('1');
-        });
+        RelationsViewPage.getRelationName(0).then(value => expect(value).toBe('Zeitlich vor'));
+        RelationsViewPage.getRelationValue(0).then(value => expect(value).toBe('1'));
 
         // docedit
         ResourcesPage.openEditByDoubleClickResource('1');
@@ -284,16 +280,14 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('2', 'feature-architecture');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
-        DoceditRelationsTabPage.typeInRelationByIndices(0, 0, '2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitgleich-mit');
+        DoceditRelationsTabPage.typeInRelationByIndices('zeitgleich-mit', 0, '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitgleich-mit', 0, 0);
         DoceditPage.clickCloseEdit('discard');
 
         ResourcesPage.clickSelectResource('1', 'links');
-        // browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
-        RelationsViewPage.getRelations().then(relations => {
-            expect(relations.length).toBe(0);
-        });
+        browser.wait(EC.visibilityOf(element(by.id('sidebar-popover'))), delays.ECWaitTime);
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 

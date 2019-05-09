@@ -465,7 +465,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('c4', 'feature');
         ResourcesPage.performDescendHierarchy('c4');
         ResourcesPage.performCreateResource('c5', 'feature');
-        ResourcesPage.performCreateRelation('c5', 'c3', 0);
+        ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
 
         ResourcesPage.clickSelectResource('c5', 'links');
         RelationsViewPage.clickRelation(0);

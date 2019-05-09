@@ -70,7 +70,7 @@ describe('matrix --', () => {
 
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
         DoceditRelationsTabPage.typeInRelationByIndices(2, 1, 'SE4');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(2, 1, 0);
+        DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);

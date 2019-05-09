@@ -367,13 +367,13 @@ export class ResourcesPage {
 
 
     public static performCreateRelation(identifier: string, targetIdentifier: string,
-                                                   relationGroupIndex: number) {
+                                                   relationGroupName: string) {
 
         this.openEditByDoubleClickResource(identifier);
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
-        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupName);
+        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupName, 0, targetIdentifier);
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupName, 0, 0);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     }
@@ -383,7 +383,7 @@ export class ResourcesPage {
 
         this.performCreateResource('1', "feature-architecture");
         this.performCreateResource('2', "feature-architecture");
-        this.performCreateRelation('2', '1', 1);   //isBefore
+        this.performCreateRelation('2', '1', 'zeitlich-vor');
     }
 
 

@@ -93,6 +93,28 @@ export class DoceditImageTabComponent {
     }
 
 
+    public isMainImage(imageDocument: ImageDocument): boolean {
+
+        return imageDocument.resource.id === this.document.resource.relations['isDepictedIn'][0];
+    }
+
+
+    public setMainImage() {
+
+        if (this.selected.length !== 1) return;
+
+        const mainImageId: string = this.selected[0].resource.id;
+
+        this.document.resource.relations['isDepictedIn'] = [mainImageId].concat(
+            this.document.resource.relations['isDepictedIn'].filter(targetId => {
+                return targetId !== mainImageId;
+            })
+        );
+
+        this.loadImages();
+    }
+
+
     private loadImages() {
 
         const imageDocPromises: any[] = [];

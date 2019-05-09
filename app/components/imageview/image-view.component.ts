@@ -31,6 +31,7 @@ export class ImageViewComponent implements OnInit {
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
+    public linkedDocument: FieldDocument|undefined;
     public activeTab: string;
     public openSection: string|undefined = 'stem';
 
@@ -63,9 +64,12 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument) {
+    public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
+                            linkedDocument?: FieldDocument) {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+
+        this.linkedDocument = linkedDocument;
 
         this.images = [];
         await this.select(await this.fetchImage(selectedDocument), false);
@@ -109,7 +113,7 @@ export class ImageViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static' }
             );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.selectedImage.document);
+        doceditModalComponent.setDocument(this.selectedImage.document as ImageDocument);
 
         try {
             const result = await doceditModalRef.result;

@@ -11,4 +11,11 @@
   #set-main-image {
     height: 40px;
   }
+
+  .image-grid-container {
+    height: calc(100vh - 223px);
+    overflow-y: auto;
+    margin: 10px;
+    padding: 0 !important;
+  }
 }

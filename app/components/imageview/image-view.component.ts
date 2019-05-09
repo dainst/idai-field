@@ -68,22 +68,26 @@ export class ImageViewComponent implements OnInit {
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
         this.images = [];
+        await this.select(await this.fetchImage(selectedDocument), false);
+
         for (let document of documents) {
-            this.images.push(await this.fetchImage(document));
+            if (document === selectedDocument) {
+                this.images.push(this.selectedImage);
+            } else {
+                this.images.push(await this.fetchImage(document));
+            }
         }
 
-        await this.select(this.images.find(image => {
-            return image.document !== undefined && image.document ===  selectedDocument;
-        }) as ImageContainer);
+        this.scrollToThumbnail(this.selectedImage);
     }
 
 
-    public async select(image: ImageContainer) {
+    public async select(image: ImageContainer, scroll: boolean = true) {
 
         if (!image.imgSrc) await this.addOriginal(image);
 
         this.selectedImage = image;
-        this.scrollToThumbnail(image);
+        if (scroll) this.scrollToThumbnail(image);
     }
 
 

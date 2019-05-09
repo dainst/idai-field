@@ -1,7 +1,7 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {Resource, ProjectConfiguration, FieldDefinition} from 'idai-components-2';
+import {Resource, ProjectConfiguration, FieldDefinition, IdaiType} from 'idai-components-2';
 
 
 type FieldViewGroupDefinition = {
@@ -31,7 +31,7 @@ export class FieldsViewComponent implements OnChanges {
 
     private groups: Array<FieldViewGroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
-        { name: 'properties', label: this.i18n({ id: 'docedit.group.properties', value: 'Eigenschaften' }), shown: false },
+        { name: 'properties', label: 'Properties', shown: false },
         { name: 'child', label: 'Child properties', shown: false },
         { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
@@ -46,7 +46,10 @@ export class FieldsViewComponent implements OnChanges {
     ngOnChanges() {
 
         this.fields = {};
-        if (this.resource) this.processFields(this.resource);
+        if (this.resource) {
+            this.processFields(this.resource);
+            this.updateGroupLabels(this.resource.type);
+        }
     }
 
 
@@ -71,6 +74,18 @@ export class FieldsViewComponent implements OnChanges {
             : this.openSection = group.name;
 
         this.onSectionToggled.emit(this.openSection);
+    }
+
+
+    private updateGroupLabels(typeName: string) {
+
+        const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
+        if (type.parentType) {
+            this.groups[1].label = type.parentType.label;
+            this.groups[2].label = type.label;
+        } else {
+            this.groups[1].label = type.label;
+        }
     }
 
 

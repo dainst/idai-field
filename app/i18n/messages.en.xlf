@@ -1327,7 +1327,7 @@
                 are displayed. Please restrict the search further in order to view all results at a glance</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.moreRowsMessage.2" datatype="html">
@@ -1339,7 +1339,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
@@ -2881,10 +2881,6 @@
         <target state="final">Properties</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

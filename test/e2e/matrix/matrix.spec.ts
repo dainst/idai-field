@@ -66,7 +66,7 @@ describe('matrix --', () => {
 
         MatrixPage.clickNode('si1');
         DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(2, 1);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
 
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
         DoceditRelationsTabPage.typeInRelationByIndices(2, 1, 'SE4');

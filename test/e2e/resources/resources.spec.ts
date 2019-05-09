@@ -265,7 +265,7 @@ describe('resources --', () => {
         expect(DoceditRelationsTabPage.getRelationButtonText('zeitlich-vor')).toEqual('1');
 
         // deletion
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-vor');
         DoceditPage.clickSaveDocument();
         ResourcesPage.clickSelectResource('1', 'links');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));

@@ -27,8 +27,6 @@ type PopoverMenu = 'none'|'info'|'relations'|'children';
 
 export class SidebarListComponent extends BaseList {
 
-    @Input() activeTab: string;
-
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
     public highlightedDocument: FieldDocument|undefined = undefined;
     public activePopoverMenu: PopoverMenu = 'none';

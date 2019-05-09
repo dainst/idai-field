@@ -31,8 +31,8 @@ export class FieldsViewComponent implements OnChanges {
 
     private groups: Array<FieldViewGroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
-        { name: 'properties', label: 'Properties', shown: false },
-        { name: 'child', label: 'Child properties', shown: false },
+        { name: 'properties', label: '', shown: false },
+        { name: 'child', label: '', shown: false },
         { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
         { name: 'time', label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }

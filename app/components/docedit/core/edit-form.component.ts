@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
     IdaiType} from 'idai-components-2';
-import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 
 
 const STEM = 0;

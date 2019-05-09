@@ -1225,7 +1225,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -1237,7 +1237,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -1249,7 +1249,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -2873,14 +2873,6 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.properties" datatype="html">
-        <source>Eigenschaften</source>
-        <target state="final">Properties</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

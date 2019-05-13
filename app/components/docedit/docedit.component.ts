@@ -327,7 +327,7 @@ export class DoceditComponent {
     private handleSaveConflict(documentAfterSave: Document) {
 
         this.documentHolder.setDocument(documentAfterSave);
-        this.activeTabService.setActiveTab('conflicts');
+        this.activeGroup = 'conflicts';
         this.messages.add([M.DOCEDIT_WARNING_SAVE_CONFLICT]);
     }
 

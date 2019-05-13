@@ -3,6 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
     IdaiType} from 'idai-components-2';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 const STEM = 0;
@@ -64,14 +65,16 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private typeUtility: TypeUtility) {}
 
     public activateGroup = (name: string) => this.activeGroup = name;
 
 
     public shouldShow(groupName: string) {
 
-        return groupName === 'images'
+        return (groupName === 'images'
+                && !this.typeUtility.getImageTypeNames().includes(this.document.resource.type))
             || (groupName === 'conflicts' && this.document._conflicts)
             || this.getFieldDefinitions(groupName).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
@@ -88,7 +91,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).relations;
     };
-
 
 
     ngAfterViewInit() {

@@ -23,16 +23,16 @@ export class DoceditLauncher {
 
 
     public async editDocument(document: Document|NewDocument,
-                              activeTabName?: string): Promise<FieldDocument|undefined> {
+                              activeGroup?: string): Promise<FieldDocument|undefined> {
 
-        if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
+        if (activeGroup) this.doceditActiveTabService.setActiveTab(activeGroup);
 
         MenuService.setContext('docedit');
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(document);
-        if (activeTabName) doceditRef.componentInstance.activeGroup = activeTabName;
+        if (activeGroup) doceditRef.componentInstance.activeGroup = activeGroup;
 
         let result: FieldDocument|undefined;
 

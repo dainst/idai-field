@@ -54,7 +54,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
-                await this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
+                await this.selectDocumentFromParams(params['id'], params['menu'], params['group']);
             }
         });
 
@@ -135,7 +135,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async editDocument(document: Document|undefined, activeTabName?: string) {
+    public async editDocument(document: Document|undefined, activeGroup?: string) {
 
         if (!document) throw 'Called edit document with undefined document';
 
@@ -143,7 +143,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.isModalOpened = true;
 
         const editedDocument: FieldDocument|undefined
-            = await this.doceditLauncher.editDocument(document, activeTabName);
+            = await this.doceditLauncher.editDocument(document, activeGroup);
         if (editedDocument) this.scrollTarget = editedDocument;
         this.isModalOpened = false;
     }
@@ -219,16 +219,16 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private async selectDocumentFromParams(id: string, menu: string, tab: string|undefined) {
+    private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);
         this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {
             if (menu === 'edit') {
-                await this.editDocument(this.viewFacade.getSelectedDocument(), tab);
+                await this.editDocument(this.viewFacade.getSelectedDocument(), group);
             } else {
-                await this.viewFacade.setActiveDocumentViewTab(tab)
+                await this.viewFacade.setActiveDocumentViewTab(group)
             }
         } catch (e) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);

@@ -23,7 +23,7 @@ export class DoceditImageTabComponent {
 
     @Input() document: FieldDocument;
 
-    public documents: Array<ImageDocument>;
+    public documents: Array<ImageDocument> = [];
     public selected: Array<ImageDocument> = [];
 
 

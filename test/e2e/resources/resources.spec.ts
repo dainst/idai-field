@@ -532,20 +532,17 @@ describe('resources --', () => {
             expect(thumbs.length).toBe(1);
             done();
         });
-    });
 
+        ThumbnailViewPage.clickClose();
 
-    it('docedit/images -- delete links to two images', done => {
+        // delete links to the other
 
-        addTwoImages('SE0');
-        ResourcesPage.clickSelectResource('SE0', 'info');
         ThumbnailViewPage.makeSureThumbnailContainerDoesAppear();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.getCells().get(1).click();
         DoceditImageTabPage.clickDeleteImages();
         DoceditImageTabPage.getCells().then(cells => {
             expect(cells.length).toBe(0);
@@ -553,6 +550,5 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
 
         ThumbnailViewPage.makeSureThumbnailContainerDoesNotAppear();
-        done();
     });
 });

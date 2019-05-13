@@ -10,6 +10,7 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
+import {ImageViewPage} from '../images/image-view.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -79,7 +80,8 @@ describe('resources/state --', function() {
     function clickDepictsRelationLink() {
 
         ImageOverviewPage.doubleClickCell(0);
-        RelationsViewPage.clickRelation(0);
+        ImageViewPage.openRelationsTab();
+        ImageViewPage.clickRelation();
     }
 
 
@@ -420,7 +422,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('switch from image to map view after click on depicts relation link', () => {
+    it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();
         clickDepictsRelationLink();

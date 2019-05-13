@@ -70,21 +70,8 @@ describe('resources --', () => {
     });
 
 
-    function gotoImageTab() {
-
-        MenuPage.navigateToImages();
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoImagesTab();
-    }
-
-
     function addTwoImages(identifier) {
 
-        // gotoImageTab();
         ResourcesPage.openEditByDoubleClickResource(identifier);
         DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.clickInsertImage();
@@ -513,23 +500,24 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/images -- create links for images', done => {
+    it('images', done => {
+
+        // create links for images
 
         addTwoImages('SE0');
         ResourcesPage.clickSelectResource('SE0', 'info');
         ResourcesPage.clickGotoImageView();
         ThumbnailViewPage.getThumbs().then(thumbs => {
             expect(thumbs.length).toBe(2);
-            done();
         });
-    });
 
+        ThumbnailViewPage.clickClose();
 
-    it('docedit/images -- delete links to one image', done => {
+        // delete links to one image
 
-        addTwoImages('SE0');
+        ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.clickGotoImagesTab();
 
-        gotoImageTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
         DoceditImageTabPage.clickDeleteImages();
@@ -538,7 +526,6 @@ describe('resources --', () => {
         });
         DoceditPage.clickSaveDocument();
 
-        ResourcesPage.clickSelectResource('SE0', 'info');
         ResourcesPage.clickGotoImageView();
 
         ThumbnailViewPage.getThumbs().then(thumbs => {
@@ -548,10 +535,14 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- delete links to two images', done => {
+    it('docedit/images -- delete links to two images', done => {
 
         addTwoImages('SE0');
-        gotoImageTab();
+        ResourcesPage.clickSelectResource('SE0', 'info');
+        ThumbnailViewPage.makeSureThumbnailContainerDoesAppear();
+
+        ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
         DoceditImageTabPage.getCells().get(1).click();
@@ -561,10 +552,7 @@ describe('resources --', () => {
         });
         DoceditPage.clickSaveDocument();
 
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(0);
-            done();
-        });
+        ThumbnailViewPage.makeSureThumbnailContainerDoesNotAppear();
+        done();
     });
-
 });

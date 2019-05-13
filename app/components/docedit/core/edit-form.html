@@ -11,6 +11,9 @@
                         [class.active]="group.name === activeGroup"
                         [class.conflicted]="group.name === 'conflicts' && document._conflicts"
                         href="javascript: void(0);">
+                    <span *ngIf="group.name === 'conflicts' && document._conflicts"
+                          class="mdi mdi-alert">
+                    </span>
 
                     {{group.label}}
                 </a>

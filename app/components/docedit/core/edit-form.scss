@@ -19,6 +19,11 @@
 
           .conflicted {
             color: orange;
+
+            &.active {
+              color: white;
+              background-color: orange !important;
+            }
           }
 
           .nav {

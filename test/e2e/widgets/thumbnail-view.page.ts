@@ -1,6 +1,6 @@
 'use strict';
 
-import {element, by, browser, protractor} from 'protractor';
+import {by, element, protractor} from 'protractor';
 
 const delays = require('../config/delays');
 let EC = protractor.ExpectedConditions;
@@ -14,8 +14,6 @@ export class ThumbnailViewPage {
 
     public static getThumbs() {
 
-        browser.wait(EC.presenceOf(element(by.id('document-view-images-tab'))), delays.ECWaitTime);
-        element(by.id('document-view-images-tab')).click();
-        return element.all(by.css('#thumbnail-view .cell'));
+        return element.all(by.className('thumbnail-container'));
     }
 }

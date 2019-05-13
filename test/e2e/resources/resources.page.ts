@@ -51,21 +51,15 @@ export class ResourcesPage {
     }
 
 
-    public static clickJumpToResourcesViewButton(identifier: string) {
-
-        return common.click(element(by.id('jump-to-resources-view-button-' + identifier)));
-    }
-
-
     public static clickHierarchyButton(identifier: string) {
 
         return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
     }
 
 
-    public static clickJumpToMatrixViewButton(identifier: string) {
+    public static clickGotoImageView() {
 
-        return common.click(element(by.id('jump-to-matrix-view-button-' + identifier)));
+        return common.click(element(by.id('thumbnail-container')));
     }
 
 

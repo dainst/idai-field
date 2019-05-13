@@ -82,10 +82,10 @@ describe('resources --', () => {
     }
 
 
-    function addTwoImages() {
+    function addTwoImages(identifier) {
 
         // gotoImageTab();
-        ResourcesPage.openEditByDoubleClickResource('SE0');
+        ResourcesPage.openEditByDoubleClickResource(identifier);
         DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.clickInsertImage();
 
@@ -513,9 +513,11 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- create links for images', done => {
+    it('docedit/images -- create links for images', done => {
 
-        addTwoImages();
+        addTwoImages('SE0');
+        ResourcesPage.clickSelectResource('SE0', 'info');
+        ResourcesPage.clickGotoImageView();
         ThumbnailViewPage.getThumbs().then(thumbs => {
             expect(thumbs.length).toBe(2);
             done();
@@ -525,7 +527,7 @@ describe('resources --', () => {
 
     xit('docedit/images -- delete links to one image', done => {
 
-        addTwoImages();
+        addTwoImages('SE0');
 
         gotoImageTab();
         DoceditImageTabPage.waitForCells();
@@ -545,7 +547,7 @@ describe('resources --', () => {
 
     xit('docedit/images -- delete links to two images', done => {
 
-        addTwoImages();
+        addTwoImages('SE0');
         gotoImageTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();

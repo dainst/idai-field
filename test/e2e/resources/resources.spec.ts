@@ -525,7 +525,7 @@ describe('resources --', () => {
     });
 
 
-    xit('docedit/images -- delete links to one image', done => {
+    it('docedit/images -- delete links to one image', done => {
 
         addTwoImages('SE0');
 
@@ -537,6 +537,9 @@ describe('resources --', () => {
             expect(cells.length).toBe(1);
         });
         DoceditPage.clickSaveDocument();
+
+        ResourcesPage.clickSelectResource('SE0', 'info');
+        ResourcesPage.clickGotoImageView();
 
         ThumbnailViewPage.getThumbs().then(thumbs => {
             expect(thumbs.length).toBe(1);

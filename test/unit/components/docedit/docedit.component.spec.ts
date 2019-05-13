@@ -1,12 +1,10 @@
 import {DoceditComponent} from '../../../../app/components/docedit/docedit.component';
-import {DoceditActiveTabService} from '../../../../app/components/docedit/docedit-active-tab-service';
 
 /**
  * @author Daniel de Oliveira
  */
 describe('DoceditComponent', () => {
 
-    let activeTabService: any;
     let docedit: any;
 
 
@@ -16,7 +14,6 @@ describe('DoceditComponent', () => {
         typeUtility.getTypeAndSubtypes.and.returnValue({ 'Object': [] });
         const documentHolder = jasmine.createSpyObj('documentHolder', ['setDocument']);
         const projectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getFieldDefinitionLabel']);
-        activeTabService = new DoceditActiveTabService();
 
         docedit = new DoceditComponent(
             undefined,
@@ -25,7 +22,6 @@ describe('DoceditComponent', () => {
             undefined,
             undefined,
             typeUtility,
-            activeTabService,
             projectConfiguration,
             undefined,
             (() => 'Projekt') as any
@@ -33,34 +29,5 @@ describe('DoceditComponent', () => {
     });
 
 
-    it('open last open tab', () => {
-
-        activeTabService.setActiveTab('relations');
-
-        docedit.setDocument({
-            resource: {
-                type: 'Object',
-                id: '1',
-                relations: {}
-            }
-        });
-
-        expect(activeTabService.getActiveTab()).toEqual('relations');
-    });
-
-
-    it('open fields tab on new document', () => {
-
-        activeTabService.setActiveTab('relations');
-
-        docedit.setDocument({
-            resource: {
-                type: 'Object',
-                // no id -> new
-                relations: {}
-            }
-        });
-
-        expect(activeTabService.getActiveTab()).toEqual('fields');
-    });
+    // TODO Check if docedit tests are needed or if this test suite can be removed
 });

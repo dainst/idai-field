@@ -6,7 +6,6 @@ import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
     ProjectConfiguration} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
-import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
@@ -53,7 +52,6 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
-        private activeTabService: DoceditActiveTabService,
         public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {
@@ -92,22 +90,6 @@ export class DoceditComponent {
     }
 
 
-    public getActiveTab() {
-
-        return 'docedit-' + this.activeTabService.getActiveTab() + '-tab';
-    }
-
-
-    public changeActiveTab(event: any) {
-
-        this.activeTabService.setActiveTab(
-            event.nextId
-                .replace('docedit-','')
-                .replace('-tab','')
-        );
-    };
-
-
     public showDuplicateButton(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
@@ -121,8 +103,6 @@ export class DoceditComponent {
     public async setDocument(document: FieldDocument|ImageDocument) {
 
         this.documentHolder.setDocument(document);
-
-        if (!document.resource.id) this.activeTabService.setActiveTab('fields');
 
         this.showDoceditImagesTab = (!
             (this.typeUtility.getTypeAndSubtypes('Image'))[document.resource.type]

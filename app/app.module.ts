@@ -25,7 +25,6 @@ import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
 import {BackupModule} from './components/backup/backup.module';
-import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
@@ -211,7 +210,6 @@ registerLocaleData(localeDe, 'de');
         },
         ImportValidator,
         { provide: MD, useClass: M},
-        DoceditActiveTabService,
         SynchronizationStatus,
         TabManager,
         TabSpaceCalculator,

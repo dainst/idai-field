@@ -6,7 +6,6 @@ import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
-import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
@@ -45,7 +44,6 @@ export class ImageViewComponent implements OnInit {
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService
     ) {}
 
@@ -101,9 +99,7 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public async startEdit(tabName: string = 'fields') {
-
-        this.doceditActiveTabService.setActiveTab(tabName);
+    public async startEdit() {
 
         this.subModalOpened = true;
         MenuService.setContext('docedit');
@@ -118,7 +114,6 @@ export class ImageViewComponent implements OnInit {
         try {
             const result = await doceditModalRef.result;
             if (result.document) this.selectedImage.document = result.document;
-            this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
             if (closeReason === 'deleted') await this.activeModal.close();
         }
@@ -223,14 +218,5 @@ export class ImageViewComponent implements OnInit {
         );
 
         if (element) element.scrollIntoView({ inline: 'center' });
-    }
-
-
-    private setNextDocumentViewActiveTab() {
-
-        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-        if (['relations', 'fields'].indexOf(nextActiveTab) != -1) {
-            this.activeTab = nextActiveTab;
-        }
     }
 }

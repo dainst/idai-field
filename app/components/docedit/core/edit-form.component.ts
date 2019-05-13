@@ -36,12 +36,11 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     @ViewChild('editor') rootElement: ElementRef;
 
-    public activeGroup: string = 'stem';
-
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() inspectedRevisions: Document[];
+    @Input() activeGroup: string;
 
 
     public types: string[];

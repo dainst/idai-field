@@ -71,8 +71,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
-    public solveConflicts = (doc: FieldDocument) => this.editDocument(doc, 'conflicts');
-
     public setScrollTarget = (doc: FieldDocument|undefined) => this.scrollTarget = doc;
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
@@ -221,13 +219,13 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private async selectDocumentFromParams(id: string, menu: string, tab: string) {
+    private async selectDocumentFromParams(id: string, menu: string, tab: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);
         this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {
-            if (menu == 'edit') {
+            if (menu === 'edit') {
                 await this.editDocument(this.viewFacade.getSelectedDocument(), tab);
             } else {
                 await this.viewFacade.setActiveDocumentViewTab(tab)

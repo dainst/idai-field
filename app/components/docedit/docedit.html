@@ -69,7 +69,8 @@
                     [(inspectedRevisions)]="documentHolder.inspectedRevisions"
                     [relationDefinitions]="getRelationDefinitions()"
                     [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                        (documentHolder.clonedDocument.resource.type)">
+                        (documentHolder.clonedDocument.resource.type)"
+                    [activeGroup]="activeGroup">
             </edit-form>
 
             <div *ngIf="isLoading()" id="loading-icon-container">

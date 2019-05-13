@@ -58,7 +58,7 @@ export class SidebarListComponent extends BaseList {
 
     public async editDocument(document: FieldDocument) {
 
-        await this.resourcesComponent.editDocument(document, 'fields');
+        await this.resourcesComponent.editDocument(document);
     }
 
 

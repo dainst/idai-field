@@ -37,6 +37,7 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
  */
 export class DoceditComponent {
 
+    public activeGroup: string = 'stem';
     public subModalOpened: boolean = false;
 
     private parentLabel: string|undefined = undefined;

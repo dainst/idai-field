@@ -10,6 +10,9 @@ import {NavigationPath} from '../view/state/navigation-path';
 import {ContextMenuAction} from './context-menu.component';
 
 
+export type PopoverMenu = 'none'|'info'|'relations'|'children';
+
+
 @Component({
     selector: 'resources-map',
     moduleId: module.id,
@@ -31,7 +34,7 @@ export class ResourcesMapComponent {
     public parentDocument: FieldDocument|undefined;
     public contextMenuPosition: { x: number, y: number }|undefined;
     public contextMenuDocument: FieldDocument|undefined;
-    public hideZoomButtons: boolean = false;
+    public activePopoverMenu: PopoverMenu = 'none';
 
 
     constructor(

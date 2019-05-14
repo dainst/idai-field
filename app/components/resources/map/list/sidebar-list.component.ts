@@ -6,12 +6,9 @@ import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
-import {ResourcesMapComponent} from '../resources-map.component';
+import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {TypeUtility} from '../../../../core/model/type-utility';
-
-
-type PopoverMenu = 'none'|'info'|'relations'|'children';
 
 
 @Component({
@@ -29,7 +26,6 @@ export class SidebarListComponent extends BaseList {
 
     public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
     public highlightedDocument: FieldDocument|undefined = undefined;
-    public activePopoverMenu: PopoverMenu = 'none';
     public selectedDocumentThumbnailUrl: string|undefined;
 
 
@@ -101,7 +97,8 @@ export class SidebarListComponent extends BaseList {
     public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
 
         return this.viewFacade.getSelectedDocument() !== undefined
-            && ((!popoverMenu && this.activePopoverMenu !== 'none') || this.activePopoverMenu === popoverMenu)
+            && ((!popoverMenu && this.resourcesMapComponent.activePopoverMenu !== 'none')
+                || this.resourcesMapComponent.activePopoverMenu === popoverMenu)
             && (!document || this.isSelected(document));
     }
 
@@ -126,10 +123,9 @@ export class SidebarListComponent extends BaseList {
 
     public closePopover() {
 
-        this.activePopoverMenu = 'none';
+        this.resourcesMapComponent.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
         this.selectedDocumentThumbnailUrl = undefined;
-        this.resourcesMapComponent.hideZoomButtons = false;
     };
 
 
@@ -150,10 +146,8 @@ export class SidebarListComponent extends BaseList {
 
     private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
-        this.activePopoverMenu = popoverMenu;
+        this.resourcesMapComponent.activePopoverMenu = popoverMenu;
 
         if (!this.isSelected(document)) await this.select(document);
-
-        this.resourcesMapComponent.hideZoomButtons = true;
     }
 }

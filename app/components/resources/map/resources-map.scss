@@ -9,3 +9,9 @@
 .detail-sidebar-container {
   max-width: 300px;
 }
+
+.no-zoom-buttons {
+  .leaflet-control-zoom {
+    display: none;
+  }
+}

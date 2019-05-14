@@ -129,6 +129,7 @@ export class SidebarListComponent extends BaseList {
         this.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
         this.selectedDocumentThumbnailUrl = undefined;
+        this.resourcesMapComponent.hideZoomButtons = false;
     };
 
 
@@ -152,5 +153,7 @@ export class SidebarListComponent extends BaseList {
         this.activePopoverMenu = popoverMenu;
 
         if (!this.isSelected(document)) await this.select(document);
+
+        this.resourcesMapComponent.hideZoomButtons = true;
     }
 }

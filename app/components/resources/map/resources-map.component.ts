@@ -31,6 +31,7 @@ export class ResourcesMapComponent {
     public parentDocument: FieldDocument|undefined;
     public contextMenuPosition: { x: number, y: number }|undefined;
     public contextMenuDocument: FieldDocument|undefined;
+    public hideZoomButtons: boolean = false;
 
 
     constructor(

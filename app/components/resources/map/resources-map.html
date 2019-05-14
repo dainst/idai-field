@@ -7,7 +7,7 @@
                   [position]="contextMenuPosition"
                   (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
-    <div class="col px-0">
+    <div class="col px-0" [class.no-zoom-buttons]="hideZoomButtons">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocument]="parentDocument"

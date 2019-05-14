@@ -22,9 +22,31 @@
       }
   }
 
-  .leaflet-control-zoom-in,
-  .leaflet-control-zoom-out {
-    cursor: default !important;
+  .leaflet-control-zoom {
+    border: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+      font-family: Roboto, sans-serif;
+      font-weight: normal;
+      cursor: default !important;
+    }
+
+    .leaflet-control-zoom-in {
+      border-top-left-radius: 4px !important;
+      border-top-right-radius: 4px !important;
+
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+      &:hover {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+      }
+    }
+
+    .leaflet-control-zoom-out {
+      border-bottom-left-radius: 4px !important;
+      border-bottom-right-radius: 4px !important;
+    }
   }
 }
 

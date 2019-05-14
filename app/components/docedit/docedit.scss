@@ -29,7 +29,7 @@
     padding: 7px;
     border-bottom: 1px solid #ccc;
     user-select: none;
-    background-color: #67b2b9;
+    background-color: $modal-header-background-color;
     
     #type-switcher-button-container {
       min-width: 55px;
@@ -43,7 +43,7 @@
       padding-right: 15px;
       flex: 1;
       min-height: 2.15em;
-      color: #fff;
+      color: $modal-header-font-color;
     }
   }
 

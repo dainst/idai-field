@@ -1,7 +1,7 @@
 import {APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import {DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
@@ -96,6 +96,7 @@ registerLocaleData(localeDe, 'de');
         HelpComponent
     ],
     providers: [
+        DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },

@@ -17,5 +17,6 @@
 </select>
 
 <textarea *ngIf="resource.geometry && resource.geometry.type !== ''"
-          (blur)="setCoordinates($event.target.value)"
+          [(ngModel)]="coordinates"
+          (blur)="parseCoordinates()"
           class="form-control">{{coordinates}}</textarea>

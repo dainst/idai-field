@@ -22,7 +22,7 @@ export class GeometryComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.updateCoordinates();
+        this.resetCoordinates();
     }
 
 
@@ -36,7 +36,7 @@ export class GeometryComponent implements OnChanges {
     }
 
 
-    public updateCoordinates() {
+    public resetCoordinates() {
 
         this.coordinates = this.resource.geometry
             ? JSON.stringify(this.resource.geometry.coordinates)
@@ -44,14 +44,14 @@ export class GeometryComponent implements OnChanges {
     }
 
 
-    public setCoordinates(coordinates: string) {
+    public parseCoordinates() {
 
         try {
-            this.resource.geometry.coordinates = JSON.parse(coordinates);
+            this.resource.geometry.coordinates = JSON.parse(this.coordinates);
         } catch(err) {
             // Do nothing
         }
 
-        this.updateCoordinates();
+        this.resetCoordinates();
     }
 }

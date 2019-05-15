@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
-    ProjectConfiguration} from 'idai-components-2';
+    ProjectConfiguration, FieldDefinition, RelationDefinition} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
@@ -38,6 +38,8 @@ export class DoceditComponent {
 
     public activeGroup: string = 'stem';
     public subModalOpened: boolean = false;
+    public fieldDefinitions: Array<FieldDefinition>|undefined;
+    public relationDefinitions: Array<RelationDefinition>|undefined;
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
@@ -62,10 +64,6 @@ export class DoceditComponent {
     public isLoading = () => this.loading.isLoading();
 
     public getFieldDefinitionLabel: (_: string) => string;
-
-
-    public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
-        this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -112,6 +110,11 @@ export class DoceditComponent {
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
+
+        this.fieldDefinitions
+            = this.projectConfiguration.getFieldDefinitions(this.documentHolder.clonedDocument.resource.type);
+        this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
+            this.documentHolder.clonedDocument.resource.type, false, 'editable');
     }
 
 

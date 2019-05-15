@@ -81,16 +81,16 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     }
 
 
-    public getFieldDefinitions = (groupName: string) => {
+    public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
 
         return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).fields;
-    };
+    }
 
 
-    public getRelationDefinitions = (groupName: string) => {
+    public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
 
         return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).relations;
-    };
+    }
 
 
     ngAfterViewInit() {
@@ -99,7 +99,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     }
 
 
-    ngOnChanges(changes: any) {
+    ngOnChanges() {
 
         this.setLabels();
 
@@ -133,6 +133,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
+        this.groups[POSITION].fields.push({
+            name: 'geometry',
+            label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
+            group: 'position',
+            inputType: 'geometry',
+            editable: true
+        });
         this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
     }
 

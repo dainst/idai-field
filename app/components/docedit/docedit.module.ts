@@ -32,6 +32,7 @@ import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {GenericFormComponent} from './core/generic-form-component';
+import {GeometryComponent} from './core/forms/geometry.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {GenericFormComponent} from './core/generic-form-component';
         DatingComponent,
         DateComponent,
         DimensionComponent,
-        DropdownRangeComponent
+        DropdownRangeComponent,
+        GeometryComponent
     ],
     exports: [
         EditSaveDialogComponent,

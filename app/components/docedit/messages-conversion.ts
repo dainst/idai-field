@@ -21,6 +21,10 @@ export module MessagesConversion {
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ValidationErrors.GENERIC_DATASTORE) msgWithParams[0] = M.IMPORT_READER_GENERIC_DATASTORE;
+        if (msg === ValidationErrors.INVALID_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_INVALID_COORDINATES;
+        if (msg === ValidationErrors.MISSING_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_COORDINATES;
+        if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
+        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;

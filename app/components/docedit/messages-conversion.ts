@@ -4,7 +4,7 @@ import {M} from '../m';
 
 
 /**
- * * Converts messages of Validator to messages of M for DoceditComponent.
+ * Converts messages of Validator to messages of M for DoceditComponent.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

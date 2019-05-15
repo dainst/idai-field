@@ -30,9 +30,13 @@ export class GeometryComponent implements OnChanges {
 
         if (!this.resource.geometry) {
             this.resource.geometry = { type: type, coordinates: [] };
+        }  else if (type === '') {
+            delete this.resource.geometry;
         } else {
             this.resource.geometry.type = type;
         }
+
+        this.parseCoordinates(false);
     }
 
 

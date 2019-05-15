@@ -44,14 +44,13 @@ export class GeometryComponent implements OnChanges {
     }
 
 
-    public parseCoordinates() {
+    public parseCoordinates(resetIfInvalid: boolean) {
 
         try {
             this.resource.geometry.coordinates = JSON.parse(this.coordinates);
         } catch(err) {
             // Do nothing
+            if (resetIfInvalid) this.resetCoordinates();
         }
-
-        this.resetCoordinates();
     }
 }

@@ -110,11 +110,8 @@ export class DoceditComponent {
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
-
-        this.fieldDefinitions
-            = this.projectConfiguration.getFieldDefinitions(this.documentHolder.clonedDocument.resource.type);
-        this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
-            this.documentHolder.clonedDocument.resource.type, false, 'editable');
+        this.updateFieldDefinitions();
+        this.updateRelationDefinitions();
     }
 
 
@@ -123,6 +120,7 @@ export class DoceditComponent {
         const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
         this.showTypeChangeFieldsWarning(invalidFields);
         this.showTypeChangeRelationsWarning(invalidRelations);
+        this.updateFieldDefinitions();
     }
 
 
@@ -175,6 +173,20 @@ export class DoceditComponent {
             this.loading.stop();
             this.operationInProgress = 'none';
         }
+    }
+
+
+    private updateFieldDefinitions() {
+
+        this.fieldDefinitions
+            = this.projectConfiguration.getFieldDefinitions(this.documentHolder.clonedDocument.resource.type);
+    }
+
+
+    private updateRelationDefinitions() {
+
+        this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
+            this.documentHolder.clonedDocument.resource.type, false, 'editable');
     }
 
 

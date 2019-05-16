@@ -23,7 +23,7 @@ import {RoutingService} from '../../../routing-service';
 
 export class SidebarListComponent extends BaseList {
 
-    public relationsToHide: string[] = ['isRecordedIn', 'liesWithin'];
+
     public highlightedDocument: FieldDocument|undefined = undefined;
     public selectedDocumentThumbnailUrl: string|undefined;
 

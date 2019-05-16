@@ -1,38 +1,35 @@
 import {FieldDefinition} from 'idai-components-2';
 
 
-const STEM = 0;
-const DIMENSIONS = 3;
-
-
 /**
+ * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module GroupUtil {
 
-    export function sortGroups(groups: Array<any>) {
+    export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
 
-        sortGroup(groups[STEM].fields, ['identifier', 'shortDescription',
-            'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
-        sortGroup(groups[DIMENSIONS].fields, ['dimensionHeight',
-            'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-            'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
+        switch(groupName) {
+            case 'stem':
+                sortGroup(fields, ['identifier', 'shortDescription',
+                    'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
+                break;
+            case 'dimension':
+                sortGroup(fields, ['dimensionHeight',
+                    'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
+                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
+                break;
+        }
     }
 
 
     /**
      * Fields not defined via 'order' are not considered
      */
-    function sortGroup(fds: Array<FieldDefinition>, order: string[]) {
+    function sortGroup(fields: Array<FieldDefinition>, order: string[]) {
 
-        const temp = fds;
-        const l = temp.length;
-        for (let fieldName of order) {
-
-            const got = temp.find((fd: FieldDefinition) => fd.name === fieldName);
-            if (got) temp.push(got);
-
-        }
-        fds.splice(0, l);
+        fields.sort((field1: FieldDefinition, field2: FieldDefinition) => {
+           return order.indexOf(field1.name) > order.indexOf(field2.name) ? 1 : -1;
+        });
     }
 }

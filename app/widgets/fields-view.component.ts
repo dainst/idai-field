@@ -4,6 +4,7 @@ import {isUndefinedOrEmpty} from 'tsfun';
 import {Resource, ProjectConfiguration, FieldDefinition, RelationDefinition, IdaiType, ReadDatastore,
     FieldDocument} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
+import {GroupUtil} from '../core/util/group-util';
 
 
 type FieldViewGroupDefinition = {
@@ -186,11 +187,15 @@ export class FieldsViewComponent implements OnChanges {
             if (!this.projectConfiguration.isVisible(resource.type, field.name)) continue;
 
             this.fields[group].push({
+                name: field.name,
                 label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
                 value: FieldsViewComponent.getValue(resource, field.name),
                 isArray: Array.isArray(resource[field.name])
             });
         }
+
+        if (this.fields['stem']) GroupUtil.sortGroups(this.fields['stem'], 'stem');
+        if (this.fields['dimension']) GroupUtil.sortGroups(this.fields['dimension'], 'dimension');
     }
 
 

@@ -10,7 +10,7 @@ import {GroupUtil} from '../../../core/util/group-util';
 const STEM = 0;
 const PROPERTIES = 1;
 const CHILD_PROPERTIES = 2;
-const DIMENSIONS = 3;
+const DIMENSION = 3;
 const POSITION = 4;
 const TIME = 5;
 
@@ -52,7 +52,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimensions', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
+        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimension', value: 'Maße' }),
             fields: [], relations: [], widget: 'generic' },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
             fields: [], relations: [], widget: 'generic' },
@@ -106,7 +106,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
             this.setFields();
-            GroupUtil.sortGroups(this.groups);
+            GroupUtil.sortGroups(this.groups[STEM].fields, 'stem');
+            GroupUtil.sortGroups(this.groups[DIMENSION].fields, 'dimension');
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
@@ -130,7 +131,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
         this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
         this.groups[CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
-        this.groups[DIMENSIONS].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
+        this.groups[DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
         this.groups[POSITION].fields.push({
             name: 'geometry',

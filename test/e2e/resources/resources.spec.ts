@@ -6,7 +6,6 @@ import {NavbarPage} from '../navbar.page';
 import {MenuPage} from '../menu.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
-import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';

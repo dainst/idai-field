@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
-import {isEmpty} from 'tsfun';
-import {FieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
-import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {TypeUtility} from '../../../../core/model/type-utility';
 
 
@@ -34,8 +32,6 @@ export class SidebarListComponent extends BaseList {
                 loading: Loading,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
-                private fieldDatastore: FieldReadDatastore,
-                private projectConfiguration: ProjectConfiguration,
                 public typeUtility: TypeUtility) {
 
         super(resourcesComponent, viewFacade, loading);
@@ -100,24 +96,6 @@ export class SidebarListComponent extends BaseList {
             && ((!popoverMenu && this.resourcesMapComponent.activePopoverMenu !== 'none')
                 || this.resourcesMapComponent.activePopoverMenu === popoverMenu)
             && (!document || this.isSelected(document));
-    }
-
-
-    public hasVisibleRelations(document: FieldDocument|undefined) {
-
-        const selectedDoc = document;
-        if (!selectedDoc) return false;
-
-        const relations: any = selectedDoc.resource.relations;
-        if (isEmpty(relations)) return false;
-
-        return Object.keys(relations)
-            .filter(name => {
-                return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)
-                    && !this.relationsToHide.includes(name)
-                    && relations[name].length > 0;
-            })
-            .length > 0;
     }
 
 

@@ -248,7 +248,7 @@ export class FieldsViewComponent implements OnChanges {
 
     private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
 
-        // what about projectConfiguration.isVisibleRelation?
+        // TODO remove projectConfiguration.isVisibleRelation
         return relations.filter(on(NAME, isnt(RECORDED_IN)))
             .filter(on(NAME, isnt(LIES_WITHIN)))
             .filter(on(NAME, isnt(INCLUDES)))

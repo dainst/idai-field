@@ -41,6 +41,10 @@ depicts-relations-view {
           color: black;
         }
 
+        .field-value.relation-value:hover {
+          text-decoration: underline;
+        }
+
         ul {
           padding: 0;
           margin-bottom: 0;

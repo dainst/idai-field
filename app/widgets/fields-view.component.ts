@@ -1,7 +1,15 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {Resource, ProjectConfiguration, FieldDefinition, IdaiType} from 'idai-components-2';
+import {
+    Resource,
+    ProjectConfiguration,
+    FieldDefinition,
+    RelationDefinition,
+    IdaiType,
+    ReadDatastore, FieldDocument
+} from 'idai-components-2';
+import {RoutingService} from '../components/routing-service';
 
 
 type FieldViewGroupDefinition = {
@@ -30,8 +38,11 @@ export class FieldsViewComponent implements OnChanges {
     @Input() openSection: string|undefined = 'stem';
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
+    @Output() onJumpClicked: EventEmitter<undefined> = new EventEmitter<undefined>();
 
     public fields: { [groupName: string]: Array<any> };
+    public relations: { [groupName: string]: Array<any> } = {};
+
 
     private groups: Array<FieldViewGroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
@@ -44,12 +55,22 @@ export class FieldsViewComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
+                private datastore: ReadDatastore,
+                private routingService: RoutingService,
                 private i18n: I18n) {}
 
 
     ngOnChanges() {
 
         this.fields = {};
+        this.relations = {};
+        this.relations['stem'] = [];
+        this.relations['properties'] = [];
+        this.relations['child'] = [];
+        this.relations['dimension'] = [];
+        this.relations['position'] = [];
+        this.relations['time'] = [];
+
         if (this.resource) {
             this.processFields(this.resource);
             this.updateGroupLabels(this.resource.type);
@@ -66,7 +87,9 @@ export class FieldsViewComponent implements OnChanges {
     public getGroups(): Array<FieldViewGroupDefinition> {
 
         return this.groups.filter(group => {
-            return this.fields[group.name] !== undefined && this.fields[group.name].length > 0;
+
+            return ((this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
+                || this.relations[group.name].length > 0);
         });
     }
 
@@ -78,6 +101,14 @@ export class FieldsViewComponent implements OnChanges {
             : this.openSection = group.name;
 
         this.onSectionToggled.emit(this.openSection);
+    }
+
+
+
+    public async jumpToResource(document: FieldDocument) {
+
+        this.onJumpClicked.emit();
+        await this.routingService.jumpToResource(document);
     }
 
 
@@ -93,12 +124,35 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private processFields(resource: Resource) {
+    private async processFields(resource: Resource) {
 
         this.addBaseFields(resource);
 
-        const fields: Array<FieldDefinition> = this.projectConfiguration
-            .getFieldDefinitions(resource.type);
+        const fields: Array<FieldDefinition> = this.projectConfiguration.getFieldDefinitions(resource.type);
+
+        const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
+
+
+        if (relations) for (let relation of relations) {
+            if (relation.name === 'isRecordedIn') continue;
+            if (relation.name === 'liesWithin') continue;
+            if (relation.name === 'includes') continue;
+            if (isUndefinedOrEmpty(resource.relations[relation.name])) continue;
+
+            const group = ['isContemporaryWith', 'isBefore', 'isAfter']
+                .includes(relation.name)
+                    ? 'time'
+                    : 'position';
+
+            const relationsForGroup = { label: relation.label, targets: []};
+
+            for (let target of resource.relations[relation.name]) {
+                const tar = await this.datastore.get(target); // what if error?
+                relationsForGroup.targets.push(tar as never);
+            }
+            this.relations[group].push(relationsForGroup);
+        }
+
 
         for (let field of fields) {
             if (field.name === 'relations') continue;

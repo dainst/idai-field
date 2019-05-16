@@ -159,23 +159,6 @@ describe('images --', function() {
     });
 
 
-    xit('navigate from overview to view, and back to overview', async done => {
-
-        const imageName = await ImageOverviewPage.getCellImageName(0);
-
-        ImageOverviewPage.doubleClickCell(0);
-        browser.wait(EC.presenceOf(DetailSidebarPage.getDocumentCard()), delays.ECWaitTime);
-        FieldsViewPage.clickFieldsTab();
-        DetailSidebarPage.getIdentifier()
-            .then(identifier => expect(identifier).toContain(imageName));
-
-        DetailSidebarPage.clickBackToGridButton();
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
-        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
-        done();
-    });
-
-
     it('link -- link an image to a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
@@ -245,6 +228,20 @@ describe('images --', function() {
             .then(esAfter => expect(esAfter.length).toBe(2));
         ImageOverviewPage.clickCancelLinkModalButton();
 
+        done();
+    });
+
+
+    it('navigate from overview to view, and back to overview', async done => { // this test seems to be included in the test "perform constraint search"
+
+        const imageName = await ImageOverviewPage.getCellImageName(0);
+
+        ImageOverviewPage.doubleClickCell(0);
+        ImageViewPage.getIdentifier().then(identifier => expect(identifier).toContain(imageName));
+        ImageViewPage.clickCloseButton();
+
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
+        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
         done();
     });
 

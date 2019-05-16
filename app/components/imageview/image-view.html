@@ -28,7 +28,6 @@
             <div #imageInfo id="image-info"
                  [class.scrollbar-visible]="isImageInfoScrollbarVisible()">
                 <fields-view *ngIf="selectedImage"
-                             [suppressRelations]="true"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
                              (onSectionToggled)="openSection = $event"></fields-view>

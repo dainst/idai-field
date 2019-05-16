@@ -35,6 +35,13 @@ export class FieldsViewPage {
     };
 
 
+    public static clickRelation(cardIndex, relationIndex) {
+
+        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value';
+        return element.all(by.css(elDescriptor)).get(relationIndex).click();
+    };
+
+
     /**
      * @param cardIndex counting from 0 for the first card
      * @param index counting from 0 for the first field

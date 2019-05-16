@@ -5,8 +5,6 @@ import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {RelationsViewPage} from '../widgets/relations-view.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
@@ -470,7 +468,8 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
 
         ResourcesPage.clickSelectResource('c5', 'info');
-        RelationsViewPage.clickRelation(0);
+        FieldsViewPage.clickAccordionTab(1);
+        FieldsViewPage.clickRelation(1, 0);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('c3')), delays.ECWaitTime);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('c3'));

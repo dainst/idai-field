@@ -1,19 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, on} from 'tsfun';
-import {
-    Document,
-    FieldDocument,
-    IdaiType,
-    ProjectConfiguration,
-    ReadDatastore,
-    RelationDefinition,
-    Resource
-} from 'idai-components-2';
+import {is, isnt, isUndefinedOrEmpty, on, isNot, undefinedOrEmpty} from 'tsfun';
+import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
+    Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
-import {isNot, undefinedOrEmpty} from 'tsfun/src/predicate';
 
 
 type FieldViewGroupDefinition = {
@@ -40,7 +32,7 @@ export class FieldsViewComponent implements OnChanges {
     @Input() openSection: string|undefined = 'stem';
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
-    @Output() onJumpClicked: EventEmitter<undefined> = new EventEmitter<undefined>();
+    @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> };
     public relations: { [groupName: string]: Array<any> } = {};
@@ -107,20 +99,10 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-
     public async jumpToResource(document: FieldDocument) {
 
-        this.onJumpClicked.emit();
-        await this.routingService.jumpToResource(document);
+        this.onJumpToResource.emit(document);
     }
-
-
-    // public async jumpToResource(document: FieldDocument) {
-    //
-    //     this.closePopover();
-    // await this.routingService.jumpToResource(document);
-    // this.resourcesComponent.setScrollTarget(document);
-    // }
 
 
     private updateGroupLabels(typeName: string) {

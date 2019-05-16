@@ -45,7 +45,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimension', value: 'Maße' }),
+        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
             fields: [], relations: [], widget: 'generic' },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
             fields: [], relations: [], widget: 'generic' },

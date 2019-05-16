@@ -106,7 +106,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
             this.setRelations();
         }
-        // this.focusFirstInputElement();
     }
 
 

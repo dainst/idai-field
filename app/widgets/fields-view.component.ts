@@ -57,7 +57,7 @@ export class FieldsViewComponent implements OnChanges {
                 private i18n: I18n) {}
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
         this.fields = {};
         this.relations = {};
@@ -69,7 +69,8 @@ export class FieldsViewComponent implements OnChanges {
         this.relations['time'] = [];
 
         if (this.resource) {
-            this.processFields(this.resource);
+            await this.processRelations(this.resource);
+            await this.processFields(this.resource);
             this.updateGroupLabels(this.resource.type);
         }
     }
@@ -126,31 +127,6 @@ export class FieldsViewComponent implements OnChanges {
         this.addBaseFields(resource);
 
         const fields: Array<FieldDefinition> = this.projectConfiguration.getFieldDefinitions(resource.type);
-
-        const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
-
-
-        if (relations) for (let relation of relations) {
-            if (relation.name === 'isRecordedIn') continue;
-            if (relation.name === 'liesWithin') continue;
-            if (relation.name === 'includes') continue;
-            if (isUndefinedOrEmpty(resource.relations[relation.name])) continue;
-
-            let group: string|undefined = undefined;
-            if (['isContemporaryWith', 'isBefore', 'isAfter'].includes(relation.name)) group = 'time';
-            if (['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'].includes(relation.name)) group = 'position';
-
-            if (!group) continue;
-
-            const relationsForGroup = { label: relation.label, targets: []};
-
-            for (let target of resource.relations[relation.name]) {
-                const tar = await this.datastore.get(target); // what if error?
-                relationsForGroup.targets.push(tar as never);
-            }
-            this.relations[group].push(relationsForGroup);
-        }
-
 
         for (let field of fields) {
             if (field.name === 'relations') continue;
@@ -239,6 +215,30 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private async processRelations(resource: Resource) {
+
+        const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
+
+        if (relations) for (let relation of relations) {
+            if (relation.name === 'isRecordedIn') continue;
+            if (relation.name === 'liesWithin') continue;
+            if (relation.name === 'includes') continue;
+            if (isUndefinedOrEmpty(resource.relations[relation.name])) continue;
+
+            let group: string|undefined = undefined;
+            if (['isContemporaryWith', 'isBefore', 'isAfter'].includes(relation.name)) group = 'time';
+            if (['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'].includes(relation.name)) group = 'position';
+
+            if (!group) continue;
+
+            const relationsForGroup = { label: relation.label, targets: []};
+
+            for (let target of resource.relations[relation.name]) {
+                const tar = await this.datastore.get(target); // what if error?
+                relationsForGroup.targets.push(tar as never);
+            }
+            this.relations[group].push(relationsForGroup);
+        }
+
 
         // const relationNames: string[] = await Object.keys(resource.relations)
         //     .filter(name => this.projectConfiguration.isVisibleRelation(name, this.resource.type))

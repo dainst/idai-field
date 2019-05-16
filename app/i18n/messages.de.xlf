@@ -2359,7 +2359,7 @@
         <target state="final">Keine Geometrie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.point" datatype="html">
@@ -2367,7 +2367,7 @@
         <target state="final">Punkt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.multiPoint" datatype="html">
@@ -2375,7 +2375,7 @@
         <target state="final">Multipunkt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.polyline" datatype="html">
@@ -2383,7 +2383,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.multiPolyline" datatype="html">
@@ -2391,7 +2391,7 @@
         <target state="final">Multipolyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.polygon" datatype="html">
@@ -2399,7 +2399,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.multiPolygon" datatype="html">
@@ -2407,7 +2407,7 @@
         <target state="final">Multipolygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.applySettings" datatype="html">

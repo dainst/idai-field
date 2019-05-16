@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Resource} from 'idai-components-2';
 
 
@@ -18,11 +19,38 @@ export class GeometryComponent implements OnChanges {
     @Input() resource: Resource;
 
     public coordinates: string;
+    public edit: boolean;
+
+
+    constructor(private i18n: I18n) {}
 
 
     ngOnChanges() {
 
         this.resetCoordinates();
+    }
+
+
+    public getGeometryTypeLabel(): string {
+
+        if (!this.resource.geometry) return this.i18n({ id: 'geometry.none', value: 'Keine Geometrie'});
+
+        switch(this.resource.geometry.type) {
+            case 'Point':
+                return this.i18n({ id: 'geometry.point', value: 'Punkt'});
+            case 'MultiPoint':
+                return this.i18n({ id: 'geometry.multiPoint', value: 'Multipunkt'});
+            case 'LineString':
+                return this.i18n({ id: 'geometry.polyline', value: 'Polyline'});
+            case 'MultiLineString':
+                return this.i18n({ id: 'geometry.multiPolyline', value: 'Multipolyline'});
+            case 'Polygon':
+                return this.i18n({ id: 'geometry.polygon', value: 'Polygon'});
+            case 'MultiPolygon':
+                return this.i18n({ id: 'geometry.multiPolygon', value: 'Multipolygon'});
+            default:
+                return '';
+        }
     }
 
 

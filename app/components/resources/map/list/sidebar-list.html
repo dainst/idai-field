@@ -18,7 +18,7 @@
 
         <div id="document-info">
             <fields-view [resource]="viewFacade.getSelectedDocument().resource"
-                         (onJumpToResource)="select($event, true)"></fields-view>
+                         (onJumpToResource)="jumpToResource($event)"></fields-view>
         </div>
     </div>
 </div>

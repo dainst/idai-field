@@ -7,6 +7,7 @@ import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
+import {RoutingService} from '../../../routing-service';
 
 
 @Component({
@@ -28,11 +29,12 @@ export class SidebarListComponent extends BaseList {
 
 
     constructor(resourcesComponent: ResourcesComponent,
-                public viewFacade: ViewFacade,
                 loading: Loading,
+                public viewFacade: ViewFacade,
+                public typeUtility: TypeUtility,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
-                public typeUtility: TypeUtility) {
+                private routingService: RoutingService) {
 
         super(resourcesComponent, viewFacade, loading);
         this.navigationService.moveIntoNotifications().subscribe(async () => {
@@ -119,6 +121,13 @@ export class SidebarListComponent extends BaseList {
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
+    }
+
+
+    public async jumpToResource(document: FieldDocument) {
+
+        await this.routingService.jumpToResource(document);
+        this.resourcesComponent.setScrollTarget(document);
     }
 
 

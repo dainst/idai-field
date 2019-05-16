@@ -1,14 +1,8 @@
 import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {
-    Resource,
-    ProjectConfiguration,
-    FieldDefinition,
-    RelationDefinition,
-    IdaiType,
-    ReadDatastore, FieldDocument
-} from 'idai-components-2';
+import {Resource, ProjectConfiguration, FieldDefinition, RelationDefinition, IdaiType, ReadDatastore,
+    FieldDocument} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 
 

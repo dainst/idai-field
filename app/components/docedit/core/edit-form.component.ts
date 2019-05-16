@@ -4,6 +4,7 @@ import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
     IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {GroupUtil} from '../../../core/util/group-util';
 
 
 const STEM = 0;
@@ -46,7 +47,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public types: string[];
 
-    public groups: GroupDefinition[] = [
+    public groups: Array<GroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), fields: [],
             relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
@@ -104,13 +105,11 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.setLabels();
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
-
             this.setFields();
-            this.sortGroups();
+            GroupUtil.sortGroups(this.groups);
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
-
             this.setRelations();
         }
         // this.focusFirstInputElement();
@@ -153,33 +152,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         } else {
             this.groups[PROPERTIES].label = type.label;
         }
-    }
-
-
-    private sortGroups() {
-
-        this.sortGroup(this.groups[STEM].fields, ['identifier', 'shortDescription',
-            'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
-        this.sortGroup(this.groups[DIMENSIONS].fields, ['dimensionHeight',
-            'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-            'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
-    }
-
-
-    /**
-     * Fields not defined via 'order' are not considered
-     */
-    private sortGroup(fds: Array<FieldDefinition>, order: string[]) {
-
-        const temp = fds;
-        const l = temp.length;
-        for (let fieldName of order) {
-
-            const got = temp.find((fd: FieldDefinition) => fd.name === fieldName);
-            if (got) temp.push(got);
-
-        }
-        fds.splice(0, l);
     }
 
 

@@ -31,6 +31,7 @@ export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() openSection: string|undefined = 'stem';
+    @Input() suppressRelations: boolean = false;
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
     @Output() onJumpClicked: EventEmitter<undefined> = new EventEmitter<undefined>();
@@ -128,7 +129,7 @@ export class FieldsViewComponent implements OnChanges {
         const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
 
 
-        if (relations) for (let relation of relations) {
+        if (relations && !this.suppressRelations) for (let relation of relations) {
             if (relation.name === 'isRecordedIn') continue;
             if (relation.name === 'liesWithin') continue;
             if (relation.name === 'includes') continue;

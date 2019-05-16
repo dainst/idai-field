@@ -6,6 +6,7 @@ import {FieldsViewPage} from '../widgets/fields-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
+import {ImageViewPage} from './image-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -248,13 +249,13 @@ describe('images --', function() {
     });
 
 
-    xit('perform constraint search', () => {
+    it('perform constraint search', () => {
 
         ImageOverviewPage.doubleClickCell(0);
-        // DetailSidebarPage.doubleClickEditDocument();
+        ImageViewPage.editDocument();
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
-        DetailSidebarPage.clickBackToGridButton();
+        ImageViewPage.clickCloseButton();
         ImageOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();

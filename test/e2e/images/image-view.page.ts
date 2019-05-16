@@ -12,9 +12,15 @@ export module ImageViewPage {
     }
 
 
+    export function editDocument() {
+
+        common.click(element(by.className('mdi-pencil')));
+    }
+
+
     export function clickCloseButton() {
 
-        common.click(element(by.id('close-button')))
+        common.click(element(by.id('close-button')));
     }
 
 

@@ -1,6 +1,8 @@
-import {browser, element, by} from 'protractor';
+import {browser, element, by, protractor} from 'protractor';
 
 const common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 export module ImageViewPage {
@@ -12,9 +14,15 @@ export module ImageViewPage {
     }
 
 
+    export function editDocument() {
+
+        common.click(element(by.className('mdi-pencil')));
+    }
+
+
     export function clickCloseButton() {
 
-        common.click(element(by.id('close-button')))
+        common.click(element(by.id('close-button')));
     }
 
 
@@ -27,5 +35,12 @@ export module ImageViewPage {
     export function clickRelation() {
 
         element.all(by.className('resources-listing-item')).get(0).click();
+    }
+
+
+    export function getIdentifier() {
+
+        // browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .identifier .fieldvalue'))), delays.ECWaitTime);
+        return element(by.id('identifier-label')).getText();
     }
 }

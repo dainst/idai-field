@@ -6,6 +6,7 @@ import {FieldsViewPage} from '../widgets/fields-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
+import {ImageViewPage} from './image-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -158,23 +159,6 @@ describe('images --', function() {
     });
 
 
-    xit('navigate from overview to view, and back to overview', async done => {
-
-        const imageName = await ImageOverviewPage.getCellImageName(0);
-
-        ImageOverviewPage.doubleClickCell(0);
-        browser.wait(EC.presenceOf(DetailSidebarPage.getDocumentCard()), delays.ECWaitTime);
-        FieldsViewPage.clickFieldsTab();
-        DetailSidebarPage.getIdentifier()
-            .then(identifier => expect(identifier).toContain(imageName));
-
-        DetailSidebarPage.clickBackToGridButton();
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
-        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
-        done();
-    });
-
-
     it('link -- link an image to a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
@@ -248,13 +232,27 @@ describe('images --', function() {
     });
 
 
-    xit('perform constraint search', () => {
+    it('navigate from overview to view, and back to overview', async done => { // this test seems to be included in the test "perform constraint search"
+
+        const imageName = await ImageOverviewPage.getCellImageName(0);
 
         ImageOverviewPage.doubleClickCell(0);
-        // DetailSidebarPage.doubleClickEditDocument();
+        ImageViewPage.getIdentifier().then(identifier => expect(identifier).toContain(imageName));
+        ImageViewPage.clickCloseButton();
+
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
+        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
+        done();
+    });
+
+
+    it('perform constraint search', () => {
+
+        ImageOverviewPage.doubleClickCell(0);
+        ImageViewPage.editDocument();
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
-        DetailSidebarPage.clickBackToGridButton();
+        ImageViewPage.clickCloseButton();
         ImageOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();

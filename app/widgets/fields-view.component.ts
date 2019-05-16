@@ -13,6 +13,7 @@ import {
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
+import {isNot, undefinedOrEmpty} from 'tsfun/src/predicate';
 
 
 type FieldViewGroupDefinition = {
@@ -222,12 +223,7 @@ export class FieldsViewComponent implements OnChanges {
         const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
         if (!relations) return;
 
-        for (let relation of relations // what about projectConfiguration.isVisibleRelation?
-            .filter(on(NAME, isnt(RECORDED_IN)))
-            .filter(on(NAME, isnt(LIES_WITHIN)))
-            .filter(on(NAME, isnt(INCLUDES)))) {
-
-            if (isUndefinedOrEmpty(resource.relations[relation.name])) continue;
+        for (let relation of this.computeRelationsToShow(resource, relations)) {
 
             let group: string|undefined = undefined;
             if (TIME_RELATIONS.includes(relation.name)) group = 'time';
@@ -238,6 +234,16 @@ export class FieldsViewComponent implements OnChanges {
                 label: relation.label,
                 targets: (await this.getTargetDocuments(resource.relations[relation.name]))});
         }
+    }
+
+
+    private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
+
+        // what about projectConfiguration.isVisibleRelation?
+        return relations.filter(on(NAME, isnt(RECORDED_IN)))
+            .filter(on(NAME, isnt(LIES_WITHIN)))
+            .filter(on(NAME, isnt(INCLUDES)))
+            .filter(relation => isNot(undefinedOrEmpty)(resource.relations[relation.name]))
     }
 
 

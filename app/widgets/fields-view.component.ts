@@ -1,12 +1,18 @@
-import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, on} from 'tsfun';
 import {
-    Resource, ProjectConfiguration, FieldDefinition, RelationDefinition, IdaiType, ReadDatastore,
-    FieldDocument, Document
+    Document,
+    FieldDocument,
+    IdaiType,
+    ProjectConfiguration,
+    ReadDatastore,
+    RelationDefinition,
+    Resource
 } from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
+import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
 
 
 type FieldViewGroupDefinition = {
@@ -15,9 +21,7 @@ type FieldViewGroupDefinition = {
     shown: boolean;
 }
 
-
-const PROPERTIES = 1;
-const CHILD_PROPERTIES = 2;
+const NAME = 'name';
 
 
 @Component({
@@ -110,14 +114,22 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
+    // public async jumpToResource(document: FieldDocument) {
+    //
+    //     this.closePopover();
+    // await this.routingService.jumpToResource(document);
+    // this.resourcesComponent.setScrollTarget(document);
+    // }
+
+
     private updateGroupLabels(typeName: string) {
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
         if (type.parentType) {
-            this.groups[PROPERTIES].label = type.parentType.label;
-            this.groups[CHILD_PROPERTIES].label = type.label;
+            this.groups[GROUP_NAME.PROPERTIES].label = type.parentType.label;
+            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = type.label;
         } else {
-            this.groups[PROPERTIES].label = type.label;
+            this.groups[GROUP_NAME.PROPERTIES].label = type.label;
         }
     }
 
@@ -126,10 +138,10 @@ export class FieldsViewComponent implements OnChanges {
 
         this.addBaseFields(resource);
 
-        const fields: Array<FieldDefinition> = this.projectConfiguration.getFieldDefinitions(resource.type);
+        for (let field of this.projectConfiguration
+            .getFieldDefinitions(resource.type)
+            .filter(on(NAME, isnt('relations')))) {
 
-        for (let field of fields) {
-            if (field.name === 'relations') continue;
             if (resource[field.name] === undefined) continue;
 
             const group: string = field.group ? field.group : 'properties';
@@ -198,7 +210,7 @@ export class FieldsViewComponent implements OnChanges {
 
         return this.projectConfiguration
             .getTypesMap()[type].fields
-            .find((field: FieldDefinition) => field.name == fieldName).label;
+            .find(on(NAME, is(fieldName))).label;
     }
 
 
@@ -217,63 +229,29 @@ export class FieldsViewComponent implements OnChanges {
     private async processRelations(resource: Resource) {
 
         const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
+        if (!relations) return;
 
-        if (relations) for (let relation of relations) {
-            if (relation.name === 'isRecordedIn') continue;
-            if (relation.name === 'liesWithin') continue;
-            if (relation.name === 'includes') continue;
+        for (let relation of relations // what about projectConfiguration.isVisibleRelation?
+            .filter(on(NAME, isnt(RECORDED_IN)))
+            .filter(on(NAME, isnt(LIES_WITHIN)))
+            .filter(on(NAME, isnt(INCLUDES)))) {
+
             if (isUndefinedOrEmpty(resource.relations[relation.name])) continue;
 
             let group: string|undefined = undefined;
-            if (['isContemporaryWith', 'isBefore', 'isAfter'].includes(relation.name)) group = 'time';
-            if (['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'].includes(relation.name)) group = 'position';
-
+            if (TIME_RELATIONS.includes(relation.name)) group = 'time';
+            if (POSITION_RELATIONS.includes(relation.name)) group = 'position';
             if (!group) continue;
 
-            const relationsForGroup = { label: relation.label, targets: []};
-
-            for (let target of resource.relations[relation.name]) {
-                const tar = await this.datastore.get(target); // what if error?
-                relationsForGroup.targets.push(tar as never);
-            }
-            this.relations[group].push(relationsForGroup);
+            this.relations[group].push({
+                label: relation.label,
+                targets: (await this.getTargetDocuments(resource.relations[relation.name]))});
         }
-
-
-        // const relationNames: string[] = await Object.keys(resource.relations)
-        //     .filter(name => this.projectConfiguration.isVisibleRelation(name, this.resource.type))
-        //     .filter(name => this.hideRelations.indexOf(name) === -1);
-        //
-        // for (let name of relationNames) {
-        //     await this.addRel(resource, name, this.projectConfiguration.getRelationDefinitionLabel(name))
-        // }
-
-        // this.relationsCount = this.relations.reduce(
-        //     (totalCount: number, relation: any) => totalCount + relation.targets.length, 0);
-    }
-
-
-    private async addRel(resource: Resource, relationName: string, relLabel: string) {
-
-        const relationGroup = {
-            name: relLabel,
-            targets: (await this.getTargetDocuments(resource.relations[relationName])) as any
-        };
-
-        // if (relationGroup.targets.length > 0) this.relations.push(relationGroup);
     }
 
 
     private getTargetDocuments(targetIds: Array<string>): Promise<Array<Document>> {
 
-        return this.datastore.getMultiple(targetIds);
+        return this.datastore.getMultiple(targetIds); // what if error?
     }
-
-
-    // public async jumpToResource(document: FieldDocument) {
-    //
-    //     this.closePopover();
-        // await this.routingService.jumpToResource(document);
-        // this.resourcesComponent.setScrollTarget(document);
-    // }
 }

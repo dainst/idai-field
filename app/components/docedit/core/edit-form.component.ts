@@ -5,14 +5,7 @@ import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
     IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
-
-
-const STEM = 0;
-const PROPERTIES = 1;
-const CHILD_PROPERTIES = 2;
-const DIMENSION = 3;
-const POSITION = 4;
-const TIME = 5;
+import {GROUP_NAME, POSITION_RELATIONS, TIME_RELATIONS} from '../../../c';
 
 
 interface GroupDefinition {
@@ -106,8 +99,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
             this.setFields();
-            GroupUtil.sortGroups(this.groups[STEM].fields, 'stem');
-            GroupUtil.sortGroups(this.groups[DIMENSION].fields, 'dimension');
+            GroupUtil.sortGroups(this.groups[GROUP_NAME.STEM].fields, 'stem');
+            GroupUtil.sortGroups(this.groups[GROUP_NAME.DIMENSION].fields, 'dimension');
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
@@ -119,28 +112,28 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setRelations() {
 
-        this.groups[POSITION].relations = this.relationDefinitions
-            .filter(on('name', includedIn(['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'])));
-        this.groups[TIME].relations = this.relationDefinitions
-            .filter(on('name', includedIn(['isAfter', 'isBefore', 'isContemporaryWith'])));
+        this.groups[GROUP_NAME.POSITION].relations =
+            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS)));
+        this.groups[GROUP_NAME.TIME].relations =
+            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS)));
     }
 
 
     private setFields() {
 
-        this.groups[STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
-        this.groups[PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
-        this.groups[CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
-        this.groups[DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
-        this.groups[POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
-        this.groups[POSITION].fields.push({
+        this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
+        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+        this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
+        this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
+        this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
+        this.groups[GROUP_NAME.POSITION].fields.push({
             name: 'geometry',
             label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
             group: 'position',
             inputType: 'geometry',
             editable: true
         });
-        this.groups[TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
+        this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
     }
 
 
@@ -148,10 +141,10 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[this.document.resource.type];
         if (type.parentType) {
-            this.groups[PROPERTIES].label = type.parentType.label;
-            this.groups[CHILD_PROPERTIES].label = type.label;
+            this.groups[GROUP_NAME.PROPERTIES].label = type.parentType.label;
+            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = type.label;
         } else {
-            this.groups[PROPERTIES].label = type.label;
+            this.groups[GROUP_NAME.PROPERTIES].label = type.label;
         }
     }
 

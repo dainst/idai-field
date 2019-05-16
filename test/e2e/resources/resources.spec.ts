@@ -224,21 +224,21 @@ describe('resources --', () => {
         ResourcesPage.performCreateLink();
 
         // sidebar
-        ResourcesPage.clickSelectResource('1', 'links');
-        RelationsViewPage.getRelationName(0).then(value => {
-            expect(value).toBe('Zeitlich nach');
-        });
-        RelationsViewPage.getRelationValue(0).then(value => {
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.clickAccordionTab(1);
+
+        FieldsViewPage.getRelationValue(1, 0).then(value => {
             expect(value).toBe('2');
         });
-        // Make sure there are only so much as expected
-        RelationsViewPage.getRelations().then(relations => {
-            expect(relations.length).toBe(1);
+        FieldsViewPage.getRelationName(1, 0).then(value => {
+            expect(value).toBe('Zeitlich nach');
         });
+        // Make sure there are only so much as expected
+        FieldsViewPage.getRelations(1).then(relations => expect(relations.length).toBe(1));
 
-        ResourcesPage.clickSelectResource('2', 'links');
-        RelationsViewPage.getRelationName(0).then(value => expect(value).toBe('Zeitlich vor'));
-        RelationsViewPage.getRelationValue(0).then(value => expect(value).toBe('1'));
+        ResourcesPage.clickSelectResource('2', 'info');
+        FieldsViewPage.getRelationName(1, 0).then(value => expect(value).toBe('Zeitlich vor'));
+        FieldsViewPage.getRelationValue(1, 0).then(value => expect(value).toBe('1'));
 
         // docedit
         ResourcesPage.openEditByDoubleClickResource('1');
@@ -250,10 +250,10 @@ describe('resources --', () => {
         // deletion
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-vor');
         DoceditPage.clickSaveDocument();
-        ResourcesPage.clickSelectResource('1', 'links');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-        ResourcesPage.clickSelectResource('2', 'links');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
+        ResourcesPage.clickSelectResource('2', 'info');
+        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
     });
 
 
@@ -272,9 +272,9 @@ describe('resources --', () => {
         DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitgleich-mit', 0, 0);
         DoceditPage.clickCloseEdit('discard');
 
-        ResourcesPage.clickSelectResource('1', 'links');
+        ResourcesPage.clickSelectResource('1', 'info');
         browser.wait(EC.visibilityOf(element(by.id('sidebar-popover'))), delays.ECWaitTime);
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
     });
 
 
@@ -290,9 +290,9 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
 
         // relations
-        ResourcesPage.clickSelectResource('1', 'links');
+        ResourcesPage.clickSelectResource('1', 'info');
         // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
     });
 
 

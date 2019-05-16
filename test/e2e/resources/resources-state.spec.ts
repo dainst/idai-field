@@ -469,7 +469,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('c5', 'feature');
         ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
 
-        ResourcesPage.clickSelectResource('c5', 'links');
+        ResourcesPage.clickSelectResource('c5', 'info');
         RelationsViewPage.clickRelation(0);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('c3')), delays.ECWaitTime);

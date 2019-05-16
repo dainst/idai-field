@@ -4,13 +4,6 @@
         <children-view [document]="viewFacade.getSelectedDocument()"></children-view>
     </div>
 
-    <div *ngIf="isPopoverMenuOpened('relations')" class="sidebar-popover-page">
-        <relations-view
-                [resource]="viewFacade.getSelectedDocument().resource"
-                [hideRelations]="relationsToHide">
-        </relations-view>
-    </div>
-
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>

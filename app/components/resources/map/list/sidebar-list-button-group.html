@@ -1,24 +1,11 @@
 <div class="sidebar-list-button-group">
 
-    <div class="btn info-button"
-         [class.info-button-middle-position]="viewFacade.isInOverview() || viewFacade.getBypassHierarchy()"
+    <div class="btn info-button info-button-middle-position"
          [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('info', document)"
          (click)="sidebarList.togglePopoverMenu('info', document); $event.stopPropagation();">
 
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
               class="mdi mdi-information-outline sidebar-list-button-group-inner">
-        </span>
-    </div>
-
-    <div *ngIf="!viewFacade.isInOverview() && !viewFacade.getBypassHierarchy()"
-         class="btn link-button"
-         [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('relations', document)"
-         placement="left"
-         (click)="sidebarList.togglePopoverMenu('relations', document); $event.stopPropagation();">
-
-        <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
-              [class.arrow-deactivated]="!sidebarList.hasVisibleRelations(document)"
-              class="mdi mdi-link sidebar-list-button-group-inner">
         </span>
     </div>
 

@@ -63,12 +63,11 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectResource(identifier: string, tab?: 'info' | 'links' | 'children') {
+    public static clickSelectResource(identifier: string, tab?: 'info' | 'children') {
 
         let buttonClass = '';
         if (tab) {
             if (tab === 'info') buttonClass = '.info-button';
-            if (tab === 'links') buttonClass = '.link-button';
             if (tab === 'children') buttonClass = '.hierarchy-button';
         }
         return common.click(element(by.css('#resource-' + identifier + ' ' + buttonClass)));
@@ -155,6 +154,7 @@ export class ResourcesPage {
 
 
     // get text
+
 
     public static getListItemIdentifierText(itemNr: number) {
 

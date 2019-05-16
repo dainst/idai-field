@@ -77,4 +77,32 @@ export class FieldsViewPage {
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'));
     }
 
+
+    /**
+     * @param cardIndex
+     * @param index counting from 0 for the first field
+     */
+    public static getRelationValue(cardIndex, index) {
+
+        return element.all(by.className('card')).get(cardIndex).all(by.className('relation-value')).get(index).getText();
+    };
+
+
+    /**
+     * @param cardIndex
+     * @param index counting from 0 for the first field
+     */
+    public static getRelationName(cardIndex, index) {
+
+        return element.all(by.className('card')).get(cardIndex).all(by.className('field-label')).get(index).getText();
+    };
+
+
+    /**
+     * @param cardIndex
+     */
+    public static getRelations(cardIndex) {
+
+        return element.all(by.className('card')).get(cardIndex).all(by.className('relation-value'));
+    };
 }

@@ -17,7 +17,8 @@
         </thumbnail>
 
         <div id="document-info">
-            <fields-view [resource]="viewFacade.getSelectedDocument().resource" (onJumpClicked)="closePopover()"></fields-view>
+            <fields-view [resource]="viewFacade.getSelectedDocument().resource"
+                         (onJumpToResource)="select($event)"></fields-view>
         </div>
     </div>
 </div>

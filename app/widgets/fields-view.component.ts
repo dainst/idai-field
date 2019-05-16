@@ -39,7 +39,7 @@ export class FieldsViewComponent implements OnChanges {
     @Input() openSection: string|undefined = 'stem';
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
-    @Output() onJumpClicked: EventEmitter<undefined> = new EventEmitter<undefined>();
+    @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> };
     public relations: { [groupName: string]: Array<any> } = {};
@@ -109,17 +109,8 @@ export class FieldsViewComponent implements OnChanges {
 
     public async jumpToResource(document: FieldDocument) {
 
-        this.onJumpClicked.emit();
-        await this.routingService.jumpToResource(document);
+        this.onJumpToResource.emit(document);
     }
-
-
-    // public async jumpToResource(document: FieldDocument) {
-    //
-    //     this.closePopover();
-    // await this.routingService.jumpToResource(document);
-    // this.resourcesComponent.setScrollTarget(document);
-    // }
 
 
     private updateGroupLabels(typeName: string) {

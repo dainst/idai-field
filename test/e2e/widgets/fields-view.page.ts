@@ -1,7 +1,6 @@
 'use strict';
 
-import {browser, protractor, element, by} from 'protractor';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {browser, by, element, protractor} from 'protractor';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
@@ -11,11 +10,6 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  */
 export class FieldsViewPage {
-
-    public static clickFieldsTab() {
-
-        return common.click(element(by.id('document-view-fields-tab')));
-    }
 
 
     public static getTabs() {
@@ -77,12 +71,6 @@ export class FieldsViewPage {
         browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
         return element.all(by.css(elDescriptor))
     };
-
-
-    public static getFieldElement(index) {
-
-        return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'));
-    }
 
 
     /**

@@ -1815,6 +1815,18 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.childrenView.openCollection" datatype="html">
+        <source>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>Kollektion öffnen
+</source>
+        <target state="final">
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>Open collection
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/children-view.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
         <source>Verschieben</source>
         <target state="final">Move</target>

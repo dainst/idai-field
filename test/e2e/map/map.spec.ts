@@ -189,7 +189,7 @@ describe('map --', function() {
         createDoc('doc','point', function() { return MapPage.setMarker(100, 100); });
 
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Punkt');
+            expect(text).toContain('Punkt');
         });
     });
 
@@ -198,7 +198,7 @@ describe('map --', function() {
 
         createDoc('doc','point', setMultiPoint);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipunkt');
+            expect(text).toContain('Multipunkt');
         });
     });
 
@@ -206,7 +206,7 @@ describe('map --', function() {
     it('create a new item with polyline geometry', () => {
         createDoc('doc', 'polyline', setPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polyline');
+            expect(text).toContain('Polyline');
         });
     });
 
@@ -214,7 +214,7 @@ describe('map --', function() {
     it('create a new item with multipolyline geometry', () => {
         createDoc('doc', 'polyline', setMultiPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipolyline');
+            expect(text).toContain('Multipolyline');
         });
     });
 
@@ -222,7 +222,7 @@ describe('map --', function() {
     it('create a new item with polygon geometry', () => {
         createDoc('doc', 'polygon', setPolygon);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polygon');
+            expect(text).toContain('Polygon');
         });
     });
 
@@ -230,7 +230,7 @@ describe('map --', function() {
     it('create a new item with multipolygon geometry', () => {
         createDoc('doc', 'polygon', setMultiPolygon);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipolygon');
+            expect(text).toContain('Multipolygon');
         });
     });
 
@@ -268,7 +268,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polygon');
+            expect(text).toContain('Polygon');
         });
 
         ResourcesPage.clickSelectResource('doc');
@@ -285,7 +285,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polyline');
+            expect(text).toContain('Polyline');
         });
 
         ResourcesPage.clickSelectResource('doc');
@@ -302,7 +302,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Punkt');
+            expect(text).toContain('Punkt');
         });
 
         ResourcesPage.clickSelectResource('doc');
@@ -320,7 +320,7 @@ describe('map --', function() {
         MapPage.setMarker(100, 100);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Punkt');
+            expect(text).toContain('Punkt');
         });
     });
 
@@ -331,7 +331,7 @@ describe('map --', function() {
         GeometryViewPage.clickCreateGeometry('doc', 'point').then(setMultiPoint);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipunkt');
+            expect(text).toContain('Multipunkt');
         });
     });
 
@@ -342,7 +342,7 @@ describe('map --', function() {
         GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polyline');
+            expect(text).toContain('Polyline');
         });
     });
 
@@ -353,7 +353,7 @@ describe('map --', function() {
         GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setMultiPolyline);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipolyline');
+            expect(text).toContain('Multipolyline');
         });
     });
 
@@ -364,7 +364,7 @@ describe('map --', function() {
         GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polygon');
+            expect(text).toContain('Polygon');
         });
     });
 
@@ -375,7 +375,7 @@ describe('map --', function() {
         GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setMultiPolygon);
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipolygon');
+            expect(text).toContain('Multipolygon');
         });
     });
 
@@ -426,7 +426,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Punkt');
+            expect(text).toContain('Punkt');
         });
     });
 
@@ -437,7 +437,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polyline');
+            expect(text).toContain('Polyline');
         });
     });
 
@@ -448,7 +448,7 @@ describe('map --', function() {
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('abort');
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polygon');
+            expect(text).toContain('Polygon');
         });
     });
 
@@ -467,7 +467,7 @@ describe('map --', function() {
 
         createDoc('doc', 'polyline', setUnfinishedPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Polyline');
+            expect(text).toContain('Polyline');
         });
     });
 
@@ -476,7 +476,7 @@ describe('map --', function() {
 
         createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toEqual('Multipolyline');
+            expect(text).toContain('Multipolyline');
         });
     });
 

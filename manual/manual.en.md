@@ -182,7 +182,7 @@ In addition to that, an upward right pointing arrow is shown in overview for res
 to operations. Clicking the arrow lets one jump into the the right hierarchical level of the 
 corresponding view.
 
-While in extendes search mode, it is not possible to create resources, which is shown by the deactivated
+While in extended search mode, it is not possible to create resources, which is shown by the deactivated
 create button. In order to create new resources, leave the extendes search mode.
 
 The number of search results shown simultaneously is restricted to a maximum of **200** for performance reasons. Other

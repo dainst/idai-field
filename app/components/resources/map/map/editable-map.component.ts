@@ -311,42 +311,44 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    protected updateMap(changes: SimpleChanges): Promise<any> {
+    protected async updateMap(changes: SimpleChanges): Promise<any> {
 
         if (!this.update) return Promise.resolve();
 
-        super.updateMap(changes).then(() => {
-            this.resetEditing();
+        if (!changes['isEditing'] || !this.isEditing
+                || EditableMapComponent.hasGeometry(this.selectedDocument)) {
+            await super.updateMap(changes);
+        }
 
-            if (this.isEditing) {
-                this.map.doubleClickZoom.disable();
-                this.showMousePositionCoordinates();
+        this.resetEditing();
 
-                if ((this.selectedDocument.resource.geometry as any).coordinates) {
-                    this.fadeOutMapElements();
-                    this.editExistingGeometry();
-                } else {
-                    switch (this.getEditorType()) {
-                        case 'polygon':
-                            this.fadeOutMapElements();
-                            this.startPolygonCreation();
-                            break;
-                        case 'polyline':
-                            this.fadeOutMapElements();
-                            this.startPolylineCreation();
-                            break;
-                        case 'point':
-                            this.fadeOutMapElements();
-                            this.startPointCreation();
-                            break;
-                    }
-                }
+        if (this.isEditing) {
+            this.map.doubleClickZoom.disable();
+            this.showMousePositionCoordinates();
+
+            if ((this.selectedDocument.resource.geometry as any).coordinates) {
+                this.fadeOutMapElements();
+                this.editExistingGeometry();
             } else {
-                this.map.doubleClickZoom.enable();
-                this.hideMousePositionCoordinates();
+                switch (this.getEditorType()) {
+                    case 'polygon':
+                        this.fadeOutMapElements();
+                        this.startPolygonCreation();
+                        break;
+                    case 'polyline':
+                        this.fadeOutMapElements();
+                        this.startPolylineCreation();
+                        break;
+                    case 'point':
+                        this.fadeOutMapElements();
+                        this.startPointCreation();
+                        break;
+                }
             }
-        });
-        return Promise.resolve();
+        } else {
+            this.map.doubleClickZoom.enable();
+            this.hideMousePositionCoordinates();
+        }
     }
 
 
@@ -630,5 +632,12 @@ export class EditableMapComponent extends LayerMapComponent {
                 list.splice(list.indexOf(element), 1);
             }
         }
+    }
+
+
+    private static hasGeometry(document: FieldDocument): boolean {
+
+        return document !== undefined && document.resource.geometry !== undefined
+            && document.resource.geometry.coordinates !== undefined;
     }
 }

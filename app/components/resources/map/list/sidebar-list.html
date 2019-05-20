@@ -16,7 +16,7 @@
                    [isDepictedInRelations]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
         </thumbnail>
 
-        <div id="document-info">
+        <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
             <fields-view [resource]="viewFacade.getSelectedDocument().resource"
                          (onJumpToResource)="jumpToResource($event)"></fields-view>
         </div>

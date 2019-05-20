@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
@@ -22,7 +22,6 @@ import {RoutingService} from '../../../routing-service';
  */
 
 export class SidebarListComponent extends BaseList {
-
 
     public highlightedDocument: FieldDocument|undefined = undefined;
     public selectedDocumentThumbnailUrl: string|undefined;
@@ -48,6 +47,9 @@ export class SidebarListComponent extends BaseList {
         this.resourcesMapComponent.openContextMenu(event, document);
 
     public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
+
+    public hasThumbnail = (document: FieldDocument): boolean =>
+        Document.hasRelations(document, 'isDepictedIn');
 
 
     public async editDocument(document: FieldDocument) {

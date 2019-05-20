@@ -161,8 +161,12 @@ $teaser-width: $resources-listing-item-slim-width;
 }
 
 #document-info {
-  height: calc(100% - 190px);
+  height: calc(100% - 40px);
   overflow-y: auto;
+
+  &.short-document-info {
+    height: calc(100% - 190px);
+  }
 }
 
 #create-document-button .circular-button {

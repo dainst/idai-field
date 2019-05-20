@@ -70,6 +70,19 @@ Maßnahmenansicht mithilfe des Plus-Buttons Ressourcen verschiedener Typen angel
 
 <p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
 
+Es besteht die Möglichkeit, Ressourcen hierarchisch anzuordnen. Typischerweise wird dies verwendet,
+um z.B. Funde innerhalb stratigraphischer Einheiten anzusiedeln. Wenn eine stratigraphische Einheit
+bzw. eine Subtyp davon innerhalb einer Maßnahme erstellt wurde, kann mittels des abgewinkelten Pfeils
+die Vorschau der untergeordneten Ressourcen angezeigt werden. Diese ist zu anfangs leer.
+
+<p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
+
+Mit Klick auf **Kollektion öffnen** kann die stratigraphische Einheit als Ebene geöffnet werden.
+Die Verwendung des Plus-Buttons führt nun dazu, dass Funde entsprechend auf dieser Ebene angelegt werden.
+Der Navigationspfad zeigt die aktuelle gerade ausgewählte Hierarchieebene an.
+
+<p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
+
 <hr>
 
 

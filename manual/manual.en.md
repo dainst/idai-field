@@ -58,6 +58,19 @@ operation view.
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
+It is possible, to lay out resources hierarchically. Typically this is used to nest finds into
+stratigraphical units. If a stratigraphical unit or one of its subtypes has been created within
+an operation, one can access a preview of the nested resources via the angled arrow. At the beginning
+it is empty.
+
+<p align="center"><img src="images/en/resources/open_collection.png" alt="Open collection"/></p>
+
+By clicking "Open collection" the stratigraphical unit gets opened as a hierarchical level. Using
+the plus button now will lead to finding get created at that level. The navigation path shows
+the currently selected level.
+
+<p align="center"><img src="images/en/resources/navpath.png" alt="navpath"/></p>
+
 <hr>
 
 

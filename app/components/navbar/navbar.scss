@@ -63,7 +63,12 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 
   &.closable-tab {
     padding-right: 9px !important;
-    padding-left: 33px !important;
+
+    type-icon {
+      position: relative;
+      top: 1px;
+      left: -4px;
+    }
   }
 
   &:before,

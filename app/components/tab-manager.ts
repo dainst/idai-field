@@ -13,6 +13,7 @@ export type Tab = {
     routeName: string,
     label: string
     operationId: string,
+    operationType: string;
     shown: boolean
 }
 
@@ -81,7 +82,8 @@ export class TabManager {
     }
 
 
-    public async openTab(routeName: string, operationId: string, operationIdentifier: string) {
+    public async openTab(routeName: string, operationId: string, operationIdentifier: string,
+                         operationType: string) {
 
         if (this.getTab(routeName, operationId)) return;
 
@@ -89,6 +91,7 @@ export class TabManager {
             routeName: routeName,
             label: this.getLabel(routeName, operationIdentifier),
             operationId: operationId,
+            operationType: operationType,
             shown: true
         });
 
@@ -200,7 +203,7 @@ export class TabManager {
 
         if (operationId && operationId !== 'project' && !this.getTab(routeName, operationId) && routeName === 'resources') {
             const document: FieldDocument = await this.datastore.get(operationId);
-            await this.openTab(routeName, operationId, document.resource.identifier);
+            await this.openTab(routeName, operationId, document.resource.identifier, document.resource.type);
         }
     }
 

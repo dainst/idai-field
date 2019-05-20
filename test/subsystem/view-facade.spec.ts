@@ -120,7 +120,8 @@ describe('ViewFacade/Subsystem', () => {
             })
         );
 
-        await tabManager.openTab('resources', 't2', 'trench2');
+        await tabManager.openTab('resources', 't2', 'trench2',
+            'Trench');
 
         await viewFacade.selectView('project');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
@@ -292,12 +293,14 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewState -- restore mode when switching views', async done => {
 
         await viewFacade.selectView('t1');
-        await tabManager.openTab('resources', 't1', 'trench1');
+        await tabManager.openTab('resources', 't1', 'trench1',
+            'Trench');
         expect(viewFacade.getMode()).toEqual('map');
         viewFacade.setMode('list');
 
         await viewFacade.selectView('t2');
-        await tabManager.openTab('resources', 't2', 'trench2');
+        await tabManager.openTab('resources', 't2', 'trench2',
+            'Trench');
         expect(viewFacade.getMode()).toEqual('list');
         viewFacade.setMode('map');
 

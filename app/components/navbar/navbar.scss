@@ -45,6 +45,10 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 #non-resources-tab {
   height: 51px;
 
+  button {
+    -webkit-app-region: no-drag;
+  }
+
   .nav-link {
     position: relative;
     left: -10px;

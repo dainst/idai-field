@@ -183,7 +183,7 @@ to operations. Clicking the arrow lets one jump into the the right hierarchical 
 corresponding view.
 
 While in extended search mode, it is not possible to create resources, which is shown by the deactivated
-create button. In order to create new resources, leave the extendes search mode.
+create button. In order to create new resources, leave the extended search mode.
 
 The number of search results shown simultaneously is restricted to a maximum of **200** for performance reasons. Other
 resources are not displayed by the application and instead a notice is shown informing about the maximum being exceeded.

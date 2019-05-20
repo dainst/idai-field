@@ -30,18 +30,19 @@
                         {{tab.label}}
                     </a>
                 </div>
-
             </li>
         </ul>
 
         <ul *ngIf="!isActiveRoute('/resources')"
             id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
+            <span class="form-inline">
+                <button class="btn btn-primary"
+                     (click)="$event.stopPropagation(); openActiveTab();">
+                    <span class="mdi mdi-arrow-left-circle mdi-18px"></span>
+                </button>
+            </span>
             <li class="nav-item">
-                <a class="nav-link active">
-                    <span class="mdi mdi-menu-left"
-                          (click)="$event.stopPropagation(); openActiveTab();"></span>
-                    {{getActiveRouteLabel()}}
-                </a>
+                <a class="nav-link active">{{getActiveRouteLabel()}}</a>
             </li>
         </ul>
 

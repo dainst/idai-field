@@ -33,9 +33,23 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   color: $link-hover-color;
 }
 
+.navbar button .mdi:hover {
+  color: #fff;
+}
+
 .navbar-tabbed .nav-link {
   padding: 0.7em 1em;
   margin-top: 0.3em;
+}
+
+#non-resources-tab {
+  height: 51px;
+
+  .nav-link {
+    position: relative;
+    left: -10px;
+    margin-top: 4px;
+  }
 }
 
 .navbar-dark .navbar-tabbed a.nav-link.tab {

@@ -63,14 +63,15 @@ operation view.
 
 ## Search
 
-In the **Overview**, in the operation views **Excavation**, **Building** and **Survey** as well as in the image
-overview (menu item **Images**), a **search filter** is available. You can use it to restrict the currently displayed
+In the **Overview**, in the operation views as well as in the image
+overview (menu item **Images**), a **search filter** is available. 
+You can use it to restrict the currently displayed
 resources by the means of some basic search criteria (identifier, short description, resource type).
 
 If you want to express more complex search queries, you can furthermore switch into the **extended search mode** while
-in the **overview** or one of the **operation views**. This mode allows you to expand the search to a larger
-area (e. g. to all trenches or the whole project) and to define additional field specific search criteria.
-
+in the **overview** or one of the **operation views**. 
+This mode allows you on the one hand to expand the search bypassing hierarchical orderings and also to search over the
+whole project and on the other hand to thereby define additional field specific search criteria.
 
 ### Search filter
 

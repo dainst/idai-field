@@ -75,15 +75,15 @@ Maßnahmenansicht mithilfe des Plus-Buttons Ressourcen verschiedener Typen angel
 
 ## Suche
 
-In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey** sowie in der 
-Bilderverwaltung (Menüpunkt **Bilder**) steht ein **Suchfilter** zur Verfügung, den Sie verwenden können, um
-die Menge der aktuell angezeigten Ressourcen anhand grundlegender Suchkriterien (Bezeichner, Kurzbeschreibung,
-Ressourcentyp) einzuschränken.
+In der **Übersicht**, den einzelnen Maßnahmenansichten sowie in der 
+Bilderverwaltung (Menüpunkt **Bilder**) stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um
+die Menge der aktuell angezeigten Ressourcen anhand grundlegender Suchkriterien 
+(Bezeichner, Kurzbeschreibung, Ressourcentyp) einzuschränken.
 
 Möchten Sie komplexere Suchanfragen formulieren, können Sie innerhalb der **Übersicht** und der
-**Maßnahmenansichten** darüber hinaus in den **erweiterten Suchmodus** wechseln. Dieser Modus ermöglicht es
-Ihnen, die Suche auf einen größeren Bereich auszuweiten (beispielsweise auf alle Schnitte oder auf das gesamte
-Projekt) und zusätzliche feldspezifische Suchkriterien zu definieren.
+**Maßnahmenansichten** darüber hinaus in den **erweiterten Suchmodus** wechseln. 
+Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und auch innerhalb des gesamten Projektes
+zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
 ### Suchfilter

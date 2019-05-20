@@ -66,7 +66,7 @@ it is empty.
 <p align="center"><img src="images/en/resources/open_collection.png" alt="Open collection"/></p>
 
 By clicking "Open collection" the stratigraphical unit gets opened as a hierarchical level. Using
-the plus button now will lead to finding get created at that level. The navigation path shows
+the plus button now will lead to finding get created at that level. The navigation path indicates
 the currently selected level.
 
 <p align="center"><img src="images/en/resources/navpath.png" alt="navpath"/></p>

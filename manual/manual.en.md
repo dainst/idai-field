@@ -168,16 +168,22 @@ the magnifier button.
 <p align="center"><img src="images/en/search/extended_search_button.png" alt="Extended search mode button"/></p>
 
 The extended search mode allows searching over larger amounts of data:
+
 * In the **overview**, the search is performed over all of the project's resources.
-* In the **operation views**, you can choose if the search shall be performed within a single operation or over all
-operations of the respective type (e. g. over all trenches in the view **Excavation**). For this purpose, the option
-"All" is available in the operation selection menu.
+* In the **operation views**, the search is performed over all of the operation's resources.
 
-<p align="center"><img src="images/en/search/all_operations.png" alt="Search over all operations of a type"/></p>
+In both cases all the resources found get shown in the list on the left side. The upward pointing
+arrows allow you to jump right into the hierarchical level which the resource belongs to. Following
+the arrow deactivates the extended search mode.
 
-Please note that the hierarchy resulting from the created "Lies within" relations is not shown in the extended
-search mode and the creation of new resources is not possible. For these tasks, leave the extended search mode
-by clicking the magnifier button again.
+<p align="center"><img src="images/en/search/show_in_context.png" alt="Show in context"/></p>
+
+In addition to that, an upward right pointing arrow is shown in overview for resources which belong
+to operations. Clicking the arrow lets one jump into the the right hierarchical level of the 
+corresponding view.
+
+While in extendes search mode, it is not possible to create resources, which is shown by the deactivated
+create button. In order to create new resources, leave the extendes search mode.
 
 The number of search results shown simultaneously is restricted to a maximum of **200** for performance reasons. Other
 resources are not displayed by the application and instead a notice is shown informing about the maximum being exceeded.

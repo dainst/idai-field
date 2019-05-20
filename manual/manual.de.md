@@ -184,16 +184,22 @@ den erweiterten Suchmodus wechseln.
 <p align="center"><img src="images/de/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
 
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
+
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.
-* In den **Maßnahmenansichten** können Sie wählen, ob die Suche innerhalb einer Maßnahme oder über alle
-Maßnahmen des jeweiligen Typs (z. B. alle Schnitte in der Ansicht **Ausgrabung**) erfolgen soll. Hierzu
-steht im Maßnahmen-Auswahlmenü die Option "Alle" zur Verfügung.
+* In den **Maßnahmenansichten** wird über alle Resourcen der Maßnahme gesucht.
 
-<p align="center"><img src="images/de/search/all_operations.png" alt="Suche über alle Maßnahmen eines Typs"/></p>
+In beiden Fällen werden alle gefundenen Suchergebnisse links in der Liste angezeigt. Der nach oben zeigende
+Pfeil erlaubt einem, in den ensprechenden hierarchischen Kontext der Ressource zu springen. Mit Klick
+auf den Pfeil wird dann auch der erweiterte Suchmodus beendet.   
 
-Bitte beachten Sie, dass die Hierarchie, die sich anhand der angelegten "Liegt in"-Relationen ergibt, im
-erweiterten Suchmodus nicht dargestellt wird und das Anlegen neuer Ressourcen nicht möglich ist. Verlassen
-Sie für diese Zwecke den erweiterten Suchmodus wieder durch einen erneuten Klick auf den Lupen-Button.
+<p align="center"><img src="images/de/search/show_in_context.png" alt="Im Kontext anzeigen"/></p>
+
+Zustätzlich taucht in der Übersicht für Ressourcen, die zu Maßnahmen gehören, ein nach rechts oben
+zeigender Pfeil auf. Ein Klick auf diesen Pfeil führt zu einem Sprung in den hierarchischen Kontext 
+der Ressource innerhalb der entsprechenden Maßnahmenasicht. 
+
+Innerhalb der erweiterten Suche können keine neuen Ressourcen angelegt werden, was durch den ausgegrauten
+Plus-Button angezeigt wird. Um neue Ressourcen anzulegen, verlassen sie die erweiterte Suchansicht wieder.
 
 Die Anzahl der gleichzeitig angezeigten Suchergebnisse ist aus Performancegründen immer auf maximal **200**
 beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber darauf hin, dass die Maximalanzahl

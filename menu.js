@@ -13,8 +13,13 @@ const getTemplate = (mainWindow, context) => {
             role: 'about'
         }, {
             type: 'separator'
+        }, {
+            label: messages.get('menu.settings'),
+            accelerator: 'CmdOrCtrl+,',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
+            enabled: context === 'default'
         }]
-    },{
+    }, {
         label: messages.get('menu.file'),
         submenu: [
             {
@@ -31,7 +36,7 @@ const getTemplate = (mainWindow, context) => {
                 type: 'separator'
             }, {
                 label: messages.get('menu.settings'),
-                accelerator: (process.platform === 'darwin') ? 'CmdOrCtrl+,' : 'CmdOrCtrl+Alt+S',
+                accelerator: 'CmdOrCtrl+Alt+S',
                 click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
                 enabled: context === 'default'
             },
@@ -169,7 +174,13 @@ const getTemplate = (mainWindow, context) => {
         }]
     }];
 
-    if (process.platform !== 'darwin') template.splice(0, 1);
+    if (process.platform === 'darwin') {
+        // Remove 'Settings' option from 'File' menu
+        template[1].submenu.splice(3, 1);
+    } else {
+        // Remove 'iDAI.field' menu
+        template.splice(0, 1);
+    }
 
     return template;
 };

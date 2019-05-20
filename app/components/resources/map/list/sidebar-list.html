@@ -24,11 +24,11 @@
 </div>
 
 <ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
-    (mouseleave)="highlightedDocument = undefined"
     (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
         class="resources-listing-item resources-listing-item-wide"
         (mouseover)="highlightDocument(document)"
+        (mouseleave)="highlightedDocument = undefined"
         (contextmenu)="openContextMenu($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"

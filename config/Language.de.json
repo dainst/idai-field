@@ -50,7 +50,7 @@
     },
     "processor": {
       "label": "Bearbeiterin/Bearbeiter",
-      "description": "Hier wird die Person bzw. werden die Personen eingetragen, die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/war. Nicht die Person, die in die Datenbank einträgt. Diese Information wird automatisch gespeichert."
+      "description": "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind. Wichtig: Die Namen der Personen, die den Eintrag in der Datenbank eintragen bzw. bearbeiten, werden automatisch gespeichert und müssen daher hier nicht angegeben werden."
     },
     "period": {
       "label": "Grobdatierung"

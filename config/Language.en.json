@@ -30,7 +30,7 @@
     },
     "processor": {
       "label": "Processor",
-      "description": "Enter the name of the person(s), that was/were responsible for the resource or the object during the campaign. The name of the person editing the database entry is saved automatically and is, therefore not required."
+      "description": "The name of the person(s) who is/are responsible for the resource or the object during the campaign. Please note: The names of the persons editing the database entry are saved automatically and are therefore not required here."
     },
     "description": {
       "label": "Description"

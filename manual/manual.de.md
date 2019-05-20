@@ -30,15 +30,45 @@ Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
 geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
 Metadaten des Projekts eingeben.
 
-Beginnnen Sie mit der Dateneingabe, indem Sie in den Bereich **Übersicht** wechseln, wo
-Sie Datensätze für Maßnahmen (Schnitte, Bauwerke, Survey-Areale) anlegen können. In den
-Bereichen **Ausgrabung**, **Bauaufnahme** und **Survey** können Sie anschließend Ressourcen
-(z. B. stratigraphische Einheiten, Funde oder Bauwerksteile) innerhalb von Maßnahmen anlegen. 
+Beginnnen Sie mit der Dateneingabe im Bereicht **Übersicht** (Siehe Abschnitt "Ressourcen"). 
 
 Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdown-Menü
 in der oberen rechten Ecke des Bildschirms erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
 anzulegen.
 
+
+<hr>
+
+## Ressourcen
+
+Die blaue Navigationsleiste oben im Fenster beherbergt unterschiedliche Ansichten, 
+in denen Grabungsressourcen verwaltet werden können. Im **Übersicht**-Reiter können Maßnahmen
+und Orte verwaltet werden. Jede in der Übersicht angelegte Maßnahme kann anschließend, 
+über die Navigationsleiste, in einem eigenen Tab geöffnet werden.
+
+Beginnend in der Übersicht, kann mithilfe des grünen Plus-Button in der Leiste links
+ eine neue Maßnahme erstellt werden.
+
+<p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
+
+Als nächstes kann eine Geometrie von Hand erstellt werden. Dieser Schritt wird hier übersprungen. 
+
+<p align="left"><img src="images/de/resources/save_operation.png" alt="Maßnahmen-Ressource speichern"/></p>
+
+Es muss mindestens das Feld Bezeichner im Stammdaten-Bereich ausgefüllt werden. 
+Dann kann die Maßnahme mittels des Speichern-Buttons gespeichert werden.
+
+<p align="center"><img src="images/de/resources/goto_operation.png" alt="Maßnahmen-Ressource öffnen"/></p>
+
+Nach dem Speichern kann durch das Anklicken entweder des Namens der Ressource in der Navigationsleiste
+oder des nach rechts oben zeigenden Pfeils des für das neue Element angelegten Listeneintrages in 
+die entsprechende Ansicht gewechselt werden, in welcher weitere Ressourcen innerhalb der Maßnahme 
+verwaltet werden können.  
+
+In Abhängigkeit vom Maßnahmentyp können innerhalb der 
+Maßnahmenansicht mithilfe des Plus-Buttons Ressourcen verschiedener Typen angelegt werden.
+
+<p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
 
 <hr>
 

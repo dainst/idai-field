@@ -22,13 +22,41 @@ a new project by clicking the plus button. Allowed characters for the project na
 As soon as the new project has been loaded, you can enter basic project metadata by clicking the edit button in the
 project management menu.
 
-To start entering data, switch to the **Overview** where you can add new operations (trenches,
-buildings, survey areas). Subsequently, you can add resources (e. g. stratigraphical units, finds or building parts)
-inside these operations in the views **Excavation**, **Building** and **Survey**. 
+Start entering data in the **Overview** tab (See section "Resources").
 
 Use the menu **Create backup**, which is also accessible via the dropdown menu in the upper right screen corner, to
 create backup files of your project data regularly.
 
+<hr>
+
+## Resources
+
+The blue navigation bar in the top part of the window contains various views for the management of 
+excavation resources. Operations and places can be managed in the **Overview** tab. Each of the operations
+created in the overview tab can in turn get opened in its own tab, accessible via the navigation bar. 
+
+Starting in the overview, using the green plus button at the bottom left 
+corner one can create a new operation.
+
+<p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
+
+The next step will ask you to create a geoemtry. This step will be skipped here.
+
+<p align="left"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
+
+At the very least the identifier field in the core section has to be filled in. Then the resources 
+can be saved by clicking the save-button.
+
+<p align="center"><img src="images/en/resources/goto_operation.png" alt="open operation resource"/></p>
+
+After saving, by clicking either on the name of the resource in the navigation bar or by clicking the 
+top right pointing arrow of the new list item created for the resource, one can jump to the view dedicated
+to manage further resources within this operation. 
+
+Depending on the type of the operation, different resource types can be created via the plus button of the 
+operation view.
+
+<p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
 <hr>
 

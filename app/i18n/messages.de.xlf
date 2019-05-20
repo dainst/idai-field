@@ -313,14 +313,6 @@
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
         <source>Multipolygon</source>
@@ -328,10 +320,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
@@ -341,14 +329,6 @@
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
         <source>Multipolyline</source>
@@ -356,10 +336,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
@@ -369,14 +345,6 @@
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
         <source>Multipunkt</source>
@@ -384,10 +352,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/geometry-view.html</context>
           <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
-          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
@@ -1738,6 +1702,78 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/context-menu.html</context>
           <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
+        <source>Polygon anlegen</source>
+        <target state="final">Polygon anlegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
+        <source>Polyline anlegen</source>
+        <target state="final">Polyline anlegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
+        <source>Punkt anlegen</source>
+        <target state="final">Punkt anlegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
+        <source>Polygon bearbeiten</source>
+        <target state="final">Polygon bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
+        <source>Multipolygon bearbeiten</source>
+        <target state="final">Multipolygon bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
+        <source>Polyline bearbeiten</source>
+        <target state="final">Polyline bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
+        <source>Multipolyline bearbeiten</source>
+        <target state="final">Multipolyline bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
+        <source>Punkt bearbeiten</source>
+        <target state="final">Punkt bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
+        <source>Multipunkt bearbeiten</source>
+        <target state="final">Multipunkt bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/context-menu.html</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectType" datatype="html">

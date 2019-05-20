@@ -23,17 +23,17 @@
     <div *ngIf="resourcesMapComponent.contextMenuDocument && !resourcesMapComponent.contextMenuDocument.resource.geometry"
             id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
         <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.detailSidebar.geometryView.polygon">Polygon</span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polygon">Polygon anlegen</span>
     </div>
     <div *ngIf="resourcesMapComponent.contextMenuDocument && !resourcesMapComponent.contextMenuDocument.resource.geometry"
             id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
         <span class="mdi mdi-vector-polyline"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.detailSidebar.geometryView.polyline">Polyline</span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polyline">Polyline anlegen</span>
     </div>
     <div *ngIf="resourcesMapComponent.contextMenuDocument && !resourcesMapComponent.contextMenuDocument.resource.geometry"
             id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
         <span class="mdi mdi-map-marker-plus"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.detailSidebar.geometryView.point">Punkt</span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Punkt anlegen</span>
     </div>
 
     <div *ngIf="resourcesMapComponent.contextMenuDocument && resourcesMapComponent.contextMenuDocument.resource.geometry"
@@ -42,22 +42,22 @@
         <span class="dropdown-entry-label" >
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'Polygon'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.polygon">Polygon</span>
+                      i18n="@@resources.contextMenu.editGeometry.polygon">Polygon bearbeiten</span>
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'MultiPolygon'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.multipolygon">Multipolygon</span>
+                      i18n="@@resources.contextMenu.editGeometry.multipolygon">Multipolygon bearbeiten</span>
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'LineString'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.polyline">Polyline</span>
+                      i18n="@@resources.contextMenu.editGeometry.polyline">Polyline bearbeiten</span>
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'MultiLineString'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.multipolyline">Multipolyline</span>
+                      i18n="@@resources.contextMenu.editGeometry.multipolyline">Multipolyline bearbeiten</span>
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'Point'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.point">Punkt</span>
+                      i18n="@@resources.contextMenu.editGeometry.point">Punkt bearbeiten</span>
                 <span *ngIf="resourcesMapComponent.contextMenuDocument.resource.geometry.type === 'MultiPoint'"
                       class="fieldvalue"
-                      i18n="@@resources.detailSidebar.geometryView.multipoint">Multipunkt</span>
+                      i18n="@@resources.contextMenu.editGeometry.multipoint">Multipunkt bearbeiten</span>
         </span>
     </div>
 

@@ -9,14 +9,14 @@
     <div id="navbarSupportedContent" class="collapse navbar-collapse" [class.mac-margin]="isRunningOnMac()">
         <ul #tabSpace *ngIf="isActiveRoute('/resources')"
             class="nav navbar-nav navbar-tabbed mr-auto">
-            <li id="navbar-project" class="nav-item">
-                <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
+            <li id="navbar-project" class="nav-item tab">
+                <a class="nav-link" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project">
                    <span class="mdi mdi-home"></span>
                </a>
             </li>
-            <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}" class="nav-item">
-                <a class="nav-link tab closable-tab"
+            <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}" class="nav-item tab closable-tab">
+                <a class="nav-link"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
                     <type-icon [size]="23" [type]="tab.operationType" ></type-icon>

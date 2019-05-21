@@ -1,5 +1,6 @@
 $tab-bg-color: $gray-100;
 $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
+$tab-separator-color: lighten($navbar-default-bg, 7%);
 $link-hover-color: lighten($navbar-default-bg, 30%);
 
 .navbar {
@@ -56,142 +57,161 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   }
 }
 
-.navbar-dark .navbar-tabbed a.nav-link.tab {
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  position: relative;
+.navbar-dark .navbar-tabbed .tab {
 
-  .mdi-home {
-      font-size: 23px;
-      line-height: 23px;
+  &:hover + .closable-tab:before {
+    background-color: transparent;
+  }
 
-      &:hover {
-        color: inherit;
+  a.nav-link {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    position: relative;
+
+    &:before,
+    &:after {
+      position: absolute;
+      bottom: 2px;
+      width: 6px;
+      height: 6px;
+      content: " ";
+    }
+    &:before {
+      left: -5px;
+    }
+    &:after {
+      right: -5px;
+    }
+
+    &:focus {
+      color: #fff;
+      outline: none;
+    }
+
+    &.active {
+      background-color: $tab-bg-color;
+      color: #000;
+      z-index: 10;
+
+      &:before {
+        border-color: $tab-bg-color;
+        box-shadow: 2px 2px 0 $tab-bg-color;
+        border-bottom-right-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color;
+        border-right: 1px solid $tab-bg-color;
       }
+
+      &:after {
+        border-color: $tab-bg-color;
+        box-shadow: -2px 2px 0 $tab-bg-color;
+        border-bottom-left-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color;
+        border-left: 1px solid $tab-bg-color;
+      }
+
+      .mdi-close:hover {
+        color: #000;
+        background-color: #dee2e6;
+      }
+    }
+
+    &:not(.active) {
+      .mdi-close:hover {
+        color: #fff;
+        background-color: lighten($navbar-default-bg, 15%);
+      }
+    }
+
+    &:hover:not(.active) {
+      background-color: $tab-bg-color-hover;
+      z-index: 5;
+      color: white;
+
+      &:before {
+        border-color: $tab-bg-color-hover;
+        box-shadow: 2px 2px 0 $tab-bg-color-hover;
+        border-bottom-right-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color-hover;
+        border-right: 1px solid $tab-bg-color-hover;
+      }
+
+      &:after {
+        border-color: $tab-bg-color-hover;
+        box-shadow: -2px 2px 0 $tab-bg-color-hover;
+        border-bottom-left-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color-hover;
+        border-left: 1px solid $tab-bg-color-hover;
+      }
+    }
+
+    &:not(:hover):not(.active) {
+      .mdi-close {
+        opacity: 0;
+      }
+    }
+
+    .mdi-home {
+        font-size: 23px;
+        line-height: 23px;
+
+        &:hover {
+          color: inherit;
+        }
+    }
+
+    .mdi-close {
+      position: relative;
+      top: 1px;
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      padding-left: 1px;
+      line-height: normal;
+      border-radius: 4px;
+      transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
   }
 
   &.closable-tab {
-    padding-right: 9px !important;
 
-    .closable-tab-label {
-      position: relative;
-      top: -2px;
-      margin-left: 5px;
-      margin-right: 5px;
+    &:before {
+      position: absolute;
+      width: 1px;
+      top: 10px;
+      bottom: 7px;
+      background-color: $tab-separator-color;
+      content: " ";
     }
 
-    .mdi-close {
-      position: relative;
-      top: -2px;
-    }
+    a.nav-link {
+      padding-right: 9px !important;
 
-    type-icon {
-      position: relative;
-      left: -4px;
+      .closable-tab-label {
+        position: relative;
+        top: -2px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
 
-      .type-icon {
-        border: 1px solid #fff;
+      .mdi-close {
+        position: relative;
+        top: -2px;
+      }
 
-        .character {
-          position: relative;
-          top: -1px;
+      type-icon {
+        position: relative;
+        left: -4px;
+
+        .type-icon {
+          border: 1px solid #fff;
+
+          .character {
+            position: relative;
+            top: -1px;
+          }
         }
       }
     }
-  }
-
-  &:before,
-  &:after {
-    position: absolute;
-    bottom: 2px;
-    width: 6px;
-    height: 6px;
-    content: " ";
-  }
-  &:before {
-    left: -5px;
-  }
-  &:after {
-    right: -5px;
-  }
-
-  &:focus {
-    color: #fff;
-    outline: none;
-  }
-
-  &.active {
-    background-color: $tab-bg-color;
-    color: #000;
-    z-index: 10;
-
-    &:before {
-      border-color: $tab-bg-color;
-      box-shadow: 2px 2px 0 $tab-bg-color;
-      border-bottom-right-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color;
-      border-right: 1px solid $tab-bg-color;
-    }
-
-    &:after {
-      border-color: $tab-bg-color;
-      box-shadow: -2px 2px 0 $tab-bg-color;
-      border-bottom-left-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color;
-      border-left: 1px solid $tab-bg-color;
-    }
-
-    .mdi-close:hover {
-      color: #000;
-      background-color: #dee2e6;
-    }
-  }
-
-  &:not(.active) {
-    .mdi-close:hover {
-      color: #fff;
-      background-color: lighten($navbar-default-bg, 15%);
-    }
-  }
-
-  &:hover:not(.active) {
-    background-color: $tab-bg-color-hover;
-    z-index: 5;
-    color: white;
-
-    &:before {
-      border-color: $tab-bg-color-hover;
-      box-shadow: 2px 2px 0 $tab-bg-color-hover;
-      border-bottom-right-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color-hover;
-      border-right: 1px solid $tab-bg-color-hover;
-    }
-
-    &:after {
-      border-color: $tab-bg-color-hover;
-      box-shadow: -2px 2px 0 $tab-bg-color-hover;
-      border-bottom-left-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color-hover;
-      border-left: 1px solid $tab-bg-color-hover;
-    }
-  }
-
-  &:not(:hover):not(.active) {
-    .mdi-close {
-      opacity: 0;
-    }
-  }
-
-  .mdi-close {
-    position: relative;
-    top: 1px;
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    padding-left: 1px;
-    line-height: normal;
-    border-radius: 4px;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
   }
 }
 

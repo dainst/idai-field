@@ -251,7 +251,7 @@ entsprechende Kriterium auswählen.
 
 ## Matrix
 
-Unter dem Menüpunkt **Matrix** finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
+In der **Matrix** Ansicht (zu finden im Werkzeuge-Menü) finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
 den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
 auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
 

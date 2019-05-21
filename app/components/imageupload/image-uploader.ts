@@ -164,6 +164,10 @@ export class ImageUploader {
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, type, depictsRelationTarget)
+                        .catch(error => {
+                            console.error(error);
+                            reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
+                        })
                         .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(() =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
                             this.imageDocumentDatastore.get(doc.resource.id, { skipCache: true })
@@ -217,6 +221,7 @@ export class ImageUploader {
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };
+            img.onerror = error => reject(error);
         });
     }
 

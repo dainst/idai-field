@@ -3920,6 +3920,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.imagestore.error.upload" datatype="html">
+        <source>Die Datei '[0]' konnte nicht gelesen werden.</source>
+        <target state="final">The file '[0]' could not be read.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.imagestore.error.write" datatype="html">
         <source>Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</source>
         <target state="final">Failed to save the file '[0]' in the image directory.</target>

@@ -143,6 +143,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'imagestore.error.invalidPath.read';
     public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'imagestore.error.invalidPath.write';
     public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imagestore.error.invalidPath.delete';
+    public static IMAGESTORE_ERROR_UPLOAD = 'imagestore.error.upload';
     public static IMAGESTORE_ERROR_WRITE = 'imagestore.error.write';
     public static IMAGESTORE_ERROR_DELETE = 'imagestore.error.delete';
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'imagestore.error.invalidWorldfile';
@@ -1092,6 +1093,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.imagestore.error.invalidPath.delete',
                 value: 'Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_UPLOAD] = {
+            content: i18n({
+                id: 'messages.imagestore.error.upload',
+                value: 'Die Datei \'[0]\' konnte nicht gelesen werden.'
             }),
             level: 'danger',
             params: [],

@@ -151,6 +151,7 @@ export class TabManager {
                 try {
                     const document: FieldDocument = await this.datastore.get(tab.operationId);
                     tab.label = this.getLabel(tab.routeName, document.resource.identifier);
+                    tab.operationType = document.resource.type;
                 } catch (err) {
                     continue;
                 }

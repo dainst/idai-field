@@ -2,7 +2,11 @@
 
     <div class="btn info-button info-button-middle-position"
          [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('info', document)"
-         (click)="sidebarList.togglePopoverMenu('info', document); $event.stopPropagation();">
+         (click)="sidebarList.togglePopoverMenu('info', document); $event.stopPropagation();"
+         placement="right"
+         container="body"
+         ngbTooltip="Daten anzeigen"
+         i18n-ngbTooltip="@@resources.showResourceData">
 
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
               class="mdi mdi-information-outline sidebar-list-button-group-inner">
@@ -10,10 +14,13 @@
     </div>
 
     <div *ngIf="shouldShowArrowBottomRight()"
-            class="btn hierarchy-button"
+         class="btn hierarchy-button"
          [class.sidebar-list-button-group-active-button]="sidebarList.isPopoverMenuOpened('children', document)"
-         (click)="sidebarList.togglePopoverMenu('children', document); $event.stopPropagation();">
-
+         (click)="sidebarList.togglePopoverMenu('children', document); $event.stopPropagation();"
+         placement="right"
+         container="body"
+         ngbTooltip="Untergeordnete Ressourcen anzeigen"
+         i18n-ngbTooltip="@@resources.showChildResources">
         <span [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
               class="arrow-bottom-right sidebar-list-button-group-inner">
         </span>

@@ -95,15 +95,14 @@ Furthermore, the context menu contains options for creating and editing geometri
 
 ## Search
 
-In the **Overview**, in the operation views as well as in the image
-overview (menu item **Images**), a **search filter** is available. 
-You can use it to restrict the currently displayed
-resources by the means of some basic search criteria (identifier, short description, resource type).
+In the **overview**, in the **operation tabs** as well as in the **image management** (accessible via the menu
+"Tools"), a **search filter** is available. You can use it to restrict the currently displayed resources by
+the means of some basic search criteria (identifier, short description, resource type).
 
-If you want to express more complex search queries, you can furthermore switch into the **extended search mode** while
-in the **overview** or one of the **operation views**. 
-This mode allows you on the one hand to expand the search bypassing hierarchical orderings and also to search over the
-whole project and on the other hand to thereby define additional field specific search criteria.
+If you want to express more complex search queries, you can furthermore switch into the **extended search
+mode** while in the **overview** or one of the **operation tabs**. This mode allows you to expand the search
+bypassing hierarchical orderings, to search over the whole project and to define additional field specific
+search criteria.
 
 ### Search filter
 
@@ -112,21 +111,21 @@ The search filter is a fast way to show or hide resources based on specific crit
 
 <p align="center"><img src="images/en/search/search_filter.png" alt="Search filter"/></p>
 
-After entering a search term and/or choosing a resource type, only the resources matching these filter criteria are
-shown. In the **overview** and the **operation views**, this affects all resources in the left sidebar and on the
-map (in map view) respectively the elements of the list (in list view). In the **image overview**, all images shown
-in the grid are affected by the search filter.
+After entering a search term and/or choosing a resource type, only the resources matching these filter
+criteria are shown. In the **overview** and the **operation tabs**, this affects all resources in the left
+sidebar and on the map (in map view) respectively the elements of the list (in list view). In the **image
+management**, all images shown in the grid are affected by the search filter.
 
 
 #### Type filter
 
 <p align="center"><img src="images/en/search/filter_menu.png" alt="Type filter selection"/></p>
 
-The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose a
-subtype (e. g. "Layer"), only the resources of the respective type are shown. In constrast, if you choose a
-supertype (e. g. "Stratigraphical unit"), the resources of the selected type as well as all of its subtypes (e. g.
-"Layer", "Grave", "Architecture", "Floor" etc.) are included. The current context decides which types are available:
-In the overview you can choose operation types, in the image overview image types etc.
+The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose
+a subtype (e. g. "Layer"), only the resources of the respective type are shown. In contrast, if you choose a
+supertype (e. g. "Stratigraphical unit"), the resources of the selected type as well as all of its subtypes
+(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. The current context decides which types
+are available: In the overview you can choose operation types, in the image management image types etc.
 
 
 #### Text filter
@@ -155,17 +154,17 @@ characters or hyphens, as in the example: "T01", "T02", "mt1", "Trench", "01", "
 Therefore, a search for the term "t01" returns the resource (1), and a search for "my" returns (3) as a
 result. **Capitalization** is ignored. 
   
-The search performed is a so-called **prefix search**, which means that in each case the beginning of the search term
-is checked: As the identifiers of (1) and (2) start with the text string "t0", a search for the term "t0" returns
-(1) as well as (2) as results. A search for "tr" returns (1), (2) and (3), while a search for "ench" or "ren" returns
-nothing.
+The search performed is a so-called **prefix search**, which means that in each case the beginning of the
+search term is checked: As the identifiers of (1) and (2) start with the text string "t0", a search for the
+term "t0" returns (1) as well as (2) as results. A search for "tr" returns (1), (2) and (3), while a search
+for "ench" or "ren" returns nothing.
 
 
 #### Placeholder search
 
-When entering text into the text filter field, placeholders can be used: Instead of a single character, you can specify
-a set of different allowed characters within square brackets. Such a placeholder can be used one time per search
-query.
+When entering text into the text filter field, placeholders can be used: Instead of a single character, you
+can specify a set of different allowed characters within square brackets. Such a placeholder can be used one
+time per search query.
 
 *Example:*
 
@@ -194,57 +193,55 @@ resource.
 
 ### Extended search mode
 
-In the **overview** as well as in the **operation views**, you can switch to the extended search mode by clicking
-the magnifier button.
+In the **overview** as well as in the **operation tabs**, you can switch to the extended search mode by
+clicking the magnifier button.
  
 <p align="center"><img src="images/en/search/extended_search_button.png" alt="Extended search mode button"/></p>
 
 The extended search mode allows searching over larger amounts of data:
 
 * In the **overview**, the search is performed over all of the project's resources.
-* In the **operation views**, the search is performed over all of the operation's resources.
+* In the **operation tabs**, the search is performed over all of the operation's resources.
 
-In both cases all the resources found get shown in the list on the left side. The upward pointing
-arrows allow you to jump right into the hierarchical level which the resource belongs to. Following
-the arrow deactivates the extended search mode.
+In both cases all the resources found get shown in the list on the left side. The buttons "Show in context"
+(Symbol: Arrow up) respectively "Show in context of an operation" (Symbol: Arrow up right) allow you to
+switch to the hierarchical context of a resource; in doing so the extended search mode is ended and a new tab
+is opened if necessary.
 
 <p align="center"><img src="images/en/search/show_in_context.png" alt="Show in context"/></p>
 
-In addition to that, an upward right pointing arrow is shown in overview for resources which belong
-to operations. Clicking the arrow lets one jump into the the right hierarchical level of the 
-corresponding view.
+While in extended search mode, it is not possible to create resources, which is indicated by the deactivated
+create button. In order to create new resources, please leave the extended search mode.
 
-While in extended search mode, it is not possible to create resources, which is shown by the deactivated
-create button. In order to create new resources, leave the extended search mode.
-
-The number of search results shown simultaneously is restricted to a maximum of **200** for performance reasons. Other
-resources are not displayed by the application and instead a notice is shown informing about the maximum being exceeded.
-Add further search criteria or leave the extended search mode in order to access these resources. 
+The number of search results shown simultaneously is restricted to a maximum of **200** for performance
+reasons. Other resources are not displayed by the application and instead a notice is shown informing about
+the maximum being exceeded. Add further search criteria or leave the extended search mode in order to access
+these resources. 
 
 
 #### Field specific search criteria
  
-If the extended search mode is activated and a type filter is selected, you can start a search over specific fields
-of a resource by clicking the plus button to the left of the type filter button. Fields available for search are
-those corresponding to the respective type definition. You can choose as many fields as you want in order to combine
-multiple search criteria. Of course, you can also use the field specific search criteria in combination with the text
-filter. 
+If the extended search mode is activated and a type filter is selected, you can start a search over specific
+fields of a resource by clicking the plus button to the left of the type filter button. Fields available for
+search are those corresponding to the respective type definition. You can choose as many fields as you want in
+order to combine multiple search criteria. Of course, you can also use the field specific search criteria in
+combination with the text filter. 
 
 <p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 
-In case of a text field, just enter the search term directly; for fields with value lists, choose the term from
-a list of all allowed values in a dropdown menu. 
+In case of a text field, just enter the search term directly; for fields with value lists, choose the term
+from a list of all allowed values in a dropdown menu. 
 
 **Important**: In contrast to the search filter, no prefix search is performed in this case. The chosen search
 term must match the content of the resource field exactly for the resource to appear in the list of search
 results. 
 
-As an alternative to specifying a specific search term, you can also search for all resources in which the
+As an alternative to specifying a particular search term, you can also search for all resources in which the
 field is set (option "Any value") or not set (option "No value"). 
 
 The number appearing next to the type filter button indicates the number of active search criteria. You can
-remove search criteria by clicking the number. This opens up the menu again and you can choose the search criterium to
-remove.
+remove search criteria by clicking the number. This opens up the menu again and you can choose the search
+criterion to remove.
 
 
 <hr>

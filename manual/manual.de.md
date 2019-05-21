@@ -109,15 +109,15 @@ Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten v
 
 ## Suche
 
-In der **Übersicht**, den einzelnen Maßnahmenansichten sowie in der 
-Bilderverwaltung (Menüpunkt **Bilder**) stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um
-die Menge der aktuell angezeigten Ressourcen anhand grundlegender Suchkriterien 
-(Bezeichner, Kurzbeschreibung, Ressourcentyp) einzuschränken.
+In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** (erreichbar über das Menü
+"Werkzeuge") stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
+angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Ressourcentyp)
+einzuschränken.
 
 Möchten Sie komplexere Suchanfragen formulieren, können Sie innerhalb der **Übersicht** und der
-**Maßnahmenansichten** darüber hinaus in den **erweiterten Suchmodus** wechseln. 
-Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und auch innerhalb des gesamten Projektes
-zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
+**Maßnahmen-Tabs** darüber hinaus in den **erweiterten Suchmodus** wechseln. 
+Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und auch innerhalb des gesamten
+Projektes zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
 ### Suchfilter
@@ -129,7 +129,7 @@ auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typf
 
 Nach der Eingabe eines Suchbegriffes und/oder der Auswahl eines Ressourcentyps wird die Menge der aktuell
 angezeigten Ressourcen so eingeschränkt, dass sie den Filterkriterien entspricht. In der **Übersicht** und den
-**Maßnahmenansichten** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
+**Maßnahmen-Tabs** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
 Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bilderverwaltung** sind alle im
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
@@ -212,7 +212,7 @@ wählen die entsprechende Ressource aus.
 
 ### Erweiterter Suchmodus
 
-In der **Übersicht** und in den **Maßnahmenansichten** können Sie durch einen Klick auf den Lupen-Button in
+In der **Übersicht** und in den **Maßnahmen-Tabs** können Sie durch einen Klick auf den Lupen-Button in
 den erweiterten Suchmodus wechseln.
  
 <p align="center"><img src="images/de/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
@@ -220,20 +220,18 @@ den erweiterten Suchmodus wechseln.
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
 
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.
-* In den **Maßnahmenansichten** wird über alle Resourcen der Maßnahme gesucht.
+* In den **Maßnahmen-Tabs** wird über alle Ressourcen der Maßnahme gesucht.
 
-In beiden Fällen werden alle gefundenen Suchergebnisse links in der Liste angezeigt. Der nach oben zeigende
-Pfeil erlaubt einem, in den ensprechenden hierarchischen Kontext der Ressource zu springen. Mit Klick
-auf den Pfeil wird dann auch der erweiterte Suchmodus beendet.   
+In beiden Fällen werden alle gefundenen Suchergebnisse links in der Liste angezeigt. Die Buttons "Im Kontext
+anzeigen" (Symbol: Pfeil nach oben) bzw. "Im Kontext einer Maßnahme anzeigen" (Symbol: Pfeil nach rechts oben)
+erlauben es, direkt in den hierarchischen Kontext einer Ressource zu wechseln; dabei wird der erweiterte
+Suchmodus beendet und wenn erforderlich ein neuer Tab geöffnet. 
 
 <p align="center"><img src="images/de/search/show_in_context.png" alt="Im Kontext anzeigen"/></p>
 
-Zustätzlich taucht in der Übersicht für Ressourcen, die zu Maßnahmen gehören, ein nach rechts oben
-zeigender Pfeil auf. Ein Klick auf diesen Pfeil führt zu einem Sprung in den hierarchischen Kontext 
-der Ressource innerhalb der entsprechenden Maßnahmenasicht. 
-
-Innerhalb der erweiterten Suche können keine neuen Ressourcen angelegt werden, was durch den ausgegrauten
-Plus-Button angezeigt wird. Um neue Ressourcen anzulegen, verlassen sie die erweiterte Suchansicht wieder.
+Bei aktiviertem erweiterten Suchmodus können keine neuen Ressourcen angelegt werden, was durch den
+ausgegrauten Plus-Button angezeigt wird. Um neue Ressourcen anzulegen, verlassen Sie den erweiterten
+Suchmodus zunächst wieder.
 
 Die Anzahl der gleichzeitig angezeigten Suchergebnisse ist aus Performancegründen immer auf maximal **200**
 beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber darauf hin, dass die Maximalanzahl
@@ -272,9 +270,9 @@ entsprechende Kriterium auswählen.
 
 ## Matrix
 
-In der **Matrix** Ansicht (zu finden im Werkzeuge-Menü) finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
-den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
-auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
+In der **Matrix** Ansicht (zu finden im Werkzeuge-Menü) finden Sie für jeden Schnitt des Projekts eine Matrix
+vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten
+der Matrix werden dabei auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
 
 <p align="center"><img src="images/de/matrix/trench_selection.png" alt="Schnitt-Auswahl"/></p>
 

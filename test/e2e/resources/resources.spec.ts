@@ -162,13 +162,13 @@ describe('resources --', () => {
 
         // edit
         NavbarPage.clickTab('project');
-        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('S1'));
+        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toContain('S1'));
 
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest * 2);
-        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toEqual('newIdentifier'));
+        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toContain('newIdentifier'));
 
         // delete
         ResourcesPage.clickOpenContextMenu('newIdentifier');
@@ -182,7 +182,7 @@ describe('resources --', () => {
 
         // create
         ResourcesPage.performCreateOperation('newTrench');
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('newTrench'));
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('newTrench'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
@@ -405,7 +405,7 @@ describe('resources --', () => {
         ResourcesPage.clickResourceListItemInMoveModal('S2');
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(7));
 
         NavbarPage.clickTab('project');

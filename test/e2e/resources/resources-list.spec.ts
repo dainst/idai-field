@@ -118,7 +118,7 @@ describe('resources/list --', () => {
         ResourcesPage.clickResourceListItemInMoveModal('S2');
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toEqual('S2'));
+        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
         ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(7));
     });
 

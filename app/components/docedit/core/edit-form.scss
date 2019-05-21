@@ -12,11 +12,11 @@
           user-select: none;
 
           .conflicted {
-            color: orange;
+            color: #dc3545;
 
             &.active {
               color: white;
-              background-color: orange !important;
+              background-color: #dc3545 !important;
             }
           }
 

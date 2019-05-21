@@ -61,6 +61,15 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   border-top-right-radius: 6px;
   position: relative;
 
+  .mdi-home {
+      font-size: 23px;
+      line-height: 23px;
+
+      &:hover {
+        color: inherit;
+      }
+  }
+
   &.closable-tab {
     padding-right: 9px !important;
 

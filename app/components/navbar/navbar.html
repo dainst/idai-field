@@ -11,7 +11,9 @@
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item">
                 <a class="nav-link tab" [class.active]="isActiveRoute('/resources/project')"
-                   href="#" routerLink="/resources/project" i18n="@@navbar.overview">Übersicht</a>
+                   href="#" routerLink="/resources/project">
+                   <span class="mdi mdi-home"></span>
+               </a>
             </li>
             <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}" class="nav-item">
                 <a class="nav-link tab closable-tab"

@@ -19,9 +19,6 @@
                 (click)="moveInto()">
             <span class="arrow-bottom-right"
                   [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0">
-                <!--<span *ngIf="viewFacade.getChildrenCount(document) > 0" class="children-count">-->
-                    <!--{{viewFacade.getChildrenCount(document)}}-->
-                <!--</span>-->
             </span>
         </button>
 
@@ -30,7 +27,7 @@
              placement="right"
              container="body"
              ngbTooltip="Im Kontext anzeigen"
-             i18n-ngbTooltip="@@resources.navigation.arrowup">
+             i18n-ngbTooltip="@@resources.showInContext.tooltip">
             <span class="arrow-up mdi-16px"></span>
         </div>
         <button *ngIf="shouldShowArrowTopRightForSearchMode()"
@@ -39,7 +36,7 @@
              placement="right"
              container="body"
              ngbTooltip="Im Kontext der Maßnahme anzeigen"
-             i18n-ngbTooltip="@@resources.navigation.arrowtopright.search">
+             i18n-ngbTooltip="@@resources.showInOperationContext.tooltip">
             <span class="arrow-top-right mdi-18px"></span>
         </button>
         <button *ngIf="shouldShowArrowTopRight()"

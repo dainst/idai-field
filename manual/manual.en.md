@@ -233,7 +233,7 @@ remove.
 
 ## Matrix
 
-The **Matrix** view (located in the tools menu) displays a matrix for each trench of the project, generated automatically from the stratigraphical
+The **Matrix** view (located in the Tools menu) displays a matrix for each trench of the project, generated automatically from the stratigraphical
 units of the respective trench. The edges of the matrix are built on the basis of the relations created for the units.
 
 <p align="center"><img src="images/en/matrix/trench_selection.png" alt="Trench selection"/></p>

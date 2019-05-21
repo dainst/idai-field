@@ -103,7 +103,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   &:before,
   &:after {
     position: absolute;
-    bottom: -1px;
+    bottom: 2px;
     width: 6px;
     height: 6px;
     content: " ";

@@ -69,7 +69,7 @@ By clicking "Open collection" the stratigraphical unit gets opened as a hierarch
 the plus button now will lead to finding get created at that level. The navigation path indicates
 the currently selected level.
 
-<p align="center"><img src="images/en/resources/navpath.png" alt="navpath"/></p>
+<p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
 <hr>
 

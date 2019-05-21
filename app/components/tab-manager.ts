@@ -45,9 +45,11 @@ export class TabManager {
     }
 
 
-    public getShownTabs = (): Array<Tab> => this.tabs.filter(tab => tab.shown);
+    public getShownTabs = (): Array<Tab> => this.tabs.filter(tab => tab.shown && this.isComplete(tab));
 
-    public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown);
+    public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown && this.isComplete(tab));
+
+    public isComplete = (tab: Tab): boolean => tab.operationType !== undefined && tab.label !== undefined;
 
     public getTabSpaceWidth = (): number => this.tabSpaceCalculator.getTabSpaceWidth();
 

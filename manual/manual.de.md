@@ -41,66 +41,69 @@ Die Ressourcenverwaltung bildet das Herzstück von iDAI.field.
 
 ### Maßnahmen
 
-Die blaue Navigationsleiste oben im Fenster beherbergt unterschiedliche Ansichten, 
-in denen Grabungsressourcen verwaltet werden können. Im **Übersicht**-Reiter können Maßnahmen
-und Orte verwaltet werden. Jede in der Übersicht angelegte Maßnahme kann anschließend, 
-über die Navigationsleiste, in einem eigenen Tab geöffnet werden.
+Nach dem Anlegen bzw. Öffnen eines Projekts befinden Sie sich zunächst im Tab **Übersicht** (gekennzeichnet
+durch ein Haus-Symbol), in dem alle Maßnahmen und Orte des Projekts verwaltet werden.
 
-Beginnend in der Übersicht, kann mithilfe des grünen Plus-Button in der Leiste links
- eine neue Maßnahme erstellt werden.
+Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue Maßnahme anzulegen. 
 
 <p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
 
-Als nächstes kann eine Geometrie von Hand erstellt werden. Dieser Schritt wird hier übersprungen. 
+Dabei wählen Sie in einem ersten Schritt den Typ der Maßnahme aus und können anschließend optional eine
+Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
+Maßnahme eintragen können. Je nach gewähltem Maßnahmentyp stehen unterschiedliche Felder zur Auswahl, die
+jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
+Buttons auf der linken Seite wechseln.
+
+Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
+**Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
 
 <p align="left"><img src="images/de/resources/save_operation.png" alt="Maßnahmen-Ressource speichern"/></p>
 
-Es muss mindestens das Feld Bezeichner im Stammdaten-Bereich ausgefüllt werden. 
-Dann kann die Maßnahme mittels des Speichern-Buttons gespeichert werden.
+Die neue Maßnahme wird nun in der Ressourcenliste angezeigt. Benutzen Sie den Button "Zur Maßnahme wechseln"
+(Symbol: Pfeil nach rechts oben), um einen neuen Tab für die Maßnahme zu öffnen.
 
 <p align="center"><img src="images/de/resources/goto_operation.png" alt="Maßnahmen-Ressource öffnen"/></p>
 
-Nach dem Speichern kann durch Klicken des nach rechts oben zeigenden Pfeils des für 
-das neue Element angelegten Listeneintrages in 
-die entsprechende Ansicht gewechselt werden, 
-in welcher weitere Ressourcen innerhalb der Maßnahme 
-verwaltet werden können. Für die Maßnahme wird ein Reiter geöffnet, der in der Navigationsleiste angezeigt wird
-und die Navigation zwischen Maßnahmen erleichert.  
-
-In Abhängigkeit vom Maßnahmentyp können innerhalb der 
-Maßnahmenansicht mithilfe des Plus-Buttons Ressourcen verschiedener Typen angelegt werden.
+In Abhängigkeit vom Maßnahmentyp können innerhalb eines Maßnahmen-Tabs mithilfe des Plus-Buttons Ressourcen
+verschiedener Typen angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts oder
+Räume innerhalb eines Gebäudes).
 
 <p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
 
-### Hierachische Anordnung
+### Hierarchische Anordnung
 
-Es besteht die Möglichkeit, Ressourcen hierarchisch anzuordnen. Typischerweise wird dies verwendet,
-um z.B. Funde innerhalb stratigraphischer Einheiten anzusiedeln. Wenn eine stratigraphische Einheit
-bzw. eine Subtyp davon innerhalb einer Maßnahme erstellt wurde, kann mittels des abgewinkelten Pfeils
-die Vorschau der untergeordneten Ressourcen angezeigt werden. Diese ist zu anfangs leer.
+Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
+stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
+(Symbol: rechtwinkliger Pfeil nach rechts unten), um eine Liste aller Ressourcen anzuzeigen, die der
+ausgewählten Ressource untergeordnet wurden. Bei einer neu angelegten Ressource ist diese Liste zunächst leer.
 
 <p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
 
-Mit Klick auf **Kollektion öffnen** kann die stratigraphische Einheit als Ebene geöffnet werden.
-Die Verwendung des Plus-Buttons führt nun dazu, dass Funde entsprechend auf dieser Ebene angelegt werden.
-Der Navigationspfad zeigt die aktuelle gerade ausgewählte Hierarchieebene an.
+Per Klick auf **Kollektion öffnen** kann auf die tiefere Hierarchieebene gewechselt werden, sodass nun die
+untergeordneten Ressourcen angezeigt werden (etwa die Funde einer stratigraphischen Einheit).
+Die Verwendung des Plus-Buttons führt jetzt dazu, dass Ressourcen entsprechend auf dieser Ebene angelegt
+werden.
+
+Der Navigationspfad oberhalb der Ressourcenliste zeigt die gerade ausgewählte Hierarchieebene an. Sie können
+jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere Ebene wechseln.
 
 <p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
 
 ### Verwaltung
 
-Es können verschiedene Funktionen aufgerufen werden, um die in der Liste aufgeführten Ressourcen zu 
-verwalten. Mit Rechtsklick auf eine jeweilige Ressource öffnet sich ein Kontextmenü.
+Bei Rechtsklick auf eine Ressource in der Liste öffnet sich ein Kontextmenü, das die folgenden Optionen
+bereitstellt:
+
+* *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
+erreichbar)
+* *Verschieben*: Erlaubt es, die Ressource aus ihrem aktuellen Kontext zu entfernen und einer anderen
+Ressource unterzuordnen
+* *Löschen*: Entfernt die Ressource nach einer Sicherheitsabfrage
+
+Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit.
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
 
-Sie können eine Ressource bearbeiten, welches innerhalb der sich dann öffnenden Editierformulare geschieht.
-Diese Option kann ebenfalls per Doppelklick angewählt werden. Sie können die Ressource verschieben oder löschen.
-Weiterhin können Sie eine Geometrie hinzufügen oder eine existierende bearbeiten.  
-
-Über das Editierformular kann die Ressource auch vervielfältigt werden.
-
-<p align="center"><img src="images/de/resources/multiply.png" alt="Vervielfältigen"/></p>
 
 <hr>
 

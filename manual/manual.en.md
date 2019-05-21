@@ -34,62 +34,62 @@ The resource management facilities are at the core of iDAI.field.
 
 ### Operations
 
-The blue navigation bar in the top part of the window contains various views for the management of 
-excavation resources. Operations and places can be managed in the **Overview** tab. Each of the operations
-created in the overview tab can in turn get opened in its own tab, accessible via the navigation bar. 
+After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
+home symbol) where all of the project's operations and places are managed.
 
-Starting in the overview, using the green plus button at the bottom left 
-corner one can create a new operation.
+Use the green plus button at the bottom of the resources list to create a new operation.
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
-The next step will ask you to create a geoemtry. This step will be skipped here.
+In the process, you firstly choose the type of the operation, before you may optionally create a geometry for
+the new resource. Afterwards the editor is opened, where all data of the operation can be filled in. Depending
+on the chosen operation type, different fields are available, which are arranged in multiple groups. You can
+switch between field groups by clicking the buttons on the left side.
+
+Before the resource can be saved via the green save button, at the very least the **identifier** field in the
+core section has to be filled in.
 
 <p align="left"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
 
-At the very least the identifier field in the core section has to be filled in. Then the resources 
-can be saved by clicking the save-button.
+The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
+up right) in order to open a new tab for the operation.
 
-<p align="center"><img src="images/en/resources/goto_operation.png" alt="open operation resource"/></p>
+<p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
-After saving, by clicking the 
-top right pointing arrow of the new list item created for the resource, one can jump to the view dedicated
-to manage further resources within this operation. A tab containing the operation's view gets opened, which 
-is shown in the navigation bar. This facilitates switching between operations.
-
-Depending on the type of the operation, different resource types can be created via the plus button of the 
-operation view.
+Depending on the type of the operation, resources of different types can be created within an operation tab
+via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
 ### Hierarchical ordering
 
-It is possible, to lay out resources hierarchically. Typically this is used to nest finds into
-stratigraphical units. If a stratigraphical unit or one of its subtypes has been created within
-an operation, one can access a preview of the nested resources via the angled arrow. At the beginning
-it is empty.
+Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphical unit.
+Use the button "Show child resources" (Symbol: rectangular arrow down right) to show a list of all resources
+that are subordinate to the selected resource. This list is initially empty for a newly created resource.
 
 <p align="center"><img src="images/en/resources/open_collection.png" alt="Open collection"/></p>
 
-By clicking "Open collection" the stratigraphical unit gets opened as a hierarchical level. Using
-the plus button now will lead to finding get created at that level. The navigation path indicates
-the currently selected level.
+By clicking "Open collection" you can switch to the lower level of the hierarchy, which means that now the
+subordinated resources are shown (e. g. the finds of a stratigraphical unit).
+Usage of the plus button will now lead to all resources getting created at that level. 
+
+The navigation path above the resources list indicates the currently selected hierarchy level. You can always
+switch to another level by clicking one of the buttons of the navigation path.
 
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
 ### Management
 
-There are several functions available which can be used to manage the resources shown in the list.
-Right clicking a list element opens a context menu.
+Right clicking a resource in the list opens a context menu providing the following options:
+
+* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
+* *Delete*: Removes the resource after a security check
+
+Furthermore, the context menu contains options for creating and editing geometries.
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
-You can edit a resource, which opens the edit forms. This option is also available by double clicking it.
-You can move it to a different place and delete it. Furthermore you can add a geometry or edit an existing one.
-
-To duplicate a resource, use the button adjacent to the save button in the edit form.
-
-<p align="center"><img src="images/en/resources/multiply.png" alt="Multiply"/></p>
 
 <hr>
 

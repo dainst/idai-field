@@ -17,8 +17,8 @@
                 <a class="nav-link tab closable-tab"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
-                    <type-icon [size]="20" [type]="tab.operationType" ></type-icon>
-                    {{tab.label}}
+                    <type-icon [size]="23" [type]="tab.operationType" ></type-icon>
+                    <span class="closable-tab-label">{{tab.label}}</span>
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
                 </a>
             </li>

@@ -165,10 +165,11 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
       position: relative;
       top: 1px;
       font-size: 14px;
+      width: 15px;
+      height: 15px;
       display: inline-block;
-      padding-left: 1px;
+      margin-left: 1px;
       line-height: normal;
-      border-radius: 4px;
       transition: opacity 0.2s ease, background-color 0.2s ease;
     }
   }

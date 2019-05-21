@@ -71,7 +71,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     &:before,
     &:after {
       position: absolute;
-      bottom: 2px;
+      bottom: 1px;
       width: 6px;
       height: 6px;
       content: " ";
@@ -209,15 +209,6 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
       type-icon {
         position: relative;
         left: -4px;
-
-        .type-icon {
-          border: 1px solid #fff;
-
-          .character {
-            position: relative;
-            top: -1px;
-          }
-        }
       }
     }
   }

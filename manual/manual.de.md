@@ -57,7 +57,7 @@ Buttons auf der linken Seite wechseln.
 Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
 **Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
 
-<p align="left"><img src="images/de/resources/save_operation.png" alt="Maßnahmen-Ressource speichern"/></p>
+<p align="center"><img src="images/de/resources/save_operation.png" alt="Maßnahmen-Ressource speichern"/></p>
 
 Die neue Maßnahme wird nun in der Ressourcenliste angezeigt. Benutzen Sie den Button "Zur Maßnahme wechseln"
 (Symbol: Pfeil nach rechts oben), um einen neuen Tab für die Maßnahme zu öffnen.

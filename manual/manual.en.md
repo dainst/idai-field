@@ -49,7 +49,7 @@ switch between field groups by clicking the buttons on the left side.
 Before the resource can be saved via the green save button, at the very least the **identifier** field in the
 core section has to be filled in.
 
-<p align="left"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
+<p align="center"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
 
 The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
 up right) in order to open a new tab for the operation.

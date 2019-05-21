@@ -145,17 +145,17 @@ export class TabManager {
     private async validateTabs() {
 
         const validatedTabs: Array<Tab> = [];
+        const operationIds: string[] = this.tabs.map(tab => tab.operationId);
 
-        for (let tab of this.tabs) {
-            if (tab.operationId) {
-                try {
-                    const document: FieldDocument = await this.datastore.get(tab.operationId);
-                    tab.label = this.getLabel(tab.routeName, document.resource.identifier);
-                    tab.operationType = document.resource.type;
-                } catch (err) {
-                    continue;
-                }
-            }
+        const operations: Array<FieldDocument> = await this.datastore.getMultiple(operationIds);
+
+        for (let operation of operations) {
+            const tab: Tab|undefined = this.tabs.find(tab => {
+                return tab.operationId === operation.resource.id;
+            });
+            if (!tab) continue;
+            tab.label = this.getLabel(tab.routeName, operation.resource.identifier);
+            tab.operationType = operation.resource.type;
             validatedTabs.push(tab);
         }
 

@@ -29,7 +29,7 @@ Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
 geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
 Metadaten des Projekts eingeben. 
 
-Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Tools" erreichen, um regelmäßig
+Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Werkzeuge" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.
 
 

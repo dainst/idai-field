@@ -41,6 +41,10 @@ anzulegen.
 
 ## Ressourcen
 
+Die Ressourcenverwaltung bildet das Herzstück von iDAI.field.
+
+### Maßnahmen
+
 Die blaue Navigationsleiste oben im Fenster beherbergt unterschiedliche Ansichten, 
 in denen Grabungsressourcen verwaltet werden können. Im **Übersicht**-Reiter können Maßnahmen
 und Orte verwaltet werden. Jede in der Übersicht angelegte Maßnahme kann anschließend, 
@@ -60,15 +64,19 @@ Dann kann die Maßnahme mittels des Speichern-Buttons gespeichert werden.
 
 <p align="center"><img src="images/de/resources/goto_operation.png" alt="Maßnahmen-Ressource öffnen"/></p>
 
-Nach dem Speichern kann durch das Anklicken entweder des Namens der Ressource in der Navigationsleiste
-oder des nach rechts oben zeigenden Pfeils des für das neue Element angelegten Listeneintrages in 
-die entsprechende Ansicht gewechselt werden, in welcher weitere Ressourcen innerhalb der Maßnahme 
-verwaltet werden können.  
+Nach dem Speichern kann durch Klicken des nach rechts oben zeigenden Pfeils des für 
+das neue Element angelegten Listeneintrages in 
+die entsprechende Ansicht gewechselt werden, 
+in welcher weitere Ressourcen innerhalb der Maßnahme 
+verwaltet werden können. Für die Maßnahme wird ein Reiter geöffnet, der in der Navigationsleiste angezeigt wird
+und die Navigation zwischen Maßnahmen erleichert.  
 
 In Abhängigkeit vom Maßnahmentyp können innerhalb der 
 Maßnahmenansicht mithilfe des Plus-Buttons Ressourcen verschiedener Typen angelegt werden.
 
 <p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
+
+### Hierachische Anordnung
 
 Es besteht die Möglichkeit, Ressourcen hierarchisch anzuordnen. Typischerweise wird dies verwendet,
 um z.B. Funde innerhalb stratigraphischer Einheiten anzusiedeln. Wenn eine stratigraphische Einheit
@@ -83,8 +91,22 @@ Der Navigationspfad zeigt die aktuelle gerade ausgewählte Hierarchieebene an.
 
 <p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
 
-<hr>
+### Verwaltung
 
+Es können verschiedene Funktionen aufgerufen werden, um die in der Liste aufgeführten Ressourcen zu 
+verwalten. Mit Rechtsklick auf eine jeweilige Ressource öffnet sich ein Kontextmenü.
+
+<p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+Sie können eine Ressource bearbeiten, welches innerhalb der sich dann öffnenden Editierformulare geschieht.
+Diese Option kann ebenfalls per Doppelklick angewählt werden. Sie können die Ressource verschieben oder löschen.
+Weiterhin können Sie eine Geometrie hinzufügen oder eine existierende bearbeiten.  
+
+Über das Editierformular kann die Ressource auch vervielfältigt werden.
+
+<p align="center"><img src="images/de/resources/multiply.png" alt="Vervielfältigen"/></p>
+
+<hr>
 
 ## Suche
 

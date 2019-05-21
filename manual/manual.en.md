@@ -31,6 +31,10 @@ create backup files of your project data regularly.
 
 ## Resources
 
+The resource management facilities are at the core of iDAI.field.
+
+### Operations
+
 The blue navigation bar in the top part of the window contains various views for the management of 
 excavation resources. Operations and places can be managed in the **Overview** tab. Each of the operations
 created in the overview tab can in turn get opened in its own tab, accessible via the navigation bar. 
@@ -49,14 +53,17 @@ can be saved by clicking the save-button.
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="open operation resource"/></p>
 
-After saving, by clicking either on the name of the resource in the navigation bar or by clicking the 
+After saving, by clicking the 
 top right pointing arrow of the new list item created for the resource, one can jump to the view dedicated
-to manage further resources within this operation. 
+to manage further resources within this operation. A tab containing the operation's view gets opened, which 
+is shown in the navigation bar. This facilitates switching between operations.
 
 Depending on the type of the operation, different resource types can be created via the plus button of the 
 operation view.
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
+
+### Hierarchical ordering
 
 It is possible, to lay out resources hierarchically. Typically this is used to nest finds into
 stratigraphical units. If a stratigraphical unit or one of its subtypes has been created within
@@ -71,8 +78,21 @@ the currently selected level.
 
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
-<hr>
+### Management
 
+There are several functions available which can be used to manage the resources shown in the list.
+Right clicking a list element opens a context menu.
+
+<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+You can edit a resource, which opens the edit forms. This option is also available by double clicking it.
+You can move it to a different place and delete it. Furthermore you can add a geometry or edit an existing one.
+
+To duplicate a resource, use the button adjacent to the save button in the edit form.
+
+<p align="center"><img src="images/en/resources/multiply.png" alt="Multiply"/></p>
+
+<hr>
 
 ## Search
 

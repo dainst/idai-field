@@ -113,6 +113,14 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
         color: #000;
         background-color: #dee2e6;
       }
+
+      .mdi-home {
+        color: $navbar-default-bg;
+
+        &:hover {
+          color: $navbar-default-bg;
+        }
+      }
     }
 
     &:not(.active) {

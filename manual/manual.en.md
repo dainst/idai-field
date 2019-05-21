@@ -249,27 +249,31 @@ criterion to remove.
 
 ## Matrix
 
-The **Matrix** view (located in the Tools menu) displays a matrix for each trench of the project, generated automatically from the stratigraphical
-units of the respective trench. The edges of the matrix are built on the basis of the relations created for the units.
+The **Matrix** view (accessible via the menu "Tools") displays a matrix for each trench of the project,
+generated automatically from the stratigraphical units of the respective trench. The edges of the matrix are
+built on the basis of the relations created for the units.
 
 <p align="center"><img src="images/en/matrix/trench_selection.png" alt="Trench selection"/></p>
 
-Choose the trench for which a matrix shall be generated via the dropdown button on the left side of the toolbar.
+Choose the trench for which a matrix shall be generated via the dropdown button on the left side of the
+toolbar.
 
 
 ### Options
 
-Via the **Options button** in the upper right corner of the matrix view, you can customize the matrix visualization by
-adjusting different settings. The chosen settings are applied to all matrices for all of the project's trenches and
-are preserved when restarting the application.
+Via the **Options button** in the upper right corner of the matrix view, you can customize the matrix
+visualization by adjusting different settings. The chosen settings are applied to all matrices for all of the
+project's trenches and are preserved when restarting the application.
 
 <p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Options menu"/></p>
 
 
 #### Relations
 
-* *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with". 
-* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts" and "Cut by".
+* *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with" (field group
+"Time"). 
+* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts" and "Cut by" (field group
+"Position").
 
 
 #### Edges
@@ -289,29 +293,29 @@ Stratigraphical units with equal period values are placed close to each other an
 
 ### Navigation
 
-Move the mouse with the **right mouse button** pressed in order to change the position of the matrix within the
-display area. Use the **mouse wheel** or the **zoom buttons** in the upper left corner of the display area to adjust
-the zoom level. By using the **left mouse button**, you can interact with units of the matrix; the type of
-interaction (editing or selection) depends on the selected interaction mode.
+Move the mouse with the **right mouse button** pressed in order to change the position of the matrix within
+the display area. Use the **mouse wheel** or the **zoom buttons** in the upper left corner of the display area
+to adjust the zoom level. By using the **left mouse button**, you can interact with units of the matrix; the
+type of interaction (editing or selection) depends on the selected interaction mode.
 
-When the mouse cursor is moved over a unit, the edges starting at this unit are highlighted in color: Green lines
-show connections to units on higher levels, blue ones to units on lower levels and orange ones to units on the
-same level of the matrix. 
+When the mouse cursor is moved over a unit, the edges starting at this unit are highlighted in color: Green
+lines show connections to units on higher levels, blue ones to units on lower levels and orange ones to units
+on the same level of the matrix. 
 
 
 ### Editing
 
-By default, the **edit mode** is active: Click a unit in the matrix in order to open up a window allowing you to
-edit the corresponding resource. In this way, you can also change the position of the unit within the matrix by editing
-the temporal respectively spatial relations in the tab **Relations**. After clicking **Save**, the matrix is updated
-automatically on the basis of the changed data. 
+By default, the **edit mode** is active: Click a unit in the matrix in order to open up the editor allowing
+you to make changes to the corresponding resource. In this way, you can also change the position of the unit
+within the matrix by editing the relations in the field groups "Time" respectively "Position". After clicking
+**Save**, the matrix is updated automatically on the basis of the changed data. 
 
 
 ### Display of sub-matrices
 
-To facilitate the overview in large matrices, sub-matrices can also be generated from selected units of the matrix.
-Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix from the
-current selection: 
+To facilitate the overview in large matrices, sub-matrices can also be generated from selected units of the
+matrix. Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix
+from the current selection: 
 
 <p align="center"><img src="images/en/matrix/interaction_mode_buttons.png" alt="Interaction mode buttons"/></p>
 
@@ -322,8 +326,8 @@ current selection:
 <p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
   
 * *Deselect*: All units are deselected.
-* *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are still
-  built on the basis of all stratigraphical units of the trench; thus the function can also be used as a fast way to
-  check if two units are connected across multiple relations/resources.
+* *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are
+  still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
+  fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
   

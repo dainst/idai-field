@@ -270,9 +270,10 @@ entsprechende Kriterium auswählen.
 
 ## Matrix
 
-In der **Matrix** Ansicht (zu finden im Werkzeuge-Menü) finden Sie für jeden Schnitt des Projekts eine Matrix
-vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten
-der Matrix werden dabei auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
+In der Ansicht **Matrix** (erreichbar über das Menu "Werkzeuge") finden Sie für jeden Schnitt des Projekts
+eine Matrix vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird.
+Die Kanten der Matrix werden dabei auf Grundlage der Relationen erstellt, die für die Einheiten angelegt
+wurden.
 
 <p align="center"><img src="images/de/matrix/trench_selection.png" alt="Schnitt-Auswahl"/></p>
 
@@ -293,9 +294,9 @@ erhalten.
 #### Relationen
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
-  erstellt.
+  (Feldgruppe "Zeit") erstellt.
 * *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
-  geschnitten von" erstellt.
+  geschnitten von" (Feldgruppe "Lage") erstellt.
 
 
 #### Kanten
@@ -330,11 +331,11 @@ und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
 
 ### Editierung
 
-Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um ein
-Fenster zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Über den Reiter **Relationen**
-können Sie auf diese Weise durch Editierung der zeitlichen bzw. räumlichen Relationen auch die Einordnung der
-Einheit innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** wird die Matrix
-automatisch auf Grundlage der geänderten Daten aktualisiert.
+Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um den
+Editor zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Durch die Editierung der
+Relationen in den Gruppen "Zeit" bzw. "Lage" können Sie auf diese Weise auch die Einordnung der Einheit
+innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** wird die Matrix automatisch auf
+Grundlage der geänderten Daten aktualisiert.
 
 
 ### Anzeige von Teilmatrizen

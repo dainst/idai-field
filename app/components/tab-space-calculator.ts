@@ -11,7 +11,7 @@ export class TabSpaceCalculator {
 
     private static OVERVIEW_TAB_WIDTH: number = 100;
     private static TABS_DROPDOWN_WIDTH: number = 42;
-    private static BASIC_TAB_WIDTH: number = 76;
+    private static BASIC_TAB_WIDTH: number = 73;
     private static FONT: string = '16px Roboto';
 
 

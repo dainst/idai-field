@@ -71,5 +71,7 @@ $button-group-width: 2 * $button-width;
 
   .sidebar-list-button-group-active-button {
     background-color: darken($list-item-hover-color, 10%);
+
+    @extend .btn:active;
   }
 }

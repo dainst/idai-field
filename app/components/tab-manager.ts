@@ -204,9 +204,17 @@ export class TabManager {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
 
-        if (operationId && operationId !== 'project' && !this.getTab(routeName, operationId) && routeName === 'resources') {
-            const document: FieldDocument = await this.datastore.get(operationId);
-            await this.openTab(routeName, operationId, document.resource.identifier, document.resource.type);
+        if (operationId && operationId !== 'project'
+                && !this.getTab(routeName, operationId) && routeName === 'resources') {
+            try {
+                const document: FieldDocument = await this.datastore.get(operationId);
+                await this.openTab(
+                    routeName, operationId, document.resource.identifier,document.resource.type
+                );
+            } catch (err) {
+                // This error occurs when switching projects while a resources tab in opened. No tab is
+                // opened in this case.
+            }
         }
     }
 

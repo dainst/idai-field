@@ -15,8 +15,15 @@
 }
 
 #sidebar-popover .sidebar-popover-page .sidebar-popover-header.clickable {
-
   &:hover {
-    background-color: darken($list-item-hover-color, 10%);
+    background-color: $popover-header-hover-bg-color;
+
+    .btn {
+      background-color: $popover-header-bg-color;
+
+      &:hover {
+        background-color: darken($popover-header-hover-bg-color, 3%);
+      }
+    }
   }
 }

@@ -12,7 +12,7 @@ $teaser-width: $resources-listing-item-slim-width;
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-  background-color: #f8f9fa;
+  background-color: $sidebar-bg-color;
 
   .new {
     color: #111;
@@ -41,7 +41,7 @@ $teaser-width: $resources-listing-item-slim-width;
 }
 
 #sidebar-popover {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: $popover-bg-color;
   position: absolute;
   left: $resources-listing-item-wide-width;
   height: 100%;
@@ -59,7 +59,7 @@ $teaser-width: $resources-listing-item-slim-width;
     .sidebar-popover-header {
       height: 40px;
       padding: 11px;
-      background-color: rgba(0, 0, 0, 0.07);
+      background-color: $popover-header-bg-color;
       border-bottom: 1px solid #ced4da;
       text-align: center;
       font-size: 14px;
@@ -70,12 +70,12 @@ $teaser-width: $resources-listing-item-slim-width;
         position: absolute;
         top: 0;
         right: 0;
-        height: 40px;
-        background-color: transparent;
+        height: 39px;
+        background-color: $popover-header-bg-color;
         border: none;
 
         &:hover {
-          background-color: lighten($list-item-hover-color, 5%);
+          background-color: $popover-header-hover-bg-color;
         }
 
         .mdi-close {

@@ -38,3 +38,9 @@ $navbar-dark-color:          #fff !default;
 $ctrl-button-close:               #d9534f;
 $ctrl-button-text-color:          #f2f2f2;
 $ctrl-button-bg:                  rgba(85, 114, 161, 0);
+
+// Sidebar & Popover
+$sidebar-bg-color: #f8f9fa;
+$popover-bg-color: transparentize($sidebar-bg-color, 0.08);
+$popover-header-bg-color: darken($popover-bg-color, 5%);
+$popover-header-hover-bg-color: darken($popover-header-bg-color, 3%);

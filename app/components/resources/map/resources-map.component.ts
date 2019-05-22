@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Messages, FieldDocument, FieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -7,7 +7,6 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
-import {ContextMenuAction} from './context-menu.component';
 
 
 export type PopoverMenu = 'none'|'info'|'relations'|'children';

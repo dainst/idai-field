@@ -220,3 +220,16 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   margin-top: 0 !important;
   user-select: none;
 }
+
+.hidden-tab {
+  type-icon {
+    position: relative;
+    top: 1px;
+  }
+
+  .hidden-tab-label {
+    position: relative;
+    top: 1px;
+    margin-left: 7px;
+  }
+}

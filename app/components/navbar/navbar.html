@@ -28,9 +28,10 @@
                 <a id="tabs-dropdown" ngbDropdownToggle class="nav-link"></a>
                 <div ngbDropdownMenu>
                     <a *ngFor="let tab of getHiddenTabs()"
-                       class="dropdown-item"
+                       class="dropdown-item hidden-tab"
                        (click)="router.navigate(getTabRouteArray(tab))">
-                        {{tab.label}}
+                        <type-icon [size]="18" [type]="tab.operationType"></type-icon>
+                        <span class="hidden-tab-label">{{tab.label}}</span>
                     </a>
                 </div>
             </li>

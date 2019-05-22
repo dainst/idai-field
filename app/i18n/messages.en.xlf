@@ -1804,8 +1804,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.childrenView.oneResource" datatype="html">
-        <source>Eine Ressource</source>
-        <target state="final">One resource</target>
+        <source>Ein Element</source>
+        <target state="final">One element</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/children-view.html</context>
           <context context-type="linenumber">2</context>
@@ -1813,10 +1813,10 @@
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
         <source>
-        <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen
+        <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Elemente
     </source>
         <target state="final">
-        <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> resources
+        <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> elements
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/children-view.html</context>

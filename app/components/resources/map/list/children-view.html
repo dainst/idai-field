@@ -1,18 +1,13 @@
-<div class="sidebar-popover-header">
-    <div *ngIf="childrenCount === 1" i18n="@@resources.childrenView.oneResource">Eine Ressource</div>
-    <div *ngIf="childrenCount !== 1" i18n="@@resources.childrenView.resources">
+<div class="sidebar-popover-header clickable"
+     (click)="openChildCollection()">
+    <span class="mdi mdi-arrow-left"></span>
+    <span *ngIf="childrenCount === 1" i18n="@@resources.childrenView.oneResource">Eine Ressource</span>
+    <span *ngIf="childrenCount !== 1" i18n="@@resources.childrenView.resources">
         {{childrenCount}} Ressourcen
-    </div>
+    </span>
     <div class="btn btn-light" (click)="closePopover()">
         <span class="mdi mdi-close"></span>
     </div>
-</div>
-
-<div id="open-child-collection-button"
-     class="btn btn-block btn-light"
-     (click)="openChildCollection()"
-     i18n="@@resources.childrenView.openCollection">
-    <span class="mdi mdi-subdirectory-arrow-right"></span>Kollektion öffnen
 </div>
 
 <ul #childrenList

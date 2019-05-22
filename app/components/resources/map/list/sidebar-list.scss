@@ -70,12 +70,12 @@ $teaser-width: $resources-listing-item-slim-width;
         position: absolute;
         top: 0;
         right: 0;
-        height: 39px;
+        height: 40px;
         background-color: transparent;
         border: none;
 
         &:hover {
-          background-color: darken($list-item-hover-color, 5%);
+          background-color: lighten($list-item-hover-color, 5%);
         }
 
         .mdi-close {

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Observer} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
 import {Action, Document} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
@@ -68,43 +67,15 @@ export class RemoteChangesStream {
     }
 
 
-    private async isRemoteChange(
-        document: Document,
-        username: string): Promise<boolean> {
+    private async isRemoteChange(document: Document, username: string): Promise<boolean> {
 
         let latestAction: Action = Document.getLastModified(document);
 
-        let conflictedRevisions: Document[] = [];
-        try {
-            conflictedRevisions = await this.fetchConflictedRevisions(document.resource.id);
-        } catch (e) {
-            console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
-            return false;
-        }
-
-        for (let revision of conflictedRevisions) {
-            const latestRevisionAction: Action = Document.getLastModified(revision);
-            if (latestRevisionAction.date > latestAction.date) {
-                latestAction = latestRevisionAction;
-            }
-        }
-
-        return latestAction && latestAction.user !== username;
-    }
-
-
-    private async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
-
-        const conflictedRevisions: Array<Document> = [];
-
-        const document = await this.datastore.fetch(resourceId);
-
         if ((document as any)['_conflicts']) {
-            for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.datastore.fetchRevision(document.resource.id, revisionId));
-            }
+            // Always treat conflicted documents as coming from remote
+            return true;
+        } else {
+            return latestAction && latestAction.user !== username;
         }
-
-        return conflictedRevisions;
     }
 }

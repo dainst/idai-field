@@ -137,7 +137,7 @@ describe('RemoteChangesStream', () => {
     });
 
 
-    it('detect local change for conflicted document', async done => {
+    it('always treat changes in conflicted documents as remote changes', async done => {
 
         const rev2 = {
             resource: {
@@ -163,7 +163,7 @@ describe('RemoteChangesStream', () => {
         typeConverter.convert.and.returnValue(doc);
 
         await fun(doc);
-        expect(indexFacade.put).not.toHaveBeenCalled();
+        expect(indexFacade.put).toHaveBeenCalled();
         done();
     });
 });

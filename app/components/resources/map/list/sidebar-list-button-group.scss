@@ -1,6 +1,6 @@
 $activated-color: #868e96;
 $button-width: 24px;
-$button-group-width: 3 * $button-width;
+$button-group-width: 2 * $button-width;
 
 
 .sidebar-list-button-group {
@@ -47,20 +47,8 @@ $button-group-width: 3 * $button-width;
     }
   }
 
-  .info-button-middle-position {
-    left: $button-width;
-  }
-
-  .link-button {
-    left: $button-width;
-
-    &.move-into-button {
-      height: $item-height;
-    }
-  }
-
   .hierarchy-button {
-    left: 2 * $button-width;
+    left: $button-width;
 
     span {
       position: absolute;

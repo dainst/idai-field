@@ -30,7 +30,7 @@
                     <a *ngFor="let tab of getHiddenTabs()"
                        class="dropdown-item hidden-tab"
                        (click)="router.navigate(getTabRouteArray(tab))">
-                        <type-icon [size]="18" [type]="tab.operationType"></type-icon>
+                        <type-icon [size]="19" [type]="tab.operationType"></type-icon>
                         <span class="hidden-tab-label">{{tab.label}}</span>
                     </a>
                 </div>

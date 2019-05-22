@@ -3,6 +3,7 @@
 
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 #image-view-modal-header {
   height: 54px;
@@ -95,7 +96,7 @@
     #popover {
       height: 100%;
       background-color: #fff;
-      width: 232px;
+      width: $resources-listing-item-slim-width;
       overflow: hidden;
       float: left;
 

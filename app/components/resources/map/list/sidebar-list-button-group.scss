@@ -69,8 +69,15 @@ $button-group-width: 3 * $button-width;
     }
 
     &.hierarchy-button-overview span {
-      top: 20px;
       left: 3px;
+
+      &.arrow-up {
+        top: 20px;
+      }
+
+      &.arrow-top-right {
+        top: 19px;
+      }
     }
   }
 

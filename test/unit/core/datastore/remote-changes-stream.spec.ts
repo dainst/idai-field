@@ -137,7 +137,7 @@ describe('RemoteChangesStream', () => {
     });
 
 
-    it('always treat changes in conflicted documents as remote changes', async done => {
+    it('always treat changes to conflicted documents as remote changes', async done => {
 
         const rev2 = {
             resource: {

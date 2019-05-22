@@ -19,7 +19,9 @@
          placement="right"
          container="body"
          ngbTooltip="Untergeordnete Ressourcen anzeigen"
-         i18n-ngbTooltip="@@resources.showChildResources.tooltip">
+         i18n-ngbTooltip="@@resources.showChildResources.tooltip"
+         #tooltip="ngbTooltip"
+         (mousedown)="tooltip.close()">
         <span [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
               class="arrow-bottom-right sidebar-list-button-group-inner">
         </span>

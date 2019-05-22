@@ -14,7 +14,8 @@ import {ContextMenuAction} from '../context-menu.component';
 @Component({
     selector: 'sidebar-list',
     moduleId: module.id,
-    templateUrl: './sidebar-list.html'
+    templateUrl: './sidebar-list.html',
+    host: {'(window:contextmenu)': 'handleClick($event, true)'}
 })
 /**
  * @author Daniel de Oliveira
@@ -23,6 +24,9 @@ import {ContextMenuAction} from '../context-menu.component';
  */
 
 export class SidebarListComponent extends BaseList {
+
+    public contextMenuPosition: { x: number, y: number }|undefined;
+    public contextMenuDocument: FieldDocument|undefined;
 
     public highlightedDocument: FieldDocument|undefined = undefined;
     public selectedDocumentThumbnailUrl: string|undefined;
@@ -40,28 +44,18 @@ export class SidebarListComponent extends BaseList {
             await this.viewFacade.deselect();
             this.closePopover();
         });
+
+        resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
+
+        this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
+            this.closeContextMenu();
+        });
     }
 
-
-    public openContextMenu = (event: MouseEvent, document: FieldDocument) =>
-        this.resourcesMapComponent.openContextMenu(event, document);
-
-    public closeContextMenu = () => this.resourcesMapComponent.closeContextMenu();
 
     public hasThumbnail = (document: FieldDocument): boolean =>
         Document.hasRelations(document, 'isDepictedIn');
 
-
-    public performContextMenuAction(action: ContextMenuAction) {
-
-        if (this.isPopoverMenuOpened() &&
-            ['edit-geometry', 'create-polygon',
-            'create-line-string', 'create-point'].includes(action)) {
-
-            this.closePopover();
-        }
-        this.resourcesMapComponent.performContextMenuAction(action);
-    }
 
     public async editDocument(document: FieldDocument) {
 
@@ -141,6 +135,86 @@ export class SidebarListComponent extends BaseList {
 
         await this.routingService.jumpToResource(document);
         this.resourcesComponent.setScrollTarget(document);
+    }
+
+
+    public openContextMenu(event: MouseEvent, document: FieldDocument) {
+
+        if (!document.resource.id) return this.closeContextMenu();
+
+        this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+        this.contextMenuDocument = document;
+    }
+
+
+    public closeContextMenu() {
+
+        this.contextMenuPosition = undefined;
+        this.contextMenuDocument = undefined;
+    }
+
+
+    public async performContextMenuAction(action: ContextMenuAction) {
+
+        if (this.isPopoverMenuOpened() &&
+            ['edit-geometry', 'create-polygon',
+                'create-line-string', 'create-point'].includes(action)) {
+
+            this.closePopover();
+        }
+
+        if (!this.contextMenuDocument) return;
+        const document: FieldDocument = this.contextMenuDocument;
+
+        this.closeContextMenu();
+
+        switch (action) {
+            case 'edit':
+                await this.resourcesComponent.editDocument(document);
+                break;
+            case 'move':
+                await this.resourcesComponent.moveDocument(document);
+                break;
+            case 'delete':
+                await this.resourcesComponent.deleteDocument(document);
+                break;
+            case 'edit-geometry':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.isEditingGeometry = true;
+                break;
+            case 'create-polygon':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('Polygon');
+                break;
+            case 'create-line-string':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('LineString');
+                break;
+            case 'create-point':
+                await this.viewFacade.setSelectedDocument(document.resource.id);
+                this.resourcesComponent.createGeometry('Point');
+                break;
+        }
+    }
+
+
+    private handleClick(event: any, rightClick: boolean = false) {
+
+        if (!this.contextMenuPosition) return;
+
+        let target = event.target;
+        let inside: boolean = false;
+
+        do {
+            if (target.id === 'context-menu'
+                || (rightClick && target.id && target.id.startsWith('resource-'))) {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+
+        if (!inside) this.closeContextMenu();
     }
 
 

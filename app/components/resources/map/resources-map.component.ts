@@ -17,10 +17,7 @@ export type PopoverMenu = 'none'|'info'|'relations'|'children';
     selector: 'resources-map',
     moduleId: module.id,
     templateUrl: './resources-map.html',
-    host: {
-        '(window:keydown)': 'onKeyDown($event)',
-        '(window:contextmenu)': 'handleClick($event, true)'
-    }
+    host: {'(window:keydown)': 'onKeyDown($event)'}
 })
 /**
  * @author Daniel de Oliveira
@@ -32,8 +29,6 @@ export class ResourcesMapComponent {
     @Input() activeTab: string;
 
     public parentDocument: FieldDocument|undefined;
-    public contextMenuPosition: { x: number, y: number }|undefined; // TODO move to sidebar list component
-    public contextMenuDocument: FieldDocument|undefined;            // TODO move to sidebar list component
     public activePopoverMenu: PopoverMenu = 'none';
 
 
@@ -49,11 +44,8 @@ export class ResourcesMapComponent {
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.closeContextMenu();
             this.parentDocument = this.getParentDocument(path);
         });
-
-        this.resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
     }
 
 
@@ -80,59 +72,6 @@ export class ResourcesMapComponent {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
         } else {
             this.viewFacade.deselect();
-        }
-    }
-
-
-    public openContextMenu(event: MouseEvent, document: FieldDocument) {
-
-        if (!document.resource.id) return this.closeContextMenu();
-
-        this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-        this.contextMenuDocument = document;
-    }
-
-
-    public closeContextMenu() {
-
-        this.contextMenuPosition = undefined;
-        this.contextMenuDocument = undefined;
-    }
-
-
-    public async performContextMenuAction(action: ContextMenuAction) {
-
-        if (!this.contextMenuDocument) return;
-        const document: FieldDocument = this.contextMenuDocument;
-
-        this.closeContextMenu();
-
-        switch (action) {
-            case 'edit':
-                await this.resourcesComponent.editDocument(document);
-                break;
-            case 'move':
-                await this.resourcesComponent.moveDocument(document);
-                break;
-            case 'delete':
-                await this.resourcesComponent.deleteDocument(document);
-                break;
-            case 'edit-geometry':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
-                this.resourcesComponent.isEditingGeometry = true;
-                break;
-            case 'create-polygon':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
-                this.resourcesComponent.createGeometry('Polygon');
-                break;
-            case 'create-line-string':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
-                this.resourcesComponent.createGeometry('LineString');
-                break;
-            case 'create-point':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
-                this.resourcesComponent.createGeometry('Point');
-                break;
         }
     }
 
@@ -213,25 +152,5 @@ export class ResourcesMapComponent {
             .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
 
         return segment ? segment.document : undefined;
-    }
-
-
-    private handleClick(event: any, rightClick: boolean = false) {
-
-        if (!this.contextMenuPosition) return;
-
-        let target = event.target;
-        let inside: boolean = false;
-
-        do {
-            if (target.id === 'context-menu'
-                    || (rightClick && target.id && target.id.startsWith('resource-'))) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.closeContextMenu();
     }
 }

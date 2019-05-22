@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
-import {ResourcesMapComponent} from './resources-map.component';
 import {SidebarListComponent} from './list/sidebar-list.component';
 
 
@@ -28,7 +27,7 @@ export class ContextMenuComponent implements OnChanges {
 
 
     constructor(
-        public resourcesMapComponent: ResourcesMapComponent,
+        public sidebarListComponent: SidebarListComponent,
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade) {}
 

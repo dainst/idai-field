@@ -119,6 +119,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
+    public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
@@ -913,6 +914,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.error.delete',
                 value: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_ERROR_RESOLVE_CONFLICT] = {
+            content: i18n({
+                id: 'messages.docedit.error.resolveConflict',
+                value: 'Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer gelöst wurde.'
             }),
             level: 'danger',
             params: [],

@@ -4,7 +4,7 @@ import {M} from '../m';
 
 
 /**
- * Converts messages of Validator to messages of M for DoceditComponent.
+ * Converts datastore errors and messages of Validator to messages of M for DoceditComponent.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -18,6 +18,7 @@ export module MessagesConversion {
         const msg = msgWithParams[0];
 
         if (msg === DatastoreErrors.GENERIC_ERROR) msgWithParams[0] = M.APP_ERROR_GENERIC_SAVE_ERROR;
+        if (msg === DatastoreErrors.REMOVE_REVISIONS_ERROR) msgWithParams[0]= M.DOCEDIT_ERROR_RESOLVE_CONFLICT;
 
         if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;

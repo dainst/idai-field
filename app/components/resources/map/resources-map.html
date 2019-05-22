@@ -1,11 +1,10 @@
 <div class="row flex-nowrap">
     <div id="sidebar-list-container" class="col">
         <sidebar-list></sidebar-list>
+
+
     </div>
 
-    <context-menu *ngIf="contextMenuPosition"
-                  [position]="contextMenuPosition"
-                  (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
     <div class="col px-0"
          [class.no-zoom-buttons]="activePopoverMenu !== 'none' && viewFacade.getSelectedDocument()">

@@ -1,3 +1,8 @@
+<context-menu *ngIf="resourcesMapComponent.contextMenuPosition"
+              [position]="resourcesMapComponent.contextMenuPosition"
+              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+
+
 <div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
 
     <div *ngIf="isPopoverMenuOpened('children')" class="sidebar-popover-page">

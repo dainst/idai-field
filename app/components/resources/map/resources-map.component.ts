@@ -32,8 +32,8 @@ export class ResourcesMapComponent {
     @Input() activeTab: string;
 
     public parentDocument: FieldDocument|undefined;
-    public contextMenuPosition: { x: number, y: number }|undefined;
-    public contextMenuDocument: FieldDocument|undefined;
+    public contextMenuPosition: { x: number, y: number }|undefined; // TODO move to sidebar list component
+    public contextMenuDocument: FieldDocument|undefined;            // TODO move to sidebar list component
     public activePopoverMenu: PopoverMenu = 'none';
 
 

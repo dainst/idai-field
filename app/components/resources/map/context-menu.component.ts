@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesMapComponent} from './resources-map.component';
+import {SidebarListComponent} from './list/sidebar-list.component';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';

@@ -8,6 +8,7 @@ import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
 import {RoutingService} from '../../../routing-service';
+import {ContextMenuAction} from '../context-menu.component';
 
 
 @Component({
@@ -25,7 +26,6 @@ export class SidebarListComponent extends BaseList {
 
     public highlightedDocument: FieldDocument|undefined = undefined;
     public selectedDocumentThumbnailUrl: string|undefined;
-
 
     constructor(resourcesComponent: ResourcesComponent,
                 loading: Loading,
@@ -51,6 +51,17 @@ export class SidebarListComponent extends BaseList {
     public hasThumbnail = (document: FieldDocument): boolean =>
         Document.hasRelations(document, 'isDepictedIn');
 
+
+    public performContextMenuAction(action: ContextMenuAction) {
+
+        if (this.isPopoverMenuOpened() &&
+            ['edit-geometry', 'create-polygon',
+            'create-line-string', 'create-point'].includes(action)) {
+
+            this.closePopover();
+        }
+        this.resourcesMapComponent.performContextMenuAction(action);
+    }
 
     public async editDocument(document: FieldDocument) {
 

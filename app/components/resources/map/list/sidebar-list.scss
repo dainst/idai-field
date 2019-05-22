@@ -1,7 +1,7 @@
 $resources-listing-item-wide-width: 300px;
 $resources-listing-item-wide-width-with-scrollbar: 293px;
-$resources-listing-item-slim-width: 254px;
-$resources-listing-item-slim-width-with-scrollbar: 247px;
+$resources-listing-item-slim-width: 258px;
+$resources-listing-item-slim-width-with-scrollbar: 251px;
 $teaser-width: $resources-listing-item-slim-width;
 
 @import 'sidebar-list-button-group';
@@ -139,6 +139,7 @@ $teaser-width: $resources-listing-item-slim-width;
     top: 0;
     height: $item-height;
     padding-left: $item-horizontal-padding;
+    padding-right: $item-horizontal-padding;
 
     .title {
       display: -webkit-box;

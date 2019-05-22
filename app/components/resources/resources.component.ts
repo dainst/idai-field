@@ -53,7 +53,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private tabManager: TabManager
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
-
             this.isEditingGeometry = false;
 
             if (params['id']) {
@@ -63,6 +62,10 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         this.initializeClickEventListener();
         this.initializeSubscriptions();
+
+        this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
+            this.isEditingGeometry = false;
+        });
     }
 
 

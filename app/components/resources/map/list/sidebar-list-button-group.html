@@ -5,8 +5,9 @@
          placement="right"
          container="body"
          ngbTooltip="Daten anzeigen"
-         i18n-ngbTooltip="@@resources.showResourceData.tooltip">
-
+         i18n-ngbTooltip="@@resources.showResourceData.tooltip"
+         #tooltip="ngbTooltip"
+         (mousedown)="tooltip.close()">
         <span *ngIf="sidebarList.isHighlighted(document) || sidebarList.isSelected(document)"
               class="mdi mdi-information-outline sidebar-list-button-group-inner">
         </span>

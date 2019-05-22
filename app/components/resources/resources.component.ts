@@ -63,7 +63,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
+    public isCurrentMode = (mode: string) => (this.viewFacade.getMode() === mode);
 
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
 

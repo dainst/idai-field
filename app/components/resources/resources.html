@@ -23,7 +23,7 @@
                             i18n-ngbTooltip="@@resources.tooltips.mode.map"
                             placement="left"
                             class="btn btn-primary m-0"
-                            [class.active]="currentModeIs('map')">
+                            [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
                     </button>
                     <button id="list-mode-button"
@@ -32,7 +32,7 @@
                             ngbTooltip="Listendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"
-                            [class.active]="currentModeIs('list')">
+                            [class.active]="isCurrentMode('list')">
                         <span class="mdi mdi-table"></span>
                     </button>
                 </div>

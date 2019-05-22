@@ -1,7 +1,7 @@
 #document-edit-wrapper {
   main {
     .container-fluid {
-      height: 100%;
+      height: calc(100vh - 132px);
 
       .row {
         height: 100%;
@@ -36,8 +36,10 @@
           height: 100%;
 
           .scrollable-group {
-            height: 100%;
+            height: calc(100% - 44px);
             overflow-y: auto;
+            margin-top: 22px;
+            margin-bottom: 22px;
 
             input[type="text"],
             input[type="number"],
@@ -72,6 +74,10 @@
 
         #docedit-conflicts-tab {
           color: red !important;
+        }
+
+        #docedit-images-tab {
+          margin-top: 12px;
         }
       }
     }

@@ -1,11 +1,8 @@
 <div class="container-fluid">
-
     <div #editor class="row">
-
         <ul id="table-of-contents" class="col-md-3 flex-column nav">
             <li *ngFor="let group of groups" class="nav nav-pills flex-column"
                 (click)="activateGroup(group.name)">
-
                 <a *ngIf="shouldShow(group.name)"
                         class="nav-link" id="edit-form-goto-{{group.name}}"
                         [class.active]="group.name === activeGroup"
@@ -14,17 +11,12 @@
                     <span *ngIf="group.name === 'conflicts' && document._conflicts"
                           class="mdi mdi-alert">
                     </span>
-
                     {{group.label}}
                 </a>
             </li>
         </ul>
 
-
         <div class="col-md-9 forms-container">
-
-            <div style="height: 22px"></div>
-
             <div id="{{activeGroup}}-group" class="scrollable-group"
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <generic-form
@@ -35,9 +27,7 @@
             </div>
 
             <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
-                <docedit-image-tab
-                        [(document)]="document">
-                </docedit-image-tab>
+                <docedit-image-tab [(document)]="document"></docedit-image-tab>
             </div>
 
 

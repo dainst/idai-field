@@ -71,7 +71,7 @@ export class GeometryComponent implements OnChanges {
     public resetCoordinates() {
 
         this.coordinates = this.resource.geometry
-            ? JSON.stringify(this.resource.geometry.coordinates)
+            ? JSON.stringify(this.resource.geometry.coordinates, undefined, 4)
             : '';
     }
 

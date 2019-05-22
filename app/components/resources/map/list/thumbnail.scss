@@ -1,10 +1,11 @@
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 
 #thumbnail-container {
   width: $resources-listing-item-slim-width;
-  height: 150px;
+  height: 172px;
 
   img {
     max-width: 100%;
@@ -12,5 +13,9 @@
     object-fit: scale-down;
     user-select: none;
     -webkit-user-drag: none;
+
+    &:hover {
+      filter: brightness(95%);
+    }
   }
 }

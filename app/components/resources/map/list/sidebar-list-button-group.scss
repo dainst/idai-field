@@ -43,7 +43,7 @@ $button-group-width: 2 * $button-width;
     span {
       position: absolute;
       left: 0;
-      top: 20px;
+      top: 19px;
     }
   }
 
@@ -52,7 +52,7 @@ $button-group-width: 2 * $button-width;
 
     span {
       position: absolute;
-      top: 21px;
+      top: 20px;
       left: 1px;
     }
 
@@ -60,11 +60,11 @@ $button-group-width: 2 * $button-width;
       left: 3px;
 
       &.arrow-up {
-        top: 20px;
+        top: 19px;
       }
 
       &.arrow-top-right {
-        top: 19px;
+        top: 18px;
       }
     }
   }

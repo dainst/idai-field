@@ -15,6 +15,11 @@
 }
 
 #sidebar-popover .sidebar-popover-page .sidebar-popover-header.clickable {
+
+  .mdi-arrow-left {
+    padding-right: 4px;
+  }
+
   &:hover {
     background-color: $popover-header-hover-bg-color;
 

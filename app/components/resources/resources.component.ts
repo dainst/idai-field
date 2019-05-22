@@ -53,6 +53,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private tabManager: TabManager
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
+
+            this.isEditingGeometry = false;
+
             if (params['id']) {
                 await this.selectDocumentFromParams(params['id'], params['menu'], params['group']);
             }

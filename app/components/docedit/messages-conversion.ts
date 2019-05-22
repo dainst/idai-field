@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration, DatastoreErrors} from 'idai-components-2';
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
 
@@ -16,6 +16,8 @@ export module MessagesConversion {
         if (msgWithParams.length === 0) return [];
 
         const msg = msgWithParams[0];
+
+        if (msg === DatastoreErrors.GENERIC_ERROR) msgWithParams[0] = M.APP_ERROR_GENERIC_SAVE_ERROR;
 
         if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;

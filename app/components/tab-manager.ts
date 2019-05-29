@@ -182,8 +182,14 @@ export class TabManager {
         this.tabs
             .filter(tab => tab !== activeTab && tab.shown === shown)
             .forEach(tab => {
-                usedTabSpaceWidth += this.tabSpaceCalculator.getTabWidth(tab);
-                tab.shown = usedTabSpaceWidth <= tabSpaceWidth;
+                const newUsedTabSpaceWidth: number
+                    = usedTabSpaceWidth + this.tabSpaceCalculator.getTabWidth(tab);
+                if (newUsedTabSpaceWidth <= tabSpaceWidth) {
+                    tab.shown = true;
+                    usedTabSpaceWidth = newUsedTabSpaceWidth;
+                } else {
+                    tab.shown = false;
+                }
             });
 
         return usedTabSpaceWidth;

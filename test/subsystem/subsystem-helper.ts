@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb';
-import {AppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
+import {AppConfigurator, ConfigLoader, ConfigReader, Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -21,6 +21,9 @@ import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 import {TabManager} from '../../app/components/tab-manager';
+import {ImageOverviewFacade} from '../../app/components/imageoverview/view/imageoverview-facade';
+import {ImageDocumentsManager} from '../../app/components/imageoverview/view/image-documents-manager';
+import {ImagesState} from '../../app/components/imageoverview/view/images-state';
 
 
 class IdGenerator {
@@ -95,6 +98,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
+    const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
+        documentCache as DocumentCache<ImageDocument>, typeConverter);
 
     const remoteChangesStream = new RemoteChangesStream(
         datastore,
@@ -151,6 +156,16 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore
     );
 
+
+    // TODO create imageoverview-facade
+
+    const imagesState = new ImagesState(); // TODO check why both imagedocumentsmanager and imageoverviewfacade need this as constructor arg
+
+    const imageDocumentsManager = new ImageDocumentsManager(viewFacade, imagesState, imageDatastore);
+
+    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, typeUtility);
+
+
     return {
         remoteChangesStream,
         viewFacade,
@@ -161,7 +176,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         settingsService,
         resourcesStateManager,
         stateSerializer,
-        tabManager
+        tabManager,
+        imageOverviewFacade
     }
 }
 

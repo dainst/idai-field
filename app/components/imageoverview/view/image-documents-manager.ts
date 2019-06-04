@@ -21,7 +21,7 @@ export class ImageDocumentsManager {
     private currentQueryId: string;
 
 
-    constructor(public viewFacade: ViewFacade,
+    constructor(public viewFacade: ViewFacade, // TODO why do we need this reference here
                 private imagesState: ImagesState,
                 private imageDatastore: ImageReadDatastore) {}
 

@@ -204,10 +204,10 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1', 'feature-architecture',
             'processor', '100');
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldName(0, 2).then(value => {
+        FieldsViewPage.getFieldName(0, 1).then(value => {
             expect(value).toBe('Bearbeiterin/Bearbeiter'); // with the correct field label
         });
-        FieldsViewPage.getFieldValue(0, 2).then(value => {
+        FieldsViewPage.getFieldValue(0, 1).then(value => {
             expect(value).toBe('100');
         });
 
@@ -317,7 +317,7 @@ describe('resources --', () => {
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 1).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
 
 
         // delete invalid fields when changing the type of a resource to its parent type
@@ -340,7 +340,7 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
 
         FieldsViewPage.clickAccordionTab(0);
-        FieldsViewPage.getFieldValue(0, 1).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
+        FieldsViewPage.getFieldValue(0, 0).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
         FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
     });
 

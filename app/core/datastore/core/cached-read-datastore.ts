@@ -104,7 +104,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const orderedResults = await this.findIds(clonedQuery);
-        const {documents, totalCount} = await this.getDocumentsForIds(orderedResults, clonedQuery.limit);
+        const {documents, totalCount} =
+            await this.getDocumentsForIds(orderedResults, clonedQuery.limit, clonedQuery.offset);
 
         return {
             documents: documents,
@@ -156,10 +157,13 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
 
     private async getDocumentsForIds(ids: string[],
-                                     limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
+                                     limit?: number,
+                                     offset?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
         let totalCount: number = ids.length;
         let idsToFetch: string[] = ids;
+
+        if (offset) idsToFetch.splice(0, offset);
         if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
 
         const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);

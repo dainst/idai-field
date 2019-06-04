@@ -219,10 +219,50 @@ describe('CachedDatastore', () => {
 
         mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
 
-        const { documents, totalCount } = await ds.find({ 'limit': 1 });
+        const { documents, totalCount } = await ds.find({ limit: 1 });
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(2);
         verifyIsFieldDocument(documents[0]);
+        done();
+    });
+
+
+    it('limit the number of documents and use an offset', async done => {
+
+        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+                {id: '1', identifier: 'eins'},
+                {id: '2', identifier: 'zwei'},
+                {id: '3', identifier: 'drei'}]);
+
+        const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
+        expect(documents.length).toBe(1);
+        expect(totalCount).toBe(3);
+        verifyIsFieldDocument(documents[0]);
+
+        // sorted order is 3, 1, 2, coresponding to drei, eins, zwei
+        expect(documents[0].resource.id).toBe('1');
+        done();
+    });
+
+
+    it('offset excludes everything', async done => {
+
+        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+            {id: '1', identifier: 'eins'},
+            {id: '2', identifier: 'zwei'},
+            {id: '3', identifier: 'drei'}]);
+
+        const { documents, totalCount } = await ds.find({ offset: 3 });
+        expect(documents.length).toBe(0);
+        expect(totalCount).toBe(3);
         done();
     });
 

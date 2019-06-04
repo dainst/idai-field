@@ -49,6 +49,8 @@
                     [showTooltips]="true"
                     [paddingRight]="20"
                     (onClick)="toggleSelected($event)"
+                    (onClickedNext)="turnPage()"
+                    (onClickedPrevious)="turnPageBack()"
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>

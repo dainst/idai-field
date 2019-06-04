@@ -72,6 +72,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
+    public turnPage = () => this.imageOverviewFacade.turnPage();
+
+    public turnPageBack = () => this.imageOverviewFacade.turnPageBack();
+
 
     ngOnInit() {
 

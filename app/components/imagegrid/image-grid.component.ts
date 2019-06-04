@@ -37,6 +37,8 @@ export class ImageGridComponent implements OnChanges {
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
+    @Output() onClickedNext: EventEmitter<any> = new EventEmitter<void>();
+    @Output() onClickedPrevious: EventEmitter<any> = new EventEmitter<void>();
 
     public rows = [];
     public resourceIdentifiers: {[id: string]: string} = {};
@@ -60,6 +62,11 @@ export class ImageGridComponent implements OnChanges {
         private imagestore: Imagestore,
         private datastore: FieldReadDatastore
     ) {}
+
+
+    public gotoNext = () => this.onClickedNext.emit();
+
+    public gotoPrevious = () => this.onClickedPrevious.emit();
 
 
     ngOnChanges(changes: SimpleChanges) {

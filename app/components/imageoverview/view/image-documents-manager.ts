@@ -78,11 +78,12 @@ export class ImageDocumentsManager {
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
      */
-    public async fetchDocuments(limit: number) {
+    public async fetchDocuments(limit: number, offset?: number) {
 
         this.currentQueryId = new Date().toISOString();
 
         const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
+        if (offset) query.offset = offset;
         query.limit = limit;
         query.id = this.currentQueryId;
 

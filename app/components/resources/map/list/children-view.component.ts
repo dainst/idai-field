@@ -56,7 +56,7 @@ export class ChildrenViewComponent implements OnChanges {
     private async updateChildren(document: FieldDocument) {
 
         this.children = [];
-        this.childrenCount = this.viewFacade.getChildrenCount(document);
+        this.childrenCount = document.resource.id ? this.viewFacade.getChildrenCount(document) : 0;
 
         if (this.childrenCount === 0) {
             this.children = [];

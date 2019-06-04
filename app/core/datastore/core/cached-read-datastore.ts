@@ -103,7 +103,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
-        const {documents, totalCount} = await this.getDocumentsForIds(await this.findIds(clonedQuery), clonedQuery.limit);
+        const orderedResults = await this.findIds(clonedQuery);
+        const {documents, totalCount} = await this.getDocumentsForIds(orderedResults, clonedQuery.limit);
 
         return {
             documents: documents,

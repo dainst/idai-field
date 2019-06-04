@@ -175,17 +175,22 @@ export class FieldsViewComponent implements OnChanges {
 
     private addBaseFields(resource: Resource) {
 
-        this.fields['stem'] = [
-            {
+        this.fields['stem'] = [];
+
+        const shortDescription: string = FieldsViewComponent.getValue(resource, 'shortDescription');
+        if (shortDescription) {
+            this.fields['stem'].push({
                 label: this.getLabel(resource.type, 'shortDescription'),
-                value: FieldsViewComponent.getValue(resource, 'shortDescription'),
+                value: shortDescription,
                 isArray: false
-            }, {
-                label: this.getLabel(resource.type, 'type'),
-                value: this.projectConfiguration.getLabelForType(resource.type),
-                isArray: false
-            }
-        ];
+            });
+        }
+
+        this.fields['stem'].push({
+            label: this.getLabel(resource.type, 'type'),
+            value: this.projectConfiguration.getLabelForType(resource.type),
+            isArray: false
+        });
     }
 
 

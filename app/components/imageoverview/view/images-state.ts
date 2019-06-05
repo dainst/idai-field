@@ -77,13 +77,13 @@ export class ImagesState {
     }
 
 
-    public getGridSize(): number {
+    public getNrImagesPerRow(): number {
 
         return this.gridSize;
     }
 
 
-    public setGridSize(value: number) {
+    public setNrImagesPerRow(value: number) {
 
         this.gridSize = value;
     }

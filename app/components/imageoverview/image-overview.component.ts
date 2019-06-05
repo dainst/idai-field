@@ -30,8 +30,6 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public maxGridSize: number = 12;
-    public minGridSize: number = 2;
     public filterOptions: Array<IdaiType> = [];
     public modalOpened: boolean = false;
 
@@ -47,6 +45,15 @@ export class ImageOverviewComponent implements OnInit {
         this.imageOverviewFacade.initialize();
     }
 
+    public increaseNrImagesPerRow = () => this.imageOverviewFacade.increaseNrImagesPerRow();
+
+    public decreaseNrImagesPerRow = () => this.imageOverviewFacade.decreaseNrImagesPerRow();
+
+    public getMaxNrImagesPerRow = () => this.imageOverviewFacade.getMaxNrImagesPerRow();
+
+    public getMinNrImagesPerRow = () => this.imageOverviewFacade.getMinNrImagesPerRow();
+
+    public getNrImagesPerRow = () => this.imageOverviewFacade.getNrImagesPerRow();
 
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
 
@@ -55,8 +62,6 @@ export class ImageOverviewComponent implements OnInit {
     public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
 
     public toggleSelected = (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
-
-    public getGridSize = () => this.imageOverviewFacade.getGridSize();
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 
@@ -81,8 +86,18 @@ export class ImageOverviewComponent implements OnInit {
 
     ngOnInit() {
 
-        this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
+        this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
         this.filterOptions = [this.projectConfiguration.getTypesTree()['Image']];
+    }
+
+
+    public async setNrImagesPerRow(nrImagesPerRow: string|number) {
+
+        const nr: number = typeof nrImagesPerRow === 'string'
+            ? parseInt(nrImagesPerRow)
+            : nrImagesPerRow;
+
+        this.imageOverviewFacade.setNrImagesPerRow(nr);
     }
 
 
@@ -121,18 +136,6 @@ export class ImageOverviewComponent implements OnInit {
 
         this.imageOverviewFacade.setTypeFilters(types);
         this.imageOverviewFacade.setCustomConstraints({});
-    }
-
-
-    public async setGridSize(size: string|number) {
-
-        const _size: number = typeof size === 'string' ? parseInt(size): size;
-
-        if (_size >= this.minGridSize && _size <= this.maxGridSize) {
-            this.imageOverviewFacade.setGridSize(_size);
-            this.imageGrid.nrOfColumns = _size;
-            await this.refreshGrid();
-        }
     }
 
 

@@ -28,19 +28,19 @@
 
             <div class="col-sm-2 text-right slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
-                      (click)="setGridSize(getGridSize() - 1)"></span>
-                <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
-                       max="{{maxGridSize}}" value="{{getGridSize()}}"
+                      (click)="decreaseNrImagesPerRow()"></span>
+                <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrImagesPerRow()}}"
+                       max="{{getMaxNrImagesPerRow()}}" value="{{getNrImagesPerRow()}}"
                        class="slider align-middle"
-                       (change)="setGridSize(gridSize.value)">
+                       (change)="setNrImagesPerRow(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
-                      (click)="setGridSize(getGridSize() + 1)"></span>
+                      (click)="increaseNrImagesPerRow()"></span>
             </div>
         </div>
 
         <div (window:resize)="onResize()" class="image-grid-container">
             <image-grid #imageGrid
-                    [nrOfColumns]="getGridSize()"
+                    [nrOfColumns]="getNrImagesPerRow()"
                     [documents]="getDocuments()"
                     [selected]="getSelected()"
                     [totalDocumentCount]="getTotalDocumentCount()"
@@ -66,8 +66,8 @@
                 Es werden die ersten {{imageOverviewFacade.getDocuments().length - 1}}
                 von insgesamt {{imageOverviewFacade.getTotalDocumentCount()}} Suchtreffern
                 angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
-                sehen</span><span *ngIf="getGridSize() === 12">.</span>
-                    <span *ngIf="getGridSize() < 12" i18n="@@imageGrid.moreRowsMessage.2">
+                sehen</span><span *ngIf="getNrImagesPerRow() === 12">.</span>
+                    <span *ngIf="getNrImagesPerRow() < 12" i18n="@@imageGrid.moreRowsMessage.2">
                 oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
             </span>
                 </i>

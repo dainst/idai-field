@@ -14,9 +14,11 @@ import {clone} from '../../../core/util/object-util';
  */
 export class ImageOverviewFacade {
 
-    private static MAX_ROWS: number = 5;
+    private currentPage = 0;
 
-    private static currentPage = 0;
+    private maxRows: number = 5;
+    private maxNrImagesPerRow: number = 12;
+    private minNrImagesPerRow: number = 2;
 
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
@@ -25,12 +27,57 @@ export class ImageOverviewFacade {
     ) {}
 
 
-    public initialize() {
+    public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
 
-        return this.imagesState.initialize().then(() => {
-            if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
-            this.setQueryConstraints();
-        }).then(() => this.fetchDocuments());
+    public getMinNrImagesPerRow = () => this.minNrImagesPerRow;
+
+
+    public async initialize() {
+
+        await this.imagesState.initialize();
+        if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
+        this.setQueryConstraints();
+        await this.fetchDocuments();
+    }
+
+
+    /**
+     * @return number how images each row can contain
+     */
+    public getNrImagesPerRow(): number {
+
+        return this.imagesState.getNrImagesPerRow();
+    }
+
+
+    public async increaseNrImagesPerRow() {
+
+        if (this.getNrImagesPerRow() < this.getMaxNrImagesPerRow()) {
+
+            this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() + 1);
+            await this.fetchDocuments();
+        }
+    }
+
+
+    public async decreaseNrImagesPerRow() {
+
+        if (this.getNrImagesPerRow() > this.getMinNrImagesPerRow()) {
+
+            this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() - 1);
+            await this.fetchDocuments();
+        }
+    }
+
+
+    public async setNrImagesPerRow(size: number) {
+
+        if (size >= this.getMinNrImagesPerRow() && size <= this.getMaxNrImagesPerRow()) {
+
+            this.imagesState.setNrImagesPerRow(size);
+            // this.imageGrid.nrOfColumns = _size;
+            await this.fetchDocuments();
+        }
     }
 
 
@@ -39,7 +86,7 @@ export class ImageOverviewFacade {
         if (this.canTurnPage()) {
 
             this.imageDocumentsManager.clearSelection();
-            ImageOverviewFacade.currentPage++;
+            this.currentPage++;
             await this.fetchDocuments();
         }
     }
@@ -47,33 +94,27 @@ export class ImageOverviewFacade {
 
     public async turnPageBack() {
 
-        if (this.canTurnPageBack()) ImageOverviewFacade.currentPage--;
+        if (this.canTurnPageBack()) this.currentPage--;
         await this.fetchDocuments();
     }
 
 
     public canTurnPage() {
 
-        const nextPage = ImageOverviewFacade.currentPage + 1;
+        const nextPage = this.currentPage + 1;
         return this.getOffset(nextPage) < this.getTotalDocumentCount()
     }
 
 
     public canTurnPageBack() {
 
-        return ImageOverviewFacade.currentPage > 0;
+        return this.currentPage > 0;
     }
 
 
     public getDepictsRelationsSelected() {
 
         return this.imageDocumentsManager.getDepictsRelationsSelected();
-    }
-
-
-    public getGridSize(): number {
-
-        return this.imagesState.getGridSize();
     }
 
 
@@ -91,7 +132,7 @@ export class ImageOverviewFacade {
 
     public setCustomConstraints(customConstraints: { [name: string]: string }) {
 
-        ImageOverviewFacade.currentPage = 0;
+        this.currentPage = 0;
 
         this.imagesState.setCustomConstraints(customConstraints);
         this.setQueryConstraints();
@@ -106,15 +147,9 @@ export class ImageOverviewFacade {
     }
 
 
-    public setGridSize(size: number) {
-
-        this.imagesState.setGridSize(size);
-    }
-
-
     public setQueryString(q: string) {
 
-        ImageOverviewFacade.currentPage = 0;
+        this.currentPage = 0;
 
         const query: Query = this.imagesState.getQuery();
         query.q = q;
@@ -126,7 +161,7 @@ export class ImageOverviewFacade {
 
     public setTypeFilters(types: string[]) {
 
-        ImageOverviewFacade.currentPage = 0;
+        this.currentPage = 0;
 
         const query: Query = this.imagesState.getQuery();
         query.types = types;
@@ -138,7 +173,7 @@ export class ImageOverviewFacade {
 
     public setLinkFilter(filterOption: ImageFilterOption) {
 
-        ImageOverviewFacade.currentPage = 0;
+        this.currentPage = 0;
 
         this.imagesState.setLinkFilter(filterOption);
         this.setQueryConstraints();
@@ -196,7 +231,7 @@ export class ImageOverviewFacade {
 
         return this.imageDocumentsManager.fetchDocuments(
             this.getLimit(),
-            this.getOffset(ImageOverviewFacade.currentPage));
+            this.getOffset(this.currentPage));
     }
 
 
@@ -211,14 +246,14 @@ export class ImageOverviewFacade {
 
     private getOffset(page: number) {
 
-        const calculatedOffset = page * this.getGridSize() * ImageOverviewFacade.MAX_ROWS - page /* drop area */;
+        const calculatedOffset = page * this.getNrImagesPerRow() * this.maxRows - page /* drop area */;
         return calculatedOffset === -1 ? 0 : calculatedOffset;
     }
 
 
     private getLimit() {
 
-        return this.getGridSize() * ImageOverviewFacade.MAX_ROWS - 1 /* drop area */;
+        return this.getNrImagesPerRow() * this.maxRows - 1 /* drop area */;
     }
 
 

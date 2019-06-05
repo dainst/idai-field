@@ -31,6 +31,30 @@ export class ImageOverviewFacade {
 
     public getMinNrImagesPerRow = () => this.minNrImagesPerRow;
 
+    public select = (document: ImageDocument) => this.imageDocumentsManager.select(document);
+
+    public toggleSelected = (document: ImageDocument) => this.imageDocumentsManager.toggleSelected(document);
+
+    public getDocuments = (): Array<ImageDocument> => this.imageDocumentsManager.getDocuments();
+
+    public getTotalDocumentCount = (): number => this.imageDocumentsManager.getTotalDocumentCount();
+
+    public remove = (document: ImageDocument) => this.imageDocumentsManager.remove(document);
+
+    public getSelected = (): Array<ImageDocument> => this.imageDocumentsManager.getSelected();
+
+    public clearSelection = () => this.imageDocumentsManager.clearSelection();
+
+    public getCustomConstraints = (): { [name: string]: string } => this.imagesState.getCustomConstraints();
+
+    public getLinkFilter = (): ImageFilterOption => this.imagesState.getLinkFilter();
+
+    public getNrImagesPerRow = (): number => this.imagesState.getNrImagesPerRow();
+
+    public getDepictsRelationsSelected = () => this.imageDocumentsManager.getDepictsRelationsSelected();
+
+    public getQuery = (): Query => this.imagesState.getQuery();
+
 
     public async initialize() {
 
@@ -41,13 +65,7 @@ export class ImageOverviewFacade {
     }
 
 
-    /**
-     * @return number how images each row can contain
-     */
-    public getNrImagesPerRow(): number {
 
-        return this.imagesState.getNrImagesPerRow();
-    }
 
 
     public async increaseNrImagesPerRow() {
@@ -112,24 +130,6 @@ export class ImageOverviewFacade {
     }
 
 
-    public getDepictsRelationsSelected() {
-
-        return this.imageDocumentsManager.getDepictsRelationsSelected();
-    }
-
-
-    public getQuery(): Query {
-
-        return this.imagesState.getQuery();
-    }
-
-
-    public getCustomConstraints(): { [name: string]: string } {
-
-        return this.imagesState.getCustomConstraints();
-    }
-
-
     public setCustomConstraints(customConstraints: { [name: string]: string }) {
 
         this.currentPage = 0;
@@ -140,11 +140,6 @@ export class ImageOverviewFacade {
         this.fetchDocuments();
     }
 
-
-    public getLinkFilter(): ImageFilterOption {
-
-        return this.imagesState.getLinkFilter();
-    }
 
 
     public setQueryString(q: string) {
@@ -179,48 +174,6 @@ export class ImageOverviewFacade {
         this.setQueryConstraints();
 
         this.fetchDocuments();
-    }
-
-
-    public select(document: ImageDocument) {
-
-        this.imageDocumentsManager.select(document);
-    }
-
-
-    public toggleSelected(document: ImageDocument) {
-
-        this.imageDocumentsManager.toggleSelected(document);
-    }
-
-
-    public getDocuments(): Array<ImageDocument> {
-
-        return this.imageDocumentsManager.getDocuments();
-    }
-
-
-    public getTotalDocumentCount(): number {
-
-        return this.imageDocumentsManager.getTotalDocumentCount();
-    }
-
-
-    public remove(document: ImageDocument) {
-
-        return this.imageDocumentsManager.remove(document);
-    }
-
-
-    public getSelected(): Array<ImageDocument> {
-
-        return this.imageDocumentsManager.getSelected();
-    }
-
-
-    public clearSelection() {
-
-        return this.imageDocumentsManager.clearSelection();
     }
 
 

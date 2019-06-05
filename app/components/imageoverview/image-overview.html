@@ -13,7 +13,7 @@
                 </select>
             </div>
 
-            <div *ngIf="!hasSelectedImages()" class="col-sm-5 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col-sm-7 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [types]="getQuery().types"
@@ -21,13 +21,6 @@
                                            (onQueryStringChanged)="setQueryString($event)"
                                            (onTypesChanged)="setTypeFilters($event)">
                 </image-overview-search-bar>
-            </div>
-
-            <div *ngIf="!hasSelectedImages()" class="col-sm-2">
-                <span style="color: blue; width: 20px" *ngIf="canTurnPageBack()" (click)="turnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
-                <span style="color: blue; width: 20px" *ngIf="canTurnPage()" (click)="turnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
             </div>
 
             <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">
@@ -61,6 +54,12 @@
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
 
+            <div *ngIf="!hasSelectedImages()" >
+                <span style="color: blue; width: 20px" *ngIf="canTurnPageBack()" (click)="turnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
+                <span style="color: gray; width: 20px" *ngIf="!canTurnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
+                <span style="color: blue; width: 20px" *ngIf="canTurnPage()" (click)="turnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
+                <span style="color: gray; width: 20px" *ngIf="!canTurnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
+            </div>
             <span *ngIf="imageOverviewFacade.getDocuments() && imageOverviewFacade.getTotalDocumentCount()">
                 {{imageOverviewFacade.getDocuments().length - 1}} angezeigt / {{imageOverviewFacade.getTotalDocumentCount()}} insgesamt
             </span>

@@ -213,7 +213,7 @@ describe('resources --', () => {
 
         // Make sure there are only so much as expected
         FieldsViewPage.getFields(1).then(items => {
-            expect(items.length).toBe(3);
+            expect(items.length).toBe(2);
         });
     });
 

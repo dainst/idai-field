@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Query, ImageDocument} from 'idai-components-2';
-import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 
@@ -21,8 +20,7 @@ export class ImageDocumentsManager {
     private currentQueryId: string;
 
 
-    constructor(public viewFacade: ViewFacade, // TODO why do we need this reference here
-                private imagesState: ImagesState,
+    constructor(private imagesState: ImagesState,
                 private imageDatastore: ImageReadDatastore) {}
 
 

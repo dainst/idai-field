@@ -161,7 +161,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const imagesState = new ImagesState(); // TODO check why both imagedocumentsmanager and imageoverviewfacade need this as constructor arg
 
-    const imageDocumentsManager = new ImageDocumentsManager(viewFacade, imagesState, imageDatastore);
+    const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
 
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, typeUtility);
 

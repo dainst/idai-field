@@ -234,7 +234,7 @@ describe('resources/state --', function() {
         checkTypeIcon();
         createResourceWithPresetType('1', false);
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 1).then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
 
         ResourcesPage.clickListModeButton();
         checkTypeIcon();

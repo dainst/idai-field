@@ -37,10 +37,9 @@
           height: 100%;
 
           .scrollable-group {
-            height: calc(100% - 44px);
+            height: calc(100% - 30px);
             overflow-y: auto;
             margin-top: 15px;
-            margin-bottom: 15px;
 
             input[type="text"],
             input[type="number"],
@@ -61,7 +60,7 @@
 
         #docedit-images-tab,
         #docedit-conflicts-tab {
-          margin-top: 12px;
+          margin-top: 15px;
         }
       }
     }

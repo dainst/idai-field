@@ -2,15 +2,6 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!hasSelectedImages()" class="col-sm-5 image-overview-nav-content">
-                <image-overview-search-bar [filterOptions]="filterOptions"
-                                           [q]="getQuery().q"
-                                           [types]="getQuery().types"
-                                           [hidden]="nrOfSelectedImages()"
-                                           (onQueryStringChanged)="setQueryString($event)"
-                                           (onTypesChanged)="setTypeFilters($event)">
-                </image-overview-search-bar>
-            </div>
 
             <div *ngIf="!hasSelectedImages()" class="col-sm-3 image-overview-nav-content">
                 <select id="link-filter-select" class="form-control"
@@ -22,14 +13,21 @@
                 </select>
             </div>
 
+            <div *ngIf="!hasSelectedImages()" class="col-sm-5 image-overview-nav-content">
+                <image-overview-search-bar [filterOptions]="filterOptions"
+                                           [q]="getQuery().q"
+                                           [types]="getQuery().types"
+                                           [hidden]="nrOfSelectedImages()"
+                                           (onQueryStringChanged)="setQueryString($event)"
+                                           (onTypesChanged)="setTypeFilters($event)">
+                </image-overview-search-bar>
+            </div>
+
             <div *ngIf="!hasSelectedImages()" class="col-sm-2">
-                <span style="color: blue; width: 20px" *ngIf="canTurnPageBack()" (click)="turnPageBack()" class="mdi mdi-arrow-left-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPageBack()" class="mdi mdi-arrow-left-bold"></span>
-                <span style="color: blue; width: 20px" *ngIf="canTurnPage()" (click)="turnPage()" class="mdi mdi-arrow-right-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPage()" class="mdi mdi-arrow-right-bold"></span>
-                <span *ngIf="imageOverviewFacade.getDocuments() && imageOverviewFacade.getTotalDocumentCount()">
-                    {{imageOverviewFacade.getDocuments().length - 1}} / {{imageOverviewFacade.getTotalDocumentCount()}}
-                </span>
+                <span style="color: blue; width: 20px" *ngIf="canTurnPageBack()" (click)="turnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
+                <span style="color: gray; width: 20px" *ngIf="!canTurnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
+                <span style="color: blue; width: 20px" *ngIf="canTurnPage()" (click)="turnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
+                <span style="color: gray; width: 20px" *ngIf="!canTurnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
             </div>
 
             <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">
@@ -62,6 +60,10 @@
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
+
+            <span *ngIf="imageOverviewFacade.getDocuments() && imageOverviewFacade.getTotalDocumentCount()">
+                {{imageOverviewFacade.getDocuments().length - 1}} angezeigt / {{imageOverviewFacade.getTotalDocumentCount()}} insgesamt
+            </span>
         </div>
     </div>
 </div>

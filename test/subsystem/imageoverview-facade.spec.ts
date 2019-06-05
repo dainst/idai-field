@@ -14,7 +14,7 @@ import {ImageOverviewFacade} from '../../app/components/imageoverview/view/image
  * @author Daniel de Oliveira
  */
 
-fdescribe('ImageOverviewFacade/Subsystem', () => {
+describe('ImageOverviewFacade/Subsystem', () => {
 
     let imageOverviewFacade: ImageOverviewFacade;
 
@@ -47,41 +47,49 @@ fdescribe('ImageOverviewFacade/Subsystem', () => {
         expect(documents.length).toBe(19); // first page's first slot is occupied by the drop area, so we have 19, not 20 documents
         expect(documents[0].resource.id).toBe('im0');
 
+        expect(imageOverviewFacade.canTurnPage()).toBeTruthy();
         await imageOverviewFacade.turnPage();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im19');
 
+        expect(imageOverviewFacade.canTurnPage()).toBeTruthy();
         await imageOverviewFacade.turnPage();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im38');
 
+        expect(imageOverviewFacade.canTurnPage()).toBeTruthy();
         await imageOverviewFacade.turnPage();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(3);
         expect(documents[0].resource.id).toBe('im57');
 
+        expect(imageOverviewFacade.canTurnPage()).not.toBeTruthy();
         await imageOverviewFacade.turnPage(); // will not turn again
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(3);
         expect(documents[0].resource.id).toBe('im57');
 
+        expect(imageOverviewFacade.canTurnPageBack()).toBeTruthy();
         await imageOverviewFacade.turnPageBack();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im38');
 
+        expect(imageOverviewFacade.canTurnPageBack()).toBeTruthy();
         await imageOverviewFacade.turnPageBack();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im19');
 
+        expect(imageOverviewFacade.canTurnPageBack()).toBeTruthy();
         await imageOverviewFacade.turnPageBack();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im0');
 
+        expect(imageOverviewFacade.canTurnPageBack()).not.toBeTruthy();
         await imageOverviewFacade.turnPageBack(); // will not turn again
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);

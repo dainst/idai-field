@@ -7,8 +7,8 @@
         height: 100%;
 
         #table-of-contents {
-          padding-left: 50px;
-          padding-top: 20px;
+          padding-left: 15px;
+          padding-top: 15px;
           user-select: none;
 
           .conflicted {
@@ -32,14 +32,15 @@
         }
 
         .forms-container {
-          padding-right: 53px;
+          padding-right: 15px;
+          padding-left: 0;
           height: 100%;
 
           .scrollable-group {
             height: calc(100% - 44px);
             overflow-y: auto;
-            margin-top: 22px;
-            margin-bottom: 22px;
+            margin-top: 15px;
+            margin-bottom: 15px;
 
             input[type="text"],
             input[type="number"],
@@ -58,7 +59,8 @@
           }
         }
 
-        #docedit-images-tab {
+        #docedit-images-tab,
+        #docedit-conflicts-tab {
           margin-top: 12px;
         }
       }

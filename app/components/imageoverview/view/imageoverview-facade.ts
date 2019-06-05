@@ -65,14 +65,12 @@ export class ImageOverviewFacade {
     }
 
 
-
-
-
     public async increaseNrImagesPerRow() {
 
         if (this.getNrImagesPerRow() < this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() + 1);
+            this.currentPage = 0;
             await this.fetchDocuments();
         }
     }
@@ -83,6 +81,7 @@ export class ImageOverviewFacade {
         if (this.getNrImagesPerRow() > this.getMinNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() - 1);
+            this.currentPage = 0;
             await this.fetchDocuments();
         }
     }
@@ -93,6 +92,7 @@ export class ImageOverviewFacade {
         if (size >= this.getMinNrImagesPerRow() && size <= this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(size);
+            this.currentPage = 0;
             // this.imageGrid.nrOfColumns = _size;
             await this.fetchDocuments();
         }

@@ -76,6 +76,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public turnPageBack = () => this.imageOverviewFacade.turnPageBack();
 
+    public canTurnPage = () => this.imageOverviewFacade.canTurnPage();
+
+    public canTurnPageBack = () => this.imageOverviewFacade.canTurnPageBack();
+
 
     ngOnInit() {
 
@@ -131,6 +135,14 @@ export class ImageOverviewComponent implements OnInit {
             this.imageGrid.nrOfColumns = _size;
             await this.refreshGrid();
         }
+    }
+
+
+    public showMoreRowsMessage(): boolean {
+
+        return this.imageOverviewFacade.getDocuments()
+            && this.imageOverviewFacade.getTotalDocumentCount() > 0
+            && this.imageOverviewFacade.getTotalDocumentCount() > this.imageOverviewFacade.getDocuments().length;
     }
 
 

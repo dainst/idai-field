@@ -34,31 +34,34 @@ export class ImageOverviewFacade {
     }
 
 
-    public turnPage() {
+    public async turnPage() {
 
-        let offset = undefined;
-        const nextPage = ImageOverviewFacade.currentPage + 1;
+        if (this.canTurnPage()) {
 
-        if (nextPage * this.nrImagesPerPage() < this.getTotalDocumentCount()) {
-
-            ImageOverviewFacade.currentPage = nextPage;
-            offset = ImageOverviewFacade.currentPage * this.nrImagesPerPage();
             this.imageDocumentsManager.clearSelection();
+            ImageOverviewFacade.currentPage++;
+            await this.fetchDocuments();
         }
-        this.fetchDocuments(offset);
     }
 
 
-    public turnPageBack() {
+    public async turnPageBack() {
 
-        if (ImageOverviewFacade.currentPage > 0) ImageOverviewFacade.currentPage--;
-        this.fetchDocuments(ImageOverviewFacade.currentPage * this.nrImagesPerPage());
+        if (this.canTurnPageBack()) ImageOverviewFacade.currentPage--;
+        await this.fetchDocuments();
     }
 
 
-    private nrImagesPerPage() {
+    public canTurnPage() {
 
-        return this.getGridSize() * ImageOverviewFacade.MAX_ROWS - 1;
+        const nextPage = ImageOverviewFacade.currentPage + 1;
+        return this.getOffset(nextPage) < this.getTotalDocumentCount()
+    }
+
+
+    public canTurnPageBack() {
+
+        return ImageOverviewFacade.currentPage > 0;
     }
 
 
@@ -186,10 +189,14 @@ export class ImageOverviewFacade {
     }
 
 
-    public fetchDocuments(offset?: number) {
+    /**
+     * Set ImageOverviewFacade.currentPage before calling this
+     */
+    public fetchDocuments() {
 
         return this.imageDocumentsManager.fetchDocuments(
-            ImageOverviewFacade.MAX_ROWS * this.getGridSize() - 1, offset);
+            this.getLimit(),
+            this.getOffset(ImageOverviewFacade.currentPage));
     }
 
 
@@ -199,6 +206,19 @@ export class ImageOverviewFacade {
             q: '',
             types: this.typeUtility.getImageTypeNames()
         };
+    }
+
+
+    private getOffset(page: number) {
+
+        const calculatedOffset = page * this.getGridSize() * ImageOverviewFacade.MAX_ROWS - page /* drop area */;
+        return calculatedOffset === -1 ? 0 : calculatedOffset;
+    }
+
+
+    private getLimit() {
+
+        return this.getGridSize() * ImageOverviewFacade.MAX_ROWS - 1 /* drop area */;
     }
 
 

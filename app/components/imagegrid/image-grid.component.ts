@@ -64,11 +64,6 @@ export class ImageGridComponent implements OnChanges {
     ) {}
 
 
-    public gotoNext = () => this.onClickedNext.emit();
-
-    public gotoPrevious = () => this.onClickedPrevious.emit();
-
-
     ngOnChanges(changes: SimpleChanges) {
 
         if (!changes['documents']) return;
@@ -102,14 +97,6 @@ export class ImageGridComponent implements OnChanges {
             await this._calcGrid();
             this.calcGridRunning = false;
         }, 500);
-    }
-
-
-    public showMoreRowsMessage(): boolean {
-
-        return this.documents
-            && this.totalDocumentCount > 0
-            && this.totalDocumentCount > this.documents.length;
     }
 
 

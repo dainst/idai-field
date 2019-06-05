@@ -80,6 +80,9 @@ export class ImageDocumentsManager {
      */
     public async fetchDocuments(limit: number, offset?: number) {
 
+
+        console.log("limit: " + limit + ' offset ' + offset)
+
         this.currentQueryId = new Date().toISOString();
 
         const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));

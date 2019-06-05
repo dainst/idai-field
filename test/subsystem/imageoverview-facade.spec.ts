@@ -1,24 +1,20 @@
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import * as PouchDB from 'pouchdb';
-import {ViewFacade} from '../../app/components/resources/view/view-facade';
-import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
-import {TabManager} from '../../app/components/tab-manager';
 import {ImageOverviewFacade} from '../../app/components/imageoverview/view/imageoverview-facade';
 
 
 /**
  * This is a subsystem test.
  * The use of mocks is intentionally reduced.
- * The subsystem gets assembled in the ViewFacade's constructor.
+ * The subsystem gets assembled via createApp.
  *
  * @author Daniel de Oliveira
- * @author Thomas Kleinke
  */
 
-describe('ViewFacade/Subsystem', () => {
+fdescribe('ImageOverviewFacade/Subsystem', () => {
 
     let imageOverviewFacade: ImageOverviewFacade;
 
@@ -30,7 +26,7 @@ describe('ViewFacade/Subsystem', () => {
         const datastore: CachedDatastore<ImageDocument> = result.idaiFieldImageDocumentDatastore; // TODO rename datastore
         imageOverviewFacade = result.imageOverviewFacade;
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 60; i++) { // create 60 documents
 
             const imageDocument = Static
                 .ifDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
@@ -45,10 +41,50 @@ describe('ViewFacade/Subsystem', () => {
     afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
 
 
-    it('reload view states on startup', async done => {
+    it('turn page', async done => {
 
-        await imageOverviewFacade.setQueryString('');
-        const documents = await imageOverviewFacade.getDocuments();
+        let documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19); // first page's first slot is occupied by the drop area, so we have 19, not 20 documents
+        expect(documents[0].resource.id).toBe('im0');
+
+        await imageOverviewFacade.turnPage();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im19');
+
+        await imageOverviewFacade.turnPage();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im38');
+
+        await imageOverviewFacade.turnPage();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toBe('im57');
+
+        await imageOverviewFacade.turnPage(); // will not turn again
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toBe('im57');
+
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im38');
+
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im19');
+
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im0');
+
+        await imageOverviewFacade.turnPageBack(); // will not turn again
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im0');
         done();
     });

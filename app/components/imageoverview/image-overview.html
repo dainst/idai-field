@@ -54,6 +54,29 @@
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
+
+
+            <div *ngIf="showMoreRowsMessage()" class="more-rows-message">
+                <br>
+                <br>
+                <br>
+                <br>
+                <i>
+            <span i18n="@@imageGrid.moreRowsMessage.1">
+                Es werden die ersten {{imageOverviewFacade.getDocuments().length - 1}}
+                von insgesamt {{imageOverviewFacade.getTotalDocumentCount()}} Suchtreffern
+                angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
+                sehen</span><span *ngIf="getGridSize() === 12">.</span>
+                    <span *ngIf="getGridSize() < 12" i18n="@@imageGrid.moreRowsMessage.2">
+                oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
+            </span>
+                </i>
+
+                <hr>
+
+                <div *ngIf="canTurnPage()" (click)="turnPage()">Next Page</div>
+                <div *ngIf="canTurnPageBack()" (click)="turnPageBack()">Previous Page</div>
+            </div>
         </div>
     </div>
 </div>

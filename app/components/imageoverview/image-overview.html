@@ -12,7 +12,7 @@
                 </image-overview-search-bar>
             </div>
 
-            <div *ngIf="hasSelectedImages()" class="col-sm-3 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col-sm-3 image-overview-nav-content">
                 <select id="link-filter-select" class="form-control"
                         [ngModel]="getLinkFilter()"
                         (ngModelChange)="setLinkFilter($event)">

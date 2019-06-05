@@ -49,33 +49,24 @@
                     [showTooltips]="true"
                     [paddingRight]="20"
                     (onClick)="toggleSelected($event)"
-                    (onClickedNext)="turnPage()"
-                    (onClickedPrevious)="turnPageBack()"
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
 
-
             <div *ngIf="canTurnPage()" class="more-rows-message">
-                <br>
-                <br>
-                <br>
-                <br>
-                <i>
-            <span i18n="@@imageGrid.moreRowsMessage.1">
-                Es werden die ersten {{imageOverviewFacade.getDocuments().length - 1}}
-                von insgesamt {{imageOverviewFacade.getTotalDocumentCount()}} Suchtreffern
-                angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
-                sehen</span><span *ngIf="getNrImagesPerRow() === 12">.</span>
-                    <span *ngIf="getNrImagesPerRow() < 12" i18n="@@imageGrid.moreRowsMessage.2">
-                oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
-            </span>
-                </i>
-
-                <hr>
-
-                <div *ngIf="canTurnPage()" (click)="turnPage()">Next Page</div>
-                <div *ngIf="canTurnPageBack()" (click)="turnPageBack()">Previous Page</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <i>
+                <span i18n="@@imageGrid.moreRowsMessage">
+                    {{imageOverviewFacade.getDocuments().length - 1}}
+                    von insgesamt {{imageOverviewFacade.getTotalDocumentCount()}} Suchtreffern angezeigt.
+                </span>
+                (<span style="color: blue" *ngIf="canTurnPage()" (click)="turnPage()">Weitere</span>
+                <span *ngIf="canTurnPage() && canTurnPageBack()">&nbsp;|&nbsp;</span>
+                <span style="color: blue" *ngIf="canTurnPageBack()" (click)="turnPageBack()">Vorige</span>)
+            </i>
             </div>
         </div>
     </div>

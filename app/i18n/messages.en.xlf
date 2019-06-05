@@ -1273,29 +1273,16 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageGrid.moreRowsMessage.1" datatype="html">
+      <trans-unit id="imageGrid.moreRowsMessage" datatype="html">
         <source>
-            Es werden die ersten <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> von insgesamt <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> Suchtreffern
-            angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
-            sehen</source>
+            <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> von insgesamt <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> Suchtreffern angezeigt.
+         </source>
         <target state="translated">
-                The first <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> of a total of <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> search results
-                are displayed. Please restrict the search further in order to view all results at a glance</target>
+            <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> of a total of <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> search results displayed.
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
           <context context-type="linenumber">66</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageGrid.moreRowsMessage.2" datatype="html">
-        <source>
-            oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
-        </source>
-        <target state="translated">
-                or increase the zoom level to view more images at once.
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.images" datatype="html">

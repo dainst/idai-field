@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, ImageDocument, Messages, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Document, IdaiType, ImageDocument, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
-import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../routing-service';
 import {ImageUploadResult} from '../imageupload/image-uploader';
@@ -48,8 +47,6 @@ export class ImageOverviewComponent implements OnInit {
         this.imageOverviewFacade.initialize();
     }
 
-
-    public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
 
     public getDocuments = () => this.imageOverviewFacade.getDocuments();
 

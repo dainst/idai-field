@@ -138,14 +138,6 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public showMoreRowsMessage(): boolean {
-
-        return this.imageOverviewFacade.getDocuments()
-            && this.imageOverviewFacade.getTotalDocumentCount() > 0
-            && this.imageOverviewFacade.getTotalDocumentCount() > this.imageOverviewFacade.getDocuments().length;
-    }
-
-
     public setLinkFilter(filterOption: ImageFilterOption) {
 
         this.imageOverviewFacade.setLinkFilter(filterOption);

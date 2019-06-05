@@ -57,8 +57,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
 
-    public toggleSelected =
-        (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
+    public toggleSelected = (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
 
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
 
@@ -79,6 +78,8 @@ export class ImageOverviewComponent implements OnInit {
     public canTurnPage = () => this.imageOverviewFacade.canTurnPage();
 
     public canTurnPageBack = () => this.imageOverviewFacade.canTurnPageBack();
+
+    public setLinkFilter = (filterOption: ImageFilterOption) => this.imageOverviewFacade.setLinkFilter(filterOption);
 
 
     ngOnInit() {
@@ -135,12 +136,6 @@ export class ImageOverviewComponent implements OnInit {
             this.imageGrid.nrOfColumns = _size;
             await this.refreshGrid();
         }
-    }
-
-
-    public setLinkFilter(filterOption: ImageFilterOption) {
-
-        this.imageOverviewFacade.setLinkFilter(filterOption);
     }
 
 

@@ -83,6 +83,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public setLinkFilter = (filterOption: ImageFilterOption) => this.imageOverviewFacade.setLinkFilter(filterOption);
 
+    public nrOfSelectedImages = () => this.getSelected().length;
+
+    public hasSelectedImages = () => this.getSelected().length > 0;
+
 
     ngOnInit() {
 

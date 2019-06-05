@@ -2,17 +2,17 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!getSelected().length" class="col-sm-7 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col-sm-7 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [types]="getQuery().types"
-                                           [hidden]="getSelected().length"
+                                           [hidden]="nrOfSelectedImages()"
                                            (onQueryStringChanged)="setQueryString($event)"
                                            (onTypesChanged)="setTypeFilters($event)">
                 </image-overview-search-bar>
             </div>
 
-            <div *ngIf="!getSelected().length" class="col-sm-3 image-overview-nav-content">
+            <div *ngIf="hasSelectedImages()" class="col-sm-3 image-overview-nav-content">
                 <select id="link-filter-select" class="form-control"
                         [ngModel]="getLinkFilter()"
                         (ngModelChange)="setLinkFilter($event)">
@@ -22,7 +22,7 @@
                 </select>
             </div>
 
-            <div *ngIf="getSelected().length" id="taskbar-container" class="col-sm-10">
+            <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">
                 <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
             </div>
 

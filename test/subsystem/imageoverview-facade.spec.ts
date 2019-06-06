@@ -100,28 +100,43 @@ describe('ImageOverviewFacade/Subsystem', () => {
 
     it('change nrImagesPerRow', async done => {
 
-        await imageOverviewFacade.turnPage();
+        // we start at 5 imgs per row
+        await imageOverviewFacade.turnPage(); // first img is 19
         let documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im19');
 
-        await imageOverviewFacade.increaseNrImagesPerRow();
+        await imageOverviewFacade.increaseNrImagesPerRow(); // 6 imgs per row
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(24);
         expect(documents[0].resource.id).toBe('im19');  // first item should stay first item
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents[0].resource.id).toBe('im0');
 
-
-        await imageOverviewFacade.decreaseNrImagesPerRow();
-        await imageOverviewFacade.decreaseNrImagesPerRow();
+        await imageOverviewFacade.decreaseNrImagesPerRow(); // 5 imgs per row
+        await imageOverviewFacade.turnPage(); // first img is 19
+        await imageOverviewFacade.decreaseNrImagesPerRow(); // 4 imgs per row
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(14);
         expect(documents[0].resource.id).toBe('im19');  // again, first item should stay first item
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents[0].resource.id).toBe('im5');
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents[0].resource.id).toBe('im0');
 
+        await imageOverviewFacade.increaseNrImagesPerRow(); // 5 imgs per row
+        await imageOverviewFacade.turnPage(); // first img is 19
         await imageOverviewFacade.setNrImagesPerRow(6);
         await imageOverviewFacade.decreaseNrImagesPerRow();
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(24);
         expect(documents[0].resource.id).toBe('im19');  // and again, first item should stay first item
+        await imageOverviewFacade.turnPageBack();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents[0].resource.id).toBe('im0');
         done();
     });
 });

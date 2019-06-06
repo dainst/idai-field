@@ -110,11 +110,12 @@ export class SettingsService {
     public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
 
         let customProjectName = undefined;
-        if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
-        if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
+        if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';
+        if (this.getSelectedProject().startsWith('pergamongrabung')) customProjectName = 'Pergamon';
         if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
             customProjectName = 'WES';
         }
+        if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
 
         try {
             return await this.appConfigurator.go(

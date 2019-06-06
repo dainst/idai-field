@@ -1,0 +1,24 @@
+{
+  "Grave": [
+    "distinguishingCriteria",
+    "specificType",
+    "tombBuilding",
+    "conditionAmount"
+    ],
+  "Floor": [
+    "conditionAmount"
+  ],
+  "Architecture": [
+    "brickwork",
+    "conditionAmount"
+  ],
+  "Stone": [
+    "workmanship"
+  ],
+  "Inscription": [
+    "conditionAmount"
+  ],
+  "Find": [
+    "catalogueNumber"
+  ]
+  }

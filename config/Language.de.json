@@ -1250,8 +1250,7 @@
           "description": "Beschreibung des Aufbaus des Putzes"
         },
         "hasDecoration": {
-          "label": "Bemalung",
-          "description": "Beschreibung der Bemalung des Putzes"
+          "label": "Bemalung"
         },
         "color": {
           "label": "Farbe und Intensität",

@@ -96,5 +96,33 @@ describe('ImageOverviewFacade/Subsystem', () => {
         expect(documents[0].resource.id).toBe('im0');
         done();
     });
+
+
+    it('change nrImagesPerRow', async done => {
+
+        await imageOverviewFacade.turnPage();
+        let documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(19);
+        expect(documents[0].resource.id).toBe('im19');
+
+        await imageOverviewFacade.increaseNrImagesPerRow();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(24);
+        expect(documents[0].resource.id).toBe('im19');  // first item should stay first item
+
+
+        await imageOverviewFacade.decreaseNrImagesPerRow();
+        await imageOverviewFacade.decreaseNrImagesPerRow();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(14);
+        expect(documents[0].resource.id).toBe('im19');  // again, first item should stay first item
+
+        await imageOverviewFacade.setNrImagesPerRow(6);
+        await imageOverviewFacade.decreaseNrImagesPerRow();
+        documents = await imageOverviewFacade.getDocuments();
+        expect(documents.length).toBe(24);
+        expect(documents[0].resource.id).toBe('im19');  // and again, first item should stay first item
+        done();
+    });
 });
 

@@ -14,11 +14,11 @@ import {clone} from '../../../core/util/object-util';
  */
 export class ImageOverviewFacade {
 
-    private currentPage = 0;
-
+    private currentOffset: number = 0;
     private maxRows: number = 5;
     private maxNrImagesPerRow: number = 12;
     private minNrImagesPerRow: number = 2;
+
 
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
@@ -70,7 +70,6 @@ export class ImageOverviewFacade {
         if (this.getNrImagesPerRow() < this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() + 1);
-            this.currentPage = 0;
             await this.fetchDocuments();
         }
     }
@@ -81,7 +80,6 @@ export class ImageOverviewFacade {
         if (this.getNrImagesPerRow() > this.getMinNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() - 1);
-            this.currentPage = 0;
             await this.fetchDocuments();
         }
     }
@@ -92,8 +90,6 @@ export class ImageOverviewFacade {
         if (size >= this.getMinNrImagesPerRow() && size <= this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(size);
-            this.currentPage = 0;
-            // this.imageGrid.nrOfColumns = _size;
             await this.fetchDocuments();
         }
     }
@@ -104,7 +100,7 @@ export class ImageOverviewFacade {
         if (this.canTurnPage()) {
 
             this.imageDocumentsManager.clearSelection();
-            this.currentPage++;
+            this.currentOffset = this.currentOffset + this.getNrImagesPerPage();
             await this.fetchDocuments();
         }
     }
@@ -112,27 +108,30 @@ export class ImageOverviewFacade {
 
     public async turnPageBack() {
 
-        if (this.canTurnPageBack()) this.currentPage--;
+        if (this.canTurnPageBack()) {
+            this.currentOffset = this.currentOffset - this.getNrImagesPerPage();
+            if (this.currentOffset < 0) this.currentOffset = 0;
+        }
         await this.fetchDocuments();
     }
 
 
     public canTurnPage() {
 
-        const nextPage = this.currentPage + 1;
-        return this.getOffset(nextPage) < this.getTotalDocumentCount()
+        const nextPageOffset = this.currentOffset + this.getNrImagesPerPage();
+        return nextPageOffset < this.getTotalDocumentCount();
     }
 
 
     public canTurnPageBack() {
 
-        return this.currentPage > 0;
+        return this.currentOffset > 0;
     }
 
 
     public setCustomConstraints(customConstraints: { [name: string]: string }) {
 
-        this.currentPage = 0;
+        this.currentOffset = 0;
 
         this.imagesState.setCustomConstraints(customConstraints);
         this.setQueryConstraints();
@@ -144,7 +143,7 @@ export class ImageOverviewFacade {
 
     public setQueryString(q: string) {
 
-        this.currentPage = 0;
+        this.currentOffset = 0;
 
         const query: Query = this.imagesState.getQuery();
         query.q = q;
@@ -156,7 +155,7 @@ export class ImageOverviewFacade {
 
     public setTypeFilters(types: string[]) {
 
-        this.currentPage = 0;
+        this.currentOffset = 0;
 
         const query: Query = this.imagesState.getQuery();
         query.types = types;
@@ -170,7 +169,7 @@ export class ImageOverviewFacade {
 
     public setLinkFilter(filterOption: ImageFilterOption) {
 
-        this.currentPage = 0;
+        this.currentOffset = 0;
 
         this.imagesState.setLinkFilter(filterOption);
         this.setQueryConstraints();
@@ -179,14 +178,11 @@ export class ImageOverviewFacade {
     }
 
 
-    /**
-     * Set ImageOverviewFacade.currentPage before calling this
-     */
     public fetchDocuments() {
 
         return this.imageDocumentsManager.fetchDocuments(
             this.getLimit(),
-            this.getOffset(this.currentPage));
+            this.currentOffset);
     }
 
 
@@ -199,16 +195,15 @@ export class ImageOverviewFacade {
     }
 
 
-    private getOffset(page: number) {
-
-        const calculatedOffset = page * this.getNrImagesPerRow() * this.maxRows - page /* drop area */;
-        return calculatedOffset === -1 ? 0 : calculatedOffset;
-    }
-
-
     private getLimit() {
 
         return this.getNrImagesPerRow() * this.maxRows - 1 /* drop area */;
+    }
+
+
+    private getNrImagesPerPage() {
+
+        return this.maxRows * this.getNrImagesPerRow() - 1;
     }
 
 

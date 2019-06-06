@@ -110,7 +110,7 @@ export class ImageOverviewComponent implements OnInit {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && !this.modalOpened
-            && this.imageOverviewFacade.getSelected().length === 0) {
+            && !this.hasSelectedImages()) {
             await this.tabManager.openActiveTab();
         }
     }

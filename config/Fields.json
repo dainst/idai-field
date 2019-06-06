@@ -1889,41 +1889,6 @@
       }
     }
   },
-  "DrillCoreLayer": {
-    "parent": "Feature",
-    "commons": ["dimensionThickness", "dimensionVerticalExtent"],
-    "fields": {
-      "hasFinds": {
-        "inputType": "boolean"
-      },
-      "soilType": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Feinsand",
-          "Feinstsand",
-          "Grobsand",
-          "Lehm",
-          "Lehmiger Sand",
-          "Lehmiger Schluff",
-          "Lehmiger Ton",
-          "Mergel",
-          "Mittlerer Sand",
-          "Sand",
-          "Sandiger Lehm",
-          "Sandiger Schluff",
-          "Sandiger Ton",
-          "Schluff",
-          "Schluffiger Lehm",
-          "Schluffiger Sand",
-          "Schluffiger Ton",
-          "Ton",
-          "Toniger Lehm",
-          "Toniger Sand",
-          "Toniger Schluff"
-        ]
-      }
-    }
-  },
   "Grave": {
     "color": "#339900",
     "parent": "Feature",

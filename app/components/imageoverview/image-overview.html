@@ -54,14 +54,24 @@
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
 
-            <div *ngIf="!hasSelectedImages()" >
-                <span style="color: blue; width: 20px" *ngIf="canTurnPageBack()" (click)="turnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPageBack()" class="mdi-36px mdi mdi-arrow-left-bold"></span>
-                <span style="color: blue; width: 20px" *ngIf="canTurnPage()" (click)="turnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
-                <span style="color: gray; width: 20px" *ngIf="!canTurnPage()" class="mdi-36px mdi mdi-arrow-right-bold"></span>
-            </div>
-            <span *ngIf="imageOverviewFacade.getDocuments() && imageOverviewFacade.getTotalDocumentCount()">
-                {{imageOverviewFacade.getDocuments().length - 1}} angezeigt / {{imageOverviewFacade.getTotalDocumentCount()}} insgesamt
+            <span style="margin-left: 4px" *ngIf="imageOverviewFacade.getDocuments() && imageOverviewFacade.getTotalDocumentCount()">
+
+                {{imageOverviewFacade.getTotalDocumentCount()}}
+                <span *ngIf="imageOverviewFacade.getTotalDocumentCount() === 1">Bild insgesamt.</span>
+                <span *ngIf="imageOverviewFacade.getTotalDocumentCount() !== 1">Bilder insgesamt.</span>
+                {{imageOverviewFacade.getDocuments().length - 1}}<!-- TODO review why the -1. length should return the right amount -->
+                <span *ngIf="(imageOverviewFacade.getDocuments().length - 1) === 1">&nbsp;wird angezeigt.</span>
+                <span *ngIf="(imageOverviewFacade.getDocuments().length - 1) !== 1">&nbsp;werden angezeigt.</span>
+
+                <span *ngIf="canTurnPage() || canTurnPageBack()">&nbsp;(</span>
+                <span *ngIf="canTurnPageBack()"
+                      (click)="turnPageBack()"
+                      style="color: #37588e">Vorige</span>
+                <span *ngIf="canTurnPage() && canTurnPageBack()">&nbsp;|&nbsp;</span>
+                <span *ngIf="canTurnPage()"
+                      (click)="turnPage()"
+                      style="color: #37588e">Nächste</span>
+                <span *ngIf="canTurnPage() || canTurnPageBack()">)</span>
             </span>
         </div>
     </div>

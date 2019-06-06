@@ -1273,18 +1273,6 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageGrid.moreRowsMessage" datatype="html">
-        <source>
-            <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> von insgesamt <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> Suchtreffern angezeigt.
-         </source>
-        <target state="translated">
-            <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> of a total of <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> search results displayed.
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="imageView.images" datatype="html">
         <source>Bilder</source>
         <target state="final">Images</target>
@@ -1310,7 +1298,7 @@
         <target state="final">All images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.unlinked" datatype="html">
@@ -1318,7 +1306,7 @@
         <target state="final">Unlinked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.linked" datatype="html">
@@ -1326,7 +1314,55 @@
         <target state="final">Linked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.imagestotal.singular" datatype="html">
+        <source>Bild insgesamt.</source>
+        <target state="final">image total.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.imagestotal.plural" datatype="html">
+        <source>Bilder insgesamt.</source>
+        <target state="final">images total.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.shown.singular" datatype="html">
+        <source> wird angezeigt.</source>
+        <target state="final"> is shown.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.shown.plural" datatype="html">
+        <source> werden angezeigt.</source>
+        <target state="final"> are shown.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.previous" datatype="html">
+        <source>Vorige</source>
+        <target state="final">Previous</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageoverview.next" datatype="html">
+        <source>Nächste</source>
+        <target state="final">Next</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">

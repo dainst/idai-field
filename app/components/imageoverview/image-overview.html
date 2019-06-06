@@ -59,7 +59,7 @@
                 {{imageOverviewFacade.getTotalDocumentCount()}}
                 <span *ngIf="imageOverviewFacade.getTotalDocumentCount() === 1">Bild insgesamt.</span>
                 <span *ngIf="imageOverviewFacade.getTotalDocumentCount() !== 1">Bilder insgesamt.</span>
-                {{imageOverviewFacade.getDocuments().length - 1}}<!-- TODO review why the -1. length should return the right amount -->
+                {{imageOverviewFacade.getDocuments().length - 1}}<!-- -1 for the drop area which is a fake doc -->
                 <span *ngIf="(imageOverviewFacade.getDocuments().length - 1) === 1">&nbsp;wird angezeigt.</span>
                 <span *ngIf="(imageOverviewFacade.getDocuments().length - 1) !== 1">&nbsp;werden angezeigt.</span>
 

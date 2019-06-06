@@ -65,6 +65,8 @@ export class ImageOverviewComponent implements OnInit {
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 
+    public setTypeFilters = (types: string[]) => this.imageOverviewFacade.setTypeFilters(types);
+
     public getLinkFilter = () => this.imageOverviewFacade.getLinkFilter();
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
@@ -133,13 +135,6 @@ export class ImageOverviewComponent implements OnInit {
 
         this.modalOpened = false;
         MenuService.setContext('default');
-    }
-
-
-    public setTypeFilters(types: string[]) {
-
-        this.imageOverviewFacade.setTypeFilters(types);
-        this.imageOverviewFacade.setCustomConstraints({});
     }
 
 

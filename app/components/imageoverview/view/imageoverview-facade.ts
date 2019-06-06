@@ -163,6 +163,8 @@ export class ImageOverviewFacade {
         this.imagesState.setQuery(query);
 
         this.fetchDocuments();
+
+        this.setCustomConstraints({});
     }
 
 

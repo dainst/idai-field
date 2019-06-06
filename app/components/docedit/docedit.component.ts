@@ -212,11 +212,9 @@ export class DoceditComponent {
             return undefined;
         }
 
-        if (errorWithParams.length > 0) {
-            this.messages.add(MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration));
-        } else {
-            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
-        }
+        this.messages.add(errorWithParams.length > 0
+            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration)
+            : [M.DOCEDIT_ERROR_SAVE]);
     }
 
 

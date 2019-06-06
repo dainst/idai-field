@@ -842,19 +842,6 @@
         }
       }
     },
-    "DrillCoreLayer": {
-      "label": "Bohrkernschicht",
-      "fields": {
-        "hasFinds": {
-          "label": "Fundmaterial",
-          "description": "Ist Fundmaterial vorhanden?"
-        },
-        "soilType": {
-          "label": "Bodenart",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
-        }
-      }
-    },
     "Grave": {
       "label": "Grab",
       "fields": {
@@ -1250,8 +1237,7 @@
           "description": "Beschreibung des Aufbaus des Putzes"
         },
         "hasDecoration": {
-          "label": "Bemalung",
-          "description": "Beschreibung der Bemalung des Putzes"
+          "label": "Bemalung"
         },
         "color": {
           "label": "Farbe und Intensität",

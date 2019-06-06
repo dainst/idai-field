@@ -746,17 +746,6 @@
         }
       }
     },
-    "DrillCoreLayer": {
-      "label": "Drill core layer",
-      "fields": {
-        "hasFinds": {
-          "label": "Finds"
-        },
-        "soilType": {
-          "label": "Soil type"
-        }
-      }
-    },
     "Grave": {
       "label": "Grave",
       "fields": {

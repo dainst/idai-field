@@ -735,12 +735,12 @@
       "sampleType": {
         "inputType": "radio",
         "valuelist": [
-          "Bodenprobe",
-          "C14-Analyse",
-          "Dendroprobe",
-          "Hammerschlagsprobe",
-          "Phosphatanalyse",
-          "Pollenanalyse"
+          "Boden",
+          "C14",
+          "Holzkohle",
+          "Hammerschlag",
+          "Mörtel",
+          "Lehmziegel"
         ]
       },
       "soilType": {

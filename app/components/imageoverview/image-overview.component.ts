@@ -61,6 +61,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
 
+    public getPageCount = () => this.imageOverviewFacade.getPageCount();
+
+    public getCurrentPage = () => this.imageOverviewFacade.getCurrentPage();
+
     public toggleSelected = (document: Document) => this.imageOverviewFacade.toggleSelected(document as ImageDocument);
 
     public getQuery = () => this.imageOverviewFacade.getQuery();

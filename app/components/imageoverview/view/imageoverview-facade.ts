@@ -95,6 +95,16 @@ export class ImageOverviewFacade {
     }
 
 
+    public getPageCount() {
+        return Math.ceil(this.getTotalDocumentCount() / this.getDocuments().length - 1);
+    }
+
+
+    public getCurrentPage() {
+        return this.currentOffset / this.getNrImagesPerPage() + 1;
+    }
+
+
     public async turnPage() {
 
         if (this.canTurnPage()) {
@@ -138,7 +148,6 @@ export class ImageOverviewFacade {
 
         this.fetchDocuments();
     }
-
 
 
     public setQueryString(q: string) {

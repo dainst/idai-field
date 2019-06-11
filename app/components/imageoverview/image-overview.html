@@ -13,7 +13,7 @@
                 </select>
             </div>
 
-            <div *ngIf="!hasSelectedImages()" class="col-sm-7 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col-sm-5 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [types]="getQuery().types"
@@ -21,6 +21,20 @@
                                            (onQueryStringChanged)="setQueryString($event)"
                                            (onTypesChanged)="setTypeFilters($event)">
                 </image-overview-search-bar>
+            </div>
+
+            <div *ngIf="!hasSelectedImages()" class="col-sm-2 image-overview-nav-content">
+                <div class="btn-group" id="image-pager" *ngIf="getDocuments() && getTotalDocumentCount()">
+                    <button class="btn btn-primary" (click)="turnPageBack()" [ngClass]="{'disabled': !canTurnPageBack()}">
+                        <span class="mdi mdi-chevron-left"></span>
+                    </button>
+                    <button class="btn btn-outline-primary disabled">
+                        {{getCurrentPage()}} / {{getPageCount()}}
+                    </button>
+                    <button class="btn btn-primary" (click)="turnPage()" [ngClass]="{'disabled': !canTurnPage()}">
+                        <span class="mdi mdi-chevron-right"></span>
+                    </button>
+                </div>
             </div>
 
             <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">
@@ -53,38 +67,6 @@
                     (onDoubleClick)="showImage($event)"
                     (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
-
-            <span style="margin-left: 4px" *ngIf="getDocuments() && getTotalDocumentCount()">
-
-                {{getTotalDocumentCount()}}
-                <span
-                        *ngIf="getTotalDocumentCount() === 1"
-                        i18n="@@imageoverview.imagestotal.singular">Bild insgesamt.</span>
-                <span
-                        *ngIf="getTotalDocumentCount() !== 1"
-                        i18n="@@imageoverview.imagestotal.plural">Bilder insgesamt.</span>
-                {{getDocuments().length - 1}}<!-- -1 for the drop area which is a fake doc -->
-                <span
-                        *ngIf="(getDocuments().length - 1) === 1"
-                        i18n="@@imageoverview.shown.singular">&nbsp;wird angezeigt.</span>
-                <span
-                        *ngIf="(getDocuments().length - 1) !== 1"
-                        i18n="@@imageoverview.shown.plural">&nbsp;werden angezeigt.</span>
-
-                <span *ngIf="canTurnPage() || canTurnPageBack()">&nbsp;(</span>
-                <span
-                        *ngIf="canTurnPageBack()"
-                        (click)="turnPageBack()"
-                        style="color: #37588e"
-                        i18n="@@imageoverview.previous">Vorige</span>
-                <span *ngIf="canTurnPage() && canTurnPageBack()">&nbsp;|&nbsp;</span>
-                <span
-                        *ngIf="canTurnPage()"
-                        (click)="turnPage()"
-                        style="color: #37588e"
-                        i18n="@@imageoverview.next">Nächste</span>
-                <span *ngIf="canTurnPage() || canTurnPageBack()">)</span>
-            </span>
         </div>
     </div>
 </div>

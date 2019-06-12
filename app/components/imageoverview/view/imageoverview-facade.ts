@@ -70,6 +70,7 @@ export class ImageOverviewFacade {
         if (this.getNrImagesPerRow() < this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() + 1);
+            this.currentOffset = 0;
             await this.fetchDocuments();
         }
     }
@@ -80,6 +81,7 @@ export class ImageOverviewFacade {
         if (this.getNrImagesPerRow() > this.getMinNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(this.getNrImagesPerRow() - 1);
+            this.currentOffset = 0;
             await this.fetchDocuments();
         }
     }
@@ -90,13 +92,14 @@ export class ImageOverviewFacade {
         if (size >= this.getMinNrImagesPerRow() && size <= this.getMaxNrImagesPerRow()) {
 
             this.imagesState.setNrImagesPerRow(size);
+            this.currentOffset = 0;
             await this.fetchDocuments();
         }
     }
 
 
     public getPageCount() {
-        return Math.ceil(this.getTotalDocumentCount() / this.getDocuments().length - 1);
+        return Math.ceil(this.getTotalDocumentCount() / this.getNrImagesPerPage());
     }
 
 

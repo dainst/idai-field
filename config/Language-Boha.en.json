@@ -2,9 +2,6 @@
   "types": {
     "Feature": {
       "fields": {
-        "identifier": {
-          "label": "Code"
-        },
         "stratigraphicReliability": {
           "label": "Stratigraphische Bewertung"
         }
@@ -41,9 +38,6 @@
     },
     "Find": {
       "fields": {
-        "identifier": {
-          "label": "Code"
-        },
         "photographed": {
           "label": "Foto"
         },
@@ -55,13 +49,6 @@
         },
         "storageInventoryNumberAdditional": {
           "label": "Envanterlik Numarası"
-        }
-      }
-    },
-    "Operation": {
-      "fields": {
-        "identifier": {
-          "label": "Code"
         }
       }
     },

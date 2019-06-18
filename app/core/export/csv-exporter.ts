@@ -2,6 +2,7 @@ import {FieldDocument, IdaiType} from 'idai-components-2';
 import {to} from 'tsfun/src/objectstruct';
 import {isnt} from 'tsfun';
 
+
 /**
  * @author Daniel de Oliveira
  */

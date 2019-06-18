@@ -421,7 +421,7 @@ describe('resources --', () => {
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickTypeFilterButton('modal');
         SearchBarPage.getTypeFilterOptionLabels().then(labels => {
-            expect(labels.length).toBe(8);
+            expect(labels.length).toBe(7);
             expect(labels[0].getText()).toEqual('Schnitt');
             expect(labels[1].getText()).toEqual('Stratigraphische Einheit');
         });

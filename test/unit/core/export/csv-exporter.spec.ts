@@ -8,19 +8,25 @@ import {Static} from '../../static';
  */
 describe('CSVExporter', () => {
 
-    it('basics', () => {
+    it('create header line', () => {
 
         const t = new IdaiType({
             type: 'Feature',
             fields: [
                 {
-                    name: 'one'
+                    name: 'identifier'
+                },
+                {
+                    name: 'shortDescription'
+                },
+                {
+                    name: 'custom'
                 }
             ]
         });
 
-        const docs = [Static.ifDoc('sd', 'id', 'type', 'i')];
-        const result = CSVExporter.createExportable(docs, t);
-        expect(result[0]).toBe('one');
+        // const docs = [Static.ifDoc('sd', 'id', 'type', 'i')];
+        const result = CSVExporter.createExportable([], t);
+        expect(result[0]).toBe('identifier, shortDescription, custom');
     });
 });

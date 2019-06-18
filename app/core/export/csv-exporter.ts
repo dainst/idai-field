@@ -1,4 +1,5 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
+import {to} from 'tsfun/src/objectstruct';
 
 /**
  * @author Daniel de Oliveira
@@ -9,7 +10,11 @@ export module CSVExporter {
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
+
+        if (documents.length > 0) return [];
+
         // compile the first line from the type's fields
-        return ['one'];
+        const fieldNames = resourceType.fields.map(to('name'));
+        return [fieldNames.join(', ')];
     }
 }

@@ -1,6 +1,6 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
 import {to} from 'tsfun/src/objectstruct';
-import {is, isnt} from 'tsfun';
+import {isnt} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -11,13 +11,18 @@ export module CSVExporter {
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
-
-        // compile the first line from the type's fields
         const fieldNames = resourceType.fields.map(to('name'));
 
-        if (documents.length === 0) return [fieldNames.join(', ')];
+        return [fieldNames.join(', ')].concat(
+            documents
+                .map(arrangeBy(fieldNames))
+                .map(toCsvLine));
+    }
 
-        return documents.map(arrangeBy(fieldNames));
+
+    function toCsvLine(as: string[]): string {
+
+        return as.join(', ');
     }
 
 

@@ -48,6 +48,7 @@ describe('CSVExporter', () => {
 
         const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
         const result = CSVExporter.createExportable(docs, t);
-        expect(result[0]).toEqual(['identifier1', 'shortDescription1']);
+        expect(result[0]).toEqual('identifier, shortDescription');
+        expect(result[1]).toEqual('identifier1, shortDescription1');
     });
 });

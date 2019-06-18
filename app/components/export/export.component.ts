@@ -14,6 +14,7 @@ import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
 import {to} from 'tsfun/src/objectstruct';
+import {CSVExporter} from '../../core/export/csv-exporter';
 
 const remote = require('electron').remote;
 
@@ -36,7 +37,7 @@ export class ExportComponent implements OnInit {
     public operations: Array<FieldDocument> = [];
     public resourceTypes: Array<IdaiType> = [];
     public selectedOperationId: string = 'project';
-    public selectedTypeId: string = '-1';
+    public selectedType: IdaiType|undefined = undefined;
 
     private modalRef: NgbModalRef|undefined;
 
@@ -91,7 +92,8 @@ export class ExportComponent implements OnInit {
                         this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
                     break;
                 case 'csv':
-                    console.log("not yet implemented", this.selectedTypeId);
+                    // const result = CSVExporter.
+                    console.log("not yet implemented");
                     break;
             }
             this.messages.add([M.EXPORT_SUCCESS]);

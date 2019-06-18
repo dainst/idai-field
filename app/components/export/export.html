@@ -43,8 +43,8 @@
                                for="resourceTypeSelect"
                                i18n="@@export.format.resourceTypeSelect">Ressourcentyp</label>
                         <select id="resourceTypeSelect" class="form-control"
-                                [(ngModel)]="selectedTypeId">
-                            <option *ngFor="let resourceType of resourceTypes" value="{{resourceType.name}}">
+                                [(ngModel)]="selectedType">
+                            <option *ngFor="let resourceType of resourceTypes" value="{{resourceType}}">
                                 {{resourceType.label}}
                             </option>
                         </select>

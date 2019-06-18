@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, FieldDocument} from 'idai-components-2';
+import {Messages, FieldDocument, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -13,6 +13,7 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
+import {to} from 'tsfun/src/objectstruct';
 
 const remote = require('electron').remote;
 
@@ -29,11 +30,13 @@ const remote = require('electron').remote;
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'geojson'|'shapefile' = 'geojson';
+    public format: 'geojson' | 'shapefile' | 'csv' = 'geojson';
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
+    public resourceTypes: Array<IdaiType> = [];
     public selectedOperationId: string = 'project';
+    public selectedTypeId: string = '-1';
 
     private modalRef: NgbModalRef|undefined;
 
@@ -47,7 +50,8 @@ export class ExportComponent implements OnInit {
                 private viewFacade: ViewFacade,
                 private datastore: FieldReadDatastore,
                 private typeUtility: TypeUtility,
-                private tabManager: TabManager) {}
+                private tabManager: TabManager,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -58,6 +62,7 @@ export class ExportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
+        this.resourceTypes = this.projectConfiguration.getTypesList();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -84,6 +89,9 @@ export class ExportComponent implements OnInit {
                 case 'shapefile':
                     await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
                         this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
+                    break;
+                case 'csv':
+                    console.log("not yet implemented", this.selectedTypeId);
                     break;
             }
             this.messages.add([M.EXPORT_SUCCESS]);
@@ -119,7 +127,12 @@ export class ExportComponent implements OnInit {
             case 'shapefile':
                 return {
                     name: this.i18n({ id: 'export.dialog.filter.zip', value: 'ZIP-Archiv' }),
-                        extensions: ['zip']
+                    extensions: ['zip']
+                };
+            case 'csv':
+                return {
+                    name: 'CSV',
+                    extensions: ['csv']
                 };
         }
     }

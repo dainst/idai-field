@@ -628,6 +628,22 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.formats.csv" datatype="html">
+        <source>CSV</source>
+        <target state="new">CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.format.resourceTypeSelect" datatype="html">
+        <source>Ressourcentyp</source>
+        <target state="final">Resource type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source>
                         Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
@@ -641,7 +657,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -655,7 +671,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -671,7 +687,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -1315,54 +1331,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
           <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.imagestotal.singular" datatype="html">
-        <source>Bild insgesamt.</source>
-        <target state="final">image total.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.imagestotal.plural" datatype="html">
-        <source>Bilder insgesamt.</source>
-        <target state="final">images total.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.shown.singular" datatype="html">
-        <source> wird angezeigt.</source>
-        <target state="final"> is shown.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.shown.plural" datatype="html">
-        <source> werden angezeigt.</source>
-        <target state="final"> are shown.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.previous" datatype="html">
-        <source>Vorige</source>
-        <target state="final">Previous</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">79</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageoverview.next" datatype="html">
-        <source>Nächste</source>
-        <target state="final">Next</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">

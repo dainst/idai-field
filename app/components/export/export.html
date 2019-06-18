@@ -34,6 +34,19 @@
                         <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
                             <option value="geojson" i18n="@@export.formats.geojson">GeoJSON</option>
                             <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
+                            <option value="csv" i18n="@@export.formats.csv">CSV</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="format === 'csv'" class="form-group">
+                        <label class="control-label col-form-label"
+                               for="resourceTypeSelect"
+                               i18n="@@export.format.resourceTypeSelect">Ressourcentyp</label>
+                        <select id="resourceTypeSelect" class="form-control"
+                                [(ngModel)]="selectedTypeId">
+                            <option *ngFor="let resourceType of resourceTypes" value="{{resourceType.name}}">
+                                {{resourceType.label}}
+                            </option>
                         </select>
                     </div>
 

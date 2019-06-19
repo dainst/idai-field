@@ -8,26 +8,64 @@ import {isnt} from 'tsfun';
  */
 export module CSVExport {
 
-    // should return a structure which can be written to a file
+
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
-        const fieldNames = getUsableFieldNames(resourceType.fields.map(to('name')));
+        let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
+        let matrix = documents.map(toRowsArrangedBy(fieldNames));
 
-        return [fieldNames.join(', ')].concat(
-            documents
-                .map(arrangeBy(fieldNames))
-                .map(toCsvLine));
+        const indexOfDatingElement = fieldNames.indexOf('dating');
+        if (indexOfDatingElement !== -1) {
+            const max = getMax(matrix, indexOfDatingElement);
+            expandDatingHeader(fieldNames, indexOfDatingElement, max);
+            matrix = matrix.map(expandRow(indexOfDatingElement, max));
+        }
+
+        return ([fieldNames].concat(matrix)).map(toCsvLine);
+    }
+
+
+    function getMax(matrix: any, indexOfDatingElement: any) {
+
+        return matrix.reduce(
+            (max: number, row: any) => Math.max(max, row[indexOfDatingElement] ? row[indexOfDatingElement].length : 0), 0);
+    }
+
+
+    /**
+     * @param fieldNames gets modified
+     * @param indexOfDatingElement
+     * @param max
+     */
+    function expandDatingHeader(fieldNames: any, indexOfDatingElement: any, max: number) {
+
+        const dating_fields: string[] = [];
+        for (let i = 0; i < max; i++) dating_fields.push('dating:' + i);
+        fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
+    }
+
+
+    function expandRow(indexOfDatingElement: any, max: number) {
+
+        return (row: any) => {
+
+            const temp = row[indexOfDatingElement];
+
+            row.splice(indexOfDatingElement, 1, new Array(max));
+            for (let i in temp) row[indexOfDatingElement][i] = temp[i];
+            return row;
+        }
     }
 
 
     function toCsvLine(as: string[]): string {
 
-        return as.join(', ');
+        return as.join(',');
     }
 
 
-    function arrangeBy(fieldNames: string[]) {
+    function toRowsArrangedBy(fieldNames: string[]) {
 
         return (document: FieldDocument) => {
 
@@ -39,13 +77,7 @@ export module CSVExport {
                     const indexOfFoundElement = fieldNames.indexOf(fieldName);
                     if (indexOfFoundElement !== -1) {
 
-                        const field = (document.resource as any)[fieldName];
-
-                        if (fieldName === 'dating') {
-                            console.log("dating found", field)
-                        }
-
-                        line[indexOfFoundElement] = field;
+                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
                     }
                     return line;
                 }, newLine);
@@ -53,7 +85,7 @@ export module CSVExport {
     }
 
 
-    function getUsableFieldNames(fieldNames: string[]) {
+    function getUsableFieldNames(fieldNames: string[]): string[] {
 
         return fieldNames
             .filter(isnt('relations'))

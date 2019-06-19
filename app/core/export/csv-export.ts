@@ -19,7 +19,7 @@ export module CSVExport {
         if (indexOfDatingElement !== -1) {
             const max = getMax(matrix, indexOfDatingElement);
             expandDatingHeader(fieldNames, indexOfDatingElement, max);
-            matrix = matrix.map(expandRow(indexOfDatingElement, max));
+            matrix = matrix.map(rowsWithDatingFieldsExpanded(indexOfDatingElement, max));
         }
 
         return ([fieldNames].concat(matrix)).map(toCsvLine);
@@ -41,12 +41,12 @@ export module CSVExport {
     function expandDatingHeader(fieldNames: any, indexOfDatingElement: any, max: number) {
 
         const dating_fields: string[] = [];
-        for (let i = 0; i < max; i++) dating_fields.push('dating:' + i);
+        for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
         fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
     }
 
 
-    function expandRow(indexOfDatingElement: any, max: number) {
+    function rowsWithDatingFieldsExpanded(indexOfDatingElement: any, max: number) {
 
         return (row: any) => {
 

@@ -84,8 +84,8 @@ describe('CSVExport', () => {
 
         const result = CSVExport.createExportable(docs, t);
 
-        expect(result[0].split(',')[1]).toBe('dating:0');
-        expect(result[0].split(',')[2]).toBe('dating:1');
+        expect(result[0].split(',')[1]).toBe('dating.0');
+        expect(result[0].split(',')[2]).toBe('dating.1');
         expect(result[0].split(',')[3]).toBe('custom');
 
         expect(result[1].split(',')[1]).toBe('a');

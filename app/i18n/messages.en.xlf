@@ -593,7 +593,7 @@
         <target state="final">Operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
@@ -601,7 +601,7 @@
         <target state="final">All operations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format" datatype="html">
@@ -609,7 +609,7 @@
         <target state="final">Format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
@@ -617,7 +617,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -625,7 +625,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
@@ -633,7 +633,23 @@
         <target state="new">CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csvimportmode.complete" datatype="html">
+        <source>Komplett</source>
+        <target state="final">Complete</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csvimportmode.schema" datatype="html">
+        <source>Nur Schema</source>
+        <target state="final">Schema only</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.resourceTypeSelect" datatype="html">
@@ -641,7 +657,7 @@
         <target state="final">Resource type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -657,7 +673,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -671,7 +687,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -687,7 +703,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">

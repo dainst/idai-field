@@ -39,6 +39,7 @@ export class ExportComponent implements OnInit {
     public resourceTypes: Array<IdaiType> = [];
     public selectedOperationId: string = 'project';
     public selectedType: IdaiType|undefined = undefined;
+    public csvImportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
 
@@ -95,6 +96,7 @@ export class ExportComponent implements OnInit {
                 case 'csv':
                     if (this.selectedType) {
                         try {
+                            console.log("csvimportmode", this.csvImportMode)
                             const result = CSVExporter.createExportable(await this.fetchDocuments(), this.selectedType);
                             console.log("not yet implemented", result);
                         } catch (err) {

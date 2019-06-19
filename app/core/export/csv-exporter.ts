@@ -12,7 +12,7 @@ export module CSVExporter {
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
-        const fieldNames = resourceType.fields.map(to('name'));
+        const fieldNames = getUsableFieldNames(resourceType.fields.map(to('name')));
 
         return [fieldNames.join(', ')].concat(
             documents
@@ -31,21 +31,24 @@ export module CSVExporter {
 
         return (document: FieldDocument) => {
 
-            return getFieldNames(document).reduce((line, fieldName) =>  {
+            const newLine = new Array(fieldNames.length);
 
-                const indexOfFoundElement = fieldNames.indexOf(fieldName);
-                if (indexOfFoundElement !== -1) {
-                    line[indexOfFoundElement] = (document.resource as any)[fieldName];
-                }
-                return line;
-            }, new Array(fieldNames.length));
+            return getUsableFieldNames(Object.keys(document.resource))
+                .reduce((line, fieldName) =>  {
+
+                    const indexOfFoundElement = fieldNames.indexOf(fieldName);
+                    if (indexOfFoundElement !== -1) {
+                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
+                    }
+                    return line;
+                }, newLine);
         }
     }
 
 
-    function getFieldNames(document: FieldDocument) {
+    function getUsableFieldNames(fieldNames: string[]) {
 
-        return Object.keys(document.resource)
+        return fieldNames
             .filter(isnt('relations'))
             .filter(isnt('type'))
             .filter(isnt('id'));

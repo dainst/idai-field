@@ -23,6 +23,9 @@ describe('CSVExporter', () => {
                 },
                 {
                     name: 'custom'
+                },
+                {
+                    name: 'id'
                 }
             ]
         });

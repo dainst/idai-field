@@ -38,7 +38,14 @@ export module CSVExport {
 
                     const indexOfFoundElement = fieldNames.indexOf(fieldName);
                     if (indexOfFoundElement !== -1) {
-                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
+
+                        const field = (document.resource as any)[fieldName];
+
+                        if (fieldName === 'dating') {
+                            console.log("dating found", field)
+                        }
+
+                        line[indexOfFoundElement] = field;
                     }
                     return line;
                 }, newLine);

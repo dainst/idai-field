@@ -93,34 +93,34 @@
           "steinig",
           "weich"
         ]
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Çorak",
+          "Feinsand",
+          "Feinstsand",
+          "Grobsand",
+          "Lehm",
+          "Lehmiger Sand",
+          "Lehmiger Schluff",
+          "Lehmiger Ton",
+          "Mergel",
+          "Mittlerer Sand",
+          "Sand",
+          "Sandiger Lehm",
+          "Sandiger Schluff",
+          "Sandiger Ton",
+          "Schluff",
+          "Schluffiger Lehm",
+          "Schluffiger Sand",
+          "Schluffiger Ton",
+          "Ton",
+          "Toniger Lehm",
+          "Toniger Sand",
+          "Toniger Schluff"
+        ]
       }
-    },
-    "soilType": {
-      "inputType": "dropdown",
-      "valuelist": [
-        "Çorak",
-        "Feinsand",
-        "Feinstsand",
-        "Grobsand",
-        "Lehm",
-        "Lehmiger Sand",
-        "Lehmiger Schluff",
-        "Lehmiger Ton",
-        "Mergel",
-        "Mittlerer Sand",
-        "Sand",
-        "Sandiger Lehm",
-        "Sandiger Schluff",
-        "Sandiger Ton",
-        "Schluff",
-        "Schluffiger Lehm",
-        "Schluffiger Sand",
-        "Schluffiger Ton",
-        "Ton",
-        "Toniger Lehm",
-        "Toniger Sand",
-        "Toniger Schluff"
-      ]
     }
   },
   "Floor": {
@@ -236,26 +236,34 @@
           "Nicht notwendig"
         ]
       },
+      "sketched": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Nicht notwendig"
+        ]
+      },
       "storageInventoryNumberAdditional": {
         "inputType": "input"
+      },
+      "hasRestoration": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Nicht notwendig"
+        ]
+      },
+      "storagePlace": {
+        "inputType": "radio",
+        "valuelist": [
+          "Museum Bogazköy",
+          "Museum Çorum",
+          "Depot",
+          "Unbekannt"
+        ]
       }
-    },
-    "hasRestoration": {
-      "inputType": "radio",
-      "valuelist": [
-        "Ja",
-        "Nein",
-        "Nicht notwendig"
-      ]
-    },
-    "storagePlace": {
-      "inputType": "radio",
-      "valuelist": [
-        "Museum Bogazköy",
-        "Museum Çorum",
-        "Depot",
-        "Unbekannt"
-      ]
     }
   },
   "Bone": {
@@ -287,6 +295,9 @@
           "Wirbel",
           "Zahn"
         ]
+      },
+      "treatment": {
+        "inputType": "input"
       }
     }
   },
@@ -431,6 +442,7 @@
           "Unsicher bzw. unbestimmbar",
           "Waffe",
           "Webgewicht",
+          "Wetzstein",
           "Werkzeug",
           "Ölpresse"
         ]
@@ -746,6 +758,7 @@
       "soilType": {
         "inputType": "dropdown",
         "valuelist": [
+          "Çorak",
           "Feinsand",
           "Feinstsand",
           "Grobsand",
@@ -768,6 +781,9 @@
           "Toniger Sand",
           "Toniger Schluff"
         ]
+      },
+      "comment": {
+        "inputType": "input"
       }
     }
   },
@@ -825,9 +841,8 @@
           "Maximinian",
           "Myrina",
           "Septimius Severus",
-          "Söhne Konstantins",
           "Traian",
-          "Türkische Republick",
+          "Türkische Republik",
           "Valentianus III"
         ]
       },

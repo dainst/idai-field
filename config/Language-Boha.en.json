@@ -44,11 +44,21 @@
         "drawn": {
           "label": "Zeichnung"
         },
+        "sketched": {
+          "label": "Skizze"
+        },
         "storageInventoryNumber": {
           "label": "Etütlük Numarası"
         },
         "storageInventoryNumberAdditional": {
           "label": "Envanterlik Numarası"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "treatment": {
+          "label": "Bearbeitung"
         }
       }
     },
@@ -70,6 +80,9 @@
         "soilType": {
           "label": "Bodenart",
           "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+        },
+        "comment": {
+          "label": "Kommentar"
         }
       }
     }

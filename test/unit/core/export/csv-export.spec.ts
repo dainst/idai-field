@@ -1,12 +1,12 @@
 import {IdaiType} from 'idai-components-2';
-import {CSVExporter} from '../../../../app/core/export/csv-exporter';
+import {CSVExport} from '../../../../app/core/export/csv-export';
 import {Static} from '../../static';
 
 
 /**
  * @author Daniel de Oliveira
  */
-describe('CSVExporter', () => {
+describe('CSVExport', () => {
 
 
 
@@ -30,7 +30,7 @@ describe('CSVExporter', () => {
             ]
         });
 
-        const result = CSVExporter.createExportable([], t);
+        const result = CSVExport.createExportable([], t);
         expect(result[0]).toBe('identifier, shortDescription, custom');
     });
 
@@ -50,7 +50,7 @@ describe('CSVExporter', () => {
         });
 
         const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
-        const result = CSVExporter.createExportable(docs, t);
+        const result = CSVExport.createExportable(docs, t);
         expect(result[0]).toEqual('identifier, shortDescription');
         expect(result[1]).toEqual('identifier1, shortDescription1');
     });

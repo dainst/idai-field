@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, FieldDocument, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {FieldDocument, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -13,9 +13,8 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {to} from 'tsfun/src/objectstruct';
-import {CSVExporter} from '../../core/export/csv-exporter';
 import {is, on} from 'tsfun/src/comparator';
+import {CSVExporter} from '../../core/export/csv-exporter';
 
 const remote = require('electron').remote;
 
@@ -96,11 +95,12 @@ export class ExportComponent implements OnInit {
                 case 'csv':
                     if (this.selectedType) {
                         try {
-                            const result = CSVExporter.createExportable(
+                            CSVExporter.performExport(
                                 this.csvExportMode === 'complete'
                                     ? await this.fetchDocuments()
                                     : [],
-                                this.selectedType);
+                                this.selectedType,
+                                filePath);
 
                         } catch (err) {
                             console.error(err);

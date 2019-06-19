@@ -1,56 +1,37 @@
-import {FieldDocument, IdaiType} from 'idai-components-2';
-import {to} from 'tsfun/src/objectstruct';
-import {isnt} from 'tsfun';
-
+import {FieldDocument} from 'idai-components-2/src/model/field-document';
+import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
+import {CSVExport} from './csv-export';
+import * as fs from "fs";
+import {M} from '../../components/m';
 
 /**
  * @author Daniel de Oliveira
  */
 export module CSVExporter {
 
-    // should return a structure which can be written to a file
-    export function createExportable(documents: FieldDocument[],
-                                     resourceType: IdaiType) {
+    export function performExport(documents: FieldDocument[],
+                                  resourceType: IdaiType,
+                                  outputFilePath: string) {
 
-        const fieldNames = getUsableFieldNames(resourceType.fields.map(to('name')));
-
-        return [fieldNames.join(', ')].concat(
-            documents
-                .map(arrangeBy(fieldNames))
-                .map(toCsvLine));
+        const result = CSVExport.createExportable(documents, resourceType); // TODO return string instead of string[]
+        // console.log("result", result);
+        writeFile(outputFilePath, result);
     }
 
 
-    function toCsvLine(as: string[]): string {
+    function writeFile(outputFilePath: string,
+                       lines: string[]): Promise<void> {
 
-        return as.join(', ');
-    }
-
-
-    function arrangeBy(fieldNames: string[]) {
-
-        return (document: FieldDocument) => {
-
-            const newLine = new Array(fieldNames.length);
-
-            return getUsableFieldNames(Object.keys(document.resource))
-                .reduce((line, fieldName) =>  {
-
-                    const indexOfFoundElement = fieldNames.indexOf(fieldName);
-                    if (indexOfFoundElement !== -1) {
-                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
-                    }
-                    return line;
-                }, newLine);
-        }
-    }
-
-
-    function getUsableFieldNames(fieldNames: string[]) {
-
-        return fieldNames
-            .filter(isnt('relations'))
-            .filter(isnt('type'))
-            .filter(isnt('id'));
+        return new Promise((resolve, reject) => {
+            fs.writeFile(outputFilePath, lines.join('\n'), // TODO review use of separators
+                (err: any) => {
+                if (err) {
+                    console.error(err);
+                    reject([M.EXPORT_ERROR_GENERIC]);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 }

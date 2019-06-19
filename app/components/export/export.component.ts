@@ -15,6 +15,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
 import {to} from 'tsfun/src/objectstruct';
 import {CSVExporter} from '../../core/export/csv-exporter';
+import {is, on} from 'tsfun/src/comparator';
 
 const remote = require('electron').remote;
 
@@ -92,8 +93,14 @@ export class ExportComponent implements OnInit {
                         this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
                     break;
                 case 'csv':
-                    // const result = CSVExporter.
-                    console.log("not yet implemented");
+                    if (this.selectedType) {
+                        try {
+                            const result = CSVExporter.createExportable(await this.fetchDocuments(), this.selectedType);
+                            console.log("not yet implemented", result);
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    }
                     break;
             }
             this.messages.add([M.EXPORT_SUCCESS]);
@@ -157,6 +164,25 @@ export class ExportComponent implements OnInit {
 
         if (this.modalRef) this.modalRef.close();
         this.modalRef = undefined;
+    }
+
+
+    private async fetchDocuments(): Promise<Array<FieldDocument>> {
+
+        if (!this.selectedType) return [];
+
+        try {
+
+            const docs = (await this.datastore.find({
+                constraints: { 'isRecordedIn:contain': this.selectedOperationId }
+            })).documents;
+
+            return docs.filter(on('resource.type', is(this.selectedType.name)));
+
+        } catch (msgWithParams) {
+            console.error(msgWithParams);
+            return [];
+        }
     }
 
 

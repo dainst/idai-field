@@ -89,7 +89,7 @@ export module CSVExport {
     function expandHomogeneousItems(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
                     computeReplacement: (removed: any) => any[]) {
 
-        return (itms: any[]) => {
+        return (itms: any[]) => { // TODO make copy so to not work in place
 
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {

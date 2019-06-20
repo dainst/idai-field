@@ -127,6 +127,6 @@ describe('CSVExport', () => {
         expect(result[3][6]).toBe('');
         expect(result[3][7]).toBe('');
         expect(result[3][8]).toBe('');
-        expect(result[3][9]).toBe('');
+        expect(result[3][9]).toBe(undefined);
     });
 });

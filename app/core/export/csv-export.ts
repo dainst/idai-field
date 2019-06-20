@@ -1,5 +1,5 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
-import {isnt, flow, to, map} from 'tsfun';
+import {isnt, flow, to, map, copy} from 'tsfun';
 
 
 /**
@@ -89,18 +89,20 @@ export module CSVExport {
     function expandHomogeneousItems(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
                     computeReplacement: (removed: any) => any[]) {
 
-        return (row: any[]) => {
+        return (items: any[]) => {
+
+            const itms = copy(items);
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {
 
-                const removed = row.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
+                const removed = itms.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
                 if (removed) {
                     const newEls = computeReplacement(removed);
-                    for (let j = 0; j < newEls.length; j++) row[where + i + j] = newEls[j];
+                    for (let j = 0; j < newEls.length; j++) itms[where + i + j] = newEls[j];
                 }
             }
 
-            return row;
+            return itms;
         }
     }
 

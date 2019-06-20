@@ -76,8 +76,8 @@ export module CSVExport {
                     .splice(indexOfDatingElement + i, 1, ...Array(4))[0];
                 if (!temp) continue;
 
-                row[indexOfDatingElement + i    ] = temp['begin'];
-                row[indexOfDatingElement + i + 1] = temp['end'];
+                row[indexOfDatingElement + i    ] = JSON.stringify(temp['begin']);
+                row[indexOfDatingElement + i + 1] = JSON.stringify(temp['end']);
                 row[indexOfDatingElement + i + 2] = temp['source'];
                 row[indexOfDatingElement + i + 3] = temp['label'];
             }

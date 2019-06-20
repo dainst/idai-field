@@ -1,6 +1,5 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
-import {to} from 'tsfun/src/objectstruct';
-import {isnt} from 'tsfun';
+import {isnt, flow, to, map} from 'tsfun';
 
 
 /**
@@ -8,6 +7,7 @@ import {isnt} from 'tsfun';
  */
 export module CSVExport {
 
+    // TODO expand begin and year fully
 
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
@@ -19,7 +19,10 @@ export module CSVExport {
         if (indexOfDatingElement !== -1) {
             const max = getMax(matrix, indexOfDatingElement);
             expandDatingHeader(fieldNames, indexOfDatingElement, max);
-            matrix = matrix.map(rowsWithDatingFieldsExpanded(indexOfDatingElement, max));
+
+            matrix = flow(matrix,
+                map(rowsWithDatingFieldsExpanded(indexOfDatingElement, max)),
+                map(rowsWithDatingElementsExpanded(indexOfDatingElement, max)));
         }
 
         return ([fieldNames].concat(matrix)).map(toCsvLine);
@@ -28,8 +31,15 @@ export module CSVExport {
 
     function getMax(matrix: any, indexOfDatingElement: any) {
 
-        return matrix.reduce(
-            (max: number, row: any) => Math.max(max, row[indexOfDatingElement] ? row[indexOfDatingElement].length : 0), 0);
+        return matrix.reduce((max: number, row: any) =>
+
+                Math.max(
+                    max,
+                    row[indexOfDatingElement]
+                        ? row[indexOfDatingElement].length
+                        : 0)
+
+            , 0);
     }
 
 
@@ -38,30 +48,60 @@ export module CSVExport {
      * @param indexOfDatingElement
      * @param max
      */
-    function expandDatingHeader(fieldNames: any, indexOfDatingElement: any, max: number) {
+    function expandDatingHeader(fieldNames: any, indexOfDatingElement: number, max: number) {
 
         const dating_fields: string[] = [];
         for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
         fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
+
+        for (let i = max - 1; i >= 0; i--) {
+
+            const indexOfCurrentDatingElement = indexOfDatingElement + i;
+            fieldNames.splice(indexOfCurrentDatingElement, 1, ...Array(4));
+            fieldNames[indexOfCurrentDatingElement    ] = 'dating.' + i + '.begin';
+            fieldNames[indexOfCurrentDatingElement + 1] = 'dating.' + i + '.end';
+            fieldNames[indexOfCurrentDatingElement + 2] = 'dating.' + i + '.source';
+            fieldNames[indexOfCurrentDatingElement + 3] = 'dating.' + i + '.label';
+        }
     }
 
 
-    function rowsWithDatingFieldsExpanded(indexOfDatingElement: any, max: number) {
+    function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
 
         return (row: any) => {
 
-            const temp = row[indexOfDatingElement];
+            for (let i = max - 1; i >= 0; i--) {
 
-            row.splice(indexOfDatingElement, 1, new Array(max));
-            for (let i in temp) row[indexOfDatingElement][i] = temp[i];
+                const temp = row[indexOfDatingElement + i];
+                row.splice(indexOfDatingElement + i, 1, ...Array(4));
+
+                if (!temp) continue;
+                row[indexOfDatingElement + i    ] = temp['begin'];
+                row[indexOfDatingElement + i + 1] = temp['end'];
+                row[indexOfDatingElement + i + 2] = temp['source'];
+                row[indexOfDatingElement + i + 3] = temp['label'];
+            }
+
             return row;
         }
     }
 
 
-    function toCsvLine(as: string[]): string {
+    function rowsWithDatingFieldsExpanded(indexOfDatingElement: number, max: number) {
 
-        return as.join(',');
+        return (row: any) => {
+
+            const temp = row[indexOfDatingElement];
+            if (temp === undefined) return row;
+
+            row.splice(indexOfDatingElement, 1, ...new Array(max));
+            for (let i = 0; i < temp.length; i++) {
+
+                const index = indexOfDatingElement + i;
+                row[index] = temp[i];
+            }
+            return row;
+        }
     }
 
 
@@ -94,4 +134,7 @@ export module CSVExport {
             .filter(isnt('relations')) // TODO probably enable later
             .filter(isnt('id'));
     }
+
+
+    const toCsvLine = (as: string[]): string => as.join(',');
 }

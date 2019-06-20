@@ -57,11 +57,11 @@ export module CSVExport {
         for (let i = max - 1; i >= 0; i--) {
 
             const indexOfCurrentDatingElement = indexOfDatingElement + i;
-            fieldNames.splice(indexOfCurrentDatingElement, 1, ...Array(4));
-            fieldNames[indexOfCurrentDatingElement    ] = 'dating.' + i + '.begin';
-            fieldNames[indexOfCurrentDatingElement + 1] = 'dating.' + i + '.end';
-            fieldNames[indexOfCurrentDatingElement + 2] = 'dating.' + i + '.source';
-            fieldNames[indexOfCurrentDatingElement + 3] = 'dating.' + i + '.label';
+            fieldNames.splice(indexOfCurrentDatingElement, 1, [
+                    'dating.' + i + '.begin',
+                    'dating.' + i + '.end',
+                    'dating.' + i + '.source',
+                    'dating.' + i + '.label']);
         }
     }
 
@@ -72,14 +72,14 @@ export module CSVExport {
 
             for (let i = max - 1; i >= 0; i--) {
 
-                const temp = row
+                const removed = row
                     .splice(indexOfDatingElement + i, 1, ...Array(4))[0];
-                if (!temp) continue;
+                if (!removed) continue;
 
-                row[indexOfDatingElement + i    ] = JSON.stringify(temp['begin']);
-                row[indexOfDatingElement + i + 1] = JSON.stringify(temp['end']);
-                row[indexOfDatingElement + i + 2] = temp['source'];
-                row[indexOfDatingElement + i + 3] = temp['label'];
+                row[indexOfDatingElement + i    ] = JSON.stringify(removed['begin']);
+                row[indexOfDatingElement + i + 1] = JSON.stringify(removed['end']);
+                row[indexOfDatingElement + i + 2] = removed['source'];
+                row[indexOfDatingElement + i + 3] = removed['label'];
             }
 
             return row;
@@ -91,14 +91,14 @@ export module CSVExport {
 
         return (row: any) => {
 
-            const temp = row
+            const removed = row
                 .splice(indexOfDatingElement, 1, ...new Array(max))[0];
-            if (!temp) return row;
+            if (!removed) return row;
 
-            for (let i = 0; i < temp.length; i++) {
+            for (let i = 0; i < removed.length; i++) {
 
                 const index = indexOfDatingElement + i;
-                row[index] = temp[i];
+                row[index] = removed[i];
             }
             return row;
         }

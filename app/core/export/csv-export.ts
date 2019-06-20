@@ -21,7 +21,7 @@ export module CSVExport {
             expandDatingHeader(fieldNames, indexOfDatingElement, max);
 
             matrix = flow(matrix,
-                map(rowsWithDatingFieldsExpanded(indexOfDatingElement, max)),
+                map(expandArrayToSize(indexOfDatingElement, max)),
                 map(rowsWithDatingElementsExpanded(indexOfDatingElement, max)));
         }
 
@@ -68,36 +68,36 @@ export module CSVExport {
 
     function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
 
-        return expand(indexOfDatingElement, max, 4,
-            (row: any[], removed: any, i: number) => {
+        return expandHomogeneousItems(indexOfDatingElement, max, 4,
+            (removed: any) => {
 
-                row[indexOfDatingElement + i    ] = JSON.stringify(removed['begin']);
-                row[indexOfDatingElement + i + 1] = JSON.stringify(removed['end']);
-                row[indexOfDatingElement + i + 2] = removed['source'];
-                row[indexOfDatingElement + i + 3] = removed['label'];
+                return [
+                    JSON.stringify(removed['begin']),
+                    JSON.stringify(removed['end']),
+                    removed['source'],
+                    removed['label']];
             });
     }
 
 
-    function rowsWithDatingFieldsExpanded(indexOfDatingElement: number, max: number) {
+    function expandArrayToSize(where: number, targetSize: number) {
 
-        return expand(indexOfDatingElement, 1, max,
-            (row: any[], removed: any) => {
-
-            for (let j = 0; j < removed.length; j++) row[indexOfDatingElement + j] = removed[j];
-        });
+        return expandHomogeneousItems(where, 1, targetSize, identity);
     }
 
 
-    function expand(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
-                    fun: (row: any[], removed: any, i: number) => void) {
+    function expandHomogeneousItems(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
+                    computeReplacement: (removed: any) => any[]) {
 
-        return (row: any) => {
+        return (row: any[]) => {
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {
 
                 const removed = row.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
-                if (removed) fun(row, removed, i);
+                if (removed) {
+                    const newEls = computeReplacement(removed);
+                    for (let j = 0; j < newEls.length; j++) row[where + i + j] = newEls[j];
+                }
             }
 
             return row;
@@ -137,4 +137,7 @@ export module CSVExport {
 
 
     const toCsvLine = (as: string[]): string => as.join(',');
+
+
+    const identity = (_: any) => _; // TODO move to tsfun or expose tsfuns identical
 }

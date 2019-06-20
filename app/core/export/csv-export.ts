@@ -68,38 +68,38 @@ export module CSVExport {
 
     function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
 
-        return (row: any) => {
-
-            for (let i = max - 1; i >= 0; i--) {
-
-                const removed = row
-                    .splice(indexOfDatingElement + i, 1, ...Array(4))[0];
-                if (!removed) continue;
+        return expand(indexOfDatingElement, max, 4,
+            (row: any[], removed: any, i: number) => {
 
                 row[indexOfDatingElement + i    ] = JSON.stringify(removed['begin']);
                 row[indexOfDatingElement + i + 1] = JSON.stringify(removed['end']);
                 row[indexOfDatingElement + i + 2] = removed['source'];
                 row[indexOfDatingElement + i + 3] = removed['label'];
-            }
-
-            return row;
-        }
+            });
     }
 
 
     function rowsWithDatingFieldsExpanded(indexOfDatingElement: number, max: number) {
 
+        return expand(indexOfDatingElement, 1, max,
+            (row: any[], removed: any) => {
+
+            for (let j = 0; j < removed.length; j++) row[indexOfDatingElement + j] = removed[j];
+        });
+    }
+
+
+    function expand(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
+                    fun: (row: any[], removed: any, i: number) => void) {
+
         return (row: any) => {
 
-            const removed = row
-                .splice(indexOfDatingElement, 1, ...new Array(max))[0];
-            if (!removed) return row;
+            for (let i = nrOfNewItems - 1; i >= 0; i--) {
 
-            for (let i = 0; i < removed.length; i++) {
-
-                const index = indexOfDatingElement + i;
-                row[index] = removed[i];
+                const removed = row.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
+                if (removed) fun(row, removed, i);
             }
+
             return row;
         }
     }

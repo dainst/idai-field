@@ -72,10 +72,10 @@ export module CSVExport {
 
             for (let i = max - 1; i >= 0; i--) {
 
-                const temp = row[indexOfDatingElement + i];
-                row.splice(indexOfDatingElement + i, 1, ...Array(4));
-
+                const temp = row
+                    .splice(indexOfDatingElement + i, 1, ...Array(4))[0];
                 if (!temp) continue;
+
                 row[indexOfDatingElement + i    ] = temp['begin'];
                 row[indexOfDatingElement + i + 1] = temp['end'];
                 row[indexOfDatingElement + i + 2] = temp['source'];
@@ -91,10 +91,10 @@ export module CSVExport {
 
         return (row: any) => {
 
-            const temp = row[indexOfDatingElement];
-            if (temp === undefined) return row;
+            const temp = row
+                .splice(indexOfDatingElement, 1, ...new Array(max))[0];
+            if (!temp) return row;
 
-            row.splice(indexOfDatingElement, 1, ...new Array(max));
             for (let i = 0; i < temp.length; i++) {
 
                 const index = indexOfDatingElement + i;

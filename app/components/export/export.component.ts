@@ -13,7 +13,7 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {is, on} from 'tsfun/src/comparator';
+import {is, on, isNot, includedIn} from 'tsfun';
 import {CSVExporter} from '../../core/export/csv-exporter';
 
 const remote = require('electron').remote;
@@ -64,7 +64,14 @@ export class ExportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
-        this.resourceTypes = this.projectConfiguration.getTypesList();
+
+        this.resourceTypes =
+            this.projectConfiguration
+                .getTypesList()
+                .filter(on('name',
+                    isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -105,7 +112,7 @@ export class ExportComponent implements OnInit {
                         } catch (err) {
                             console.error(err);
                         }
-                    }
+                    } else console.error("No resource type selected");
                     break;
             }
             this.messages.add([M.EXPORT_SUCCESS]);

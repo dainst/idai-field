@@ -14,9 +14,10 @@ import {TypeUtility} from '../model/type-utility';
 import {isnt} from 'tsfun';
 import {ImportFunction} from "./exec/import-function";
 import {DocumentDatastore} from '../datastore/document-datastore';
+import {CsvParser} from './parser/csv-parser';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
+export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
 
 export type ImportReport = { errors: any[], warnings: any[], successfulImports: number };
 
@@ -82,14 +83,19 @@ export module Importer {
             return { errors: [msgWithParams], warnings: parserWarnings, successfulImports: 0 };
         }
 
+        const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));
+        const mainTypeDocumentId_ = !allowMergingExistingResources ? mainTypeDocumentId : '';
+        const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
+        const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
+
         const importFunction = buildImportFunction(
             format,
-            new ImportValidator(projectConfiguration, datastore, typeUtility),
-            typeUtility.getOverviewTypeNames().filter(isnt('Place')),
-            !allowMergingExistingResources ? mainTypeDocumentId : '',
+            importValidator,
+            operationTypeNames,
+            mainTypeDocumentId_,
             allowMergingExistingResources,
             allowUpdatingRelationsOnMerge,
-            (_: string) => projectConfiguration.getInverseRelations(_),
+            getInverseRelation,
             generateId);
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
@@ -105,6 +111,8 @@ export module Importer {
                 return new MeninxFindCsvParser();
             case 'idig':
                 return new IdigCsvParser();
+            case 'csv':
+                return new CsvParser();
             case 'geojson-gazetteer':
                 return new GeojsonParser(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
@@ -129,18 +137,26 @@ export module Importer {
                                  generateId: () => string): ImportFunction {
 
         switch (format) {
+            case 'csv':
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId, true);
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId);
             case 'shapefile':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId, true);
             case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId, true);
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId);
             default: // native
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
+                    generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

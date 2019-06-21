@@ -167,6 +167,8 @@ export class ImportComponent implements OnInit {
                 return '.geojson,.json';
             case 'shapefile':
                 return '.shp';
+            case 'csv':
+                return '.csv';
         }
     }
 

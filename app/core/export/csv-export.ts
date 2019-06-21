@@ -7,8 +7,6 @@ import {isnt, flow, to, map} from 'tsfun';
  */
 export module CSVExport {
 
-    // TODO expand begin and year fully
-
     /**
      * Creates a header line and lines for each record.
      * If documents is empty, still a header line gets created.
@@ -19,9 +17,7 @@ export module CSVExport {
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
-        let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
-        // TODO sor, so that at least identifier and shortDescription are at the beginning
-
+        const fieldNames: string[] = makeFieldNamesList(resourceType);
         let matrix = documents.map(toRowsArrangedBy(fieldNames));
 
         const indexOfDatingElement = fieldNames.indexOf('dating');
@@ -131,6 +127,20 @@ export module CSVExport {
                     return line;
                 }, newLine);
         }
+    }
+
+
+    function makeFieldNamesList(resourceType: IdaiType) {
+
+        let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
+        const indexOfShortDescription = fieldNames.indexOf('shortDescription');
+        if (indexOfShortDescription !== -1) {
+            fieldNames.splice(indexOfShortDescription, 1);
+            fieldNames.unshift('shortDescription');
+        }
+        fieldNames = fieldNames.filter(isnt('identifier'));
+        fieldNames.unshift('identifier');
+        return fieldNames;
     }
 
 

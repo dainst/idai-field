@@ -11,7 +11,7 @@ describe('CSVExport', () => {
 
 
 
-    it('create header line', () => {
+    it('create header line if documents empty', () => {
 
         const t = new IdaiType({
             type: 'Feature',

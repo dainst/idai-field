@@ -25,6 +25,7 @@
                         </select>
                     </div>
 
+                    <!--
                     <div *ngIf="format === 'csv'" class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" [(ngModel)]="csvExportMode" value="complete" id="completeselect"/>
@@ -35,8 +36,9 @@
                             <label class="form-check-label" for="schemaselect" i18n="@@export.csvimportmode.schema">Nur Schema</label>
                         </div>
                     </div>
+                    -->
 
-                    <div *ngIf="format !== 'csv' || csvExportMode === 'complete'" class="form-group">
+                    <div *ngIf="format !== 'csv'" class="form-group">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@export.operationSelect.label">Maßnahme</label>

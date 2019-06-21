@@ -178,11 +178,8 @@ export class ExportComponent implements OnInit {
 
         try {
 
-            const docs = (await this.datastore.find({
-                constraints: { 'isRecordedIn:contain': this.selectedOperationId }
-            })).documents;
-
-            return docs.filter(on('resource.type', is(this.selectedType.name)));
+            const docs = (await this.datastore.find({})).documents;
+            return docs.filter(on('resource.type', is(this.selectedType.name))); // TODO review. maybe index type
 
         } catch (msgWithParams) {
             console.error(msgWithParams);

@@ -9,6 +9,13 @@ export module CSVExport {
 
     // TODO expand begin and year fully
 
+    /**
+     * Creates a header line and lines for each record.
+     * If documents is empty, still a header line gets created.
+     *
+     * @param documents
+     * @param resourceType
+     */
     export function createExportable(documents: FieldDocument[],
                                      resourceType: IdaiType) {
 
@@ -90,7 +97,7 @@ export module CSVExport {
                     computeReplacement: (removed: any) => any[]) {
 
         return (itms: any[]) => { // TODO make copy so to not work in place
-            
+
             for (let i = nrOfNewItems - 1; i >= 0; i--) {
 
                 const removed = itms.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];

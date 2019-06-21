@@ -1,5 +1,5 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
-import {isnt, flow, to, map, copy} from 'tsfun';
+import {isnt, flow, to, map} from 'tsfun';
 
 
 /**
@@ -20,6 +20,8 @@ export module CSVExport {
                                      resourceType: IdaiType) {
 
         let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
+        // TODO sor, so that at least identifier and shortDescription are at the beginning
+
         let matrix = documents.map(toRowsArrangedBy(fieldNames));
 
         const indexOfDatingElement = fieldNames.indexOf('dating');
@@ -65,8 +67,8 @@ export module CSVExport {
 
             const indexOfCurrentDatingElement = indexOfDatingElement + i;
             fieldNames.splice(indexOfCurrentDatingElement, 1, [
-                    'dating.' + i + '.begin',
-                    'dating.' + i + '.end',
+                    'dating.' + i + '.begin.year',
+                    'dating.' + i + '.end.year',
                     'dating.' + i + '.source',
                     'dating.' + i + '.label']);
         }
@@ -79,8 +81,8 @@ export module CSVExport {
             (removed: any) => {
 
                 return [
-                    JSON.stringify(removed['begin']),
-                    JSON.stringify(removed['end']),
+                    removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
+                    removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
                     removed['source'],
                     removed['label']];
             });

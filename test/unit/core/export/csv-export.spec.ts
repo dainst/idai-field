@@ -80,21 +80,21 @@ describe('CSVExport', () => {
             Static.ifDoc('shortDescription3', 'identifier3', 'type', 'i3')
         ];
         docs[0].resource.dating = [
-            {begin: 10, end: 20, source: 'some1', label: 'blablabla1'},
-            {begin: 20, end: 30, source: 'some2', label: 'blablabla2'}];
+            {begin: {year: 10}, end: {year: 20}, source: 'some1', label: 'blablabla1'},
+            {begin: {year: 20}, end: {year: 30}, source: 'some2', label: 'blablabla2'}];
         docs[1].resource.dating = [
-            {begin: 40, end: 50, source: 'some3', label: 'blablabla3'}];
+            {begin: {year: 40}, end: {year: 50}, source: 'some3', label: 'blablabla3'}];
         docs[1].resource.custom = 'custom';
 
         const result = CSVExport.createExportable(docs, t).map(row => row.split(','));
 
 
-        expect(result[0][1]).toBe('dating.0.begin');
-        expect(result[0][2]).toBe('dating.0.end');
+        expect(result[0][1]).toBe('dating.0.begin.year');
+        expect(result[0][2]).toBe('dating.0.end.year');
         expect(result[0][3]).toBe('dating.0.source');
         expect(result[0][4]).toBe('dating.0.label');
-        expect(result[0][5]).toBe('dating.1.begin');
-        expect(result[0][6]).toBe('dating.1.end');
+        expect(result[0][5]).toBe('dating.1.begin.year');
+        expect(result[0][6]).toBe('dating.1.end.year');
         expect(result[0][7]).toBe('dating.1.source');
         expect(result[0][8]).toBe('dating.1.label');
         expect(result[0][9]).toBe('custom');

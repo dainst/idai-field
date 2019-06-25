@@ -1,4 +1,3 @@
-import {Observable, Observer} from 'rxjs';
 import {NewDocument} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {Parser} from './parser';
@@ -15,14 +14,15 @@ export module NativeJsonlParser {
      */
     export const parse: Parser = (content:string) => {
 
-        return Observable.create((observer: Observer<NewDocument>) => {
-            parseContent(makeLines(content), observer);
-            observer.complete();
+        return new Promise((resolve: Function, reject: Function) => {
+            resolve(parseContent(makeLines(content), reject));
         });
     };
 
 
-    function parseContent(lines: string[], observer: Observer<NewDocument>) {
+    function parseContent(lines: string[], reject: Function) {
+
+        const docs: Array<NewDocument> = [];
 
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].length === 0) continue;
@@ -32,12 +32,14 @@ export module NativeJsonlParser {
                 document = makeDoc(lines[i]);
             } catch (e) {
                 console.error('parse content error. reason: ', e);
-                observer.error([ParserErrors.FILE_INVALID_JSONL, i + 1]);
+                reject([ParserErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
             assertIsValid(document);
-            observer.next(document);
+            docs.push(document);
         }
+
+        return docs;
     }
 
 

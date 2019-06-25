@@ -13,12 +13,12 @@ describe('GeojsonParser', () => {
     function expectErr(fileContent, which, done) {
 
         const parse = GeojsonParser.getParse(undefined, undefined);
-        parse(fileContent).subscribe(() => {
+        parse(fileContent).then(() => {
             fail('should not emit next');
         }, err => {
             expect(err[0]).toBe(which);
             done();
-        }, () => fail('should not complete'));
+        });
     }
 
 
@@ -33,13 +33,9 @@ describe('GeojsonParser', () => {
 
         const parse = GeojsonParser.getParse(undefined, undefined);
         const docs: Document[] = [];
-        parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-            docs.push(resultDocument);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
+        parse(fileContent).then(docs => {
+            // expect(resultDocument).not.toBe(undefined);
+            // docs.push(resultDocument);
             expect(docs[0].resource['identifier']).toEqual('122');
             expect(docs[0].resource['geometry']['type']).toEqual('Point');
 
@@ -47,6 +43,9 @@ describe('GeojsonParser', () => {
             expect(docs[1].resource['geometry']['type']).toEqual('Polygon');
 
             expect(docs.length).toEqual(2);
+            done();
+        }, err => {
+            fail(err);
             done();
         });
     });

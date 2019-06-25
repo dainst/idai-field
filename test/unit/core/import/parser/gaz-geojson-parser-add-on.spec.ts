@@ -13,12 +13,12 @@ describe('GazGeojsonParserAddOn', () => {
     function expectErr(fileContent, which, done) {
 
         const parse = GeojsonParser.getParse(GazGeojsonParserAddOn.preValidateAndTransformFeature, GazGeojsonParserAddOn.postProcess);
-        parse(fileContent).subscribe(() => {
+        parse(fileContent).then(() => {
             fail('should not emit next');
         }, err => {
             expect(err[0]).toBe(which);
             done();
-        }, () => fail('should not complete'));
+        });
     }
 
 
@@ -32,19 +32,19 @@ describe('GazGeojsonParserAddOn', () => {
             GazGeojsonParserAddOn.preValidateAndTransformFeature,
             GazGeojsonParserAddOn.postProcess);
         const docs: Document[] = [];
-        parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-            docs.push(resultDocument);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
+        parse(fileContent).then(docs => {
+            // expect(resultDocument).not.toBe(undefined);
+            // docs.push(resultDocument);
 
             expect(docs[0].resource['id']).toEqual('gazetteer2312125');
             expect(docs[0].resource['identifier']).toEqual('2312125');
             expect(docs[0].resource['geometry']['type']).toEqual('Point');
 
             expect(docs.length).toEqual(1);
+            done();
+
+        }, err => {
+            fail(err);
             done();
         });
     });

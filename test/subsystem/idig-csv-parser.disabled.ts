@@ -18,6 +18,7 @@ describe('IdigCsvParser', () => {
         }
     );
 
+/*
     it('should create documents from file content', (done) => {
 
         let fileContent = 'IdentifierUUID,Identifier,Title,Type\n'
@@ -115,5 +116,5 @@ describe('IdigCsvParser', () => {
             done();
         });
 
-    });
+    });*/
 });

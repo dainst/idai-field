@@ -13,9 +13,8 @@ xdescribe('MeninxCsvParser', () => {
             + '1001,2,hallohallo2\n';
 
         const documents = [];
-        MeninxFindCsvParser.parse(fileContent).forEach(document => {
-            documents.push(document);
-        }).then(() => {
+        MeninxFindCsvParser.parse(fileContent).then((documents) => {
+
             expect(documents[0].resource.identifier).toEqual('1001-1');
             expect(documents[1].resource.identifier).toEqual('1001-2');
             expect(documents[0].resource.relations.liesWithin[0]).toEqual('1001');

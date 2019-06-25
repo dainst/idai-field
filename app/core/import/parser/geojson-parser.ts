@@ -55,34 +55,35 @@ export module GeojsonParser {
          * @throws [FILE_INVALID_JSON]
          * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
          */
-        return (content: string): Observable<Document> => {
+        return (content: string): Promise<Array<Document>> => {
 
-            return Observable.create((observer: Observer<any>) => {
+            return new Promise((resolve: Function, reject: Function) => {
                 let geojson: Geojson;
                 try {
                     geojson = JSON.parse(content) as Geojson;
                 } catch (e) {
-                    return observer.error([ParserErrors.FILE_INVALID_JSON, e.toString()]);
+                    return reject([ParserErrors.FILE_INVALID_JSON, e.toString()]);
                 }
 
                 const msgWithParams = validateAndTransform(geojson, preValidateAndTransform);
-                if (msgWithParams !== undefined) return observer.error(msgWithParams);
+                if (msgWithParams !== undefined) return reject(msgWithParams);
 
                 if (postProcess) postProcess(geojson);
 
-                iterateDocs(geojson, observer);
-                observer.complete();
+                resolve(iterateDocs(geojson));
             });
         }
     }
 
 
-    function iterateDocs(content: Geojson, observer: Observer<any>) {
+    function iterateDocs(content: Geojson) {
 
+        const docs: Array<Document> = [];
         for (let feature of content.features) {
             const document: any = makeDoc(feature);
-            observer.next(document);
+            docs.push(document);
         }
+        return docs;
     }
 
 

@@ -11,15 +11,16 @@ export module ShapefileParser {
 
     export const parse: Parser = (content: string) => {
 
-        return Observable.create(async (observer: Observer<NewDocument>) => {
+        return new Promise((resolve: Function, reject: Function)=> {
             try {
-                await NativeJsonlParser
-                    .parse(content)
-                    .forEach((document: Document) => observer.next(document));
+
+                resolve(NativeJsonlParser.parse(content))
+
+                    // .forEach((document: Document) => observer.next(document));
+
             } catch (err) {
-                observer.error([ParserErrors.SHAPEFILE_GENERIC]);
+                reject([ParserErrors.SHAPEFILE_GENERIC]);
             }
-            observer.complete();
         });
     }
 }

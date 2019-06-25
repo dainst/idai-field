@@ -1,7 +1,7 @@
-import {Observable, Observer} from 'rxjs';
-import {FieldGeometry, NewDocument, Document} from 'idai-components-2';
+import {Document, FieldGeometry, NewDocument} from 'idai-components-2';
 import {M} from '../../../components/m';
 import {ParserErrors} from './parser-errors';
+import {Parser} from './parser';
 
 /**
  * @author Sebastian Cuy
@@ -40,27 +40,26 @@ export module IdigCsvParser {
     const GEOMETRY_FIELD: string = 'CoverageUnion';
 
 
-    export function parse(content: string): Observable<Document> {
+    export const parse: Parser = (content: string) => {
 
-        return Observable.create((observer: Observer<any>) => {
+        return new Promise((resolve: Function, reject: Function) => {
 
-            let errorCallback = (e: any) => observer.error([ParserErrors.CSV_INVALID, e.row]);
+            let errorCallback = (e: any) => reject([ParserErrors.CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
                 result.data.forEach( (object: any, i:any) => {
-                    let msgWithParams = this.checkExistenceOfMandatoryFields(object, i + 1);
+                    let msgWithParams = checkExistenceOfMandatoryFields(object, i + 1);
                     if (msgWithParams != undefined) {
-                        observer.error(msgWithParams);
+                        reject(msgWithParams);
                     } else {
                         try {
-                            observer.next(this.documentFrom(object, i + 1));
+                            // observer.next(documentFrom(object, i + 1));
                         } catch (msgWithParams) {
-                            observer.error(msgWithParams);
+                            reject(msgWithParams);
                         }
                     }
                 });
-                observer.complete();
             };
 
             try {
@@ -72,10 +71,10 @@ export module IdigCsvParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ParserErrors.CSV_GENERIC]);
+                reject([ParserErrors.CSV_GENERIC]);
             }
         });
-    }
+    };
 
 
     /**

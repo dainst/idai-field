@@ -1,14 +1,13 @@
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
 import {CsvParsing} from './csv-parsing';
+import {Parser} from './parser';
 
 /**
  * @author Daniel de Oliveira
  */
-export class CsvParser extends AbstractParser {
+export module CsvParser {
 
-    public parse(content: string): Observable<Document> {
+    export const parse: Parser = (content: string) => {
 
         return Observable.create((observer: Observer<any>) => {
 

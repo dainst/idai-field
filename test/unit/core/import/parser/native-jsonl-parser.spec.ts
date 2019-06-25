@@ -19,9 +19,9 @@ describe('NativeJsonlParser', () => {
             + '{ "type": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
             + '{ "type": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-        let parser = new NativeJsonlParser();
+        let parse = NativeJsonlParser.parse;
         let objects = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
+        parse(fileContent).subscribe(resultDocument => {
             expect(resultDocument).not.toBe(undefined);
             objects.push(resultDocument);
         }, () => {
@@ -43,9 +43,9 @@ describe('NativeJsonlParser', () => {
             + '{ "type": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
             + '{ "type": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-        let parser = new NativeJsonlParser();
+        let parse = NativeJsonlParser.parse;
         let objects = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
+        parse(fileContent).subscribe(resultDocument => {
             expect(resultDocument).not.toBe(undefined);
             objects.push(resultDocument);
         }, (error) => {
@@ -61,9 +61,9 @@ describe('NativeJsonlParser', () => {
         let fileContent = '{ "type": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
             + '{ "type": "Find", "identifier" : "ob3", "id" : "abc", "title": "Obi-Three Kenobi"}';
 
-        let parser = new NativeJsonlParser();
+        let parse = NativeJsonlParser.parse;
         let objects = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
+        parse(fileContent).subscribe(resultDocument => {
             expect(resultDocument).not.toBe(undefined);
             objects.push(resultDocument);
         }, (error) => {

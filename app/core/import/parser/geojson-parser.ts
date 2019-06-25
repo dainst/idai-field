@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
 import {ParserErrors} from './parser-errors';
+import {Parser} from './parser';
 
 export interface Geojson {
     type: string,
@@ -30,54 +30,57 @@ export interface GazetteerProperties {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class GeojsonParser extends AbstractParser {
+export module GeojsonParser {
 
-    private static supportedGeometryTypes = [
+    const supportedGeometryTypes = [
         'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'
     ];
 
 
-    constructor(private preValidateAndTransform: Function|undefined,
-                private postProcess: Function|undefined) {super()}
-
-
     /**
-     * The content json must be of a certain structure to
-     * get accepted. Any deviance of this structure will lead
-     * to a msgWithParams emitted and no document created at all.
-     *
-     * @param content
-     * @throws [WRONG_IDENTIFIER_FORMAT]
-     * @throws [MISSING_IDENTIFIER]
-     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
-     * @throws [FILE_INVALID_JSON]
-     * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
+     * @param preValidateAndTransform
+     * @param postProcess
      */
-    public parse(content: string): Observable<Document> {
+    export function getParse(preValidateAndTransform: Function|undefined,
+                    postProcess: Function|undefined): Parser {
 
-        return Observable.create((observer: Observer<any>) => {
-            let geojson: Geojson;
-            try {
-                geojson = JSON.parse(content) as Geojson;
-            } catch (e) {
-                return observer.error([ParserErrors.FILE_INVALID_JSON, e.toString()]);
-            }
+        /**
+         * The content json must be of a certain structure to
+         * get accepted. Any deviance of this structure will lead
+         * to a msgWithParams emitted and no document created at all.
+         *
+         * @throws [WRONG_IDENTIFIER_FORMAT]
+         * @throws [MISSING_IDENTIFIER]
+         * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
+         * @throws [FILE_INVALID_JSON]
+         * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
+         */
+        return (content: string): Observable<Document> => {
 
-            const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.preValidateAndTransform);
-            if (msgWithParams !== undefined) return observer.error(msgWithParams);
+            return Observable.create((observer: Observer<any>) => {
+                let geojson: Geojson;
+                try {
+                    geojson = JSON.parse(content) as Geojson;
+                } catch (e) {
+                    return observer.error([ParserErrors.FILE_INVALID_JSON, e.toString()]);
+                }
 
-            if (this.postProcess) this.postProcess(geojson);
+                const msgWithParams = validateAndTransform(geojson, preValidateAndTransform);
+                if (msgWithParams !== undefined) return observer.error(msgWithParams);
 
-            GeojsonParser.iterateDocs(geojson, observer);
-            observer.complete();
-        });
+                if (postProcess) postProcess(geojson);
+
+                iterateDocs(geojson, observer);
+                observer.complete();
+            });
+        }
     }
 
 
-    private static iterateDocs(content: Geojson, observer: Observer<any>) {
+    function iterateDocs(content: Geojson, observer: Observer<any>) {
 
         for (let feature of content.features) {
-            const document: any = GeojsonParser.makeDoc(feature);
+            const document: any = makeDoc(feature);
             observer.next(document);
         }
     }
@@ -86,7 +89,7 @@ export class GeojsonParser extends AbstractParser {
     /**
      * Validate and transform (modify in place) in one pass to reduce runtime.
      */
-    private static validateAndTransform(geojson: Geojson, preValidateAndTransformFeature: Function|undefined) {
+    function validateAndTransform(geojson: Geojson, preValidateAndTransformFeature: Function|undefined) {
 
         if (geojson.type !== 'FeatureCollection') return [
             ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
@@ -105,13 +108,13 @@ export class GeojsonParser extends AbstractParser {
                 if (msgWithParams) return msgWithParams;
             }
 
-            const msgWithParams = this.validateAndTransformFeature(feature);
+            const msgWithParams = validateAndTransformFeature(feature);
             if (msgWithParams) return msgWithParams;
         }
     }
 
 
-    private static validateAndTransformFeature(feature: any) {
+    function validateAndTransformFeature(feature: any) {
 
         if (!feature.properties['identifier']) return [ParserErrors.MISSING_IDENTIFIER];
         if (typeof feature.properties['identifier'] !== 'string') return [ParserErrors.WRONG_IDENTIFIER_FORMAT];
@@ -120,14 +123,14 @@ export class GeojsonParser extends AbstractParser {
         if (feature.type !== 'Feature') return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
 
         if (feature.geometry && feature.geometry.type
-            && GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+            && supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
 
             return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
     }
 
 
-    private static makeDoc(feature: any) {
+    function makeDoc(feature: any) {
 
         const resource = {
             identifier: feature.properties['identifier'],

@@ -13,7 +13,7 @@ xdescribe('MeninxCsvParser', () => {
             + '1001,2,hallohallo2\n';
 
         const documents = [];
-        new MeninxFindCsvParser().parse(fileContent).forEach(document => {
+        MeninxFindCsvParser.parse(fileContent).forEach(document => {
             documents.push(document);
         }).then(() => {
             expect(documents[0].resource.identifier).toEqual('1001-1');

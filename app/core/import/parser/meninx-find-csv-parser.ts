@@ -1,15 +1,14 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
 import {ParserErrors} from './parser-errors';
 // import * as Papa from 'papaparse'; this does not work in production, fixes only unit test
 
 /**
  * @author Daniel de Oliveira
  */
-export class MeninxFindCsvParser extends AbstractParser {
+export module MeninxFindCsvParser {
 
-    public parse(content: string): Observable<Document> {
+    export function parse(content: string): Observable<Document> {
 
         return Observable.create((observer: Observer<Document>) => {
 

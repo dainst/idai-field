@@ -1,6 +1,5 @@
 import {Observable, Observer} from 'rxjs';
 import {FieldGeometry, NewDocument, Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
 import {M} from '../../../components/m';
 import {ParserErrors} from './parser-errors';
 
@@ -9,11 +8,11 @@ import {ParserErrors} from './parser-errors';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class IdigCsvParser extends AbstractParser {
+export module IdigCsvParser {
 
-    private static MANDATORY_FIELDS: string[] = ['IdentifierUUID', 'Type'];
-    private static MANUALLY_MAPPED_FIELDS: string[] = ['Identifier', 'Title'];
-    private static IGNORED_FIELDS: string[] = ['Contributor', 'Coverage', 'CoverageSpatial',
+    const MANDATORY_FIELDS: string[] = ['IdentifierUUID', 'Type'];
+    const MANUALLY_MAPPED_FIELDS: string[] = ['Identifier', 'Title'];
+    const IGNORED_FIELDS: string[] = ['Contributor', 'Coverage', 'CoverageSpatial',
         'CoverageSpatialAreaCartesian_double', 'CoverageSpatialBoundsCartesian_bbox', 'CoverageSpatialCRS',
         'CoverageSpatialCartesian_rpt', 'CoverageSpatialElevations_rpt', 'CoverageSpatialPoints_rpt',
         'CoverageTemporal', 'CoverageTemporalStart', 'CoverageTemporal_range', 'Creator', 'Date', 'DateTimeZone',
@@ -32,16 +31,16 @@ export class IdigCsvParser extends AbstractParser {
         'RelationIsBeforeUUID', 'RightsDeleted', 'RightsLocked', 'RightsSidelined', 'RightsStatus',
         'RightsTrashed', 'SectionNumber', 'Storage'
     ];
-    private static RELATION_FIELDS: string[] = [
+    const RELATION_FIELDS: string[] = [
         'Relation', 'Relation_uuid',
         'RelationBelongsTo', 'RelationBelongsToUUID', 'RelationIncludes', 'RelationIncludesUUID',
         'RelationIsAbove', 'RelationIsAboveUUID', 'RelationIsBelow', 'RelationIsBelowUUID', 'RelationIsCoevalWith',
         'RelationIsCoevalWithUUID'
     ];
-    private static GEOMETRY_FIELD: string = 'CoverageUnion';
+    const GEOMETRY_FIELD: string = 'CoverageUnion';
 
 
-    public parse(content: string): Observable<Document> {
+    export function parse(content: string): Observable<Document> {
 
         return Observable.create((observer: Observer<any>) => {
 
@@ -76,7 +75,6 @@ export class IdigCsvParser extends AbstractParser {
                 observer.error([ParserErrors.CSV_GENERIC]);
             }
         });
-
     }
 
 
@@ -85,9 +83,9 @@ export class IdigCsvParser extends AbstractParser {
      * @param lineNumber
      * @returns {any} msgWithParams for the first occurence of a missing field
      */
-    private checkExistenceOfMandatoryFields(object: any, lineNumber: number): any {
+    function checkExistenceOfMandatoryFields(object: any, lineNumber: number): any {
         let msgWithParams: any = undefined;
-        IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
+        MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
                 if (!msgWithParams) msgWithParams = [ParserErrors.MANDATORY_CSV_FIELD_MISSING,lineNumber,mandatoryField];
             }
@@ -96,7 +94,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private identifier(object: any) {
+    function identifier(object: any) {
         if (object['Identifier'] != undefined)
             return object['Identifier'];
         else
@@ -104,7 +102,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private documentFrom(object: any, lineNumber: number): Document {
+    function documentFrom(object: any, lineNumber: number): Document {
 
         let doc: NewDocument = {
             resource: {
@@ -124,14 +122,14 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private map(object: any, doc: any, lineNumber: number): Document {
+    function map(object: any, doc: any, lineNumber: number): Document {
 
         Object.keys(object).forEach( field => {
-            if (IdigCsvParser.IGNORED_FIELDS.indexOf(field) == -1) {
+            if (IGNORED_FIELDS.indexOf(field) == -1) {
 
                 if (this.isRelation(field)) {
                     this.mapRelationField(object, doc.resource, field);
-                } else if (field == IdigCsvParser.GEOMETRY_FIELD) {
+                } else if (field == GEOMETRY_FIELD) {
                     this.mapGeometryField(object, doc.resource, lineNumber);
                 }
                 else this.copyField(object, doc.resource,field);
@@ -142,17 +140,17 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private isRelation(field: any) {
-        return (IdigCsvParser.RELATION_FIELDS.indexOf(field) != -1);
+    function isRelation(field: any) {
+        return (RELATION_FIELDS.indexOf(field) != -1);
     }
 
 
-    private hasContent(object: any, field: any) {
+    function hasContent(object: any, field: any) {
         return (object[field] != undefined && object[field] != '');
     }
 
 
-    private relationName(relation: any) {
+    function relationName(relation: any) {
         var relN = relation.substring(0, relation.indexOf('UUID'));
         var relN = relN.replace('Relation', '');
         if (relN == '') return 'Relation';
@@ -160,12 +158,12 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private isMappableRelation(relation: any) {
+    function isMappableRelation(relation: any) {
         return (relation.indexOf('UUID') != -1) && (this.relationName(relation) != 'Relation');
     }
 
 
-    private mapRelationField(object: any, resource: any, relation: any) {
+    function mapRelationField(object: any, resource: any, relation: any) {
 
         if (this.hasContent(object, relation)) {
             if (this.isMappableRelation(relation)) {
@@ -173,20 +171,20 @@ export class IdigCsvParser extends AbstractParser {
                     object[relation].split(/[\n\s\t]/g);
             }
         }
-    };
+    }
 
 
-    private mapGeometryField(object: any, resource: any, lineNumber: number) {
+    function mapGeometryField(object: any, resource: any, lineNumber: number) {
 
-        if (this.hasContent(object, IdigCsvParser.GEOMETRY_FIELD)) {
-            let geometryString = object[IdigCsvParser.GEOMETRY_FIELD];
+        if (this.hasContent(object, GEOMETRY_FIELD)) {
+            let geometryString = object[GEOMETRY_FIELD];
             let geometry: FieldGeometry|null = this.parseGeometryString(geometryString, lineNumber);
             if (geometry) resource.geometry = geometry;
         }
     }
 
 
-    private parseGeometryString(geometryString: any, lineNumber: number): FieldGeometry|null {
+    function parseGeometryString(geometryString: any, lineNumber: number): FieldGeometry|null {
 
         geometryString = geometryString.toLowerCase();
         let geometry: FieldGeometry|null = null;
@@ -203,7 +201,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private parsePointGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
+    function parsePointGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
 
         let geometry: FieldGeometry = { type: 'Point', coordinates: [] };
 
@@ -217,7 +215,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private parsePolygonGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
+    function parsePolygonGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
 
         let geometry: FieldGeometry = { type: 'Polygon', coordinates: [] };
 
@@ -231,7 +229,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private parseMultiPolygonGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
+    function parseMultiPolygonGeometryString(geometryString: string, lineNumber: number): FieldGeometry {
 
         let geometry: FieldGeometry = {  type: 'MultiPolygon', coordinates: [] };
 
@@ -249,7 +247,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private parsePoint(coordinatesString: string, lineNumber: number): number[] {
+    function parsePoint(coordinatesString: string, lineNumber: number): number[] {
 
         let point: number[] = [];
 
@@ -268,7 +266,7 @@ export class IdigCsvParser extends AbstractParser {
     }
 
 
-    private parsePolygon(coordinatesString: string, lineNumber: number): number[][][] {
+    function parsePolygon(coordinatesString: string, lineNumber: number): number[][][] {
 
         let polygon: number[][][] = [[]];
 
@@ -293,10 +291,10 @@ export class IdigCsvParser extends AbstractParser {
      * @param resource
      * @param field
      */
-    private copyField(object: any, resource: any, field: any) {
+    function copyField(object: any, resource: any, field: any) {
 
-        if (IdigCsvParser.MANDATORY_FIELDS.indexOf(field) == -1 &&
-            IdigCsvParser.MANUALLY_MAPPED_FIELDS.indexOf(field) == -1) {
+        if (MANDATORY_FIELDS.indexOf(field) == -1 &&
+            MANUALLY_MAPPED_FIELDS.indexOf(field) == -1) {
             resource[field] = object[field];
         }
     }

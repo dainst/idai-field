@@ -67,13 +67,11 @@ export module Importer {
                                    fileContent: string,
                                    generateId: () => string) {
 
-        const parser = createParser(format);
+        const parse = createParser(format);
         const docsToUpdate: Document[] = [];
         try {
 
-            await parser
-                .parse(fileContent)
-                .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
+            await parse(fileContent).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument)); // TODO use lambda
 
         } catch (msgWithParams) {
 
@@ -101,25 +99,25 @@ export module Importer {
 
 
 
-    function createParser(format: ImportFormat): Parser {
+    function createParser(format: ImportFormat): any {
 
         switch (format) {
             case 'meninxfind':
-                return new MeninxFindCsvParser();
+                return MeninxFindCsvParser.parse;
             case 'idig':
-                return new IdigCsvParser();
+                return IdigCsvParser.parse;
             case 'csv':
-                return new CsvParser();
+                return CsvParser.parse;
             case 'geojson-gazetteer':
-                return new GeojsonParser(
+                return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
                     GazGeojsonParserAddOn.postProcess);
             case 'geojson':
-                return new GeojsonParser(undefined, undefined);
+                return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
-                return new ShapefileParser();
+                return ShapefileParser.parse;
             case 'native':
-                return new NativeJsonlParser() as any;
+                return NativeJsonlParser.parse;
         }
     }
 

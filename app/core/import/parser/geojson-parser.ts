@@ -55,7 +55,6 @@ export class GeojsonParser extends AbstractParser {
      */
     public parse(content: string): Observable<Document> {
 
-        this.warnings = [];
         return Observable.create((observer: Observer<any>) => {
             let geojson: Geojson;
             try {

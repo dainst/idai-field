@@ -15,7 +15,6 @@ export class NativeJsonlParser extends AbstractParser {
      */
     public parse(content: string): Observable<Document> {
 
-        this.warnings = [];
         return Observable.create((observer: Observer<NewDocument>) => {
             NativeJsonlParser.parseContent(NativeJsonlParser.makeLines(content), observer);
             observer.complete();

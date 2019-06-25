@@ -11,8 +11,6 @@ export class ShapefileParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
 
-        this.warnings = [];
-
         return Observable.create(async (observer: Observer<NewDocument>) => {
             try {
                 await new NativeJsonlParser()

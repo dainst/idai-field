@@ -19,7 +19,7 @@ import {CsvParser} from './parser/csv-parser';
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
 
-export type ImportReport = { errors: any[], warnings: any[], successfulImports: number };
+export type ImportReport = { errors: any[], successfulImports: number };
 
 
 
@@ -67,7 +67,6 @@ export module Importer {
                                    fileContent: string,
                                    generateId: () => string) {
 
-        let parserWarnings: string[][] = [];
         const parser = createParser(format);
         const docsToUpdate: Document[] = [];
         try {
@@ -76,11 +75,9 @@ export module Importer {
                 .parse(fileContent)
                 .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
 
-            parserWarnings = parser.getWarnings() as never[];
-
         } catch (msgWithParams) {
 
-            return { errors: [msgWithParams], warnings: parserWarnings, successfulImports: 0 };
+            return { errors: [msgWithParams], successfulImports: 0 };
         }
 
         const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));

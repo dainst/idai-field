@@ -177,7 +177,6 @@ export class ImportComponent implements OnInit {
 
         if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
 
-        this.showMessages(importReport.warnings);
         this.showSuccessMessage(importReport.successfulImports);
     }
 

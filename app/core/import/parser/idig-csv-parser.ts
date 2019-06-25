@@ -43,8 +43,6 @@ export class IdigCsvParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
 
-        this.warnings = [];
-
         return Observable.create((observer: Observer<any>) => {
 
             let errorCallback = (e: any) => observer.error([ParserErrors.CSV_INVALID, e.row]);

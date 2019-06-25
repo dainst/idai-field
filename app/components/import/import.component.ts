@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, isNot, map, take, forEach} from 'tsfun';
-import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
+import {empty, filter, flow, isNot, map, take, forEach, on, includedIn} from 'tsfun';
+import {Document, Messages, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -48,6 +48,8 @@ export class ImportComponent implements OnInit {
     public url: string|undefined;
     public operations: Array<Document> = [];
     public selectedOperationId: string = '';
+    public selectedType: IdaiType|undefined = undefined; // for csv import, the technical type name
+    public resourceTypes: Array<IdaiType> = []; // for csv import
     public allowMergingExistingResources = false;
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
@@ -79,6 +81,14 @@ export class ImportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
+
+        this.resourceTypes = // TODO remove duplication with export component
+            this.projectConfiguration
+                .getTypesList()
+                .filter(on('name',
+                    isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -119,7 +129,8 @@ export class ImportComponent implements OnInit {
             this.allowMergingExistingResources,
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
-            () => this.idGenerator.generateId()
+            () => this.idGenerator.generateId(),
+            this.format === 'csv' && this.selectedType ? this.selectedType.name : undefined
         );
         this.remoteChangesStream.setAutoCacheUpdate(true);
 

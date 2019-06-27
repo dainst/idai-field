@@ -1,5 +1,9 @@
 // Constants
 
+export const PARENT = 'isChildOf';
+export const RESOURCE_IDENTIFIER = 'resource.identifier';
+export const RESOURCE_ID = 'resource.id';
+
 export const RECORDED_IN = 'isRecordedIn';
 export const LIES_WITHIN = 'liesWithin';
 export const INCLUDES = 'includes';

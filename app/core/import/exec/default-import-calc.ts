@@ -6,6 +6,8 @@ import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
 import {clone} from '../../util/object-util';
+import {INCLUDES, LIES_WITHIN, PARENT, RECORDED_IN, RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
+
 
 
 /**
@@ -25,13 +27,6 @@ export module DefaultImportCalc {
     type IdMap = { [id: string]: Document };
     type Identifier = string;
     type IdentifierMap = { [identifier: string]: string };
-
-    const RECORDED_IN = 'isRecordedIn';
-    const LIES_WITHIN = 'liesWithin';
-    const INCLUDES = 'includes';
-    const PARENT = 'isChildOf';
-    const RESOURCE_IDENTIFIER = 'resource.identifier';
-    const RESOURCE_ID = 'resource.id';
 
     const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
 

@@ -50,6 +50,8 @@ export module DefaultImportCalc {
             : Promise<[Array<Document>, Array<Document>, Array<string>|undefined]> {
 
             try {
+                assertNoDuplicates(documents);
+
                 const documentsForUpdate = await processDocuments(
                     documents,
                     validator,
@@ -64,7 +66,9 @@ export module DefaultImportCalc {
                     mainTypeDocumentId);
 
                 return [documentsForUpdate, relatedDocuments, undefined];
+
             } catch (errWithParams) {
+
                 return [[],[], errWithParams];
             }
         }
@@ -83,17 +87,12 @@ export module DefaultImportCalc {
                                     get: Get,
                                     generateId: GenerateId): Promise<Array<Document>> {
 
-
-        const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
-        if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
         const rewriteFunction = rewriteIdentifiersInRelations(find, identifierMap);
 
         return await asyncMap(async (document: Document) => {
 
-            let _ = clone(document);
-
-            _ = await preprocessAndValidateRelations(
+            const preprocessedDocument = await preprocessAndValidateRelations(
                 document,
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
@@ -101,10 +100,23 @@ export module DefaultImportCalc {
                 get,
                 rewriteFunction);
 
-            _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
+            return validate(
+                await mergeOrUseAsIs(
+                    preprocessedDocument,
+                    find,
+                    mergeMode,
+                    allowOverwriteRelationsInMergeMode),
+                validator,
+                mergeMode);
 
-            return validate(_, validator, mergeMode);
         })(documents);
+    }
+
+
+    function assertNoDuplicates(documents: Array<Document>) {
+
+        const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
+        if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
     }
 
 

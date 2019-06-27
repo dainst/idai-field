@@ -143,17 +143,39 @@ export module DefaultImportCalc {
 
     function adjustRelations(document: Document, relations: Relations) {
 
+        assertHasNoForbiddenRelations(document);
+        const assertIsntArrayRelation = assertIsNotArrayRelation(document);
+
+        Object.keys(document.resource.relations)
+            .filter(isnt(PARENT))
+            .forEach(assertIsntArrayRelation);
+
+        assertParentNotArray(relations[PARENT], document.resource.identifier);
+        if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    }
+
+
+    function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
+
+        if (isArray(parentRelation)) throw [E.PARENT_MUST_NOT_BE_ARRAY, resourceIdentifier];
+    }
+
+
+    function assertHasNoForbiddenRelations(document: Document) {
+
         const foundForbiddenRelations = Object.keys(document.resource.relations)
             .filter(includedIn(forbiddenRelations))
             .join(', ');
         if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+    }
 
-        for (let name of Object.keys(document.resource.relations)) {
-            if (name === PARENT) continue;
-            if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+
+    function assertIsNotArrayRelation(document: Document) {
+
+        return (name: string) => {
+
+            if (not(isArray)(document.resource.relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
         }
-        if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-        if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
     }
 
 
@@ -276,7 +298,7 @@ export module DefaultImportCalc {
 
 
     function rewriteIdentifiersInRelations(find: Find,
-                                                 identifierMap: IdentifierMap) {
+                                           identifierMap: IdentifierMap) {
 
         return async (relations: Relations): Promise<void> => {
 

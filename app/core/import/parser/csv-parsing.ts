@@ -1,4 +1,5 @@
 import {Document} from 'idai-components-2';
+import {makeLines} from './parser';
 
 /**
  * @author Daniel de Oliveira
@@ -9,7 +10,7 @@ export module CsvParsing {
 
         // TODO get the first line, which contains the header. make sure it conforms to the specified type
 
-        const rows = content.split('\n');
+        const rows = makeLines(content);
         if (rows.length < 1) return [];
         const fields = rows[0].split(sep);
         rows.shift();

@@ -1,6 +1,6 @@
 import {NewDocument} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {Parser} from './parser';
+import {makeLines, Parser} from './parser';
 
 /**
  * @author Sebastian Cuy
@@ -43,12 +43,7 @@ export module NativeJsonlParser {
     }
 
 
-    function makeLines(content: string) {
-
-        return content
-            .replace(/\r\n|\n\r|\n|\r/g,'\n') // accept unix and windows line endings
-            .split('\n');
-    }
+    
 
 
     function assertIsValid(document: NewDocument) {

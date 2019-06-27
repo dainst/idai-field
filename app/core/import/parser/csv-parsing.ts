@@ -5,19 +5,18 @@ import {Document} from 'idai-components-2';
  */
 export module CsvParsing {
 
-    export function parse(content: string, type: string): Array<Document> {
+    export function parse(content: string, type: string, sep: string): Array<Document> {
 
         // TODO get the first line, which contains the header. make sure it conforms to the specified type
 
         const rows = content.split('\n');
         if (rows.length < 1) return [];
-        const fields = rows[0].split(',');
+        const fields = rows[0].split(sep);
         rows.shift();
 
         return rows.reduce((documents, row) => {
 
-            const rowContents = row.split(',');
-            const document = makeDocument(rowContents, fields);
+            const document = makeDocument(row.split(sep), fields);
             (document.resource as any)['type'] = type;
             return documents.concat([document as any]);
 

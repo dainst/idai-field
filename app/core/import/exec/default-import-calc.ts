@@ -84,46 +84,24 @@ export module DefaultImportCalc {
                                     generateId: GenerateId): Promise<Array<Document>> {
 
 
-        async function preprocessAndValidateRelations(document: Document): Promise<Document> {
-
-            const relations = document.resource.relations;
-            if (!relations) return document;
-
-            if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-                const foundForbiddenRelations = Object.keys(document.resource.relations)
-                    .filter(includedIn(forbiddenRelations))
-                    .join(', ');
-                if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
-
-                for (let name of Object.keys(document.resource.relations)) {
-                    if (name === PARENT) continue;
-                    if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
-                }
-                if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-                if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
-            }
-
-            if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-
-                if (useIdentifiersInRelations) {
-                    removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-                    await rewriteIdentifiersInRelations(relations, find, identifierMap);
-                }
-            } else if (!mergeMode) {
-                await assertNoMissingRelationTargets(relations, get);
-            }
-            return document;
-        }
-
-
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
         return await asyncMap(async (document: Document) => {
-            let _ = clone(document); 
-            _ = await preprocessAndValidateRelations(_);
+
+            let _ = clone(document);
+
+            _ = await preprocessAndValidateRelations(
+                document,
+                mergeMode,
+                allowOverwriteRelationsInMergeMode,
+                useIdentifiersInRelations,
+                get,
+                rewriteIdentifiersInRelations(find, identifierMap));
+
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
+
             return validate(_, validator, mergeMode);
         })(documents);
     }
@@ -148,6 +126,43 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode)
             : [];
+    }
+
+
+    async function preprocessAndValidateRelations(document: Document,
+                                                  mergeMode: boolean,
+                                                  allowOverwriteRelationsInMergeMode: boolean,
+                                                  useIdentifiersInRelations: boolean,
+                                                  get: Get,
+                                                  rewriteIdentifiersInRelations: Function): Promise<Document> {
+
+        const relations = document.resource.relations;
+        if (!relations) return document;
+
+        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+            const foundForbiddenRelations = Object.keys(document.resource.relations)
+                .filter(includedIn(forbiddenRelations))
+                .join(', ');
+            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+
+            for (let name of Object.keys(document.resource.relations)) {
+                if (name === PARENT) continue;
+                if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+            }
+            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+            if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+        }
+
+        if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+
+            if (useIdentifiersInRelations) {
+                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(relations);
+            }
+        } else if (!mergeMode) {
+            await assertNoMissingRelationTargets(relations, get);
+        }
+        return document;
     }
 
 
@@ -240,19 +255,21 @@ export module DefaultImportCalc {
     }
 
 
-    async function rewriteIdentifiersInRelations(relations: Relations,
-                                                 find: Find,
-                                                 identifierMap: IdentifierMap): Promise<void> {
+    function rewriteIdentifiersInRelations(find: Find,
+                                                 identifierMap: IdentifierMap) {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: Identifier) => {
-            if (identifierMap[identifier]) {
-                relations[relation][i] = identifierMap[identifier];
-            } else {
-                const _ = await find(identifier);
-                if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
-                relations[relation][i] = _.resource.id;
-            }
-        });
+        return async (relations: Relations): Promise<void> => {
+
+            return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: Identifier) => {
+                if (identifierMap[identifier]) {
+                    relations[relation][i] = identifierMap[identifier];
+                } else {
+                    const _ = await find(identifier);
+                    if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
+                    relations[relation][i] = _.resource.id;
+                }
+            });
+        }
     }
 
 

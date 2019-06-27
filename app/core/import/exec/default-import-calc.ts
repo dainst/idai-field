@@ -87,6 +87,7 @@ export module DefaultImportCalc {
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
         const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
+        const rewriteFunction = rewriteIdentifiersInRelations(find, identifierMap);
 
         return await asyncMap(async (document: Document) => {
 
@@ -98,7 +99,7 @@ export module DefaultImportCalc {
                 allowOverwriteRelationsInMergeMode,
                 useIdentifiersInRelations,
                 get,
-                rewriteIdentifiersInRelations(find, identifierMap));
+                rewriteFunction);
 
             _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
 

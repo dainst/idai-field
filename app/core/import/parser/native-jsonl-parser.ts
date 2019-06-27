@@ -43,9 +43,6 @@ export module NativeJsonlParser {
     }
 
 
-    
-
-
     function assertIsValid(document: NewDocument) {
 
         if (document.resource.id) throw [ParserErrors.ID_MUST_NOT_BE_SET];

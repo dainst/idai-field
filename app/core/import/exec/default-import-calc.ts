@@ -5,7 +5,6 @@ import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
-import {clone} from '../../util/object-util';
 import {INCLUDES, LIES_WITHIN, PARENT, RECORDED_IN, RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
 
 
@@ -142,6 +141,22 @@ export module DefaultImportCalc {
     }
 
 
+    function adjustRelations(document: Document, relations: Relations) {
+
+        const foundForbiddenRelations = Object.keys(document.resource.relations)
+            .filter(includedIn(forbiddenRelations))
+            .join(', ');
+        if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+
+        for (let name of Object.keys(document.resource.relations)) {
+            if (name === PARENT) continue;
+            if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+        }
+        if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+        if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    }
+
+
     async function preprocessAndValidateRelations(document: Document,
                                                   mergeMode: boolean,
                                                   allowOverwriteRelationsInMergeMode: boolean,
@@ -153,28 +168,20 @@ export module DefaultImportCalc {
         if (!relations) return document;
 
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-            const foundForbiddenRelations = Object.keys(document.resource.relations)
-                .filter(includedIn(forbiddenRelations))
-                .join(', ');
-            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
-            for (let name of Object.keys(document.resource.relations)) {
-                if (name === PARENT) continue;
-                if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
-            }
-            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-            if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+            adjustRelations(document, relations);
         }
 
-        if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
+        if ((!mergeMode || allowOverwriteRelationsInMergeMode) && useIdentifiersInRelations) {
 
-            if (useIdentifiersInRelations) {
-                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-                await rewriteIdentifiersInRelations(relations);
-            }
+            removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+            await rewriteIdentifiersInRelations(relations);
+
         } else if (!mergeMode) {
+
             await assertNoMissingRelationTargets(relations, get);
         }
+
         return document;
     }
 

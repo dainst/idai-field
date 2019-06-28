@@ -18,6 +18,8 @@ import {CSVExporter} from '../../core/export/csv-exporter';
 
 const remote = require('electron').remote;
 
+type Count = number;
+type ResourceTypeCount = [ IdaiType, Count ];
 
 @Component({
     moduleId: module.id,
@@ -35,9 +37,12 @@ export class ExportComponent implements OnInit {
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
-    public resourceTypes: Array<IdaiType> = [];
-    public selectedOperationId: string = 'project';
+
+    public resourceTypeCounts: Array<ResourceTypeCount> = [];
     public selectedType: IdaiType|undefined = undefined;
+
+
+    public selectedOperationId: string = 'project';
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -64,15 +69,27 @@ export class ExportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
+        this.resourceTypeCounts = await this.determineTypeCounts();
+        if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
+        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+    }
 
-        this.resourceTypes =
+
+    private async determineTypeCounts() {
+
+        const resourceTypes =
             this.projectConfiguration
                 .getTypesList()
                 .filter(on('name',
                     isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
 
-        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+        const resourceTypeCounts: Array<ResourceTypeCount> = [];
+        for (let resourceType of resourceTypes) { // TODO make asyncReduce in tsfun
+            resourceTypeCounts.push([
+                resourceType,
+                (await this.datastore.find({ types: [resourceType.name] })).documents.length]);
+        }
+        return resourceTypeCounts.filter(_ => _[1] > 0);
     }
 
 

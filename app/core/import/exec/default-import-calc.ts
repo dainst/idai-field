@@ -87,7 +87,8 @@ export module DefaultImportCalc {
                                     generateId: GenerateId): Promise<Array<Document>> {
 
         const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
-        const rewriteFunction = rewriteIdentifiersInRelations(find, identifierMap);
+        const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
+        const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
 
         const process = asyncMap(async (document: Document) => {
 
@@ -96,8 +97,8 @@ export module DefaultImportCalc {
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
                 useIdentifiersInRelations,
-                get,
-                rewriteFunction);
+                assertNoMissingRelTargets,
+                rewriteIdentifiersInRels);
 
             return validate(
                 await mergeOrUseAsIs(
@@ -184,7 +185,7 @@ export module DefaultImportCalc {
                                                   mergeMode: boolean,
                                                   allowOverwriteRelationsInMergeMode: boolean,
                                                   useIdentifiersInRelations: boolean,
-                                                  get: Get,
+                                                  assertNoMissingRelTargets: Function,
                                                   rewriteIdentifiersInRelations: Function): Promise<Document> {
 
         const relations = document.resource.relations;
@@ -202,7 +203,7 @@ export module DefaultImportCalc {
 
         } else if (!mergeMode) {
 
-            await assertNoMissingRelationTargets(relations, get);
+            await assertNoMissingRelTargets(relations);
         }
 
         return document;
@@ -316,19 +317,25 @@ export module DefaultImportCalc {
     }
 
 
-    async function assertNoMissingRelationTargets(relations: Relations,
-                                                  get: Get): Promise<void> {
+    function assertNoMissingRelationTargets(get: Get) {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, id: Id) => {
-            try { await get(id) }
-            catch { throw [E.MISSING_RELATION_TARGET, id] }
-        });
+        return async (relations: Relations): Promise<void> => {
+
+            return iterateRelationsInImport(relations,
+                async (relation: string, i: number, id: Id) => {
+
+                try { await get(id) }
+                catch { throw [E.MISSING_RELATION_TARGET, id] }
+            });
+        }
     }
 
 
     async function iterateRelationsInImport(
         relations: Relations,
-        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: Id|Identifier) => Promise<void>): Promise<void> {
+        asyncIterationFunction:
+            // TODO make i last param
+            (relation: string, i: number, idOrIdentifier: Id|Identifier) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
             await asyncForEach((idOrIdentifier: string, i) =>

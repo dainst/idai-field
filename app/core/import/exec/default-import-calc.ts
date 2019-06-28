@@ -89,7 +89,7 @@ export module DefaultImportCalc {
         const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
         const rewriteFunction = rewriteIdentifiersInRelations(find, identifierMap);
 
-        return await asyncMap(async (document: Document) => {
+        const process = asyncMap(async (document: Document) => {
 
             const preprocessedDocument = await preprocessAndValidateRelations(
                 document,
@@ -107,8 +107,9 @@ export module DefaultImportCalc {
                     allowOverwriteRelationsInMergeMode),
                 validator,
                 mergeMode);
+        });
 
-        })(documents);
+        return await process(documents);
     }
 
 

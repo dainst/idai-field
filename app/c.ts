@@ -1,12 +1,14 @@
 // Constants
 
-export const PARENT = 'isChildOf';
 export const RESOURCE_IDENTIFIER = 'resource.identifier';
 export const RESOURCE_ID = 'resource.id';
 
+export const PARENT = 'isChildOf';
 export const RECORDED_IN = 'isRecordedIn';
 export const LIES_WITHIN = 'liesWithin';
 export const INCLUDES = 'includes';
+
+export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
 export const POSITION_RELATIONS = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];
 export const TIME_RELATIONS = ['isAfter', 'isBefore', 'isContemporaryWith'];

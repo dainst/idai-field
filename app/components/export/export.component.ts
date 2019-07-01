@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument, IdaiType, Messages, ProjectConfiguration, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -13,13 +13,12 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {is, on, isNot, includedIn} from 'tsfun';
-import {CSVExporter} from '../../core/export/csv-exporter';
+import {CsvExportHelper} from './csv-export-helper';
+import {ResourceTypeCount} from './export-helper';
 
 const remote = require('electron').remote;
 
-type Count = number;
-type ResourceTypeCount = [ IdaiType, Count ];
+
 
 @Component({
     moduleId: module.id,
@@ -65,32 +64,26 @@ export class ExportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
+    public find = (query: Query) => this.datastore.find(query);
 
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
-        this.resourceTypeCounts = await this.determineTypeCounts();
-        if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
+        await this.setTypeCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
 
-    private async determineTypeCounts() {
+    public async setTypeCounts() {
 
-        const resourceTypes =
-            this.projectConfiguration
-                .getTypesList()
-                .filter(on('name',
-                    isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
+        this.resourceTypeCounts = await CsvExportHelper.determineTypeCounts(
+            this.find,
+            this.selectedOperationId,
+            this.projectConfiguration.getTypesList());
 
-        const resourceTypeCounts: Array<ResourceTypeCount> = [];
-        for (let resourceType of resourceTypes) { // TODO make asyncReduce in tsfun
-            resourceTypeCounts.push([
-                resourceType,
-                (await this.datastore.find({ types: [resourceType.name] })).documents.length]);
-        }
-        return resourceTypeCounts.filter(_ => _[1] > 0);
+        if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
     }
+
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -118,17 +111,8 @@ export class ExportComponent implements OnInit {
                     break;
                 case 'csv':
                     if (this.selectedType) {
-                        try {
-                            CSVExporter.performExport(
-                                this.csvExportMode === 'complete'
-                                    ? await this.fetchDocuments()
-                                    : [],
-                                this.selectedType,
-                                filePath);
-
-                        } catch (err) {
-                            console.error(err);
-                        }
+                        await CsvExportHelper.performExport(this.find, filePath,
+                            this.csvExportMode, this.selectedOperationId, this.selectedType);
                     } else console.error("No resource type selected");
                     break;
             }
@@ -193,22 +177,6 @@ export class ExportComponent implements OnInit {
 
         if (this.modalRef) this.modalRef.close();
         this.modalRef = undefined;
-    }
-
-
-    private async fetchDocuments(): Promise<Array<FieldDocument>> {
-
-        if (!this.selectedType) return [];
-
-        try {
-
-            const docs = (await this.datastore.find({})).documents;
-            return docs.filter(on('resource.type', is(this.selectedType.name))); // TODO review. maybe index type
-
-        } catch (msgWithParams) {
-            console.error(msgWithParams);
-            return [];
-        }
     }
 
 

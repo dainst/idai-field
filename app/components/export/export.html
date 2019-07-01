@@ -38,12 +38,13 @@
                     </div>
                     -->
 
-                    <div *ngIf="format !== 'csv'" class="form-group">
+                    <div class="form-group">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@export.operationSelect.label">Maßnahme</label>
                         <select id="operationSelect" class="form-control"
-                                [(ngModel)]="selectedOperationId">
+                                [(ngModel)]="selectedOperationId"
+                                (change)="setTypeCounts()">
                             <option value="project"
                                     i18n="@@export.operationSelect.all">Alle Maßnahmen</option>
                             <option *ngFor="let operation of operations" value="{{operation.resource.id}}">

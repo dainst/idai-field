@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, isNot, map, take, forEach, on, includedIn} from 'tsfun';
-import {Document, Messages, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
+import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -22,6 +22,9 @@ import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
+import {CsvExportHelper} from '../export/csv-export-helper';
+import BASE_EXCLUSION = CsvExportHelper.BASE_EXCLUSION;
+import getTypesWithoutExcludedTypes = CsvExportHelper.getTypesWithoutExcludedTypes;
 
 
 @Component({
@@ -82,13 +85,12 @@ export class ImportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
 
-        this.resourceTypes = // TODO remove duplication with export component
-            this.projectConfiguration
-                .getTypesList()
-                .filter(on('name',
-                    isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+        this.resourceTypes =
+            getTypesWithoutExcludedTypes(
+                this.projectConfiguration.getTypesList(),
+                BASE_EXCLUSION);
 
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 

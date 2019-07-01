@@ -5,6 +5,7 @@ import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
 import {CSVExporter} from '../../core/export/csv-exporter';
 import {FieldDocument} from 'idai-components-2/src/model/field-document';
 import {Find, ResourceTypeCount} from './export-helper';
+import {subtractBy} from 'tsfun/src/arrayset';
 
 
 /**
@@ -12,7 +13,7 @@ import {Find, ResourceTypeCount} from './export-helper';
  */
 export module CsvExportHelper {
 
-    const BASE_EXCLUSION = ['Operation', 'Project', 'Image', 'Drawing', 'Photo'];
+    export const BASE_EXCLUSION = ['Operation', 'Project', 'Image', 'Drawing', 'Photo'];
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
@@ -41,6 +42,13 @@ export module CsvExportHelper {
     }
 
 
+    export function getTypesWithoutExcludedTypes(types: Array<IdaiType>, exclusion: string[]) {
+
+        return types.filter(on('name', isNot(includedIn(exclusion))))
+    }
+
+
+
     /**
      * @param find
      * @param selectedOperationId
@@ -52,12 +60,10 @@ export module CsvExportHelper {
 
         if (!selectedOperationId) return determineTypeCountsForSchema(typesList);
 
-        const exclusion = BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION);
-
         const resourceTypes =
-            typesList
-                .filter(on('name',
-                    isNot(includedIn(exclusion))));
+            getTypesWithoutExcludedTypes(
+                typesList,
+                BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION));
 
         const resourceTypeCounts: Array<ResourceTypeCount> = [];
         for (let resourceType of resourceTypes) { // TODO make asyncReduce in tsfun
@@ -72,11 +78,7 @@ export module CsvExportHelper {
 
     function determineTypeCountsForSchema(typesList: Array<IdaiType>): Array<ResourceTypeCount> {
 
-        const resourceTypes: Array<IdaiType> =
-            typesList
-                .filter(on('name',
-                    isNot(includedIn(BASE_EXCLUSION))));
-
+        const resourceTypes = getTypesWithoutExcludedTypes(typesList, BASE_EXCLUSION);
         return resourceTypes.map(type => [type, -1] as ResourceTypeCount);
     }
 

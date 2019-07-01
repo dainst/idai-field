@@ -11,17 +11,25 @@ import {Find, ResourceTypeCount} from './export-helper';
  * @author Daniel de Oliveira
  */
 export module CsvExportHelper {
-    
-    
+
+    const BASE_EXCLUSION = ['Operation', 'Project', 'Image', 'Drawing', 'Photo'];
+    const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
+
+
+    /**
+     * @param find
+     * @param filePath
+     * @param selectedOperationId
+     * @param selectedType
+     */
     export async function performExport(find: Find,
                                         filePath: string,
-                                        csvExportMode: string,
-                                        selectedOperationId: string,
+                                        selectedOperationId: string|undefined,
                                         selectedType: IdaiType) {
 
         try {
             CSVExporter.performExport(
-                csvExportMode === 'complete'
+                selectedOperationId
                     ? await fetchDocuments(find, selectedOperationId, selectedType)
                     : [],
                 selectedType,
@@ -31,14 +39,20 @@ export module CsvExportHelper {
             console.error(err);
         }
     }
-    
 
+
+    /**
+     * @param find
+     * @param selectedOperationId
+     * @param typesList
+     */
     export async function determineTypeCounts(find: Find,
-                                              selectedOperationId: string,
+                                              selectedOperationId: string|undefined,
                                               typesList: Array<IdaiType>): Promise<Array<ResourceTypeCount>> {
 
-        const exclusion = ['Operation', 'Project', 'Image', 'Drawing', 'Photo']
-            .concat(selectedOperationId === 'project' ? [] : ['Place', 'Survey', 'Trench', 'Building']);
+        if (!selectedOperationId) return determineTypeCountsForSchema(typesList);
+
+        const exclusion = BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION);
 
         const resourceTypes =
             typesList
@@ -56,16 +70,14 @@ export module CsvExportHelper {
     }
 
 
-    function getQuery(typeName: string, selectedOperationId: string) {
+    function determineTypeCountsForSchema(typesList: Array<IdaiType>): Array<ResourceTypeCount> {
 
-        const query: Query = {
-            types: [typeName],
-            constraints: {}
-        };
-        if (selectedOperationId !== 'project') {
-            (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
-        }
-        return query;
+        const resourceTypes: Array<IdaiType> =
+            typesList
+                .filter(on('name',
+                    isNot(includedIn(BASE_EXCLUSION))));
+
+        return resourceTypes.map(type => [type, -1] as ResourceTypeCount);
     }
 
 
@@ -81,5 +93,18 @@ export module CsvExportHelper {
             console.error(msgWithParams);
             return [];
         }
+    }
+
+
+    function getQuery(typeName: string, selectedOperationId: string) {
+
+        const query: Query = {
+            types: [typeName],
+            constraints: {}
+        };
+        if (selectedOperationId !== 'project') {
+            (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;
+        }
+        return query;
     }
 }

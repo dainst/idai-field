@@ -66,6 +66,9 @@ export class ExportComponent implements OnInit {
 
     public find = (query: Query) => this.datastore.find(query);
 
+    public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
+
+
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
@@ -78,7 +81,7 @@ export class ExportComponent implements OnInit {
 
         this.resourceTypeCounts = await CsvExportHelper.determineTypeCounts(
             this.find,
-            this.selectedOperationId,
+            this.getOperationIdForMode(),
             this.projectConfiguration.getTypesList());
 
         if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
@@ -89,6 +92,12 @@ export class ExportComponent implements OnInit {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') await this.tabManager.openActiveTab();
+    }
+
+
+    private getOperationIdForMode() {
+
+        return this.csvExportMode === 'complete' ? this.selectedOperationId : undefined;
     }
 
 
@@ -112,7 +121,7 @@ export class ExportComponent implements OnInit {
                 case 'csv':
                     if (this.selectedType) {
                         await CsvExportHelper.performExport(this.find, filePath,
-                            this.csvExportMode, this.selectedOperationId, this.selectedType);
+                            this.getOperationIdForMode(), this.selectedType);
                     } else console.error("No resource type selected");
                     break;
             }

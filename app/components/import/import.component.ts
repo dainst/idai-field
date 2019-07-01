@@ -76,9 +76,17 @@ export class ImportComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    public getProject = () => this.settingsService.getSelectedProject();
-
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
+
+    public showMergeOption = () => this.format === 'native' || this.format === 'csv';
+
+    public showMergeRelationsOption = () => this.format === 'native' && this.allowMergingExistingResources;
+
+    public isMeninxProject = () => this.getProject().indexOf('meninx-project') !== -1;
+
+    public isTestProject = () => this.getProject().indexOf('test') !== -1;
+
+    public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.allowMergingExistingResources;
 
 
     async ngOnInit() {
@@ -121,19 +129,9 @@ export class ImportComponent implements OnInit {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await Importer.doImport(
-            this.format,
-            this.typeUtility,
-            this.datastore,
-            this.usernameProvider,
-            this.projectConfiguration,
-            this.selectedOperationId,
-            this.allowMergingExistingResources,
-            this.allowUpdatingRelationOnMerge,
-            await reader.go(),
-            () => this.idGenerator.generateId(),
-            this.format === 'csv' && this.selectedType ? this.selectedType.name : undefined
-        );
+
+        const importReport = await this.doImport(reader);
+
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;
@@ -183,6 +181,23 @@ export class ImportComponent implements OnInit {
             case 'csv':
                 return '.csv';
         }
+    }
+
+
+    private async doImport(reader: Reader) {
+
+        return Importer.doImport(
+            this.format,
+            this.typeUtility,
+            this.datastore,
+            this.usernameProvider,
+            this.projectConfiguration,
+            this.selectedOperationId,
+            this.allowMergingExistingResources,
+            this.allowUpdatingRelationOnMerge,
+            await reader.go(),
+            () => this.idGenerator.generateId(),
+            this.format === 'csv' && this.selectedType ? this.selectedType.name : undefined);
     }
 
 
@@ -236,4 +251,7 @@ export class ImportComponent implements OnInit {
                 : new FileSystemReader(file)
             : new HttpReader(url, http);
     }
+
+
+    private getProject = () => this.settingsService.getSelectedProject();
 }

@@ -69,7 +69,9 @@ export module Importer {
                                    generateId: () => string,
                                    selectedType?: string|undefined) {
 
-        const parse = createParser(format, selectedType);
+        const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
+
+        const parse = createParser(format, mainTypeDocumentId_, selectedType);
         const docsToUpdate: Document[] = [];
         try {
 
@@ -81,7 +83,6 @@ export module Importer {
         }
 
         const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));
-        const mainTypeDocumentId_ = !allowMergingExistingResources ? mainTypeDocumentId : '';
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
@@ -102,6 +103,7 @@ export module Importer {
 
 
     function createParser(format: ImportFormat,
+                          operationId: string,
                           selectedType?: string|undefined): any {
 
         switch (format) {
@@ -110,7 +112,8 @@ export module Importer {
             case 'idig':
                 return IdigCsvParser.parse;
             case 'csv':
-                return CsvParser.getParse(selectedType as any); // TODO throw if undefined type
+                if (!selectedType) throw "SELECTED TYPE MUST BE SET"; // TODO improve
+                return CsvParser.getParse(selectedType as any, operationId);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
@@ -137,7 +140,7 @@ export module Importer {
         switch (format) {
             case 'csv':
                 return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, true);
+                    generateId, mergeMode);
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':

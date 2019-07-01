@@ -1,12 +1,23 @@
 import {Document} from 'idai-components-2';
 import {makeLines} from './parser';
+import {PARENT} from '../../../c';
 
 /**
  * @author Daniel de Oliveira
  */
 export module CsvParsing {
 
-    export function parse(content: string, type: string, sep: string): Array<Document> {
+    /**
+     * @param content
+     * @param type
+     * @param sep
+     * @param operationId
+     */
+    export function parse(content: string,
+                          type: string,
+                          sep: string,
+                          operationId: string // '' means no operation id - TODO test
+    ): Array<Document> {
 
         // TODO get the first line, which contains the header. make sure it conforms to the specified type
 
@@ -18,7 +29,10 @@ export module CsvParsing {
         return rows.reduce((documents, row) => {
 
             const document = makeDocument(row.split(sep), fields);
+
             (document.resource as any)['type'] = type;
+            (document.resource as any).relations = { isChildOf: operationId };
+
             return documents.concat([document as any]);
 
         }, [] as Array<Document>);

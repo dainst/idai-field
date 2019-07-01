@@ -22,12 +22,12 @@
                         <select id="importFormatSelect" class="form-control"
                                 [(ngModel)]="format" (change)="onFormatChange()">
                             <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
-                            <option *ngIf="getProject().indexOf('test') !== -1" value="idig"
+                            <option *ngIf="isTestProject()" value="idig"
                                     i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
                             <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
                             <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
                             <option value="csv">CSV</option>
-                            <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind"
+                            <option *ngIf="isMeninxProject()" value="meninxfind"
                                     i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
                         </select>
                     </div>
@@ -51,7 +51,7 @@
                         <select id="importTypeSelect" class="form-control"
                                 [(ngModel)]="selectedType">
 
-                            <option *ngFor="let t of resourceTypes" value="t.name">
+                            <option *ngFor="let t of resourceTypes" [ngValue]="t">
                                 {{t.label}}
                             </option>
                         </select>
@@ -81,7 +81,7 @@
                                [(ngModel)]="url">
                     </div>
 
-                    <div *ngIf="format === 'native'" class="form-group form-check-inline">
+                    <div *ngIf="showMergeOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
                                [(ngModel)]="allowMergingExistingResources">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
@@ -89,7 +89,7 @@
                         </label>
                     </div>
 
-                    <div *ngIf="format === 'native'" class="import-info" i18n="@@import.mergeOption.info">
+                    <div *ngIf="showMergeOption()" class="import-info" i18n="@@import.mergeOption.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
@@ -99,7 +99,7 @@
                         geschieht per Bezeichner (Feld <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="form-group form-check-inline">
+                    <div *ngIf="showMergeRelationsOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
                                [(ngModel)]="allowUpdatingRelationOnMerge">
                         <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.relationsLabel">
@@ -107,12 +107,12 @@
                         </label>
                     </div>
 
-                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="import-info" i18n="@@import.mergeOption.relationsInfo">
+                    <div *ngIf="showMergeRelationsOption()" class="import-info" i18n="@@import.mergeOption.relationsInfo">
                         Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
                         Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </div>
 
-                    <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
+                    <div class="form-group" *ngIf="showImportIntoOperation()">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>

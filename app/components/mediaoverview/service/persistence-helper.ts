@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {MediaOverviewFacade} from '../view/media-overview-facade';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {Model3DStore} from '../../core-3d/model-3d-store';
-import {TypeUtility} from '../../../core/model/type-utility';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
+import {clone} from '../../../core/util/object-util';
+import {TypeUtility} from '../../../core/model/type-utility';
+
 
 @Injectable()
 /**
@@ -27,76 +29,51 @@ export class PersistenceHelper {
     ) {}
 
 
-    public deleteSelectedMediaDocuments(): Promise<any> {
+    public async deleteSelectedMediaDocuments() {
 
-        return new Promise<any>((resolve, reject) => {
+        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
 
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let document of this.mediaOverviewFacade.getSelected()) {
-                if (!document.resource.id) continue;
-
-                promise = promise.then(
-                    () => this.removeAssociatedMediaFiles(document),
-                    msgWithParams => reject(msgWithParams)
-                ).then(
-                    () => this.persistenceManager.remove(document, this.usernameProvider.getUsername()),
-                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
-                ).then(() => {
-                    this.mediaOverviewFacade.remove(document);
-                });
-            }
-
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
-            );
-        });
-    }
-
-
-    public addRelationsToSelectedDocuments(targetDocument: IdaiFieldDocument): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let mediaDocument of this.mediaOverviewFacade.getSelected()) {
-                const oldVersion = JSON.parse(JSON.stringify(mediaDocument));
-
-                const depictsEl = mediaDocument.resource.relations.depicts;
-
-                if (depictsEl.indexOf(targetDocument.resource.id as any) == -1) {
-                    depictsEl.push(targetDocument.resource.id as any);
-                }
-
-                promise = promise.then(
-                    () => this.persistenceManager.persist(mediaDocument, this.usernameProvider.getUsername(), oldVersion),
-                    msgWithParams => reject(msgWithParams)
-                );
-            }
-
-            promise.then(
-                () => resolve(),
-                msgWithParams => reject(msgWithParams)
-            );
-        });
-    }
-
-
-    public removeRelationsOnSelectedDocuments() {
-
-        const promises = [] as any;
         for (let document of this.mediaOverviewFacade.getSelected()) {
+            if (!document.resource.id) continue;
 
-            const oldVersion = JSON.parse(JSON.stringify(document));
+            try {
+                await this.removeAssociatedMediaFiles(document);
+                await this.persistenceManager.remove(document, this.usernameProvider.getUsername());
+                this.mediaOverviewFacade.remove(document);
+            } catch (err) {
+                throw [M.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
+            }
+        }
+    }
+
+
+    public async addDepictsRelationsToSelectedDocuments(targetDocument: FieldDocument) {
+
+        for (let mediaDocument of this.mediaOverviewFacade.getSelected()) {
+            const oldVersion: IdaiFieldMediaDocument = clone(mediaDocument);
+            const depictsRelations: string[] = mediaDocument.resource.relations.depicts;
+
+            if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
+                depictsRelations.push(targetDocument.resource.id);
+            }
+
+            await this.persistenceManager.persist(
+                mediaDocument, this.usernameProvider.getUsername(), oldVersion
+            );
+        }
+    }
+
+
+    public async removeDepictsRelationsOnSelectedDocuments() {
+
+        for (let document of this.mediaOverviewFacade.getSelected()) {
+            const oldVersion: IdaiFieldMediaDocument = clone(document);
             document.resource.relations.depicts = [];
 
-            promises.push(this.persistenceManager.persist(
-                document, this.usernameProvider.getUsername(),
-                oldVersion) as never);
+            await this.persistenceManager.persist(
+                document, this.usernameProvider.getUsername(), oldVersion
+            );
         }
-        return Promise.all(promises);
     }
 
 

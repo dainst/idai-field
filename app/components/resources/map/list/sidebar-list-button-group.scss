@@ -1,0 +1,77 @@
+$activated-color: #868e96;
+$button-width: 24px;
+$button-group-width: 2 * $button-width;
+
+
+.sidebar-list-button-group {
+  position: absolute;
+  right: 0;
+  height: $item-height;
+  width: $button-group-width;
+  color: gray;
+
+  .btn {
+    border: 0;
+    color: $activated-color;
+  }
+
+  .sidebar-list-button-group-inner {
+    position: relative;
+    width: $button-width;
+    top: 14px;
+  }
+
+  .info-button,
+  .link-button,
+  .hierarchy-button {
+    position: absolute;
+    width: $button-width;
+    height: $item-height;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:hover {
+      color: darken($activated-color, 10%);
+      background-color: darken($list-item-hover-color, 10%);
+      transition: background-color .2s ease;
+    }
+  }
+
+  .info-button {
+    left: 0;
+
+    span {
+      position: absolute;
+      left: 0;
+      top: 19px;
+    }
+  }
+
+  .hierarchy-button {
+    left: $button-width;
+
+    span {
+      position: absolute;
+      top: 20px;
+      left: 1px;
+    }
+
+    &.hierarchy-button-overview span {
+      left: 3px;
+
+      &.arrow-up {
+        top: 19px;
+      }
+
+      &.arrow-top-right {
+        top: 18px;
+      }
+    }
+  }
+
+  .sidebar-list-button-group-active-button {
+    background-color: darken($list-item-hover-color, 10%);
+
+    @extend .btn:active;
+  }
+}

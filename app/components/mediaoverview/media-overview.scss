@@ -62,15 +62,16 @@
     padding-top: 14px;
     user-select: none;
     cursor: default;
+  }
 
-    .mdi {
-      cursor: pointer;
-    }
+  #media-pager {
+    margin-top: 3px;
+    width: 100%;
   }
 
   .slider {
     -webkit-appearance: none;
-    width: 70%;
+    width: 80%;
     height: 5px;
     border-radius: 2px;
     background: #d3d3d3;
@@ -86,7 +87,6 @@
       height: 15px;
       border-radius: 50%;
       background: $primary;
-      cursor: pointer;
     }
   }
 

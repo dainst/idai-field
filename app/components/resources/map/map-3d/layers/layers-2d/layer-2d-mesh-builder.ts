@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {IdaiFieldGeoreference} from 'idai-components-2'
+import {ImageGeoreference} from 'idai-components-2'
 import {SettingsService} from '../../../../../../core/settings/settings-service';
 import {ImageReadDatastore} from '../../../../../../core/datastore/field/image-read-datastore';
 import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';;
@@ -33,11 +33,11 @@ export class Layer2DMeshBuilder {
 
 
     private async getGeoreference(imageResourceId: string)
-    : Promise<{ georeference: IdaiFieldGeoreference, height: number}> {
+    : Promise<{ georeference: ImageGeoreference, height: number}> {
 
         const imageDocument: IdaiFieldImageDocument = await this.datastore.get(imageResourceId);
         return {
-            georeference: imageDocument.resource.georeference as IdaiFieldGeoreference,
+            georeference: imageDocument.resource.georeference as ImageGeoreference,
             height: imageDocument.resource.georeferenceHeight || 0
         };
     }
@@ -61,19 +61,19 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getPosition(georeference: IdaiFieldGeoreference, height: number): THREE.Vector3 {
+    private static getPosition(georeference: ImageGeoreference, height: number): THREE.Vector3 {
 
         return Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates, height);
     }
 
 
-    private static getGeometryOffset(georeference: IdaiFieldGeoreference): THREE.Vector3 {
+    private static getGeometryOffset(georeference: ImageGeoreference): THREE.Vector3 {
 
         return Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates);
     }
 
 
-    private static async createGeometry(georeference: IdaiFieldGeoreference,
+    private static async createGeometry(georeference: ImageGeoreference,
                                         offset: THREE.Vector3): Promise<THREE.BufferGeometry> {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
@@ -101,7 +101,7 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static async createVertices(georeference: IdaiFieldGeoreference,
+    private static async createVertices(georeference: ImageGeoreference,
                                         offset: THREE.Vector3): Promise<Array<THREE.Vector3>> {
 
         const bottomLeft: THREE.Vector3

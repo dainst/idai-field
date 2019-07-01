@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {DatastoreErrors, Document, NewDocument, ProjectConfiguration, IdaiType,
-    FieldDefinition} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -127,13 +126,6 @@ export class DocumentHolder {
     }
 
 
-    public async remove() {
-
-        await this.removeAssociatedMediaFiles();
-        await this.removeWithPersistenceManager();
-    }
-
-
     private async performAssertions() {
 
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
@@ -142,6 +134,7 @@ export class DocumentHolder {
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
         await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
+        await this.validator.assertGeometryIsValid(this.clonedDocument);
     }
 
 
@@ -178,37 +171,9 @@ export class DocumentHolder {
     private async fetchLatestRevision(id: string): Promise<Document> {
 
         try {
-            return await this.datastore.get(id, { skip_cache: true });
+            return await this.datastore.get(id, { skipCache: true });
         } catch (e) {
             throw [M.DATASTORE_ERROR_NOT_FOUND];
-        }
-    }
-
-
-    private async removeAssociatedMediaFiles(): Promise<any> {
-
-        if (this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Image')) {
-            if (!this.imagestore.getPath()) {
-                return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
-            }
-            return this.imagestore.remove(this.clonedDocument.resource.id).catch(() => {
-                return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
-            });
-        } else if (this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Model3D')) {
-            return this.model3DStore.remove(this.clonedDocument.resource.id);
-        } else {
-            return Promise.resolve();
-        }
-    }
-
-
-    private async removeWithPersistenceManager(): Promise<any> {
-
-        try {
-            await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
-        } catch (removeError) {
-            console.error('removeWithPersistenceManager', removeError);
-            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];
         }
     }
 

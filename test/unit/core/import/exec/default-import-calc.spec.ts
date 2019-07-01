@@ -111,7 +111,7 @@ describe('DefaultImportCalc', () => {
 
         const result = await process([
             d('Feature', 'newFeature', { isChildOf: 'existingTrench',
-                isAfter: ['existingFeature2']}) // TODO should not be allowed since not in same trench (see todo for adding test in relations completer spec)
+                isAfter: ['existingFeature']})
         ]);
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');
@@ -372,7 +372,7 @@ describe('DefaultImportCalc', () => {
     it('merge, overwrite relations', async done => {
 
         const result = await processMergeOverwriteRelations([
-            d('Feature', 'existingFeature', { isAfter: ['existingFeature2']})
+            d('Feature', 'existingFeature', { isChildOf: 'existingTrench2', isAfter: ['existingFeature2']})
         ]);
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
@@ -482,7 +482,7 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('parent is an array', async done => {
+    it('isChildOf is an array', async done => {
 
         const result = await process([
             d('Feature', 'one', { isChildOf: [] })
@@ -493,14 +493,25 @@ describe('DefaultImportCalc', () => {
     });
 
 
+    it('other relation is not an array', async done => {
+
+        const result = await process([
+            d('Feature', 'one', { isAbove: 'b' })
+        ]);
+        expect(result[2][0]).toEqual(E.MUST_BE_ARRAY);
+        expect(result[2][1]).toEqual('one');
+        done();
+    });
+
+
     it('missing liesWithin and no operation assigned', async done => {
 
-        validator.assertHasLiesWithin.and.throwError('E');
+        validator.assertHasLiesWithin.and.callFake(() => { throw [E.NO_PARENT_ASSIGNED]});
 
         const result = await process([
             d('Feature', 'one')
         ]);
-        expect(result[2][0]).toEqual(E.NO_LIES_WITHIN_SET);
+        expect(result[2][0]).toEqual(E.NO_PARENT_ASSIGNED);
         done();
     });
 

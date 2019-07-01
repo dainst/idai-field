@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {IdaiDocumentsModule, IdaiWidgetsModule, IdaiMessagesModule} from 'idai-components-2';
+import {IdaiWidgetsModule, IdaiMessagesModule} from 'idai-components-2';
 import {DoceditComponent} from './docedit.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditMediaTabComponent} from './tabs/docedit-media-tab.component';
@@ -13,10 +13,9 @@ import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.component';
 import {MediaResourcePickerComponent} from './widgets/media-resource-picker.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
-import {DeleteModalComponent} from './dialog/delete-modal.component';
+import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
 import {DocumentHolder} from './document-holder';
 import {EditFormComponent} from './core/edit-form.component';
-import {RelationsFormComponent} from './core/relations-form.component';
 import {RelationPickerComponent} from './widgets/relationpicker/relation-picker.component';
 import {RelationPickerGroupComponent} from './widgets/relationpicker/relation-picker-group.component';
 import {CheckboxesComponent} from './core/forms/checkboxes.component';
@@ -32,6 +31,8 @@ import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
+import {GenericFormComponent} from './core/generic-form-component';
+import {GeometryComponent} from './core/forms/geometry.component';
 
 
 @NgModule({
@@ -44,7 +45,6 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
         NgbModule,
         FormsModule,
         IdaiWidgetsModule,
-        IdaiDocumentsModule,
         RouterModule,
         IdaiMessagesModule,
         WidgetsModule,
@@ -62,8 +62,8 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
         MediaResourcePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,
-        RelationsFormComponent,
         RelationPickerComponent,
+        GenericFormComponent,
         RelationPickerGroupComponent,
         CheckboxesComponent,
         BooleanComponent,
@@ -74,7 +74,8 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
         DatingComponent,
         DateComponent,
         DimensionComponent,
-        DropdownRangeComponent
+        DropdownRangeComponent,
+        GeometryComponent
     ],
     exports: [
         EditSaveDialogComponent,

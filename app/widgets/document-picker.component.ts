@@ -1,8 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Query, IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {union} from 'tsfun';
+import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint, Messages} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
+import {AngularUtility} from '../common/angular-utility';
+
 
 @Component({
     selector: 'document-picker',
@@ -16,12 +19,12 @@ import {clone} from '../core/util/object-util';
  */
 export class DocumentPickerComponent implements OnChanges {
 
-    @Input() relationName: string;
-    @Input() relationRangeType: string;
+    @Input() filterOptions: Array<IdaiType>;
+    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
 
-    @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    public documents: Array<IdaiFieldDocument>;
+    public documents: Array<FieldDocument>;
 
     private query: Query = { limit: 50 };
     private currentQueryId: string;
@@ -29,7 +32,8 @@ export class DocumentPickerComponent implements OnChanges {
 
     constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private loading: Loading) {}
+                private loading: Loading,
+                private messages: Messages) {}
 
 
     public isLoading = () => this.loading.isLoading();
@@ -37,7 +41,19 @@ export class DocumentPickerComponent implements OnChanges {
 
     async ngOnChanges() {
 
+        this.query.types = this.getAllAvailableTypeNames();
         await this.updateResultList();
+    }
+
+
+    public getQueryTypes(): string[]|undefined {
+
+        if (!this.query.types) return undefined;
+
+        return this.query.types.length === this.getAllAvailableTypeNames().length
+                && this.filterOptions.length > 1
+            ? undefined
+            : this.query.types;
     }
 
 
@@ -53,8 +69,9 @@ export class DocumentPickerComponent implements OnChanges {
         if (types && types.length > 0) {
             this.query.types = types;
         } else {
-            delete this.query.types;
+            this.query.types = this.getAllAvailableTypeNames();
         }
+
         await this.updateResultList();
     }
 
@@ -62,7 +79,9 @@ export class DocumentPickerComponent implements OnChanges {
     public isQuerySpecified(): boolean {
 
         return ((this.query.q !== undefined && this.query.q.length > 0)
-            || (this.query.types !== undefined && this.query.types.length > 0));
+            || (this.query.types !== undefined
+                && (this.query.types.length < this.getAllAvailableTypeNames().length
+                    || this.query.types.length === 1)));
     }
 
 
@@ -75,39 +94,31 @@ export class DocumentPickerComponent implements OnChanges {
 
     private async fetchDocuments() {
 
-        this.loading.start();
+        this.loading.start('documentPicker');
+        await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
-        this.query.id = this.currentQueryId;
 
         try {
+            if (this.getConstraints) this.query.constraints = await this.getConstraints();
+            this.query.id = this.currentQueryId;
+
             const result = await this.datastore.find(clone(this.query));
-            if (result.queryId === this.currentQueryId) {
-                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
-            }
-        } catch (err) {
-            console.error(err);
+            if (result.queryId === this.currentQueryId) this.documents = result.documents;
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
         } finally {
             this.loading.stop();
         }
     }
 
 
-    private filterNotAllowedRelationDomainTypes(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private getAllAvailableTypeNames(): string[] {
 
-        const result: Array<IdaiFieldDocument> = [];
-
-        for (let document of documents) {
-
-            if (this.projectConfiguration.isAllowedRelationDomainType(
-                    document.resource.type,
-                    this.relationRangeType,
-                    this.relationName)) {
-
-                result.push(document);
-            }
-        }
-
-        return result;
+        return union(this.filterOptions.map(type => {
+            return type.children
+                ? [type.name].concat(type.children.map(child => child.name))
+                : [type.name];
+        }));
     }
 }

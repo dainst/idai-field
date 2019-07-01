@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb';
-import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document, Query} from 'idai-components-2';
+import {AppConfigurator, ConfigLoader, ConfigReader, Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -12,8 +12,6 @@ import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
 import {RemoteChangesStream} from '../../app/core/datastore/core/remote-changes-stream';
-import {ResourcesStateManagerConfiguration} from '../../app/components/resources/view/resources-state-manager-configuration';
-import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';
@@ -21,6 +19,11 @@ import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
+import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
+import {TabManager} from '../../app/components/tab-manager';
+import {MediaState} from '../../app/components/mediaoverview/view/media-state';
+import {MediaDocumentsManager} from '../../app/components/mediaoverview/view/media-documents-manager';
+import {MediaOverviewFacade} from '../../app/components/mediaoverview/view/media-overview-facade';
 
 
 class IdGenerator {
@@ -40,7 +43,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
         pouchdbmanager,
         undefined,
-        new IdaiFieldAppConfigurator(
+        new AppConfigurator(
             new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
             () => ''
         ),
@@ -90,12 +93,14 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const typeConverter = new FieldTypeConverter(typeUtility);
 
-    const idaiFieldDocumentDatastore = new FieldDatastore(
+    const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const idaiFieldImageDocumentDatastore = new ImageDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
+    const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
+        documentCache as DocumentCache<ImageDocument>, typeConverter);
 
     const remoteChangesStream = new RemoteChangesStream(
         datastore,
@@ -104,18 +109,32 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         typeConverter,
         { getUsername: () => 'fakeuser' });
 
-    const resourcesStateManager = ResourcesStateManagerConfiguration.build(
-        projectConfiguration,
-        idaiFieldDocumentDatastore,
-        new StandardStateSerializer(settingsService),
-        'synctest',
-        true,
-        'de'
+    const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
+    stateSerializer.load.and.returnValue(Promise.resolve({}));
+    stateSerializer.store.and.returnValue(Promise.resolve());
+
+    const tabSpaceCalculator = jasmine.createSpyObj('tabSpaceCalculator',
+        ['getTabSpaceWidth', 'getTabWidth']);
+    tabSpaceCalculator.getTabSpaceWidth.and.returnValue(1000);
+    tabSpaceCalculator.getTabWidth.and.returnValue(0);
+
+    const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
+        fieldDocumentDatastore,
+        { url: '/project', events: { subscribe: () => Promise.resolve() } } as any, () => '');
+
+    const resourcesStateManager = new ResourcesStateManager(
+        fieldDocumentDatastore,
+        createdIndexFacade,
+        stateSerializer,
+        typeUtility,
+        tabManager,
+        projectName,
+        true
     );
 
     const viewFacade = new ViewFacade(
         projectConfiguration,
-        idaiFieldDocumentDatastore,
+        fieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
@@ -123,7 +142,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const persistenceManager = new PersistenceManager(
-        idaiFieldDocumentDatastore,
+        fieldDocumentDatastore,
         projectConfiguration,
         typeUtility,
     );
@@ -131,7 +150,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => idaiFieldDocumentDatastore.find(q), typeUtility),
+        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), typeUtility),
         undefined,
         undefined,
         typeUtility,
@@ -139,14 +158,28 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore
     );
 
+
+    // TODO create imageoverview-facade
+
+    const mediaState = new MediaState(); // TODO check why both imagedocumentsmanager and imageoverviewfacade need this as constructor arg
+
+    const mediaDocumentsManager = new MediaDocumentsManager(mediaState, imageDatastore);
+
+    const mediaOverviewFacade = new MediaOverviewFacade(mediaDocumentsManager, mediaState, typeUtility);
+
+
     return {
         remoteChangesStream,
         viewFacade,
         documentHolder,
         documentDatastore,
-        idaiFieldDocumentDatastore,
+        fieldDocumentDatastore,
         idaiFieldImageDocumentDatastore,
-        settingsService
+        settingsService,
+        resourcesStateManager,
+        stateSerializer,
+        tabManager,
+        mediaOverviewFacade
     }
 }
 

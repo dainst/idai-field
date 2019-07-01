@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 
 
 export type Map3DAction = 'drag'|'changeAngle'|'none';
@@ -10,6 +10,6 @@ export type Map3DAction = 'drag'|'changeAngle'|'none';
 export interface Map3DControlState {
 
     action: Map3DAction;
-    hoverDocument?: IdaiFieldDocument;
-    selectedDocument?: IdaiFieldDocument;
+    hoverDocument?: FieldDocument;
+    selectedDocument?: FieldDocument;
 }

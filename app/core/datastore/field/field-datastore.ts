@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {PouchdbDatastore} from '../core/pouchdb-datastore';
 import {DocumentCache} from '../core/document-cache';
 import {TypeConverter} from '../core/type-converter';
@@ -10,14 +10,14 @@ import {IndexFacade} from '../index/index-facade';
  *
  * @author Daniel de Oliveira
  */
-export class FieldDatastore extends CachedDatastore<IdaiFieldDocument> {
+export class FieldDatastore extends CachedDatastore<FieldDocument> {
 
     constructor(
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
-        documentCache: DocumentCache<IdaiFieldDocument>,
-        documentConverter: TypeConverter<IdaiFieldDocument>) {
+        documentCache: DocumentCache<FieldDocument>,
+        documentConverter: TypeConverter<FieldDocument>) {
 
-        super(datastore, indexFacade, documentCache, documentConverter, 'IdaiFieldDocument');
+        super(datastore, indexFacade, documentCache, documentConverter, 'FieldDocument');
     }
 }

@@ -1,5 +1,5 @@
-import {takeUntil, takeWhile, on} from 'tsfun';
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {takeUntil, takeWhile, on, is} from 'tsfun';
+import {Document, FieldDocument} from 'idai-components-2';
 import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
@@ -13,13 +13,13 @@ import {ModelUtil} from '../../../../core/model/model-util';
 export interface NavigationPath {
 
     readonly basicContext: ViewContext; // used when no segment selected
-    readonly segments: Array<NavigationPathSegment>;
+    segments: Array<NavigationPathSegment>;
 
     /**
      * The selected segment is 'identified' by this id.
      * It corresponds with segment[_].document.resource.id.
      */
-    readonly selectedSegmentId?: string;
+    selectedSegmentId?: string;
 }
 
 
@@ -36,8 +36,8 @@ export module NavigationPath {
 
     export function getSelectedSegment(navPath: NavigationPath) {
 
-        return navPath.segments.find(element =>
-            element.document.resource.id === navPath.selectedSegmentId) as NavigationPathSegment;
+        return navPath.segments
+            .find(on('document.resource.id', is(navPath.selectedSegmentId))) as NavigationPathSegment;
     }
 
 
@@ -73,45 +73,39 @@ export module NavigationPath {
      * @return a new path object with updated state
      */
     export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
-                                             newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
-
-        const updatedNavigationPath = clone(navigationPath);
+                                             newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
         if (newSelectedSegmentDoc) {
-            (updatedNavigationPath as any).segments = rebuildElements(
+            (navigationPath as any).segments = rebuildElements(
                 navigationPath.segments,
                 navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
 
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc
+        (navigationPath as any).selectedSegmentId = newSelectedSegmentDoc
             ? newSelectedSegmentDoc.resource.id
             : undefined;
 
-        return updatedNavigationPath;
+        return navigationPath;
     }
 
 
     export function setSelectedDocument(navPath: NavigationPath,
-                                        document: IdaiFieldDocument|undefined): NavigationPath {
+                                        document: FieldDocument|undefined) {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).selected = document;
-        return _clone;
+        getViewContext(navPath).selected = document;
     }
 
 
-    export function getSelectedDocument(navPath: NavigationPath): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(navPath: NavigationPath): FieldDocument|undefined {
 
         return getViewContext(navPath).selected;
     }
 
 
-    export function setQueryString(navPath: NavigationPath, q: string): NavigationPath {
+    export function setQueryString(navPath: NavigationPath, q: string) {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).q = q;
-        return _clone;
+        getViewContext(navPath).q = q;
     }
 
 
@@ -123,9 +117,7 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
-        const _clone = clone(navPath);
-        (getViewContext(_clone) as any).types = types;
-        return _clone;
+        getViewContext(navPath).types = types;
     }
 
 
@@ -137,20 +129,21 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortened = clone(navPath);
-        (shortened as any /* cast ok on construction */).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
+        const oldNavPath = clone(navPath);
+        (navPath as any /* cast ok on construction */).segments
+            = takeWhile(differentFrom(firstToBeExcluded))(oldNavPath.segments);
 
-        if (shortened.selectedSegmentId) {
+        if (navPath.selectedSegmentId) {
 
-            const stillSelectedSegment = shortened.segments
-                .find(_ => _.document.resource.id === shortened.selectedSegmentId);
+            const stillSelectedSegment = navPath.segments
+                .find(_ => _.document.resource.id === navPath.selectedSegmentId);
 
             if (!stillSelectedSegment) {
-                (shortened as any /* cast ok on construction */).selectedSegmentId = undefined;
+                (navPath as any /* cast ok on construction */).selectedSegmentId = undefined;
             }
         }
 
-        return shortened;
+        return navPath;
     }
 
 
@@ -160,16 +153,14 @@ export module NavigationPath {
     }
 
 
-    export async function findInvalidSegment(mainTypeDocumentResourceId: string|undefined, navPath: NavigationPath,
-                                             exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
+    export function findInvalidSegment(mainTypeDocumentResourceId: string|undefined,
+                                       navPath: NavigationPath,
+                                       exists: (_: string) => boolean): NavigationPathSegment|undefined {
 
         for (let segment of navPath.segments) {
-            if (!await NavigationPathSegment.isValid(
-                    mainTypeDocumentResourceId,
-                    segment,
-                    navPath.segments,
-                    exists)) {
-
+            if (!NavigationPathSegment.isValid(
+                mainTypeDocumentResourceId, segment, navPath.segments, exists
+            )) {
                 return segment;
             }
         }
@@ -178,7 +169,7 @@ export module NavigationPath {
     }
 
 
-    export function isPartOfNavigationPath(document: IdaiFieldDocument, navPath: NavigationPath,
+    export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath,
                                            mainTypeDocumentResourceId: string|undefined): boolean {
 
         if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
@@ -193,7 +184,7 @@ export module NavigationPath {
     }
 
 
-    export async function makeSegments(document: IdaiFieldDocument, get: (_: string) => Promise<IdaiFieldDocument>) {
+    export async function makeSegments(document: FieldDocument, get: (_: string) => Promise<FieldDocument>) {
 
         const segments: Array<NavigationPathSegment> = [];
 
@@ -209,17 +200,16 @@ export module NavigationPath {
     }
 
 
-    export function replaceSegmentsIfNecessary(navPath:NavigationPath, newSegments: NavigationPathSegment[],
+    export function replaceSegmentsIfNecessary(navPath: NavigationPath,
+                                               newSegments: Array<NavigationPathSegment>,
                                                newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = clone(navPath);
-
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
-            (updatedNavigationPath as any).segments = newSegments;
+            navPath.segments = newSegments;
         }
 
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentId;
-        return updatedNavigationPath;
+        navPath.selectedSegmentId = newSelectedSegmentId;
+        return navPath;
     }
 
 
@@ -234,12 +224,12 @@ export module NavigationPath {
 
     function rebuildElements(oldSegments: Array<NavigationPathSegment>,
                              oldSelectedSegmentId: string|undefined,
-                             newSelectedSegmentDoc: IdaiFieldDocument): Array<NavigationPathSegment> {
+                             newSelectedSegmentDoc: FieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
-                    ? takeUntil(on('document.resource.id:')(oldSelectedSegmentId))(oldSegments)
+                    ? takeUntil(on('document.resource.id', is(oldSelectedSegmentId)))(oldSegments)
                     : []
             ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]) as NavigationPathSegment[];
     }

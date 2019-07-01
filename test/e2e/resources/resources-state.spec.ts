@@ -1,15 +1,14 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {MediaOverviewPage} from '../media/media-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {RelationsViewPage} from '../widgets/relations-view.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {OperationBarPage} from '../operation-bar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
+import {ImageViewPage} from '../images/image-view.page';
 
 
 const fs = require('fs');
@@ -19,6 +18,12 @@ const common = require('../common');
 
 
 /**
+ * filter
+ * suggestions
+ * search/list
+ * filter
+ * navpath
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -37,10 +42,11 @@ describe('resources/state --', function() {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToOverview();
+            NavbarPage.clickCloseNonResourcesTab();
+            NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 3);
         }
 
@@ -65,7 +71,7 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        NavbarPage.clickNavigateToMediaOverview();
+        MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 5);
         MediaOverviewPage.createDepictsRelation('S1');
     }
@@ -74,12 +80,40 @@ describe('resources/state --', function() {
     function clickDepictsRelationLink() {
 
         MediaOverviewPage.doubleClickCell(0);
-        RelationsViewPage.clickRelation(0);
+        ImageViewPage.openRelationsTab();
+        ImageViewPage.clickRelation();
     }
 
 
-    it('search/suggestions -- show suggestion for resource from different context', done => {
+    it('filter', () => {
 
+        // map
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performCreateResource('1');
+        SearchBarPage.typeInSearchField('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+
+        // list
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S2');
+        ResourcesPage.clickListModeButton();
+
+        // fulltext
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        SearchBarPage.typeInSearchField('SE1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+
+        // filter
+        SearchBarPage.typeInSearchField(' ');
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+    });
+
+
+    it('filter - suggestions', async done => {
+
+        // show suggestion for resource from different context
         SearchBarPage.typeInSearchField('SE0');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
@@ -87,23 +121,13 @@ describe('resources/state --', function() {
             expect(suggestions[0].getText()).toEqual('SE0');
         });
 
-        done();
-    });
-
-
-    it('search/suggestions -- do not show suggestions if any resources in current context are found', done => {
-
+        // do not show suggestions if any resources in current context are found
         SearchBarPage.typeInSearchField('S');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
 
-        done();
-    });
-
-
-    it('search/suggestions -- do not suggest project document', done => {
-
+        // do not suggest project document
         SearchBarPage.typeInSearchField('te');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
@@ -111,52 +135,21 @@ describe('resources/state --', function() {
             expect(suggestions[0].getText()).toEqual('testf1');
         });
 
-        done();
-    });
-
-
-    it('search/suggestions -- delete query string after following suggestion link', async done => {
-
+        // delete query string after following suggestion link
         SearchBarPage.typeInSearchField('SE0');
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.clickTab('project');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
     });
 
 
-    it('search/list -- perform a fulltext search', () => {
+    it('filter -- select all', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickListModeButton();
-
-        OperationBarPage.performSelectOperation(1);
-
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('SE1');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-    });
-
-
-    it('search/list -- perform a type filter search', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickListModeButton();
-
-        OperationBarPage.performSelectOperation(1);
-
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-    });
-
-
-    it('search -- select all filter', () => {
-
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -169,9 +162,9 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- show correct types in plus type menu after choosing type filter', () => {
+    it('filter -- show correct types in plus type menu after choosing type filter', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         const checkTypeOptions = () => {
 
@@ -203,9 +196,9 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('filter -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
 
         const checkTypeIcon = () => {
@@ -242,7 +235,8 @@ describe('resources/state --', function() {
 
         checkTypeIcon();
         createResourceWithPresetType('1', false);
-        DetailSidebarPage.getTypeFromDocView().then(character => expect(character).toEqual('Erdbefund'));
+        ResourcesPage.clickSelectResource('1', 'info');
+        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
 
         ResourcesPage.clickListModeButton();
         checkTypeIcon();
@@ -250,9 +244,9 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- filter by parent type', () => {
+    it('filter -- by parent type', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -266,16 +260,18 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for extended search query', done => {
+    it('search -- show suggestion for extended search query', done => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
-        NavbarPage.clickNavigateToExcavation();
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
         SearchConstraintsPage.clickConstraintsMenuButton();
@@ -294,9 +290,49 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for simple input field', () => {
+    it('filter - jump into right context', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        // map - stay in overview
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('S1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('S1'));
+
+        // list - stay in overview
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('S1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
+
+        // map - goto other tab and into navpath
+        ResourcesPage.clickMapModeButton();
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickHierarchyButton('testf1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('testf1'));
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+
+        // list - goto other tab and into navpath
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickListModeButton();
+        ResourcesPage.clickHierarchyButton('testf1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+    });
+
+
+    it('search -- perform constraint search for simple input field', () => {
+
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('processor', 'testvalue');
@@ -313,11 +349,12 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for dropdown field', () => {
+    it('search -- perform constraint search for dropdown field', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickGotoChildPropertiesTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -332,14 +369,16 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- perform constraint search for boolean field', () => {
+    it('search -- perform constraint search for boolean field', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
+        DoceditPage.clickGotoPropertiesTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 
@@ -366,9 +405,9 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/extended -- remove field from dropdown after adding constraint', () => {
+    it('search -- remove field from dropdown after adding constraint', () => {
 
-        OperationBarPage.clickSwitchHierarchyMode();
+        ResourcesPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('operation');
         SearchConstraintsPage.clickConstraintsMenuButton();
@@ -388,28 +427,6 @@ describe('resources/state --', function() {
         createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-    });
-
-
-    it('operate in different views', () => {
-
-        ResourcesPage.performCreateResource('trench3', 'trench');
-
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.performCreateResource('befund1', 'feature-architecture');
-
-        OperationBarPage.performSelectOperation(1);
-
-        OperationBarPage.performSelectOperation(0); // trench2
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
-
-        NavbarPage.clickNavigateToOverview();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('A1'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('B1'));
-        ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('S1'));
-        ResourcesPage.getListItemIdentifierText(3).then(text => expect(text).toEqual('S2'));
-        ResourcesPage.getListItemIdentifierText(4).then(text => expect(text).toEqual('trench3'));
     });
 
 
@@ -438,74 +455,45 @@ describe('resources/state --', function() {
     });
 
 
-    it('jump from operation overview to view via move into button', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-
-        NavbarPage.clickNavigateToOverview();
-        ResourcesPage.performCreateResource('t2', 'trench');
-        ResourcesPage.clickHierarchyButton('t2');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
-    });
-
-
     it('navpath -- show correct navigation path after click on relation link', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
 
         ResourcesPage.performCreateResource('c2', 'feature');
-        ResourcesPage.clickHierarchyButton('c2');
-        ResourcesPage.performCreateResource('i1', 'inscription',
-            undefined, undefined, true);
-        ResourcesPage.performCreateRelation('i1', 'testf1', 0);
+        ResourcesPage.performDescendHierarchy('c2');
+        ResourcesPage.performCreateResource('c3', 'feature');
+        ResourcesPage.getNavigationButtons().get(0).click();
 
-        RelationsViewPage.clickRelation(2);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
+        ResourcesPage.performCreateResource('c4', 'feature');
+        ResourcesPage.performDescendHierarchy('c4');
+        ResourcesPage.performCreateResource('c5', 'feature');
+        ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
+
+        ResourcesPage.clickSelectResource('c5', 'info');
+        FieldsViewPage.clickAccordionTab(1);
+        FieldsViewPage.clickRelation(1, 0);
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('c3')), delays.ECWaitTime);
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('c3'));
+
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
             expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
-        });
-    });
-
-
-    it('navpath -- update navigation path after changing liesWithin relation', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickHierarchyButton('SE0');
-
-        ResourcesPage.openEditByDoubleClickResource('testf1');
-        DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
-        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
-        DoceditPage.clickSaveDocument();
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('context2');
+            expect(navigationButtons[1].getText()).toEqual('c2');
         });
     });
 
 
     it('navpath -- update navigation path after deleting resource', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-
+        ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickMainTypeDocumentNavigationButton();
+        ResourcesPage.clickOperationNavigationButton();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('SE0');
-        DoceditPage.clickConfirmDeleteInModal();
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
+        ResourcesPage.clickConfirmDeleteInModal();
 
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
@@ -515,25 +503,61 @@ describe('resources/state --', function() {
     });
 
 
-    it('navpath/hierarchy - switch between modes', () => {
+    it('navpath - update when moving a resource within the same operation', () => {
 
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performCreateResource('S-New', 'feature');
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
-        OperationBarPage.clickSwitchHierarchyMode();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
+        ResourcesPage.performDescendHierarchy('SE0');
+        ResourcesPage.clickOpenContextMenu('testf1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('S-New');
+        ResourcesPage.clickResourceListItemInMoveModal('S-New');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('S-New');
+        });
     });
 
 
-    it('navpath/hierarchy - select all', () => {
+    it('navpath - update when moving a resource to another operation', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-        OperationBarPage.clickSwitchHierarchyMode();
-        OperationBarPage.performSelectOperation(0);
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.performDescendHierarchy('SE0');
+        ResourcesPage.clickOperationNavigationButton();
+
+        ResourcesPage.clickOpenContextMenu('SE0');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        ResourcesPage.clickResourceListItemInMoveModal('S2');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(1);
+            expect(navigationButtons[0].getText()).toEqual('S2');
+        });
+
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(1);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+        });
+    });
+
+
+    it('navpath/hierarchy - switch between modes', () => {
+
+        ResourcesPage.clickHierarchyButton('S1');
+
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SE1'));
+        ResourcesPage.performDescendHierarchy('SE0');
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
+        ResourcesPage.clickSwitchHierarchyMode();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
     });
 });

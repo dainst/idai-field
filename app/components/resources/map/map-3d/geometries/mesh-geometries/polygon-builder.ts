@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import earcut from 'earcut';
-import {ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {ProjectConfiguration, FieldDocument, FieldGeometry} from 'idai-components-2';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
 import {MeshPreparationUtility} from '../../../../../core-3d/mesh-loading/mesh-preparation-utility';
@@ -15,7 +15,7 @@ export class PolygonBuilder {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public buildPolygon(document: IdaiFieldDocument, selected: boolean): MeshGeometry {
+    public buildPolygon(document: FieldDocument, selected: boolean): MeshGeometry {
 
         const mesh: THREE.Mesh = this.createMesh(document, selected);
 
@@ -28,7 +28,7 @@ export class PolygonBuilder {
     }
 
 
-    private createMesh(document: IdaiFieldDocument, selected: boolean): THREE.Mesh {
+    private createMesh(document: FieldDocument, selected: boolean): THREE.Mesh {
 
         const position: THREE.Vector3 = PolygonBuilder.getPosition(document);
         const geometry: THREE.BufferGeometry = PolygonBuilder.createGeometry(document, position);
@@ -46,7 +46,7 @@ export class PolygonBuilder {
     }
 
 
-    private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
+    private createMaterial(document: FieldDocument, selected: boolean): THREE.Material {
 
         return new THREE.MeshLambertMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type),
@@ -58,7 +58,7 @@ export class PolygonBuilder {
     }
 
 
-    private createOutline(document: IdaiFieldDocument, geometry: THREE.BufferGeometry): THREE.LineSegments {
+    private createOutline(document: FieldDocument, geometry: THREE.BufferGeometry): THREE.LineSegments {
 
         const edgesGeometry: THREE.EdgesGeometry
             = new THREE.EdgesGeometry(geometry, 180);
@@ -74,7 +74,7 @@ export class PolygonBuilder {
     }
 
 
-    private static createGeometry(document: IdaiFieldDocument, position: THREE.Vector3)
+    private static createGeometry(document: FieldDocument, position: THREE.Vector3)
             : THREE.BufferGeometry {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
@@ -87,18 +87,18 @@ export class PolygonBuilder {
     }
 
 
-    private static getPosition(document: IdaiFieldDocument): THREE.Vector3 {
+    private static getPosition(document: FieldDocument): THREE.Vector3 {
 
-        const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0][0];
+        const firstPoint: number[] = (document.resource.geometry as FieldGeometry).coordinates[0][0];
 
         return getPointVector(firstPoint);
     }
 
 
-    private static getVertices(document: IdaiFieldDocument, position: THREE.Vector3): Array<THREE.Vector3> {
+    private static getVertices(document: FieldDocument, position: THREE.Vector3): Array<THREE.Vector3> {
 
         return PolygonBuilder
-            .getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates)
+            .getPointVectors((document.resource.geometry as FieldGeometry).coordinates)
             .map(point => point.sub(position));
     }
 
@@ -115,9 +115,9 @@ export class PolygonBuilder {
     }
 
 
-    private static getFaces(document: IdaiFieldDocument): Array<THREE.Face3> {
+    private static getFaces(document: FieldDocument): Array<THREE.Face3> {
 
-        const {vertices} = earcut.flatten((document.resource.geometry as IdaiFieldGeometry).coordinates);
+        const {vertices} = earcut.flatten((document.resource.geometry as FieldGeometry).coordinates);
         const faceIndices: number[] = earcut(vertices, undefined, 3);
         const faces: Array<THREE.Face3> = [];
 

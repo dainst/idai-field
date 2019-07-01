@@ -95,6 +95,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'M.Import.ImportErrors.liesWithinRecordedInMismatch';
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
+    public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
     public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
 
     // Export Package
@@ -118,6 +119,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
+    public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
@@ -137,6 +139,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'imagestore.error.invalidPath.read';
     public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'imagestore.error.invalidPath.write';
     public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imagestore.error.invalidPath.delete';
+    public static IMAGESTORE_ERROR_UPLOAD = 'imagestore.error.upload';
     public static IMAGESTORE_ERROR_WRITE = 'imagestore.error.write';
     public static IMAGESTORE_ERROR_DELETE = 'imagestore.error.delete';
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'imagestore.error.invalidWorldfile';
@@ -593,6 +596,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
+        this.msgs[M.IMPORT_MUST_BE_ARRAY] = {
+            content: i18n({
+                id: 'messages.Import.ImportErrors.relationMustBeArray',
+                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Relationen ausser \'isChildOf\' müssen Arrays sein.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {
             content: i18n({
                 id: 'messages.import.error.prevalidation.missingRelationTarget',
@@ -935,6 +947,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.DOCEDIT_ERROR_RESOLVE_CONFLICT] = {
+            content: i18n({
+                id: 'messages.docedit.error.resolveConflict',
+                value: 'Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer gelöst wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidNumericValue',
@@ -1065,6 +1086,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.imagestore.error.invalidPath.delete',
                 value: 'Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGESTORE_ERROR_UPLOAD] = {
+            content: i18n({
+                id: 'messages.imagestore.error.upload',
+                value: 'Die Datei \'[0]\' konnte nicht gelesen werden.'
             }),
             level: 'danger',
             params: [],

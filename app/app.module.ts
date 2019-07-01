@@ -1,13 +1,13 @@
 import {APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import {DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
-    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator, Query} from 'idai-components-2';
+import {ConfigLoader, ConfigReader, IdaiMessagesModule, MD, Messages,
+    ProjectConfiguration, IdaiWidgetsModule, AppConfigurator, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -25,7 +25,6 @@ import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
 import {BackupModule} from './components/backup/backup.module';
-import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {View3DModule} from './components/view-3d/view-3d.module';
 import {AppController} from './app-controller';
@@ -51,6 +50,9 @@ import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
 import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
 import {FieldDatastore} from './core/datastore/field/field-datastore';
+import {TabManager} from './components/tab-manager';
+import {MenuService} from './menu-service';
+import {TabSpaceCalculator} from './components/tab-space-calculator';
 
 
 const remote = require('electron').remote;
@@ -75,7 +77,6 @@ registerLocaleData(localeDe, 'de');
         FormsModule,
         HttpClientModule,
         NgbModule.forRoot(),
-        IdaiDocumentsModule,
         IdaiMessagesModule,
         routing,
         IdaiWidgetsModule,
@@ -97,13 +98,14 @@ registerLocaleData(localeDe, 'de');
         HelpComponent
     ],
     providers: [
+        DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,
         ConfigReader,
         ConfigLoader,
-        IdaiFieldAppConfigurator,
+        AppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
@@ -164,8 +166,8 @@ registerLocaleData(localeDe, 'de');
             provide: FulltextIndex,
             useFactory: () => {
                 if (!fulltextIndex) {
-                    console.error('fulltext indexer has not yet been provided');
-                    throw 'fulltext indexer has not yet been provided';
+                    console.error('fulltext index has not yet been provided');
+                    throw 'fulltext index has not yet been provided';
                 }
                 return fulltextIndex;
             },
@@ -175,8 +177,8 @@ registerLocaleData(localeDe, 'de');
             provide: ConstraintIndex,
             useFactory: () => {
                 if (!constraintIndex) {
-                    console.error('constraint indexer has not yet been provided');
-                    throw 'constraint indexer has not yet been provided';
+                    console.error('constraint index has not yet been provided');
+                    throw 'constraint index has not yet been provided';
                 }
                 return constraintIndex;
             },
@@ -197,13 +199,13 @@ registerLocaleData(localeDe, 'de');
         {
             provide: Validator,
             useFactory: (
-                idaiFieldDocumentDatastore: FieldDatastore,
+                fieldDocumentDatastore: FieldDatastore,
                 projectConfiguration: ProjectConfiguration,
                 typeUtility: TypeUtility) => {
 
                 return new Validator(
                     projectConfiguration,
-                    (q: Query) => idaiFieldDocumentDatastore.find(q),
+                    (q: Query) => fieldDocumentDatastore.find(q),
                     typeUtility
                 )
             },
@@ -211,8 +213,10 @@ registerLocaleData(localeDe, 'de');
         },
         ImportValidator,
         { provide: MD, useClass: M},
-        DoceditActiveTabService,
-        SynchronizationStatus
+        SynchronizationStatus,
+        TabManager,
+        TabSpaceCalculator,
+        MenuService
     ],
     entryComponents: [
         ProjectsModalComponent

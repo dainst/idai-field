@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {MapComponent, Messages, ProjectConfiguration, IdaiFieldImageDocument,
-    IdaiFieldGeoreference} from 'idai-components-2';
+import {MapComponent, Messages, ProjectConfiguration, ImageDocument,
+    ImageGeoreference} from 'idai-components-2';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {ImageLayerManager} from './image-layer-manager';
 import {ListDiffResult} from '../layer-manager';
@@ -20,9 +20,9 @@ import {SettingsService} from '../../../../core/settings/settings-service';
  */
 export class LayerMapComponent extends MapComponent {
 
-    @Input() mainTypeDocumentIds: string;
+    @Input() viewName: string;
 
-    public layers: Array<IdaiFieldImageDocument> = [];
+    public layers: Array<ImageDocument> = [];
 
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
@@ -51,7 +51,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public async toggleLayer(layer: IdaiFieldImageDocument) {
+    public async toggleLayer(layer: ImageDocument) {
 
         this.layerManager.toggleLayer(layer.resource.id as any);
 
@@ -63,7 +63,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public focusLayer(layer: IdaiFieldImageDocument) {
+    public focusLayer(layer: ImageDocument) {
 
         const georeference = layer.resource.georeference;
         const bounds = [] as any;
@@ -134,13 +134,13 @@ export class LayerMapComponent extends MapComponent {
 
     private async addLayerToMap(resourceId: string) {
 
-        const layerDocument: IdaiFieldImageDocument|undefined
-            = this.layers.find(layer => layer.resource.id == resourceId);
+        const layerDocument: ImageDocument|undefined
+            = this.layers.find(layer => layer.resource.id === resourceId);
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
-        const georeference = layerDocument.resource.georeference as IdaiFieldGeoreference;
+        const georeference = layerDocument.resource.georeference as ImageGeoreference;
         this.imageOverlays[resourceId] = L.imageOverlay(
             imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any,
             [georeference.topLeftCoordinates,
@@ -195,14 +195,14 @@ export class LayerMapComponent extends MapComponent {
         // Update layers after switching main type document.
         // Update layers after switching to another view with an existing main type document or coming from
         // a view with an existing main type document.
-        if (changes['mainTypeDocumentIds']
-            && (changes['mainTypeDocumentIds'].currentValue || changes['mainTypeDocumentIds'].previousValue)) {
+        if (changes['viewName']
+            && (changes['viewName'].currentValue || changes['viewName'].previousValue)) {
             return true;
         }
 
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.
         return (changes['documents'] && changes['documents'].currentValue
-            && changes['documents'].currentValue.length == 0);
+            && changes['documents'].currentValue.length === 0);
     }
 }

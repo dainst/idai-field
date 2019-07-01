@@ -1,6 +1,7 @@
 import {MediaOverviewPage} from './media-overview.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {MenuPage} from '../menu.page';
 
 const common = require('../common');
 
@@ -22,10 +23,10 @@ describe('media/media-overview/state --', () => {
         SearchBarPage.clickChooseTypeFilter('image-drawing');
         MediaOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToMediaOverview();
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
+        SearchBarPage.getSelectedTypeFilterCharacter('images').then(value => expect(value).toEqual('Z'));
         MediaOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
     });
 
@@ -37,8 +38,8 @@ describe('media/media-overview/state --', () => {
         SearchBarPage.typeInSearchField('Layer 1');
         MediaOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToMediaOverview();
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('Layer 1'));
         MediaOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
@@ -50,8 +51,8 @@ describe('media/media-overview/state --', () => {
         MediaOverviewPage.clickIncreaseGridSizeButton();
         MediaOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToMediaOverview();
+        NavbarPage.clickCloseNonResourcesTab();
+        MenuPage.navigateToImages();
 
         MediaOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });

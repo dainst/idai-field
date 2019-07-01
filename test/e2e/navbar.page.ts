@@ -4,57 +4,40 @@ const EC = protractor.ExpectedConditions;
 const delays = require('./config/delays');
 const common = require('./common');
 
+
 export class NavbarPage {
 
     // click
 
-    public static clickNavigateToOverview() {
+    public static clickTab(tabName: string) {
 
-        return common.click(element.all(by.css('.nav-link')).get(0));
+        return common.click(element(by.id('navbar-' + tabName)));
     }
 
 
-    public static clickNavigateToExcavation() {
+    public static clickCloseNonResourcesTab() {
 
-        return common.click(element.all(by.css('.nav-link')).get(2));
-    };
-
-
-    public static clickNavigateToBuilding() {
-
-        return common.click(element.all(by.css('.nav-link')).get(3));
-    };
-
-
-    public static clickNavigateToMediaOverview() {
-
-        return common.click(element.all(by.css('.nav-link')).get(8));
-    };
-
-
-    public static clickNavigateToMatrix() {
-
-        return common.click(element.all(by.css('.nav-link')).get(6));
-    };
+        return common.click(element(by.css('#non-resources-tab .mdi')));
+    }
 
 
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));
-    };
+    }
 
 
-    public static clickConflictResolverLink(identifier) {
+    public static clickConflictResolverLink(identifier: string) {
 
         return common.click(element(by.id('taskbar-conflict-' + identifier)));
-    };
+    }
 
 
-    public static clickSelectProject = function(option) {
+    public static clickSelectProject(option) {
 
         browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#projectSelectBox option')).get(option).click();
-    };
+    }
 
 
     public static clickCloseAllMessages() {
@@ -65,12 +48,12 @@ export class NavbarPage {
                 buttonEl.click();
             }
         })
-    };
+    }
 
 
     // await
 
-    public static awaitAlert(text, matchExactly = true) {
+    public static awaitAlert(text: string, matchExactly: boolean = true) {
 
         if (matchExactly) {
             browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
@@ -81,34 +64,34 @@ export class NavbarPage {
     };
 
 
+    // elements
+
+    public static getTab(routeName: string, resourceIdentifier?: string) {
+
+        return element(by.id('navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : '')));
+    }
+
+
     // get text
 
     public static getMessageText() {
 
         browser.sleep(200);
         return element(by.id('message-0')).getText();
-    };
+    }
 
 
     public static getActiveNavLinkLabel() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))),
+            delays.ECWaitTime);
         return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
     }
 
 
-    // sequences
+    public static getTabLabel(routeName: string, resourceIdentifier?: string) {
 
-    public static performNavigateToSettings() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        return common.click(element(by.id('settings-button')));
-    };
-
-
-    public static performNavigateToImport() {
-
-        common.click(element(by.id('taskbar-dropdown')));
-        common.click(element(by.id('import-button')));
-    };
+        browser.wait(EC.visibilityOf(this.getTab(routeName, resourceIdentifier)), delays.ECWaitTime);
+        return this.getTab(routeName, resourceIdentifier).getText();
+    }
 }

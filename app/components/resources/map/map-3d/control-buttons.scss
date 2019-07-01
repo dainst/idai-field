@@ -18,8 +18,8 @@
 
 #turn-clockwise-button:hover,
 #turn-counterclockwise-button:hover {
-  border-top-color: darken($list-item-hover-colour, 5%);
-  border-left-color: darken($list-item-hover-colour, 5%);
+  border-top-color: darken($list-item-hover-color, 5%);
+  border-left-color: darken($list-item-hover-color, 5%);
 }
 
 #turn-clockwise-button {
@@ -47,7 +47,7 @@
 
 #turn-clockwise-button:hover:before,
 #turn-counterclockwise-button:hover:before {
-  border-left: 9px solid darken($list-item-hover-colour, 5%);
+  border-left: 9px solid darken($list-item-hover-color, 5%);
 }
 
 #turn-clockwise-button:before {

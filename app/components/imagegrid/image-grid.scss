@@ -17,7 +17,6 @@
 
   .cell {
     position: relative;
-    cursor: pointer;
     user-select: none;
     pointer-events: auto !important;
 
@@ -41,6 +40,10 @@
 
     img {
       border: 3px solid white;
+    }
+
+    .identifier {
+      width: calc(100% - 1px);
     }
 
     .title {

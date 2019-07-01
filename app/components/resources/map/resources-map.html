@@ -3,11 +3,12 @@
         <sidebar-list></sidebar-list>
     </div>
 
-    <div id="map-component-container" class="col px-0" [class.small-container]="isDocumentSelected()">
+    <div class="col px-0"
+         [class.no-zoom-buttons]="activePopoverMenu !== 'none' && viewFacade.getSelectedDocument()">
         <editable-map *ngIf="mapMode === '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
-                      [parentDocuments]="parentDocuments"
-                      [mainTypeDocumentIds]="mainTypeIds()"
+                      [parentDocument]="parentDocument"
+                      [viewName]="viewFacade.getView()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="getProjectDocument()"
                       [update]="viewFacade.isReady()"
@@ -15,11 +16,7 @@
                       (onQuitEditing)="quitEditing($event)"></editable-map>
         <map-3d *ngIf="mapMode === '3d'" [documents]="viewFacade.getDocuments()"
                 [selectedDocument]="viewFacade.getSelectedDocument()"
-                [mainTypeDocumentIds]="mainTypeIds()"
+                [parentDocument]="parentDocument"
                 (onSelectDocument)="select($event)"></map-3d>
-    </div>
-
-    <div *ngIf="isDocumentSelected()" class="col px-0 detail-sidebar-container">
-        <document-view-sidebar [showGeometryEditingOptions]="mapMode === '2d'"></document-view-sidebar>
     </div>
 </div>

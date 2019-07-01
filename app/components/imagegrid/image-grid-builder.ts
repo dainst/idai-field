@@ -95,6 +95,7 @@ export module ImageGridConstruction {
     function newCell(document: any, calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
+
         cell.document = document;
         cell.calculatedWidth = getWidth(document) * calculatedHeight / getHeight(document);
         cell.calculatedHeight = calculatedHeight;

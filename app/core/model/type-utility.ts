@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {to} from 'tsfun';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2';
 
 
 @Injectable()
@@ -23,18 +23,18 @@ export class TypeUtility {
     }
 
 
-    public getSubtypes(superTypeName: string): any {
+    public getTypeAndSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
 
-        const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
+        const projectTypesMap: { [type: string]: IdaiType } = this.projectConfiguration.getTypesMap();
         let subtypes: any = {};
 
-        if (projectTypesTree[superTypeName]) {
-            subtypes[superTypeName] = projectTypesTree[superTypeName];
+        if (projectTypesMap[superTypeName]) {
+            subtypes[superTypeName] = projectTypesMap[superTypeName];
 
-            if (projectTypesTree[superTypeName].children) {
-                for (let i = projectTypesTree[superTypeName].children.length - 1; i >= 0; i--) {
-                    subtypes[projectTypesTree[superTypeName].children[i].name]
-                        = projectTypesTree[superTypeName].children[i];
+            if (projectTypesMap[superTypeName].children) {
+                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
+                    subtypes[projectTypesMap[superTypeName].children[i].name]
+                        = projectTypesMap[superTypeName].children[i];
                 }
             }
         }
@@ -59,6 +59,12 @@ export class TypeUtility {
     }
 
 
+    public getNamesOfTypeAndSubtypes(superTypeName: string): string[] {
+
+        return Object.keys(this.getTypeAndSubtypes(superTypeName));
+    }
+
+
     public getNonMediaTypeNames(): string[] {
 
         return this.getNonMediaTypes().map(type => type.name);
@@ -67,19 +73,25 @@ export class TypeUtility {
 
     public getImageTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Image'));
+        return Object.keys(this.getTypeAndSubtypes('Image'));
     }
 
 
     public getFeatureTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Feature'));
+        return Object.keys(this.getTypeAndSubtypes('Feature'));
+    }
+
+
+    public getOperationTypeNames(): string[] {
+
+        return Object.keys(this.getTypeAndSubtypes('Operation'));
     }
 
 
     public get3DTypeNames(): string[] {
 
-        return Object.keys(this.getSubtypes('Model3D'));
+        return Object.keys(this.getTypeAndSubtypes('Model3D'));
     }
 
 
@@ -109,6 +121,32 @@ export class TypeUtility {
             .map(to('name'))
             .filter(typename => this.isSubtype(typename, 'Operation'))
             .concat('Place');
+    }
+
+
+    public getAllowedRelationDomainTypes(relationName: string, rangeTypeName: string): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => {
+                return this.projectConfiguration.isAllowedRelationDomainType(
+                    type.name, rangeTypeName, relationName
+                ) && (!type.parentType || !this.projectConfiguration.isAllowedRelationDomainType(
+                    type.parentType.name, rangeTypeName, relationName
+                ));
+            });
+    }
+
+
+    public getAllowedRelationRangeTypes(relationName: string, domainTypeName: string): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => {
+                return this.projectConfiguration.isAllowedRelationDomainType(
+                    domainTypeName, type.name, relationName
+                ) && (!type.parentType || !this.projectConfiguration.isAllowedRelationDomainType(
+                    domainTypeName, type.parentType.name, relationName
+                ));
+            });
     }
 
 

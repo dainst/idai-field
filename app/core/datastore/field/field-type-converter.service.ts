@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Document, IdaiFieldImageDocument} from 'idai-components-2';
-import {takeOrMake} from 'tsfun';
+import {Document, ImageDocument} from 'idai-components-2';
 import {TypeConverter} from '../core/type-converter';
 import {TypeUtility} from '../../model/type-utility';
 import {FieldnameMigrator} from './fieldname-migrator';
+import {takeOrMake} from "../../util/object-util";
+
 
 @Injectable()
 /**
@@ -20,18 +21,25 @@ export class FieldTypeConverter extends TypeConverter<Document> {
 
     public assertTypeToBeOfClass(type: string, typeClass: string): void {
 
-        if (typeClass === 'IdaiFieldImageDocument') {
-            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be IdaiFieldImageDocument';
-        } else if (typeClass === 'IdaiFieldFeatureDocument') {
-            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be IdaiFieldFeatureDocument';
-        } else if (typeClass === 'IdaiFieldDocument') {
-            if (this.typeUtility.isSubtype(type, 'Image') || this.typeUtility.isSubtype(type, 'Model3D')) {
-                throw 'Wrong type class: must not be IdaiFieldImageDocument';
-            }
+        if (typeClass === 'ImageDocument') {
+
+            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be ImageDocument';
+
+        } else if (typeClass === 'FeatureDocument') {
+
+            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be FeatureDocument';
+
+        } else if (typeClass === 'FieldDocument') {
+
+            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be ImageDocument';
             // feature docs are allowed to also be idai field documents
+
         } else if (typeClass === 'IdaiField3DDocument') {
+
             if (!this.typeUtility.isSubtype(type, 'Model3D')) throw 'Wrong type class: must be IdaiField3DDocument';
+
         } else if (typeClass === 'IdaiFieldMediaDocument') {
+
             if (!this.typeUtility.isSubtype(type, 'Image') && !this.typeUtility.isSubtype(type, 'Model3D')) {
                 throw 'Wrong type class: must be IdaiFieldMediaDocument';
             }
@@ -41,11 +49,11 @@ export class FieldTypeConverter extends TypeConverter<Document> {
 
     public getTypesForClass(typeClass: string): string[]|undefined {
 
-        if (typeClass === 'IdaiFieldImageDocument') {
+        if (typeClass === 'ImageDocument') {
             return this.typeUtility.getImageTypeNames();
-        } else if (typeClass === 'IdaiFieldFeatureDocument') {
+        } else if (typeClass === 'FeatureDocument') {
             return this.typeUtility.getFeatureTypeNames();
-        } else if (typeClass === 'IdaiFieldDocument') {
+        } else if (typeClass === 'FieldDocument') {
             return this.typeUtility.getNonMediaTypeNames();
         } else if (typeClass === 'IdaiField3DDocument') {
            return this.typeUtility.get3DTypeNames();
@@ -62,13 +70,13 @@ export class FieldTypeConverter extends TypeConverter<Document> {
             takeOrMake(document,'resource.identifier','');
             takeOrMake(document,'resource.relations.depicts', []);
         } else {
-            takeOrMake(document,'resource.identifier','');
-            takeOrMake(document,'resource.relations.isRecordedIn', []);
+            takeOrMake(document, 'resource.identifier','');
+            takeOrMake(document, 'resource.relations.isRecordedIn', []);
 
             if (this.typeUtility.isSubtype(document.resource.type,'Feature')) {
-                takeOrMake(document,'resource.relations.isContemporaryWith', []);
-                takeOrMake(document,'resource.relations.isAfter', []);
-                takeOrMake(document,'resource.relations.isBefore', []);
+                takeOrMake(document, 'resource.relations.isContemporaryWith', []);
+                takeOrMake(document, 'resource.relations.isAfter', []);
+                takeOrMake(document, 'resource.relations.isBefore', []);
             }
         }
 

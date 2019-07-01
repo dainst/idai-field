@@ -16,14 +16,14 @@ media-overview-search-bar {
       }
     }
 
-    #object-search {
+    .search-bar-input {
       width: calc(100% - 101px) !important;
     }
 
-    #filter-button {
+    #media-search-bar-filter-button {
       right: 26px !important;
 
-      #searchfilter {
+      .search-filter {
         height: 39px !important;
       }
     }

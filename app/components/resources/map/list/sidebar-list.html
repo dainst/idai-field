@@ -1,46 +1,52 @@
-<ul id="objectList" class="list-group object-list">
+<context-menu *ngIf="contextMenuPosition"
+              [position]="contextMenuPosition"
+              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+
+
+<div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
+
+    <div *ngIf="isPopoverMenuOpened('children')" class="sidebar-popover-page">
+        <children-view [document]="viewFacade.getSelectedDocument()"></children-view>
+    </div>
+
+    <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
+        <div class="sidebar-popover-header">
+            <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>
+            <div class="btn btn-light" (click)="closePopover()">
+                <span class="mdi mdi-close"></span>
+            </div>
+        </div>
+
+        <thumbnail [identifier]="viewFacade.getSelectedDocument().resource.identifier"
+                   [isDepictedInRelations]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
+        </thumbnail>
+
+        <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
+            <fields-view [resource]="viewFacade.getSelectedDocument().resource"
+                         (onJumpToResource)="jumpToResource($event)"></fields-view>
+        </div>
+    </div>
+</div>
+
+<ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
+    (scroll)="closeContextMenu()">
     <li *ngFor="let document of viewFacade.getDocuments()"
-        (click)="select(document)"
-        (dblclick)="resourcesComponent.editDocument(document, 'fields')"
-        class="list-group-item"
+        class="resources-listing-item resources-listing-item-wide"
+        (mouseover)="highlightDocument(document)"
+        (mouseleave)="highlightedDocument = undefined"
+        (contextmenu)="openContextMenu($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
         [class.selected]="viewFacade.getSelectedDocument()
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <div *ngIf="showMoveIntoOption(document)"
-             class="hierarchy-button move-into-button btn float-right"
-             ngbTooltip="Untergeordnete Ressourcen ansehen"
-             i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
-             placement="left"
-             triggers="manual"
-             #tooltip="ngbTooltip"
-             (mouseover)="tooltip.open()"
-             (mouseleave)="tooltip.close()"
-             (mousedown)="tooltip.close()"
-             (click)="moveInto(document); $event.stopPropagation();">
-            <span class="badge badge-secondary">{{viewFacade.getChildrenCount(document)}}</span>
-            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
-        </div>
+        <sidebar-list-button-group [document]="document"></sidebar-list-button-group>
 
-        <div *ngIf="showJumpToViewOption(document)"
-             class="hierarchy-button btn float-right"
-             ngbTooltip="Zur Maßnahme wechseln"
-             i18n-ngbTooltip="@@resources.jumpToView.tooltip"
-             placement="left"
-             triggers="manual"
-             #tooltip="ngbTooltip"
-             (mouseover)="tooltip.open()"
-             (mouseleave)="tooltip.close()"
-             (mousedown)="tooltip.close()"
-             (click)="jumpToView(document); $event.stopPropagation();">
-            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
-        </div>
-
-        <div class="document-teaser-container">
-            <document-teaser [document]="document"></document-teaser>
-        </div>
+        <document-teaser
+                (click)="select(document)"
+                (dblclick)="editDocument(document)"
+                [document]="document"></document-teaser>
     </li>
 
     <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info" i18n="@@resources.sidebarList.resourceLimitInfo">
@@ -54,6 +60,6 @@
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedType]="getCurrentFilterType()"
              [liesWithin]="getSelectedSegmentDoc()"
-             [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
+             [isRecordedIn]="viewFacade.getCurrentOperation()"
              [status]="getPlusButtonStatus()"></plus-button>
 <loading-icon></loading-icon>

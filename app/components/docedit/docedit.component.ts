@@ -2,12 +2,10 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
-import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
-    ProjectConfiguration} from 'idai-components-2';
+import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
+    ProjectConfiguration, FieldDefinition, RelationDefinition} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
-import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
@@ -38,11 +36,14 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
  */
 export class DoceditComponent {
 
+    public activeGroup: string = 'stem';
     public subModalOpened: boolean = false;
+    public fieldDefinitions: Array<FieldDefinition>|undefined;
+    public relationDefinitions: Array<RelationDefinition>|undefined;
 
     private parentLabel: string|undefined = undefined;
     private showDoceditMediaTab: boolean = false;
-    private operationInProgress: 'save'|'duplicate'|'delete'|'none' = 'none';
+    private operationInProgress: 'save'|'duplicate'|'none' = 'none';
     private escapeKeyPressed: boolean = false;
 
 
@@ -53,8 +54,7 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
-        private activeTabService: DoceditActiveTabService,
-        private projectConfiguration: ProjectConfiguration,
+        public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {
     }
@@ -64,10 +64,6 @@ export class DoceditComponent {
     public isLoading = () => this.loading.isLoading();
 
     public getFieldDefinitionLabel: (_: string) => string;
-
-
-    public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
-        this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -92,53 +88,27 @@ export class DoceditComponent {
     }
 
 
-    public getActiveTab() {
-
-        return 'docedit-' + this.activeTabService.getActiveTab() + '-tab';
-    }
-
-
-    public changeActiveTab(event: any) {
-
-        this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
-    };
-
-
-    public showDropdownButton(): boolean {
-
-        return this.documentHolder.clonedDocument !== undefined
-            && this.documentHolder.clonedDocument.resource.type !== 'Project';
-    }
-
-
     public showDuplicateButton(): boolean {
 
-        return this.showDropdownButton()
+        return this.documentHolder.clonedDocument !== undefined
+            && this.documentHolder.clonedDocument.resource.type !== 'Project'
             && !this.typeUtility.isSubtype(
                 this.documentHolder.clonedDocument.resource.type, 'Image'
             );
     }
 
 
-    public showDeleteButton(): boolean {
-
-        return this.showDropdownButton()
-            && this.documentHolder.clonedDocument.resource.id !== undefined
-    }
-
-
-    public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
+    public async setDocument(document: FieldDocument|ImageDocument) {
 
         this.documentHolder.setDocument(document);
-
-        if (!document.resource.id) this.activeTabService.setActiveTab('fields');
-
         this.showDoceditMediaTab = !this.typeUtility.getMediaTypeNames().includes(document.resource.type);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
+        this.updateFieldDefinitions();
+        this.updateRelationDefinitions();
     }
 
 
@@ -147,6 +117,7 @@ export class DoceditComponent {
         const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
         this.showTypeChangeFieldsWarning(invalidFields);
         this.showTypeChangeRelationsWarning(invalidRelations);
+        this.updateFieldDefinitions();
     }
 
 
@@ -181,25 +152,6 @@ export class DoceditComponent {
     }
 
 
-    public async openDeleteModal() {
-
-        this.subModalOpened = true;
-
-        const ref: NgbModalRef = this.modalService.open(DeleteModalComponent, { keyboard: false });
-        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
-
-        try {
-            const decision: string = await ref.result;
-            if (decision === 'delete') await this.deleteDocument();
-        } catch(err) {
-            // DeleteModal has been canceled
-        } finally {
-            this.subModalOpened = false;
-        }
-    }
-
-
     public async save(numberOfDuplicates?: number) {
 
         this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
@@ -218,6 +170,20 @@ export class DoceditComponent {
             this.loading.stop();
             this.operationInProgress = 'none';
         }
+    }
+
+
+    private updateFieldDefinitions() {
+
+        this.fieldDefinitions
+            = this.projectConfiguration.getFieldDefinitions(this.documentHolder.clonedDocument.resource.type);
+    }
+
+
+    private updateRelationDefinitions() {
+
+        this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
+            this.documentHolder.clonedDocument.resource.type, false, 'editable');
     }
 
 
@@ -243,11 +209,9 @@ export class DoceditComponent {
             return undefined;
         }
 
-        if (errorWithParams.length > 0) {
-            this.messages.add(MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration));
-        } else {
-            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
-        }
+        this.messages.add(errorWithParams.length > 0
+            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration)
+            : [M.DOCEDIT_ERROR_SAVE]);
     }
 
 
@@ -271,7 +235,7 @@ export class DoceditComponent {
     }
 
 
-    private async fetchParentLabel(document: IdaiFieldDocument|IdaiFieldImageDocument) {
+    private async fetchParentLabel(document: FieldDocument|ImageDocument) {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
@@ -309,16 +273,6 @@ export class DoceditComponent {
         } finally {
             this.subModalOpened = false;
         }
-    }
-
-
-    private async fetchIsRecordedInCount(document: Document): Promise<number> {
-
-        return !document.resource.id
-            ? 0
-            : (await this.datastore.find(
-                    { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
-            ).documents.length;
     }
 
 
@@ -360,28 +314,10 @@ export class DoceditComponent {
     }
 
 
-    private async deleteDocument() {
-
-        this.operationInProgress = 'delete';
-        this.loading.start('docedit');
-
-        try {
-            await this.documentHolder.remove();
-            this.activeModal.dismiss('deleted');
-            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
-        } catch(err) {
-            this.messages.add(err);
-        }
-
-        this.loading.stop();
-        this.operationInProgress = 'none';
-    }
-
-
     private handleSaveConflict(documentAfterSave: Document) {
 
         this.documentHolder.setDocument(documentAfterSave);
-        this.activeTabService.setActiveTab('conflicts');
+        this.activeGroup = 'conflicts';
         this.messages.add([M.DOCEDIT_WARNING_SAVE_CONFLICT]);
     }
 

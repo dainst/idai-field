@@ -8,6 +8,7 @@ import {DocumentCache} from './core/datastore/core/document-cache';
 import {ResourcesStateManager} from './components/resources/view/resources-state-manager';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {MediaState} from './components/mediaoverview/view/media-state';
+import {TabManager} from './components/tab-manager';
 
 const remote = require('electron').remote;
 
@@ -23,7 +24,8 @@ export class AppController {
         private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
         private mediaState: MediaState,
-        private indexFacade: IndexFacade) {
+        private indexFacade: IndexFacade,
+        private tabManager: TabManager) {
     }
     
 
@@ -34,19 +36,29 @@ export class AppController {
             if (!remote.getGlobal('switches').provide_reset) return resolve();
 
             const control = express();
-            control.post('/reset', async (req: any, res: any) => {
-                this.resourcesState.resetForE2E();
-                this.mediaState.resetForE2E();
-                this.documentCache.resetForE2E();
-                await this.pouchdbManager.resetForE2E();
-                await this.pouchdbManager.reindex(this.indexFacade);
+            control.use(express.json());
 
-                res.send('done');
+            control.post('/reset', async (request: any, result: any) => {
+                await this.reset();
+                result.send('done');
             });
+
             control.listen(3003, function() {
                 console.log('App Control listening on port 3003');
                 resolve();
             });
         });
+    }
+
+
+    private async reset() {
+
+        this.resourcesState.resetForE2E();
+        this.mediaState.resetForE2E();
+
+        this.tabManager.resetForE2E();
+        this.documentCache.resetForE2E();
+        await this.pouchdbManager.resetForE2E();
+        await this.pouchdbManager.reindex(this.indexFacade);
     }
 }

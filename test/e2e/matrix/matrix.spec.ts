@@ -1,9 +1,9 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {OperationBarPage} from '../operation-bar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -18,26 +18,28 @@ describe('matrix --', () => {
     let i = 0;
 
 
-    beforeAll(() => {
+    beforeAll(async done => {
 
         MatrixPage.get();
-        browser.sleep(delays.shortRest * 4);
+        MatrixPage.performSelectOperation(1);
+        done();
     });
 
 
     beforeEach(async done => {
 
         if (i > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToMatrix();
+            NavbarPage.clickCloseNonResourcesTab();
+            MatrixPage.get();
+            MatrixPage.performSelectOperation(1);
         }
 
         i++;
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
-        OperationBarPage.performSelectOperation(1);
 
         done();
     });
@@ -45,8 +47,8 @@ describe('matrix --', () => {
 
     function testDefaultMatrix() {
 
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(5));
-        for (let i = 1; i <= 5; i++) {
+        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(6));
+        for (let i = 1; i <= 6; i++) {
             browser.wait(EC.presenceOf(MatrixPage.getNode('si' + i)), delays.ECWaitTime);
         }
 
@@ -60,28 +62,15 @@ describe('matrix --', () => {
     }
 
 
-    it('show matrix for different trenches', () => {
-
-        testDefaultMatrix();
-        OperationBarPage.performSelectOperation(0);
-
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
-        browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
-
-        OperationBarPage.performSelectOperation(1);
-        testDefaultMatrix();
-    });
-
-
     it('edit relations and show updated matrix', () => {
 
         MatrixPage.clickNode('si1');
-        DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(9, 1);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(9);
-        DoceditRelationsTabPage.typeInRelationByIndices(9, 1, 'SE4');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(9, 1, 0);
+        DoceditPage.clickGotoTimeTab();
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
+
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
+        DoceditRelationsTabPage.typeInRelationByIndices('zeitlich-nach', 1, 'SE4');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
@@ -102,17 +91,6 @@ describe('matrix --', () => {
 
         MatrixPage.clickClearSelectionButton();
         MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
-    });
-
-
-    it('clear selection when switching trenches', () => {
-
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-
-        OperationBarPage.performSelectOperation(0);
-        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
-        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 
 
@@ -139,6 +117,8 @@ describe('matrix --', () => {
 
     it('switch between spatial and temporal relations', () => {
 
+        testDefaultMatrix();
+
         MatrixPage.clickOptionsButton();
         MatrixPage.clickSpatialRelationsRadioButton();
         MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
@@ -156,5 +136,30 @@ describe('matrix --', () => {
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(0));
         MatrixPage.clickPeriodCheckbox();
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
+    });
+
+
+    it('show matrix for different trenches', () => {
+
+        testDefaultMatrix();
+        MatrixPage.performSelectOperation(0);
+
+        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
+        browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
+        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
+
+        MatrixPage.performSelectOperation(1);
+        testDefaultMatrix();
+    });
+
+
+    it('clear selection when switching trenches', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+
+        MatrixPage.performSelectOperation(0);
+        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
+        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 });

@@ -1,0 +1,34 @@
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ * @author Sebastian Cuy
+ */
+
+#children-list {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+
+  loading-icon {
+    position: relative;
+    top: 49px;
+  }
+}
+
+#sidebar-popover .sidebar-popover-page .sidebar-popover-header#open-child-collection-button {
+
+  .mdi-arrow-left {
+    padding-right: 4px;
+  }
+
+  &:hover {
+    background-color: $popover-header-hover-bg-color;
+
+    .btn {
+      background-color: $popover-header-bg-color;
+
+      &:hover {
+        background-color: darken($popover-header-hover-bg-color, 3%);
+      }
+    }
+  }
+}

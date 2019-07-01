@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 const messages = require('./messages');
 
 
-const getTemplate = () => {
+const getTemplate = (mainWindow, context) => {
 
     const template = [{
         label: 'iDAI.field',
@@ -13,10 +13,33 @@ const getTemplate = () => {
             role: 'about'
         }, {
             type: 'separator'
+        }, {
+            label: messages.get('menu.settings'),
+            accelerator: 'CmdOrCtrl+,',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
+            enabled: context === 'default'
         }]
-    },{
+    }, {
         label: messages.get('menu.file'),
         submenu: [
+            {
+                label: messages.get('menu.file.import'),
+                accelerator: 'CmdOrCtrl+I',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'import'),
+                enabled: context === 'default'
+            }, {
+                label: messages.get('menu.file.export'),
+                accelerator: 'CmdOrCtrl+E',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'export'),
+                enabled: context === 'default'
+            }, {
+                type: 'separator'
+            }, {
+                label: messages.get('menu.settings'),
+                accelerator: 'CmdOrCtrl+Alt+S',
+                click: () => mainWindow.webContents.send('menuItemClicked', 'settings'),
+                enabled: context === 'default'
+            },
             {
                 label: messages.get('menu.file.exit'),
                 accelerator: 'CmdOrCtrl+Q',
@@ -52,6 +75,29 @@ const getTemplate = () => {
             label: messages.get('menu.edit.selectAll'),
             accelerator: 'CmdOrCtrl+A',
             role: 'selectall'
+        }]
+    }, {
+        label: messages.get('menu.tools'),
+        submenu: [{
+            label: messages.get('menu.tools.media'),
+            accelerator: 'CmdOrCtrl+B',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'media'),
+            enabled: context === 'default'
+        }, {
+            label: messages.get('menu.tools.matrix'),
+            accelerator: 'CmdOrCtrl+Y',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),
+            enabled: context === 'default'
+        }, {
+            type: 'separator'
+        }, {
+            label: messages.get('menu.tools.backupCreation'),
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-creation'),
+            enabled: context === 'default'
+        }, {
+            label: messages.get('menu.tools.backupLoading'),
+            click: () => mainWindow.webContents.send('menuItemClicked', 'backup-loading'),
+            enabled: context === 'default'
         }]
     }, {
         label: messages.get('menu.view'),
@@ -120,10 +166,21 @@ const getTemplate = () => {
 
                 infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
             }
+        }, {
+            label: messages.get('menu.help'),
+            accelerator: 'CmdOrCtrl+H',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'help'),
+            enabled: context === 'default'
         }]
     }];
 
-    if (process.platform !== 'darwin') template.splice(0, 1);
+    if (process.platform === 'darwin') {
+        // Remove 'Settings' option from 'File' menu
+        template[1].submenu.splice(3, 1);
+    } else {
+        // Remove 'iDAI.field' menu
+        template.splice(0, 1);
+    }
 
     return template;
 };

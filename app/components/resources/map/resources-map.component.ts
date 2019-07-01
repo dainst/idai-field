@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Document, Messages, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -7,16 +7,16 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
-import {DoceditLauncher} from '../service/docedit-launcher';
+
+
+export type PopoverMenu = 'none'|'info'|'relations'|'children';
 
 
 @Component({
     selector: 'resources-map',
     moduleId: module.id,
     templateUrl: './resources-map.html',
-    host: {
-        '(window:keydown)': '(onKeyDown($event))'
-    }
+    host: {'(window:keydown)': 'onKeyDown($event)'}
 })
 /**
  * @author Daniel de Oliveira
@@ -28,7 +28,8 @@ export class ResourcesMapComponent {
     @Input() activeTab: string;
     @Input() mapMode: '2d'|'3d';
 
-    public parentDocuments: Array<Document>;
+    public parentDocument: FieldDocument|undefined;
+    public activePopoverMenu: PopoverMenu = 'none';
 
 
     constructor(
@@ -38,13 +39,12 @@ export class ResourcesMapComponent {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private settingsService: SettingsService,
-        private messages: Messages,
-        private doceditLauncher: DoceditLauncher
+        private messages: Messages
     ) {
-        this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
+        this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.parentDocuments = this.getParentDocuments(path);
+            this.parentDocument = this.getParentDocument(path);
         });
     }
 
@@ -52,15 +52,9 @@ export class ResourcesMapComponent {
     public getProjectDocument = () => this.settingsService.getProjectDocument();
 
 
-    // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1.
-    // this is ok because we do not offer the 'all'-selection if only one operation is available.
-    public mainTypeIds = () => this.viewFacade.getSelectedOperations()
-        .map(_ => _.resource.id).join(',');
-
-
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.doceditLauncher.isDoceditModalOpened) {
+        if (event.key === 'Escape' && !this.resourcesComponent.isModalOpened) {
             if (this.resourcesComponent.isEditingGeometry) {
                 await this.quitEditing(undefined);
             } else {
@@ -70,7 +64,7 @@ export class ResourcesMapComponent {
     }
 
 
-    public async select(document: IdaiFieldDocument|undefined) {
+    public async select(document: FieldDocument|undefined) {
 
         this.resourcesComponent.setScrollTarget(document);
 
@@ -87,7 +81,7 @@ export class ResourcesMapComponent {
      *   <code>null</code> indicates geometry should get deleted.
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: IdaiFieldGeometry|undefined) {
+    public async quitEditing(geometry: FieldGeometry|undefined) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (!selectedDocument) return;
@@ -115,13 +109,6 @@ export class ResourcesMapComponent {
     }
 
 
-    public isDocumentSelected() {
-        
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        return selectedDocument && selectedDocument.resource.id;
-    }
-
-
     private async save() {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
@@ -146,15 +133,17 @@ export class ResourcesMapComponent {
     }
 
 
-    private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
+    private getParentDocument(navigationPath: NavigationPath): FieldDocument|undefined {
 
-        if (this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) {
-            return this.viewFacade.getSelectedOperations();
+        const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
+
+        if ((this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) && currentOperation) {
+            return currentOperation;
         }
 
         const segment = navigationPath.segments
             .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
 
-        return segment ? [segment.document] : [];
+        return segment ? segment.document : undefined;
     }
 }

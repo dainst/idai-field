@@ -1,28 +1,36 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2';
 import {IdaiWidgetsModule} from 'idai-components-2';
 import {ImageViewComponent} from './image-view.component';
 import {GeoreferenceViewComponent} from './georeference-view.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
-import {imageViewRouting} from './image-view.routing';
-
+import {MediaDocumentsManager} from '../mediaoverview/view/media-documents-manager';
+import {MediaOverviewFacade} from '../mediaoverview/view/media-overview-facade';
+import {PersistenceHelper} from '../mediaoverview/service/persistence-helper';
+import {DepictsRelationsViewComponent} from './depicts-relations-view.component';
 
 @NgModule({
     imports: [
         BrowserModule,
         NgbModule,
         WidgetsModule,
-        IdaiDocumentsModule,
         IdaiWidgetsModule,
-        ImageGridModule,
-        imageViewRouting
+        ImageGridModule
     ],
     declarations: [
         ImageViewComponent,
-        GeoreferenceViewComponent
+        GeoreferenceViewComponent,
+        DepictsRelationsViewComponent
+    ],
+    providers: [
+        MediaDocumentsManager,
+        MediaOverviewFacade,
+        PersistenceHelper
+    ],
+    entryComponents: [
+        ImageViewComponent
     ]
 })
 

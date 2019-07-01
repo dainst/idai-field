@@ -28,7 +28,7 @@ export class MediaResourcePickerModalPage {
 
     public static typeInIdentifierInSearchField(identifier) {
 
-       common.typeIn(element(by.css('#media-resource-picker-modal #object-search')), identifier);
+       common.typeIn(element(by.css('#media-resource-picker-modal .search-bar-input')), identifier);
     }
 
 

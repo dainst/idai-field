@@ -30,7 +30,6 @@
                         </div>
 
                         <div class="tab-view-container">
-                            <description-view [document]="document"></description-view>
                             <fields-view [resource]="document.resource"></fields-view>
                         </div>
                     </ng-template>
@@ -48,9 +47,6 @@
                         </div>
 
                         <div class="tab-view-container">
-                            <relations-view *ngIf="hasRelations()" [resource]="document.resource"
-                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                            </relations-view>
                         </div>
                     </ng-template>
                 </ngb-tab>

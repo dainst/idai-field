@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, Query, IdaiFieldDocument} from 'idai-components-2';
+import {Messages, Query, FieldDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {M} from '../../m';
@@ -26,7 +26,7 @@ export class MediaResourcePickerComponent implements OnInit {
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
     public documents: Array<IdaiFieldMediaDocument>;
-    public document: IdaiFieldDocument;
+    public document: FieldDocument;
     public selectedDocuments: Array<IdaiFieldMediaDocument> = [];
 
     private query: Query = { q: '' };
@@ -65,7 +65,7 @@ export class MediaResourcePickerComponent implements OnInit {
     }
 
 
-    public async setDocument(document: IdaiFieldDocument) {
+    public async setDocument(document: FieldDocument) {
 
         this.document = document;
         await this.fetchDocuments(this.query);
@@ -131,7 +131,7 @@ export class MediaResourcePickerComponent implements OnInit {
 
         return this.datastore.find(clone(this.query))
             .then(result => {
-                if (result.queryId === this.currentQueryId) this.documents = result.documents
+                if (result.queryId === this.currentQueryId) this.documents = result.documents;
             })
             .catch(errWithParams => {
                 console.error('Error in find with query', this.query);

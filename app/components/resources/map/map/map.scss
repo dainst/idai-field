@@ -8,7 +8,6 @@
   user-select: none;
 
   .leaflet-overlay-pane path {
-
       &.templine {
         stroke: blue;
         stroke-width: 1px;
@@ -19,7 +18,34 @@
         stroke-width: 1px;
         stroke-dasharray: 5;
       }
+  }
+
+  .leaflet-control-zoom {
+    border: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+      font-family: Roboto, sans-serif;
+      font-weight: normal;
+      cursor: default !important;
     }
+
+    .leaflet-control-zoom-in {
+      border-top-left-radius: 4px !important;
+      border-top-right-radius: 4px !important;
+
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+      &:hover {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+      }
+    }
+
+    .leaflet-control-zoom-out {
+      border-bottom-left-radius: 4px !important;
+      border-bottom-right-radius: 4px !important;
+    }
+  }
 }
 
 #mouse-position-coordinates-x,
@@ -58,6 +84,10 @@
   #map-editor-button-ok {
     right: 119px;
     bottom: 8px;
+
+    &.near-to-right {
+      right: 91px;
+    }
   }
 
   #map-editor-button-abort {

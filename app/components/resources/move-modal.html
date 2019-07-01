@@ -1,0 +1,16 @@
+<div class="modal-body" id="move-modal">
+    <p i18n="@@resources.moveModal.chooseParentResource">
+        Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+        <b>{{document.resource.identifier}}</b> zugewiesen werden soll:
+    </p>
+    <document-picker [filterOptions]="filterOptions"
+                     [getConstraints]="getConstraints"
+                     (documentSelected)="moveDocument($event)"></document-picker>
+</div>
+
+<div class="modal-footer">
+    <button type="button" id="move-modal-cancel-button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

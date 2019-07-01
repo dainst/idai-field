@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {subtract} from 'tsfun';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer-manager';
@@ -11,7 +11,7 @@ import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
+export class ImageLayerManager extends LayerManager<ImageDocument> {
 
     constructor(private datastore: ImageReadDatastore,
                 viewFacade: ViewFacade) {
@@ -21,7 +21,7 @@ export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
 
 
     public async initializeLayers(skipRemoval: boolean = false)
-            : Promise<LayersInitializationResult<IdaiFieldImageDocument>> {
+            : Promise<LayersInitializationResult<ImageDocument>> {
 
         if (!skipRemoval) await this.removeNonExistingLayers();
 

@@ -25,6 +25,7 @@
                 
                 <image-grid-cell
                         [cell]="cell"
+                        [main]="main"
                         [nrOfColumns]="nrOfColumns"
                         [resourceIdentifiers]="resourceIdentifiers"
                         [showLinkBadges]="showLinkBadges"
@@ -38,19 +39,6 @@
         </div>
     </div>
 
-    <div *ngIf="showMoreRowsMessage()" class="more-rows-message">
-        <br>
-        <br>
-        <br>
-        <br>
-        <i>
-            <span i18n="@@imageGrid.moreRowsMessage.1">
-                Es werden die ersten {{documents.length - 1}} von insgesamt {{totalDocumentCount}} Suchtreffern
-                angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
-                sehen</span><span *ngIf="nrOfColumns === 12">.</span>
-            <span *ngIf="nrOfColumns < 12" i18n="@@imageGrid.moreRowsMessage.2">
-                oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
-            </span>
-        </i>
-    </div>
 </div>
+
+

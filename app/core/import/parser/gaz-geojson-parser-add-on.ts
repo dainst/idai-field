@@ -27,9 +27,6 @@ export module GazGeojsonParserAddOn {
                 if (!parentsNotFound.includes(parent)) parentsNotFound.push(parent);
             }
         }
-
-        console.log("parents not found: ", parentsNotFound);
-        console.log("parents not found length ", parentsNotFound.length);
     }
 
 

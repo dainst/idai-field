@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Messages, Document, IdaiFieldImageDocument} from 'idai-components-2';
+import {Messages, Document} from 'idai-components-2';
 import {ImageGridConstruction} from './image-grid-builder';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
@@ -23,6 +23,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() nrOfColumns: number = 1;
     @Input() documents: Array<IdaiFieldMediaDocument>;
     @Input() selected: Array<IdaiFieldMediaDocument> = [];
+    @Input() main: IdaiFieldMediaDocument|undefined;
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
@@ -70,7 +71,7 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    public async onCellMouseEnter(doc: IdaiFieldImageDocument) {
+    public async onCellMouseEnter(doc: IdaiFieldMediaDocument) {
 
         if (!this.showLinkBadges) return;
 
@@ -95,14 +96,6 @@ export class ImageGridComponent implements OnChanges {
             await this._calcGrid();
             this.calcGridRunning = false;
         }, 500);
-    }
-
-
-    public showMoreRowsMessage(): boolean {
-
-        return this.documents
-            && this.totalDocumentCount > 0
-            && this.totalDocumentCount > this.documents.length;
     }
 
 

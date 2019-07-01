@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {unique} from 'tsfun';
-import {Messages, ProjectConfiguration, Document, IdaiFieldAppConfigurator} from 'idai-components-2';
+import {Messages, ProjectConfiguration, Document, AppConfigurator} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
@@ -39,7 +39,7 @@ export class SettingsService {
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private messages: Messages,
-                private appConfigurator: IdaiFieldAppConfigurator,
+                private appConfigurator: AppConfigurator,
                 private converter: Converter,
                 private synchronizationStatus: SynchronizationStatus) {
     }
@@ -112,11 +112,12 @@ export class SettingsService {
     public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
 
         let customProjectName = undefined;
-        if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
-        if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
+        if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';
+        if (this.getSelectedProject().startsWith('pergamongrabung')) customProjectName = 'Pergamon';
         if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
             customProjectName = 'WES';
         }
+        if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
 
         try {
             return await this.appConfigurator.go(

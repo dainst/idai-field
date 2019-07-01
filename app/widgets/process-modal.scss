@@ -10,9 +10,9 @@
       margin-right: 10px;
     }
 
-    .process-info-message {
-      display: inline-block;
-      position: relative; top: -14px;
+    .process-info {
+      cursor: default;
+      user-select: none;
     }
   }
 }

@@ -2,6 +2,7 @@
 
 import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -190,7 +191,7 @@ export module MediaOverviewPage {
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return MediaOverviewPage.getLinkModal().element(by.id('resource-' + identifier))
+        return MediaOverviewPage.getLinkModal().element(by.id('document-picker-resource-' + identifier))
     }
 
 
@@ -198,7 +199,7 @@ export module MediaOverviewPage {
 
     export function typeInIdentifierInLinkModal(identifier) {
 
-        return common.typeIn(MediaOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
+        return common.typeIn(MediaOverviewPage.getLinkModal().element(by.css('.search-bar-input')), identifier);
     }
 
 
@@ -214,8 +215,14 @@ export module MediaOverviewPage {
         MediaOverviewPage.typeInIdentifierInLinkModal(identifier);
         MediaOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
 
-        NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToMediaOverview();
+        mediaResourceToConnect.click();
+        expect(mediaResourceToConnect.getAttribute('class')).toMatch(selectedClass);
+        MediaOverviewPage.clickLinkButton();
+        MediaOverviewPage.typeInIdentifierInLinkModal(identifier);
+        MediaOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 5);
     }
 }

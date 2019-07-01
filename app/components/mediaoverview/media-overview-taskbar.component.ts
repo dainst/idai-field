@@ -1,12 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument, Messages} from 'idai-components-2';
+import {FieldDocument, Messages} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {MediaOverviewFacade} from './view/media-overview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {DeleteModalComponent} from './delete-modal.component';
+import {MediaOverviewComponent} from './media-overview.component';
+
 
 @Component({
     selector: 'media-overview-taskbar',
@@ -28,14 +30,14 @@ export class MediaOverviewTaskbarComponent {
     public getDepictsRelationsSelected = () => this.mediaOverviewFacade.getDepictsRelationsSelected();
     public clearSelection = () => this.mediaOverviewFacade.clearSelection();
 
-    private modalOpenend: boolean = false;
 
     constructor(
         public viewFacade: ViewFacade,
         private modalService: NgbModal,
         private messages: Messages,
         private mediaOverviewFacade: MediaOverviewFacade,
-        private persistenceHelper: PersistenceHelper
+        private persistenceHelper: PersistenceHelper,
+        private mediaOverviewComponent: MediaOverviewComponent
     ) {
         this.mediaOverviewFacade.initialize();
     }
@@ -43,22 +45,25 @@ export class MediaOverviewTaskbarComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpenend) this.clearSelection();
+        if (event.key === 'Escape' && !this.mediaOverviewComponent.modalOpened) this.clearSelection();
     }
 
 
     public async openLinkModal() {
 
-        this.modalOpenend = true;
+        this.mediaOverviewComponent.modalOpened = true;
 
         try {
-            const targetDoc: IdaiFieldDocument = await this.modalService.open(
+            const modalRef: NgbModalRef = this.modalService.open(
                 LinkModalComponent, { keyboard: false }
-            ).result;
-            if (!targetDoc) return;
+            );
+            modalRef.componentInstance.initializeFilterOptions();
+
+            const targetDocument: FieldDocument = await modalRef.result;
+            if (!targetDocument) return;
 
             try {
-                await this.persistenceHelper.addRelationsToSelectedDocuments(targetDoc);
+                await this.persistenceHelper.addDepictsRelationsToSelectedDocuments(targetDocument);
                 this.mediaOverviewFacade.clearSelection();
             } catch(msgWithParams) {
                 this.messages.add(msgWithParams);
@@ -66,19 +71,19 @@ export class MediaOverviewTaskbarComponent {
         } catch(err) {
             // LinkModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.mediaOverviewComponent.modalOpened = false;
         }
     }
 
 
     public async openDeleteModal() {
 
-        this.modalOpenend = true;
+        this.mediaOverviewComponent.modalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
         );
-        modalRef.componentInstance.numberOfSelectedImages
+        modalRef.componentInstance.numberOfSelectedMediaResources
             = this.mediaOverviewFacade.getSelected().length;
 
         try {
@@ -86,34 +91,37 @@ export class MediaOverviewTaskbarComponent {
         } catch(err) {
             // DeleteModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.mediaOverviewComponent.modalOpened = false;
         }
     }
 
 
     public async openRemoveLinkModal() {
 
-        this.modalOpenend = true;
+        this.mediaOverviewComponent.modalOpened = true;
 
         try {
             await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
-            await this.persistenceHelper.removeRelationsOnSelectedDocuments();
+            await this.persistenceHelper.removeDepictsRelationsOnSelectedDocuments();
             this.mediaOverviewFacade.clearSelection();
             await this.mediaOverviewFacade.fetchDocuments();
             this.imageGrid.calcGrid();
         } catch(err) {
             // RemoveLinkModal has been canceled
         } finally {
-            this.modalOpenend = false;
+            this.mediaOverviewComponent.modalOpened = false;
         }
     }
 
 
     private async deleteSelected() {
 
-        await this.persistenceHelper.deleteSelectedMediaDocuments();
-
-        this.mediaOverviewFacade.clearSelection();
-        await this.mediaOverviewFacade.fetchDocuments();
+        try {
+            await this.persistenceHelper.deleteSelectedMediaDocuments();
+            this.mediaOverviewFacade.clearSelection();
+            await this.mediaOverviewFacade.fetchDocuments();
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
     }
 }

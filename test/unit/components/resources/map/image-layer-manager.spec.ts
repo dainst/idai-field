@@ -1,6 +1,5 @@
+import {ImageDocument, FieldDocument} from 'idai-components-2';
 import {ImageLayerManager} from '../../../../../app/components/resources/map/map/image-layer-manager';
-import {IdaiFieldImageDocument} from '../../../../../app/core/model/idai-field-image-document';
-import {IdaiFieldDocument} from 'idai-components-2';
 import {Static} from '../../../static';
 
 
@@ -12,13 +11,13 @@ describe('ImageLayerManager', () => {
 
     let layerManager: ImageLayerManager;
 
-    const layerDocuments: Array<IdaiFieldImageDocument> = [
-        Static.doc('Layer 1', 'layer1', 'Image', 'l1') as IdaiFieldImageDocument,
-        Static.doc('Layer 2', 'layer2', 'Image', 'l2') as IdaiFieldImageDocument,
+    const layerDocuments: Array<ImageDocument> = [
+        Static.doc('Layer 1', 'layer1', 'Image', 'l1') as ImageDocument,
+        Static.doc('Layer 2', 'layer2', 'Image', 'l2') as ImageDocument,
     ];
 
-    const mainTypeDocument: IdaiFieldDocument
-        = Static.doc('Main Type Document', 'MTD', 'trench', 'mtd') as IdaiFieldDocument;
+    const mainTypeDocument: FieldDocument
+        = Static.doc('Main Type Document', 'MTD', 'trench', 'mtd') as FieldDocument;
 
     let mockViewFacade;
 

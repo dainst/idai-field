@@ -8,7 +8,7 @@ import {IndexFacade} from "../index/index-facade";
 
 /**
  * Returns fully checked instances of
- * IdaiFieldDocument and IdaiFieldImageDocument respectively,
+ * FieldDocument and ImageDocument respectively,
  * so that the rest of the app can rely that the declared
  * fields are present.
  *

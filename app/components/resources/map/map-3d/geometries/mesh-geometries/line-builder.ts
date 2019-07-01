@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {ProjectConfiguration, FieldDocument, FieldGeometry} from 'idai-components-2';
 import {Viewer3D} from '../../../../../core-3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
@@ -20,12 +20,12 @@ export class LineBuilder {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public buildLine(document: IdaiFieldDocument, selected: boolean): MeshGeometry {
+    public buildLine(document: FieldDocument, selected: boolean): MeshGeometry {
 
         const position: THREE.Vector3 = LineBuilder.getPosition(document);
 
         const geometry: THREE.Geometry
-            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates, position);
+            = this.createGeometry((document.resource.geometry as FieldGeometry).coordinates, position);
 
         return {
             mesh: this.createMesh(document, geometry, position, selected),
@@ -48,7 +48,7 @@ export class LineBuilder {
     }
 
 
-    private createMesh(document: IdaiFieldDocument, geometry: THREE.Geometry,
+    private createMesh(document: FieldDocument, geometry: THREE.Geometry,
                        position: THREE.Vector3, selected: boolean): THREE.Mesh {
 
         const clonedGeometry: THREE.Geometry = geometry.clone();
@@ -71,7 +71,7 @@ export class LineBuilder {
     }
 
 
-    private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
+    private createMaterial(document: FieldDocument, selected: boolean): THREE.Material {
 
         return this.cameraManager.getProjectionMode() == 'perspective' ?
             this.createMaterialForPerspectiveCameraMode(document, selected) :
@@ -79,7 +79,7 @@ export class LineBuilder {
     }
 
 
-    private createMaterialForPerspectiveCameraMode(document: IdaiFieldDocument,
+    private createMaterialForPerspectiveCameraMode(document: FieldDocument,
                                                    selected: boolean): THREE.Material {
 
         return new MeshLineMaterial({
@@ -94,7 +94,7 @@ export class LineBuilder {
     }
 
 
-    private createMaterialForOrthographicCameraMode(document: IdaiFieldDocument,
+    private createMaterialForOrthographicCameraMode(document: FieldDocument,
                                                     selected: boolean): THREE.Material {
 
         return new MeshLineMaterial({
@@ -120,9 +120,9 @@ export class LineBuilder {
     }
 
 
-    private static getPosition(document: IdaiFieldDocument): THREE.Vector3 {
+    private static getPosition(document: FieldDocument): THREE.Vector3 {
 
-        const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0];
+        const firstPoint: number[] = (document.resource.geometry as FieldGeometry).coordinates[0];
 
         return getPointVector(firstPoint);
     }

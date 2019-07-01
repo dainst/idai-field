@@ -1,0 +1,64 @@
+<div id="context-menu"
+     class="dropdown-menu show"
+     [class.orientation-top]="orientation === 'top'"
+     [class.orientation-bottom]="orientation === 'bottom'"
+     [style.left]="position.x + 'px'"
+     [style.top]="position.y + 'px'"
+     [style.bottom]="getBottomPosition(position.y) + 'px'">
+    <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
+        <span class="mdi mdi-pencil"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+    </div>
+    <div id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
+        <span class="mdi mdi-file-tree"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
+    </div>
+    <div id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
+        <span class="mdi mdi-delete"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
+    </div>
+
+    <hr>
+
+    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+            id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
+        <span class="mdi mdi-shape-polygon-plus"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polygon">Polygon anlegen</span>
+    </div>
+    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+            id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
+        <span class="mdi mdi-vector-polyline"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polyline">Polyline anlegen</span>
+    </div>
+    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+            id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
+        <span class="mdi mdi-map-marker-plus"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Punkt anlegen</span>
+    </div>
+
+    <div *ngIf="sidebarListComponent.contextMenuDocument && sidebarListComponent.contextMenuDocument.resource.geometry"
+            id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
+        <span class="mdi mdi-pencil"></span>
+        <span class="dropdown-entry-label" >
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'Polygon'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.polygon">Polygon bearbeiten</span>
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiPolygon'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.multipolygon">Multipolygon bearbeiten</span>
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'LineString'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.polyline">Polyline bearbeiten</span>
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiLineString'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.multipolyline">Multipolyline bearbeiten</span>
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'Point'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.point">Punkt bearbeiten</span>
+                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiPoint'"
+                      class="fieldvalue"
+                      i18n="@@resources.contextMenu.editGeometry.multipoint">Multipunkt bearbeiten</span>
+        </span>
+    </div>
+
+</div>

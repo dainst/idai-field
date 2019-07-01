@@ -25,10 +25,8 @@
         <div class="row">
             <div class="col-md-6">
                 <search-bar *ngIf="!selectedDocuments.length"
-                            [relationName]="'depicts'"
-                            [relationRangeType]="'Trench'"
-                            (onQueryStringChanged)="setQueryString($event)"
-                            (onTypesChanged)="setTypeFilters($event)">>
+                            [showFiltersMenu]="false"
+                            (onQueryStringChanged)="setQueryString($event)">
                 </search-bar>
             </div>
         </div>

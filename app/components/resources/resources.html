@@ -6,10 +6,9 @@
     <div class="col-md-6 mr-md-auto">
         <div class="row">
             <div id="search-bar-container" class="col-md-9">
-                <resources-search-bar *ngIf="!isViewWithoutMainTypeDocuments()" [q]="getQueryString()"
+                <resources-search-bar [filterOptions]="filterOptions"
+                                      [q]="getQueryString()"
                                       [types]="getTypeFilters()"
-                                      [relationName]="'isRecordedIn'"
-                                      [relationRangeType]="getViewType()"
                                       [extendedSearch]="getBypassHierarchy()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">
@@ -24,7 +23,7 @@
                             i18n-ngbTooltip="@@resources.tooltips.mode.2dMap"
                             placement="left"
                             class="btn btn-primary m-0"
-                            [class.active]="currentModeIs('map')">
+                            [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
                     </button>
                     <button id="3d-map-mode-button"
@@ -33,7 +32,7 @@
                             i18n-ngbTooltip="@@resources.tooltips.mode.3dMap"
                             placement="left"
                             class="btn btn-primary m-0"
-                            [class.active]="currentModeIs('3dMap')">
+                            [class.active]="isCurrentMode('3dMap')">
                         <span class="mdi mdi-cube-outline"></span>
                     </button>
                     <button id="list-mode-button"
@@ -42,7 +41,7 @@
                             ngbTooltip="Listendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"
-                            [class.active]="currentModeIs('list')">
+                            [class.active]="isCurrentMode('list')">
                         <span class="mdi mdi-table"></span>
                     </button>
                 </div>
@@ -55,14 +54,6 @@
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
-
-    <div *ngIf="isViewWithoutMainTypeDocuments()"
-         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em i18n="@@resources.noOperationsWarning">
-            Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationLabel()}}' in der
-            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
-        </em>
-    </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
         <resources-map *ngIf="viewFacade.getMode() === 'map'" [mapMode]="'2d'"></resources-map>

@@ -1,5 +1,5 @@
 import {to, differentFromBy, on} from 'tsfun';
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ViewContext} from './view-context';
 
 
@@ -9,17 +9,17 @@ import {ViewContext} from './view-context';
  */
 export interface NavigationPathSegment extends ViewContext {
 
-    readonly document: IdaiFieldDocument;
+    readonly document: FieldDocument;
 }
 
 
 export module NavigationPathSegment {
 
-    export async function isValid(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
+    export function isValid(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
                                   segments: Array<NavigationPathSegment>,
-                                  exists: (_: string) => Promise<boolean>): Promise<boolean> {
+                                  exists: (_: string) => boolean): boolean {
 
-        return await exists(segment.document.resource.id)
+        return exists(segment.document.resource.id)
             && hasValidRelation(mainTypeDocumentResourceId, segment, segments);
     }
 

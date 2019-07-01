@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {Component, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {Map3DComponent} from '../../map-3d.component';
 
 
@@ -14,9 +14,9 @@ import {Map3DComponent} from '../../map-3d.component';
  */
 export class MeshGeometriesComponent implements OnChanges {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
-    @Input() hoverDocument: IdaiFieldDocument;
+    @Input() documents: Array<FieldDocument>;
+    @Input() selectedDocument: FieldDocument;
+    @Input() hoverDocument: FieldDocument;
 
     public showLineGeometries: boolean = true;
     public showPolygonGeometries: boolean = true;

@@ -2,36 +2,13 @@
   "Trench": {
     "color": "blue",
     "parent": "Operation",
+    "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent", "spatialLocation"],
     "fields": {
-      "diary": {
-        "inputType": "input"
-      },
       "researchQuestion": {
-        "inputType": "input"
-      },
-      "spatialLocation": {
         "inputType": "input"
       },
       "trenchComment": {
         "inputType": "text"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "excavationType": {
         "inputType": "radio",
@@ -41,25 +18,13 @@
           "künstliche Schichten",
           "natürliche Schichten"
         ]
-      },
-      "orientation": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "N-S",
-          "NNO - SSW",
-          "NNW-SSO",
-          "NO-SW",
-          "NW-SO",
-          "W-O",
-          "WNW-OSO",
-          "WSW-ONO"
-        ]
       }
     }
   },
   "Glass": {
     "color": "#99CC33",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "decorationDescription": {
         "inputType": "input"
@@ -171,52 +136,6 @@
           "Weinheber"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "transparency": {
         "inputType": "radio",
         "valuelist": [
@@ -299,6 +218,7 @@
   "Brick": {
     "color": "#CC0000",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "featureText": {
         "inputType": "input"
@@ -468,52 +388,6 @@
           "handgeformt"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "specificType": {
         "inputType": "dropdown",
         "valuelist": [
@@ -554,15 +428,13 @@
     }
   },
   "Project": {
+    "commons": ["description"],
     "fields": {
       "contactMail": {
         "inputType": "input"
       },
       "contactPerson": {
         "inputType": "input"
-      },
-      "description": {
-        "inputType": "text"
       },
       "epsgId": {
         "inputType": "unsignedInt"
@@ -709,13 +581,8 @@
   },
   "Building": {
     "parent": "Operation",
+    "commons": ["period", "dating", "dimensionWidth", "dimensionLength"],
     "fields": {
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "buildingHistory": {
         "inputType": "input"
       },
@@ -866,18 +733,6 @@
           "Wohnviertel"
         ]
       },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "material": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -959,6 +814,7 @@
   "Architecture": {
     "color": "#707070",
     "parent": "Feature",
+    "commons": ["orientation", "spatialLocation"],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -1006,9 +862,6 @@
         "inputType": "text"
       },
       "publicationRemark": {
-        "inputType": "input"
-      },
-      "spatialLocation": {
         "inputType": "input"
       },
       "blockProcessing": {
@@ -1126,19 +979,6 @@
           "sandig"
         ]
       },
-      "orientation": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "N-S",
-          "NNO - SSW",
-          "NNW-SSO",
-          "NO-SW",
-          "NW-SO",
-          "W-O",
-          "WNW-OSO",
-          "WSW-ONO"
-        ]
-      },
       "wallClassification": {
         "inputType": "dropdown",
         "valuelist": [
@@ -1172,24 +1012,10 @@
     }
   },
   "Operation": {
+    "commons": ["beginningDate", "endDate", "processor", "description", "area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
       "diaryAbstract": {
         "inputType": "text"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "supervisor": {
         "inputType": "input"
@@ -1201,10 +1027,8 @@
   },
   "Place": {
     "color": "#5572A1",
+    "commons": ["dating", "description"],
     "fields": {
-      "dating": {
-        "inputType": "dating"
-      },
       "placeName": {
         "inputType": "input"
       },
@@ -1212,9 +1036,6 @@
         "inputType": "text"
       },
       "buildingResearchHistory": {
-        "inputType": "text"
-      },
-      "description": {
         "inputType": "text"
       },
       "excavationHistory": {
@@ -1256,6 +1077,7 @@
   "Layer": {
     "color": "#663300",
     "parent": "Feature",
+    "commons": ["dimensionThickness"],
     "fields": {
       "appearance": {
         "inputType": "input"
@@ -1291,12 +1113,6 @@
           "steif",
           "weich"
         ]
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "distinguishingCriteria": {
         "inputType": "radio",
@@ -1347,35 +1163,15 @@
   },
   "Feature": {
     "color": "black",
+    "commons": ["beginningDate", "endDate", "dating", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent","area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "comparison": {
-        "inputType": "text"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "description": {
         "inputType": "text"
       },
       "hasDisturbance": {
         "inputType": "boolean"
       },
       "featureAmount": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       },
       "color": {
@@ -1401,24 +1197,6 @@
           "violett",
           "weiß"
         ]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1567,6 +1345,7 @@
     }
   },
   "Inscription": {
+    "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
     "fields": {
       "comparison": {
         "inputType": "text"
@@ -1577,13 +1356,7 @@
       "content": {
         "inputType": "text"
       },
-      "description": {
-        "inputType": "text"
-      },
       "language": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       },
       "condition": {
@@ -1604,24 +1377,6 @@
           "Vollständig zerstört"
         ]
       },
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "objectType": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -1641,20 +1396,16 @@
     }
   },
   "Image": {
+    "commons": ["processor", "description"],
     "fields": {
-      "description": {
-        "inputType": "text"
-      },
       "draughtsmen": {
-        "inputType": "input"
-      },
-      "processor": {
         "inputType": "input"
       }
     }
   },
   "Pottery": {
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "amountSherdsWall": {
         "inputType": "unsignedInt"
@@ -2025,52 +1776,6 @@
           "Terra sigilata"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "temper": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -2184,55 +1889,10 @@
       }
     }
   },
-  "DrillCoreLayer": {
-    "parent": "Feature",
-    "fields": {
-      "hasFinds": {
-        "inputType": "boolean"
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "soilType": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Feinsand",
-          "Feinstsand",
-          "Grobsand",
-          "Lehm",
-          "Lehmiger Sand",
-          "Lehmiger Schluff",
-          "Lehmiger Ton",
-          "Mergel",
-          "Mittlerer Sand",
-          "Sand",
-          "Sandiger Lehm",
-          "Sandiger Schluff",
-          "Sandiger Ton",
-          "Schluff",
-          "Schluffiger Lehm",
-          "Schluffiger Sand",
-          "Schluffiger Ton",
-          "Ton",
-          "Toniger Lehm",
-          "Toniger Sand",
-          "Toniger Schluff"
-        ]
-      }
-    }
-  },
   "Grave": {
     "color": "#339900",
     "parent": "Feature",
+    "commons": ["spatialLocation"],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -2253,9 +1913,6 @@
         "inputType": "text"
       },
       "publicationRemark": {
-        "inputType": "input"
-      },
-      "spatialLocation": {
         "inputType": "input"
       },
       "condition": {
@@ -2471,17 +2128,9 @@
     }
   },
   "Room": {
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
       "conditionComment": {
-        "inputType": "input"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
         "inputType": "input"
       },
       "campaign": {
@@ -2507,42 +2156,13 @@
           "Vollständig",
           "Vollständig zerstört"
         ]
-      },
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
       }
     }
   },
   "Terracotta": {
     "color": "#FF6600",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -2717,52 +2337,6 @@
           "handgeformt",
           "in Form gedreht",
           "nachgedreht (überdreht)"
-        ]
-      },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
         ]
       },
       "surfaceCondition": {
@@ -2950,6 +2524,7 @@
   "Stone": {
     "color": "#5c5c8a",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "purpose": {
         "inputType": "input"
@@ -3109,52 +2684,6 @@
           "Sizilien"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "temperAmount": {
         "inputType": "radio",
         "valuelist": [
@@ -3172,6 +2701,7 @@
   "Coin": {
     "color": "#cc9900",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "frontSideDescription": {
         "inputType": "input"
@@ -3555,52 +3085,6 @@
           "Valentianus III"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "stampPositioning": {
         "inputType": "dropdown",
         "valuelist": [
@@ -3622,6 +3106,7 @@
   },
   "Find": {
     "color": "black",
+    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
     "fields": {
       "amount": {
         "inputType": "unsignedInt"
@@ -3640,15 +3125,6 @@
       },
       "conditionPercent": {
         "inputType": "unsignedFloat"
-      },
-      "date": {
-        "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "publicationMaterialSummary": {
         "inputType": "input"
@@ -3683,60 +3159,6 @@
           "Vollständig zerstört"
         ]
       },
-      "period": {
-        "inputType": "dropdownRange"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "dimensionDiameter": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionPerimeter": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Oberkante",
-        "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
-      "dimensionOther": {
-        "inputType": "dimension",
-        "positionValues": [
-        "Maximale Ausdehnung",
-        "Minimale Ausdehnung"]
-      },
       "storagePlace": {
         "inputType": "radio",
         "valuelist": [
@@ -3755,10 +3177,8 @@
   "PlasterFragment": {
     "color": "#737373",
     "parent": "Find",
+    "commons": ["area"],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
       "composition": {
         "inputType": "input"
       },
@@ -3820,6 +3240,7 @@
   "Metal": {
     "color": "#995f25",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "materialDescription": {
         "inputType": "input"
@@ -3946,52 +3367,6 @@
           "Zierbeschlag"
         ]
       },
-      "provenance": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Anatolien",
-          "Antiochia (Antakya)",
-          "Athen",
-          "Attisch",
-          "Britannien",
-          "Chios",
-          "Deutschland",
-          "Ephesos",
-          "Etruskisch",
-          "Gallien",
-          "Ionien",
-          "Irland",
-          "Italien",
-          "Kampanisch",
-          "Karthagisch",
-          "Kleinasien",
-          "Knidos",
-          "Korinth",
-          "Kos",
-          "Lesbos",
-          "Levante",
-          "Lokal",
-          "Lokal/Regional",
-          "Milet",
-          "Mäandertal",
-          "Nordafrika",
-          "Nordafrikanisch",
-          "Palästina",
-          "Pannonien",
-          "Peloponnes",
-          "Regional",
-          "Rhodos",
-          "Samos",
-          "Sizilien",
-          "Skandinavien",
-          "Slawisch",
-          "Spanien",
-          "Syrien",
-          "Südtunesisch",
-          "Südägäis",
-          "Ägypten"
-        ]
-      },
       "vesselForm": {
         "inputType": "dropdown",
         "valuelist": [
@@ -4049,30 +3424,13 @@
     "fields": {}
   },
   "Area": {
+    "commons": ["description", "area", "dimensionLength", "dimensionWidth"],
     "fields": {
-      "description": {
-        "inputType": "text"
-      },
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
       "dimensionVerticalExtent": {
         "inputType": "dimension",
         "positionValues": [
           "Oberkante",
           "Unterkante"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
       }
     }
   },

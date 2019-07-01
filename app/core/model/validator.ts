@@ -2,6 +2,7 @@ import {isnt, on} from 'tsfun';
 import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
+import {Validations} from './validations';
 
 
 const RECORDED_IN = 'isRecordedIn';
@@ -68,12 +69,22 @@ export class Validator {
     /**
      * @throws [NO_ISRECORDEDIN]
      */
-    public assertHasIsRecordedIn(document: Document|NewDocument): void {
+    public assertHasIsRecordedIn(document: Document|NewDocument) {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)
             && !Document.hasRelations(document as Document, RECORDED_IN)) {
 
             throw [ValidationErrors.NO_ISRECORDEDIN];
+        }
+    }
+
+
+    public assertGeometryIsValid(document: Document) {
+
+        if (document.resource.geometry) {
+            const errWithParam: string[]|null
+                = Validations.validateStructureOfGeometries(document.resource.geometry);
+            if (errWithParam) throw(errWithParam);
         }
     }
 

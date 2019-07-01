@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter, OnChanges, SimpleChanges,
     OnInit} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {Map3DComponent} from '../../map-3d.component';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
 import {VisibilityHelper} from '../../../../../core-3d/helpers/visibility-helper';
@@ -10,7 +10,7 @@ import {has3DPointGeometry, getPointVector} from '../../../../../../util/util-3d
 
 export interface Map3DMarker {
 
-    document: IdaiFieldDocument;
+    document: FieldDocument;
     canvasPosition: THREE.Vector2;
     worldSpacePosition: THREE.Vector3;
     visible: boolean;
@@ -28,11 +28,11 @@ export interface Map3DMarker {
  */
 export class PointGeometriesComponent implements OnChanges, OnInit {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
+    @Input() documents: Array<FieldDocument>;
+    @Input() selectedDocument: FieldDocument;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-    @Output() onSetHoverDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onSelectDocument: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
+    @Output() onSetHoverDocument: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     @ViewChild('container') container: ElementRef;
 
@@ -46,9 +46,9 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     constructor(private map3DComponent: Map3DComponent) {}
 
 
-    public setHoverDocument = (document: IdaiFieldDocument) => this.onSetHoverDocument.emit(document)
-    public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
-    public isSelected = (document: IdaiFieldDocument) => this.selectedDocument == document;
+    public setHoverDocument = (document: FieldDocument) => this.onSetHoverDocument.emit(document)
+    public select = (document: FieldDocument) => this.onSelectDocument.emit(document);
+    public isSelected = (document: FieldDocument) => this.selectedDocument == document;
 
     public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
 
@@ -88,7 +88,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     }
 
 
-    private getMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
+    private getMarker(document: FieldDocument): Map3DMarker|undefined {
 
         const { canvasPosition, worldSpacePosition } = this.getPositionVectors(document);
 
@@ -105,7 +105,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     }
 
 
-    private createMarker(document: IdaiFieldDocument, canvasPosition: THREE.Vector2,
+    private createMarker(document: FieldDocument, canvasPosition: THREE.Vector2,
                          worldSpacePosition: THREE.Vector3): Map3DMarker|undefined {
 
         const marker: Map3DMarker = {
@@ -122,7 +122,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     }
 
 
-    private getPositionVectors(document: IdaiFieldDocument)
+    private getPositionVectors(document: FieldDocument)
             : { canvasPosition?: THREE.Vector2, worldSpacePosition?: THREE.Vector3 } {
 
         const worldSpacePosition: THREE.Vector3 = PointGeometriesComponent.getWorldSpacePosition(document);
@@ -204,23 +204,23 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     }
 
 
-    private getCanvasPosition(document: IdaiFieldDocument): THREE.Vector2 {
+    private getCanvasPosition(document: FieldDocument): THREE.Vector2 {
 
         return this.map3DComponent.getViewer().getCanvasCoordinates(
-            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
+            getPointVector((document.resource.geometry as FieldGeometry).coordinates)
         );
     }
 
 
-    private static getWorldSpacePosition(document: IdaiFieldDocument): THREE.Vector3 {
+    private static getWorldSpacePosition(document: FieldDocument): THREE.Vector3 {
 
         return getPointVector(
-            (document.resource.geometry as IdaiFieldGeometry).coordinates
+            (document.resource.geometry as FieldGeometry).coordinates
         );
     }
 
 
-    private static get3DPointGeometries(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private static get3DPointGeometries(documents: Array<FieldDocument>): Array<FieldDocument> {
 
         return documents.filter(document => has3DPointGeometry(document));
     }

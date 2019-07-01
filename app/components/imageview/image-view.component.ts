@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty} from 'tsfun';
-import {Messages, IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
-import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -22,142 +21,202 @@ import {M} from '../m';
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ImageViewComponent implements OnInit {
 
-    public image: ImageContainer = {};
+    @ViewChild('thumbnailSliderContainer') thumbnailSliderContainer: ElementRef;
+    @ViewChild('imageInfo') imageInfo: ElementRef;
+
+    public images: Array<ImageContainer> = [];
+    public selectedImage: ImageContainer;
+    public linkedResourceIdentifier: string|undefined;
     public activeTab: string;
-    public originalNotFound: boolean = false;
+    public openSection: string|undefined = 'stem';
 
-    private comingFrom: Array<any>|undefined = undefined;
-
-    // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToJumpTo: IdaiFieldDocument) => this.routingService.jumpToRelationTarget(
-        documentToJumpTo, undefined, true);
+    private subModalOpened: boolean = false;
 
 
     constructor(
-        private route: ActivatedRoute,
+        private activeModal: NgbActiveModal,
         private datastore: ImageReadDatastore,
         private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService
-    ) {
-        this.route.queryParams.subscribe(queryParams => {
-            if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
-        });
-    }
+    ) {}
 
 
     ngOnInit() {
 
-        this.fetchDocAndImage();
         window.getSelection().removeAllRanges();
     }
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.deselect();
+        if (event.key === 'Escape' && !this.subModalOpened) await this.activeModal.close();
+        if (event.key === 'ArrowLeft') await this.selectPrevious();
+        if (event.key === 'ArrowRight') await this.selectNext();
     }
 
 
-    public async deselect() {
-
-        if (this.comingFrom) {
-            await this.router.navigate(this.comingFrom);
-        } else {
-            await this.router.navigate(['media']);
-        }
-    }
-
-
-    public async startEdit(tabName: string = 'fields') {
-
-        this.doceditActiveTabService.setActiveTab(tabName);
-
-        const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
-        const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.image.document);
-
-        try {
-            const result = await doceditModalRef.result;
-            if (result.document) this.image.document = result.document;
-            this.setNextDocumentViewActiveTab();
-        } catch (closeReason) {
-            if (closeReason === 'deleted') await this.deselect();
-        }
-    }
-
-
-    public hasRelations() {
-
-        if (!this.image) return false;
-        if (!this.image.document) return false;
-
-        const relations: any = this.image.document.resource.relations;
-        if (isEmpty(relations)) return false;
-
-        return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
-    }
-
-
-    protected fetchDocAndImage() {
+    public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
+                            linkedResourceIdentifier?: string) {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(async (id: string, menu: string, tab?: string) => {
+        this.linkedResourceIdentifier = linkedResourceIdentifier;
 
-            let document: IdaiFieldImageDocument;
+        this.images = [];
+        await this.select(await this.fetchThumbnail(selectedDocument), false);
 
-            try {
-                document = await this.datastore.get(id);
-                if (!document.resource.id) return await this.router.navigate(['images']);
-            } catch (e) {
-                return await this.router.navigate(['images']);
+        for (let document of documents) {
+            if (document === selectedDocument) {
+                this.images.push(this.selectedImage);
+            } else {
+                this.images.push(await this.fetchThumbnail(document));
             }
+        }
 
-            this.image.document = document;
-
-            try {
-                // read original (empty if not present)
-                let url = await this.imagestore.read(document.resource.id, false, false);
-                if (!url || url == '') this.originalNotFound = true;
-                this.image.imgSrc = url;
-
-                // read thumb
-                url = await this.imagestore.read(document.resource.id, false, true);
-                this.image.thumbSrc = url;
-
-                if (menu === 'edit') {
-                    await this.startEdit(tab);
-                } else if (tab) {
-                    this.activeTab = tab;
-                }
-            } catch (e) {
-                this.image.imgSrc = BlobMaker.blackImg;
-                this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
-            }
-        });
+        this.scrollToThumbnail(this.selectedImage);
     }
 
 
-    private setNextDocumentViewActiveTab() {
+    public async select(image: ImageContainer, scroll: boolean = true) {
 
-        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
-        if (['relations', 'fields'].indexOf(nextActiveTab) != -1) {
-            this.activeTab = nextActiveTab;
+        if (!image.imgSrc) await this.addOriginal(image);
+
+        this.selectedImage = image;
+        if (scroll) this.scrollToThumbnail(image);
+    }
+
+
+    public close() {
+
+        this.activeModal.close();
+    }
+
+
+    public async startEdit() {
+
+        this.subModalOpened = true;
+        MenuService.setContext('docedit');
+
+        const doceditModalRef = this.modalService.open(
+            DoceditComponent,
+            { size: 'lg', backdrop: 'static' }
+            );
+        const doceditModalComponent = doceditModalRef.componentInstance;
+        doceditModalComponent.setDocument(this.selectedImage.document as ImageDocument);
+
+        try {
+            const result = await doceditModalRef.result;
+            if (result.document) this.selectedImage.document = result.document;
+        } catch (closeReason) {
+            if (closeReason === 'deleted') await this.activeModal.close();
+        }
+
+        this.subModalOpened = false;
+        MenuService.setContext('image-view');
+    }
+
+
+    public async jumpToResource(documentToJumpTo: FieldDocument) {
+
+        await this.routingService.jumpToResource(
+            documentToJumpTo, true
+        );
+
+        this.activeModal.close();
+    }
+
+
+    public isThumbnailSliderScrollbarVisible(): boolean {
+
+        return this.thumbnailSliderContainer
+            && this.thumbnailSliderContainer.nativeElement.scrollWidth
+            > this.thumbnailSliderContainer.nativeElement.clientWidth;
+    }
+
+
+    public isImageInfoScrollbarVisible(): boolean {
+
+        return this.imageInfo
+            && this.imageInfo.nativeElement.scrollHeight
+            > this.imageInfo.nativeElement.clientHeight;
+    }
+
+
+    public containsOriginal(image: ImageContainer): boolean {
+
+        return image.imgSrc !== undefined && image.imgSrc !== '';
+    }
+
+
+    private async fetchThumbnail(document: ImageDocument): Promise<ImageContainer> {
+
+        const image: ImageContainer = { document: document };
+
+        try {
+            image.thumbSrc = await this.imagestore.read(document.resource.id, false, true);
+        } catch (e) {
+            image.thumbSrc = BlobMaker.blackImg;
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+        }
+
+        return image;
+    }
+
+
+    private async addOriginal(image: ImageContainer) {
+
+        if (!image.document) return;
+
+        try {
+            image.imgSrc = await this.imagestore.read(
+                image.document.resource.id, false, false
+            );
+        } catch (e) {
+            image.imgSrc = BlobMaker.blackImg;
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
     }
 
 
-    private getRouteParams(callback: Function) {
+    private async selectPrevious() {
 
-        this.route.params.forEach((params: Params) => {
-            callback(params['id'], params['menu'], params['tab']);
-        });
+        if (this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === 0
+            ? this.images.length - 1
+            : index - 1;
+
+        await this.select(this.images[index]);
+    }
+
+
+    private async selectNext() {
+
+        if (this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === this.images.length - 1
+            ? 0
+            : index + 1;
+
+        await this.select(this.images[index]);
+    }
+
+
+    private scrollToThumbnail(image: ImageContainer) {
+
+        const element: HTMLElement|null = document.getElementById(
+            'thumbnail-' + (image.document as ImageDocument).resource.id
+        );
+
+        if (element) element.scrollIntoView({ inline: 'center' });
     }
 }

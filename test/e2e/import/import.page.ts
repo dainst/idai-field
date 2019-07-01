@@ -36,16 +36,16 @@ export class ImportPage {
         return this.getFormatOptions().get(index).getAttribute("value");
     };
 
-    public static getMainTypeDocumentOptions = function() {
+    public static getOperationOptions = function() {
 
-        browser.wait(EC.presenceOf(element(by.id('mainTypeDocumentSelect'))), delays.ECWaitTime);
-        return element(by.id('mainTypeDocumentSelect')).all(by.css('select option'));
+        browser.wait(EC.presenceOf(element(by.id('operationSelect'))), delays.ECWaitTime);
+        return element(by.id('operationSelect')).all(by.css('select option'));
     };
 
-    public static clickMainTypeDocumentOption = function(index) {
+    public static clickOperationOption = function(index) {
 
-        browser.wait(EC.presenceOf(this.getMainTypeDocumentOptions().get(index)), delays.ECWaitTime);
-        return this.getMainTypeDocumentOptions().get(index).click();
+        browser.wait(EC.presenceOf(this.getOperationOptions().get(index)), delays.ECWaitTime);
+        return this.getOperationOptions().get(index).click();
     };
 
     public static getImportURLInput = function() {

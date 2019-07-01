@@ -12,37 +12,16 @@ const delays = require('../config/delays');
 
 export class ResourcesPage {
 
-    public static get(view: string = 'excavation') {
+    public static get(view: string = 'project') {
 
         return browser.get('#/resources/' + view);
     }
-
 
     // click
 
     public static clickCreateResource() {
 
         common.click(ResourcesPage.getCreateDocumentButton());
-    }
-
-
-    public static clickSaveInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-save-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
-    }
-
-
-    public static clickCancelInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
-    }
-
-
-    public static clickDiscardInModal() {
-
-        common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 
@@ -54,24 +33,44 @@ export class ResourcesPage {
     }
 
 
-    /**
-     * @deprecated use selectObjectByIdentifier instead
-     */
-    public static clickSelectObjectByIndex(listIndex) {
+    public static clickOpenContextMenu(identifier: string) {
 
-        return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
+        common.rightClick(this.getListItemEl(identifier));
     }
 
 
-    public static clickHierarchyButton(identifier) {
+    public static clickContextMenuMoveButton() {
+
+        common.click(element(by.id('context-menu-move-button')));
+    }
+
+
+    public static clickContextMenuDeleteButton() {
+
+        common.click(element(by.id('context-menu-delete-button')));
+    }
+
+
+    public static clickHierarchyButton(identifier: string) {
 
         return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
     }
 
 
-    public static clickSelectResource(identifier) {
+    public static clickGotoImageView() {
 
-        return common.click(element(by.id('resource-' + identifier)));
+        return common.click(element(by.id('thumbnail-container')));
+    }
+
+
+    public static clickSelectResource(identifier: string, tab?: 'info' | 'children') {
+
+        let buttonClass = '';
+        if (tab) {
+            if (tab === 'info') buttonClass = '.info-button';
+            if (tab === 'children') buttonClass = '.hierarchy-button';
+        }
+        return common.click(element(by.css('#resource-' + identifier + ' ' + buttonClass)));
     }
 
 
@@ -88,58 +87,88 @@ export class ResourcesPage {
     }
 
 
-    public static clickMainTypeDocumentNavigationButton() {
+    public static clickSwitchHierarchyMode() {
 
-        common.click(element(by.id('selected-operation-type-document')));
+        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
+        common.click(element(by.id('hierarchy-mode-switch')));
+        browser.actions().mouseUp().mouseMove({ x: 200, y: 200 }).perform(); // avoid tooltip
     }
 
 
-    public static clickSelectResourceType(typeName?) {
+    public static clickOperationNavigationButton() {
 
-        if (!typeName) typeName = "feature-architecture";
+        common.click(element(by.id('selected-operation')));
+    }
+
+
+    public static clickSelectResourceType(typeName: string = 'feature-architecture') {
+
         return common.click(element(by.id('choose-type-option-' + typeName)));
     }
 
 
-    public static openEditByDoubleClickResource(identifier) {
+    public static clickConfirmDeleteInModal() {
+
+        common.click(element(by.id('delete-resource-confirm')));
+    };
+
+
+    public static openEditByDoubleClickResource(identifier: string) {
 
         browser.wait(EC.visibilityOf(
-            element(by.xpath('//*[@id="objectList"]//div[@class="title" and normalize-space(text())="'
+            element(by.xpath('//*[@id="sidebar"]//div[@class="title" and normalize-space(text())="'
                 + identifier + '"]'))), delays.ECWaitTime);
-        return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="title" and ' +
+        return browser.actions().doubleClick(element(by.xpath('//*[@id="sidebar"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]'))).perform();
+    }
+
+
+    public static clickResourceListItemInMoveModal(identifier: string) {
+
+        common.click(element(by.id('document-picker-resource-' + identifier)));
+    }
+
+
+    public static clickCancelInMoveModal() {
+
+        common.click(element(by.id('move-modal-cancel-button')));
+    }
+
+
+    public static clickListEditButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-edit-button')));
+    }
+
+
+    public static clickListMoveButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-move-button')));
+    }
+
+
+    public static clickListDeleteButton(identifier: string) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .list-delete-button')));
     }
 
 
     // get text
 
-    public static getListItemIdentifierText(itemNr) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
+    public static getListItemIdentifierText(itemNr: number) {
+
+        browser.wait(EC.visibilityOf(element(by.css('#sidebar .resources-listing-item:nth-child('
             + (itemNr + 1) + ') .title'))), delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
+        return element(by.css('#sidebar .resources-listing-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
     }
 
 
     public static getSelectedListItemIdentifierText() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .title'))),
+        browser.wait(EC.visibilityOf(element(by.css('#sidebar .resources-listing-item.selected .title'))),
             delays.ECWaitTime);
-        return element(by.css('#objectList .list-group-item.selected .title')).getText();
-    }
-
-
-    public static getSelectedMainTypeDocumentOption() {
-
-        browser.wait(EC.presenceOf(element(by.id('selected-operation-type-document'))), delays.ECWaitTime);
-        return element(by.id('selected-operation-type-document')).getText();
-    }
-
-
-    public static getMainTypeDocumentOption() {
-
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
-        return element.all(by.css('#mainTypeSelectBox')).getText();
+        return element(by.css('#sidebar .resources-listing-item.selected .title')).getText();
     }
 
 
@@ -180,6 +209,12 @@ export class ResourcesPage {
     }
 
 
+    public static getConfirmDeletionInputField() {
+
+        return element(by.id('delete-resource-input'));
+    }
+
+
     // elements
 
     public static getListItemEl(identifier) {
@@ -190,7 +225,7 @@ export class ResourcesPage {
 
     public static getListItemEls() {
 
-        return element.all(by.css('.list-group-item'));
+        return element.all(by.css('#sidebar .resources-listing-item'));
     }
 
 
@@ -202,7 +237,7 @@ export class ResourcesPage {
 
     public static getListItemMarkedNewEls() {
 
-        return element.all(by.css('#objectList .list-group-item .new'));
+        return element.all(by.css('#sidebar .resources-listing-item .new'));
     }
 
 
@@ -232,6 +267,30 @@ export class ResourcesPage {
     }
 
 
+    public static getContextMenu() {
+
+        return element(by.id('context-menu'));
+    }
+
+
+    public static getMoveModal() {
+
+        return element(by.id('move-modal'));
+    }
+
+
+    public static getResourceIdentifierLabelsInMoveModal() {
+
+        return element.all(by.css('#move-modal document-teaser .title'));
+    }
+
+
+    public static getListRows() {
+
+        return element.all(by.css('.row-wrapper'));
+    }
+
+
     // type in
 
     public static typeInListModeInputField(identifier: string, index: number, inputText: string) {
@@ -249,49 +308,66 @@ export class ResourcesPage {
     }
 
 
+    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
+
+        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
+    }
+
+
+    public static typeInMoveModalSearchBarInput(identifier: string) {
+
+        return common.typeIn(this.getMoveModal().element(by.css('.search-bar-input')), identifier);
+    }
+
+
     // sequences
 
     public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
                                         inputFieldText?: string, skipGeometry?: boolean,
                                         clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType(typeName);
+        this.clickCreateResource();
+        this.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
-        DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
-        ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument(clickMsgAway, waitForModalToClose);
+    }
+
+
+    public static performDescendHierarchy(identifier: string) {
+
+        this.clickHierarchyButton(identifier);
+        return common.click(element(by.id('open-child-collection-button')));
     }
 
 
     public static performCreateResourceInList(identifier: string, typeName: string) {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType(typeName);
-        ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+        this.clickCreateResource();
+        this.clickSelectResourceType(typeName);
+        this.typeInNewResourceAndHitEnterInList(identifier);
     }
 
 
-    public static performCreateMainTypeResource(identifier: string) {
+    public static performCreateOperation(identifier: string) {
 
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.clickTab('project');
         this.performCreateResource(identifier, 'trench');
         this.clickHierarchyButton(identifier);
     }
 
 
     public static performCreateRelation(identifier: string, targetIdentifier: string,
-                                                   relationGroupIndex: number) {
+                                                   relationGroupName: string) {
 
-        ResourcesPage.openEditByDoubleClickResource(identifier);
-        DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupIndex);
-        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupIndex, 0, targetIdentifier);
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
+        this.openEditByDoubleClickResource(identifier);
+        DoceditPage.clickGotoTimeTab();
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupName);
+        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupName, 0, targetIdentifier);
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupName, 0, 0);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     }
@@ -299,23 +375,15 @@ export class ResourcesPage {
 
     public static performCreateLink() {
 
-        ResourcesPage.performCreateResource('1', "feature-architecture");
-        ResourcesPage.performCreateResource('2', "feature-architecture");
-        ResourcesPage.performCreateRelation('2', '1', 8);
+        this.performCreateResource('1', "feature-architecture");
+        this.performCreateResource('2', "feature-architecture");
+        this.performCreateRelation('2', '1', 'zeitlich-vor');
     }
-
 
     // script
-
-    public static scrollDown() {
-
-        return browser.executeScript('window.scrollTo(0,200);');
-    }
-
 
     public static scrollUp() {
 
         return browser.executeScript('window.scrollTo(0,0);');
     }
-
 }

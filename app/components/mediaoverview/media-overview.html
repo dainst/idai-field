@@ -1,16 +1,7 @@
 <div class="media-overview row">
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
         <div class="row bg-light media-overview-nav">
-            <div *ngIf="!getSelected().length" class="col-sm-7 media-overview-nav-content">
-                <media-overview-search-bar [q]="getQuery().q"
-                                           [types]="getQuery().types" [relationName]="'depicts'"
-                                           [relationRangeType]="'Trench'" [hidden]="getSelected().length"
-                                           (onQueryStringChanged)="setQueryString($event)"
-                                           (onTypesChanged)="setTypeFilters($event)">
-                </media-overview-search-bar>
-            </div>
-
-            <div *ngIf="!getSelected().length" class="col-sm-3 media-overview-nav-content">
+            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-3 media-overview-nav-content">
                 <select id="link-filter-select" class="form-control"
                         [ngModel]="getLinkFilter()"
                         (ngModelChange)="setLinkFilter($event)">
@@ -20,25 +11,49 @@
                 </select>
             </div>
 
-            <div *ngIf="getSelected().length" id="taskbar-container" class="col-sm-10">
+            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-5 media-overview-nav-content">
+                <media-overview-search-bar [filterOptions]="filterOptions"
+                                           [q]="getQuery().q"
+                                           [types]="getQuery().types"
+                                           [hidden]="nrOfSelectedMediaResources()"
+                                           (onQueryStringChanged)="setQueryString($event)"
+                                           (onTypesChanged)="setTypeFilters($event)">
+                </media-overview-search-bar>
+            </div>
+
+            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-2 media-overview-nav-content">
+                <div class="btn-group" id="media-pager" *ngIf="getDocuments() && getTotalDocumentCount()">
+                    <button class="btn btn-primary" (click)="turnPageBack()" [ngClass]="{'disabled': !canTurnPageBack()}">
+                        <span class="mdi mdi-chevron-left"></span>
+                    </button>
+                    <button class="btn btn-outline-primary disabled">
+                        {{getCurrentPage()}} / {{getPageCount()}}
+                    </button>
+                    <button class="btn btn-primary" (click)="turnPage()" [ngClass]="{'disabled': !canTurnPage()}">
+                        <span class="mdi mdi-chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="hasSelectedMediaResources()" id="taskbar-container" class="col-sm-10">
                 <media-overview-taskbar [imageGrid]="imageGrid"></media-overview-taskbar>
             </div>
 
             <div class="col-sm-2 text-right slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
-                      (click)="setGridSize(getGridSize() - 1)"></span>
-                <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
-                       max="{{maxGridSize}}" value="{{getGridSize()}}"
+                      (click)="decreaseNrMediaResourcesPerRow()"></span>
+                <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrMediaResourcesPerRow()}}"
+                       max="{{getMaxNrMediaResourcesPerRow()}}" value="{{getNrMediaResourcesPerRow()}}"
                        class="slider align-middle"
-                       (change)="setGridSize(gridSize.value)">
+                       (change)="setNrMediaResourcesPerRow(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
-                      (click)="setGridSize(getGridSize() + 1)"></span>
+                      (click)="increaseNrMediaResourcesPerRow()"></span>
             </div>
         </div>
 
         <div (window:resize)="onResize()" class="image-grid-container">
             <image-grid #imageGrid
-                    [nrOfColumns]="getGridSize()"
+                    [nrOfColumns]="getNrMediaResourcesPerRow()"
                     [documents]="getDocuments()"
                     [selected]="getSelected()"
                     [totalDocumentCount]="getTotalDocumentCount()"
@@ -47,7 +62,7 @@
                     [showTooltips]="true"
                     [paddingRight]="20"
                     (onClick)="toggleSelected($event)"
-                    (onDoubleClick)="jumpToRelationTarget($event)"
+                    (onDoubleClick)="showMediaResource($event)"
                     (onFilesUploaded)="onFilesUploaded($event)">
             </image-grid>
         </div>

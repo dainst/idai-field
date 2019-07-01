@@ -1,11 +1,12 @@
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import * as PouchDB from 'pouchdb';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
-import {toResourceId} from '../../app/components/resources/view/state/navigation-path-segment';
+import {TabManager} from '../../app/components/tab-manager';
+
 
 /**
  * This is a subsystem test.
@@ -13,23 +14,25 @@ import {toResourceId} from '../../app/components/resources/view/state/navigation
  * The subsystem gets assembled in the ViewFacade's constructor.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 
 describe('ViewFacade/Subsystem', () => {
     
     let viewFacade: ViewFacade;
-    let resourcesState: ResourcesStateManager;
-    let stateSerializer;
     let changesStream;
     let loading;
+    let resourcesStateManager: ResourcesStateManager;
+    let stateSerializer;
+    let tabManager: TabManager;
 
-    let trenchDocument1: IdaiFieldDocument;
-    let trenchDocument2: IdaiFieldDocument;
-    let findDocument1: IdaiFieldDocument;
-    let findDocument2: IdaiFieldDocument;
-    let featureDocument1: IdaiFieldDocument;
-    let featureDocument2: IdaiFieldDocument;
-    let idaiFieldDocumentDatastore: CachedDatastore<IdaiFieldDocument>;
+    let trenchDocument1: FieldDocument;
+    let trenchDocument2: FieldDocument;
+    let findDocument1: FieldDocument;
+    let findDocument2: FieldDocument;
+    let featureDocument1: FieldDocument;
+    let featureDocument2: FieldDocument;
+    let fieldDocumentDatastore: CachedDatastore<FieldDocument>;
 
 
     /*
@@ -48,11 +51,12 @@ describe('ViewFacade/Subsystem', () => {
         await setupSyncTestDb();
 
         const result = await createApp();
-        
-        idaiFieldDocumentDatastore = result.idaiFieldDocumentDatastore;
-        viewFacade = result.viewFacade;
 
-        // await new PouchDB('testdb').destroy();
+        fieldDocumentDatastore = result.fieldDocumentDatastore;
+        viewFacade = result.viewFacade;
+        resourcesStateManager = result.resourcesStateManager;
+        stateSerializer = result.stateSerializer;
+        tabManager = result.tabManager;
 
         spyOn(console, 'debug'); // suppress console.debug
 
@@ -76,42 +80,82 @@ describe('ViewFacade/Subsystem', () => {
         featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        // await idaiFieldDocumentDatastore.create(projectDocument, 'u');
-        await idaiFieldDocumentDatastore.create(trenchDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(trenchDocument2, 'u');
-        await idaiFieldDocumentDatastore.create(findDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(findDocument2, 'u');
-        await idaiFieldDocumentDatastore.create(featureDocument1, 'u');
-        await idaiFieldDocumentDatastore.create(featureDocument2, 'u');
-
-        stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
-        stateSerializer.load.and.returnValue(Promise.resolve({}));
-        stateSerializer.store.and.returnValue(Promise.resolve());
+        await fieldDocumentDatastore.create(trenchDocument1, 'u');
+        await fieldDocumentDatastore.create(trenchDocument2, 'u');
+        await fieldDocumentDatastore.create(findDocument1, 'u');
+        await fieldDocumentDatastore.create(findDocument2, 'u');
+        await fieldDocumentDatastore.create(featureDocument1, 'u');
+        await fieldDocumentDatastore.create(featureDocument2, 'u');
 
         changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
         changesStream.notifications.and.returnValue({
             subscribe: () => {}
         });
 
-        // resourcesState.loaded = true;
         loading = jasmine.createSpyObj('loading', ['start', 'stop']);
         done();
     });
 
 
-    afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
+    afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
 
 
-    xit('reload layer ids on startup', async done => {
+    it('reload view states on startup', async done => {
 
-        resourcesState.loaded = false;
-        stateSerializer.load.and.returnValue({ excavation: {
-            navigationPaths: { 't1': { elements: [] } },
-            layerIds: { 't1': ['layerid1'] }
-        }});
-        await viewFacade.selectView('excavation');
-        await viewFacade.selectOperation(trenchDocument1.resource.id);
-        expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
+        resourcesStateManager.loaded = false;
+        stateSerializer.load.and.returnValue(
+            Promise.resolve({
+                overviewState: {
+                    mode: 'list',
+                    layerIds: ['layerId1']
+                },
+                operationViewStates: {
+                    t1: {
+                        layerIds: ['layerId2']
+                    },
+                    t2: {
+                        mode: 'map'
+                    }
+                }
+            })
+        );
+
+        await tabManager.openTab('resources', 't2', 'trench2',
+            'Trench');
+
+        await viewFacade.selectView('project');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
+        expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t1');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layerId2']);
+        expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t2');
+        expect(viewFacade.getMode()).toEqual('map');
+
+        done();
+    });
+
+
+    it('keep only map layer ids when deactivating view', async done => {
+
+        await viewFacade.selectView('t1');
+        await viewFacade.setSearchString('test');
+        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setSelectedDocument('feature1');
+        viewFacade.setMode('list');
+        viewFacade.setActiveLayersIds(['layer1']);
+
+        await viewFacade.deactivateView('t1');
+        await viewFacade.selectView('t1');
+
+        expect(viewFacade.getSearchString()).toEqual('');
+        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getSelectedDocument()).toBeUndefined();
+        expect(viewFacade.getMode()).toEqual('map');
+        expect(viewFacade.getActiveLayersIds()).toEqual(['layer1']);
+
         done();
     });
 
@@ -120,9 +164,9 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        await idaiFieldDocumentDatastore.create(findDocument3, 'u');
+        await fieldDocumentDatastore.create(findDocument3, 'u');
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature2');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('find3');
@@ -136,11 +180,11 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep filter when switching views', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setFilterTypes(['Feature']);
         await viewFacade.selectView('project');
         expect(viewFacade.getFilterTypes()).toEqual([]);
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
         done();
     });
@@ -148,7 +192,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep filter when move into', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setFilterTypes(['Feature']);
         await viewFacade.moveInto(featureDocument1);
         expect(viewFacade.getFilterTypes()).toEqual([]);
@@ -160,7 +204,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep filter on switching mode', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setFilterTypes(['Feature']);
         viewFacade.setMode('list');
         expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
@@ -172,11 +216,11 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep query string when switching views', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
         await viewFacade.selectView('project');
         expect(viewFacade.getSearchString()).toEqual('');
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getSearchString()).toEqual('abc');
         done();
     });
@@ -184,7 +228,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep query string when move into', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
         await viewFacade.moveInto(featureDocument1);
         expect(viewFacade.getSearchString()).toEqual('');
@@ -196,7 +240,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep query string on switching mode', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
         viewFacade.setMode('list');
         expect(viewFacade.getSearchString()).toEqual('abc');
@@ -208,13 +252,13 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep custom constraints when switching views', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
         await viewFacade.selectView('project');
         expect(viewFacade.getCustomConstraints()).toEqual({});
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
         done();
     });
@@ -222,7 +266,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('ViewContext -- keep custom constraints on switching mode', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
@@ -234,9 +278,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('ViewContext -- optypedoc has different context in different hierarchy mode', async done => {
+    it('ViewContext -- use different view context when bypassing hierarchy', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
         await viewFacade.setBypassHierarchy(true);
         expect(viewFacade.getSearchString()).toEqual('');
@@ -246,39 +290,25 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('ViewContext -- all optypedocs selection does not have its own context', async done => {
+    it('ViewState -- restore mode when switching views', async done => {
 
-        await viewFacade.selectView('excavation');
-        await viewFacade.setBypassHierarchy(true);
-        await viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
-        await viewFacade.setSearchString('abc');
-        await viewFacade.setSelectAllOperationsOnBypassHierarchy(false);
-        expect(viewFacade.getSearchString()).toEqual('abc');
-        done();
-    });
-
-
-    it('ViewState -- restore operation type selection after switching views', async done => {
-
-        await viewFacade.selectView('excavation');
-        expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument1.resource.id);
-        await viewFacade.selectOperation(trenchDocument2.resource.id);
-        await viewFacade.selectView('project');
-        await viewFacade.selectView('excavation');
-        expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument2.resource.id);
-        done();
-    });
-
-
-    it('ViewState -- keep mode when switching views', async done => {
-
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
+        await tabManager.openTab('resources', 't1', 'trench1',
+            'Trench');
         expect(viewFacade.getMode()).toEqual('map');
         viewFacade.setMode('list');
-        await viewFacade.selectView('project');
+
+        await viewFacade.selectView('t2');
+        await tabManager.openTab('resources', 't2', 'trench2',
+            'Trench');
         expect(viewFacade.getMode()).toEqual('list');
-        await viewFacade.selectView('excavation');
+        viewFacade.setMode('map');
+
+        await viewFacade.selectView('t1');
         expect(viewFacade.getMode()).toEqual('list');
+
+        await viewFacade.selectView('t2');
+        expect(viewFacade.getMode()).toEqual('map');
 
         done();
     });
@@ -287,7 +317,7 @@ describe('ViewFacade/Subsystem', () => {
     it('reload predefined layer ids on startup in test/demo project', async done => {
 
         resourcesState = new ResourcesStateManager(
-            idaiFieldDocumentDatastore,
+            fieldDocumentDatastore,
             stateSerializer,
             new OperationViews(viewsList),
             [],
@@ -298,7 +328,7 @@ describe('ViewFacade/Subsystem', () => {
 
         viewFacade = new viewFacade(
             projectConfiguration,
-            idaiFieldDocumentDatastore,
+            fieldDocumentDatastore,
             changesStream,
             resourcesState,
             loading
@@ -311,7 +341,7 @@ describe('ViewFacade/Subsystem', () => {
     });*/
 
 
-    it('operations overview: populate document list', async done => {
+    it('overview: populate document list', async done => {
 
         await viewFacade.selectView('project');
         expect(viewFacade.getDocuments().length).toBe(2);
@@ -322,7 +352,7 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations overview: search', async done => {
+    it('overview: search', async done => {
 
         await viewFacade.selectView('project');
         await viewFacade.setSearchString('trench2');
@@ -332,7 +362,7 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations overview: show all resources in extended search mode', async done => {
+    it('overview: show all resources in extended search mode', async done => {
 
         await viewFacade.selectView('project');
         await viewFacade.setBypassHierarchy(true);
@@ -341,9 +371,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: populate document list', async done => {
+    it('operation view: populate document list', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         const documents: Array<Document> = viewFacade.getDocuments();
         expect(documents.length).toBe(2);
         expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);
@@ -352,32 +382,18 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: update children count map when populating document list', async done => {
+    it('operation view: update children count map when populating document list', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getChildrenCount(featureDocument1)).toBe(2);
         expect(viewFacade.getChildrenCount(featureDocument2)).toBe(0);
         done();
     });
 
 
-    it('operations view: select operations type document', async done => {
+    it('operation view: search', async done => {
 
-        const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
-        findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await idaiFieldDocumentDatastore.create(findDocument3, 'u');
-
-        await viewFacade.selectView('excavation');
-        await viewFacade.selectOperation(trenchDocument2.resource.id);
-        expect(viewFacade.getDocuments().length).toBe(1);
-        expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
-        done();
-    });
-
-
-    it('operations view: search', async done => {
-
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature2');
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('feature2');
@@ -385,9 +401,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: set selected, query invalidated', async done => {
+    it('operation view: invalidate query after selecting document if necessary', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature1');
         await viewFacade.setSelectedDocument(featureDocument2.resource.id);
         expect(viewFacade.getSearchString()).toEqual('');
@@ -396,9 +412,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: set selected in operations view, query not invalidated', async done => {
+    it('operation view: do not invalidate query after selecting document if not necessary', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature1');
         await viewFacade.setSelectedDocument(featureDocument1.resource.id);
         expect(viewFacade.getSearchString()).toEqual('feature1');
@@ -407,9 +423,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: query matches selection', async done => {
+    it('operation view: do not deselect if query matches selection', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
         await viewFacade.setSelectedDocument(findDocument1.resource.id);
         await viewFacade.setSearchString('find1');
@@ -418,9 +434,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: query does not match selection, deselect', async done => {
+    it('operation view: deselect if query does not match selection', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSelectedDocument(findDocument1.resource.id);
         await viewFacade.setSearchString('find2');
         expect(viewFacade.getSelectedDocument()).toBe(undefined);
@@ -434,15 +450,15 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setSelectedDocument(trenchDocument1.resource.id);
         expect(viewFacade.getSelectedDocument().resource.id).toEqual(trenchDocument1.resource.id);
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getSelectedDocument()).toEqual(undefined);
         done();
     });
 
 
-    it('operations view: previous selection gets restored', async () => {
+    it('operation view: restore previous selection while navigation through hierarchy', async () => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
         await viewFacade.setSelectedDocument(findDocument1.resource.id);
 
@@ -454,35 +470,21 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: previous selection gets restored on view change', async () => {
+    it('operation view: restore previous selection on view change', async () => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setSelectedDocument(featureDocument2.resource.id);
 
         await viewFacade.selectView('project');
         expect(viewFacade.getSelectedDocument()).toBeUndefined();
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
     });
 
 
-    // there was a problem ...
-    it('operations view: previous selection gets restored when coming from overview', async () => {
+    it('operation view: show only documents with liesWithin relation to a specific resource', async done => {
 
-        await viewFacade.selectView('excavation');
-        await viewFacade.setSelectedDocument(featureDocument2.resource.id);
-
-        await viewFacade.selectView('project');
-        await viewFacade.selectView('excavation');
-        await viewFacade.selectOperation(trenchDocument1.resource.id); // ... with this deleting the selection
-
-        expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
-    });
-
-
-    it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
-
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
 
         let documents = await viewFacade.getDocuments();
@@ -500,42 +502,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: get navigation path, switch between operation type docs', async done => {
+    it('operation view: search with custom constraint filter', async done => {
 
-        const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'feature3');
-        featureDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-        await idaiFieldDocumentDatastore.create(featureDocument3, 'u');
-        await viewFacade.selectView('excavation');
-
-        await viewFacade.moveInto(featureDocument1);
-
-        let navigationPath = await viewFacade.getNavigationPath();
-        expect(navigationPath.segments.length).toEqual(1);
-        expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument1.resource.id);
-        expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
-
-        await viewFacade.selectOperation(trenchDocument2.resource.id);
-        navigationPath = await viewFacade.getNavigationPath();
-        expect(navigationPath.segments.length).toEqual(0);
-
-        await viewFacade.moveInto(featureDocument3);
-
-        navigationPath = await viewFacade.getNavigationPath();
-        expect(navigationPath.segments.length).toEqual(1);
-        expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument3.resource.id);
-        expect(navigationPath.selectedSegmentId).toEqual(featureDocument3.resource.id);
-
-        await viewFacade.selectOperation(trenchDocument1.resource.id);
-        navigationPath = await viewFacade.getNavigationPath();
-        expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
-
-        done();
-    });
-
-
-    it('operations view: search with custom constraint filter', async done => {
-
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
 
         await viewFacade.setFilterTypes(['Find']);
@@ -552,9 +521,9 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operations view: remove custom constraint filters when type filter is changed', async done => {
+    it('operation view: remove custom constraint filters when type filter is changed', async done => {
 
-        await viewFacade.selectView('excavation');
+        await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
 
         await viewFacade.setFilterTypes(['Find']);

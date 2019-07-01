@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
     Renderer2} from '@angular/core';
-import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../core-3d/viewer-3d';
@@ -21,12 +21,12 @@ import {GeometriesBounds} from './geometries/geometries-bounds';
  */
 export class Map3DComponent implements OnChanges, OnDestroy {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
-    @Input() mainTypeDocumentIds: string[];
+    @Input() documents: Array<FieldDocument>;
+    @Input() selectedDocument: FieldDocument;
+    @Input() parentDocument: FieldDocument;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined>
-        = new EventEmitter<IdaiFieldDocument|undefined>();
+    @Output() onSelectDocument: EventEmitter<FieldDocument|undefined>
+        = new EventEmitter<FieldDocument|undefined>();
 
     @ViewChild('container') container: ElementRef;
 
@@ -60,9 +60,9 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public zoomIn = () => this.controls.zoomIn();
     public zoomOut = () => this.controls.zoomOut();
 
-    public setHoverDocument = (document: IdaiFieldDocument|undefined) =>
+    public setHoverDocument = (document: FieldDocument|undefined) =>
         this.controlState.hoverDocument = document;
-    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
+    public select = (document: FieldDocument|undefined) => this.onSelectDocument.emit(document);
 
     public recreateLineGeometries = () =>
         this.meshGeometryManager.recreateLineGeometries(this.selectedDocument);
@@ -72,7 +72,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (!this.viewer) this.initialize();
 
-        if (changes['mainTypeDocumentIds']) this.geometriesBounds.reset();
+        if (changes['parentDocument']) this.geometriesBounds.reset();
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
     }
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {Document, IdaiType, ProjectConfiguration, NewImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadStatus} from '../upload-status';
@@ -80,10 +80,14 @@ export class ImageUploader extends Uploader {
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, type, depictsRelationTarget)
+                        .catch(error => {
+                            console.error(error);
+                            reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
+                        })
                         .then(doc => that.imagestore.create(doc.resource.id, reader.result as ArrayBuffer, true)
                         .then(() =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
-                            this.datastore.get(doc.resource.id, { skip_cache: true })
+                            this.datastore.get(doc.resource.id, { skipCache: true })
                         ))
                         .then(() => resolve())
                         .catch(error => {
@@ -110,7 +114,7 @@ export class ImageUploader extends Uploader {
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                const doc: any = {
+                const doc: NewImageDocument = {
                     resource: {
                         identifier: this.getIdentifier(file.name),
                         shortDescription: '',
@@ -128,10 +132,11 @@ export class ImageUploader extends Uploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc, this.usernameProvider.getUsername(), doc)
+                this.persistenceManager.persist(doc, this.usernameProvider.getUsername())
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };
+            img.onerror = error => reject(error);
         });
     }
 

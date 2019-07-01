@@ -1,7 +1,9 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry, IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2';
+import {FieldDocument, FieldGeometry, FieldPolyline, FieldMarker, FieldPolygon} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
+
+const remote = require('electron').remote;
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
@@ -13,7 +15,6 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
     selector: 'editable-map',
     templateUrl: './editable-map.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -21,8 +22,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() isEditing: boolean;
 
-    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
-        new EventEmitter<IdaiFieldGeometry>();
+    @Output() onQuitEditing: EventEmitter<FieldGeometry> =
+        new EventEmitter<FieldGeometry>();
 
     public mousePositionCoordinates: string[]|undefined;
 
@@ -38,21 +39,26 @@ export class EditableMapComponent extends LayerMapComponent {
     private drawMode: string = 'None';
 
 
-    private addPolyLayer(drawMode: string) {
+    public getLocale = () => remote.getGlobal('config').locale;
 
-        if (this.drawMode != 'None') this.finishDrawing();
+    public addPolygon = () => this.addPolyLayer('Poly');
 
-        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
-        className += ' active';
+    public addPolyline = () => this.addPolyLayer('Line');
 
-        const drawOptions = {
-            templineStyle: { className: 'templine' },
-            hintlineStyle: { className: 'hintline' },
-            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
-        };
 
-        this.map.pm.enableDraw(drawMode, drawOptions);
-        this.drawMode = drawMode;
+    @HostListener('document:keyup', ['$event'])
+    public handleKeyEvent(event: KeyboardEvent) {
+
+        if (event.key == 'Escape') this.finishDrawing();
+    }
+
+
+    public abortEditing() {
+
+        this.fadeInMapElements();
+        this.resetEditing();
+
+        this.onQuitEditing.emit(undefined as any);
     }
 
 
@@ -60,7 +66,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode !== 'None') this.finishDrawing();
 
-        let geometry: IdaiFieldGeometry|undefined|null = { type: '', coordinates: [] };
+        let geometry: FieldGeometry|undefined|null = { type: '', coordinates: [] };
 
         if (this.editablePolygons.length === 1) {
             geometry.type = 'Polygon';
@@ -88,52 +94,6 @@ export class EditableMapComponent extends LayerMapComponent {
         this.resetEditing();
 
         this.onQuitEditing.emit(geometry as any);
-    }
-
-
-    private finishDrawing() {
-
-        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
-            ((this.map.pm.Draw).Line)._finishShape();
-        } else if (this.drawMode != 'None') {
-            this.map.pm.disableDraw(this.drawMode);
-        }
-
-        this.drawMode = 'None';
-    }
-
-
-    private createEditableMarker(position: L.LatLng): L.Marker {
-
-        const color: string = this.typeColors[this.selectedDocument.resource.type];
-        const editableMarker: L.Marker = L.marker(position, {
-            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
-            draggable: true,
-            zIndexOffset: 1000
-        });
-        this.setupMarkerEvents(editableMarker);
-        editableMarker.addTo(this.map);
-        this.editableMarkers.push(editableMarker);
-
-        return editableMarker;
-    }
-
-
-    private setSelectedMarkerPosition(position: L.LatLng) {
-
-        if (this.selectedMarker) this.selectedMarker.setLatLng(position);
-    }
-
-
-    public addPolygon() {
-
-        this.addPolyLayer('Poly');
-    }
-
-
-    public addPolyline() {
-
-        this.addPolyLayer('Line');
     }
 
 
@@ -193,6 +153,58 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.selectedMarker = undefined as any;
             }
         }
+    }
+
+
+    private finishDrawing() {
+
+        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
+            ((this.map.pm.Draw).Line)._finishShape();
+        } else if (this.drawMode != 'None') {
+            this.map.pm.disableDraw(this.drawMode);
+        }
+
+        this.drawMode = 'None';
+    }
+
+
+    private createEditableMarker(position: L.LatLng): L.Marker {
+
+        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const editableMarker: L.Marker = L.marker(position, {
+            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
+            draggable: true,
+            zIndexOffset: 1000
+        });
+        this.setupMarkerEvents(editableMarker);
+        editableMarker.addTo(this.map);
+        this.editableMarkers.push(editableMarker);
+
+        return editableMarker;
+    }
+
+
+    private setSelectedMarkerPosition(position: L.LatLng) {
+
+        if (this.selectedMarker) this.selectedMarker.setLatLng(position);
+    }
+
+
+    private addPolyLayer(drawMode: string) {
+
+        if (this.drawMode != 'None') this.finishDrawing();
+
+        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        className += ' active';
+
+        const drawOptions = {
+            templineStyle: { className: 'templine' },
+            hintlineStyle: { className: 'hintline' },
+            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
+        };
+
+        this.map.pm.enableDraw(drawMode, drawOptions);
+        this.drawMode = drawMode;
     }
 
 
@@ -263,12 +275,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     private applyStyle = (style: { opacity: number, fillOpacity?: number }) =>
-        (geometry: IdaiFieldPolygon|IdaiFieldPolyline) => geometry.setStyle(style);
+        (geometry: FieldPolygon|FieldPolyline) => geometry.setStyle(style);
 
 
     private applyOpacity = (style: number) =>
-        (markers: Array<IdaiFieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
-
+        (markers: Array<FieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
 
 
     private forAll<T>(f: (arg: T) => void) {
@@ -300,49 +311,78 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    protected updateMap(changes: SimpleChanges): Promise<any> {
+    protected async updateMap(changes: SimpleChanges): Promise<any> {
 
         if (!this.update) return Promise.resolve();
 
-        super.updateMap(changes).then(() => {
-            this.resetEditing();
+        if (!changes['isEditing'] || !this.isEditing
+                || EditableMapComponent.hasGeometry(this.selectedDocument)) {
+            await super.updateMap(changes);
+        }
 
-            if (this.isEditing) {
-                this.map.doubleClickZoom.disable();
-                this.showMousePositionCoordinates();
+        this.resetEditing();
 
-                if ((this.selectedDocument.resource.geometry as any).coordinates) {
-                    this.fadeOutMapElements();
-                    this.editExistingGeometry();
-                } else {
-                    switch (this.getEditorType()) {
-                        case 'polygon':
-                            this.fadeOutMapElements();
-                            this.startPolygonCreation();
-                            break;
-                        case 'polyline':
-                            this.fadeOutMapElements();
-                            this.startPolylineCreation();
-                            break;
-                        case 'point':
-                            this.fadeOutMapElements();
-                            this.startPointCreation();
-                            break;
-                    }
-                }
+        if (this.isEditing) {
+            this.map.doubleClickZoom.disable();
+            this.showMousePositionCoordinates();
+
+            if ((this.selectedDocument.resource.geometry as any).coordinates) {
+                this.fadeOutMapElements();
+                this.editExistingGeometry();
             } else {
-                this.map.doubleClickZoom.enable();
-                this.hideMousePositionCoordinates();
+                switch (this.getEditorType()) {
+                    case 'polygon':
+                        this.fadeOutMapElements();
+                        this.startPolygonCreation();
+                        break;
+                    case 'polyline':
+                        this.fadeOutMapElements();
+                        this.startPolylineCreation();
+                        break;
+                    case 'point':
+                        this.fadeOutMapElements();
+                        this.startPointCreation();
+                        break;
+                }
             }
-        });
-        return Promise.resolve();
+        } else {
+            this.map.doubleClickZoom.enable();
+            this.hideMousePositionCoordinates();
+        }
     }
 
 
-    @HostListener('document:keyup', ['$event'])
-    public handleKeyEvent(event: KeyboardEvent) {
+    protected clickOnMap(clickPosition: L.LatLng) {
 
-        if (event.key == 'Escape') this.finishDrawing();
+        if (!this.selectedDocument) return;
+
+        switch(this.getEditorType()) {
+            case 'point':
+                this.setSelectedMarkerPosition(clickPosition);
+                break;
+            case 'none':
+                this.deselect();
+                break;
+        }
+    }
+
+
+    protected select(document: FieldDocument): boolean {
+
+        if (!this.isEditing) {
+            this.onSelectDocument.emit(document);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected deselect() {
+
+        if (!this.isEditing) {
+            this.onSelectDocument.emit(undefined);
+        }
     }
 
 
@@ -494,7 +534,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.selectedPolyline.pm.disable();
         }
 
-        polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        polyline.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
         polyline.on('pm:edit', function() {
@@ -564,49 +604,6 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    public abortEditing() {
-
-        this.fadeInMapElements();
-        this.resetEditing();
-
-        this.onQuitEditing.emit(undefined as any);
-    }
-
-
-    protected clickOnMap(clickPosition: L.LatLng) {
-
-        if (!this.selectedDocument) return;
-
-        switch(this.getEditorType()) {
-            case 'point':
-                this.setSelectedMarkerPosition(clickPosition);
-                break;
-            case 'none':
-                this.deselect();
-                break;
-        }
-    }
-
-
-    protected select(document: IdaiFieldDocument): boolean {
-
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(document);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    protected deselect() {
-
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(undefined);
-        }
-    }
-
-
     private showMousePositionCoordinates() {
 
         this.map.addEventListener('mousemove', (event: any) => this.updateMousePositionCoordinates(event['latlng']));
@@ -635,5 +632,12 @@ export class EditableMapComponent extends LayerMapComponent {
                 list.splice(list.indexOf(element), 1);
             }
         }
+    }
+
+
+    private static hasGeometry(document: FieldDocument): boolean {
+
+        return document !== undefined && document.resource.geometry !== undefined
+            && document.resource.geometry.coordinates !== undefined;
     }
 }

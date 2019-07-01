@@ -2,7 +2,7 @@ import {ImageViewPage} from './image-view.page';
 import {MediaOverviewPage} from '../media/media-overview.page';
 
 
-describe('image view --', function() {
+xdescribe('image view --', function() {
 
     it('navigate to media overview if the image document could not be found', () => {
 

@@ -5,6 +5,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
+import {MenuService} from '../../menu-service';
 
 const remote = require('electron').remote;
 
@@ -126,6 +127,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
 
     public async editProject() {
 
+        MenuService.setContext('docedit');
         this.subModalOpened = true;
 
         const document = this.settingsService.getProjectDocument();
@@ -140,9 +142,10 @@ export class ProjectsModalComponent implements AfterViewChecked {
             await this.settingsService.loadProjectDocument();
         } catch(err) {
             // Docedit modal has been canceled
-        } finally {
-            this.subModalOpened = false;
         }
+
+        this.subModalOpened = false;
+        MenuService.setContext('default');
     }
 
 

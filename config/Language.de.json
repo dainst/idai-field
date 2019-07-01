@@ -1,43 +1,99 @@
 {
+  "commons": {
+    "dimensionLength": {
+      "label": "Länge",
+      "description": "Angabe der Länge"
+    },
+    "dimensionWidth": {
+      "label": "Breite",
+      "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+    },
+    "dimensionHeight": {
+      "label": "Höhe",
+      "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+    },
+    "dimensionThickness": {
+      "label": "Stärke",
+      "description": "Dicke bzw. Stärke des Objekts"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Niveau",
+      "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+    },
+    "dimensionDiameter": {
+      "label": "Durchmesser",
+      "description": "Angabe des Objektdurchmessers"
+    },
+    "dimensionPerimeter": {
+      "label": "Umfang",
+      "description": "Angabe des Umfangs des Objekts"
+    },
+    "dimensionOther": {
+      "label": "Andere Maße",
+      "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
+    },
+    "area": {
+      "label": "Fläche in m2",
+      "description": "Flächenangabe in Quadratmetern"
+    },
+    "description": {
+      "label": "Beschreibung",
+      "description": "Freies Beschreibungsfeld"
+    },
+    "beginningDate": {
+      "label": "Startdatum",
+      "description": "Datum, an dem die Aufnahme der Resource begonnen wurde"
+    },
+    "endDate": {
+      "label": "Enddatum",
+      "description": "Datum, an dem die Aufnahme der Resource abgeschlossen wurde"
+    },
+    "processor": {
+      "label": "Bearbeiterin/Bearbeiter",
+      "description": "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind. Wichtig: Die Namen der Personen, die den Eintrag in der Datenbank eintragen bzw. bearbeiten, werden automatisch gespeichert und müssen daher hier nicht angegeben werden."
+    },
+    "period": {
+      "label": "Grobdatierung"
+    },
+    "dating": {
+      "label": "Datierung"
+    },
+    "diary": {
+      "label": "Tagebuch",
+      "description": "Verweis auf Grabungstagebuch"
+    },
+    "date": {
+      "label": "Datum",
+      "description": "Datum der Aufnahme/Durchführung"
+    },
+    "orientation": {
+      "label": "Orientierung",
+      "description": "Ausrichtung nach Himmelsrichtung"
+    },
+    "spatialLocation": {
+      "label": "Lage",
+      "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+    },
+    "provenance": {
+      "label": "Provenienz",
+      "description": "Herkunftsort"
+    }
+  },
   "types": {
     "Trench": {
       "label": "Schnitt",
       "fields": {
-        "diary": {
-          "label": "Tagebuch",
-          "description": "Verweis auf Grabungstagebuch"
-        },
         "researchQuestion": {
           "label": "Fragestellung",
           "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z. B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
-        },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
         },
         "trenchComment": {
           "label": "Schnittkommentar",
           "description": "Schnittkommentar zur Auswertung und Dokumentation, Bericht für die Grabungsleitung"
         },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
         "excavationType": {
           "label": "Ausgrabungsart",
           "description": "Art der durchgeführten Ausgrabung"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
         }
       }
     },
@@ -67,10 +123,6 @@
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "transparency": {
           "label": "Transparenz",
           "description": "Wie durchscheinend ist das Objekt?"
@@ -96,29 +148,9 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
         "horizontalLocation": {
           "label": "Horizontallage",
           "description": "Ausrichtung des Planums"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
         },
         "planumForm": {
           "label": "Form Planum",
@@ -161,10 +193,6 @@
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "specificType": {
           "label": "Format",
           "description": "Format der Steine und Ziegel, sofern erkennbar"
@@ -185,10 +213,6 @@
         "contactPerson": {
           "label": "Kontaktperson",
           "description": "Kontaktperson des Projekts"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
         },
         "epsgId": {
           "label": "EPSG-Code",
@@ -345,41 +369,14 @@
           "label": "Kontext",
           "description": "In welchem Kontext liegt das Bauwerk?"
         },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite"
-        },
         "material": {
           "label": "Material"
-        },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
         }
       }
     },
     "SurveyUnit": {
       "label": "Planquadrat",
-      "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        }
-      }
+      "fields": {}
     },
     "Wood": {
       "label": "Holz",
@@ -462,10 +459,6 @@
           "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
         },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
-        },
         "blockProcessing": {
           "label": "Art der Steinblöcke"
         },
@@ -502,10 +495,6 @@
         "mortarConsistency": {
           "label": "Mörtelkonsistenz"
         },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
-        },
         "wallClassification": {
           "label": "Klassifikation Mauer"
         },
@@ -518,29 +507,9 @@
     "Operation": {
       "label": "Maßnahme",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der Maßnahme begonnen wurde"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der Maßnahme abgeschlossen wurde"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
         "diaryAbstract": {
           "label": "Projektverlauf",
           "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme"
         },
         "supervisor": {
           "label": "Leiter/Leiterin",
@@ -589,9 +558,6 @@
         "findspotClassification": {
           "label": "Klassifikation Fundstelle"
         },
-        "dating": {
-          "label": "Datierung"
-        },
         "siteClassification": {
           "label": "Klassifikation Fundplatz"
         }
@@ -611,10 +577,6 @@
         "consistency": {
           "label": "Konsistenz"
         },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
         "distinguishingCriteria": {
           "label": "Unterscheidungskriterium",
           "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
@@ -631,29 +593,9 @@
     "Feature": {
       "label": "Stratigraphische Einheit",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
-        },
         "comparison": {
           "label": "Vergleich(e)",
           "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
-        },
-        "diary": {
-          "label": "Tagebuch",
-          "description": "Verweis auf Grabungstagebuch"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
         },
         "hasDisturbance": {
           "label": "Störung",
@@ -663,31 +605,9 @@
           "label": "Befundanteil",
           "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
         },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
-        },
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
-        },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
         "featureBorders": {
           "label": "Grenzen der stratigraphischen Einheit",
@@ -742,61 +662,31 @@
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
         },
-        "content": {
-          "label": "Abschrift der Inschrift"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "language": {
-          "label": "Sprache"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Inschrift"
-        },
         "condition": {
           "label": "Erhaltungszustand",
           "description": "Beschreibung des Erhaltungszustands"
         },
-        "conditionAmount": {
-          "label": "Erhaltener Anteil",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+        "language": {
+          "label": "Sprache"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+        "content": {
+          "label": "Abschrift der Inschrift"
         },
         "objectType": {
           "label": "Ansprache bzw. Art der Inschrift"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original"
         }
       }
     },
     "Image": {
       "label": "Abbildung",
       "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
         "draughtsmen": {
           "label": "Bildersteller/Bilderstellerin",
           "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Abbildung, falls nach der Aufnahme Änderungen erfolgten"
         }
       }
     },
@@ -929,10 +819,6 @@
         "specificType": {
           "label": "Keramikart Ware"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "temper": {
           "label": "Magerungsart",
           "description": "Grundsätzliche Art der Magerung, z. B. 'Organische Partikel'"
@@ -953,27 +839,6 @@
         "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
-        }
-      }
-    },
-    "DrillCoreLayer": {
-      "label": "Bohrkernschicht",
-      "fields": {
-        "hasFinds": {
-          "label": "Fundmaterial",
-          "description": "Ist Fundmaterial vorhanden?"
-        },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "soilType": {
-          "label": "Bodenart",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
         }
       }
     },
@@ -1005,10 +870,6 @@
         "publicationRemark": {
           "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
-        },
-        "spatialLocation": {
-          "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
         },
         "condition": {
           "label": "Erhaltungszustand",
@@ -1069,20 +930,8 @@
     "Room": {
       "label": "Raum",
       "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Raumes"
         },
         "campaign": {
           "label": "Kampagne"
@@ -1094,46 +943,12 @@
         "conditionAmount": {
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
-        },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         }
       }
     },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {
-        "date": {
-          "label": "Datum",
-          "description": "Datum der Durchführung"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs"
-        },
         "operationClassification": {
           "label": "Klassifikation Arbeitsgang"
         }
@@ -1170,10 +985,6 @@
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
-        },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
         },
         "surfaceCondition": {
           "label": "Oberflächenzustand",
@@ -1311,10 +1122,6 @@
           "label": "Materialherkunft",
           "description": "Herkunftsort des Materials"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "temperAmount": {
           "label": "Menge der Einschlüsse"
         }
@@ -1353,10 +1160,6 @@
           "label": "Prägeherr",
           "description": "Person oder Körperschaft, die für die Prägung der Münze verantwortlich ist"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "stampPositioning": {
           "label": "Stempelstellung",
           "description": "Verdrehung des Stempels der Rückseite im Verhältnis zur Vorderseite; Angabe in 1-12h analog zur Uhr (z. B. '12' bei gleicher Stellung)"
@@ -1388,18 +1191,6 @@
           "label": "Erhaltung in Prozent",
           "description": "Erhaltene Menge in Prozent"
         },
-        "date": {
-          "label": "Funddatum",
-          "description": "Datum der Aufnahme des Fundes"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Fundbearbeiter/Fundbearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Fundes"
-        },
         "publicationMaterialSummary": {
           "label": "Material",
           "description": "Ausführliche Beschreibung zur Publikation"
@@ -1428,44 +1219,6 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionDiameter": {
-          "label": "Durchmesser",
-          "description": "Angabe des Objektdurchmessers"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionPerimeter": {
-          "label": "Umfang",
-          "description": "Angabe des Umfangs des Objekts"
-        },
-        "dimensionThickness": {
-          "label": "Stärke",
-          "description": "Dicke bzw. Stärke des Objekts"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
-        "dimensionOther": {
-          "label": "Andere Maße",
-          "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
-        },
         "storagePlace": {
           "label": "Aufbewahrungsort",
           "description": "Aufbewahrungsort des Fundes"
@@ -1484,8 +1237,7 @@
           "description": "Beschreibung des Aufbaus des Putzes"
         },
         "hasDecoration": {
-          "label": "Bemalung",
-          "description": "Beschreibung der Bemalung des Putzes"
+          "label": "Bemalung"
         },
         "color": {
           "label": "Farbe und Intensität",
@@ -1507,20 +1259,7 @@
     },
     "Profile": {
       "label": "Profil",
-      "fields": {
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "orientation": {
-          "label": "Orientierung",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
-        }
-      }
+      "fields": {}
     },
     "Metal": {
       "label": "Metall",
@@ -1545,10 +1284,6 @@
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
-        "provenance": {
-          "label": "Provenienz",
-          "description": "Herkunftsort"
-        },
         "vesselForm": {
           "label": "Gefäß-Grundform"
         },
@@ -1564,28 +1299,7 @@
     },
     "Area": {
       "label": "Bereich",
-      "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        }
-      }
+      "fields": {}
     },
     "Excavation": {
       "label": "Ausgrabung",

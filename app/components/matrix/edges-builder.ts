@@ -1,5 +1,5 @@
 import {Document, Relations} from 'idai-components-2';
-import {unique, to, on, unionBy, intoObject} from 'tsfun';
+import {unique, to, on, unionBy, intoObj, is} from 'tsfun';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };
@@ -35,7 +35,7 @@ export module EdgesBuilder {
 
         return graphDocuments
             .map(getEdgesForDocument(graphDocuments, totalDocuments, relations))
-            .reduce(intoObject('resourceId', 'edges'), {});
+            .reduce(intoObj('resourceId', 'edges'), {});
     }
 
 
@@ -57,11 +57,11 @@ export module EdgesBuilder {
                 : [];
 
             sameRankTargetIds
-                .filter(on('pathType:')('above'))
+                .filter(on('pathType', is('above')))
                 .forEach(id => aboveTargetIds.push(id));
 
             sameRankTargetIds
-                .filter(on('pathType:')('below'))
+                .filter(on('pathType', is('below')))
                 .forEach(id => belowTargetIds.push(id));
 
             const edges = {
@@ -136,9 +136,9 @@ export module EdgesBuilder {
 
         processedTargetIds.push(targetId);
 
-        let targetDocument: Document | undefined = graphDocuments.find(on('resource.id:')(targetId));
+        let targetDocument: Document | undefined = graphDocuments.find(on('resource.id', is(targetId)));
         if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
-        targetDocument = totalDocuments.find(on('resource.id:')(targetId));
+        targetDocument = totalDocuments.find(on('resource.id', is(targetId)));
         if (!targetDocument) return [];
 
         return mergeTargetIdResults(

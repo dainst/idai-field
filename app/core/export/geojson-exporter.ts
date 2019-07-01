@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
 import {jsonClone} from 'tsfun';
-import {IdaiFieldDocument, IdaiFieldGeometry, Query} from 'idai-components-2';
+import {FieldDocument, FieldGeometry, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/m';
 
@@ -16,7 +16,7 @@ export module GeoJsonExporter {
     export async function performExport(datastore: FieldReadDatastore, outputFilePath: string,
                                         operationId: string): Promise<void> {
 
-        const documents: Array<IdaiFieldDocument> = await getGeometryDocuments(datastore, operationId);
+        const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId);
         const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents);
 
         return writeFile(outputFilePath, featureCollection);
@@ -24,7 +24,7 @@ export module GeoJsonExporter {
 
 
     async function getGeometryDocuments(datastore: FieldReadDatastore,
-                                        operationId: string): Promise<Array<IdaiFieldDocument>> {
+                                        operationId: string): Promise<Array<FieldDocument>> {
 
         const query: Query = createQuery(operationId);
         return (await datastore.find(query)).documents;
@@ -46,7 +46,7 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeatureCollection(documents: Array<IdaiFieldDocument>): FeatureCollection<GeometryObject> {
+    function createFeatureCollection(documents: Array<FieldDocument>): FeatureCollection<GeometryObject> {
 
         const featureCollection: FeatureCollection<GeometryObject> = {
             type: 'FeatureCollection',
@@ -59,7 +59,7 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeature(document: IdaiFieldDocument): Feature<GeometryObject> {
+    function createFeature(document: FieldDocument): Feature<GeometryObject> {
 
         return {
             type: 'Feature',
@@ -87,16 +87,16 @@ export module GeoJsonExporter {
     }
 
 
-    function getGeometry(document: IdaiFieldDocument): GeometryObject {
+    function getGeometry(document: FieldDocument): GeometryObject {
 
         return {
-            type: (document.resource.geometry as IdaiFieldGeometry).type,
-            coordinates: getCoordinates(document.resource.geometry as IdaiFieldGeometry)
+            type: (document.resource.geometry as FieldGeometry).type,
+            coordinates: getCoordinates(document.resource.geometry as FieldGeometry)
         };
     }
 
 
-    function getCoordinates(geometry: IdaiFieldGeometry): any {
+    function getCoordinates(geometry: FieldGeometry): any {
 
         const coordinates: any = jsonClone(geometry.coordinates);
 
@@ -120,7 +120,7 @@ export module GeoJsonExporter {
     }
 
 
-    function getProperties(document: IdaiFieldDocument): any {
+    function getProperties(document: FieldDocument): any {
 
         const properties: any = {
             identifier: document.resource.identifier,

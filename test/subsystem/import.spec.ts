@@ -20,8 +20,8 @@ describe('Import/Subsystem', () => {
         await setupSyncTestDb();
         const {projectConfiguration} = await setupSettingsService(new PouchdbManager());
         _projectConfiguration = projectConfiguration;
-        const {idaiFieldDocumentDatastore} = await createApp();
-        datastore = idaiFieldDocumentDatastore;
+        const {fieldDocumentDatastore} = await createApp();
+        datastore = fieldDocumentDatastore;
         done();
     });
 
@@ -62,6 +62,42 @@ describe('Import/Subsystem', () => {
             () => '101');
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
+        done();
+    });
+
+
+    it('liesWithin not set', async done => {
+
+        const report = await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            '',
+            false, false,
+            '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
+            () => '101');
+
+        expect(report.errors[0]).toEqual([ImportErrors.NO_PARENT_ASSIGNED]);
+        done();
+    });
+
+
+    it('liesWithin not set (but does not matter)', async done => {
+
+        const report = await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            '',
+            false, false,
+            '{ "type": "Trench", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
+            () => '101');
+
+        expect(report.errors.length).toBe(0);
         done();
     });
 

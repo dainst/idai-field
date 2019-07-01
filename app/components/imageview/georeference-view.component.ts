@@ -1,6 +1,6 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2';
-import {IdaiFieldGeoreference} from 'idai-components-2';
+import {ImageGeoreference} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from "../../core/model/persistence-manager";
 import {UsernameProvider} from '../../core/settings/username-provider';
@@ -18,8 +18,13 @@ import {M} from '../m';
 export class GeoreferenceViewComponent {
 
     @Input() document: any;
+    @Input() openSection: string|undefined;
+
+    @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
 
     @ViewChild('worldfileInput') worldfileInput: ElementRef;
+
+    public shown: boolean = false;
 
     constructor(
         private persistenceManager: PersistenceManager,
@@ -27,6 +32,18 @@ export class GeoreferenceViewComponent {
         private modalService: NgbModal,
         private usernameProvider: UsernameProvider
     ) {}
+
+
+    public toggle() {
+
+        if (this.openSection === 'georeference') {
+            this.openSection = undefined;
+        } else {
+            this.openSection = 'georeference';
+        }
+
+        this.onSectionToggled.emit(this.openSection);
+    }
 
 
     public onSelectFile(event: any) {
@@ -85,7 +102,7 @@ export class GeoreferenceViewComponent {
     }
 
 
-    private createGeoreference(worldfileContent: string[]): IdaiFieldGeoreference {
+    private createGeoreference(worldfileContent: string[]): ImageGeoreference {
 
         const width: number = parseInt(this.document.resource.width);
         const height: number = parseInt(this.document.resource.height);

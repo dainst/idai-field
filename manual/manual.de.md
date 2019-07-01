@@ -10,50 +10,114 @@ oder Datenbanken statt.
 Um mit dem Client produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte
 durchführen:
 
-1. Im Menü **Einstellungen**, das Sie über das Dropdown-Menü in der oberen
-rechten Bildschirmecke erreichen, können Sie grundlegende Einstellungen vornehmen,
-die für sämtliche Projekte gelten. Legen Sie hier bitte zunächst Ihren Bearbeiternamen
-fest. Dieser Name wird bei allen von Ihnen vorgenommenen Änderungen in der
-Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn Daten mit anderen
-Clients synchronisiert werden sollen.
+1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Datei" (Windows)
+erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
+bitte zunächst Ihren Bearbeiternamen fest. Dieser Name wird bei allen von Ihnen vorgenommenen Änderungen in
+der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn Daten mit anderen Clients
+synchronisiert werden sollen.
 
-2. Darüber hinaus können Sie im Menü **Einstellungen** den Pfad des Bilderverzeichnisses
+2. Darüber hinaus können Sie im Untermenü **Einstellungen** den Pfad des Bilderverzeichnisses
 ändern. Dies ist erforderlich, wenn Sie auf ein Bilderverzeichnis zugreifen möchten,
 das auf einem Netzwerk-Gerät (NAS) liegt und das von mehreren Nutzern bzw. Nutzerinnen
 gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über den
 Client importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
-eingefügt werden, können von der Anwendung **nicht** verwendet werden. 
+eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Klicken Sie auf den Projektnamen "test", um die **Projektverwaltung** aufzurufen. Hier
 können Sie über den Plus-Button ein neues Projekt anlegen. Erlaubte Zeichen für den
 Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
 geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
-Metadaten des Projekts eingeben.
+Metadaten des Projekts eingeben. 
 
-Beginnnen Sie mit der Dateneingabe, indem Sie in den Bereich **Übersicht** wechseln, wo
-Sie Datensätze für Maßnahmen (Schnitte, Bauwerke, Survey-Areale) anlegen können. In den
-Bereichen **Ausgrabung**, **Bauaufnahme** und **Survey** können Sie anschließend Ressourcen
-(z. B. stratigraphische Einheiten, Funde oder Bauwerksteile) innerhalb von Maßnahmen anlegen. 
-
-Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdown-Menü
-in der oberen rechten Ecke des Bildschirms erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
-anzulegen.
+Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Werkzeuge" erreichen, um regelmäßig
+Sicherungen Ihrer Projektdaten anzulegen.
 
 
 <hr>
 
+## Ressourcen
+
+Die Ressourcenverwaltung bildet das Herzstück von iDAI.field.
+
+### Maßnahmen
+
+Nach dem Anlegen bzw. Öffnen eines Projekts befinden Sie sich zunächst im Tab **Übersicht** (gekennzeichnet
+durch ein Haus-Symbol), in dem alle Maßnahmen und Orte des Projekts verwaltet werden.
+
+Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue Maßnahme anzulegen. 
+
+<p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
+
+Dabei wählen Sie in einem ersten Schritt den Typ der Maßnahme aus und können anschließend optional eine
+Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
+Maßnahme eintragen können. Je nach gewähltem Maßnahmentyp stehen unterschiedliche Felder zur Auswahl, die
+jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
+Buttons auf der linken Seite wechseln.
+
+Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
+**Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
+
+<p align="center"><img src="images/de/resources/save_operation.png" alt="Maßnahmen-Ressource speichern"/></p>
+
+Die neue Maßnahme wird nun in der Ressourcenliste angezeigt. Benutzen Sie den Button "Zur Maßnahme wechseln"
+(Symbol: Pfeil nach rechts oben), um einen neuen Tab für die Maßnahme zu öffnen.
+
+<p align="center"><img src="images/de/resources/goto_operation.png" alt="Maßnahmen-Ressource öffnen"/></p>
+
+In Abhängigkeit vom Maßnahmentyp können innerhalb eines Maßnahmen-Tabs mithilfe des Plus-Buttons Ressourcen
+verschiedener Typen angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts oder
+Räume innerhalb eines Gebäudes).
+
+<p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
+
+### Hierarchische Anordnung
+
+Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
+stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
+(Symbol: rechtwinkliger Pfeil nach rechts unten), um eine Liste aller Ressourcen anzuzeigen, die der
+ausgewählten Ressource untergeordnet wurden. Bei einer neu angelegten Ressource ist diese Liste zunächst leer.
+
+<p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
+
+Per Klick auf **Kollektion öffnen** kann auf die tiefere Hierarchieebene gewechselt werden, sodass nun die
+untergeordneten Ressourcen angezeigt werden (etwa die Funde einer stratigraphischen Einheit).
+Die Verwendung des Plus-Buttons führt jetzt dazu, dass Ressourcen entsprechend auf dieser Ebene angelegt
+werden.
+
+Der Navigationspfad oberhalb der Ressourcenliste zeigt die gerade ausgewählte Hierarchieebene an. Sie können
+jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere Ebene wechseln.
+
+<p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
+
+### Verwaltung
+
+Bei Rechtsklick auf eine Ressource in der Liste öffnet sich ein Kontextmenü, das die folgenden Optionen
+bereitstellt:
+
+* *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
+erreichbar)
+* *Verschieben*: Erlaubt es, die Ressource aus ihrem aktuellen Kontext zu entfernen und einer anderen
+Ressource unterzuordnen
+* *Löschen*: Entfernt die Ressource nach einer Sicherheitsabfrage
+
+Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit.
+
+<p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+<hr>
 
 ## Suche
 
-In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey** sowie in der 
-Bilderverwaltung (Menüpunkt **Bilder**) steht ein **Suchfilter** zur Verfügung, den Sie verwenden können, um
-die Menge der aktuell angezeigten Ressourcen anhand grundlegender Suchkriterien (Bezeichner, Kurzbeschreibung,
-Ressourcentyp) einzuschränken.
+In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** (erreichbar über das Menü
+"Werkzeuge") stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
+angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Ressourcentyp)
+einzuschränken.
 
 Möchten Sie komplexere Suchanfragen formulieren, können Sie innerhalb der **Übersicht** und der
-**Maßnahmenansichten** darüber hinaus in den **erweiterten Suchmodus** wechseln. Dieser Modus ermöglicht es
-Ihnen, die Suche auf einen größeren Bereich auszuweiten (beispielsweise auf alle Schnitte oder auf das gesamte
-Projekt) und zusätzliche feldspezifische Suchkriterien zu definieren.
+**Maßnahmen-Tabs** darüber hinaus in den **erweiterten Suchmodus** wechseln. 
+Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und auch innerhalb des gesamten
+Projektes zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
 ### Suchfilter
@@ -65,7 +129,7 @@ auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typf
 
 Nach der Eingabe eines Suchbegriffes und/oder der Auswahl eines Ressourcentyps wird die Menge der aktuell
 angezeigten Ressourcen so eingeschränkt, dass sie den Filterkriterien entspricht. In der **Übersicht** und den
-**Maßnahmenansichten** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
+**Maßnahmen-Tabs** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
 Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bilderverwaltung** sind alle im
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
@@ -148,22 +212,26 @@ wählen die entsprechende Ressource aus.
 
 ### Erweiterter Suchmodus
 
-In der **Übersicht** und in den **Maßnahmenansichten** können Sie durch einen Klick auf den Lupen-Button in
+In der **Übersicht** und in den **Maßnahmen-Tabs** können Sie durch einen Klick auf den Lupen-Button in
 den erweiterten Suchmodus wechseln.
  
 <p align="center"><img src="images/de/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
 
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
+
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.
-* In den **Maßnahmenansichten** können Sie wählen, ob die Suche innerhalb einer Maßnahme oder über alle
-Maßnahmen des jeweiligen Typs (z. B. alle Schnitte in der Ansicht **Ausgrabung**) erfolgen soll. Hierzu
-steht im Maßnahmen-Auswahlmenü die Option "Alle" zur Verfügung.
+* In den **Maßnahmen-Tabs** wird über alle Ressourcen der Maßnahme gesucht.
 
-<p align="center"><img src="images/de/search/all_operations.png" alt="Suche über alle Maßnahmen eines Typs"/></p>
+In beiden Fällen werden alle gefundenen Suchergebnisse links in der Liste angezeigt. Die Buttons "Im Kontext
+anzeigen" (Symbol: Pfeil nach oben) bzw. "Im Kontext einer Maßnahme anzeigen" (Symbol: Pfeil nach rechts oben)
+erlauben es, direkt in den hierarchischen Kontext einer Ressource zu wechseln; dabei wird der erweiterte
+Suchmodus beendet und wenn erforderlich ein neuer Tab geöffnet. 
 
-Bitte beachten Sie, dass die Hierarchie, die sich anhand der angelegten "Liegt in"-Relationen ergibt, im
-erweiterten Suchmodus nicht dargestellt wird und das Anlegen neuer Ressourcen nicht möglich ist. Verlassen
-Sie für diese Zwecke den erweiterten Suchmodus wieder durch einen erneuten Klick auf den Lupen-Button.
+<p align="center"><img src="images/de/search/show_in_context.png" alt="Im Kontext anzeigen"/></p>
+
+Bei aktiviertem erweiterten Suchmodus können keine neuen Ressourcen angelegt werden, was durch den
+ausgegrauten Plus-Button angezeigt wird. Um neue Ressourcen anzulegen, verlassen Sie den erweiterten
+Suchmodus zunächst wieder.
 
 Die Anzahl der gleichzeitig angezeigten Suchergebnisse ist aus Performancegründen immer auf maximal **200**
 beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber darauf hin, dass die Maximalanzahl
@@ -202,9 +270,10 @@ entsprechende Kriterium auswählen.
 
 ## Matrix
 
-Unter dem Menüpunkt **Matrix** finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
-den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
-auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
+In der Ansicht **Matrix** (erreichbar über das Menu "Werkzeuge") finden Sie für jeden Schnitt des Projekts
+eine Matrix vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird.
+Die Kanten der Matrix werden dabei auf Grundlage der Relationen erstellt, die für die Einheiten angelegt
+wurden.
 
 <p align="center"><img src="images/de/matrix/trench_selection.png" alt="Schnitt-Auswahl"/></p>
 
@@ -225,9 +294,9 @@ erhalten.
 #### Relationen
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
-  erstellt.
+  (Feldgruppe "Zeit") erstellt.
 * *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
-  geschnitten von" erstellt.
+  geschnitten von" (Feldgruppe "Lage") erstellt.
 
 
 #### Kanten
@@ -262,11 +331,11 @@ und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
 
 ### Editierung
 
-Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um ein
-Fenster zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Über den Reiter **Relationen**
-können Sie auf diese Weise durch Editierung der zeitlichen bzw. räumlichen Relationen auch die Einordnung der
-Einheit innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** wird die Matrix
-automatisch auf Grundlage der geänderten Daten aktualisiert.
+Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um den
+Editor zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Durch die Editierung der
+Relationen in den Gruppen "Zeit" bzw. "Lage" können Sie auf diese Weise auch die Einordnung der Einheit
+innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** wird die Matrix automatisch auf
+Grundlage der geänderten Daten aktualisiert.
 
 
 ### Anzeige von Teilmatrizen

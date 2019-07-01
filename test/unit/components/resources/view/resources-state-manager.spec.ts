@@ -1,6 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
-import {Query} from 'idai-components-2';
-import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
+import {FieldDocument} from 'idai-components-2';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
 import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
@@ -10,55 +8,51 @@ import {ResourcesState} from '../../../../../app/components/resources/view/state
  */
 describe('ResourcesStateManager', () => {
 
-    const viewsList = [
-        {
-            'mainTypeLabel': 'Schnitt',
-            'label': 'Ausgrabung',
-            'operationSubtype': 'Trench',
-            'name': 'excavation'
-        }
-    ];
-
     let mockDatastore: any;
+    let mockIndexFacade: any;
 
-    const find = (query: Query) => {
-        return {
-            totalCount: documents.map(document => document.resource.id)
-                .find(id => id == query.constraints['id:match']) ? 1 : 0
-        };
+    const getCount = (constraintIndexName: string, matchTerm: string) => {
+        return documents.map(document => document.resource.id)
+            .find(id => id === matchTerm) ? 1 : 0
     };
 
     let resourcesStateManager: ResourcesStateManager;
 
-    let documents: Array<IdaiFieldDocument>;
-    let trenchDocument1: IdaiFieldDocument;
+    let documents: Array<FieldDocument>;
+    let trenchDocument1: FieldDocument;
 
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['get', 'find']);
-        mockDatastore.find.and.callFake(find);
+        mockDatastore = jasmine.createSpyObj('datastore', ['get']);
+        mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
+
+        mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
+        mockIndexFacade.getCount.and.callFake(getCount);
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
+        const mockTabManager
+            = jasmine.createSpyObj('tabManager', ['openTab', 'isOpen']);
+
         resourcesStateManager = new ResourcesStateManager(
             mockDatastore,
+            mockIndexFacade,
             mockSerializer,
-            new OperationViews(viewsList),
             undefined,
+            mockTabManager,
             undefined
         );
 
         resourcesStateManager.loaded = true;
 
+
         trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
     });
 
 
-
     it('repair navigation path if a relation is changed', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -87,8 +81,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -121,8 +114,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument - is correct navigation path', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
@@ -150,8 +142,7 @@ describe('ResourcesStateManager', () => {
 
     it('step into', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -170,8 +161,7 @@ describe('ResourcesStateManager', () => {
 
     it('step out', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -191,8 +181,7 @@ describe('ResourcesStateManager', () => {
 
     it('repair navigation path if a document is deleted', async done => {
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
@@ -224,16 +213,15 @@ describe('ResourcesStateManager', () => {
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(['Find']);
         resourcesStateManager.setQueryString('abc');
 
-        await resourcesStateManager.initialize('survey');
+        await resourcesStateManager.initialize('anotherOperationId');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual([]);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
-        await resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(['Find']);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
@@ -246,8 +234,7 @@ describe('ResourcesStateManager', () => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
@@ -262,8 +249,7 @@ describe('ResourcesStateManager', () => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
 
-        await resourcesStateManager.initialize('excavation');
-        resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
+        await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');

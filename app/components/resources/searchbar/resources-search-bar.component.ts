@@ -1,8 +1,6 @@
-import {Component, ElementRef, Input, SimpleChanges} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
-import {ViewFacade} from '../view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -23,20 +21,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                private viewFacade: ViewFacade,
-                private typeUtility: TypeUtility,
-                projectConfiguration: ProjectConfiguration) {
+                typeUtility: TypeUtility) {
 
-        super(projectConfiguration);
-    }
-
-
-    public ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['relationName'] || changes['relationRangeType'] || changes['parentType'] ||
-            changes['showFiltersMenu'] || changes['extendedSearch']) {
-            this.initializeFilterOptions();
-        }
+        super(typeUtility);
     }
 
 
@@ -64,28 +51,6 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    protected initializeFilterOptions() {
-
-        this.filterOptions = [];
-
-        if (this.viewFacade.isInOverview()) {
-            this.addFilterTypesForOverview();
-        } else {
-            this.addFilterOptionsFromConfiguration();
-        }
-    }
-
-
-    private addFilterTypesForOverview() {
-
-        const types: Array<IdaiType> = this.extendedSearch ?
-            this.typeUtility.getNonMediaTypes().filter(type => !type.parentType) :
-            this.typeUtility.getOverviewTopLevelTypes();
-
-        types.forEach(type => this.addFilterOption(type));
-    }
-
-
     protected handleClick(event: Event) {
 
         let target: any = event.target;
@@ -93,7 +58,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
         let insideSearchBarComponent: boolean = false;
 
         do {
-            if (target.id === 'filter-button') insideFilterMenu = true;
+            if (target.id === 'resources-search-bar-filter-button') insideFilterMenu = true;
             if (target === this.elementRef.nativeElement) insideSearchBarComponent = true;
 
             target = target.parentNode;

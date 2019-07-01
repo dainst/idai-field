@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {subtract, unique} from 'tsfun';
-import {Document, IdaiFieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 
 

@@ -8,12 +8,12 @@ import {Document} from 'idai-components-2';
  */
 export class DocumentCache<T extends Document> {
 
-    protected _: { [resourceId: string]: T } = { };
+    protected _: { [resourceId: string]: T } = {};
 
 
-    public set(doc: T): T {
+    public set(document: T): T {
 
-        return this._[doc.resource.id as any] = doc;
+        return this._[document.resource.id as any] = document;
     }
 
 
@@ -29,18 +29,19 @@ export class DocumentCache<T extends Document> {
     }
 
 
-    public reassign(doc: T) {
+    public reassign(document: T) {
 
-        if (!(doc as any)['_conflicts']) {
-            delete (this.get(doc.resource.id) as any)['_conflicts'];
+        if (!(document as any)['_conflicts']) {
+            delete (this.get(document.resource.id) as any)['_conflicts'];
         }
-        Object.assign(this.get(doc.resource.id), doc);
-        return doc;
+        Object.assign(this.get(document.resource.id), document);
+
+        return document;
     }
 
 
     public resetForE2E() {
 
-        this._ = { };
+        this._ = {};
     }
 }

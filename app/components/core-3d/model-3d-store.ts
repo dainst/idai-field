@@ -48,7 +48,7 @@ export class Model3DStore {
         );
 
         // Update datastore cache
-        await this.datastore.get(document.resource.id as string, { skip_cache: true });
+        await this.datastore.get(document.resource.id as string, { skipCache: true });
     }
 
 

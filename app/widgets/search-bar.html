@@ -5,13 +5,11 @@
            (keyup)="onKeyUp($event)"
            name="searchInput"
            type="text"
-           class="form-control"
-           id="object-search"
+           class="form-control search-bar-input"
            placeholder="Suchen..." i18n-placeholder="@@widgets.searchBar.placeholder">
 
-    <span *ngIf="showFiltersMenu" id="filter-button">
-        <button id="searchfilter"
-                class="btn btn-primary"
+    <span *ngIf="showFiltersMenu" id="filter-button" class="filter-button">
+        <button class="btn btn-primary search-filter"
                 type="button"
                 [ngbPopover]="filterMenu"
                 [autoClose]="false"
@@ -28,8 +26,10 @@
                 <div class="popover-custom-title">
                     <span i18n="@@widgets.searchBar.resourceTypeFilter">Nach Ressourcentyp filtern:</span>
                 </div>
-                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
-                             [selectedTypes]="types" [allowPickingAbstractTypes]="true"
+                <type-picker [typesTreeList]="filterOptions"
+                             [allTypesOptionVisible]="isAllTypesOptionVisible()"
+                             [selectedTypes]="types"
+                             [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">
                 </type-picker>
             </div>

@@ -1,4 +1,4 @@
-import {Resource, IdaiFieldGeoreference} from 'idai-components-2';
+import {Resource, ImageGeoreference} from 'idai-components-2';
 import {IdaiFieldMediaRelations} from './idai-field-media-relations';
 
 export interface IdaiFieldImageResource extends Resource {
@@ -10,7 +10,7 @@ export interface IdaiFieldImageResource extends Resource {
     width: number;
     height: number;
 
-    georeference?: IdaiFieldGeoreference;
+    georeference?: ImageGeoreference;
     georeferenceHeight?: number;
 
     relations: IdaiFieldMediaRelations;

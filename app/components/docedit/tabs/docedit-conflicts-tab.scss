@@ -1,23 +1,31 @@
-.conflict-resolver-field {
-  padding: 10px 30px;
-  cursor: pointer;
-}
+#conflict-resolver {
+  height: calc(100vh - 161px);
+  overflow-x: hidden;
+  overflow-y: auto;
 
-.radio-button-field {
-  padding-bottom: 5px;
-  padding-left: 50px;
-  cursor: pointer;
-}
+  .conflict-resolver-field {
+    padding: 10px 5px;
+  }
 
-.winning-side {
-  color: #1b9519;
-}
+  .radio-button-field {
+    padding-bottom: 5px;
+    padding-left: 20px;
+  }
 
-.losing-side {
-  color: #e00000;
-}
+  .winning-side {
+    color: #1b9519;
+  }
 
-#solve-conflict-button {
-  margin-top: 20px;
-  margin-bottom: 10px;
+  .losing-side {
+    color: #e00000;
+  }
+
+  #solve-conflict-button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    margin: inherit;
+  }
 }

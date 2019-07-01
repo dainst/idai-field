@@ -1,18 +1,26 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Document, Messages} from 'idai-components-2';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
-import {ModelUtil} from '../../core/model/model-util';
 import {MediaOverviewFacade} from './view/media-overview-facade';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 import {UploadResult} from '../upload/upload-result';
 import {M} from '../m';
 import {MediaFilterOption} from './view/media-state';
+import {TabManager} from '../tab-manager';
+import {ImageViewComponent} from '../imageview/image-view.component';
+import {MenuService} from '../../menu-service';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
+import {TypeUtility} from '../../core/model/type-utility';
+
 
 @Component({
     moduleId: module.id,
-    templateUrl: './media-overview.html'
+    templateUrl: './media-overview.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -24,20 +32,31 @@ export class MediaOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public maxGridSize: number = 12;
-    public minGridSize: number = 2;
+    public filterOptions: Array<IdaiType> = [];
+    public modalOpened: boolean = false;
 
 
     constructor(public viewFacade: ViewFacade,
                 private mediaOverviewFacade: MediaOverviewFacade,
                 private routingService: RoutingService,
-                private messages: Messages) {
+                private messages: Messages,
+                private projectConfiguration: ProjectConfiguration,
+                private tabManager: TabManager,
+                private modalService: NgbModal,
+                private typeUtility: TypeUtility) {
 
         this.mediaOverviewFacade.initialize();
     }
 
+    public increaseNrMediaResourcesPerRow = () => this.mediaOverviewFacade.increaseNrMediaResourcesPerRow();
 
-    public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
+    public decreaseNrMediaResourcesPerRow = () => this.mediaOverviewFacade.decreaseNrMediaResourcesPerRow();
+
+    public getMaxNrMediaResourcesPerRow = () => this.mediaOverviewFacade.getMaxNrMediaResourcesPerRow();
+
+    public getMinNrMediaResourcesPerRow = () => this.mediaOverviewFacade.getMinNrMediaResourcesPerRow();
+
+    public getNrMediaResourcesPerRow = () => this.mediaOverviewFacade.getNrMediaResourcesPerRow();
 
     public getDocuments = () => this.mediaOverviewFacade.getDocuments();
 
@@ -45,12 +64,15 @@ export class MediaOverviewComponent implements OnInit {
 
     public getTotalDocumentCount = () => this.mediaOverviewFacade.getTotalDocumentCount();
 
-    public toggleSelected =
-        (document: Document) => this.mediaOverviewFacade.toggleSelected(document as IdaiFieldMediaDocument);
+    public getPageCount = () => this.mediaOverviewFacade.getPageCount();
 
-    public getGridSize = () => this.mediaOverviewFacade.getGridSize();
+    public getCurrentPage = () => this.mediaOverviewFacade.getCurrentPage();
+
+    public toggleSelected = (document: Document) => this.mediaOverviewFacade.toggleSelected(document as IdaiFieldMediaDocument);
 
     public getQuery = () => this.mediaOverviewFacade.getQuery();
+
+    public setTypeFilters = (types: string[]) => this.mediaOverviewFacade.setTypeFilters(types);
 
     public getLinkFilter = () => this.mediaOverviewFacade.getLinkFilter();
 
@@ -60,42 +82,69 @@ export class MediaOverviewComponent implements OnInit {
 
     public refreshGrid = () => this.mediaOverviewFacade.fetchDocuments();
 
+    public turnPage = () => this.mediaOverviewFacade.turnPage();
+
+    public turnPageBack = () => this.mediaOverviewFacade.turnPageBack();
+
+    public canTurnPage = () => this.mediaOverviewFacade.canTurnPage();
+
+    public canTurnPageBack = () => this.mediaOverviewFacade.canTurnPageBack();
+
+    public setLinkFilter = (filterOption: MediaFilterOption) => this.mediaOverviewFacade.setLinkFilter(filterOption);
+
+    public nrOfSelectedMediaResources = () => this.getSelected().length;
+
+    public hasSelectedMediaResources = () => this.getSelected().length > 0;
+
 
     ngOnInit() {
 
-        this.imageGrid.nrOfColumns = this.mediaOverviewFacade.getGridSize();
+        this.imageGrid.nrOfColumns = this.mediaOverviewFacade.getNrMediaResourcesPerRow();
+        this.filterOptions = [
+            this.projectConfiguration.getTypesTree()['Image'],
+            this.projectConfiguration.getTypesTree()['Model3D']
+        ];
     }
 
 
-    public jumpToRelationTarget(document: IdaiFieldMediaDocument) {
+    public async setNrMediaResourcesPerRow(nrMediaResourcesPerRow: string|number) {
 
-        this.mediaOverviewFacade.select(document);
-        this.routingService.jumpToRelationTarget(document, undefined, true);
+        const nr: number = typeof nrMediaResourcesPerRow === 'string'
+            ? parseInt(nrMediaResourcesPerRow)
+            : nrMediaResourcesPerRow;
+
+        this.mediaOverviewFacade.setNrMediaResourcesPerRow(nr);
     }
 
 
-    public setTypeFilters(types: string[]) {
+    public async onKeyDown(event: KeyboardEvent) {
 
-        this.mediaOverviewFacade.setTypeFilters(types);
-        this.mediaOverviewFacade.setCustomConstraints({});
-    }
-
-
-    public async setGridSize(size: string|number) {
-
-        const _size: number = typeof size === 'string' ? parseInt(size): size;
-
-        if (_size >= this.minGridSize && _size <= this.maxGridSize) {
-            this.mediaOverviewFacade.setGridSize(_size);
-            this.imageGrid.nrOfColumns = _size;
-            await this.refreshGrid();
+        if (event.key === 'Escape' && !this.modalOpened
+            && !this.hasSelectedMediaResources()) {
+            await this.tabManager.openActiveTab();
         }
     }
 
 
-    public setLinkFilter(filterOption: MediaFilterOption) {
+    public async showMediaResource(document: IdaiFieldMediaDocument) {
 
-        this.mediaOverviewFacade.setLinkFilter(filterOption);
+        this.modalOpened = true;
+        MenuService.setContext('image-view');
+
+        this.mediaOverviewFacade.select(document);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ImageViewComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
+        );
+        await modalRef.componentInstance.initialize(
+            this.getDocuments().filter(document => document.id !== 'droparea'),
+            document
+        );
+        await modalRef.result;
+
+        this.modalOpened = false;
+        MenuService.setContext('default');
     }
 
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, isNot, map, take} from 'tsfun';
+import {empty, filter, flow, isNot, map, take, forEach} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
@@ -21,11 +21,15 @@ import {ImportValidator} from '../../core/import/exec/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './import.html'
+    templateUrl: './import.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * Delegates calls to the Importer, waits for
@@ -42,8 +46,8 @@ export class ImportComponent implements OnInit {
     public format: ImportFormat = 'native';
     public file: File|undefined;
     public url: string|undefined;
-    public mainTypeDocuments: Array<Document> = [];
-    public mainTypeDocumentId: string = ''; // no assignment to a mainType
+    public operations: Array<Document> = [];
+    public selectedOperationId: string = '';
     public allowMergingExistingResources = false;
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
@@ -62,12 +66,7 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-    ) {
-        this.viewFacade.getAllOperations().then(
-            documents => this.mainTypeDocuments = documents,
-            msgWithParams => messages.add(msgWithParams)
-        );
-    }
+        private tabManager: TabManager) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -79,7 +78,14 @@ export class ImportComponent implements OnInit {
 
     async ngOnInit() {
 
+        this.operations = await this.fetchOperations();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.openActiveTab();
     }
 
 
@@ -109,7 +115,7 @@ export class ImportComponent implements OnInit {
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,
-            this.mainTypeDocumentId,
+            this.selectedOperationId,
             this.allowMergingExistingResources,
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
@@ -161,6 +167,8 @@ export class ImportComponent implements OnInit {
                 return '.geojson,.json';
             case 'shapefile':
                 return '.shp';
+            case 'csv':
+                return '.csv';
         }
     }
 
@@ -169,7 +177,6 @@ export class ImportComponent implements OnInit {
 
         if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
 
-        this.showMessages(importReport.warnings);
         this.showSuccessMessage(importReport.successfulImports);
     }
 
@@ -189,8 +196,21 @@ export class ImportComponent implements OnInit {
         flow(messages,
             map(MessagesConversion.convertMessage),
             filter(isNot(empty)),
-            take(1))
-            .forEach((msgWithParams: any) => this.messages.add(msgWithParams));
+            take(1),
+            forEach((msgWithParams: any) => this.messages.add(msgWithParams)));
+    }
+
+
+    private async fetchOperations(): Promise<Array<Document>> {
+
+        try {
+            return (await this.datastore.find({
+                types: this.typeUtility.getOperationTypeNames()
+            })).documents;
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+            return [];
+        }
     }
 
 

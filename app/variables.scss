@@ -6,6 +6,16 @@ $list-item-hover-color: #f5f5f5;
 
 $primary: #37588e !default;
 
+$item-height: 58px;
+$item-padding-top: 8px;
+$item-horizontal-padding: 9px;
+$font-size-bigger: 14px;
+$font-size-smaller: 12px;
+$font-size-even-smaller: 10px;
+
+$modal-header-background-color: #e7e7e7;
+$modal-header-font-color: #424242;
+
 //== Typography
 $font-family-sans-serif: 'Roboto', Helvetica, Arial, sans-serif;
 
@@ -28,3 +38,13 @@ $navbar-dark-color:          #fff !default;
 $ctrl-button-close:               #d9534f;
 $ctrl-button-text-color:          #f2f2f2;
 $ctrl-button-bg:                  rgba(85, 114, 161, 0);
+
+// Sidebar & Popover
+$sidebar-bg-color: #f8f9fa;
+$popover-bg-color: transparentize($sidebar-bg-color, 0.08);
+$popover-header-bg-color: darken($popover-bg-color, 5%);
+$popover-header-hover-bg-color: darken($popover-header-bg-color, 3%);
+$resources-listing-item-wide-width: 300px;
+$resources-listing-item-wide-width-with-scrollbar: 293px;
+$resources-listing-item-slim-width: 258px;
+$resources-listing-item-slim-width-with-scrollbar: 251px;

@@ -8,10 +8,6 @@
   padding-left: 8px;
   color: rgba(85, 114, 161, 1);
 
-  #selected-operation-type-document {
-    text-align: left;
-  }
-
   .dropdown-menu {
     max-height: calc(100vh - 350px);
     overflow-y: scroll;
@@ -20,6 +16,10 @@
 
   .root-document {
     @extend .btn-outline-primary:active;
+  }
+
+  .navigation-button {
+    padding-top: 7px;
   }
 
   .root-document ~ .navigation-button,

@@ -1,80 +1,68 @@
-<div class="row flex-nowrap image-view bg-light">
-    <div *ngIf="image.document" id="image-container" class="col px-0">
-        <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
-            <img id="original-image" [src]="image.imgSrc">
-        </div>
-        <div *ngIf="originalNotFound && image.thumbSrc" id="thumbnail-image-container">
-            <div class="alert alert-info" role="alert"
-                 i18n="@@imageView.originalNotFoundWarning">
-                Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-            </div>
-            <div class="d-flex align-items-center justify-content-center">
-                <img [src]="image.thumbSrc" id="thumb-image">
-            </div>
-        </div>
+<div id="image-view-modal-header" class="d-flex justify-content-between">
+    <div *ngIf="!linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.images">Bilder</div>
+    <div *ngIf="linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.linkedImages">
+        Mit <strong>{{linkedResourceIdentifier}}</strong> verknüpfte Bilder
     </div>
 
-    <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar-container">
-        <div class="card-block detail-sidebar">
-            <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
-                    id="document-view-button-solve-conflicts"
-                    (click)="startEdit('conflicts')">
-                <span class="mdi mdi-alert-outline"></span>
-            </button>
+    <button class="btn btn-primary"
+            id="close-button"
+            (click)="close()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
 
-            <button class="close-button btn btn-link btn-xs"
-                    id="back-to-map"
-                    (click)="deselect()">
-                <span class="mdi mdi-close"></span>
-            </button>
+<div id="image-view-modal-body" class="modal-body px-0">
+    <div id="image-view"
+         class="flex-nowrap bg-light px-0"
+         [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+        <div id="popover">
+            <div id="popover-header">
+                <div *ngIf="selectedImage" id="identifier-label">
+                    {{selectedImage.document.resource.identifier}}
+                </div>
+                <button class="btn btn-light" (click)="startEdit()">
+                    <span class="mdi mdi-pencil"></span>
+                </button>
+            </div>
 
-            <ngb-tabset activeId="document-view-{{activeTab}}-tab">
-                <ngb-tab id="document-view-fields-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-format-list-bulleted"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <div id="document-view-button-edit-document"
-                                class="btn btn-light btn-block edit-button"
-                                (click)="startEdit()">
-                            <span class="button-label" i18n="@@imageView.editMetadata">Metadaten bearbeiten</span>
-                        </div>
+            <div #imageInfo id="image-info"
+                 [class.scrollbar-visible]="isImageInfoScrollbarVisible()">
+                <fields-view *ngIf="selectedImage"
+                             [resource]="selectedImage.document.resource"
+                             [openSection]="openSection"
+                             (onSectionToggled)="openSection = $event"></fields-view>
+                <georeference-view *ngIf="selectedImage"
+                                   [document]="selectedImage.document"
+                                   [openSection]="openSection"
+                                   (onSectionToggled)="openSection = $event"></georeference-view>
+                <depicts-relations-view *ngIf="selectedImage"
+                                        [resource]="selectedImage.document.resource"
+                                        [openSection]="openSection"
+                                        (onSectionToggled)="openSection = $event"
+                                        (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
+            </div>
+        </div>
 
-                        <div class="tab-view-container">
-                            <description-view [document]="image.document"></description-view>
-                            <fields-view [resource]="image.document.resource"></fields-view>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
+        <div *ngIf="selectedImage" id="image-container">
+            <div class="d-flex align-items-center justify-content-center">
+                <div *ngIf="!containsOriginal(selectedImage)" class="alert alert-info" role="alert"
+                     i18n="@@imageView.originalNotFoundWarning">
+                    Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+                </div>
+                <img [src]="containsOriginal(selectedImage) ? selectedImage.imgSrc : selectedImage.thumbSrc">
+            </div>
+        </div>
 
-                <ngb-tab id="document-view-georeference-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-map"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <georeference-view [document]="image.document"></georeference-view>
-                    </ng-template>
-                </ngb-tab>
-
-                <ngb-tab id="document-view-relations-tab">
-                    <ng-template ngbTabTitle>
-                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
-                    </ng-template>
-                    <ng-template ngbTabContent>
-                        <div id="document-view-button-edit-document"
-                                class="btn btn-light btn-block edit-button"
-                                (click)="startEdit('relations')">
-                            <span class="button-label" i18n="@@imageView.editRelations">Relationen bearbeiten</span>
-                        </div>
-
-                        <div class="tab-view-container">
-                            <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
-                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                            </relations-view>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
+        <div #thumbnailSliderContainer id="thumbnail-slider-container"
+             [class.scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+            <div id="thumbnail-slider">
+                <div *ngFor="let image of images"
+                     id="thumbnail-{{image.document.resource.id}}"
+                     class="thumbnail-container"
+                     [class.selected]="image === selectedImage">
+                    <img [src]="image.thumbSrc" (click)="select(image)">
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild,
-    ElementRef} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
+import {IdaiType} from 'idai-components-2';
+import {TypeUtility} from '../core/model/type-utility';
 
 
 @Component({
@@ -17,21 +17,13 @@ import {ProjectConfiguration, IdaiType} from 'idai-components-2';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent implements OnChanges {
+export class SearchBarComponent {
 
-    // If these values are set, only valid domain types for the given relation name & range type are shown in the
-    // filter menu.
-    @Input() relationName: string;
-    @Input() relationRangeType: string;
-
-    // If this value is set, only child types of the parent type are shown in the filter menu.
-    // The 'all types' option is not visible if a parent type is set because choosing the parent type is equivalent to
-    // this option.
-    @Input() parentType: string;
+    @Input() filterOptions: Array<IdaiType> = [];
+    @Input() showFiltersMenu: boolean = true;
 
     @Input() q: string = '';
     @Input() types: string[]|undefined;
-    @Input() showFiltersMenu: boolean = true;
 
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
@@ -41,39 +33,13 @@ export class SearchBarComponent implements OnChanges {
 
     public focused: boolean = false;
 
-    protected filterOptions: Array<IdaiType> = [];
-
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private typeUtility: TypeUtility) {}
 
 
-    public ngOnChanges(changes: SimpleChanges) {
-
-        if (changes['relationName'] || changes['relationRangeType'] || changes['parentType'] ||
-            changes['showFiltersMenu']) {
-            this.initializeFilterOptions();
-        }
-    }
-
-
-    public chooseTypeFilter(type: IdaiType) {
-
-        if (!type) {
-            this.types = undefined;
-        } else {
-            this.types = [type.name];
-
-            if (type.children) {
-                for (let childType of type.children) {
-                    this.types.push(childType.name);
-                }
-            }
-        }
-
-        this.onTypesChanged.emit(this.types);
-    }
+    public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
 
 
     public onKeyUp(event: KeyboardEvent) {
@@ -91,56 +57,19 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
+    public chooseTypeFilter(type: IdaiType) {
+
+        this.types = type
+            ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
+            : undefined;
+
+        this.onTypesChanged.emit(this.types);
+    }
+
+
     public blur() {
 
         this.fulltextSearchInput.nativeElement.blur();
-    }
-
-
-    protected initializeFilterOptions() {
-
-        this.filterOptions = [];
-        this.addFilterOptionsFromConfiguration();
-    }
-
-
-    protected addFilterOptionsFromConfiguration() {
-
-        for (let type of this.projectConfiguration.getTypesTreeList()) {
-
-            if (this.parentType && type.name !== this.parentType) continue;
-
-            if ((!this.relationName && !this.relationRangeType)
-                    || this.projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
-                    this.relationName)) {
-
-                this.addFilterOption(type);
-
-            } else if (type.children) {
-
-                this.addFilterOptionsFor(type);
-            }
-
-        }
-    }
-
-
-    protected addFilterOptionsFor(type: IdaiType) {
-
-        for (let childType of type.children) {
-            if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
-                    this.relationName)) {
-                this.addFilterOption(childType);
-            }
-        }
-    }
-
-
-    protected addFilterOption(type: IdaiType) {
-
-        if (this.filterOptions.indexOf(type) == -1) {
-            this.filterOptions.push(type);
-        }
     }
 
 
@@ -152,7 +81,7 @@ export class SearchBarComponent implements OnChanges {
         let inside: boolean = false;
 
         do {
-            if (target.id === 'filter-button') {
+            if (target.id && target.id.includes('filter-button')) {
                 inside = true;
                 break;
             }

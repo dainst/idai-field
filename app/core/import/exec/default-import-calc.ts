@@ -1,6 +1,6 @@
 import {ImportValidator} from './import-validator';
 import {asyncForEach, asyncMap, duplicates, equal, hasNot, includedIn, isArray,
-    isDefined, isNot, isUndefinedOrEmpty, to, undefinedOrEmpty, isnt} from 'tsfun';
+    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
@@ -94,17 +94,26 @@ export module DefaultImportCalc {
             const relations = document.resource.relations;
             if (!relations) return document;
 
-            const foundForbiddenRelations = Object.keys(document.resource.relations)
-                .filter(includedIn(forbiddenRelations))
-                .join(', ');
-            if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+            if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+                const foundForbiddenRelations = Object.keys(document.resource.relations)
+                    .filter(includedIn(forbiddenRelations))
+                    .join(', ');
+                if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 
-            if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-            if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+                for (let name of Object.keys(document.resource.relations)) {
+                    if (name === PARENT) continue;
+                    if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+                }
+                if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
+                if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+            }
 
             if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-                await rewriteIdentifiersInRelations(relations, find, identifierMap);
+
+                if (useIdentifiersInRelations) {
+                    removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                    await rewriteIdentifiersInRelations(relations, find, identifierMap);
+                }
             } else if (!mergeMode) {
                 await assertNoMissingRelationTargets(relations, get);
             }
@@ -172,8 +181,10 @@ export module DefaultImportCalc {
                                     get: Get,
                                     mainTypeDocumentId: Id) {
 
-        const idMap = documents.reduce((tmpMap, document: Document) =>
-                (tmpMap[document.resource.id] = document, tmpMap),
+        const idMap = documents.reduce((tmpMap, document: Document) => {
+                tmpMap[document.resource.id] = document;
+                return tmpMap;
+            },
             {} as IdMap);
 
 
@@ -295,9 +306,10 @@ export module DefaultImportCalc {
 
         return documents
             .filter(hasNot(RESOURCE_ID))
-            .reduce((identifierMap, document)  =>
-                (identifierMap[document.resource.identifier] = document.resource.id = generateId(), identifierMap)
-            , {} as IdentifierMap);
+            .reduce((identifierMap, document)  => {
+                identifierMap[document.resource.identifier] = document.resource.id = generateId();
+                return identifierMap;
+            }, {} as IdentifierMap);
     }
 
 
@@ -325,8 +337,7 @@ export module DefaultImportCalc {
 
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
-                try { validator.assertHasLiesWithin(document) }
-                catch { throw [E.NO_LIES_WITHIN_SET] }
+                validator.assertHasLiesWithin(document);
             } else {
                 await validator.assertIsNotOverviewType(document);
                 await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);

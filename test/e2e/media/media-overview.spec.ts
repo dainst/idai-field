@@ -1,11 +1,10 @@
 import {browser, protractor, by} from 'protractor';
 import {MediaOverviewPage} from './media-overview.page';
-import {NavbarPage} from '../navbar.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {FieldsViewPage} from '../widgets/fields-view-page';
+import {MenuPage} from '../menu.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
+import {ImageViewPage} from '../images/image-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -64,10 +63,10 @@ describe('media/media-overview --', function() {
     beforeEach(async done => {
 
         if (i > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest * 3);
-            NavbarPage.clickNavigateToMediaOverview();
+            MenuPage.navigateToImages();
             MediaOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);
         }
@@ -158,24 +157,6 @@ describe('media/media-overview --', function() {
     });
 
 
-    it('navigate from overview to image view, and back to overview', async done => {
-
-        const imageName = await MediaOverviewPage.getCellMediaResourceName(0);
-
-        MediaOverviewPage.doubleClickCell(0);
-        browser.wait(EC.presenceOf(DetailSidebarPage.getDocumentCard()), delays.ECWaitTime);
-        FieldsViewPage.clickFieldsTab();
-        DetailSidebarPage.getIdentifier()
-            .then(identifier => expect(identifier).toContain(imageName));
-
-        DetailSidebarPage.clickBackToGridButton();
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCell(0)), delays.ECWaitTime);
-        MediaOverviewPage.getCellMediaResourceName(0).then(name => expect(name).toContain(imageName));
-
-        done();
-    });
-
-
     it('link -- link an image to a resource', () => {
 
         MediaOverviewPage.createDepictsRelation('testf1');
@@ -240,7 +221,7 @@ describe('media/media-overview --', function() {
         SearchBarPage.typeInSearchField('S');
         MediaOverviewPage.getLinkModalListEntries()
             .then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
-        SearchBarPage.clickChooseTypeFilter('operation-trench');
+        SearchBarPage.clickChooseTypeFilter('operation-trench', 'modal');
         MediaOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
         MediaOverviewPage.clickCancelLinkModalButton();
@@ -249,13 +230,27 @@ describe('media/media-overview --', function() {
     });
 
 
+    it('navigate from overview to view, and back to overview', async done => { // this test seems to be included in the test "perform constraint search"
+
+        const imageName = await MediaOverviewPage.getCellMediaResourceName(0);
+
+        MediaOverviewPage.doubleClickCell(0);
+        ImageViewPage.getIdentifier().then(identifier => expect(identifier).toContain(imageName));
+        ImageViewPage.clickCloseButton();
+
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCell(0)), delays.ECWaitTime);
+        MediaOverviewPage.getCellMediaResourceName(0).then(name => expect(name).toContain(imageName));
+        done();
+    });
+
+
     it('perform constraint search', () => {
 
         MediaOverviewPage.doubleClickCell(0);
-        DetailSidebarPage.performEditDocument();
+        ImageViewPage.editDocument();
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
-        DetailSidebarPage.clickBackToGridButton();
+        ImageViewPage.clickCloseButton();
         MediaOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();

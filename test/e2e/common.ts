@@ -19,10 +19,22 @@ function typeIn(inputField, text) {
 }
 
 
-function click(el) {
+function click(element) {
 
-    browser.wait(EC.visibilityOf(el), delays.ECWaitTime);
-    return el.click();
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
+    return element.click();
+}
+
+
+function rightClick(element) {
+
+    browser.actions().click(element, protractor.Button.RIGHT).perform();
+}
+
+
+function doubleClick(element) {
+
+    browser.actions().doubleClick(element).perform();
 }
 
 
@@ -53,6 +65,8 @@ function resetApp(): Promise<any> {
 module.exports = {
     typeIn: typeIn,
     click: click,
+    rightClick: rightClick,
+    doubleClick: doubleClick,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp
 };

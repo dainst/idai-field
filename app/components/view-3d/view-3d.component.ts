@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2';
-import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
@@ -24,15 +23,15 @@ export class View3DComponent implements OnInit {
     private activeTab: string;
     private comingFrom: Array<any>|undefined = undefined;
 
-    public jumpToRelationTarget = (documentToJumpTo: Document) => this.routingService.jumpToRelationTarget(
-        documentToJumpTo, 'media', true);
+    public jumpToRelationTarget = (documentToJumpTo: Document) => this.routingService.jumpToResource(
+        documentToJumpTo, true
+    );
 
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private modalService: NgbModal,
-        private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService,
         private datastore: IdaiField3DDocumentReadDatastore
     ) {
@@ -59,8 +58,6 @@ export class View3DComponent implements OnInit {
 
 
     public async startEdit(tabName: string = 'fields') {
-
-        this.doceditActiveTabService.setActiveTab(tabName);
 
         const doceditModalRef
             = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
@@ -109,10 +106,10 @@ export class View3DComponent implements OnInit {
 
     private setNextDocumentViewActiveTab() {
 
-        const nextActiveTab = this.doceditActiveTabService.getActiveTab();
+        /*const nextActiveTab = this.doceditActiveTabService.getActiveTab();
         if (['relations', 'fields'].indexOf(nextActiveTab) != -1) {
             this.activeTab = nextActiveTab;
-        }
+        }*/
     }
 
 

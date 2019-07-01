@@ -2,7 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {OperationBarPage} from '../operation-bar.page';
+import {MenuPage} from '../menu.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('import --', function() {
+describe('import --', function() {
 
     let index = 0;
 
@@ -26,12 +26,13 @@ xdescribe('import --', function() {
     beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
+            MenuPage.navigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToOverview();
+            NavbarPage.clickCloseNonResourcesTab();
+            NavbarPage.clickTab('project');
             browser.sleep(delays.shortRest * 4);
-            NavbarPage.performNavigateToImport();
+            MenuPage.navigateToImport();
         }
 
         index++;
@@ -45,7 +46,7 @@ xdescribe('import --', function() {
         ImportPage.clickSourceOption(1);
         expect(ImportPage.getFormatOptionValue(0)).toEqual('native');
         ImportPage.clickFormatOption(0);
-        ImportPage.clickMainTypeDocumentOption(mainTypeDocumentOption);
+        ImportPage.clickOperationOption(mainTypeDocumentOption);
         common.typeIn(ImportPage.getImportURLInput(), url);
         ImportPage.clickStartImportButton();
         browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);
@@ -56,8 +57,9 @@ xdescribe('import --', function() {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
-        NavbarPage.clickNavigateToExcavation();
-        OperationBarPage.performSelectOperation(0);
+
+        NavbarPage.clickCloseNonResourcesTab();
+        ResourcesPage.clickHierarchyButton('importedTrench');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
@@ -72,7 +74,8 @@ xdescribe('import --', function() {
 
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();
-        NavbarPage.clickNavigateToExcavation();
+        NavbarPage.clickCloseNonResourcesTab();
+        ResourcesPage.clickHierarchyButton('S1');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
     });

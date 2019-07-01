@@ -207,6 +207,30 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     },
     {
         'resource': {
+            'id': 'si4-f1',
+            'identifier': locale === 'de' ? 'SE4-F1' : 'SU4-F1',
+            'shortDescription': locale === 'de' ? 'Eine Münze' : 'A coin',
+            'relations': {
+                'isRecordedIn': ['t2'],
+                'liesWithin': ['si4'],
+            },
+            'type': 'Coin'
+        }
+    },
+    {
+        'resource': {
+            'id': 'si4-f2',
+            'identifier': locale === 'de' ? 'SE4-F2' : 'SU4-F2',
+            'shortDescription': locale === 'de' ? 'Noch eine Münze' : 'Another coin',
+            'relations': {
+                'isRecordedIn': ['t2'],
+                'liesWithin': ['si4'],
+            },
+            'type': 'Coin'
+        }
+    },
+    {
+        'resource': {
             'id': 'si5',
             'identifier': locale === 'de' ? 'SE5' : 'SU5',
             'hasPeriod': 'Bronzezeitlich',
@@ -262,6 +286,18 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                         ]
                     ]
                 ]
+            },
+            'type': 'Layer'
+        }
+    },
+    {
+        'resource': {
+            'id': 'si6',
+            'identifier': locale === 'de' ? 'SE6' : 'SU6',
+            'hasPeriod': 'Bronzezeitlich',
+            'shortDescription': locale === 'de' ? 'Noch ein Erdbefund' : 'Another Layer',
+            'relations': {
+                'isRecordedIn': ['t2'],
             },
             'type': 'Layer'
         }

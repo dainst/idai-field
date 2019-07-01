@@ -1,9 +1,24 @@
 #media-tab-container {
-  margin-top: 15px;
+  margin-top: 0;
+
+  .card-block {
+    padding-top: 0;
+  }
 
   #create-depicts-relations-btn,
-  #delete-media-resources,
-  #deselect-media-resources {
+  #delete-images,
+  #deselect-images,
+  #set-main-media-resource {
     height: 40px;
+  }
+
+  .image-grid-container {
+    height: calc(100vh - 223px);
+    overflow-y: auto;
+    margin: 10px 0;
+
+    .image-grid {
+      margin-top: 0;
+    }
   }
 }

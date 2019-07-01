@@ -1,4 +1,4 @@
-<div *ngIf="showNavigation()" id="navigation" class="row">
+<div id="navigation" class="row">
     <div id="hierarchy-mode-switch"
          class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="{{getTooltip()}}"
@@ -15,36 +15,11 @@
     </div>
 
     <div class="btn-group">
-        <div *ngIf="!viewFacade.isInOverview()" class="btn-group dropdown"
-             ngbDropdown placement="bottom-left" role="group">
-            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
-                        (click)="activateBypassOperationTypeSelection()">
-                    <em i18n="@@resources.navigation.all">Alle</em>
-                </button>
-                <hr *ngIf="showSelectAllOperationsOption()">
-
-                <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
-                        (click)="chooseOperationTypeDocumentOption(document)">
-                    {{getOperationButtonLabel(document)}}
-                </button>
-            </div>
-        </div>
-
-        <div *ngIf="showOperationAsFirstSegment()"
-             id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
+        <div *ngIf="!viewFacade.isInOverview() && viewFacade.getCurrentOperation()"
+             id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            {{viewFacade.getSelectedOperations()[0].resource.identifier}}
-        </div>
-
-        <div *ngIf="showOperationsAllAsFirstSegment()"
-             id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="!navigationPath.selectedSegmentId"
-             (click)="moveInto(undefined)">
-            <em i18n="@@resources.navigation.all">Alle</em>
+            {{viewFacade.getCurrentOperation().resource.identifier}}
         </div>
 
         <div *ngIf="viewFacade.isInOverview()"

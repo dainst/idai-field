@@ -1,5 +1,5 @@
-import {on} from 'tsfun';
-import {FieldDefinition, IdaiFieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
+import {on, is} from 'tsfun';
+import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
     Resource, NewDocument, Document} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
@@ -70,7 +70,7 @@ export module Validations {
     }
 
 
-    export function validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
+    export function validateStructureOfGeometries(geometry: FieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
 
@@ -146,7 +146,7 @@ export module Validations {
         if (!resource.type) return false;
         return projectConfiguration
             .getTypesList()
-            .some(on('name:')(resource.type));
+            .some(on('name', is(resource.type)));
     }
 
 
@@ -157,7 +157,7 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
+        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition /* TODO remove cast*/];
 
         const fields: Array<any> = projectFields.concat(defaultFields);
 

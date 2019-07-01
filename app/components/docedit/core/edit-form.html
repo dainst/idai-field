@@ -1,15 +1,43 @@
-<div *ngFor="let field of fieldDefinitions" id="edit-form-element-{{field.name}}">
-    <div *ngIf="field && (field.editable === true)" class="form-group card">
-        <div class="card-header h4">
-            <span class="card-title" *ngIf="field.label">{{field.label}}</span>
-            <span class="card-title" *ngIf="!field.label">{{field.name}}</span>
+<div class="container-fluid">
+    <div #editor class="row">
+        <ul id="table-of-contents" class="col-md-3 flex-column nav">
+            <li *ngFor="let group of groups" class="nav nav-pills flex-column"
+                (click)="activateGroup(group.name)">
+                <a *ngIf="shouldShow(group.name)"
+                        class="nav-link" id="edit-form-goto-{{group.name}}"
+                        [class.active]="group.name === activeGroup"
+                        [class.conflicted]="group.name === 'conflicts' && document._conflicts"
+                        href="javascript: void(0);">
+                    <span *ngIf="group.name === 'conflicts' && document._conflicts"
+                          class="mdi mdi-alert">
+                    </span>
+                    {{group.label}}
+                </a>
+            </li>
+        </ul>
 
-            <span *ngIf="field.description" placement="left" container="body" ngbTooltip="{{field.description}}"
-                  class="mdi mdi-information-outline float-right"></span>
-        </div>
+        <div class="col-md-9 forms-container">
+            <div id="{{activeGroup}}-group" class="scrollable-group"
+                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
+                <generic-form
+                        [document]="document"
+                        [fieldDefinitions]="getFieldDefinitions(activeGroup)"
+                        [relationDefinitions]="getRelationDefinitions(activeGroup)">
+                </generic-form>
+            </div>
 
-        <div class="card-block">
-            <edit-form-field [resource]="document['resource']" [field]="field"></edit-form-field>
+            <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
+                <docedit-media-tab [(document)]="document"></docedit-media-tab>
+            </div>
+
+
+            <div *ngIf="activeGroup === 'conflicts'" id="docedit-conflicts-tab">
+                <docedit-conflicts-tab [(document)]="document" [(inspectedRevisions)]="inspectedRevisions">
+                </docedit-conflicts-tab>
+            </div>
         </div>
     </div>
 </div>
+
+
+

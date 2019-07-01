@@ -4,6 +4,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
+import {IndexItem} from '../index/index-item';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -22,7 +23,7 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  *    for clients to work with references to documents.
  *
  * 2) Returns fully checked instances of
- *    IdaiFieldDocument and IdaiFieldImageDocument respectively,
+ *    FieldDocument and ImageDocument respectively,
  *    so that the rest of the app can rely that the declared
  *    fields are present.
  *
@@ -46,19 +47,24 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      *
      * Additional specs:
      *
-     * @param options.skip_cache: boolean
+     * @param options.skipCache: boolean
      * @throws if fetched doc is not of type T, determined by resource.type
      */
-    public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
+    public async get(id: string, options?: { skipCache: boolean }): Promise<T> {
 
-        if ((!options || !options.skip_cache) && this.documentCache.get(id)) {
-            return this.documentCache.get(id);
+        const cachedDocument: T = this.documentCache.get(id);
+
+        if ((!options || !options.skipCache) && cachedDocument) {
+            return cachedDocument;
         }
 
-        const document = await this.datastore.fetch(id);
+        let document: T = await this.datastore.fetch(id) as T;
         this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        document = this.typeConverter.convert(document);
 
-        return this.documentCache.set(this.typeConverter.convert(document));
+        return cachedDocument
+            ? this.documentCache.reassign(document)
+            : this.documentCache.set(document);
     }
 
 
@@ -71,13 +77,19 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     /**
      * Implements {@link ReadDatastore#find}
      *
+     *
      * Additional specs:
      *
      * Find sorts the documents by identifier ascending
      *
+     * @param query
+     * @param ignoreTypes to make queries faster, the facility to return only the
+     *   types the datastore is supposed to return, can be turned off. This can make sense if
+     *   one performs constraint queries, where one knows that all documents returned are of
+     *   allowed types, due to the nature of the relations to which the constraints refer.
      * @throws if query contains types incompatible with T
      */
-    public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
+    public async find(query: Query, ignoreTypes: boolean = false): Promise<IdaiFieldFindResult<T>> {
 
         if (!this.suppressWait) await this.datastore.ready();
 
@@ -87,11 +99,13 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.types.forEach(type => {
                 this.typeConverter.assertTypeToBeOfClass(type, this.typeClass);
             });
-        } else {
+        } else if (!ignoreTypes) {
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
-        const {documents, totalCount} = await this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
+        const orderedResults = await this.findIds(clonedQuery);
+        const {documents, totalCount} =
+            await this.getDocumentsForIds(orderedResults, clonedQuery.limit, clonedQuery.offset);
 
         return {
             documents: documents,
@@ -122,21 +136,34 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      *   if two or more documents have the same last modifed date, their sort order is unspecified.
      *   the modified date is taken from document.modified[document.modified.length-1].date
      */
-    private findIds(query: Query): string[] {
+    private async findIds(query: Query): Promise<string[]> {
 
+        let result: any;
         try {
-            return this.indexFacade.perform(query);
+            result = this.indexFacade.perform(query);
         } catch (err) {
-            throw [DatastoreErrors.GENERIC_ERROR, err];
+            return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
         }
+
+        // Wrap asynchronously in order to make the app more responsive
+        return new Promise<string[]>((resolve: any, reject: any) => {
+            try {
+                resolve(IndexItem.generateOrderedResultList(result));
+            } catch (err) {
+                reject([DatastoreErrors.GENERIC_ERROR, err]);
+            }
+        });
     }
 
 
     private async getDocumentsForIds(ids: string[],
-                                     limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
+                                     limit?: number,
+                                     offset?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
         let totalCount: number = ids.length;
         let idsToFetch: string[] = ids;
+
+        if (offset) idsToFetch.splice(0, offset);
         if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
 
         const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);

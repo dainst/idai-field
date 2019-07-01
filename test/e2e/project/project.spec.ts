@@ -1,5 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from './project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -62,8 +63,8 @@ describe('project --', function() {
         ResourcesPage.get();
 
         ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+        ProjectPage.getProjectNameOptionText(0).then(text => { expect(text).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(text => { expect(text).toContain('test') });
 
         ProjectPage.clickDeleteProject();
         browser.sleep(delays.shortRest);
@@ -73,10 +74,8 @@ describe('project --', function() {
         browser.sleep(1000);
 
         ResourcesPage.get();
-        browser.sleep(delays.shortRest * 10);
-        NavbarPage.clickNavigateToOverview();
         browser.sleep(delays.shortRest * 15);
-        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
 
@@ -94,19 +93,15 @@ describe('project --', function() {
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unknown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
-        NavbarPage.clickNavigateToMediaOverview();
+        MenuPage.navigateToImages();
         browser.sleep(200);
-        NavbarPage.clickNavigateToOverview();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
         //
 
         browser.sleep(200);
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
-
-        NavbarPage.clickNavigateToBuilding();
-        NavbarPage.clickNavigateToOverview();
-        browser.sleep(delays.shortRest);
-
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
 
         ProjectPage.clickProjectsBadge();
@@ -117,8 +112,10 @@ describe('project --', function() {
 
         browser.sleep(delays.shortRest * 20);
 
-        NavbarPage.performNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
+        MenuPage.navigateToSettings();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S1');
 
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
@@ -132,10 +129,7 @@ describe('project --', function() {
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();
-        NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 10);
-
-        NavbarPage.clickNavigateToOverview();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
 });

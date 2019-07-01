@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 
 
 /**
@@ -9,6 +9,6 @@ export interface MeshGeometry {
 
     mesh: THREE.Mesh,
     raycasterObject: THREE.Object3D,
-    document: IdaiFieldDocument,
+    document: FieldDocument,
     type: 'polygon'|'line'
 }

@@ -17,7 +17,7 @@ export class BaseList {
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
-        private loading: Loading
+        protected loading: Loading
     ) {
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
@@ -43,9 +43,7 @@ export class BaseList {
 
         return !this.resourcesComponent.isEditingGeometry
             && this.viewFacade.isReady()
-            && !this.loading.isLoading()
-            && (this.viewFacade.isInOverview()
-                || this.viewFacade.getSelectedOperations().length > 0);
+            && (!this.loading.isLoading() || this.loading.getContext() !== undefined);
     }
 
 

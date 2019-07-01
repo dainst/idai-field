@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {Observable} from 'rxjs';
-import {Observer} from 'rxjs';
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Observable, Observer} from 'rxjs';
+import {DatastoreErrors, Document} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
-import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TypeUtility} from '../core/model/type-utility';
 
 
@@ -27,9 +25,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private typeUtility: TypeUtility,
-                private projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentReadDatastore) {}
+                private typeUtility: TypeUtility) {}
 
 
     // For ResourcesComponent
@@ -41,27 +37,23 @@ export class RoutingService {
     }
 
 
-    public async jumpToMainTypeHomeView(document: Document) {
+    public async jumpToOperationView(operation: Document) {
 
-        await this.router.navigate(['resources',
-            this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
-
-        await this.viewFacade.selectOperation(document.resource.id);
+        await this.router.navigate(['resources', operation.resource.id]);
     }
 
 
-    // Currently used from DocumentViewSidebar and ImageViewComponent
-    public async jumpToRelationTarget(documentToSelect: Document, tab?: string,
+    public async jumpToResource(documentToSelect: Document,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
-            this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Model3D')) {
-            this.jumpTo3DTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpTo3DTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            await this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
+            await this.jumpToFieldTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         }
     }
 
@@ -73,36 +65,19 @@ export class RoutingService {
         }  else if (this.typeUtility.isSubtype(document.resource.type, 'Model3D')) {
             return this.router.navigate(['3d', document.resource.id, 'edit', 'conflicts']);
         } else {
-            const mainTypeName = await this.getMainTypeNameForDocument(document);
-            if (!mainTypeName) return;
-
-            const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+            const viewName: 'project'|string = this.getViewName(document);
             if (this.router.url.includes('resources')) {
                 // indirect away first to reload the resources component, in case you are already there
                 await this.router.navigate(['resources', viewName]);
             }
-            return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
+            return this.router.navigate(
+                ['resources', viewName, document.resource.id, 'edit', 'conflicts']
+            );
         }
     }
 
 
-    public async getMainTypeNameForDocument(document: Document): Promise<string|undefined> {
-
-        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
-                || document.resource.type === 'Place') return 'Project';
-
-        if (!document.resource.relations['isRecordedIn']
-            || document.resource.relations['isRecordedIn'].length === 0) return 'Project';
-
-        try {
-            return (await this.datastore.get(document.resource.relations['isRecordedIn'][0])).resource.type
-        } catch (_) {
-            console.error("targetDocument does not exist",document.resource.relations['isRecordedIn'][0]);
-        }
-    }
-
-
-    private jumpToImageTypeRelationTarget(documentToSelect: Document,
+    private async jumpToImageTypeResource(documentToSelect: Document,
                                           comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
@@ -112,14 +87,15 @@ export class RoutingService {
             }
         }
 
-        this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
+        await this.router.navigate(
+            ['images', documentToSelect.resource.id, 'show',
+                comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }
 
 
-    private async jumpTo3DTypeRelationTarget(documentToSelect: Document,
+    private async jumpTo3DTypeResource(documentToSelect: Document,
                                              comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
@@ -136,18 +112,13 @@ export class RoutingService {
     }
 
 
-    private async jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string,
-                                                   comingFromOutsideResourcesComponent: boolean = false) {
+    private async jumpToFieldTypeResource(documentToSelect: Document,
+                                          comingFromOutsideResourcesComponent: boolean = false) {
 
-        const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
-        if (!mainTypeName) return;
+        const viewName: 'project'|string = this.getViewName(documentToSelect);
 
-        const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-
-        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
-            await this.router.navigate(tab
-                ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
-                : ['resources', viewName, documentToSelect.resource.id]);
+        if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
+            await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
         }
@@ -155,7 +126,8 @@ export class RoutingService {
 
 
     // For ResourcesComponent
-    private setRoute(route: ActivatedRoute, observer: Observer<any>) { // we need a setter because the route must come from the componenent it is bound to
+    // We need a setter because the route must come from the component it is bound to
+    private setRoute(route: ActivatedRoute, observer: Observer<any>) {
 
         route.params.subscribe(async (params) => {
 
@@ -168,9 +140,22 @@ export class RoutingService {
                 await this.viewFacade.selectView(params['view']);
                 observer.next(params);
             } catch (msgWithParams) {
-                if (msgWithParams) console.error(
-                    'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
+                if (msgWithParams) {
+                    if (msgWithParams.includes(DatastoreErrors.DOCUMENT_NOT_FOUND)) {
+                        await this.router.navigate(['resources', 'project']);
+                    } else {
+                        console.error('Got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
+                    }
+                }
             }
         });
+    }
+
+
+    private getViewName(document: Document): 'project'|string {
+
+        return this.typeUtility.getOverviewTypeNames().includes(document.resource.type)
+            ? 'project'
+            : document.resource.relations['isRecordedIn'][0];
     }
 }

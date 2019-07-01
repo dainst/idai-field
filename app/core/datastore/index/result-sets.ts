@@ -1,14 +1,14 @@
-import {NestedArray, union, uniteObject, includedIn, isNot} from 'tsfun';
+import {intersection, NestedArray, union, subtract} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 
-
+type ResourceId = string;
 type IndexItemMap = {[id: string]: SimpleIndexItem};
 
 
 export interface ResultSets {
 
-    addSets: NestedArray<string>,
-    subtractSets: NestedArray<string>,
+    addSets: NestedArray<ResourceId>,
+    subtractSets: NestedArray<ResourceId>,
     map: IndexItemMap
 }
 
@@ -44,25 +44,29 @@ export module ResultSets {
     export function combine(resultSets: ResultSets,
                             indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
 
-        const indexItemsMap = intoObject(indexItems);
-        resultSets.map = uniteObject(indexItemsMap)(resultSets.map);
+
+        const keys = [];
+        for (let item of indexItems) {
+            resultSets.map[item.id] = item;
+            keys.push(item.id)
+        }
 
         if (mode !== 'subtract') {
-            resultSets.addSets.push(Object.keys(indexItemsMap));
+            resultSets.addSets.push(keys);
         }  else {
-            resultSets.subtractSets.push(Object.keys(indexItemsMap));
+            resultSets.subtractSets.push(keys);
         }
     }
 
 
     export function collapse(resultSets: ResultSets): Array<SimpleIndexItem> {
 
-        const addSetIds: string[] = getIntersecting(resultSets.addSets);
+        const addSetIds: string[] = intersection(resultSets.addSets);
 
         return pickFromMap(resultSets,
             resultSets.subtractSets.length === 0
                 ? addSetIds
-                : subtract(addSetIds, union(resultSets.subtractSets))
+                : subtract(union(resultSets.subtractSets))(addSetIds)
         );
     }
 
@@ -76,35 +80,5 @@ export module ResultSets {
     function pickFromMap(resultSets: ResultSets, ids: string[]) {
 
         return ids.map(id => resultSets.map[id]);
-    }
-
-
-    function intoObject(indexItems: Array<SimpleIndexItem>) {
-
-        return indexItems
-            .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
-    }
-
-
-    function subtract(ids: string[], idsToSubtract: string[]) {
-
-        return ids.filter(isNot(includedIn(idsToSubtract)));
-    }
-
-
-    function getIntersecting(idSets: string[][]) {
-
-        let result: string[] = idSets[0];
-
-        if (idSets.length > 1) {
-            result = result.filter(id => {
-                for (let idSet of idSets.slice(1)) {
-                    if (!idSet.includes(id)) return false;
-                }
-                return true;
-            });
-        }
-
-        return result;
     }
 }

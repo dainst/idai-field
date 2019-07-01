@@ -1,5 +1,6 @@
 $tab-bg-color: $gray-100;
 $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
+$tab-separator-color: lighten($navbar-default-bg, 7%);
 $link-hover-color: lighten($navbar-default-bg, 30%);
 
 .navbar {
@@ -8,15 +9,16 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 
   .nav-item {
     -webkit-app-region: no-drag;
+    max-height: 51px;
+  }
+
+  .dropdown-menu {
+    z-index: 1050;
   }
 }
 
 .navbar.bg-primary {
   background-color: $navbar-default-bg !important;
-}
-
-.navbar.navbar-fixed-top .navbar-brand {
-  font-weight: 700;
 }
 
 .navbar a {
@@ -32,109 +34,186 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   color: $link-hover-color;
 }
 
+.navbar button .mdi:hover {
+  color: #fff;
+}
+
 .navbar-tabbed .nav-link {
   padding: 0.7em 1em;
   margin-top: 0.3em;
 }
 
-.navbar-dark .navbar-tabbed a.nav-link {
+#non-resources-tab {
+  height: 51px;
 
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  position: relative;
-
-  &:before,
-  &:after {
-    position: absolute;
-    bottom: -1px;
-    width: 6px;
-    height: 6px;
-    content: " ";
-  }
-  &:before {
-    left: -5px;
-  }
-  &:after {
-    right: -5px;
+  button {
+    -webkit-app-region: no-drag;
   }
 
-  &.active {
-    background-color: $tab-bg-color;
-    color: #000;
-    z-index: 10;
-
-    &:before {
-      border-color: $tab-bg-color;
-      box-shadow: 2px 2px 0 $tab-bg-color;
-      border-bottom-right-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color;
-      border-right: 1px solid $tab-bg-color;
-    }
-
-    &:after {
-      border-color: $tab-bg-color;
-      box-shadow: -2px 2px 0 $tab-bg-color;
-      border-bottom-left-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color;
-      border-left: 1px solid $tab-bg-color;
-    }
+  .nav-link {
+    position: relative;
+    left: -12px;
+    margin-top: 3px;
   }
-
-  &:hover:not(.active) {
-    background-color: $tab-bg-color-hover;
-    z-index: 5;
-    color: white;
-
-    &:before {
-      border-color: $tab-bg-color-hover;
-      box-shadow: 2px 2px 0 $tab-bg-color-hover;
-      border-bottom-right-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color-hover;
-      border-right: 1px solid $tab-bg-color-hover;
-    }
-
-    &:after {
-      border-color: $tab-bg-color-hover;
-      box-shadow: -2px 2px 0 $tab-bg-color-hover;
-      border-bottom-left-radius: 6px;
-      border-bottom: 1px solid $tab-bg-color-hover;
-      border-left: 1px solid $tab-bg-color-hover;
-    }
-  }
-
 }
 
-#idai-field-brand {
-  padding: 0;
-  margin-right: 20px;
-  user-select: none;
+.navbar-dark .navbar-tabbed .tab {
 
-  &.navbar-brand-mac {
-    margin-left: 70px;
+  &:hover + .closable-tab:before {
+    background-color: transparent;
   }
 
-  #brand-text {
-    display: inline-block;
-    cursor: default;
+  a.nav-link {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    position: relative;
 
-    #brand-text-idai {
-      color: #ccc;
-      font-size: 90%;
-      font-weight: 300;
+    &:before,
+    &:after {
+      position: absolute;
+      bottom: 1px;
+      width: 6px;
+      height: 6px;
+      content: " ";
+    }
+    &:before {
+      left: -5px;
+    }
+    &:after {
+      right: -5px;
     }
 
-    #brand-text-field {
+    &:focus {
       color: #fff;
+      outline: none;
     }
 
-    #brand-text-number {
-      color: #ccc;
+    &.active {
+      background-color: $tab-bg-color;
+      color: #000;
+      z-index: 10;
+
+      &:before {
+        border-color: $tab-bg-color;
+        box-shadow: 2px 2px 0 $tab-bg-color;
+        border-bottom-right-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color;
+        border-right: 1px solid $tab-bg-color;
+      }
+
+      &:after {
+        border-color: $tab-bg-color;
+        box-shadow: -2px 2px 0 $tab-bg-color;
+        border-bottom-left-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color;
+        border-left: 1px solid $tab-bg-color;
+      }
+
+      .mdi-close:hover {
+        color: #000;
+        background-color: #dee2e6;
+      }
+
+      .mdi-home {
+        color: $navbar-default-bg;
+
+        &:hover {
+          color: $navbar-default-bg;
+        }
+      }
+    }
+
+    &:not(.active) {
+      .mdi-close:hover {
+        color: #fff;
+        background-color: lighten($navbar-default-bg, 15%);
+      }
+    }
+
+    &:hover:not(.active) {
+      background-color: $tab-bg-color-hover;
+      z-index: 5;
+      color: white;
+
+      &:before {
+        border-color: $tab-bg-color-hover;
+        box-shadow: 2px 2px 0 $tab-bg-color-hover;
+        border-bottom-right-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color-hover;
+        border-right: 1px solid $tab-bg-color-hover;
+      }
+
+      &:after {
+        border-color: $tab-bg-color-hover;
+        box-shadow: -2px 2px 0 $tab-bg-color-hover;
+        border-bottom-left-radius: 6px;
+        border-bottom: 1px solid $tab-bg-color-hover;
+        border-left: 1px solid $tab-bg-color-hover;
+      }
+    }
+
+    .mdi-home {
+        font-size: 23px;
+        line-height: 23px;
+
+        &:hover {
+          color: inherit;
+        }
+    }
+
+    .mdi-close {
+      position: relative;
+      top: 1px;
+      font-size: 14px;
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      margin-left: 1px;
+      line-height: normal;
+      transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
+  }
+
+  &.closable-tab {
+
+    &:before {
+      position: absolute;
+      width: 1px;
+      top: 10px;
+      bottom: 7px;
+      background-color: $tab-separator-color;
+      content: " ";
+    }
+
+    a.nav-link {
+      padding-right: 9px !important;
+
+      .closable-tab-label {
+        position: relative;
+        top: -2px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+
+      .mdi-close {
+        position: relative;
+        top: -2px;
+      }
+
+      type-icon {
+        position: relative;
+        left: -4px;
+      }
     }
   }
 }
 
 #navbarSupportedContent {
   cursor: default;
+
+  &.mac-margin {
+    margin-left: 70px;
+  }
 }
 
 .navbar-nav {
@@ -142,11 +221,15 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   user-select: none;
 }
 
-.navbar-hover-element {
-  transition: text-shadow .25s ease-in-out;
-  cursor: pointer;
-}
+.hidden-tab {
+  type-icon {
+    position: relative;
+    top: 1px;
+  }
 
-.navbar-separator-element:hover {
-  color: #fff !important;
+  .hidden-tab-label {
+    position: relative;
+    top: 1px;
+    margin-left: 7px;
+  }
 }

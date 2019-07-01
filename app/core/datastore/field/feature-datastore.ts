@@ -3,7 +3,7 @@ import {DocumentCache} from '../core/document-cache';
 import {TypeConverter} from '../core/type-converter';
 import {CachedDatastore} from '../core/cached-datastore';
 import {IndexFacade} from '../index/index-facade';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
+import {FeatureDocument} from 'idai-components-2';
 
 /**
  * Data Access Object
@@ -11,14 +11,14 @@ import {IdaiFieldFeatureDocument} from 'idai-components-2';
  * @author Daniel de Oliveira
  */
 export class FeatureDatastore
-    extends CachedDatastore<IdaiFieldFeatureDocument> {
+    extends CachedDatastore<FeatureDocument> {
 
     constructor(
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
-        documentCache: DocumentCache<IdaiFieldFeatureDocument>,
-        documentConverter: TypeConverter<IdaiFieldFeatureDocument>) {
+        documentCache: DocumentCache<FeatureDocument>,
+        documentConverter: TypeConverter<FeatureDocument>) {
 
-        super(datastore, indexFacade, documentCache, documentConverter, 'IdaiFieldFeatureDocument');
+        super(datastore, indexFacade, documentCache, documentConverter, 'FeatureDocument');
     }
 }

@@ -1,12 +1,12 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 
 
 /**
  * @author Thomas Kleinke
  */
 
-export const has3DPointGeometry = (document: IdaiFieldDocument): boolean => {
+export const has3DPointGeometry = (document: FieldDocument): boolean => {
 
     return document.resource.geometry != undefined &&
         document.resource.geometry.type == 'Point' &&
@@ -15,7 +15,7 @@ export const has3DPointGeometry = (document: IdaiFieldDocument): boolean => {
 };
 
 
-export const has3DLineGeometry = (document: IdaiFieldDocument): boolean => {
+export const has3DLineGeometry = (document: FieldDocument): boolean => {
 
     return document.resource.geometry != undefined &&
         document.resource.geometry.type == 'LineString' &&
@@ -24,7 +24,7 @@ export const has3DLineGeometry = (document: IdaiFieldDocument): boolean => {
 };
 
 
-export const has3DPolygonGeometry = (document: IdaiFieldDocument): boolean => {
+export const has3DPolygonGeometry = (document: FieldDocument): boolean => {
 
     return document.resource.geometry != undefined &&
         document.resource.geometry.type == 'Polygon' &&

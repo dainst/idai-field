@@ -12,8 +12,7 @@
     <a [ngbPopover]="popContent" [autoClose]="false"
        popoverTitle="Konflikte" i18n-popoverTitle="@@navbar.taskbar.conflicts"
        #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
-       triggers="manual" (click)="togglePopover()"
-       placement="bottom" class="navbar-hover-element">
+       triggers="manual" (click)="togglePopover()" placement="bottom">
         <span class="mdi mdi-alert-outline"></span>
         <span class="badge-pill badge-danger taskbar-badge">
             {{conflicts.length}}

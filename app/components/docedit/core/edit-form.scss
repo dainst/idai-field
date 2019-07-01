@@ -1,0 +1,69 @@
+#document-edit-wrapper {
+  main {
+    .container-fluid {
+      height: calc(100vh - 132px);
+
+      .row {
+        height: 100%;
+
+        #table-of-contents {
+          padding-left: 15px;
+          padding-top: 15px;
+          user-select: none;
+
+          .conflicted {
+            color: #dc3545;
+
+            &.active {
+              color: white;
+              background-color: #dc3545 !important;
+            }
+          }
+
+          .nav {
+            .nav-link {
+              margin: 5px 12px;
+
+              &.active {
+                background-color: #5572a1;
+              }
+            }
+          }
+        }
+
+        .forms-container {
+          padding-right: 15px;
+          padding-left: 0;
+          height: 100%;
+
+          .scrollable-group {
+            height: calc(100% - 30px);
+            overflow-y: auto;
+            margin-top: 15px;
+
+            input[type="text"],
+            input[type="number"],
+            select {
+              height: 33px;
+            }
+
+            .btn-success,
+            .btn-danger,
+            .btn-info,
+            .btn-outline-primary {
+              height: 33px;
+              width: 34px;
+              padding: 0;
+            }
+          }
+        }
+
+        #docedit-images-tab,
+        #docedit-conflicts-tab {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}
+

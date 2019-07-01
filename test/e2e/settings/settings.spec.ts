@@ -1,10 +1,10 @@
 import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {MediaOverviewPage} from '../media/media-overview.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {ImageViewPage} from '../images/image-view.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
@@ -35,8 +35,9 @@ describe('settings --', function() {
         SettingsPage.get();
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
+        NavbarPage.clickCloseNonResourcesTab();
 
-        NavbarPage.clickNavigateToExcavation()
+        NavbarPage.clickTab('project')
             .then(() => {
                 browser.sleep(5000);
                 return SettingsPage.get().then(() => browser.sleep(2000));
@@ -59,22 +60,21 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
         NavbarPage.clickCloseAllMessages();
 
-        NavbarPage.clickNavigateToMediaOverview();
-        browser.sleep(delays.shortRest * 50); // TODO replace by wait for el im clickUploadArea
+        MenuPage.navigateToImages();
+        browser.sleep(delays.shortRest * 50);
         MediaOverviewPage.clickUploadArea();
         MediaOverviewPage.uploadFile(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
-
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         NavbarPage.clickCloseAllMessages();
 
         MediaOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseAllMessages();
-        //
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');
-        DoceditPage.clickConfirmDeleteInModal();
+        ImageViewPage.clickCloseButton();
+
+        MediaOverviewPage.clickCell(1);
+        MediaOverviewPage.clickDeleteButton();
+        MediaOverviewPage.clickConfirmDeleteButton();
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
     });
 });

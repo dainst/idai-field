@@ -1,12 +1,18 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
-import {Document, IdaiFieldDocument, IdaiFieldGeometry, Messages} from 'idai-components-2';
+import {Document, FieldDocument, FieldGeometry, Messages, IdaiType} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {M} from '../m';
+import {TypeUtility} from '../../core/model/type-utility';
+import {MoveModalComponent} from './move-modal.component';
+import {AngularUtility} from '../../common/angular-utility';
+import {ResourceDeletion} from './deletion/resource-deletion';
+import {TabManager} from '../tab-manager';
 
 
 @Component({
@@ -22,8 +28,10 @@ import {M} from '../m';
 export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
+    public isModalOpened: boolean = false;
 
-    private scrollTarget: IdaiFieldDocument|undefined;
+    public filterOptions: Array<IdaiType> = [];
+    private scrollTarget: FieldDocument|undefined;
     private clickEventObservers: Array<any> = [];
 
     private deselectionSubscription: Subscription;
@@ -38,22 +46,30 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private renderer: Renderer2,
                 private messages: Messages,
                 private loading: Loading,
-                private changeDetectorRef: ChangeDetectorRef
+                private changeDetectorRef: ChangeDetectorRef,
+                private typeUtility: TypeUtility,
+                private modalService: NgbModal,
+                private resourceDeletion: ResourceDeletion,
+                private tabManager: TabManager
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
+            this.isEditingGeometry = false;
+
             if (params['id']) {
-                await this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
+                await this.selectDocumentFromParams(params['id'], params['menu'], params['group']);
             }
         });
 
         this.initializeClickEventListener();
         this.initializeSubscriptions();
+
+        this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
+            this.isEditingGeometry = false;
+        });
     }
 
 
-    public getViewType = () => this.viewFacade.getViewType();
-
-    public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
+    public isCurrentMode = (mode: string) => (this.viewFacade.getMode() === mode);
 
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
 
@@ -61,14 +77,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
-    public solveConflicts = (doc: IdaiFieldDocument) => this.editDocument(doc, 'conflicts');
-
-    public setScrollTarget = (doc: IdaiFieldDocument|undefined) => this.scrollTarget = doc;
+    public setScrollTarget = (doc: FieldDocument|undefined) => this.scrollTarget = doc;
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
-
-    public isViewWithoutMainTypeDocuments = () => this.isReady() && !this.viewFacade.isInOverview()
-        && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
 
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
@@ -103,12 +114,25 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public startEditNewDocument(newDocument: IdaiFieldDocument, geometryType: string) {
+    private updateFilterOptions() {
+
+        this.filterOptions = this.viewFacade.isInOverview()
+         ? this.viewFacade.getBypassHierarchy()
+             ? this.typeUtility.getNonMediaTypes().filter(type => !type.parentType)
+             : this.typeUtility.getOverviewTopLevelTypes()
+         : this.typeUtility.getAllowedRelationDomainTypes(
+             'isRecordedIn',
+                (this.viewFacade.getCurrentOperation() as FieldDocument).resource.type
+            );
+    }
+
+
+    public startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
 
         if (geometryType == 'none') {
             this.editDocument(newDocument);
         } else {
-            newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
+            newDocument.resource['geometry'] = <FieldGeometry> { 'type': geometryType };
 
             this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
@@ -117,15 +141,61 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async editDocument(document: Document|undefined, activeTabName?: string) {
+    public async editDocument(document: Document|undefined, activeGroup?: string) {
 
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
+        this.isModalOpened = true;
 
-        const editedDocument: IdaiFieldDocument|undefined
-            = await this.doceditLauncher.editDocument(document, activeTabName);
+        const editedDocument: FieldDocument|undefined
+            = await this.doceditLauncher.editDocument(document, activeGroup);
         if (editedDocument) this.scrollTarget = editedDocument;
+        this.isModalOpened = false;
+    }
+
+
+    public async moveDocument(document: FieldDocument) {
+
+        this.quitGeometryEditing();
+        this.isModalOpened = true;
+
+        const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
+        modalRef.componentInstance.initialize(document);
+
+        try {
+            await modalRef.result;
+            await this.viewFacade.deselect();
+            await this.viewFacade.rebuildNavigationPath();
+            await this.routingService.jumpToResource(document);
+        } catch (msgWithParams) {
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            // Otherwise, the move modal has been canceled
+        }
+
+        this.isModalOpened = false;
+    }
+
+
+    public async deleteDocument(document: FieldDocument) {
+
+        this.quitGeometryEditing();
+        this.isModalOpened = true;
+
+        try {
+            await this.resourceDeletion.delete(document);
+            await this.viewFacade.deselect();
+            await this.tabManager.closeTab('resources', document.resource.id);
+            this.viewFacade.removeView(document.resource.id);
+            await this.viewFacade.rebuildNavigationPath();
+            await this.viewFacade.populateDocumentList();
+            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
+        } catch (msgWithParams) {
+            if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
+            // Otherwise, the delete modal has been canceled.
+        }
+
+        this.isModalOpened = false;
     }
 
 
@@ -136,35 +206,35 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public switchMode(mode: 'map'|'3dMap'|'list') {
+    public async switchMode(mode: 'map'|'3dMap'|'list') {
 
         if (!this.isReady()) return;
 
+        this.loading.start();
+        await AngularUtility.refresh();
+
         // This is so that new elements are properly included and sorted when coming back to list
         if (this.viewFacade.getMode() === 'list' && (mode === 'map' || mode === '3dMap')) {
-            this.viewFacade.populateDocumentList();
+            await this.viewFacade.populateDocumentList();
         }
 
-        this.loading.start();
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(() => {
-            this.viewFacade.deselect();
-            this.viewFacade.setMode(mode);
-            this.loading.stop();
-        }, 1);
+        this.viewFacade.deselect();
+        this.viewFacade.setMode(mode);
+
+        this.loading.stop();
     }
 
 
-    private async selectDocumentFromParams(id: string, menu: string, tab: string) {
+    private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);
         this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {
-            if (menu == 'edit') {
-                await this.editDocument(this.viewFacade.getSelectedDocument(), tab);
+            if (menu === 'edit') {
+                await this.editDocument(this.viewFacade.getSelectedDocument(), group);
             } else {
-                await this.viewFacade.setActiveDocumentViewTab(tab)
+                await this.viewFacade.setActiveDocumentViewTab(group)
             }
         } catch (e) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
@@ -187,8 +257,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             });
 
         this.populateDocumentsSubscription =
-            this.viewFacade.populateDocumentNotifications().subscribe(() => {
+            this.viewFacade.populateDocumentsNotifications().subscribe(() => {
                 this.changeDetectorRef.detectChanges();
+                this.updateFilterOptions();
             });
 
         this.changedDocumentFromRemoteSubscription =
@@ -198,7 +269,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private static scrollToDocument(doc: IdaiFieldDocument): boolean {
+    private static scrollToDocument(doc: FieldDocument): boolean {
 
         const element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {
@@ -215,10 +286,10 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private quitGeometryEditing(deselectedDocument: Document) {
+    private quitGeometryEditing(document: Document|undefined = this.viewFacade.getSelectedDocument()) {
 
-        if (deselectedDocument.resource.geometry && !deselectedDocument.resource.geometry.coordinates) {
-            delete deselectedDocument.resource.geometry;
+        if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
+            delete document.resource.geometry;
         }
 
         this.isEditingGeometry = false;

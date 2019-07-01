@@ -1,8 +1,9 @@
 'use strict';
 
-import {element, by, browser, protractor} from 'protractor';
+import {browser, by, element, protractor} from 'protractor';
 
 const delays = require('../config/delays');
+const common = require('../common.js');
 let EC = protractor.ExpectedConditions;
 
 /**
@@ -10,12 +11,32 @@ let EC = protractor.ExpectedConditions;
  */
 export class ThumbnailViewPage {
 
+    //
+
+    public static clickClose() {
+
+        common.click(element(by.id('close-button')));
+    }
+
     // elements
 
     public static getThumbs() {
 
-        browser.wait(EC.presenceOf(element(by.id('document-view-images-tab'))), delays.ECWaitTime);
-        element(by.id('document-view-images-tab')).click();
-        return element.all(by.css('#thumbnail-view .cell'));
+        return element.all(by.className('thumbnail-container'));
+    }
+
+    // other
+
+    public static makeSureThumbnailContainerDoesAppear() {
+
+        element.all(by.css('thumbnail div')).then(el => expect(el.length).toBe(1));
+    }
+
+
+    // element.all(by.css('thumbnail div')).then(el => expect(el.length).toBe(0));
+
+    public static makeSureThumbnailContainerDoesNotAppear() {
+
+        element.all(by.css('thumbnail div')).then(el => expect(el.length).toBe(0));
     }
 }

@@ -77,13 +77,13 @@ export class MediaState {
     }
 
 
-    public getGridSize(): number {
+    public getNrMediaResourcesPerRow(): number {
 
         return this.gridSize;
     }
 
 
-    public setGridSize(value: number) {
+    public setNrMediaResourcesPerRow(value: number) {
 
         this.gridSize = value;
     }

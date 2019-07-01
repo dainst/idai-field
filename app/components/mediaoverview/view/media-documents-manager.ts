@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
-import {ViewFacade} from '../../resources/view/view-facade';
-import {MediaState} from './media-state';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
+import {MediaState} from './media-state';
 
 
 @Injectable()
@@ -22,8 +21,7 @@ export class MediaDocumentsManager {
     private currentQueryId: string;
 
 
-    constructor(public viewFacade: ViewFacade,
-                private mediaState: MediaState,
+    constructor(private mediaState: MediaState,
                 private mediaDatastore: IdaiFieldMediaDocumentReadDatastore) {}
 
 
@@ -44,9 +42,6 @@ export class MediaDocumentsManager {
     }
 
 
-    /**
-     * @param document the object that should be selected
-     */
     public select(document: IdaiFieldMediaDocument) {
 
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
@@ -82,11 +77,14 @@ export class MediaDocumentsManager {
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
      */
-    public async fetchDocuments(limit: number) {
+    public async fetchDocuments(limit: number, offset?: number) {
+
+        // console.log("limit: " + limit + ' offset ' + offset)
 
         this.currentQueryId = new Date().toISOString();
 
         const query: Query = JSON.parse(JSON.stringify(this.mediaState.getQuery()));
+        if (offset) query.offset = offset;
         query.limit = limit;
         query.id = this.currentQueryId;
 

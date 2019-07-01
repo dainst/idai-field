@@ -1,5 +1,7 @@
+import {FieldDocument} from 'idai-components-2';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
+
 
 /**
  * @author Thomas Kleinke
@@ -7,31 +9,29 @@ import {ViewContext} from './view-context';
  */
 export interface ViewState {
 
-    readonly mainTypeDocumentResourceId?: string;
+    operation: FieldDocument|undefined;
+    layerIds: string[];
+    layer3DIds: string[];
+    navigationPath: NavigationPath;
+    mode: 'map'|'3dMap'|'list';
 
-    readonly layerIds: {[mainTypeDocumentId: string]: string[]};
-    readonly layer3DIds: {[mainTypeDocumentId: string]: string[]};
-    readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
-
-    // bypassHierarchy (search mode) related
-    readonly bypassHierarchy: boolean;
-    readonly selectAllOperationsOnBypassHierarchy: boolean;
-    readonly searchContext: ViewContext;
-    readonly customConstraints: { [name: string]: string }
+    bypassHierarchy: boolean;
+    searchContext: ViewContext;
+    customConstraints: { [name: string]: string }
 }
 
 
 export class ViewState {
 
-    public static default() {
+    public static default(): ViewState {
 
         return {
-            mode: 'map',
+            operation: undefined,
             bypassHierarchy: false,
-            selectAllOperationsOnBypassHierarchy: false,
-            navigationPaths: {},
-            layerIds: {},
-            layer3DIds: {},
+            navigationPath: NavigationPath.empty(),
+            mode: 'map',
+            layerIds: [],
+            layer3DIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
@@ -40,26 +40,18 @@ export class ViewState {
 
     public static complete(viewState: ViewState) {
 
-        this.validateLayerIds(viewState, 'layerIds');
-        this.validateLayerIds(viewState, 'layer3DIds');
-
-        (viewState as any).bypassHierarchy = false;
-        (viewState as any).searchContext = ViewContext.empty();
-        (viewState as any).navigationPaths = {};
-        (viewState as any).customConstraints = {};
-    }
-
-
-    private static validateLayerIds(viewState: ViewState, fieldName: 'layerIds'|'layer3DIds') {
-
-        if (!viewState[fieldName] || Array.isArray(viewState[fieldName])) {
-            (viewState as any)[fieldName] = {};
-        } else {
-            for (let key of Object.keys(viewState[fieldName])) {
-                if (!Array.isArray(viewState[fieldName][key])) {
-                    delete viewState[fieldName][key];
-                }
-            }
+        if (!viewState.layerIds || !Array.isArray(viewState.layerIds)) {
+            viewState.layerIds = [];
         }
+
+        if (!viewState.layer3DIds || !Array.isArray(viewState.layer3DIds)) {
+            viewState.layer3DIds = [];
+        }
+
+        if (!viewState.mode) viewState.mode = 'map';
+        viewState.bypassHierarchy = false;
+        viewState.searchContext = ViewContext.empty();
+        viewState.navigationPath = NavigationPath.empty();
+        viewState.customConstraints = {};
     }
 }

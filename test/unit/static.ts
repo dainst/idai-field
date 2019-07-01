@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
+import {FeatureDocument} from 'idai-components-2';
 
 
 /**
@@ -9,12 +9,12 @@ import {IdaiFieldFeatureDocument} from 'idai-components-2';
  */
 export class Static {
 
-    public static ifDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
+    public static ifDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as FieldDocument;
 
 
     public static iffDoc = (sd, identifier?, type?, id?) => {
 
-        const doc = Static.doc(sd, identifier, type, id) as IdaiFieldFeatureDocument;
+        const doc = Static.doc(sd, identifier, type, id) as FeatureDocument;
         doc.resource.relations.isContemporaryWith = [];
         doc.resource.relations.isBefore = [];
         doc.resource.relations.isAfter = [];

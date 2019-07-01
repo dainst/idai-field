@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
 import {Viewer3D} from '../../../../../core-3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
@@ -30,10 +30,10 @@ export class MeshGeometryManager {
     }
 
 
-    public async update(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
+    public async update(documents: Array<FieldDocument>, showLineGeometries: boolean,
                         showPolygonGeometries: boolean) {
 
-        const geometryDocuments: Array<IdaiFieldDocument>
+        const geometryDocuments: Array<FieldDocument>
             = MeshGeometryManager.getMeshGeometryDocuments(documents, showLineGeometries,
                 showPolygonGeometries);
 
@@ -42,7 +42,7 @@ export class MeshGeometryManager {
     }
 
 
-    public updateSelected(document: IdaiFieldDocument, selected: boolean) {
+    public updateSelected(document: FieldDocument, selected: boolean) {
 
         // Use timeout to make sure canvas size has been updated
         setTimeout(() => {
@@ -52,7 +52,7 @@ export class MeshGeometryManager {
     }
 
 
-    public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
+    public getMesh(document: FieldDocument): THREE.Mesh|undefined {
 
         const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
 
@@ -72,7 +72,7 @@ export class MeshGeometryManager {
     }
 
 
-    public recreateLineGeometries(selectedDocument: IdaiFieldDocument) {
+    public recreateLineGeometries(selectedDocument: FieldDocument) {
 
         Object.values(this.meshGeometries)
             .filter(meshGeometry => meshGeometry.type == 'line')
@@ -83,7 +83,7 @@ export class MeshGeometryManager {
     }
 
 
-    public getDocument(raycasterObject: THREE.Object3D): IdaiFieldDocument|undefined {
+    public getDocument(raycasterObject: THREE.Object3D): FieldDocument|undefined {
 
         const geometry: MeshGeometry|undefined
             = Object.values(this.meshGeometries).find(line => line.raycasterObject == raycasterObject);
@@ -92,7 +92,7 @@ export class MeshGeometryManager {
     }
 
 
-    private add(document: IdaiFieldDocument, selected: boolean = false) {
+    private add(document: FieldDocument, selected: boolean = false) {
 
         const geometry: MeshGeometry|undefined = this.createMeshGeometry(document, selected);
 
@@ -105,7 +105,7 @@ export class MeshGeometryManager {
     }
 
 
-    private remove(document: IdaiFieldDocument) {
+    private remove(document: FieldDocument) {
 
         const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
         if (!geometry) return;
@@ -117,7 +117,7 @@ export class MeshGeometryManager {
     }
 
 
-    private createMeshGeometry(document: IdaiFieldDocument, selected: boolean): MeshGeometry|undefined {
+    private createMeshGeometry(document: FieldDocument, selected: boolean): MeshGeometry|undefined {
 
         if (!document.resource.geometry) return undefined;
 
@@ -131,7 +131,7 @@ export class MeshGeometryManager {
     }
 
 
-    private getGeometriesToAdd(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private getGeometriesToAdd(documents: Array<FieldDocument>): Array<FieldDocument> {
 
         return documents.filter(document => {
             return !Object.keys(this.meshGeometries).includes(document.resource.id as string);
@@ -139,7 +139,7 @@ export class MeshGeometryManager {
     }
 
 
-    private getGeometriesToRemove(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private getGeometriesToRemove(documents: Array<FieldDocument>): Array<FieldDocument> {
 
         return Object.values(this.meshGeometries).filter(line => {
             return !documents.map(document => document.resource.id)
@@ -148,8 +148,8 @@ export class MeshGeometryManager {
     }
 
 
-    private static getMeshGeometryDocuments(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
-                                            showPolygonGeometries: boolean): Array<IdaiFieldDocument> {
+    private static getMeshGeometryDocuments(documents: Array<FieldDocument>, showLineGeometries: boolean,
+                                            showPolygonGeometries: boolean): Array<FieldDocument> {
 
         return documents.filter(document => {
             return (showLineGeometries && has3DLineGeometry(document))

@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
@@ -25,7 +25,7 @@ describe('CachedDatastore', () => {
         mockTypeUtility.isSubtype.and.returnValue(false);
         mockTypeUtility.getNonMediaTypeNames.and.returnValue(['Find']);
 
-        const documentCache = new DocumentCache<IdaiFieldDocument>();
+        const documentCache = new DocumentCache<FieldDocument>();
         const docDatastore = new FieldDatastore(
             mockdb,
             mockIndexFacade,
@@ -36,7 +36,7 @@ describe('CachedDatastore', () => {
     }
 
 
-    function verifyIsIdaiFieldDocument(document) {
+    function verifyIsFieldDocument(document) {
 
         expect(document.resource.identifier).toEqual('');
         expect(document.resource.relations.isRecordedIn).toEqual([]);
@@ -59,7 +59,7 @@ describe('CachedDatastore', () => {
         mockIndexFacade.perform.and.callFake(function() {
             const d = Static.doc('sd1');
             d.resource.id = '1';
-            return['1'];
+            return [{id: '1'}];
         });
         mockIndexFacade.put.and.callFake(function(doc) {
             return Promise.resolve(doc);
@@ -86,7 +86,7 @@ describe('CachedDatastore', () => {
         }));
 
         const document = await ds.get('1'); // fetch from mockdb
-        verifyIsIdaiFieldDocument(document);
+        verifyIsFieldDocument(document);
         done();
     });
 
@@ -109,10 +109,10 @@ describe('CachedDatastore', () => {
             }
         ]));
 
-        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2']);
+        const documents: Array<FieldDocument> = await ds.getMultiple(['1', '2']);
         expect(documents.length).toBe(2);
-        verifyIsIdaiFieldDocument(documents[0]);
-        verifyIsIdaiFieldDocument(documents[1]);
+        verifyIsFieldDocument(documents[0]);
+        verifyIsFieldDocument(documents[1]);
         done();
     });
 
@@ -143,7 +143,7 @@ describe('CachedDatastore', () => {
 
         await ds.get('2');  // Save in cache
 
-        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2', '3']);
+        const documents: Array<FieldDocument> = await ds.getMultiple(['1', '2', '3']);
         expect(documents.length).toBe(3);
         expect(documents[0].resource.id).toEqual('1');
         expect(documents[1].resource.id).toEqual('2');
@@ -164,7 +164,7 @@ describe('CachedDatastore', () => {
         }));
 
         const document = await ds.getRevision('1', '1'); // fetch from mockdb
-        verifyIsIdaiFieldDocument(document);
+        verifyIsFieldDocument(document);
         done();
     });
 
@@ -173,7 +173,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
              {
                 resource: {
@@ -185,7 +185,7 @@ describe('CachedDatastore', () => {
 
         const documents = (await ds.find({})).documents; // fetch from mockdb
         expect(documents.length).toBe(1);
-        verifyIsIdaiFieldDocument(documents[0]);
+        verifyIsFieldDocument(documents[0]);
         done();
     });
 
@@ -196,11 +196,11 @@ describe('CachedDatastore', () => {
             id: '1',
             relations: {}
         }} as any, 'u');
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
-        verifyIsIdaiFieldDocument(documents[0]);
+        verifyIsFieldDocument(documents[0]);
         done();
     });
 
@@ -217,19 +217,59 @@ describe('CachedDatastore', () => {
             relations: {}
         }} as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues(['1', '2']);
+        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
 
-        const { documents, totalCount } = await ds.find({ 'limit': 1 });
+        const { documents, totalCount } = await ds.find({ limit: 1 });
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(2);
-        verifyIsIdaiFieldDocument(documents[0]);
+        verifyIsFieldDocument(documents[0]);
+        done();
+    });
+
+
+    it('limit the number of documents and use an offset', async done => {
+
+        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+                {id: '1', identifier: 'eins'},
+                {id: '2', identifier: 'zwei'},
+                {id: '3', identifier: 'drei'}]);
+
+        const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
+        expect(documents.length).toBe(1);
+        expect(totalCount).toBe(3);
+        verifyIsFieldDocument(documents[0]);
+
+        // sorted order is 3, 1, 2, coresponding to drei, eins, zwei
+        expect(documents[0].resource.id).toBe('1');
+        done();
+    });
+
+
+    it('offset excludes everything', async done => {
+
+        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
+        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+            {id: '1', identifier: 'eins'},
+            {id: '2', identifier: 'zwei'},
+            {id: '3', identifier: 'drei'}]);
+
+        const { documents, totalCount } = await ds.find({ offset: 3 });
+        expect(documents.length).toBe(0);
+        expect(totalCount).toBe(3);
         done();
     });
 
 
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1']);
+        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
@@ -241,7 +281,7 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.perform.and.returnValues(['1', '2']);
+        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
             {
@@ -268,7 +308,7 @@ describe('CachedDatastore', () => {
             relations: {}
         }} as any, 'u');
         const document = await ds.get('1'); // fetch from cache
-        verifyIsIdaiFieldDocument(document);
+        verifyIsFieldDocument(document);
         done();
     });
 
@@ -287,7 +327,7 @@ describe('CachedDatastore', () => {
         }} as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
-        verifyIsIdaiFieldDocument(document);
+        verifyIsFieldDocument(document);
         done();
     });
 
@@ -302,7 +342,7 @@ describe('CachedDatastore', () => {
         }} as any, 'u');
 
         const document = await ds.get('1'); // fetch from cache
-        verifyIsIdaiFieldDocument(document);
+        verifyIsFieldDocument(document);
         done();
     });
 

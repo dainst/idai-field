@@ -1,35 +1,83 @@
 {
+  "commons": {
+    "dimensionLength": {
+      "label": "Length"
+    },
+    "dimensionWidth": {
+      "label": "Width"
+    },
+    "dimensionHeight": {
+      "label": "Height"
+    },
+    "dimensionThickness": {
+      "label": "Thickness"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Vertical extent"
+    },
+    "dimensionPerimeter": {
+      "label": "Perimeter"
+    },
+    "dimensionDiameter": {
+      "label": "Diameter"
+    },
+    "dimensionOther": {
+      "label": "Other dimensions",
+      "description": "Other dimensions can be entered here; please comment"
+    },
+    "area": {
+      "label": "Area in m2"
+    },
+    "processor": {
+      "label": "Processor",
+      "description": "The name of the person(s) who is/are responsible for the resource or the object during the campaign. Please note: The names of the persons editing the database entry are saved automatically and are therefore not required here."
+    },
+    "description": {
+      "label": "Description"
+    },
+    "period": {
+      "label": "Period"
+    },
+    "dating": {
+      "label": "Dating"
+    },
+    "diary": {
+      "label": "Diary",
+      "description": "Reference to excavation diary"
+    },
+    "beginningDate": {
+      "label": "Beginning date",
+      "description": "Date on which the recording of the resource was started"
+    },
+    "endDate": {
+      "label": "End date",
+      "description": "Date on which the recording of the resource was finished"
+    },
+    "date": {
+      "label": "Date"
+    },
+    "orientation": {
+      "label": "Orientation"
+    },
+    "spatialLocation": {
+      "label": "Spatial location"
+    },
+    "provenance": {
+      "label": "Provenance"
+    }
+  },
   "types": {
     "Trench": {
       "label": "Trench",
       "fields": {
-        "diary": {
-          "label": "Diary",
-          "description": "Reference to excavation diary"
-        },
         "researchQuestion": {
           "label": "Research question"
-        },
-        "spatialLocation": {
-          "label": "Spatial location"
         },
         "trenchComment": {
           "label": "Trench comment"
         },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
         "excavationType": {
           "label": "Excavation type"
-        },
-        "orientation": {
-          "label": "Orientation"
         }
       }
     },
@@ -54,9 +102,6 @@
         "objectType": {
           "label": "Designation or type of the object"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "transparency": {
           "label": "Transparency"
         },
@@ -79,23 +124,8 @@
     "Planum": {
       "label": "Planum",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
         "horizontalLocation": {
           "label": "Horizontal location"
-        },
-        "orientation": {
-          "label": "Orientation"
         },
         "planumForm": {
           "label": "Planum form"
@@ -136,9 +166,6 @@
         "manufacturingMethod": {
           "label": "Manufacturing method"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "specificType": {
           "label": "Format"
         },
@@ -156,9 +183,6 @@
         },
         "contactPerson": {
           "label": "Contact person"
-        },
-        "description": {
-          "label": "Description"
         },
         "epsgId": {
           "label": "EPSG Code",
@@ -299,36 +323,14 @@
         "context": {
           "label": "Context"
         },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
         "material": {
           "label": "Material"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
         }
       }
     },
     "SurveyUnit": {
       "label": "Survey unit",
-      "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        }
-      }
+      "fields": {}
     },
     "Wood": {
       "label": "Wood",
@@ -396,9 +398,6 @@
         "publicationRemark": {
           "label": "Publication remark"
         },
-        "spatialLocation": {
-          "label": "Spatial location"
-        },
         "blockProcessing": {
           "label": "Block processing"
         },
@@ -430,9 +429,6 @@
         "mortarConsistency": {
           "label": "Mortar consistency"
         },
-        "orientation": {
-          "label": "Orientation"
-        },
         "wallClassification": {
           "label": "Wall classification"
         },
@@ -444,25 +440,8 @@
     "Operation": {
       "label": "Operation",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the operation was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the operation was finished"
-        },
-        "description": {
-          "label": "Description"
-        },
         "diaryAbstract": {
           "label": "Diary abstract"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "supervisor": {
           "label": "Supervisor",
@@ -504,9 +483,6 @@
         "findspotClassification": {
           "label": "Findspot classification"
         },
-        "dating": {
-          "label": "Dating"
-        },
         "siteClassification": {
           "label": "Site classification"
         }
@@ -525,9 +501,6 @@
         "consistency": {
           "label": "Consistency"
         },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
         "distinguishingCriteria": {
           "label": "Distinguishing criteria"
         },
@@ -542,52 +515,17 @@
     "Feature": {
       "label": "Stratigraphical unit",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the stratigraphical unit was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the stratigraphical unit was finished"
-        },
-        "comparison": {
-          "label": "Comparison"
-        },
-        "diary": {
-          "label": "Diary"
-        },
-        "description": {
-          "label": "Description"
-        },
         "hasDisturbance": {
           "label": "Disturbance"
         },
         "featureAmount": {
           "label": "Feature amount"
         },
-        "processor": {
-          "label": "Processor"
+        "comparison": {
+          "label": "Comparison"
         },
         "color": {
           "label": "Color and intensity"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         },
         "featureBorders": {
           "label": "Borders of the stratigraphical unit"
@@ -639,14 +577,8 @@
         "content": {
           "label": "Transcription"
         },
-        "description": {
-          "label": "Description"
-        },
         "language": {
           "label": "Language"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "condition": {
           "label": "Condition"
@@ -654,18 +586,6 @@
         "conditionAmount": {
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
-        "dimensionHeight": {
-          "label": "Height"
         },
         "objectType": {
           "label": "Designation or type of inscription"
@@ -675,9 +595,6 @@
     "Image": {
       "label": "Image",
       "fields": {
-        "description": {
-          "label": "Description"
-        },
         "draughtsmen": {
           "label": "Creator",
           "description": "Creator of the image, photographer respectively draughtsman"
@@ -809,9 +726,6 @@
         "specificType": {
           "label": "Pottery type, ware"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "temper": {
           "label": "Temper"
         },
@@ -829,23 +743,6 @@
         },
         "vesselFormSpecific": {
           "label": "Specific vessel form"
-        }
-      }
-    },
-    "DrillCoreLayer": {
-      "label": "Drill core layer",
-      "fields": {
-        "hasFinds": {
-          "label": "Finds"
-        },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "soilType": {
-          "label": "Soil type"
         }
       }
     },
@@ -873,9 +770,6 @@
         },
         "publicationRemark": {
           "label": "Publication remark"
-        },
-        "spatialLocation": {
-          "label": "Spatial location"
         },
         "condition": {
           "label": "Condition"
@@ -931,60 +825,24 @@
     "Room": {
       "label": "Room",
       "fields": {
-        "area": {
-          "label": "Area in m2"
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
         },
         "conditionComment": {
           "label": "Condition comment"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
         },
         "campaign": {
           "label": "Campaign"
         },
         "condition": {
           "label": "Condition"
-        },
-        "conditionAmount": {
-          "label": "Preservation assessment",
-          "description": "Preserved amount in comparison to the original"
-        },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
         }
       }
     },
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {
-        "date": {
-          "label": "Date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
         "operationClassification": {
           "label": "Operation classification"
         }
@@ -1019,9 +877,6 @@
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
-        },
-        "provenance": {
-          "label": "Provenance"
         },
         "surfaceCondition": {
           "label": "Surface condition"
@@ -1139,9 +994,6 @@
         "origin": {
           "label": "Origin of material"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "temperAmount": {
           "label": "Number of inclusions"
         }
@@ -1177,9 +1029,6 @@
           "label": "Minting ruler",
           "description": "Person or corporate body responsible for the coinage"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "stampPositioning": {
           "label": "Stamp positioning",
           "description": "Rotation of the stamp on the reverse side in comparison to the front side; specification in 1-12h analogous to the clock face (e. g. '12' for equal rotation)"
@@ -1207,15 +1056,6 @@
         "conditionPercent": {
           "label": "Condition in percent"
         },
-        "date": {
-          "label": "Find date"
-        },
-        "description": {
-          "label": "Description"
-        },
-        "processor": {
-          "label": "Processor"
-        },
         "publicationMaterialSummary": {
           "label": "Material summary"
         },
@@ -1238,37 +1078,6 @@
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
-        "period": {
-          "label": "Period"
-        },
-        "dating": {
-          "label": "Dating"
-        },
-        "dimensionDiameter": {
-          "label": "Diameter"
-        },
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionPerimeter": {
-          "label": "Perimeter"
-        },
-        "dimensionThickness": {
-          "label": "Thickness"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        },
-        "dimensionOther": {
-          "label": "Other dimensions",
-          "description": "Other dimensions can be entered here; please comment"
-        },
         "storagePlace": {
           "label": "Storage place"
         }
@@ -1277,9 +1086,6 @@
     "PlasterFragment": {
       "label": "Plaster fragment",
       "fields": {
-        "area": {
-          "label": "Area in m2"
-        },
         "composition": {
           "label": "Composition"
         },
@@ -1305,17 +1111,7 @@
     },
     "Profile": {
       "label": "Profile",
-      "fields": {
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "orientation": {
-          "label": "Orientation"
-        }
-      }
+      "fields": {}
     },
     "Metal": {
       "label": "Metal",
@@ -1338,9 +1134,6 @@
         "objectType": {
           "label": "Designation or type of the object"
         },
-        "provenance": {
-          "label": "Provenance"
-        },
         "vesselForm": {
           "label": "Basic vessel form"
         },
@@ -1355,23 +1148,7 @@
     },
     "Area": {
       "label": "Area",
-      "fields": {
-        "description": {
-          "label": "Description"
-        },
-        "area": {
-          "label": "Area in m2"
-        },
-        "dimensionLength": {
-          "label": "Length"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "dimensionWidth": {
-          "label": "Width"
-        }
-      }
+      "fields": {}
     },
     "Excavation": {
       "label": "Excavation",

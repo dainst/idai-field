@@ -18,7 +18,7 @@ $roboto-font-path: '../fonts/';
 @import 'components/import/import';
 @import 'components/export/export';
 @import 'components/settings/settings';
-@import 'components/imageview/imageview';
+@import 'components/imageview/image-view';
 @import 'components/docedit/docedit';
 @import 'components/imagegrid/image-grid';
 @import 'components/mediaoverview/media-overview';
@@ -57,6 +57,7 @@ html {
 
 body {
   font-family: Roboto, sans-serif !important;
+  overflow: hidden;
 }
 
 #idaifieldlogo {
@@ -73,7 +74,7 @@ body {
 }
 
 .btn:active, .btn.active {
-  box-shadow: inset 1px 1px 2px 1px rgba(0,0,0,0.2);
+  box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary {
@@ -207,7 +208,7 @@ html [type='button'],
 }
 
 .popover-item {
-  cursor: pointer;
+  cursor: default;
   border: 0 !important;
   border-radius: 0 !important;
 }
@@ -249,7 +250,7 @@ html [type='button'],
 }
 
 .card-block .form-control {
-  margin: 0 !important;
+  margin: 0;
   font-size: 13px;
 }
 
@@ -275,12 +276,6 @@ select.form-control:not([size]):not([multiple]) {
 .form-check .form-check-label {
   font-size: 15px;
   padding-left: 1.4rem;
-}
-
-.fieldcollapse {
-  font-size: 1em;
-  cursor: pointer;
-  font-weight: bold !important;
 }
 
 /* Relation Picker */
@@ -323,10 +318,15 @@ relations-view .fieldvalue:hover {
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, .5);
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+a {
+  -webkit-user-drag: none;
 }

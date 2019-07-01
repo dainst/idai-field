@@ -11,10 +11,35 @@ let EC = protractor.ExpectedConditions;
  */
 export class DoceditPage {
 
-     public static clickCloseEdit() {
+
+    private static clickSaveInModal() {
+
+        common.click(element(by.id('overview-save-confirmation-modal-save-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+    }
+
+
+    private static clickCancelInModal() {
+
+        common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
+    }
+
+
+    private static clickDiscardInModal() {
+
+        common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+    }
+
+
+     public static clickCloseEdit(action?: 'discard' | 'cancel' | 'save') {
 
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
+
+        if (action === 'discard') this.clickDiscardInModal();
+        if (action === 'cancel') this.clickCancelInModal();
+        if (action === 'save') this.clickSaveInModal();
     };
 
 
@@ -24,10 +49,28 @@ export class DoceditPage {
     };
 
 
-    public static clickRelationsTab() {
+    public static clickGotoTimeTab() {
 
-        common.click(element(by.id('docedit-relations-tab')));
+        common.click(element(by.id('edit-form-goto-time')));
     };
+
+
+    public static clickGotoPropertiesTab() {
+
+        common.click(element(by.id('edit-form-goto-properties')));
+    }
+
+
+    public static clickGotoChildPropertiesTab() {
+
+        common.click(element(by.id('edit-form-goto-childProperties')));
+    }
+
+
+    public static clickGotoImagesTab() {
+
+        common.click(element(by.id('edit-form-goto-images')));
+    }
 
 
     public static clickMediaTab() {
@@ -72,23 +115,10 @@ export class DoceditPage {
     };
 
 
-    public static clickDeleteDocument() {
-
-        common.click(element(by.id('document-edit-button-dropdown')));
-        common.click(element(by.id('document-edit-button-delete-document')));
-    };
-
-
     public static clickConfirmDuplicateInModal() {
 
         common.click(element(by.id('duplicate-confirm')));
         browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
-    };
-
-
-    public static clickConfirmDeleteInModal() {
-
-        common.click(element(by.id('delete-resource-confirm')));
     };
 
 
@@ -151,11 +181,6 @@ export class DoceditPage {
         return element(by.id('duplicate-input'));
     }
 
-    public static getConfirmDeletionInputField() {
-
-        return element(by.id('delete-resource-input'));
-    }
-
 
     // type in
 
@@ -170,11 +195,5 @@ export class DoceditPage {
     public static typeInNumberOfDuplicates(numberOfDuplicates: string) {
 
         return common.typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
-    }
-
-
-    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
-
-        return common.typeIn(this.getConfirmDeletionInputField(), identifier);
     }
 }

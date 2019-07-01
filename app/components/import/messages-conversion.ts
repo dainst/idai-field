@@ -58,7 +58,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.TYPE_ONLY_ALLOWED_ON_UPDATE) replacement = M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE;
         if (msg === ParserErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_PARSER_IDENTIFIER_FORMAT;
         if (msg === ImportErrors.OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
-        if (msg === ImportErrors.NO_LIES_WITHIN_SET) replacement = M.IMPORT_EXEC_NO_LIES_WITHIN_SET;
+        if (msg === ImportErrors.NO_PARENT_ASSIGNED) replacement = M.IMPORT_EXEC_NO_LIES_WITHIN_SET;
         if (msg === ImportErrors.DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
         if (msg === ImportErrors.MISSING_RELATION_TARGET) replacement = M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET;
         if (msg === ImportErrors.MENINX_NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_NO_OPERATION_ASSIGNABLE;
@@ -69,6 +69,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN) replacement = M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN;
         if (msg === ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.PARENT_MUST_NOT_BE_ARRAY) replacement = M.IMPORT_PARENT_MUST_NOT_BE_ARRAY;
+        if (msg === ImportErrors.MUST_BE_ARRAY) replacement = M.IMPORT_MUST_BE_ARRAY;
         if (msg === ImportErrors.MUST_BE_IN_SAME_OPERATION) replacement = M.IMPORT_MUST_BE_IN_SAME_OPERATION;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;

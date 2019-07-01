@@ -1,3 +1,8 @@
+import {createApp, setupSyncTestDb} from './subsystem-helper';
+import * as PouchDB from 'pouchdb';
+import {Static} from '../unit/static';
+
+
 /**
  * This test suite focuses on the differences between the Data Access Objects.
  *
@@ -7,17 +12,12 @@
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import {createApp, setupSyncTestDb} from './subsystem-helper';
-import * as PouchDB from 'pouchdb';
-import {Static} from '../unit/static';
-
-
 describe('DAOs/Convert/Subsystem', () => {
 
     let image0;
     let trench0;
     let _documentDatastore;
-    let _idaiFieldDocumentDatastore;
+    let _fieldDocumentDatastore;
     let _idaiFieldImageDocumentDatastore;
 
 
@@ -37,19 +37,19 @@ describe('DAOs/Convert/Subsystem', () => {
             viewFacade,
             documentHolder,
             documentDatastore,
-            idaiFieldDocumentDatastore,
+            fieldDocumentDatastore,
             idaiFieldImageDocumentDatastore
         } = await createApp();
 
         _documentDatastore = documentDatastore;
-        _idaiFieldDocumentDatastore = idaiFieldDocumentDatastore;
+        _fieldDocumentDatastore = fieldDocumentDatastore;
         _idaiFieldImageDocumentDatastore = idaiFieldImageDocumentDatastore;
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
         image0 = await _idaiFieldImageDocumentDatastore.create(image0);
-        trench0 = await _idaiFieldDocumentDatastore.create(trench0);
+        trench0 = await _fieldDocumentDatastore.create(trench0);
         done();
     });
 
@@ -79,7 +79,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await _idaiFieldDocumentDatastore.
+            expect((await _fieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Trench','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
         } catch (err) {
@@ -92,7 +92,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('create - unknown type', async done => {
 
         try {
-            expect((await _idaiFieldDocumentDatastore.
+            expect((await _fieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Unknown','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
             fail();
@@ -116,7 +116,7 @@ describe('DAOs/Convert/Subsystem', () => {
     it('FieldDatastore - add relations with update', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
-        expect((await _idaiFieldDocumentDatastore.
+        expect((await _fieldDocumentDatastore.
         update(trench0)).resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -124,29 +124,29 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // get
 
-    it('get - add relations for IdaiFieldDocument', async done => {
+    it('get - add relations for FieldDocument', async done => {
 
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skip_cache: true })).
+        expect((await _fieldDocumentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _idaiFieldDocumentDatastore.get('trench0', { skip_cache: false })).
+        expect((await _fieldDocumentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skip_cache: true })).
+        expect((await _documentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skip_cache: false })).
+        expect((await _documentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
         done();
     });
 
 
-    it('get - add relations for IdaiFieldImageDocument', async done => {
+    it('get - add relations for ImageDocument', async done => {
 
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skip_cache: true })).
+        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skip_cache: false })).
+        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skip_cache: true })).
+        expect((await _documentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skip_cache: false })).
+        expect((await _documentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
         done();
     });
@@ -154,9 +154,9 @@ describe('DAOs/Convert/Subsystem', () => {
 
     // find
 
-    it('find - add relations for IdaiFieldDocument', async done => {
+    it('find - add relations for FieldDocument', async done => {
 
-        expect((await _idaiFieldDocumentDatastore.find({})). // result coming from cache
+        expect((await _fieldDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.isRecordedIn).toEqual([]);
         expect((await _idaiFieldImageDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.depicts).toEqual([]);

@@ -1,8 +1,8 @@
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
-import {clone} from '../../../../core/util/object-util';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
+
 
 /**
  * @author Thomas Kleinke
@@ -10,10 +10,10 @@ import {ViewContext} from './view-context';
  */
 export interface ResourcesState { // 'the' resources state
 
-    readonly viewStates: { [viewName: string]: ViewState };
-    readonly view: string;
-    readonly mode: 'map' | '3dMap' | 'list';
-    readonly activeDocumentViewTab: string|undefined;
+    overviewState: ViewState;
+    operationViewStates: { [operationId: string]: ViewState };
+    view: 'project' | string; // <- active view state
+    activeDocumentViewTab: string|undefined;
 }
 
 
@@ -43,7 +43,7 @@ export module ResourcesState {
     }
 
 
-    export function getSelectedDocument(state: ResourcesState): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(state: ResourcesState): FieldDocument|undefined {
 
         return viewState(state).bypassHierarchy
             ? viewState(state).searchContext.selected
@@ -53,17 +53,14 @@ export module ResourcesState {
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const mainTypeDocumentResourceId = viewState(state).mainTypeDocumentResourceId;
-        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
-
-        const path = viewState(state).navigationPaths[mainTypeDocumentResourceId];
+        const path: NavigationPath = viewState(state).navigationPath;
         return path ? path : NavigationPath.empty();
     }
 
 
-    export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
+    export function getCurrentOperation(state: ResourcesState): FieldDocument|undefined {
 
-        return viewState(state).selectAllOperationsOnBypassHierarchy;
+        return viewState(state).operation;
     }
 
 
@@ -73,216 +70,123 @@ export module ResourcesState {
     }
 
 
-    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
-
-        return viewState(state).mainTypeDocumentResourceId;
-    }
-
-
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return [];
-
-        const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
+        const layersIds = viewState(state).layerIds;
         return layersIds ? layersIds : [];
     }
 
 
-    // TODO Use common function for 2D and 3D layer ids
     export function getActive3DLayersIds(state: ResourcesState): string[] {
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return [];
-
-        const layer3DIds = viewState(state).layer3DIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
+        const layer3DIds = viewState(state).layer3DIds;
         return layer3DIds ? layer3DIds : [];
     }
 
 
-    export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
+    export function getMode(state: ResourcesState): 'map'|'3dMap'|'list' {
 
-        return viewState(state).layerIds;
+        return viewState(state).mode;
     }
 
 
-    export function get3DLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
+    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined) {
 
-        return viewState(state).layer3DIds;
+        state.activeDocumentViewTab = activeDocumentViewTab;
     }
 
 
-    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
-
-        const cloned: any = clone(state);
-        cloned.activeDocumentViewTab = activeDocumentViewTab;
-        return cloned;
-    }
-
-
-    export function setView(state: ResourcesState, view: string): ResourcesState {
-
-        const cloned: any = clone(state);
-        cloned.view = view;
-        return cloned;
-    }
-
-
-    export function setMode(state: ResourcesState, mode: 'map'|'3dMap'|'list'): ResourcesState {
-
-        const cloned: any = clone(state);
-        cloned.mode = mode;
-        return cloned;
-    }
-
-
-    export function setQueryString(state: ResourcesState, q: string): ResourcesState {
+    export function setQueryString(state: ResourcesState, q: string) {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).q = q;
-            return cloned;
-
+            viewState(state).searchContext.q = q;
         } else {
-
-            return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
+            NavigationPath.setQueryString(getNavigationPath(state), q);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
 
-    export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
+    export function setTypeFilters(state: ResourcesState, types: string[]) {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).types = types;
-            return cloned;
-
+            viewState(state).searchContext.types = types;
         } else {
-
-            return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
+            NavigationPath.setTypeFilters(getNavigationPath(state), types);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
 
     export function setCustomConstraints(state: ResourcesState,
-                                         constraints: { [name: string]: string}): ResourcesState {
+                                         constraints: { [name: string]: string}) {
 
-        const cloned: any = clone(state);
-        (viewState(cloned) as any).customConstraints = constraints;
-        return cloned;
+        viewState(state).customConstraints = constraints;
     }
 
 
     export function setSelectedDocument(state: ResourcesState,
-                                        document: IdaiFieldDocument|undefined): ResourcesState {
+                                        document: FieldDocument|undefined) {
 
         if (viewState(state).bypassHierarchy) {
-
-            const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any).selected = document;
-            return cloned;
-
+            viewState(state).searchContext.selected = document;
         } else {
-
-            return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
+            NavigationPath.setSelectedDocument(getNavigationPath(state), document);
+            updateNavigationPath(state, getNavigationPath(state));
         }
     }
 
 
-    export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]): ResourcesState {
+    export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]) {
 
-        const cloned = clone(state);
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (!mainTypeDocumentResourceId) return cloned;
-
-        const layerContextId = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
-        viewState(cloned).layerIds[layerContextId] = activeLayersIds.slice(0);
-
-        return cloned;
+        viewState(state).layerIds = activeLayersIds.slice(0);
     }
 
 
-    // TODO Use common function for 2D and 3D layer ids
-    export function setActive3DLayerIds(state: ResourcesState, activeLayer3DIds: string[]): ResourcesState {
+    export function setActive3DLayerIds(state: ResourcesState, active3DLayersIds: string[]) {
 
-        const cloned = clone(state);
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (!mainTypeDocumentResourceId) return cloned;
-
-        const layerContextId = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
-        viewState(cloned).layer3DIds[layerContextId] = activeLayer3DIds.slice(0);
-
-        return cloned;
+        viewState(state).layer3DIds = active3DLayersIds.slice(0);
     }
 
 
-    export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
+    export function setMode(state: ResourcesState, mode: 'map'|'3dMap'|'list') {
 
-        const cloned = clone(state);
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (mainTypeDocumentResourceId) delete viewState(cloned).layerIds[mainTypeDocumentResourceId];
-
-        return cloned;
+        viewState(state).mode = mode;
     }
 
 
-    // TODO Use common function for 2D and 3D layer ids
-    export function removeActive3DLayersIds(state: ResourcesState): ResourcesState {
+    export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath) {
 
-        const cloned = clone(state);
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (mainTypeDocumentResourceId) delete viewState(cloned).layer3DIds[mainTypeDocumentResourceId];
-
-        return cloned;
-    }
-
-
-    export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
-
-        const cloned = clone(state);
-
-        const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
-        if (!mainTypeDocumentResourceId) return cloned;
-
-        viewState(cloned).navigationPaths[mainTypeDocumentResourceId] = navPath;
-
-        return cloned;
+        viewState(state).navigationPath = navPath;
     }
 
 
     export function makeSampleDefaults(): ResourcesState {
 
         return {
-            viewStates: {
-                project: {
-                    layerIds: { 'project': ['o25'] },
-                    layer3DIds: {},
+            overviewState: {
+                operation: undefined,
+                layerIds: ['o25'],
+                layer3DIds: [],
+                mode: 'map',
+                bypassHierarchy: false,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {}
+            },
+            operationViewStates: {
+                't1': {
+                    operation: undefined,
+                    layerIds: ['o25'],
+                    layer3DIds: [],
+                    mode: 'map',
                     bypassHierarchy: false,
-                    selectAllOperationsOnBypassHierarchy: false,
-                    navigationPaths: {},
-                    searchContext: ViewContext.empty(),
-                    customConstraints: {}
-                },
-                excavation: {
-                    bypassHierarchy: false,
-                    selectAllOperationsOnBypassHierarchy: false,
-                    navigationPaths: {
-                        't1': NavigationPath.empty()
-                    },
-                    layerIds: { 't1': ['o25'] },
-                    layer3DIds: {},
+                    navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
                 }
             },
             view: 'project',
-            mode: 'map',
             activeDocumentViewTab: undefined
         }
     }
@@ -291,63 +195,45 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            viewStates: {
-                excavation: ViewState.default(),
-                project: ViewState.default()
-            },
+            overviewState: ViewState.default(),
+            operationViewStates: {},
             view: 'project',
-            mode: 'map',
             activeDocumentViewTab: undefined
         };
     }
 
 
-    export function complete(state: ResourcesState ): ResourcesState {
+    export function complete(state: ResourcesState): ResourcesState {
 
-        const cloned = clone(state);
-        Object.keys(cloned.viewStates)
-            .forEach(viewName => ViewState.complete(cloned.viewStates[viewName]));
-        return cloned;
+        ViewState.complete(state.overviewState);
+        Object.keys(state.operationViewStates)
+            .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
+
+        return state;
     }
 
 
-    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
+    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
-        const cloned = clone(state);
-        (viewState(cloned) as any).bypassHierarchy = bypassHierarchy;
-        return cloned;
+        viewState(state).bypassHierarchy = bypassHierarchy;
     }
 
 
-    export function setMainTypeDocumentResourceId(state: ResourcesState,
-                                                  mainTypeDocumentResourceId: string|undefined): ResourcesState {
+    export function deactivate(state: ResourcesState, viewName: string) {
 
-        const cloned = clone(state);
-        (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(cloned) as any).searchContext.selected = undefined;
-        return cloned;
-    }
+        const deactivatedState: ViewState = ViewState.default();
+        deactivatedState.operation = state.operationViewStates[viewName].operation;
+        deactivatedState.layerIds = state.operationViewStates[viewName].layerIds;
 
-    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
-
-        const cloned = clone(state);
-        (viewState(cloned) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
-        if (selectAllOperationsOnBypassHierarchy) {
-            (viewState(state) as any).searchContext.selected = undefined;
-        }
-        return cloned;
-    }
-
-
-    function isAllSelection(viewState: ViewState): boolean {
-
-        return viewState.bypassHierarchy && viewState.selectAllOperationsOnBypassHierarchy;
+        state.operationViewStates[viewName] = deactivatedState;
     }
 
 
     function viewState(state: ResourcesState): ViewState {
 
-        return state.viewStates[state.view];
+        return state.view === 'project'
+            ? state.overviewState
+            : state.operationViewStates[state.view];
     }
 }
 

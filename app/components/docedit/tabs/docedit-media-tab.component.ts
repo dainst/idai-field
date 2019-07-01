@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
@@ -23,7 +23,7 @@ export class DoceditMediaTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    @Input() document: IdaiFieldDocument;
+    @Input() document: FieldDocument;
 
     public documents: Array<IdaiFieldMediaDocument>;
     public selected: Array<IdaiFieldMediaDocument> = [];
@@ -92,6 +92,34 @@ export class DoceditMediaTabComponent {
         return this.selected.length === 1
             ? this.i18n({ id: 'docedit.tabs.media.tooltips.removeLink', value: 'Verknüpfung löschen' })
             : this.i18n({ id: 'docedit.tabs.media.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
+    }
+
+
+    public isMainMediaResource(mediaDocument: IdaiFieldMediaDocument): boolean {
+
+        return mediaDocument.resource.id === this.document.resource.relations['isDepictedIn'][0];
+    }
+
+
+    public getMainMediaResource(): IdaiFieldMediaDocument|undefined {
+
+        return this.documents.find(document => this.isMainMediaResource(document));
+    }
+
+
+    public setMainMediaResource() {
+
+        if (this.selected.length !== 1) return;
+
+        const mainMediaResourceId: string = this.selected[0].resource.id;
+
+        this.document.resource.relations['isDepictedIn'] = [mainMediaResourceId].concat(
+            this.document.resource.relations['isDepictedIn'].filter(targetId => {
+                return targetId !== mainMediaResourceId;
+            })
+        );
+
+        this.loadMediaResources();
     }
 
 

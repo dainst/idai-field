@@ -53,7 +53,7 @@ export module JavaToolExecutor {
 
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
-                const javaVersion = new RegExp('java version').test(stderr)
+                const javaVersion = new RegExp('version').test(stderr)
                     ? stderr.split(' ')[2].replace(/"/g, '')
                     : undefined;
                 resolve(javaVersion);

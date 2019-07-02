@@ -18,13 +18,14 @@ export module CSVExporter {
      * @param relations
      * @param outputFilePath
      */
-    export function performExport(documents: Array<FieldDocument>,
+    export async function performExport(documents: Array<FieldDocument>,
                                   resourceType: IdaiType,
                                   relations: string[],
                                   outputFilePath: string) {
 
-        const result = CSVExport.createExportable(documents, resourceType, relations);
-        writeFile(outputFilePath, result);
+        await writeFile(
+            outputFilePath,
+            CSVExport.createExportable(documents, resourceType, relations));
     }
 
 

@@ -35,7 +35,7 @@ export module CsvExportHelper {
         // TODO technical ids in relations must be replaces with identifiers
 
         try {
-            CSVExporter.performExport(
+            await CSVExporter.performExport(
                 selectedOperationId
                     ? await fetchDocuments(find, selectedOperationId, selectedType, getIdentifierForId)
                     : [],

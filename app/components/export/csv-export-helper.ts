@@ -1,11 +1,11 @@
-import {includedIn, isNot, on} from 'tsfun';
+import {includedIn, isNot, on, asyncMap} from 'tsfun';
 import {Query} from 'idai-components-2/src/datastore/query';
 import {ISRECORDEDIN_CONTAIN} from '../../c';
 import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
 import {CSVExporter} from '../../core/export/csv-exporter';
 import {FieldDocument} from 'idai-components-2/src/model/field-document';
-import {Find, ResourceTypeCount} from './export-helper';
-import {subtractBy} from 'tsfun/src/arrayset';
+import {Find, GetIdentifierForId, ResourceTypeCount} from './export-helper';
+import {clone} from '../../core/util/object-util';
 
 
 /**
@@ -22,18 +22,25 @@ export module CsvExportHelper {
      * @param filePath
      * @param selectedOperationId
      * @param selectedType
+     * @param relations
+     * @param getIdentifierForId
      */
     export async function performExport(find: Find,
                                         filePath: string,
                                         selectedOperationId: string|undefined,
-                                        selectedType: IdaiType) {
+                                        selectedType: IdaiType,
+                                        relations: string[],
+                                        getIdentifierForId: GetIdentifierForId) {
+
+        // TODO technical ids in relations must be replaces with identifiers
 
         try {
             CSVExporter.performExport(
                 selectedOperationId
-                    ? await fetchDocuments(find, selectedOperationId, selectedType)
+                    ? await fetchDocuments(find, selectedOperationId, selectedType, getIdentifierForId)
                     : [],
                 selectedType,
+                relations,
                 filePath);
 
         } catch (err) {
@@ -83,14 +90,40 @@ export module CsvExportHelper {
     }
 
 
+    /**
+     * Fetches documents, clones them and replaces ids with identifiers
+     *
+     * @param find
+     * @param selectedOperationId
+     * @param selectedType
+     * @param getIdentifierForId
+     */
     async function fetchDocuments(find: Find,
                                   selectedOperationId: string,
-                                  selectedType: IdaiType): Promise<Array<FieldDocument>> {
+                                  selectedType: IdaiType,
+                                  getIdentifierForId: GetIdentifierForId): Promise<Array<FieldDocument>> {
 
         try {
             const query = getQuery(selectedType.name, selectedOperationId);
-            return (await find(query)).documents;
-    
+            const fetchedDocuments = (await find(query)).documents as Array<FieldDocument>;
+
+            return asyncMap(async (document: FieldDocument) => {
+
+                const clonedDocument: FieldDocument = clone(document); // because we will modify it
+                if (!clonedDocument.resource.relations) return clonedDocument;
+
+                for (let relation of Object.keys(clonedDocument.resource.relations)) {
+
+                    const newTargets = [];
+                    for (let target of clonedDocument.resource.relations[relation]) {
+                        newTargets.push(await getIdentifierForId(target));
+                    }
+                    clonedDocument.resource.relations[relation] = newTargets;
+                }
+                return clonedDocument;
+
+            })(fetchedDocuments);
+
         } catch (msgWithParams) {
             console.error(msgWithParams);
             return [];

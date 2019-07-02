@@ -5,16 +5,24 @@ import * as fs from "fs";
 import {M} from '../../components/m';
 
 /**
+ * Small wrapper to separate async and file handling from the main logic
+ *
  * @author Daniel de Oliveira
  */
 export module CSVExporter {
 
-    export function performExport(documents: FieldDocument[],
+    /**
+     * @param documents
+     * @param resourceType
+     * @param relations
+     * @param outputFilePath
+     */
+    export function performExport(documents: Array<FieldDocument>,
                                   resourceType: IdaiType,
+                                  relations: string[],
                                   outputFilePath: string) {
 
-        const result = CSVExport.createExportable(documents, resourceType); // TODO return string instead of string[]
-        // console.log("result", result);
+        const result = CSVExport.createExportable(documents, resourceType, relations); // TODO return string instead of string[]
         writeFile(outputFilePath, result);
     }
 

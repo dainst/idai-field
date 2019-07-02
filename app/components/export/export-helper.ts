@@ -6,3 +6,4 @@ import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-dat
 export type Count = number; // -1 signals that there is not usable count
 export type ResourceTypeCount = [ IdaiType, Count ];
 export type Find = (query: Query) => Promise<FieldDocumentFindResult>;
+export type GetIdentifierForId = (resourceId: string) => Promise<string>;

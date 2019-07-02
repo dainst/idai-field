@@ -1,5 +1,7 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
-import {isnt, flow, to, map} from 'tsfun';
+import {includedIn, isNot, isnt, to} from 'tsfun';
+import {HIERARCHICAL_RELATIONS} from '../../c';
+import {clone} from '../util/object-util';
 
 
 /**
@@ -13,24 +15,29 @@ export module CSVExport {
      *
      * @param documents
      * @param resourceType
+     * @param relations
      */
     export function createExportable(documents: FieldDocument[],
-                                     resourceType: IdaiType) {
+                                     resourceType: IdaiType,
+                                     relations: Array<string>) {
 
-        const fieldNames: string[] = makeFieldNamesList(resourceType);
-        let matrix = documents.map(toRowsArrangedBy(fieldNames));
+        const headings: string[] = makeHeadings(resourceType, relations);
 
-        const indexOfDatingElement = fieldNames.indexOf('dating');
+        let matrix = documents
+            .map(toDocumentWithFlattenedRelations)
+            .map(toRowsArrangedBy(headings));
+
+        const indexOfDatingElement = headings.indexOf('dating');
         if (indexOfDatingElement !== -1) {
             const max = getMax(matrix, indexOfDatingElement);
-            expandDatingHeader(fieldNames, indexOfDatingElement, max);
+            expandDatingHeader(headings, indexOfDatingElement, max);
 
-            matrix = flow(matrix,
-                map(expandArrayToSize(indexOfDatingElement, max)),
-                map(rowsWithDatingElementsExpanded(indexOfDatingElement, max)));
+            matrix = matrix
+                .map(expandArrayToSize(indexOfDatingElement, max))
+                .map(rowsWithDatingElementsExpanded(indexOfDatingElement, max));
         }
 
-        return ([fieldNames].concat(matrix)).map(toCsvLine);
+        return ([headings].concat(matrix)).map(toCsvLine);
     }
 
 
@@ -45,6 +52,16 @@ export module CSVExport {
                         : 0)
 
             , 0);
+    }
+
+
+    function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
+
+        return makeFieldNamesList(resourceType)
+            .concat(
+                relations
+                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
+                    .map(relation => 'relations.' + relation));
     }
 
 
@@ -110,6 +127,19 @@ export module CSVExport {
     }
 
 
+    function toDocumentWithFlattenedRelations(document: FieldDocument) {
+
+        const cloned = clone(document);
+
+        if (!cloned.resource.relations) return cloned;
+        for (let relation of Object.keys(cloned.resource.relations)) { // TODO use HOF, maybe get rid of clone then
+            cloned.resource['relations.' + relation] = cloned.resource.relations[relation].join(';');
+        }
+        delete cloned.resource.relations;
+        return cloned;
+    }
+
+
     function toRowsArrangedBy(fieldNames: string[]) {
 
         return (document: FieldDocument) => {
@@ -147,10 +177,8 @@ export module CSVExport {
     function getUsableFieldNames(fieldNames: string[]): string[] {
 
         return fieldNames
-            .filter(isnt('relations'))
             .filter(isnt('type'))
             .filter(isnt('geometry'))  // TODO probably enable later
-            .filter(isnt('relations')) // TODO probably enable later
             .filter(isnt('id'));
     }
 

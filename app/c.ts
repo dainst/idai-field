@@ -12,6 +12,7 @@ export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
 export const POSITION_RELATIONS = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];
 export const TIME_RELATIONS = ['isAfter', 'isBefore', 'isContemporaryWith'];
+export const HIERARCHICAL_RELATIONS = ['liesWithin', 'isRecordedIn', 'includes'];
 
 export module GROUP_NAME {
 

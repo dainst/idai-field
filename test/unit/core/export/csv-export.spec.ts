@@ -31,7 +31,7 @@ describe('CSVExport', () => {
             ]
         });
 
-        const result = CSVExport.createExportable([], t);
+        const result = CSVExport.createExportable([], t, []);
         expect(result[0]).toBe('identifier,shortDescription,custom');
     });
 
@@ -51,7 +51,7 @@ describe('CSVExport', () => {
         });
 
         const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
-        const result = CSVExport.createExportable(docs, t);
+        const result = CSVExport.createExportable(docs, t, []);
         expect(result[0]).toEqual('identifier,shortDescription');
         expect(result[1]).toEqual('identifier1,shortDescription1');
     });
@@ -86,7 +86,7 @@ describe('CSVExport', () => {
             {begin: {year: 40}, end: {year: 50}, source: 'some3', label: 'blablabla3'}];
         docs[1].resource.custom = 'custom';
 
-        const result = CSVExport.createExportable(docs, t).map(row => row.split(','));
+        const result = CSVExport.createExportable(docs, t, []).map(row => row.split(','));
 
 
         expect(result[0][1]).toBe('dating.0.begin.year');
@@ -128,5 +128,30 @@ describe('CSVExport', () => {
         expect(result[3][7]).toBe('');
         expect(result[3][8]).toBe('');
         expect(result[3][9]).toBe('');
+    });
+
+
+    it('export relations', () => {
+
+        const t = new IdaiType({
+            type: 'Feature',
+            fields: [
+                {
+                    name: 'identifier'
+                },
+                {
+                    name: 'shortDescription'
+                }
+            ]
+        });
+
+        const docs = [
+            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        ];
+        docs[0].resource.relations = { someRelation: ["identifier2"] } as any;
+
+        const result = CSVExport.createExportable(docs, t, ['someRelation', 'isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.someRelation');
+        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
     });
 });

@@ -44,13 +44,16 @@
         </div>
 
         <div *ngIf="selectedImage" id="image-container">
-            <div class="d-flex align-items-center justify-content-center">
+            <div *ngIf="selectedImage.document.resource.type !== 'Model3D'"
+                 class="d-flex align-items-center justify-content-center">
                 <div *ngIf="!containsOriginal(selectedImage)" class="alert alert-info" role="alert"
                      i18n="@@imageView.originalNotFoundWarning">
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
                 </div>
                 <img [src]="containsOriginal(selectedImage) ? selectedImage.imgSrc : selectedImage.thumbSrc">
             </div>
+            <model-3d-viewer *ngIf="selectedImage.document.resource.type === 'Model3D'"
+                             [document]="selectedImage.document"></model-3d-viewer>
         </div>
 
         <div #thumbnailSliderContainer id="thumbnail-slider-container"

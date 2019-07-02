@@ -10,6 +10,7 @@ import {MediaDocumentsManager} from '../mediaoverview/view/media-documents-manag
 import {MediaOverviewFacade} from '../mediaoverview/view/media-overview-facade';
 import {PersistenceHelper} from '../mediaoverview/service/persistence-helper';
 import {DepictsRelationsViewComponent} from './depicts-relations-view.component';
+import {Model3DViewerModule} from '../model-3d-viewer/model-3d-viewer.module';
 
 @NgModule({
     imports: [
@@ -17,12 +18,13 @@ import {DepictsRelationsViewComponent} from './depicts-relations-view.component'
         NgbModule,
         WidgetsModule,
         IdaiWidgetsModule,
-        ImageGridModule
+        ImageGridModule,
+        Model3DViewerModule
     ],
     declarations: [
         ImageViewComponent,
         GeoreferenceViewComponent,
-        DepictsRelationsViewComponent
+        DepictsRelationsViewComponent,
     ],
     providers: [
         MediaDocumentsManager,

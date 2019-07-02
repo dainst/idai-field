@@ -71,8 +71,8 @@
       "description": "Ausrichtung nach Himmelsrichtung"
     },
     "spatialLocation": {
-      "label": "Lage",
-      "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+      "label": "Beschreibung der räumlichen Lage",
+      "description": "Beschreibung der Position innerhalb der Fundstelle, des Schnittes oder des Befundes"
     },
     "provenance": {
       "label": "Provenienz",

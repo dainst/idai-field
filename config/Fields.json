@@ -3089,9 +3089,6 @@
         "inputType": "dropdown",
         "valuelist": [
           "- 1 Uhr",
-          "- 10 Uhr",
-          "- 11 Uhr",
-          "- 12 Uhr",
           "- 2 Uhr",
           "- 3 Uhr",
           "- 4 Uhr",
@@ -3099,7 +3096,10 @@
           "- 6 Uhr",
           "- 7 Uhr",
           "- 8 Uhr",
-          "- 9 Uhr"
+          "- 9 Uhr",
+          "- 10 Uhr",
+          "- 11 Uhr",
+          "- 12 Uhr"
         ]
       }
     }

@@ -2393,12 +2393,6 @@
           "sehr grob"
         ]
       },
-      "terracottaType": {
-        "inputType": "radio",
-        "valuelist": [
-          "Kalyptere"
-        ]
-      },
       "vesselForm": {
         "inputType": "dropdown",
         "valuelist": [

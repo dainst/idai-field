@@ -890,9 +890,6 @@
         "temperParticles": {
           "label": "Temper particles"
         },
-        "terracottaType": {
-          "label": "Terracotta type"
-        },
         "vesselForm": {
           "label": "Basic vessel form"
         },

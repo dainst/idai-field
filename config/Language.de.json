@@ -1001,10 +1001,6 @@
           "label": "Magerungskörnung",
           "description": "Größe der Magerungspartikel"
         },
-        "terracottaType": {
-          "label": "Art der Terrakotta",
-          "description": "Massivität des Terrakotta-Objekts, z. B. 'Innen hohl'"
-        },
         "vesselForm": {
           "label": "Gefäß-Grundform"
         },

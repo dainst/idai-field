@@ -1313,18 +1313,6 @@
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.linkedImages" datatype="html">
-        <source>
-        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
-    </source>
-        <target state="final">
-        Images linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="mediaOverview.filter.all" datatype="html">
         <source>Alle Medienressourcen</source>
         <target state="final">All media resources</target>
@@ -1458,7 +1446,7 @@
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
@@ -2510,12 +2498,28 @@
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.images" datatype="html">
-        <source>Bilder</source>
-        <target state="final">Images</target>
+      <trans-unit id="imageView.mediaResources" datatype="html">
+        <source>
+        Medienressourcen
+    </source>
+        <target state="final">
+        Media resources
+    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.linkedMediaResources" datatype="html">
+        <source>
+        Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Medienressourcen
+    </source>
+        <target state="final">
+        Media resources linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">

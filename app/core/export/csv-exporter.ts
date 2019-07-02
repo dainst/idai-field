@@ -5,7 +5,8 @@ import * as fs from "fs";
 import {M} from '../../components/m';
 
 /**
- * Small wrapper to separate async and file handling from the main logic
+ * Small wrapper to separate async and file handling, including
+ * the choice of line endings, from the main logic
  *
  * @author Daniel de Oliveira
  */
@@ -22,7 +23,7 @@ export module CSVExporter {
                                   relations: string[],
                                   outputFilePath: string) {
 
-        const result = CSVExport.createExportable(documents, resourceType, relations); // TODO return string instead of string[]
+        const result = CSVExport.createExportable(documents, resourceType, relations);
         writeFile(outputFilePath, result);
     }
 

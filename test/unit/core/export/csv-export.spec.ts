@@ -10,26 +10,18 @@ import {Static} from '../../static';
 describe('CSVExport', () => {
 
 
+    function makeType(fieldNames: string[]) {
+
+        return new IdaiType({
+            type: 'Feature',
+            fields: fieldNames.map(fieldName => {return {name: fieldName}})
+        })
+    }
+
 
     it('create header line if documents empty', () => {
 
-        const t = new IdaiType({
-            type: 'Feature',
-            fields: [
-                {
-                    name: 'identifier'
-                },
-                {
-                    name: 'shortDescription'
-                },
-                {
-                    name: 'custom'
-                },
-                {
-                    name: 'id'
-                }
-            ]
-        });
+        const t = makeType(['identifier', 'shortDescription', 'custom', 'id']);
 
         const result = CSVExport.createExportable([], t, []);
         expect(result[0]).toBe('identifier,shortDescription,custom');
@@ -38,17 +30,7 @@ describe('CSVExport', () => {
 
     it('create document line', () => {
 
-        const t = new IdaiType({
-            type: 'Feature',
-            fields: [
-                {
-                    name: 'identifier'
-                },
-                {
-                    name: 'shortDescription'
-                }
-            ]
-        });
+        const t = makeType(['identifier', 'shortDescription']);
 
         const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
         const result = CSVExport.createExportable(docs, t, []);
@@ -59,20 +41,7 @@ describe('CSVExport', () => {
 
     it('expand dating', () => {
 
-        const t = new IdaiType({
-            type: 'Feature',
-            fields: [
-                {
-                    name: 'identifier'
-                },
-                {
-                    name: 'dating'
-                },
-                {
-                    name: 'custom'
-                }
-            ]
-        });
+        const t = makeType(['identifier', 'dating', 'custom']);
 
         const docs = [
             Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
@@ -133,25 +102,50 @@ describe('CSVExport', () => {
 
     it('export relations', () => {
 
-        const t = new IdaiType({
-            type: 'Feature',
-            fields: [
-                {
-                    name: 'identifier'
-                },
-                {
-                    name: 'shortDescription'
-                }
-            ]
-        });
+        const t = makeType(['identifier', 'shortDescription']);
 
         const docs = [
             Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
         ];
         docs[0].resource.relations = { someRelation: ["identifier2"] } as any;
 
-        const result = CSVExport.createExportable(docs, t, ['someRelation', 'isRecordedIn', 'liesWithin', 'includes']);
+        const result = CSVExport.createExportable(docs, t, ['someRelation']);
         expect(result[0]).toBe('identifier,shortDescription,relations.someRelation');
         expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
+    });
+
+
+    it('is nested in another resource', () => {
+
+        const t = makeType(['identifier', 'shortDescription']);
+
+        const docs = [
+            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        ];
+        docs[0].resource.relations = {
+            liesWithin: ["identifier2"],
+            isRecordedIn: ["operation1"]
+        } as any;
+
+        const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.liesWithin');
+        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
+    });
+
+
+    it('is nested in an operation', () => { // TODO factor out redundandcies with previous test
+
+        const t = makeType(['identifier', 'shortDescription']);
+
+        const docs = [
+            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        ];
+        docs[0].resource.relations = {
+            isRecordedIn: ["operation1"]
+        } as any;
+
+        const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.liesWithin');
+        expect(result[1]).toBe('identifier1,shortDescription1,operation1');
     });
 });

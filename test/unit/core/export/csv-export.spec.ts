@@ -24,7 +24,7 @@ describe('CSVExport', () => {
         const t = makeType(['identifier', 'shortDescription', 'custom', 'id']);
 
         const result = CSVExport.createExportable([], t, []);
-        expect(result[0]).toBe('identifier,shortDescription,custom');
+        expect(result[0]).toBe('identifier,shortDescription,custom,relations.isChildOf');
     });
 
 
@@ -34,8 +34,8 @@ describe('CSVExport', () => {
 
         const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
         const result = CSVExport.createExportable(docs, t, []);
-        expect(result[0]).toEqual('identifier,shortDescription');
-        expect(result[1]).toEqual('identifier1,shortDescription1');
+        expect(result[0]).toEqual('identifier,shortDescription,relations.isChildOf');
+        expect(result[1]).toEqual('identifier1,shortDescription1,');
     });
 
 
@@ -110,8 +110,8 @@ describe('CSVExport', () => {
         docs[0].resource.relations = { someRelation: ["identifier2"] } as any;
 
         const result = CSVExport.createExportable(docs, t, ['someRelation']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.someRelation');
-        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
+        expect(result[0]).toBe('identifier,shortDescription,relations.someRelation,relations.isChildOf');
+        expect(result[1]).toBe('identifier1,shortDescription1,identifier2,');
     });
 
 
@@ -128,7 +128,7 @@ describe('CSVExport', () => {
         } as any;
 
         const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.liesWithin');
+        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
     });
 
@@ -145,7 +145,7 @@ describe('CSVExport', () => {
         } as any;
 
         const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.liesWithin');
+        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toBe('identifier1,shortDescription1,operation1');
     });
 });

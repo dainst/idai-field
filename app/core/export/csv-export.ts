@@ -1,6 +1,7 @@
 import {FieldDocument, IdaiType} from 'idai-components-2';
 import {includedIn, isNot, isnt, to} from 'tsfun';
 import {clone} from '../util/object-util';
+import {HIERARCHICAL_RELATIONS} from '../../c';
 
 
 /**
@@ -59,8 +60,9 @@ export module CSVExport {
         return makeFieldNamesList(resourceType)
             .concat(
                 relations
-                    .filter(isNot(includedIn(['isRecordedIn', 'includes'])))
-                    .map(relation => 'relations.' + relation));
+                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
+                    .map(relation => 'relations.' + relation))
+            .concat(['relations.isChildOf']);
     }
 
 
@@ -136,9 +138,12 @@ export module CSVExport {
         }
         delete cloned.resource.relations;
 
-        if (cloned.resource['relations.liesWithin']) delete cloned.resource['relations.isRecordedIn'];
+        if (cloned.resource['relations.liesWithin']) {
+            delete cloned.resource['relations.isRecordedIn'];
+            cloned.resource['relations.isChildOf'] = cloned.resource['relations.liesWithin'];
+        }
         else if (cloned.resource['relations.isRecordedIn']) {
-            cloned.resource['relations.liesWithin'] = cloned.resource['relations.isRecordedIn'];
+            cloned.resource['relations.isChildOf'] = cloned.resource['relations.isRecordedIn'];
             delete cloned.resource['relations.isRecordedIn'];
         }
 

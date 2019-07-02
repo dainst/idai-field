@@ -9,6 +9,8 @@ import {clone} from '../../core/util/object-util';
 
 
 /**
+ * Fetches documents, rewrites identifiers, exports the transformed docs
+ *
  * @author Daniel de Oliveira
  */
 export module CsvExportHelper {
@@ -32,12 +34,21 @@ export module CsvExportHelper {
                                         relations: string[],
                                         getIdentifierForId: GetIdentifierForId) {
 
-        // TODO technical ids in relations must be replaces with identifiers
+        const fetchDocs = async (selectedOperationId: string) => {
+
+            const docs = await fetchDocuments(
+                find,
+                selectedOperationId,
+                selectedType,
+                getIdentifierForId);
+
+            return asyncMap(rewriteIdentifiers(getIdentifierForId))(docs)
+        };
 
         try {
             await CSVExporter.performExport(
                 selectedOperationId
-                    ? await fetchDocuments(find, selectedOperationId, selectedType, getIdentifierForId)
+                    ? await fetchDocs(selectedOperationId)
                     : [],
                 selectedType,
                 relations,
@@ -104,29 +115,33 @@ export module CsvExportHelper {
                                   getIdentifierForId: GetIdentifierForId): Promise<Array<FieldDocument>> {
 
         try {
+
             const query = getQuery(selectedType.name, selectedOperationId);
-            const fetchedDocuments = (await find(query)).documents as Array<FieldDocument>;
-
-            return asyncMap(async (document: FieldDocument) => {
-
-                const clonedDocument: FieldDocument = clone(document); // because we will modify it
-                if (!clonedDocument.resource.relations) return clonedDocument;
-
-                for (let relation of Object.keys(clonedDocument.resource.relations)) {
-
-                    const newTargets = [];
-                    for (let target of clonedDocument.resource.relations[relation]) {
-                        newTargets.push(await getIdentifierForId(target));
-                    }
-                    clonedDocument.resource.relations[relation] = newTargets;
-                }
-                return clonedDocument;
-
-            })(fetchedDocuments);
+            return (await find(query)).documents as Array<FieldDocument>;
 
         } catch (msgWithParams) {
             console.error(msgWithParams);
             return [];
+        }
+    }
+
+
+    function rewriteIdentifiers(getIdentifierForId: GetIdentifierForId) {
+
+        return async (document: FieldDocument): Promise<FieldDocument> => {
+
+            const clonedDocument: FieldDocument = clone(document); // because we will modify it
+            if (!clonedDocument.resource.relations) return clonedDocument;
+
+            for (let relation of Object.keys(clonedDocument.resource.relations)) {
+
+                const newTargets = [];
+                for (let target of clonedDocument.resource.relations[relation]) {
+                    newTargets.push(await getIdentifierForId(target));
+                }
+                clonedDocument.resource.relations[relation] = newTargets;
+            }
+            return clonedDocument;
         }
     }
 

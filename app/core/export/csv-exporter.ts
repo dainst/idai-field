@@ -1,7 +1,7 @@
 import {FieldDocument} from 'idai-components-2/src/model/field-document';
 import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
 import {CSVExport} from './csv-export';
-import * as fs from "fs";
+import * as fs from 'fs';
 import {M} from '../../components/m';
 
 /**

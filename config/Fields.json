@@ -3106,7 +3106,7 @@
   },
   "Find": {
     "color": "black",
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
+    "commons": ["spatialLocation", "processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
     "fields": {
       "amount": {
         "inputType": "unsignedInt"

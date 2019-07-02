@@ -82,9 +82,9 @@ export class ImportComponent implements OnInit {
 
     public showMergeRelationsOption = () => this.format === 'native' && this.allowMergingExistingResources;
 
-    public isMeninxProject = () => this.getProject().indexOf('meninx-project') !== -1;
+    public isMeninxProject = () => this.settingsService.getSelectedProject().indexOf('meninx-project') !== -1;
 
-    public isTestProject = () => this.getProject().indexOf('test') !== -1;
+    public isTestProject = () => this.settingsService.getSelectedProject().indexOf('test') !== -1;
 
     public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.allowMergingExistingResources;
 
@@ -251,7 +251,4 @@ export class ImportComponent implements OnInit {
                 : new FileSystemReader(file)
             : new HttpReader(url, http);
     }
-
-
-    private getProject = () => this.settingsService.getSelectedProject();
 }

@@ -34,15 +34,12 @@ export module CsvExportHelper {
                                         relations: string[],
                                         getIdentifierForId: GetIdentifierForId) {
 
+        const rewriteIdentifiers_ = rewriteIdentifiers(getIdentifierForId);
+
         const fetchDocs = async (selectedOperationId: string) => {
 
-            const docs = await fetchDocuments(
-                find,
-                selectedOperationId,
-                selectedType,
-                getIdentifierForId);
-
-            return asyncMap(rewriteIdentifiers(getIdentifierForId))(docs)
+            const docs = await fetchDocuments(find, selectedOperationId, selectedType);
+            return asyncMap(rewriteIdentifiers_)(docs)
         };
 
         try {
@@ -107,12 +104,10 @@ export module CsvExportHelper {
      * @param find
      * @param selectedOperationId
      * @param selectedType
-     * @param getIdentifierForId
      */
     async function fetchDocuments(find: Find,
                                   selectedOperationId: string,
-                                  selectedType: IdaiType,
-                                  getIdentifierForId: GetIdentifierForId): Promise<Array<FieldDocument>> {
+                                  selectedType: IdaiType): Promise<Array<FieldDocument>> {
 
         try {
 

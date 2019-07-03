@@ -136,21 +136,19 @@ export module Importer {
                                  getInverseRelation: (_: string) => string|undefined,
                                  generateId: () => string): ImportFunction {
 
+        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
+
         switch (format) {
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, false, false);
+                return defaultImport()(false, false);
             case 'shapefile':
             case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, true, false);
+                return defaultImport()(true, false);
             default: // native | csv
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, mergeMode, updateRelationsOnMergeMode,
-                    mainTypeDocumentId, true);
+                return defaultImport()(mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

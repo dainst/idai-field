@@ -16,52 +16,56 @@ export module DefaultImport {
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
                           getInverseRelation: (_: string) => string|undefined,
-                          generateId: () => string,
-                          mergeMode: boolean,
-                          allowOverwriteRelationsInMergeMode: boolean,
-                          mainTypeDocumentId: string = '' /* '' => no assignment */,
-                          useIdentifiersInRelations: boolean = false): ImportFunction {
+                          generateId: () => string) {
 
-        if (mainTypeDocumentId && mergeMode) {
-            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
-        }
+        return (mergeMode: boolean,
+                allowOverwriteRelationsInMergeMode: boolean,
+                mainTypeDocumentId: string = '' /* '' => no assignment */,
+                useIdentifiersInRelations: boolean = false): ImportFunction => {
 
-        /**
-         * @param datastore
-         * @param username
-         * @param documents documents with the field resource.identifier set to a non empty string.
-         *   If resource.id is set, it will be taken as document.id on creation.
-         *   The relations map is assumed to be at least existent, but can be empty.
-         *   The resource.type field may be empty.
-         * @param importReport
-         *   .errors of ImportError or Validation Error
-         */
-        return async function importFunction(documents: Array<Document>,
-                                             datastore: DocumentDatastore,
-                                             username: string): Promise<{ errors: string[][], successfulImports: number }> {
+            if (mainTypeDocumentId && mergeMode) {
+                throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
+            }
 
-            const process = DefaultImportCalc.build(
-                validator,
-                operationTypeNames,
-                generateId,
-                findByIdentifier(datastore),
-                (resourceId: string) => datastore.get(resourceId),
-                getInverseRelation,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode,
-                mainTypeDocumentId,
-                useIdentifiersInRelations);
+            /**
+             * @param datastore
+             * @param username
+             * @param documents documents with the field resource.identifier set to a non empty string.
+             *   If resource.id is set, it will be taken as document.id on creation.
+             *   The relations map is assumed to be at least existent, but can be empty.
+             *   The resource.type field may be empty.
+             * @param importReport
+             *   .errors of ImportError or Validation Error
+             */
+            return async function importFunction(documents: Array<Document>,
+                                                 datastore: DocumentDatastore, // TODO maybe get rid of datastore and username and let caller take care for storing to db
+                                                 username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-            const result = await process(documents);
-            if (result[2]) return {errors: [result[2]], successfulImports: 0};
+                const process = DefaultImportCalc.build(
+                    validator,
+                    operationTypeNames,
+                    generateId,
+                    findByIdentifier(datastore),
+                    (resourceId: string) => datastore.get(resourceId),
+                    getInverseRelation,
+                    mergeMode,
+                    allowOverwriteRelationsInMergeMode,
+                    mainTypeDocumentId,
+                    useIdentifiersInRelations);
 
-            const updateErrors = [];
-            try {
-                await ImportUpdater.go(
-                    result[0],
-                    result[1], datastore, username, mergeMode);
-            } catch (errWithParams) { updateErrors.push(errWithParams)}
-            return { errors: updateErrors, successfulImports: documents.length };
+                const result = await process(documents);
+                if (result[2]) return {errors: [result[2]], successfulImports: 0};
+
+                const updateErrors = [];
+                try {
+                    await ImportUpdater.go(
+                        result[0],
+                        result[1], datastore, username, mergeMode);
+                } catch (errWithParams) {
+                    updateErrors.push(errWithParams)
+                }
+                return {errors: updateErrors, successfulImports: documents.length};
+            }
         }
     }
 

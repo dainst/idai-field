@@ -1,6 +1,5 @@
 import {Document} from 'idai-components-2';
 import {makeLines} from './parser';
-import {PARENT} from '../../../c';
 
 /**
  * @author Daniel de Oliveira
@@ -31,7 +30,7 @@ export module CsvParsing {
             const document = makeDocument(row.split(sep), fields);
 
             (document.resource as any)['type'] = type;
-            (document.resource as any).relations = { isChildOf: operationId };
+            if (operationId) (document.resource as any).relations = { isChildOf: operationId };
 
             return documents.concat([document as any]);
 
@@ -70,7 +69,7 @@ export module CsvParsing {
 
     function makeDocument(fieldsOfRow: string[], fields: string[]) {
 
-        return fieldsOfRow.reduce((document, fieldOfRow, i) => {
+        return fieldsOfRow.reduce((document, fieldOfRow, i) => { // TODO return tsfun reduce
 
             if (fieldOfRow) insertFieldIntoDocument(document.resource, fields[i], fieldOfRow);
             return document;

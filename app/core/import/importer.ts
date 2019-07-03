@@ -132,7 +132,7 @@ export module Importer {
                                  validator: ImportValidator,
                                  operationTypeNames: string[],
                                  mainTypeDocumentId: string,
-                                 mergeMode = false,
+                                 mergeMode = false, // TODO we dont need default args both here and in DefaultImport.build
                                  updateRelationsOnMergeMode = false,
                                  getInverseRelation: (_: string) => string|undefined,
                                  generateId: () => string): ImportFunction {
@@ -140,7 +140,7 @@ export module Importer {
         switch (format) {
             case 'csv':
                 return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, mergeMode);
+                    generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true); // TODO put to default block
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':

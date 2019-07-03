@@ -1,4 +1,5 @@
 import {CsvParsing} from '../../../../../app/core/import/parser/csv-parsing';
+import {PARENT} from '../../../../../app/c';
 
 
 describe('CsvParsing', () => {
@@ -28,5 +29,16 @@ describe('CsvParsing', () => {
         expect(resource.dating[0].end.year).toBe('200');
         expect(resource.dating[0].source).toBe('S');
         expect(resource.dating[0].label).toBe('L');
+    });
+
+
+    it('implode relations', () => {
+
+        const lines = 'identifier,relations.isChildOf\n'
+            + 'identifier1,identifier2';
+
+        const documents = CsvParsing.parse(lines, 'type1', ',', '');
+        const resource = documents[0].resource;
+        expect(resource.relations[PARENT]).toBe('identifier2');
     });
 });

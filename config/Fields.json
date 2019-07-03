@@ -754,6 +754,7 @@
   "Wood": {
     "color": "#660000",
     "parent": "Find",
+    "commons": ["provenance"],
     "fields": {
       "color": {
         "inputType": "dropdown",
@@ -766,10 +767,12 @@
       "objectType": {
         "inputType": "dropdown",
         "valuelist": [
+          "Architektur",
           "Altar",
           "Anhänger",
           "Gefäß",
           "Gerät",
+          "Grabbehältnis",
           "Grabmarkierung",
           "Grabplatte",
           "Gussform",
@@ -777,9 +780,11 @@
           "Löffel",
           "Mobiliar",
           "Plastik/Skulptur",
+          "Produktionsrest",
           "Ring",
           "Sarkophag",
           "Schmuck",
+          "Spielzeug",
           "Unsicher bzw. unbestimmbar"
         ]
       },
@@ -807,6 +812,78 @@
           "Ulme",
           "Weide",
           "Zeder"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelist": [
+          "Gebohrt",
+          "Gedämpft",
+          "Gedreht",
+          "Gefräst",
+          "Gehobelt",
+          "Gesägt",
+          "Geschabt",
+          "Geschliffen",
+          "Geschnitzt",
+          "Gespalten"
+        ]
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Brandspuren",
+          "Keine Brandspuren",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Applik",
+          "Bemalung (Enkaustik)",
+          "Bemalung (Eitemperatechnik)",
+          "Intarsie",
+          "Relief",
+          "Ritzung",
+          "Schnitzung",
+          "Sgraffito",
+          "Vergoldung/metallischer Überzug"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
         ]
       }
     }

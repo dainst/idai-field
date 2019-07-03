@@ -22,9 +22,9 @@ import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
+import {ExportRunner} from '../../core/export/export-runner';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
-import {ExportRunner} from '../../core/export/export-runner';
 
 
 @Component({

@@ -1,6 +1,5 @@
-import {Document, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Document, ProjectConfiguration} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
-import {Parser} from './parser/parser';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
@@ -12,7 +11,7 @@ import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
 import {isnt} from 'tsfun';
-import {ImportFunction} from "./exec/import-function";
+import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 

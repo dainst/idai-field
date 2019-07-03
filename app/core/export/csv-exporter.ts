@@ -3,6 +3,7 @@ import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
 import {CSVExport} from './csv-export';
 import * as fs from 'fs';
 import {M} from '../../components/m';
+import {PerformExport} from './export-helper';
 
 /**
  * Small wrapper to separate async and file handling, including
@@ -10,22 +11,21 @@ import {M} from '../../components/m';
  *
  * @author Daniel de Oliveira
  */
-export module CSVExporter {
+export module CsvExporter {
 
     /**
-     * @param documents
-     * @param resourceType
-     * @param relations
      * @param outputFilePath
      */
-    export async function performExport(documents: Array<FieldDocument>,
-                                  resourceType: IdaiType,
-                                  relations: string[],
-                                  outputFilePath: string) {
+    export function performExport(outputFilePath: string): PerformExport {
 
-        await writeFile(
-            outputFilePath,
-            CSVExport.createExportable(documents, resourceType, relations));
+        return async (documents: Array<FieldDocument>,
+                      resourceType: IdaiType,
+                      relations: string[]) => {
+
+            await writeFile(
+                outputFilePath,
+                CSVExport.createExportable(documents, resourceType, relations)); // TODO maybe call it separately
+        }
     }
 
 

@@ -2,18 +2,20 @@ import {includedIn, isNot, on, asyncMap} from 'tsfun';
 import {Query} from 'idai-components-2/src/datastore/query';
 import {ISRECORDEDIN_CONTAIN} from '../../c';
 import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
-import {CSVExporter} from '../../core/export/csv-exporter';
 import {FieldDocument} from 'idai-components-2/src/model/field-document';
-import {Find, GetIdentifierForId, ResourceTypeCount} from './export-helper';
-import {clone} from '../../core/util/object-util';
+import {clone} from '../util/object-util';
+import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './export-helper';
 
 
 /**
- * Fetches documents, rewrites identifiers, exports the transformed docs
+ * Fetches documents, rewrites identifiers in relations, triggering the export of the transformed docs.
+ *
+ * Currently this gets used only by CSV export, though in principle it serves every export
+ * with the abovementioned requirements, especially the second.
  *
  * @author Daniel de Oliveira
  */
-export module CsvExportHelper {
+export module ExportRunner { // TODO set up test
 
     export const BASE_EXCLUSION = ['Operation', 'Project', 'Image', 'Drawing', 'Photo'];
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
@@ -21,18 +23,18 @@ export module CsvExportHelper {
 
     /**
      * @param find
-     * @param filePath
      * @param selectedOperationId
      * @param selectedType
      * @param relations
      * @param getIdentifierForId
+     * @param performExport
      */
     export async function performExport(find: Find,
-                                        filePath: string,
                                         selectedOperationId: string|undefined,
                                         selectedType: IdaiType,
                                         relations: string[],
-                                        getIdentifierForId: GetIdentifierForId) {
+                                        getIdentifierForId: GetIdentifierForId,
+                                        performExport: PerformExport) {
 
         const rewriteIdentifiers_ = rewriteIdentifiers(getIdentifierForId);
 
@@ -43,13 +45,12 @@ export module CsvExportHelper {
         };
 
         try {
-            await CSVExporter.performExport(
+            await performExport(
                 selectedOperationId
                     ? await fetchDocs(selectedOperationId)
                     : [],
                 selectedType,
-                relations,
-                filePath);
+                relations);
 
         } catch (err) {
             console.error(err);

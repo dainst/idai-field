@@ -13,9 +13,10 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {CsvExportHelper} from './csv-export-helper';
-import {ResourceTypeCount} from './export-helper';
 import {to} from 'tsfun';
+import {CsvExporter} from '../../core/export/csv-exporter';
+import {ResourceTypeCount} from '../../core/export/export-helper';
+import {ExportRunner} from '../../core/export/export-runner';
 
 const remote = require('electron').remote;
 
@@ -80,7 +81,7 @@ export class ExportComponent implements OnInit {
 
     public async setTypeCounts() {
 
-        this.resourceTypeCounts = await CsvExportHelper.determineTypeCounts(
+        this.resourceTypeCounts = await ExportRunner.determineTypeCounts(
             this.find,
             this.getOperationIdForMode(),
             this.projectConfiguration.getTypesList());
@@ -127,7 +128,7 @@ export class ExportComponent implements OnInit {
 
     private async startGeojsonExport(filePath: string) {
 
-        await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
+        await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId); // TODO make use of ExportRunner
     }
 
 
@@ -140,17 +141,15 @@ export class ExportComponent implements OnInit {
 
     private async startCsvExport(filePath: string) {
 
-        if (this.selectedType) {
+        if (!this.selectedType) return console.error("No resource type selected");
 
-            await CsvExportHelper.performExport(
-                this.find,
-                filePath,
-                this.getOperationIdForMode(),
-                this.selectedType,
-                (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
-                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier));
-
-        } else console.error("No resource type selected");
+        await ExportRunner.performExport(
+            this.find,
+            this.getOperationIdForMode(),
+            this.selectedType,
+            (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
+            (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
+            CsvExporter.performExport(filePath));
     }
 
 

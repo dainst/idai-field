@@ -23,7 +23,7 @@ export module DefaultImport {
                 mainTypeDocumentId: string = '' /* '' => no assignment */,
                 useIdentifiersInRelations: boolean = false): ImportFunction => {
 
-            if (mainTypeDocumentId && mergeMode) {
+            if (mainTypeDocumentId && mergeMode) { // TODO extract redundancy into function
                 throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
             }
 

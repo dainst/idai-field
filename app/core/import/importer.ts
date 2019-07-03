@@ -132,8 +132,8 @@ export module Importer {
                                  validator: ImportValidator,
                                  operationTypeNames: string[],
                                  mainTypeDocumentId: string,
-                                 mergeMode = false, // TODO we dont need default args both here and in DefaultImport.build
-                                 updateRelationsOnMergeMode = false,
+                                 mergeMode: boolean,
+                                 updateRelationsOnMergeMode: boolean,
                                  getInverseRelation: (_: string) => string|undefined,
                                  generateId: () => string): ImportFunction {
 

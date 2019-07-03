@@ -15,7 +15,7 @@ import {INCLUDES, LIES_WITHIN, PARENT, RECORDED_IN, RESOURCE_ID, RESOURCE_IDENTI
  */
 export module DefaultImportCalc {
 
-    type Either<T1, T2> = [T1, undefined]|[undefined, T2];
+    type Either<T1, T2> = [T1, undefined]|[undefined, T2]; // TODO move to helper
 
     type Get = (resourceId: string) => Promise<Document>;
     type Find = (identifier: string) => Promise<Document|undefined>;
@@ -27,7 +27,7 @@ export module DefaultImportCalc {
     type Identifier = string;
     type IdentifierMap = { [identifier: string]: string };
 
-    const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
+    const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN]; // TODO use existing definitions from c.ts
 
 
     export function build(validator: ImportValidator,

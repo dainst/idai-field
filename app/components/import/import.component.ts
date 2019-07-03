@@ -25,6 +25,7 @@ import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
+import {includedIn} from 'tsfun/src/comparator';
 
 
 @Component({
@@ -80,7 +81,7 @@ export class ImportComponent implements OnInit {
 
     public showMergeOption = () => this.format === 'native' || this.format === 'csv';
 
-    public showMergeRelationsOption = () => this.format === 'native' && this.allowMergingExistingResources;
+    public showMergeRelationsOption = () => includedIn(['native', 'csv'])(this.format) && this.allowMergingExistingResources;
 
     public isMeninxProject = () => this.settingsService.getSelectedProject().indexOf('meninx-project') !== -1;
 

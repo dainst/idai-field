@@ -138,9 +138,6 @@ export module Importer {
                                  generateId: () => string): ImportFunction {
 
         switch (format) {
-            case 'csv':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true); // TODO put to default block
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
@@ -155,7 +152,7 @@ export module Importer {
             case 'geojson-gazetteer':
                 return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
                     generateId);
-            default: // native
+            default: // native | csv
                 return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
                     generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }

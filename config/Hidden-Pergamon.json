@@ -1,1 +1,19 @@
-{}
+{
+  "Find" : [
+    "condition"
+  ],
+  "Glass": [
+    "vesselForm",
+    "vesselFormSpecific",
+    "formDescription",
+    "color"
+  ],
+  "Coin": [
+    "preservedDiameter"
+  ],
+  "Terracotta": [
+    "vesselForm",
+    "formDescription",
+    "vesselFormSpecific"
+  ]
+}

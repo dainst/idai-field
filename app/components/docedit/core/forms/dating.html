@@ -1,9 +1,7 @@
 <ng-template #editDate let-date="date" let-index="index">
-    <input class="form-control" type="number" size="6" min="0" max="100000"
-           [(ngModel)]="date.year" value="0" style="width:100px" name="year_{{index}}"
-           required>
-    <select class="form-control ml-1" [(ngModel)]="date.type"
-            style="width:80px" name="type_{{index}}">
+    <input class="form-control year-input" type="number" size="6" min="0" max="100000"
+           [(ngModel)]="date.year" value="0" name="year_{{index}}" required>
+    <select class="form-control ml-1 type-select" [(ngModel)]="date.type" name="type_{{index}}">
         <option value="bce">v.Chr.</option>
         <option value="ce">n.Chr.</option>
         <option value="bp">BP</option>
@@ -53,7 +51,7 @@
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
                                           [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
-                            <span style="width: 60px; text-align:center;" i18n="@@docedit.forms.dating.until">bis</span>
+                            <span class="until-label" i18n="@@docedit.forms.dating.until">bis</span>
                             <ng-container [ngTemplateOutlet]="editDate"
                                           [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                         </div>
@@ -100,8 +98,8 @@
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
                                           [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
-                            <span style="width: 60px; text-align:center; font-weight:bold; font-size:1.5em">&plusmn;</span>
-                            <input type="number" style="width:100px" name="margin" class="form-control"
+                            <span class="margin-label">&plusmn;</span>
+                            <input type="number" name="margin" class="form-control margin-input"
                                    [(ngModel)]="dating.margin">
                         </div>
                     </div>

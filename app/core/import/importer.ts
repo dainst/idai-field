@@ -142,13 +142,13 @@ export module Importer {
                 return MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, false);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, false, false);
             case 'shapefile':
             case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, true, false);
             default: // native | csv
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, mergeMode,
-                    updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                return DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, mergeMode, updateRelationsOnMergeMode,
+                    mainTypeDocumentId, true);
         }
     }
 }

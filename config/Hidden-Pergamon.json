@@ -19,5 +19,11 @@
   "Wood": [
     "color",
     "catalogueNumber"
+  ],
+  "Brick": [
+    "brickForm",
+    "clayColorInside",
+    "clayColorOutside",
+    "specificType"
   ]
 }

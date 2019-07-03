@@ -566,7 +566,7 @@
         ]
       },
       "coatQuality": {
-        "inputType": "input",
+        "inputType": "dropdown",
         "valuelist": [
           "glänzend dicht",
           "glänzend dünn",
@@ -790,6 +790,107 @@
           "Vieleckig",
           "Sonstiges"
         ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Bodenziegel",
+          "Dachziegel (Imbrex)",
+          "Dachziegel (Kalypter)",
+          "Dachziegel (Stroter)",
+          "Dachziegel (Tegula)",
+          "Hypokaustziegel",
+          "Mauerziegel",
+          "Unsicher",
+          "Wandziegel"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelist": [
+          "Gebrannt",
+          "Gepresst",
+          "handgeformt",
+          "luftgetrocknet"
+        ]
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schadensbrand",
+          "Fehlbrand",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Überzug",
+          "Glasur",
+          "Fingerabdruck",
+          "Sonstige Abdrücke",
+          "Wischzeichen",
+          "Relief",
+          "Ritzung",
+          "Stempel"
+        ]
+      },
+      "coatQuality": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "glänzend dicht",
+          "glänzend dünn",
+          "matt dicht",
+          "matt dünn",
+          "schwach glänzend dicht",
+          "schwach glänzend dünn",
+          "stark glänzend dicht",
+          "stark glänzend dünn"
+        ]
+      },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
       }
     }
   },

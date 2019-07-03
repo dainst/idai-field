@@ -179,6 +179,54 @@
       "fields": {
         "formDescription": {
           "label": "Form"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "colorInside": {
+          "label": "Tonfarbe(n) innen"
+        },
+        "colorOutside": {
+          "label": "Tonfarbe(n) außen"
+        },
+        "colorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Tonfarbe Kern Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+          "label": "Tonfarbe Innen Munsell-Nr."
+        },
+        "colorOutsideMunsell": {
+          "label": "Tonfarbe Außen Munsell-Nr."
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "featureText": {
+          "label": "Stempeltext/Produzent"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug außen"
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug innen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Farbe Überzug innen Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Farbe Überzug außen Munsell-Nr."
+        },
+        "coatCondition": {
+          "label": "Zustand Überzug"
         }
       }
     },

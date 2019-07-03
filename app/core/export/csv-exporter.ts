@@ -1,5 +1,4 @@
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
-import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
+import {FieldResource, IdaiType} from 'idai-components-2';
 import {CSVExport} from './csv-export';
 import * as fs from 'fs';
 import {M} from '../../components/m';
@@ -18,13 +17,13 @@ export module CsvExporter {
      */
     export function performExport(outputFilePath: string): PerformExport {
 
-        return async (documents: Array<FieldDocument>,
+        return async (resources: Array<FieldResource>,
                       resourceType: IdaiType,
                       relations: string[]) => {
 
             await writeFile(
                 outputFilePath,
-                CSVExport.createExportable(documents, resourceType, relations)); // TODO maybe call it separately
+                CSVExport.createExportable(resources, resourceType, relations)); // TODO maybe call it separately
         }
     }
 

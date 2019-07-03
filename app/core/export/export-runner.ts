@@ -1,4 +1,4 @@
-import {includedIn, isNot, on, asyncMap} from 'tsfun';
+import {includedIn, isNot, on, asyncMap, to} from 'tsfun';
 import {Query} from 'idai-components-2/src/datastore/query';
 import {ISRECORDEDIN_CONTAIN} from '../../c';
 import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
@@ -47,7 +47,7 @@ export module ExportRunner { // TODO set up test
         try {
             await performExport(
                 selectedOperationId
-                    ? await fetchDocs(selectedOperationId)
+                    ? (await fetchDocs(selectedOperationId)).map(to('resource'))
                     : [],
                 selectedType,
                 relations);

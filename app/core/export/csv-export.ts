@@ -1,5 +1,5 @@
-import {FieldDocument, IdaiType} from 'idai-components-2';
-import {includedIn, isNot, isnt, to} from 'tsfun';
+import {FieldResource, IdaiType} from 'idai-components-2';
+import {includedIn, isNot, isnt, to, identity} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 
@@ -11,19 +11,19 @@ export module CSVExport {
 
     /**
      * Creates a header line and lines for each record.
-     * If documents is empty, still a header line gets created.
+     * If resources is empty, still a header line gets created.
      *
-     * @param documents
+     * @param resources
      * @param resourceType
      * @param relations
      */
-    export function createExportable(documents: FieldDocument[],
+    export function createExportable(resources: FieldResource[],
                                      resourceType: IdaiType,
                                      relations: Array<string>) {
 
         const headings: string[] = makeHeadings(resourceType, relations);
 
-        let matrix = documents
+        let matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
@@ -128,23 +128,23 @@ export module CSVExport {
     }
 
 
-    function toDocumentWithFlattenedRelations(document: FieldDocument) {
+    function toDocumentWithFlattenedRelations(resource: FieldResource) {
 
-        const cloned = clone(document);
+        const cloned = clone(resource);
 
-        if (!cloned.resource.relations) return cloned;
-        for (let relation of Object.keys(cloned.resource.relations)) { // TODO use HOF, maybe get rid of clone then
-            cloned.resource['relations.' + relation] = cloned.resource.relations[relation].join(';');
+        if (!cloned.relations) return cloned;
+        for (let relation of Object.keys(cloned.relations)) { // TODO use HOF, maybe get rid of clone then
+            cloned['relations.' + relation] = cloned.relations[relation].join(';');
         }
-        delete cloned.resource.relations;
+        delete cloned.relations;
 
-        if (cloned.resource['relations.liesWithin']) {
-            delete cloned.resource['relations.isRecordedIn'];
-            cloned.resource['relations.isChildOf'] = cloned.resource['relations.liesWithin'];
+        if (cloned['relations.liesWithin']) {
+            delete cloned['relations.isRecordedIn'];
+            cloned['relations.isChildOf'] = cloned['relations.liesWithin'];
         }
-        else if (cloned.resource['relations.isRecordedIn']) {
-            cloned.resource['relations.isChildOf'] = cloned.resource['relations.isRecordedIn'];
-            delete cloned.resource['relations.isRecordedIn'];
+        else if (cloned['relations.isRecordedIn']) {
+            cloned['relations.isChildOf'] = cloned['relations.isRecordedIn'];
+            delete cloned['relations.isRecordedIn'];
         }
 
         return cloned;
@@ -153,17 +153,17 @@ export module CSVExport {
 
     function toRowsArrangedBy(fieldNames: string[]) {
 
-        return (document: FieldDocument) => {
+        return (resource: FieldResource) => {
 
             const newLine = new Array(fieldNames.length);
 
-            return getUsableFieldNames(Object.keys(document.resource))
+            return getUsableFieldNames(Object.keys(resource))
                 .reduce((line, fieldName) =>  {
 
                     const indexOfFoundElement = fieldNames.indexOf(fieldName);
                     if (indexOfFoundElement !== -1) {
 
-                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
+                        line[indexOfFoundElement] = (resource as any)[fieldName];
                     }
                     return line;
                 }, newLine);
@@ -195,7 +195,4 @@ export module CSVExport {
 
 
     const toCsvLine = (as: string[]): string => as.join(',');
-
-
-    const identity = (_: any) => _; // TODO move to tsfun or expose tsfuns identical
 }

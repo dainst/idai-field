@@ -19,6 +19,12 @@ describe('CSVExport', () => {
     }
 
 
+    function ifResource(id: string, identifier: string, sd: string, type: string) {
+
+        return Static.ifDoc(sd, identifier, type, id).resource;
+    }
+
+
     it('create header line if documents empty', () => {
 
         const t = makeType(['identifier', 'shortDescription', 'custom', 'id']);
@@ -32,8 +38,8 @@ describe('CSVExport', () => {
 
         const t = makeType(['identifier', 'shortDescription']);
 
-        const docs = [Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i')];
-        const result = CSVExport.createExportable(docs, t, []);
+        const resources = [ifResource('i', 'identifier1', 'shortDescription1','type')];
+        const result = CSVExport.createExportable(resources, t, []);
         expect(result[0]).toEqual('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toEqual('identifier1,shortDescription1,');
     });
@@ -43,19 +49,19 @@ describe('CSVExport', () => {
 
         const t = makeType(['identifier', 'dating', 'custom']);
 
-        const docs = [
-            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
-            Static.ifDoc('shortDescription2', 'identifier2', 'type', 'i2'),
-            Static.ifDoc('shortDescription3', 'identifier3', 'type', 'i3')
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+            ifResource('i2', 'identifier2', 'shortDescription2', 'type'),
+            ifResource('i3', 'identifier3', 'shortDescription3', 'type')
         ];
-        docs[0].resource.dating = [
+        resources[0].dating = [
             {begin: {year: 10}, end: {year: 20}, source: 'some1', label: 'blablabla1'},
             {begin: {year: 20}, end: {year: 30}, source: 'some2', label: 'blablabla2'}];
-        docs[1].resource.dating = [
+        resources[1].dating = [
             {begin: {year: 40}, end: {year: 50}, source: 'some3', label: 'blablabla3'}];
-        docs[1].resource.custom = 'custom';
+        resources[1].custom = 'custom';
 
-        const result = CSVExport.createExportable(docs, t, []).map(row => row.split(','));
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
 
         expect(result[0][1]).toBe('dating.0.begin.year');
@@ -104,12 +110,12 @@ describe('CSVExport', () => {
 
         const t = makeType(['identifier', 'shortDescription']);
 
-        const docs = [
-            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
         ];
-        docs[0].resource.relations = { someRelation: ["identifier2"] } as any;
+        resources[0].relations = { someRelation: ["identifier2"] } as any;
 
-        const result = CSVExport.createExportable(docs, t, ['someRelation']);
+        const result = CSVExport.createExportable(resources, t, ['someRelation']);
         expect(result[0]).toBe('identifier,shortDescription,relations.someRelation,relations.isChildOf');
         expect(result[1]).toBe('identifier1,shortDescription1,identifier2,');
     });
@@ -119,15 +125,15 @@ describe('CSVExport', () => {
 
         const t = makeType(['identifier', 'shortDescription']);
 
-        const docs = [
-            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
         ];
-        docs[0].resource.relations = {
+        resources[0].relations = {
             liesWithin: ["identifier2"],
             isRecordedIn: ["operation1"]
         } as any;
 
-        const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
+        const result = CSVExport.createExportable(resources, t, ['isRecordedIn', 'liesWithin', 'includes']);
         expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
     });
@@ -137,14 +143,14 @@ describe('CSVExport', () => {
 
         const t = makeType(['identifier', 'shortDescription']);
 
-        const docs = [
-            Static.ifDoc('shortDescription1', 'identifier1', 'type', 'i1'),
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
         ];
-        docs[0].resource.relations = {
+        resources[0].relations = {
             isRecordedIn: ["operation1"]
         } as any;
 
-        const result = CSVExport.createExportable(docs, t, ['isRecordedIn', 'liesWithin', 'includes']);
+        const result = CSVExport.createExportable(resources, t, ['isRecordedIn', 'liesWithin', 'includes']);
         expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toBe('identifier1,shortDescription1,operation1');
     });

@@ -6,6 +6,7 @@ import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, 
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
+import {DatingUtil} from '../core/util/dating-util';
 
 
 type FieldViewGroupDefinition = {
@@ -102,6 +103,16 @@ export class FieldsViewComponent implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         this.onJumpToResource.emit(document);
+    }
+
+
+    public getArrayItemLabel(arrayItem: any): string {
+
+        if (arrayItem.begin || arrayItem.end) {
+            return DatingUtil.generateLabel(arrayItem);
+        } else {
+            return arrayItem;
+        }
     }
 
 

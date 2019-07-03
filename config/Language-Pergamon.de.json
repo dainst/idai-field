@@ -30,47 +30,59 @@
     },
     "Glass": {
       "fields": {
-        "clayColorOutside": {
+        "colorOutside": {
           "label": "Farbe(n) außen"
         },
-        "clayColorOutsideMunsell": {
+        "colorOutsideMunsell": {
           "label": "Farbe außen Munsell-Nr."
         },
-        "clayColorInside": {
+        "colorInside": {
           "label": "Farbe(n) innen"
         },
-        "clayColorInsideMunsell": {
+        "colorInsideMunsell": {
           "label": "Farbe innen Munsell-Nr."
         },
-        "burnMarks": {
+        "surfaceCondition": {
           "label": "Brandspuren"
         },
         "form": {
           "label": "Form"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
         }
       }
     },
     "Terracotta": {
       "fields": {
-        "make": {
+        "manufacturing": {
           "label": "Fabrikat"
         },
-        "clayColorOutside": {
+        "colorOutside": {
           "label": "Tonfarbe(n) Außen"
         },
-        "clayColorInside": {
+        "colorInside": {
           "label": "Tonfarbe(n) Innen"
         },
-        "clayColorOutsideMunsell": {
+        "colorOutsideMunsell": {
           "label": "Tonfarbe Außen Munsell-Nr."
         },
-        "clayColorInsideMunsell": {
+        "colorInsideMunsell": {
             "label": "Tonfarbe Innen Munsell-Nr."
         },
-        "clayColorBreak": {
+        "colorBreak": {
           "label": "Tonfarbe(n) Kern"
         },
-        "clayColorBreakMunsell": {
+        "colorBreakMunsell": {
           "label": "Tonfarbe(n) Kern Munsell-Nr."
         },
         "coatColorInside": {
@@ -135,6 +147,38 @@
         },
         "depictedBeingClothing": {
           "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Wood": {
+      "fields": {
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Brick": {
+      "fields": {
+        "formDescription": {
+          "label": "Form"
         }
       }
     },

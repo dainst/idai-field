@@ -391,6 +391,42 @@
         "typeOfWood": {
           "label": "Holzart",
           "description": "Holzartenbestimmung am Objekt"
+        },
+        "manufacturingMethod": {
+          "label": "Herstellungstechnik"
+        },
+        "colorOutside": {
+          "label": "Holzfarbe(n) Außen"
+        },
+        "colorInside": {
+          "label": "Holzfarbe(n) Innen"
+        },
+        "colorOutsideMunsell": {
+          "label": "Holzfarbe Außen Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+            "label": "Holzfarbe Innen Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Holzfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Holzfarbe(n) Kern Munsell-Nr."
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
         }
       }
     },

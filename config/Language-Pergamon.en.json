@@ -30,19 +30,19 @@
     },
     "Glass": {
       "fields": {
-        "clayColorOutside": {
+        "colorOutside": {
           "label": "Color(s) outside"
         },
-        "clayColorOutsideMunsell": {
+        "colorOutsideMunsell": {
           "label": "Color outside Munsell-Nr."
         },
-        "clayColorInside": {
+        "colorInside": {
           "label": "Color(s) inside"
         },
-        "clayColorInsideMunsell": {
+        "colorInsideMunsell": {
           "label": "Color inside Munsell-Nr."
         },
-        "burnMarks": {
+        "surfaceCondition": {
           "label": "Burn marks"
         },
         "form": {
@@ -52,19 +52,19 @@
     },
     "Terracotta": {
       "fields": {
-        "make": {
+        "manufacturing": {
           "label": "Make"
         },
-        "clayColorOutsideMunsell": {
+        "colorOutsideMunsell": {
           "label": "color outside Munsell-Nr."
         },
-        "clayColorInsideMunsell": {
+        "colorInsideMunsell": {
           "label": "color inside Munsell-Nr."
         },
-        "clayColorBreak": {
+        "colorBreak": {
           "label": "Color(s) core"
         },
-        "clayColorBreakMunsell": {
+        "colorBreakMunsell": {
           "label": "Color core Munsell-Nr."
         },
         "coatColorInside": {
@@ -129,6 +129,38 @@
         },
         "depictedBeingClothing": {
           "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Wood": {
+      "fields": {
+        "depictedBeing": {
+          "label": "Depicted being"
+        },
+        "depictedBeingSpecific": {
+          "label": "Being: specific"
+        },
+        "depictedBeingSex": {
+          "label": "Being: sex"
+        },
+        "depictedBeingAge": {
+          "label": "Being: age",
+        },
+        "depictedBeingFormat": {
+          "label": "Being: format"
+        },
+        "artist": {
+          "label": "Artist/Umsetzung nach Typus "
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Brick": {
+      "fields": {
+        "formDescription": {
+          "label": "Form"
         }
       }
     },

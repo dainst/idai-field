@@ -100,7 +100,6 @@ export module Importer {
     }
 
 
-
     function createParser(format: ImportFormat,
                           operationId: string,
                           selectedType?: string|undefined): any {

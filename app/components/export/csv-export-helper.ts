@@ -81,7 +81,7 @@ export module CsvExportHelper {
                 BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION));
 
         const resourceTypeCounts: Array<ResourceTypeCount> = [];
-        for (let resourceType of resourceTypes) { // TODO make asyncReduce in tsfun
+        for (let resourceType of resourceTypes) {
             const query = getQuery(resourceType.name, selectedOperationId);
             resourceTypeCounts.push([
                 resourceType,

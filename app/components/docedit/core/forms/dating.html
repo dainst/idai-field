@@ -1,6 +1,6 @@
 <ng-template #editDate let-date="date" let-index="index">
     <input class="form-control" type="number" size="6" min="0" max="100000"
-           [(ngModel)]="date.value" value="0" style="width:100px" name="value_{{index}}"
+           [(ngModel)]="date.year" value="0" style="width:100px" name="year_{{index}}"
            required>
     <select class="form-control ml-1" [(ngModel)]="date.type"
             style="width:80px" name="type_{{index}}">
@@ -12,7 +12,7 @@
 
 <ng-template #checkboxes let-dating="dating" let-hide="hide">
     <div class="form-group">
-        <div class="form-check form-check-inline" *ngIf="hide != 'isImprecise'">
+        <div class="form-check form-check-inline" *ngIf="hide !== 'isImprecise'">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox"
                        [checked]="dating.isImprecise"
@@ -20,7 +20,7 @@
                 <span i18n="@@docedit.forms.dating.imprecise">Ungenau</span>
             </label>
         </div>
-        <div class="form-check form-check-inline" *ngIf="hide != 'isUncertain'">
+        <div class="form-check form-check-inline" *ngIf="hide !== 'isUncertain'">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox"
                        [checked]="dating.isUncertain"
@@ -30,7 +30,6 @@
         </div>
     </div>
 </ng-template>
-
 
 <ng-template #editDating let-dating="dating">
     <form #datingForm="ngForm" (ngSubmit)="addNewDating()">
@@ -53,10 +52,10 @@
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
                             <span style="width: 60px; text-align:center;" i18n="@@docedit.forms.dating.until">bis</span>
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[1], index: 1 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                         </div>
                     </div>
                     <ng-container [ngTemplateOutlet]="checkboxes"
@@ -67,7 +66,7 @@
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                         </div>
                     </div>
                     <ng-container [ngTemplateOutlet]="checkboxes"
@@ -78,7 +77,7 @@
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[1], index: 1 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                         </div>
                     </div>
                     <ng-container [ngTemplateOutlet]="checkboxes"
@@ -89,7 +88,7 @@
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
                         </div>
                     </div>
                     <ng-container [ngTemplateOutlet]="checkboxes"
@@ -100,7 +99,7 @@
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
-                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                                          [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                             <span style="width: 60px; text-align:center; font-weight:bold; font-size:1.5em">&plusmn;</span>
                             <input type="number" style="width:100px" name="margin" class="form-control"
                                    [(ngModel)]="dating.margin">
@@ -117,7 +116,7 @@
             </div>
             <div class="card-footer" align="right">
                 <button type="submit" class="btn btn-primary"
-                        [disabled]="!convertDating(dating)">
+                        [disabled]="!validate(dating)">
                     <span i18n="@@buttons.ok">OK</span>
                 </button>
                 <button type="button" class="btn btn-secondary"
@@ -129,9 +128,9 @@
     </form>
 </ng-template>
 
-<div *ngFor="let item of resource[field.name]; index as i"  class="checkbox">
+<div *ngFor="let dating of resource[field.name]; index as i"  class="checkbox">
     <div class="input-group mb-2">
-        <input value="{{item.label}}" type="text" disabled class="form-control">
+        <input value="{{getLabel(dating)}}" type="text" disabled class="form-control">
         <button class="btn btn-danger" type="button" (click)="removeDating(i)">
             <span class="mdi mdi-delete"></span>
         </button>

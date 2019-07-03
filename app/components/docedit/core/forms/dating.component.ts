@@ -1,5 +1,18 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
+import {DatingUtil} from '../../../../core/util/dating-util';
+
+
+export interface Dating {
+    type: 'range'|'exact'|'before'|'after'|'scientific',
+    begin?: { year: number, type: 'bce'|'ce'|'bp' },
+    end?: { year: number, type: 'bce'|'ce'|'bp' },
+    margin?: number,
+    source?: string,
+    isImprecise?: boolean,
+    isUncertain?: boolean,
+    label?: string  // Deprecated
+}
 
 
 @Component({
@@ -7,22 +20,16 @@ import {Resource} from 'idai-components-2';
     selector: 'dai-dating',
     templateUrl: './dating.html'
 })
-
 /**
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class DatingComponent {
-
-    public DATE_TYPES = {
-        'bce': 'v.Chr.',
-        'ce': 'n.Chr.',
-        'bp': 'BP'
-    };
 
     @Input() resource: Resource;
     @Input() field: any;
 
-    public newDating: {} = null as any;
+    public newDating: Dating|undefined = undefined;
 
 
     constructor() {}
@@ -39,7 +46,8 @@ export class DatingComponent {
 
         this.newDating = {
             type: 'range',
-            dates: [{ value: 0, type: 'bce' }, { value: 0, type: 'bce' }]
+            begin: { year: 0, type: 'bce' },
+            end: { year: 0, type: 'bce' }
         };
     }
 
@@ -47,98 +55,37 @@ export class DatingComponent {
     public addNewDating() {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-        this.resource[this.field.name].push(this.convertDating(this.newDating));
-        this.newDating = null as any;
+        this.resource[this.field.name].push(this.newDating);
+        this.newDating = undefined;
     }
 
 
-    public convertDating(dating: any): any {
+    public getLabel(dating: Dating): string {
 
-        for (let date of dating.dates) {
-            if (date.value < 0) return false;
-        }
-
-        const converted = this.createNormalizedDating(dating);
-
-        if (dating.type != 'scientific' && converted['begin'] && converted['end']
-                && converted['begin']['year'] > converted['end']['year']) {
-            return false;
-        }
-
-        if (dating.type == 'scientific' && dating.margin > 0) {
-            converted['end']['year'] = converted['begin']['year'] + dating.margin;
-            converted['begin']['year'] -= dating.margin;
-        }
-
-        if (dating['source']) converted['source'] = dating['source'];
-        if (dating['isImprecise']) converted['isImprecise'] = true;
-        if (dating['isUncertain']) converted['isUncertain'] = true;
-
-        converted['label'] = this.generateLabel(dating);
-
-        return converted;
+        return dating.label ? dating.label : DatingUtil.generateLabel(dating);
     }
 
 
-    private createNormalizedDating(dating: any) {
+    public validate(dating: Dating): boolean {
 
-        const normalized = {} as any;
-
-        if (dating.type != 'before')
-            normalized['begin'] = { year: this.normalizeDate(dating.dates[0]) };
-        if (dating.type != 'after')
-            normalized['end'] = { year: this.normalizeDate(dating.dates[1]) };
-        if (dating.type == 'exact')
-            normalized['end'] = { year: this.normalizeDate(dating.dates[0]) };
-
-        return normalized;
+        if (dating.begin && dating.begin.year < 0) return false;
+        if (dating.end && dating.end.year < 0) return false;
+        return dating.type !== 'range' || DatingComponent.validateRangeDating(dating);
     }
 
 
-    private normalizeDate(date: any) {
+    private static validateRangeDating(dating: Dating): boolean {
 
-        if (date.type == 'bce') return 0 - date.value;
-        if (date.type == 'bp') return 1950 - date.value;
-
-        return date.value;
+        return dating.begin !== undefined && dating.end !== undefined &&
+            this.getNormalizedYear(dating.begin) < this.getNormalizedYear(dating.end);
     }
 
 
-    private generateLabel(dating: any): string {
+    private static getNormalizedYear(date: any): number {
 
-        let prefix = '';
-        let year = '';
-        let postfix = '';
+        if (date.type === 'bce') return 0 - date.year;
+        if (date.type === 'bp') return 1950 - date.year;
 
-        if (dating.type == 'range') {
-            year = this.generateLabelForDate(dating.dates[0])
-                + ' – ' + this.generateLabelForDate(dating.dates[1]);
-        }
-        if (dating.type == 'before') year = this.generateLabelForDate(dating.dates[1]);
-        if (dating.type == 'after' || dating.type == 'exact') year = this.generateLabelForDate(dating.dates[0]);
-        if (dating.type == 'scientific') {
-            year = this.generateLabelForDate(dating.dates[0]);
-            if (dating.margin > 0) year += ' ± ' + dating.margin;
-        }
-
-        if (dating['isImprecise']) prefix = 'ca. ';
-        if (dating['isUncertain']) postfix = ' (?)';
-
-        if (dating.type == 'before') prefix = 'Vor ' + prefix;
-        if (dating.type == 'after') prefix = 'Nach ' + prefix;
-
-        if (dating['source']) postfix += ' [' + dating['source'] + ']';
-
-        return prefix + year + postfix;
-    }
-
-
-    private generateLabelForDate(date: any): string {
-
-        if (date.value == 0) {
-            return '0';
-        } else {
-            return date.value + ' ' + ((this.DATE_TYPES as any)[date.type as any] as any);
-        }
+        return date.year;
     }
 }

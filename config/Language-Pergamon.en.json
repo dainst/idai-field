@@ -1,8 +1,20 @@
 {
   "types": {
     "Find": {
-      "amount": {
-        "label": "Total number"
+      "fields":{
+        "amount": {
+          "label": "Total number"
+        },
+        "specialStatus": {
+          "label": "Special status"
+        },
+        "deviatingStoragePlace": {
+          "label": "Deviating Storage Place/Inventory number"
+        },
+        "conditionComment": {
+          "label": "Anpassungen/Zugehörigkeiten",
+          "description": "bzw. Kommentar Erhaltungszustand"
+        }
       }
     },
     "Pottery": {
@@ -13,6 +25,110 @@
         },
         "isMisfired": {
           "label": "Misfired"
+        }
+      }
+    },
+    "Glass": {
+      "fields": {
+        "clayColorOutside": {
+          "label": "Color(s) outside"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Color outside Munsell-Nr."
+        },
+        "clayColorInside": {
+          "label": "Color(s) inside"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Color inside Munsell-Nr."
+        },
+        "burnMarks": {
+          "label": "Burn marks"
+        },
+        "form": {
+          "label": "Form"
+        }
+      }
+    },
+    "Terracotta": {
+      "fields": {
+        "make": {
+          "label": "Make"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "color outside Munsell-Nr."
+        },
+        "clayColorInsideMunsell": {
+          "label": "color inside Munsell-Nr."
+        },
+        "clayColorBreak": {
+          "label": "Color(s) core"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Color core Munsell-Nr."
+        },
+        "coatColorInside": {
+          "label": "Color(s) coat inside"
+        },
+        "coatColorOutside": {
+          "label": "Color(s) coat outside"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Coat inside Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Coat outside Munsell-Nr."
+        },
+        "paintColor": {
+          "label": "Paint color"
+        },
+        "paintColorMunsell": {
+          "label": "Paint color Munsell-Nr."
+        },
+        "coatQuality": {
+          "label": "Quality of coat"
+        },
+        "coatCondition": {
+          "label": "Condition of coat"
+        },
+        "paintCondition": {
+          "label": "Condition of paint"
+        },
+        "objectType": {
+          "label": "Object type"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "surfaceCondition": {
+          "label": "Burn marks"
+        },
+        "decorationTechnique": {
+          "label": "Decoration technique"
+        },
+        "decorationDescription": {
+          "label": "Decoration Description"
+        },
+        "depictedBeing": {
+          "label": "Depicted being"
+        },
+        "depictedBeingSpecific": {
+          "label": "Being: specific"
+        },
+        "depictedBeingSex": {
+          "label": "Being: sex"
+        },
+        "depictedBeingAge": {
+          "label": "Being: age",
+        },
+        "depictedBeingFormat": {
+          "label": "Being: format"
+        },
+        "artist": {
+          "label": "Artist/Umsetzung nach Typus "
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
         }
       }
     },

@@ -1,9 +1,20 @@
 {
   "types": {
     "Find": {
-      "amount": {
-        "label": "Anzahl (gesamt)",
-        "decription": "Was unter 'Zustand' zusammengefasst wird kann hier zusammengerechnet werden, wenn dies gewollt ist"
+      "fields": {
+        "date": {
+          "label": "Funddatum"
+        },
+        "amount": {
+          "label": "Anzahl (gesamt)",
+          "decription": "Was unter 'Zustand' zusammengefasst wird kann hier zusammengerechnet werden, wenn dies gewollt ist"
+        },
+        "specialStatus": {
+          "label": "Sonderstatus"
+        },
+        "deviatingStoragePlace": {
+          "label": "Abweichende/r Aufbewahrungsort/Inventarnummer"
+        }
       }
     },
     "Pottery": {
@@ -13,7 +24,117 @@
           "label": "Import"
         },
         "isMisfired": {
-          "label": "Fehlbrand/Schadensbrand"
+          "label": "Fehlbrand/Schadensbrand: BITTE INFORMATIONEN ÜBERTRAGEN"
+        }
+      }
+    },
+    "Glass": {
+      "fields": {
+        "clayColorOutside": {
+          "label": "Farbe(n) außen"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Farbe außen Munsell-Nr."
+        },
+        "clayColorInside": {
+          "label": "Farbe(n) innen"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Farbe innen Munsell-Nr."
+        },
+        "burnMarks": {
+          "label": "Brandspuren"
+        },
+        "form": {
+          "label": "Form"
+        }
+      }
+    },
+    "Terracotta": {
+      "fields": {
+        "make": {
+          "label": "Fabrikat"
+        },
+        "clayColorOutside": {
+          "label": "Tonfarbe(n) Außen"
+        },
+        "clayColorInside": {
+          "label": "Tonfarbe(n) Innen"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Tonfarbe Außen Munsell-Nr."
+        },
+        "clayColorInsideMunsell": {
+            "label": "Tonfarbe Innen Munsell-Nr."
+        },
+        "clayColorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Tonfarbe(n) Kern Munsell-Nr."
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug Innen"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug Außen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Überzug (innen) Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Überzug (außen) Munsell-Nr."
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatCondition": {
+          "label": "Zustand Überzug"
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objekts"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche"
+        },
+        "decorationDescription": {
+          "label": "Beschreibung Oberfläche und Dekor"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
         }
       }
     },

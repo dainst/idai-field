@@ -53,20 +53,20 @@
   },
   "Glass": {
     "fields": {
-      "clayColorOutside": {
+      "colorOutside": {
         "inputType": "input"
       },
-      "clayColorOutsideMunsell": {
+      "colorOutsideMunsell": {
         "inputType": "input"
       },
-      "clayColorInside": {
+      "colorInside": {
         "inputType": "input"
       },
-      "clayColorInsideMunsell": {
+      "colorInsideMunsell": {
         "inputType": "input"
       },
-      "burnMarks": {
-        "inputType": "checkboxes",
+      "surfaceCondition": {
+        "inputType": "radio",
         "valuelist": [
           "Schadensbrand",
           "Fehlbrand",
@@ -518,25 +518,25 @@
   },
   "Terracotta": {
     "fields": {
-      "make": {
+      "manufacturing": {
         "inputType": "input"
       },
-      "clayColorOutside": {
+      "colorOutside": {
         "inputType": "input"
       },
-      "clayColorOutsideMunsell": {
+      "colorOutsideMunsell": {
         "inputType": "input"
       },
-      "clayColorInside": {
+      "colorInside": {
         "inputType": "input"
       },
-      "clayColorInsideMunsell": {
+      "colorInsideMunsell": {
         "inputType": "input"
       },
-      "clayColorBreak": {
+      "colorBreak": {
         "inputType": "input"
       },
-      "clayColorBreakMunsell": {
+      "colorBreakMunsell": {
         "inputType": "input"
       },
       "coatColorInside": {
@@ -702,6 +702,93 @@
           "bekleidet",
           "teils unbekleidet",
           "unbekleidet"
+        ]
+      }
+    }
+  },
+  "Wood": {
+    "commons": ["provenance"],
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektur",
+          "Gefäß",
+          "Gerät",
+          "Grabbehältnis",
+          "Mobiliar",
+          "Plastik",
+          "Schmuck",
+          "Produktionsrest",
+          "Spielzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
+      }
+    }
+  },
+  "Brick": {
+    "fields": {
+      "formDescription": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Dreieckig",
+          "Quadratisch",
+          "Rechteckig",
+          "Rund",
+          "Vieleckig",
+          "Sonstiges"
         ]
       }
     }

@@ -15,5 +15,9 @@
     "vesselForm",
     "formDescription",
     "vesselFormSpecific"
+  ],
+  "Wood": [
+    "color",
+    "catalogueNumber"
   ]
 }

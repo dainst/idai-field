@@ -17,7 +17,7 @@ export module DefaultImport {
                           operationTypeNames: string[],
                           getInverseRelation: (_: string) => string|undefined,
                           generateId: () => string,
-                          mergeMode: boolean = false,
+                          mergeMode: boolean,
                           allowOverwriteRelationsInMergeMode = false,
                           mainTypeDocumentId: string = '' /* '' => no assignment */,
                           useIdentifiersInRelations: boolean = false): ImportFunction {

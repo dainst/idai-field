@@ -34,9 +34,11 @@ describe('DefaultImport', () => {
         });
 
         importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
+            mockValidator,
+            operationTypeNames,
             () => undefined,
-            () => '101');
+            () => '101',
+            false);
     });
 
 

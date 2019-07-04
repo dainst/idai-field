@@ -47,7 +47,7 @@ export module CSVExport {
 
     function getIndices(headings: string[], searchPattern: string) {
 
-        return headings.reduce(
+        return headings.reduce( // TODO extract more general function indices
             (indices: number[], heading: string, i: number) => {
                 return heading.includes(searchPattern) // TODO make that dependent on the actual field type
                     ? indices.concat([i])

@@ -1,5 +1,5 @@
 import {FieldResource, IdaiType} from 'idai-components-2';
-import {includedIn, isNot, isnt, to, identity, reverse} from 'tsfun';
+import {includedIn, isNot, isnt, to, identity, reverse, indices} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 
@@ -46,12 +46,9 @@ export module CSVExport {
 
     function getIndices(headings: string[], searchPattern: string) {
 
-        return headings.reduce( // TODO extract more general function indices
-            (indices: number[], heading: string, i: number) => {
-                return heading.includes(searchPattern) // TODO make that dependent on the actual field type
-                    ? indices.concat([i])
-                    : indices;
-            }, []);
+        return indices(
+            (heading: string) => heading.includes(searchPattern) // TODO make that dependent on the actual field type
+            )(headings);
     }
 
 
@@ -244,18 +241,18 @@ export module CSVExport {
 
         return (resource: FieldResource) => {
 
-            const newLine = new Array(fieldNames.length);
+            const newRow = new Array(fieldNames.length);
 
             return getUsableFieldNames(Object.keys(resource))
-                .reduce((line, fieldName) =>  {
+                .reduce((row, fieldName) =>  {
 
                     const indexOfFoundElement = fieldNames.indexOf(fieldName);
                     if (indexOfFoundElement !== -1) {
 
-                        line[indexOfFoundElement] = (resource as any)[fieldName];
+                        row[indexOfFoundElement] = (resource as any)[fieldName];
                     }
-                    return line;
-                }, newLine);
+                    return row;
+                }, newRow);
         }
     }
 

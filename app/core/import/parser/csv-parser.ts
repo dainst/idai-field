@@ -6,6 +6,8 @@ import {Parser} from './parser';
  */
 export module CsvParser {
 
+    export const SEP = ',';
+
     export const getParse = (typeName: string, operationId: string): Parser =>
-            (content: string) => Promise.resolve(CsvParsing.parse(content, typeName, ',', operationId));
+            (content: string) => Promise.resolve(CsvParsing.parse(content, typeName, SEP, operationId));
 }

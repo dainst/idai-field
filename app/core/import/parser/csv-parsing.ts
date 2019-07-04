@@ -5,19 +5,18 @@ import {reduce} from 'tsfun';
 /**
  * @author Daniel de Oliveira
  */
-export module CsvParsing {
+export module CsvParsing { // TODO make sure number typed fields get converted into number fields
 
     /**
      * @param content
      * @param type
      * @param sep
-     * @param operationId
+     * @param operationId converted into isChildOf entry if not empty
      */
     export function parse(content: string,
                           type: string,
                           sep: string,
-                          operationId: string // '' means no operation id - TODO test
-    ): Array<Document> {
+                          operationId: string): Array<Document> {
 
         const rows = makeLines(content); // TODO test separation works properly
         if (rows.length < 1) return [];

@@ -1,40 +1,39 @@
 import {Document} from 'idai-components-2';
-import {makeLines} from './parser';
 import {reduce} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
  */
-export module CsvParsing { // TODO make sure number typed fields get converted into number fields
+export module CsvRowsConversion { // TODO make sure number typed fields get converted into number fields
 
     const PATH_SEP = '.';
 
     /**
-     * @param content
      * @param type
      * @param sep
      * @param operationId converted into isChildOf entry if not empty
      */
-    export function parse(content: string,
-                          type: string,
+    export function parse(type: string,
                           sep: string,
-                          operationId: string): Array<Document> {
+                          operationId: string) {
 
-        const rows = makeLines(content); // TODO test separation works properly
-        if (rows.length < 1) return [];
-        const headings = rows[0].split(sep);
-        rows.shift();
+        return (rows: string[]): Array<Document> => {
 
-        return rows.reduce((documents, row) => {
+            if (rows.length < 1) return [];
+            const headings = rows[0].split(sep);
+            rows.shift();
 
-            const document = makeDocument(headings)(row.split(sep));
+            return rows.reduce((documents, row) => {
 
-            (document.resource as any)['type'] = type;
-            if (operationId) (document.resource as any).relations = { isChildOf: operationId };
+                const document = makeDocument(headings)(row.split(sep));
 
-            return documents.concat([document as any]);
+                (document.resource as any)['type'] = type;
+                if (operationId) (document.resource as any).relations = { isChildOf: operationId };
 
-        }, [] as Array<Document>);
+                return documents.concat([document as any]);
+
+            }, [] as Array<Document>);
+        }
     }
 
 

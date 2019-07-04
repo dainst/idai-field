@@ -1,16 +1,16 @@
-import {CsvParsing} from '../../../../../app/core/import/parser/csv-parsing';
+import {CsvRowsConversion} from '../../../../../app/core/import/parser/csv-rows-conversion';
 import {PARENT} from '../../../../../app/c';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 import SEP = CsvParser.SEP;
 
 
-describe('CsvParsing', () => {
+describe('CsvRowsConversion', () => {
 
     const EMPTY = '';
 
     it('basics', () => {
 
-        const documents = CsvParsing.parse('identifier,shortDescription,custom\n10,zehn,bla', 'type1', SEP, EMPTY);
+        const documents = CsvRowsConversion.parse( 'type1', SEP, EMPTY)(['identifier,shortDescription,custom', '10,zehn,bla']);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.identifier).toBe('10');
         expect(documents[0].resource.shortDescription).toBe('zehn');
@@ -21,7 +21,7 @@ describe('CsvParsing', () => {
 
     it('assign operation id', () => {
 
-        const documents = CsvParsing.parse('identifier,shortDescription,custom\n10,zehn,bla', 'type1', SEP, 'operationId1');
+        const documents = CsvRowsConversion.parse( 'type1', SEP, 'operationId1')(['identifier,shortDescription,custom', '10,zehn,bla']);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.relations['isChildOf']).toBe('operationId1');
     });
@@ -29,10 +29,10 @@ describe('CsvParsing', () => {
 
     it('implode datings', () => {
 
-        const lines = 'identifier,dating.0.begin.year,dating.0.end.year,dating.0.source,dating.0.label\n'
-            + 'identifier1,100,200,S,L';
+        const lines = ['identifier,dating.0.begin.year,dating.0.end.year,dating.0.source,dating.0.label',
+            'identifier1,100,200,S,L'];
 
-        const documents = CsvParsing.parse(lines, 'type1', SEP, EMPTY);
+        const documents = CsvRowsConversion.parse('type1', SEP, EMPTY)(lines);
         expect(documents.length).toBe(1);
 
         const resource = documents[0].resource;
@@ -46,10 +46,9 @@ describe('CsvParsing', () => {
 
     it('implode dimensions', () => {
 
-        const lines = 'identifier,dimensionX.value\n'
-            + 'identifier1,100';
+        const lines = ['identifier,dimensionX.value', 'identifier1,100'];
 
-        const documents = CsvParsing.parse(lines, 'type1', SEP, EMPTY);
+        const documents = CsvRowsConversion.parse( 'type1', SEP, EMPTY)(lines);
         const resource = documents[0].resource;
         expect(resource['dimensionX']['value']).toBe('100');
     });
@@ -57,10 +56,9 @@ describe('CsvParsing', () => {
 
     it('implode relations', () => { // relations are also nested, but sometimes treated differently
 
-        const lines = 'identifier,relations.isChildOf\n'
-            + 'identifier1,identifier2';
+        const lines = ['identifier,relations.isChildOf', 'identifier1,identifier2'];
 
-        const documents = CsvParsing.parse(lines, 'type1', SEP, EMPTY);
+        const documents = CsvRowsConversion.parse( 'type1', SEP, EMPTY)(lines);
         const resource = documents[0].resource;
         expect(resource.relations[PARENT]).toBe('identifier2');
     });

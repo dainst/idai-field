@@ -34,9 +34,8 @@ export module CSVExport {
             rowsWithDatingElementsExpanded,
             matrix);
 
-        const indicesOfDimensionElements = getIndices(headings, 'dimension');
         expand(
-            indicesOfDimensionElements,
+            getIndices(headings, 'dimension'),
             expandDimensionHeader(headings),
             rowsWithDimensionElementsExpanded,
             matrix);

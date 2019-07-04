@@ -32,7 +32,18 @@ describe('CsvParsing', () => {
     });
 
 
-    it('implode relations', () => {
+    it('implode dimensions', () => {
+
+        const lines = 'identifier,dimensionX.value\n'
+            + 'identifier1,100';
+
+        const documents = CsvParsing.parse(lines, 'type1', ',', '');
+        const resource = documents[0].resource;
+        expect(resource['dimensionX']['value']).toBe('100');
+    });
+
+
+    it('implode relations', () => { // relations are also nested, but sometimes treated differently
 
         const lines = 'identifier,relations.isChildOf\n'
             + 'identifier1,identifier2';

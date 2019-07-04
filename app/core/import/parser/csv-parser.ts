@@ -12,7 +12,7 @@ export module CsvParser {
     export const getParse = (typeName: string, operationId: string): Parser =>
             (content: string) => {
 
-                const documents = flow<any>(content,
+                const documents = flow<any>(content, // TODO line separators and column separators should be handled at the same place. now we treat SEP here and split into columns later
                     makeLines, // TODO test separation works properly)
                     CsvRowsConversion.parse(typeName, SEP, operationId));
 

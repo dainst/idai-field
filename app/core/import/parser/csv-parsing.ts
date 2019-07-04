@@ -41,20 +41,19 @@ export module CsvParsing { // TODO make sure number typed fields get converted i
         let index = parseInt(pathSegments[0]);
         if (isNaN(index)) index = pathSegments[0];
 
-        if (pathSegments.length >= 2) {
-
-            let nextindex = parseInt(pathSegments[1]);
-            const newItem = isNaN(nextindex) ? {} : Array(nextindex + 1);
-
-            if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
-
-            pathSegments.shift();
-            implodePaths(currentSegmentObject[index], pathSegments, val);
-
-        } else {
+        if (pathSegments.length < 2) {
 
             currentSegmentObject[index] = val;
+            return;
         }
+
+        const nextIndex = parseInt(pathSegments[1]);
+        const newItem = isNaN(nextIndex) ? {} : Array(nextIndex + 1);
+
+        if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
+
+        pathSegments.shift();
+        implodePaths(currentSegmentObject[index], pathSegments, val);
     }
 
 

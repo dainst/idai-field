@@ -45,6 +45,51 @@ describe('CSVExport', () => {
     });
 
 
+    it('export relations', () => {
+
+        const t = makeType(['identifier', 'shortDescription']);
+
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource.relations = { someRelation: ["identifier2"] } as any;
+
+        const result = CSVExport.createExportable([resource], t, ['someRelation']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.someRelation,relations.isChildOf');
+        expect(result[1]).toBe('identifier1,shortDescription1,identifier2,');
+    });
+
+
+    it('is nested in another resource', () => {
+
+        const t = makeType(['identifier', 'shortDescription']);
+
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource.relations = {
+            liesWithin: ["identifier2"],
+            isRecordedIn: ["operation1"]
+        } as any;
+
+        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
+        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
+    });
+
+
+    it('is nested in an operation', () => { // TODO factor out redundandcies with previous test
+
+        const t = makeType(['identifier', 'shortDescription']);
+
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource.relations = {
+            isRecordedIn: ["operation1"]
+        } as any;
+
+        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
+        expect(result[1]).toBe('identifier1,shortDescription1,operation1');
+    });
+
+
+
     it('expand dating', () => {
 
         const t = makeType(['identifier', 'dating', 'custom']);
@@ -106,46 +151,45 @@ describe('CSVExport', () => {
     });
 
 
-    it('export relations', () => {
+    it('expand dimension', () => {
 
-        const t = makeType(['identifier', 'shortDescription']);
+        const t = makeType(['identifier', 'dimensionX', 'custom']);
 
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
-        resource.relations = { someRelation: ["identifier2"] } as any;
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+        ];
+        resources[0]['dimensionX'] = [
+            {value: 100, measurementComment: 'abc'},
+            {inputValue: 200, measurementPosition: 'def'}];
 
-        const result = CSVExport.createExportable([resource], t, ['someRelation']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.someRelation,relations.isChildOf');
-        expect(result[1]).toBe('identifier1,shortDescription1,identifier2,');
-    });
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
+        expect(result[0][1]).toBe('dimensionX.0.value');
+        expect(result[0][2]).toBe('dimensionX.0.inputValue');
+        expect(result[0][3]).toBe('dimensionX.0.inputRangeEndValue');
+        expect(result[0][4]).toBe('dimensionX.0.measurementPosition');
+        expect(result[0][5]).toBe('dimensionX.0.measurementComment');
+        expect(result[0][6]).toBe('dimensionX.0.inputUnit');
+        expect(result[0][7]).toBe('dimensionX.0.isImprecise');
+        expect(result[0][8]).toBe('dimensionX.0.isRange');
+        expect(result[0][9]).toBe('dimensionX.0.label');
+        expect(result[0][10]).toBe('dimensionX.0.rangeMin');
+        expect(result[0][11]).toBe('dimensionX.0.rangeMax');
+        expect(result[0][12]).toBe('dimensionX.1.value');
+        expect(result[0][13]).toBe('dimensionX.1.inputValue');
+        expect(result[0][14]).toBe('dimensionX.1.inputRangeEndValue');
+        expect(result[0][15]).toBe('dimensionX.1.measurementPosition');
+        expect(result[0][16]).toBe('dimensionX.1.measurementComment');
+        expect(result[0][17]).toBe('dimensionX.1.inputUnit');
+        expect(result[0][18]).toBe('dimensionX.1.isImprecise');
+        expect(result[0][19]).toBe('dimensionX.1.isRange');
+        expect(result[0][20]).toBe('dimensionX.1.label');
+        expect(result[0][21]).toBe('dimensionX.1.rangeMin');
+        expect(result[0][22]).toBe('dimensionX.1.rangeMax');
 
-    it('is nested in another resource', () => {
-
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
-        resource.relations = {
-            liesWithin: ["identifier2"],
-            isRecordedIn: ["operation1"]
-        } as any;
-
-        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
-        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
-    });
-
-
-    it('is nested in an operation', () => { // TODO factor out redundandcies with previous test
-
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
-        resource.relations = {
-            isRecordedIn: ["operation1"]
-        } as any;
-
-        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
-        expect(result[1]).toBe('identifier1,shortDescription1,operation1');
+        expect(result[1][1]).toBe('100');
+        expect(result[1][5]).toBe('abc');
+        expect(result[1][13]).toBe('200');
+        expect(result[1][15]).toBe('def');
     });
 });

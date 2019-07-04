@@ -1,5 +1,5 @@
 import {FieldResource, IdaiType} from 'idai-components-2';
-import {includedIn, isNot, isnt, to, identity} from 'tsfun';
+import {includedIn, isNot, isnt, to, identity, reverse} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 
@@ -28,16 +28,53 @@ export module CSVExport {
             .map(toRowsArrangedBy(headings));
 
         const indexOfDatingElement = headings.indexOf('dating');
-        if (indexOfDatingElement !== -1) {
-            const max = getMax(matrix, indexOfDatingElement);
-            expandDatingHeader(headings, indexOfDatingElement, max);
+        if (indexOfDatingElement !== -1) expand(
+            [indexOfDatingElement],
+            expandDatingHeader(headings),
+            rowsWithDatingElementsExpanded,
+            matrix);
 
-            matrix = matrix
-                .map(expandArrayToSize(indexOfDatingElement, max))
-                .map(rowsWithDatingElementsExpanded(indexOfDatingElement, max));
-        }
+        const indicesOfDimensionElements = getIndices(headings, 'dimension');
+        expand(
+            reverse(indicesOfDimensionElements),
+            expandDimensionHeader(headings),
+            rowsWithDimensionElementsExpanded,
+            matrix);
 
         return ([headings].concat(matrix)).map(toCsvLine);
+    }
+
+
+    function getIndices(headings: string[], searchPattern: string) {
+
+        return headings.reduce(
+            (indices: number[], heading: string, i: number) => {
+                return heading.includes(searchPattern) // TODO make that dependent on the actual field type
+                    ? indices.concat([i])
+                    : indices;
+            }, []);
+    }
+
+
+    /**
+     * @param indices in increasing order
+     * @param headerExpansion
+     * @param rowsExpansion
+     * @param matrix
+     */
+    function expand(indices: number[], headerExpansion: Function, rowsExpansion: Function, matrix: any) {
+
+        for (let index of reverse(indices)) {
+
+            const max = getMax(matrix, index);
+            if (isNaN(max)) continue; // TODO review
+
+            headerExpansion(index, max);
+
+            matrix = matrix
+                .map(expandArrayToSize(index, max))
+                .map(rowsExpansion(index, max))
+        }
     }
 
 
@@ -67,24 +104,56 @@ export module CSVExport {
 
 
     /**
-     * @param fieldNames gets modified
-     * @param indexOfDatingElement
-     * @param max
+     * @param fieldNames gets modified in place
      */
-    function expandDatingHeader(fieldNames: any, indexOfDatingElement: number, max: number) {
+    function expandDatingHeader(fieldNames: any) {
 
-        const dating_fields: string[] = [];
-        for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
-        fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
+        return (indexOfDatingElement: number, max: number) => {
 
-        for (let i = max - 1; i >= 0; i--) {
+            const dating_fields: string[] = [];
+            for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
+            fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
 
-            const indexOfCurrentDatingElement = indexOfDatingElement + i;
-            fieldNames.splice(indexOfCurrentDatingElement, 1, [
+            for (let i = max - 1; i >= 0; i--) {
+
+                const indexOfCurrentDatingElement = indexOfDatingElement + i;
+                fieldNames.splice(indexOfCurrentDatingElement, 1, [
                     'dating.' + i + '.begin.year',
                     'dating.' + i + '.end.year',
                     'dating.' + i + '.source',
                     'dating.' + i + '.label']);
+            }
+        }
+    }
+
+
+    /**
+     * @param fieldNames gets modified in place
+     */
+    function expandDimensionHeader(fieldNames: any) {
+
+        return (indexOfDimensionElement: number, max: number) => {
+
+            const dating_fields: string[] = [];
+            for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
+            fieldNames.splice(indexOfDimensionElement, 1, ...dating_fields);
+
+            for (let i = max - 1; i >= 0; i--) {
+
+                const indexOfCurrentDimensionElement = indexOfDimensionElement + i;
+                fieldNames.splice(indexOfCurrentDimensionElement, 1, [
+                    'dimensionX.' + i + '.value', // TODO replace with actual dimension name
+                    'dimensionX.' + i + '.inputValue',
+                    'dimensionX.' + i + '.inputRangeEndValue',
+                    'dimensionX.' + i + '.measurementPosition',
+                    'dimensionX.' + i + '.measurementComment',
+                    'dimensionX.' + i + '.inputUnit',
+                    'dimensionX.' + i + '.isImprecise',
+                    'dimensionX.' + i + '.isRange',
+                    'dimensionX.' + i + '.label',
+                    'dimensionX.' + i + '.rangeMin',
+                    'dimensionX.' + i + '.rangeMax']);
+            }
         }
     }
 
@@ -99,6 +168,27 @@ export module CSVExport {
                     removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
                     removed['source'],
                     removed['label']];
+            });
+    }
+
+
+    function rowsWithDimensionElementsExpanded(indexOfDimensionElement: number, max: number) {
+
+        return expandHomogeneousItems(indexOfDimensionElement, max, 11,
+            (removed: any) => {
+
+                return [
+                    removed['value'],
+                    removed['inputValue'],
+                    removed['inputRangeEndValue'],
+                    removed['measurementPosition'],
+                    removed['measurementComment'],
+                    removed['inputUnit'],
+                    removed['isImprecise'],
+                    removed['isRange'],
+                    removed['label'],
+                    removed['rangeMin'],
+                    removed['rangeMax']];
             });
     }
 

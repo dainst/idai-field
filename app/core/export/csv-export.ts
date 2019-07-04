@@ -67,7 +67,7 @@ export module CSVExport {
 
             headerExpansion(index, max);
 
-            matrix = matrix
+            matrix = matrix // TODO, weird that this reassignment seems to work. review and perhaps return it as return value
                 .map(expandArrayToSize(index, max))
                 .map(rowsExpansion(index, max))
         }

@@ -7,6 +7,8 @@ import {reduce} from 'tsfun';
  */
 export module CsvParsing { // TODO make sure number typed fields get converted into number fields
 
+    const PATH_SEP = '.';
+
     /**
      * @param content
      * @param type
@@ -20,12 +22,12 @@ export module CsvParsing { // TODO make sure number typed fields get converted i
 
         const rows = makeLines(content); // TODO test separation works properly
         if (rows.length < 1) return [];
-        const fields = rows[0].split(sep);
+        const headings = rows[0].split(sep);
         rows.shift();
 
         return rows.reduce((documents, row) => {
 
-            const document = makeDocument(fields)(row.split(sep));
+            const document = makeDocument(headings)(row.split(sep));
 
             (document.resource as any)['type'] = type;
             if (operationId) (document.resource as any).relations = { isChildOf: operationId };
@@ -59,16 +61,16 @@ export module CsvParsing { // TODO make sure number typed fields get converted i
 
     function insertFieldIntoDocument(resource: any, field: any, fieldOfRow: any) {
 
-        if (field.includes('.')) implodePaths(resource, field.split('.'), fieldOfRow);
+        if (field.includes(PATH_SEP)) implodePaths(resource, field.split(PATH_SEP), fieldOfRow);
         else (resource as any)[field] = fieldOfRow;
     }
 
 
-    function makeDocument(fields: string[]) {
+    function makeDocument(headings: string[]) {
 
         return reduce((document, fieldOfRow, i: number) => {
 
-            if (fieldOfRow) insertFieldIntoDocument(document.resource, fields[i], fieldOfRow);
+            if (fieldOfRow) insertFieldIntoDocument(document.resource, headings[i], fieldOfRow);
             return document;
 
         }, { resource: {} });

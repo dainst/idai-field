@@ -18,8 +18,6 @@ export module CsvParsing {
                           operationId: string // '' means no operation id - TODO test
     ): Array<Document> {
 
-        // TODO get the first line, which contains the header. make sure it conforms to the specified type
-
         const rows = makeLines(content); // TODO test separation works properly
         if (rows.length < 1) return [];
         const fields = rows[0].split(sep);

@@ -33,13 +33,13 @@ export module CSVExport {
         const indexOfDatingElement = headings.indexOf('dating');
         if (indexOfDatingElement !== -1) expand(
             [indexOfDatingElement],
-            expandDatingHeader(headings),
+            expandHeader(headings, getInsertableDatingItems),
             rowsWithDatingElementsExpanded,
             matrix);
 
         expand(
             getIndices(headings, resourceType.fields, 'dimension'),
-            expandDimensionHeader(headings),
+            expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
             matrix);
 
@@ -110,8 +110,9 @@ export module CSVExport {
 
     /**
      * @param fieldNames gets modified in place
+     * @param replaceFunction
      */
-    function expandDatingHeader(fieldNames: any) {
+    function expandHeader(fieldNames: any, replaceFunction: Function) {
 
         return (indexOfElementToReplace: number, max: number) => {
 
@@ -122,44 +123,36 @@ export module CSVExport {
             for (let i = max - 1; i >= 0; i--) {
 
                 const indexOfCurrentElement = indexOfElementToReplace + i;
-                fieldNames.splice(indexOfCurrentElement, 1, [
-                    fieldName + OBJ_SEP + i + '.begin.year',
-                    fieldName + OBJ_SEP + i + '.end.year',
-                    fieldName + OBJ_SEP + i + '.source',
-                    fieldName + OBJ_SEP + i + '.label']);
+                fieldNames.splice(indexOfCurrentElement, 1, replaceFunction(fieldName, i));
             }
         }
     }
 
 
-    /**
-     * @param fieldNames gets modified in place
-     */
-    function expandDimensionHeader(fieldNames: any) { // TODO remove redundancy with previous function
+    function getInsertableDatingItems(fieldName: string, i: number) {
 
-        return (indexOfElementToReplace: number, max: number) => {
+        return [
+            fieldName + OBJ_SEP + i + '.begin.year',
+            fieldName + OBJ_SEP + i + '.end.year',
+            fieldName + OBJ_SEP + i + '.source',
+            fieldName + OBJ_SEP + i + '.label'];
+    }
 
-            const fieldsToInsert: string[] = [];
-            for (let i = 0; i < max; i++) fieldsToInsert.push(BOGUS);
-            const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
 
-            for (let i = max - 1; i >= 0; i--) {
+    function getInsertableDimensionItems(fieldName: string, i: number) {
 
-                const indexOfCurrentElement = indexOfElementToReplace + i;
-                fieldNames.splice(indexOfCurrentElement, 1, [
-                    fieldName + OBJ_SEP + i + '.value',
-                    fieldName + OBJ_SEP + i + '.inputValue',
-                    fieldName + OBJ_SEP + i + '.inputRangeEndValue',
-                    fieldName + OBJ_SEP + i + '.measurementPosition',
-                    fieldName + OBJ_SEP + i + '.measurementComment',
-                    fieldName + OBJ_SEP + i + '.inputUnit',
-                    fieldName + OBJ_SEP + i + '.isImprecise',
-                    fieldName + OBJ_SEP + i + '.isRange',
-                    fieldName + OBJ_SEP + i + '.label',
-                    fieldName + OBJ_SEP + i + '.rangeMin',
-                    fieldName + OBJ_SEP + i + '.rangeMax']);
-            }
-        }
+        return [
+            fieldName + OBJ_SEP + i + '.value',
+            fieldName + OBJ_SEP + i + '.inputValue',
+            fieldName + OBJ_SEP + i + '.inputRangeEndValue',
+            fieldName + OBJ_SEP + i + '.measurementPosition',
+            fieldName + OBJ_SEP + i + '.measurementComment',
+            fieldName + OBJ_SEP + i + '.inputUnit',
+            fieldName + OBJ_SEP + i + '.isImprecise',
+            fieldName + OBJ_SEP + i + '.isRange',
+            fieldName + OBJ_SEP + i + '.label',
+            fieldName + OBJ_SEP + i + '.rangeMin',
+            fieldName + OBJ_SEP + i + '.rangeMax'];
     }
 
 

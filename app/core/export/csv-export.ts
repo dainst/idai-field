@@ -1,13 +1,15 @@
-import {FieldResource, IdaiType, FieldDefinition} from 'idai-components-2';
-import {includedIn, isNot, isnt, to, identity, reverse, indices, on, is} from 'tsfun';
+import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
+import {includedIn, indices, is, isNot, isnt, on, reverse, to} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
+import {expand, makeEmptyDenseArray} from './export-helper';
 
 
 /**
  * @author Daniel de Oliveira
  */
 export module CSVExport {
+
 
     const SEP = ',';
     const OBJ_SEP = '.';
@@ -33,13 +35,13 @@ export module CSVExport {
             .map(toRowsArrangedBy(headings));
 
         const indexOfDatingElement = headings.indexOf('dating');
-        if (indexOfDatingElement !== -1) expand(
+        if (indexOfDatingElement !== -1) matrix = expandMatrix(
             [indexOfDatingElement],
             expandHeader(headings, getInsertableDatingItems),
             rowsWithDatingElementsExpanded,
             matrix);
 
-        expand(
+        matrix = expandMatrix(
             getIndices(resourceType.fields, 'dimension')(headings),
             expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
@@ -68,7 +70,7 @@ export module CSVExport {
      * @param rowsExpansion
      * @param matrix
      */
-    function expand(indices: number[], headerExpansion: Function, rowsExpansion: Function, matrix: any) {
+    function expandMatrix(indices: number[], headerExpansion: Function, rowsExpansion: Function, matrix: any) {
 
         for (let index of reverse(indices)) {
 
@@ -81,6 +83,7 @@ export module CSVExport {
                 .map(expandArrayToSize(index, max))
                 .map(rowsExpansion(index, max))
         }
+        return matrix;
     }
 
 
@@ -113,7 +116,7 @@ export module CSVExport {
      * @param fieldNames gets modified in place
      * @param replaceFunction
      */
-    function expandHeader(fieldNames: any, replaceFunction: Function) {
+    function expandHeader(fieldNames: any, replaceFunction: Function) { // TODO looks very similar to expand
 
         return (indexOfElementToReplace: number, max: number) => {
 
@@ -124,7 +127,7 @@ export module CSVExport {
             for (let i = max - 1; i >= 0; i--) {
 
                 const indexOfCurrentElement = indexOfElementToReplace + i;
-                fieldNames.splice(indexOfCurrentElement, 1, replaceFunction(fieldName, i));
+                fieldNames.splice(indexOfCurrentElement, 1, ...replaceFunction(fieldName, i));
             }
         }
     }
@@ -159,81 +162,46 @@ export module CSVExport {
 
     function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
 
-        return expandHomogeneousItems(indexOfDatingElement, max, 4,
-            (removed: any) => {
+        return expand(indexOfDatingElement, max,
+            (removed: any|undefined) => {
 
-                return [
-                    removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
-                    removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
-                    removed['source'],
-                    removed['label']];
+                return !removed
+                    ? makeEmptyStringsArray(4)
+                    : [
+                        removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
+                        removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
+                        removed['source'],
+                        removed['label']];
             });
     }
 
 
     function rowsWithDimensionElementsExpanded(indexOfDimensionElement: number, max: number) {
 
-        return expandHomogeneousItems(indexOfDimensionElement, max, 11,
-            (removed: any) => {
+        return expand(indexOfDimensionElement, max,
+            (removed: any|undefined) => {
 
-                return [
-                    removed['value'],
-                    removed['inputValue'],
-                    removed['inputRangeEndValue'],
-                    removed['measurementPosition'],
-                    removed['measurementComment'],
-                    removed['inputUnit'],
-                    removed['isImprecise'],
-                    removed['isRange'],
-                    removed['label'],
-                    removed['rangeMin'],
-                    removed['rangeMax']];
+                return !removed
+                    ? makeEmptyStringsArray(11)
+                    : [
+                        removed['value'],
+                        removed['inputValue'],
+                        removed['inputRangeEndValue'],
+                        removed['measurementPosition'],
+                        removed['measurementComment'],
+                        removed['inputUnit'],
+                        removed['isImprecise'],
+                        removed['isRange'],
+                        removed['label'],
+                        removed['rangeMin'],
+                        removed['rangeMax']];
             });
     }
 
 
     function expandArrayToSize(where: number, targetSize: number) {
 
-        return expandHomogeneousItems(where, 1, targetSize, identity);
-    }
-
-
-    /**
-     * Takes itms, for example [A,B,C,D,E]
-     * and replaces one or more entries by a number of same-structured entries.
-     *
-     * Lets assume where is 2, nrOfNewItems is 2 and widthOfEachNewitem is 2, then
-     * we get
-     * [A,B,R1a,R1b,R2a,R2b,E]
-     * where the R1 entries replace the C entry
-     *   and the R2 entries replace the D enty
-     *
-     * @param where
-     * @param nrOfNewItems
-     * @param widthOfEachNewItem
-     * @param computeReplacement should return an array of size widthOfEachNewItem
-     */
-    function expandHomogeneousItems(where: number, // TODO make more general by getting rid of widthOfEachNewItem (remove Homogeneous from name afterwards) and put to utility module (and test it)
-                                    nrOfNewItems: number,
-                                    widthOfEachNewItem: number,
-                                    computeReplacement: (removed: any) => any[]) {
-
-        /**
-         * @param itms
-         */
-        return (itms: any[]) => { // TODO implement as pure function
-
-            for (let i = nrOfNewItems - 1; i >= 0; i--) {
-
-                const removed = itms.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
-                if (removed) {
-                    const newEls = computeReplacement(removed);
-                    for (let j = 0; j < newEls.length; j++) itms[where + i + j] = newEls[j];
-                }
-            }
-
-            return itms;
-        }
+        return expand(where, 1, fillUpToSize(targetSize, ''));
     }
 
 
@@ -276,7 +244,7 @@ export module CSVExport {
 
         return (resource: FieldResource) => {
 
-            const newRow = new Array(fieldNames.length);
+            const newRow = makeEmptyDenseArray(fieldNames.length);
 
             return getUsableFieldNames(Object.keys(resource))
                 .reduce((row, fieldName) =>  {
@@ -312,6 +280,29 @@ export module CSVExport {
             .filter(isnt('type'))
             .filter(isnt('geometry'))
             .filter(isnt('id'));
+    }
+
+
+    function fillUpToSize(targetSize: number, defaultVal: any) {
+
+        return (items: any[]|undefined) => {
+
+            const items_ = items ? items : [];
+            const fills = makeEmptyDenseArray(targetSize - items_.length).map(() => defaultVal);
+            return items_.concat(fills);
+        }
+    }
+
+
+    function makeEmptyStringsArray(size: number) {
+
+        return makeEmptyDenseArray(size).map(genEmptyString);
+    }
+
+
+    function genEmptyString() {
+
+        return '';
     }
 
 

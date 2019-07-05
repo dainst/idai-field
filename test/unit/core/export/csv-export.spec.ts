@@ -6,6 +6,7 @@ import {Static} from '../../static';
 /**
  * @author Daniel de Oliveira
  */
+
 describe('CSVExport', () => {
 
 
@@ -195,7 +196,7 @@ describe('CSVExport', () => {
         resources[1]['dimensionX'] = [
             {value: 300, inputRangeEndValue: 'ghc'}];
         resources[1]['custom'] = 'custom';
-        //
+
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
         expect(result[0][1]).toBe('dimensionX.0.value');

@@ -40,7 +40,7 @@ export module CSVExport {
             matrix);
 
         expand(
-            getIndices(headings, resourceType.fields, 'dimension'),
+            getIndices(resourceType.fields, 'dimension')(headings),
             expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
             matrix);
@@ -49,7 +49,7 @@ export module CSVExport {
     }
 
 
-    function getIndices(headings: string[], fieldDefinitions: Array<FieldDefinition>, inputType: string) {
+    function getIndices(fieldDefinitions: Array<FieldDefinition>, inputType: string) {
 
         return indices((heading: string) => {
 
@@ -58,8 +58,7 @@ export module CSVExport {
                if (!field) return false;
 
                return (field.inputType === inputType);
-
-            })(headings);
+            });
     }
 
 

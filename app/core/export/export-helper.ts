@@ -15,7 +15,7 @@ export type PerformExport = (resources: Array<FieldResource>, resourceType: Idai
  * @param nrOfNewItems
  * @param computeReplacement
  */
-export function expand(where: number,
+export function expand(where: number, // TODO maybe put it back to csv-export, and get rid of unit tests
                        nrOfNewItems: number,
                        computeReplacement: (removed: any) => any[]) {
 

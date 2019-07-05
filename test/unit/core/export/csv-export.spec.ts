@@ -67,6 +67,14 @@ describe('CSVExport', () => {
     });
 
 
+    function expectCorrectChildOfTarget(resource, t, expectation) {
+
+        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
+        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
+        expect(result[1]).toBe('identifier1,shortDescription1,' + expectation);
+    }
+
+
     it('is nested in another resource', () => {
 
         const {t, resource} = makeSimpleTypeAndResource();
@@ -74,25 +82,18 @@ describe('CSVExport', () => {
             liesWithin: ["identifier2"],
             isRecordedIn: ["operation1"]
         } as any;
-
-        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
-        expect(result[1]).toBe('identifier1,shortDescription1,identifier2');
+        expectCorrectChildOfTarget(resource, t, 'identifier2');
     });
 
 
-    it('is nested in an operation', () => { // TODO factor out redundandcies with previous test
+    it('is nested in an operation', () => {
 
         const {t, resource} = makeSimpleTypeAndResource();
         resource.relations = {
             isRecordedIn: ["operation1"]
         } as any;
-
-        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
-        expect(result[0]).toBe('identifier,shortDescription,relations.isChildOf');
-        expect(result[1]).toBe('identifier1,shortDescription1,operation1');
+        expectCorrectChildOfTarget(resource, t, 'operation1')
     });
-
 
 
     it('expand dating', () => {

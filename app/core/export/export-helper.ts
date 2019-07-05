@@ -27,7 +27,7 @@ export function makeEmptyDenseArray(size: number) {
  * @param targetSize
  * @param defaultVal
  */
-export function fillUpToSize(targetSize: number, defaultVal: any) { // TODO maybe move
+export function fillUpToSize(targetSize: number, defaultVal: any) { // TODO maybe move, review Array.prototype.fill
 
     /**
      * @param items

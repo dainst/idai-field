@@ -112,20 +112,20 @@ export module CSVExport {
      */
     function expandDatingHeader(fieldNames: any) {
 
-        return (indexOfDatingElement: number, max: number) => {
+        return (indexOfElementToReplace: number, max: number) => {
 
-            const dating_fields: string[] = [];
-            for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
-            fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
+            const fieldsToInsert: string[] = [];
+            for (let i = 0; i < max; i++) fieldsToInsert.push(fieldsToInsert + OBJ_SEP + i);
+            const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
 
             for (let i = max - 1; i >= 0; i--) {
 
-                const indexOfCurrentDatingElement = indexOfDatingElement + i;
-                fieldNames.splice(indexOfCurrentDatingElement, 1, [
-                    'dating.' + i + '.begin.year',
-                    'dating.' + i + '.end.year',
-                    'dating.' + i + '.source',
-                    'dating.' + i + '.label']);
+                const indexOfCurrentElement = indexOfElementToReplace + i;
+                fieldNames.splice(indexOfCurrentElement, 1, [
+                    fieldName + OBJ_SEP + i + '.begin.year',
+                    fieldName + OBJ_SEP + i + '.end.year',
+                    fieldName + OBJ_SEP + i + '.source',
+                    fieldName + OBJ_SEP + i + '.label']);
             }
         }
     }
@@ -134,29 +134,29 @@ export module CSVExport {
     /**
      * @param fieldNames gets modified in place
      */
-    function expandDimensionHeader(fieldNames: any) {
+    function expandDimensionHeader(fieldNames: any) { // TODO remove redundancy with previous function
 
-        return (indexOfDimensionElement: number, max: number) => {
+        return (indexOfElementToReplace: number, max: number) => {
 
-            const dating_fields: string[] = [];
-            for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
-            fieldNames.splice(indexOfDimensionElement, 1, ...dating_fields);
+            const fieldsToInsert: string[] = [];
+            // for (let i = 0; i < max; i++) dimensionFields.push('dating.' + i); TODO review and test, test for dating shows that there it is necesarry because of other fields like custom
+            const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
 
             for (let i = max - 1; i >= 0; i--) {
 
-                const indexOfCurrentDimensionElement = indexOfDimensionElement + i;
-                fieldNames.splice(indexOfCurrentDimensionElement, 1, [
-                    'dimensionX.' + i + '.value', // TODO replace with actual dimension name
-                    'dimensionX.' + i + '.inputValue',
-                    'dimensionX.' + i + '.inputRangeEndValue',
-                    'dimensionX.' + i + '.measurementPosition',
-                    'dimensionX.' + i + '.measurementComment',
-                    'dimensionX.' + i + '.inputUnit',
-                    'dimensionX.' + i + '.isImprecise',
-                    'dimensionX.' + i + '.isRange',
-                    'dimensionX.' + i + '.label',
-                    'dimensionX.' + i + '.rangeMin',
-                    'dimensionX.' + i + '.rangeMax']);
+                const indexOfCurrentElement = indexOfElementToReplace + i;
+                fieldNames.splice(indexOfCurrentElement, 1, [
+                    fieldName + OBJ_SEP + i + '.value',
+                    fieldName + OBJ_SEP + i + '.inputValue',
+                    fieldName + OBJ_SEP + i + '.inputRangeEndValue',
+                    fieldName + OBJ_SEP + i + '.measurementPosition',
+                    fieldName + OBJ_SEP + i + '.measurementComment',
+                    fieldName + OBJ_SEP + i + '.inputUnit',
+                    fieldName + OBJ_SEP + i + '.isImprecise',
+                    fieldName + OBJ_SEP + i + '.isRange',
+                    fieldName + OBJ_SEP + i + '.label',
+                    fieldName + OBJ_SEP + i + '.rangeMin',
+                    fieldName + OBJ_SEP + i + '.rangeMax']);
             }
         }
     }

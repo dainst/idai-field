@@ -221,7 +221,7 @@ export module CSVExport {
         /**
          * @param itms
          */
-        return (itms: any[]) => {
+        return (itms: any[]) => { // TODO implement as pure function
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {
 

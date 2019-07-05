@@ -2,6 +2,7 @@ import {FieldResource, IdaiType, FieldDefinition} from 'idai-components-2';
 import {includedIn, isNot, isnt, to, identity, reverse, indices, on, is} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
+import {makeEmptyDenseArray} from './export-helper';
 
 
 /**
@@ -213,7 +214,7 @@ export module CSVExport {
      * @param widthOfEachNewItem
      * @param computeReplacement should return an array of size widthOfEachNewItem
      */
-    function expandHomogeneousItems(where: number, // TODO make more general by getting rid of widthOfEachNewItem (remove Homogeneous from name afterwards) and put to utility module (and test it)
+    function expandHomogeneousItems(where: number,
                                     nrOfNewItems: number,
                                     widthOfEachNewItem: number,
                                     computeReplacement: (removed: any) => any[]) {
@@ -221,11 +222,11 @@ export module CSVExport {
         /**
          * @param itms
          */
-        return (itms: any[]) => { // TODO implement as pure function
+        return (itms: any[]) => {
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {
 
-                const removed = itms.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
+                const removed = itms.splice(where + i, 1, ...makeEmptyDenseArray(widthOfEachNewItem).map(() => ''))[0];
                 if (removed) {
                     const newEls = computeReplacement(removed);
                     for (let j = 0; j < newEls.length; j++) itms[where + i + j] = newEls[j];

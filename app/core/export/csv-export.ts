@@ -1,8 +1,8 @@
-import {FieldResource, IdaiType, FieldDefinition} from 'idai-components-2';
-import {includedIn, isNot, isnt, to, identity, reverse, indices, on, is} from 'tsfun';
+import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reverse, take, to} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {makeEmptyDenseArray} from './export-helper';
+import {fillUpToSize, flatten} from './export-helper';
 
 
 /**
@@ -38,13 +38,13 @@ export module CSVExport {
             .map(toRowsArrangedBy(headings));
 
         const indexOfDatingElement = headings.indexOf('dating');
-        if (indexOfDatingElement !== -1) expand(
+        if (indexOfDatingElement !== -1) matrix = expand(
             [indexOfDatingElement],
             expandHeader(headings, getInsertableDatingItems),
             rowsWithDatingElementsExpanded,
             matrix);
 
-        expand(
+        matrix = expand(
             getIndices(resourceType.fields, 'dimension')(headings),
             expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
@@ -75,17 +75,17 @@ export module CSVExport {
      */
     function expand(indices: number[], headerExpansion: Function, rowsExpansion: Function, matrix: any) {
 
-        for (let index of reverse(indices)) {
+        return reverse(indices).reduce((matrix: any, index: number) => {
 
-            const max = getMax(matrix, index);
-            if (isNaN(max)) continue; // TODO review
+                const max = getMax(matrix, index);
+                if (isNaN(max)) return matrix; // TODO review
 
-            headerExpansion(index, max);
+                headerExpansion(index, max);
 
-            matrix = matrix // TODO, weird that this reassignment seems to work. review and perhaps return it as return value
-                .map(expandArrayToSize(index, max))
-                .map(rowsExpansion(index, max))
-        }
+                return matrix
+                    .map(expandArrayToSize(index, max))
+                    .map(rowsExpansion(index, max))
+            }, matrix);
     }
 
 
@@ -221,23 +221,23 @@ export module CSVExport {
     function expandHomogeneousItems(where: number,
                                     nrOfNewItems: number,
                                     widthOfEachNewItem: number,
-                                    computeReplacement: (removed: any) => any[]) {
+                                    computeReplacement: (removed: any) => any[]|undefined) {
 
         /**
          * @param itms
          */
         return (itms: any[]) => {
 
-            for (let i = nrOfNewItems - 1; i >= 0; i--) {
-
-                const removed = itms.splice(where + i, 1, ...makeEmptyDenseArray(widthOfEachNewItem).map(() => ''))[0];
-                if (removed) {
-                    const newEls = computeReplacement(removed);
-                    for (let j = 0; j < newEls.length; j++) itms[where + i + j] = newEls[j];
-                }
+            let replacements = [];
+            for (let i = 0; i < nrOfNewItems; i++) {
+                const itm = itms[where + i];
+                const insertion: any[] | undefined = itm ? computeReplacement(itm) : [];
+                replacements.push(fillUpToSize_(widthOfEachNewItem, '')(insertion))
             }
 
-            return itms;
+            return take(where)(itms)
+                .concat(flatten(replacements))
+                .concat(drop(where + nrOfNewItems)(itms));
         }
     }
 
@@ -313,6 +313,15 @@ export module CSVExport {
             .filter(isnt('type'))
             .filter(isnt('geometry'))
             .filter(isnt('id'));
+    }
+
+
+    function fillUpToSize_(targetSize: number, defaultVal: any) {
+
+        /**
+         * @param items may be undefined
+         */
+        return (items: any[]|undefined) => fillUpToSize(targetSize, defaultVal)(items ? items : [])
     }
 
 

@@ -1,5 +1,6 @@
 import {FieldResource, Query, IdaiType} from 'idai-components-2';
 import {FieldDocumentFindResult} from '../datastore/field/field-read-datastore';
+import {reduce} from 'tsfun';
 
 
 export type Count = number; // -1 signals that there is not usable count
@@ -18,3 +19,25 @@ export function makeEmptyDenseArray(size: number) {
 
     return Array.apply(null, Array(size))
 }
+
+
+/**
+ * Fills up items with defaultVal, until it reaches the specified targetSize
+ *
+ * @param targetSize
+ * @param defaultVal
+ */
+export function fillUpToSize(targetSize: number, defaultVal: any) { // TODO maybe move
+
+    /**
+     * @param items
+     */
+    return (items: any[]) => {
+
+        const fills = makeEmptyDenseArray(targetSize - items.length).map(() => defaultVal);
+        return items.concat(fills);
+    }
+}
+
+
+export const flatten = reduce((acc: any, val: any) => acc.concat(val), [] as any); // TODO perhaps move to other place, perhaps rename

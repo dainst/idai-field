@@ -281,7 +281,7 @@ export module CSVExport {
 
         return fieldNames
             .filter(isnt('type'))
-            .filter(isnt('geometry'))  // TODO probably enable later
+            .filter(isnt('geometry'))
             .filter(isnt('id'));
     }
 

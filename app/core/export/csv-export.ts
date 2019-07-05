@@ -1,5 +1,5 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reverse, take, to} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize, flatten} from './export-helper';
@@ -39,16 +39,16 @@ export module CSVExport {
 
         const indexOfDatingElement = headings.indexOf('dating');
         if (indexOfDatingElement !== -1) matrix = expand(
-            [indexOfDatingElement],
             expandHeader(headings, getInsertableDatingItems),
             rowsWithDatingElementsExpanded,
-            matrix);
+            matrix
+        )([indexOfDatingElement]);
 
         matrix = expand(
-            getIndices(resourceType.fields, 'dimension')(headings),
             expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
-            matrix);
+            matrix
+        )(getIndices(resourceType.fields, 'dimension')(headings));
 
         return ([headings].concat(matrix)).map(toCsvLine);
     }
@@ -67,15 +67,9 @@ export module CSVExport {
     }
 
 
-    /**
-     * @param indices in increasing order
-     * @param headerExpansion
-     * @param rowsExpansion
-     * @param matrix
-     */
-    function expand(indices: number[], headerExpansion: Function, rowsExpansion: Function, matrix: any) {
+    function expand(headerExpansion: Function, rowsExpansion: Function, matrix: any) {
 
-        return reverse(indices).reduce((matrix: any, index: number) => {
+        return reduce((matrix: any, index: number) => {
 
                 const max = getMax(matrix, index);
                 if (isNaN(max)) return matrix; // TODO review
@@ -85,6 +79,7 @@ export module CSVExport {
                 return matrix
                     .map(expandArrayToSize(index, max))
                     .map(rowsExpansion(index, max))
+
             }, matrix);
     }
 

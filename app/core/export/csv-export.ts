@@ -199,9 +199,29 @@ export module CSVExport {
     }
 
 
-    function expandHomogeneousItems(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
-                    computeReplacement: (removed: any) => any[]) {
+    /**
+     * Takes itms, for example [A,B,C,D,E]
+     * and replaces one or more entries by a number of same-structured entries.
+     *
+     * Lets assume where is 2, nrOfNewItems is 2 and widthOfEachNewitem is 2, then
+     * we get
+     * [A,B,R1a,R1b,R2a,R2b,E]
+     * where the R1 entries replace the C entry
+     *   and the R2 entries replace the D enty
+     *
+     * @param where
+     * @param nrOfNewItems
+     * @param widthOfEachNewItem
+     * @param computeReplacement should return an array of size widthOfEachNewItem
+     */
+    function expandHomogeneousItems(where: number,
+                                    nrOfNewItems: number,
+                                    widthOfEachNewItem: number,
+                                    computeReplacement: (removed: any) => any[]) {
 
+        /**
+         * @param itms
+         */
         return (itms: any[]) => {
 
             for (let i = nrOfNewItems - 1; i >= 0; i--) {

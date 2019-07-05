@@ -214,7 +214,7 @@ export module CSVExport {
      * @param widthOfEachNewItem
      * @param computeReplacement should return an array of size widthOfEachNewItem
      */
-    function expandHomogeneousItems(where: number,
+    function expandHomogeneousItems(where: number, // TODO make more general by getting rid of widthOfEachNewItem (remove Homogeneous from name afterwards) and put to utility module (and test it)
                                     nrOfNewItems: number,
                                     widthOfEachNewItem: number,
                                     computeReplacement: (removed: any) => any[]) {

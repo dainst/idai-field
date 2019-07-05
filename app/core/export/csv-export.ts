@@ -54,10 +54,10 @@ export module CSVExport {
         return indices((heading: string) => {
 
                 if (heading.includes(OBJ_SEP)) return false;
-               const field = fieldDefinitions.find(on('name', is(heading)));
-               if (!field) return false;
+                const field = fieldDefinitions.find(on('name', is(heading)));
+                if (!field) return false;
 
-               return (field.inputType === inputType);
+                return field.inputType === inputType;
             });
     }
 

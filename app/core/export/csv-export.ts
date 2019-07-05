@@ -71,7 +71,7 @@ export module CSVExport {
 
         return reduce((matrix: any, index: number) => {
 
-                const max = getMax(matrix, index);
+                const max = getMax(index)(matrix);
                 if (isNaN(max)) return matrix; // TODO review
 
                 headerExpansion(index, max);
@@ -84,9 +84,9 @@ export module CSVExport {
     }
 
 
-    function getMax(matrix: any, indexOfDatingElement: any) {
+    function getMax(indexOfDatingElement: any) {
 
-        return matrix.reduce((max: number, row: any) =>
+        return reduce((max: number, row: any) =>
 
                 Math.max(
                     max,

@@ -218,6 +218,10 @@ export module CSVExport {
 
     function toDocumentWithFlattenedRelations(resource: FieldResource) {
 
+        const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
+        const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
+        const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
+
         const cloned = clone(resource);
 
         if (!cloned.relations) return cloned;
@@ -226,13 +230,13 @@ export module CSVExport {
         }
         delete cloned.relations;
 
-        if (cloned['relations.liesWithin']) {
-            delete cloned['relations.isRecordedIn'];
-            cloned['relations.isChildOf'] = cloned['relations.liesWithin'];
+        if (cloned[RELATIONS_LIES_WITHIN]) {
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
         }
-        else if (cloned['relations.isRecordedIn']) {
-            cloned['relations.isChildOf'] = cloned['relations.isRecordedIn'];
-            delete cloned['relations.isRecordedIn'];
+        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
+            delete cloned[RELATIONS_IS_RECORDED_IN];
         }
 
         return cloned;

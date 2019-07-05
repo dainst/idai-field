@@ -14,7 +14,12 @@ describe('CSVExport', () => {
 
         return new IdaiType({
             type: 'Feature',
-            fields: fieldNames.map(fieldName => {return {name: fieldName}})
+            fields: fieldNames.map(fieldName => {
+                return {
+                    name: fieldName,
+                    inputType: fieldName.startsWith('dimension') ? 'dimension' : 'input'
+                }
+            })
         })
     }
 
@@ -157,10 +162,14 @@ describe('CSVExport', () => {
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+            ifResource('i2', 'identifier2', 'shortDescription2', 'type'),
+            ifResource('i3', 'identifier3', 'shortDescription3', 'type'),
         ];
         resources[0]['dimensionX'] = [
             {value: 100, measurementComment: 'abc'},
             {inputValue: 200, measurementPosition: 'def'}];
+        resources[1]['dimensionX'] = [
+            {value: 300, inputRangeEndValue: 'ghc'}];
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
@@ -191,5 +200,10 @@ describe('CSVExport', () => {
         expect(result[1][5]).toBe('abc');
         expect(result[1][13]).toBe('200');
         expect(result[1][15]).toBe('def');
+
+        expect(result[2][1]).toBe('300');
+        expect(result[2][3]).toBe('ghc');
+
+        expect(result[3][1]).toBe('');
     });
 });

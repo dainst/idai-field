@@ -1,5 +1,5 @@
-import {FieldResource, IdaiType} from 'idai-components-2';
-import {includedIn, isNot, isnt, to, identity, reverse, indices} from 'tsfun';
+import {FieldResource, IdaiType, FieldDefinition} from 'idai-components-2';
+import {includedIn, isNot, isnt, to, identity, reverse, indices, on, is} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 
@@ -8,6 +8,8 @@ import {HIERARCHICAL_RELATIONS} from '../../c';
  * @author Daniel de Oliveira
  */
 export module CSVExport {
+
+    const OBJ_SEP = '.';
 
     /**
      * Creates a header line and lines for each record.
@@ -35,7 +37,7 @@ export module CSVExport {
             matrix);
 
         expand(
-            getIndices(headings, 'dimension'),
+            getIndices(headings, resourceType.fields, 'dimension'),
             expandDimensionHeader(headings),
             rowsWithDimensionElementsExpanded,
             matrix);
@@ -44,11 +46,17 @@ export module CSVExport {
     }
 
 
-    function getIndices(headings: string[], searchPattern: string) {
+    function getIndices(headings: string[], fieldDefinitions: Array<FieldDefinition>, inputType: string) {
 
-        return indices(
-            (heading: string) => heading.includes(searchPattern) // TODO make that dependent on the actual field type
-            )(headings);
+        return indices((heading: string) => {
+
+                if (heading.includes(OBJ_SEP)) return false;
+               const field = fieldDefinitions.find(on('name', is(heading)));
+               if (!field) return false;
+
+               return (field.inputType === inputType);
+
+            })(headings);
     }
 
 

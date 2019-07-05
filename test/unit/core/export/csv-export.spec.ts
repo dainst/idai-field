@@ -156,6 +156,34 @@ describe('CSVExport', () => {
     });
 
 
+    it('do not modify resource when expanding', () => {
+
+        const t = makeType(['identifier', 'dating']);
+
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource.dating = [{begin: {year: 10}, end: {year: 20}, source: 'some1', label: 'blablabla1'}];
+
+        CSVExport.createExportable([resource], t, []).map(row => row.split(','));
+
+        expect(resource['dating'][0]['begin']['year']).toBe(10);
+        expect(resource['dating'][0]['end']['year']).toBe(20);
+        expect(resource['dating'][0]['source']).toBe('some1');
+    });
+
+
+    it('do not modify resource when expanding relations', () => {
+
+        const t = makeType(['identifier']);
+
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource['relations']['isAbove'] = ['abc'];
+
+        CSVExport.createExportable([resource], t, ['isAbove']).map(row => row.split(','));
+
+        expect(resource['relations']['isAbove'][0]).toBe('abc');
+    });
+
+
     it('expand dimension', () => {
 
         const t = makeType(['identifier', 'dimensionX', 'custom']);

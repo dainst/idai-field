@@ -9,7 +9,9 @@ import {HIERARCHICAL_RELATIONS} from '../../c';
  */
 export module CSVExport {
 
+    const SEP = ',';
     const OBJ_SEP = '.';
+    const REL_SEP = ';';
     const BOGUS = 'tmpval';
 
     /**
@@ -216,17 +218,25 @@ export module CSVExport {
     }
 
 
-    function toDocumentWithFlattenedRelations(resource: FieldResource) {
+    /**
+     * resource.relations = { someRel: ['val1', 'val2] }
+     * ->
+     * resource['relations.someRel'] = 'val1; val2'
+     *
+     * @param resource
+     * @returns a new resource instance, where relations are turned into fields.
+     */
+    function toDocumentWithFlattenedRelations(resource: FieldResource): FieldResource {
 
         const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
         const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
         const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
-        const cloned = clone(resource);
+        const cloned = clone(resource); // so we can modify in place
 
         if (!cloned.relations) return cloned;
-        for (let relation of Object.keys(cloned.relations)) { // TODO use HOF, maybe get rid of clone then
-            cloned['relations.' + relation] = cloned.relations[relation].join(';');
+        for (let relation of Object.keys(cloned.relations)) {
+            cloned['relations.' + relation] = cloned.relations[relation].join(REL_SEP);
         }
         delete cloned.relations;
 
@@ -286,5 +296,5 @@ export module CSVExport {
     }
 
 
-    const toCsvLine = (as: string[]): string => as.join(',');
+    const toCsvLine = (as: string[]): string => as.join(SEP);
 }

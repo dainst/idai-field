@@ -30,6 +30,14 @@ describe('CSVExport', () => {
     }
 
 
+    function makeSimpleTypeAndResource() {
+
+        const t = makeType(['identifier', 'shortDescription']);
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        return {t: t, resource: resource};
+    }
+
+
     it('create header line if documents empty', () => {
 
         const t = makeType(['identifier', 'shortDescription', 'custom', 'id']);
@@ -41,9 +49,7 @@ describe('CSVExport', () => {
 
     it('create document line', () => {
 
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i', 'identifier1', 'shortDescription1','type');
+        const {t, resource} = makeSimpleTypeAndResource();
         const result = CSVExport.createExportable([resource], t, []);
         expect(result[0]).toEqual('identifier,shortDescription,relations.isChildOf');
         expect(result[1]).toEqual('identifier1,shortDescription1,');
@@ -52,9 +58,7 @@ describe('CSVExport', () => {
 
     it('export relations', () => {
 
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        const {t, resource} = makeSimpleTypeAndResource();
         resource.relations = { someRelation: ["identifier2"] } as any;
 
         const result = CSVExport.createExportable([resource], t, ['someRelation']);
@@ -65,9 +69,7 @@ describe('CSVExport', () => {
 
     it('is nested in another resource', () => {
 
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        const {t, resource} = makeSimpleTypeAndResource();
         resource.relations = {
             liesWithin: ["identifier2"],
             isRecordedIn: ["operation1"]
@@ -81,9 +83,7 @@ describe('CSVExport', () => {
 
     it('is nested in an operation', () => { // TODO factor out redundandcies with previous test
 
-        const t = makeType(['identifier', 'shortDescription']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        const {t, resource} = makeSimpleTypeAndResource();
         resource.relations = {
             isRecordedIn: ["operation1"]
         } as any;
@@ -158,9 +158,7 @@ describe('CSVExport', () => {
 
     it('do not modify resource when expanding', () => {
 
-        const t = makeType(['identifier', 'dating']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        const {t, resource} = makeSimpleTypeAndResource();
         resource.dating = [{begin: {year: 10}, end: {year: 20}, source: 'some1', label: 'blablabla1'}];
 
         CSVExport.createExportable([resource], t, []).map(row => row.split(','));
@@ -173,9 +171,7 @@ describe('CSVExport', () => {
 
     it('do not modify resource when expanding relations', () => {
 
-        const t = makeType(['identifier']);
-
-        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        const {t, resource} = makeSimpleTypeAndResource();
         resource['relations']['isAbove'] = ['abc'];
 
         CSVExport.createExportable([resource], t, ['isAbove']).map(row => row.split(','));

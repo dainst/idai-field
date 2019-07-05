@@ -282,17 +282,8 @@ export module CSVExport {
     }
 
 
-    /**
-     * Fills up items with defaultVal, until it reaches the specified targetSize
-     *
-     * @param targetSize
-     * @param defaultVal
-     */
     function fillUpToSize(targetSize: number, defaultVal: any) {
 
-        /**
-         * @param items
-         */
         return (items: any[]|undefined) => {
 
             const items_ = items ? items : [];

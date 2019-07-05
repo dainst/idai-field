@@ -170,6 +170,7 @@ describe('CSVExport', () => {
             {inputValue: 200, measurementPosition: 'def'}];
         resources[1]['dimensionX'] = [
             {value: 300, inputRangeEndValue: 'ghc'}];
+        resources[1]['custom'] = 'custom';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
@@ -203,6 +204,7 @@ describe('CSVExport', () => {
 
         expect(result[2][1]).toBe('300');
         expect(result[2][3]).toBe('ghc');
+        expect(result[2][23]).toBe('custom');
 
         expect(result[3][1]).toBe('');
     });

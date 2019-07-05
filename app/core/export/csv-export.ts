@@ -10,6 +10,7 @@ import {HIERARCHICAL_RELATIONS} from '../../c';
 export module CSVExport {
 
     const OBJ_SEP = '.';
+    const BOGUS = 'tmpval';
 
     /**
      * Creates a header line and lines for each record.
@@ -115,7 +116,7 @@ export module CSVExport {
         return (indexOfElementToReplace: number, max: number) => {
 
             const fieldsToInsert: string[] = [];
-            for (let i = 0; i < max; i++) fieldsToInsert.push(fieldsToInsert + OBJ_SEP + i);
+            for (let i = 0; i < max; i++) fieldsToInsert.push(BOGUS);
             const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
 
             for (let i = max - 1; i >= 0; i--) {
@@ -139,7 +140,7 @@ export module CSVExport {
         return (indexOfElementToReplace: number, max: number) => {
 
             const fieldsToInsert: string[] = [];
-            // for (let i = 0; i < max; i++) dimensionFields.push('dating.' + i); TODO review and test, test for dating shows that there it is necesarry because of other fields like custom
+            for (let i = 0; i < max; i++) fieldsToInsert.push(BOGUS);
             const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
 
             for (let i = max - 1; i >= 0; i--) {

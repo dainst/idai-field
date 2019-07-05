@@ -308,7 +308,11 @@ export module CSVExport {
     }
 
 
-    const genEmptyString = () => '';
+    function genEmptyString() {
+
+        return '';
+    }
+
 
     const toCsvLine = (as: string[]): string => as.join(SEP);
 }

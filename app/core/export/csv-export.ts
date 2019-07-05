@@ -15,6 +15,10 @@ export module CSVExport {
     const REL_SEP = ';';
     const BOGUS = 'tmpval';
 
+    const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
+    const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
+    const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
+
     /**
      * Creates a header line and lines for each record.
      * If resources is empty, still a header line gets created.
@@ -106,7 +110,7 @@ export module CSVExport {
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
                     .map(relation => 'relations.' + relation))
-            .concat(['relations.isChildOf']);
+            .concat([RELATIONS_IS_CHILD_OF]);
     }
 
 
@@ -134,27 +138,27 @@ export module CSVExport {
     function getInsertableDatingItems(fieldName: string, i: number) {
 
         return [
-            fieldName + OBJ_SEP + i + '.begin.year',
-            fieldName + OBJ_SEP + i + '.end.year',
-            fieldName + OBJ_SEP + i + '.source',
-            fieldName + OBJ_SEP + i + '.label'];
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'end.year',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'label'];
     }
 
 
     function getInsertableDimensionItems(fieldName: string, i: number) {
 
         return [
-            fieldName + OBJ_SEP + i + '.value',
-            fieldName + OBJ_SEP + i + '.inputValue',
-            fieldName + OBJ_SEP + i + '.inputRangeEndValue',
-            fieldName + OBJ_SEP + i + '.measurementPosition',
-            fieldName + OBJ_SEP + i + '.measurementComment',
-            fieldName + OBJ_SEP + i + '.inputUnit',
-            fieldName + OBJ_SEP + i + '.isImprecise',
-            fieldName + OBJ_SEP + i + '.isRange',
-            fieldName + OBJ_SEP + i + '.label',
-            fieldName + OBJ_SEP + i + '.rangeMin',
-            fieldName + OBJ_SEP + i + '.rangeMax'];
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'value',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementComment',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'label',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMin',
+            fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMax'];
     }
 
 
@@ -247,10 +251,6 @@ export module CSVExport {
      * @returns a new resource instance, where relations are turned into fields.
      */
     function toDocumentWithFlattenedRelations(resource: FieldResource): FieldResource {
-
-        const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
-        const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
-        const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
         const cloned = clone(resource); // so we can modify in place
 

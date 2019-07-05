@@ -10,9 +10,6 @@ import {expand, makeEmptyDenseArray} from './export-helper';
  */
 export module CSVExport {
 
-    const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
-    const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
-    const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
     const SEP = ',';
     const OBJ_SEP = '.';
@@ -111,7 +108,7 @@ export module CSVExport {
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
                     .map(relation => 'relations.' + relation))
-            .concat([RELATIONS_IS_CHILD_OF]);
+            .concat(['relations.isChildOf']);
     }
 
 
@@ -217,6 +214,10 @@ export module CSVExport {
      * @returns a new resource instance, where relations are turned into fields.
      */
     function toDocumentWithFlattenedRelations(resource: FieldResource): FieldResource {
+
+        const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
+        const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
+        const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
         const cloned = clone(resource); // so we can modify in place
 

@@ -1,8 +1,8 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize, flatten} from './export-helper';
+import {fillUpToSize, flatten, makeEmptyDenseArray} from './export-helper';
 
 
 /**
@@ -223,15 +223,16 @@ export module CSVExport {
          */
         return (itms: any[]) => {
 
-            let replacements = [];
-            for (let i = 0; i < nrOfNewItems; i++) {
-                const itm = itms[where + i];
-                const insertion: any[] | undefined = itm ? computeReplacement(itm) : [];
-                replacements.push(fillUpToSize_(widthOfEachNewItem, '')(insertion))
-            }
+            const replacements =
+                flow(itms,
+                    drop(where),
+                    take(nrOfNewItems),
+                    map(itm => itm ? computeReplacement(itm) : []),
+                    map(fillTo(widthOfEachNewItem)),
+                    flatten);
 
             return take(where)(itms)
-                .concat(flatten(replacements))
+                .concat(replacements)
                 .concat(drop(where + nrOfNewItems)(itms));
         }
     }
@@ -272,7 +273,7 @@ export module CSVExport {
 
         return (resource: FieldResource) => {
 
-            const newRow = new Array(fieldNames.length);
+            const newRow = makeEmptyDenseArray(fieldNames.length);
 
             return getUsableFieldNames(Object.keys(resource))
                 .reduce((row, fieldName) =>  {
@@ -311,12 +312,12 @@ export module CSVExport {
     }
 
 
-    function fillUpToSize_(targetSize: number, defaultVal: any) {
+    function fillTo(targetSize: number) {
 
         /**
          * @param items may be undefined
          */
-        return (items: any[]|undefined) => fillUpToSize(targetSize, defaultVal)(items ? items : [])
+        return (items: any[]|undefined) => fillUpToSize(targetSize, '')(items ? items : [])
     }
 
 

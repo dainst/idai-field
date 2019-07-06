@@ -38,20 +38,41 @@ export module CSVExport {
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        const indexOfDatingElement = headings.indexOf('dating');
-        if (indexOfDatingElement !== -1) matrix = expand(
-            expandHeader(headings, getInsertableDatingItems),
-            rowsWithDatingElementsExpanded,
-            matrix
-        )([indexOfDatingElement]);
+        matrix = expandDating(headings, matrix);
+        matrix = expandDimension(headings, resourceType, matrix);
 
-        matrix = expand(
+        return ([headings].concat(matrix)).map(toCsvLine);
+    }
+
+
+    /**
+     * @param headings modified in place
+     * @param matrix
+     */
+    function expandDating(headings: string[], matrix: any) {
+
+        const indexOfDatingElement = headings.indexOf('dating');
+        return indexOfDatingElement !== -1
+            ? expand(
+                expandHeader(headings, getInsertableDatingItems),
+                rowsWithDatingElementsExpanded,
+                matrix)([indexOfDatingElement])
+            : matrix;
+    }
+
+
+    /**
+     * @param headings modified in place
+     * @param resourceType
+     * @param matrix
+     */
+    function expandDimension(headings: string[], resourceType: IdaiType, matrix: any) {
+
+        return expand(
             expandHeader(headings, getInsertableDimensionItems),
             rowsWithDimensionElementsExpanded,
             matrix
         )(getIndices(resourceType.fields, 'dimension')(headings));
-
-        return ([headings].concat(matrix)).map(toCsvLine);
     }
 
 

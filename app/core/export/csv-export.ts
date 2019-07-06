@@ -249,7 +249,7 @@ export module CSVExport {
                 flow(itms,
                     drop(where),
                     take(nrOfNewItems),
-                    map(itm => itm ? computeReplacement(itm) : []),
+                    map(itm => itm ? computeReplacement(itm) : []), // TODO add if and when combinators if_(p, t: F, e: F) and when(p, t: F, default?)
                     map(fillTo(widthOfEachNewItem)),
                     flatten);
 

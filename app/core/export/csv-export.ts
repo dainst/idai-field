@@ -10,6 +10,7 @@ import {fillUpToSize, flatten, makeEmptyDenseArray} from './export-helper';
  */
 export module CSVExport {
 
+    const EMPTY = '';
     const SEP = ',';
     const OBJ_SEP = '.';
     const REL_SEP = ';';
@@ -317,7 +318,7 @@ export module CSVExport {
         /**
          * @param items may be undefined
          */
-        return (items: any[]|undefined) => fillUpToSize(targetSize, '')(items ? items : [])
+        return (items: any[]|undefined) => fillUpToSize(targetSize, EMPTY)(items ? items : [])
     }
 
 

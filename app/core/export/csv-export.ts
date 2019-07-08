@@ -1,8 +1,8 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize, flatten, makeEmptyDenseArray} from './export-helper';
+import {fillUpToSize, makeEmptyDenseArray} from './export-helper';
 
 
 /**
@@ -240,30 +240,31 @@ export module CSVExport {
                                     widthOfEachNewItem: number,
                                     computeReplacement: (removed: any) => any[]|undefined) {
 
-        return expandItems(
+        return replaceItems(
             where,
             nrOfNewItems,
-            compose<any[]>(
-                map(itm => itm ? computeReplacement(itm) : []), // TODO add if and when combinators if_(p, t: F, e: F) and when(p, t: F, default?)
-                map(fillTo(widthOfEachNewItem))));
+            flatMap(compose<any>(
+                itm => itm ? computeReplacement(itm) : [],
+                fillTo(widthOfEachNewItem))));
     }
 
+    // TODO add if and when combinators if_(p, t: F, e: F) and when(p, t: F, default?)
 
-    function expandItems(where: number,
-                         nrOfNewItems: number,
-                         comp: (_: any[]) => any[][]) {
+
+    function replaceItems<A>(where: number,
+                             nrOfNewItems: number,
+                             replace: (_: A[]) => A[]) {
 
         /**
          * @param itms
          */
-        return (itms: any[]) => {
+        return (itms: A[]) => {
 
             const replacements =
                 flow(itms,
                     drop(where),
                     take(nrOfNewItems),
-                    comp,
-                    flatten); // TODO could we also use flatMap in comp instead?
+                    replace);
 
             return take(where)(itms)
                 .concat(replacements)

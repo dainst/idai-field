@@ -14,6 +14,9 @@
         },
         "deviatingStoragePlace": {
           "label": "Abweichende/r Aufbewahrungsort/Inventarnummer"
+        },
+        "conditionComment": {
+          "label": "Kommentar Erhaltungszustand und Anpassungen/Zugehörigkeiten"
         }
       }
     },

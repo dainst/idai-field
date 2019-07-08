@@ -1,6 +1,8 @@
 {
   "Find" : [
-    "condition"
+    "condition",
+    "storageInventoryNumber",
+    "catalogueNumber"
   ],
   "Glass": [
     "vesselForm",

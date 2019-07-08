@@ -88,33 +88,54 @@ export module CSVExport {
     }
 
 
-    function expand(replaceFunction: Function, rowsExpansion: Function, headings_and_matrix: any) {
+    /**
+     * Returns a function that when provided an array of columnIndices,
+     * expands headings_and_matrix at the columns, assuming that
+     * these columns contain array values.
+     *
+     * For example:
+     *
+     * [['h1', 'h2'],
+     *  [[7,   [{b: 2}, {b: 3}],
+     *   [8,   [{b: 5}]]]
+     *
+     * Expanding at index 1, with appropriate expansion functions we can transform into
+     *
+     * [['h1', 'h2.0.b', 'h2.1.b'],
+     *  [[7,   2       , 3],
+     *   [8,   5,      , undefined]]]
+     *
+     * @param headingExpansion
+     * @param rowsExpansion
+     * @param headings_and_matrix
+     */
+    function expand(headingExpansion: Function, rowsExpansion: Function, headings_and_matrix: any) {
 
-        return reduce((headings_and_matrix: any, index: number) => {
+        return reduce((headings_and_matrix: any, columnIndex: number) => {
 
                 const [headings, matrix] = headings_and_matrix;
 
-                const max = getMax(index)(matrix);
-                if (isNaN(max)) return [headings, matrix]; // TODO review
+                const max = getMax(columnIndex)(matrix);
+                if (isNaN(max)) return [headings, matrix];
 
                 return [
-                    replaceItems(index, 1, replaceFunction(max))(headings),
+                    replaceItems(columnIndex, 1, headingExpansion(max))(headings),
                     matrix
-                        .map(expandArrayToSize(index, max))
-                        .map(rowsExpansion(index, max))];
+                        .map(expandArrayToSize(columnIndex, max))
+                        .map(rowsExpansion(columnIndex, max))];
 
             }, headings_and_matrix);
     }
 
 
-    function getMax(indexOfDatingElement: any) {
+    function getMax(columnIndex: any) {
 
         return reduce((max: number, row: any) =>
 
                 Math.max(
                     max,
-                    row[indexOfDatingElement]
-                        ? row[indexOfDatingElement].length
+                    row[columnIndex]
+                        ? row[columnIndex].length
                         : 0)
 
             , 0);
@@ -130,9 +151,6 @@ export module CSVExport {
                     .map(relation => 'relations.' + relation))
             .concat([RELATIONS_IS_CHILD_OF]);
     }
-
-
-
 
 
     function getInsertableDatingItems(n: number) { return (fieldName: string) => {

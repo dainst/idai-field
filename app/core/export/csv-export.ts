@@ -2,7 +2,7 @@ import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
 import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap, isDefined, arrayList, when} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize} from './export-helper';
+import {fillUpToSize, range, flatReduce} from './export-helper';
 
 
 /**
@@ -33,46 +33,45 @@ export module CSVExport {
                                      relations: Array<string>) {
 
         const headings: string[] = makeHeadings(resourceType, relations);
-
-        let matrix = resources
+        const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        matrix = expandDating(headings, matrix);
-        matrix = expandDimension(headings, resourceType, matrix);
-
-        return ([headings].concat(matrix)).map(toCsvLine);
+        return flow([headings, matrix],
+            expandDating,
+            expandDimension(resourceType),
+            combine);
     }
 
 
-    /**
-     * @param headings modified in place
-     * @param matrix
-     */
-    function expandDating(headings: string[], matrix: any) {
+    function combine(headings_and_matrix: any) {
 
-        const indexOfDatingElement = headings.indexOf('dating');
+        return [headings_and_matrix[0]].concat(headings_and_matrix[1]).map(toCsvLine);
+    }
+
+
+    function expandDating(headings_and_matrix: any) {
+
+        const indexOfDatingElement = headings_and_matrix[0].indexOf('dating');
         return indexOfDatingElement !== -1
             ? expand(
-                expandHeader(headings, getInsertableDatingItems),
+                getInsertableDatingItems,
                 rowsWithDatingElementsExpanded,
-                matrix)([indexOfDatingElement])
-            : matrix;
+                headings_and_matrix)([indexOfDatingElement])
+            : headings_and_matrix;
     }
 
 
-    /**
-     * @param headings modified in place
-     * @param resourceType
-     * @param matrix
-     */
-    function expandDimension(headings: string[], resourceType: IdaiType, matrix: any) {
+    function expandDimension(resourceType: IdaiType) {
 
-        return expand(
-            expandHeader(headings, getInsertableDimensionItems),
-            rowsWithDimensionElementsExpanded,
-            matrix
-        )(getIndices(resourceType.fields, 'dimension')(headings));
+        return (headings_and_matrix: any) => {
+
+            return expand(
+                    getInsertableDimensionItems,
+                    rowsWithDimensionElementsExpanded,
+                    headings_and_matrix
+                )(getIndices(resourceType.fields, 'dimension')(headings_and_matrix[0]));
+        }
     }
 
 
@@ -89,20 +88,22 @@ export module CSVExport {
     }
 
 
-    function expand(headerExpansion: Function, rowsExpansion: Function, matrix: any) {
+    function expand(replaceFunction: Function, rowsExpansion: Function, headings_and_matrix: any) {
 
-        return reduce((matrix: any, index: number) => {
+        return reduce((headings_and_matrix: any, index: number) => {
+
+                const [headings, matrix] = headings_and_matrix;
 
                 const max = getMax(index)(matrix);
-                if (isNaN(max)) return matrix; // TODO review
+                if (isNaN(max)) return [headings, matrix]; // TODO review
 
-                headerExpansion(index, max);
+                return [
+                    replaceItems(index, 1, replaceFunction(max))(headings),
+                    matrix
+                        .map(expandArrayToSize(index, max))
+                        .map(rowsExpansion(index, max))];
 
-                return matrix
-                    .map(expandArrayToSize(index, max))
-                    .map(rowsExpansion(index, max))
-
-            }, matrix);
+            }, headings_and_matrix);
     }
 
 
@@ -131,52 +132,36 @@ export module CSVExport {
     }
 
 
-    /**
-     * @param fieldNames gets modified in place
-     * @param replaceFunction
-     */
-    function expandHeader(fieldNames: any, replaceFunction: Function) {
-
-        return (indexOfElementToReplace: number, max: number) => {
-
-            const fieldsToInsert: string[] = [];
-            for (let i = 0; i < max; i++) fieldsToInsert.push(BOGUS);
-            const fieldName = fieldNames.splice(indexOfElementToReplace, 1, ...fieldsToInsert);
-
-            for (let i = max - 1; i >= 0; i--) {
-
-                const indexOfCurrentElement = indexOfElementToReplace + i;
-                fieldNames.splice(indexOfCurrentElement, 1, replaceFunction(fieldName, i));
-            }
-        }
-    }
 
 
-    function getInsertableDatingItems(fieldName: string, i: number) {
 
-        return [
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'end.year',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'label'];
-    }
+    function getInsertableDatingItems(n: number) { return (fieldName: string) => {
+
+        return flatReduce((i: number) => [
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.year',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'label']
+            )(range(n));
+    }}
 
 
-    function getInsertableDimensionItems(fieldName: string, i: number) {
+    function getInsertableDimensionItems(n:number) { return (fieldName: string) => {
 
-        return [
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'value',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementComment',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'label',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMin',
-            fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMax'];
-    }
+        return flatReduce((i: number) => [
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'value',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementComment',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'label',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMin',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMax']
+            )(range(n));
+    }}
 
 
     function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {

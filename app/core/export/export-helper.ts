@@ -1,6 +1,6 @@
 import {FieldResource, Query, IdaiType} from 'idai-components-2';
 import {FieldDocumentFindResult} from '../datastore/field/field-read-datastore';
-import {arrayList} from 'tsfun';
+import {arrayList, reduce} from 'tsfun';
 
 
 export type Count = number; // -1 signals that there is not usable count
@@ -33,3 +33,10 @@ export function fillUpToSize(targetSize: number, defaultVal: any) {
         return items.concat(fills);
     }
 }
+
+
+// from https://stackoverflow.com/questions/3895478/does-javascript-have-a-method-like-range-to-generate-a-range-within-the-supp
+export function range(n: number) { return Array.apply(null, Array(n)).map(function (_: any, i: number) {return i;});}
+
+
+export const flatReduce = <A, B>(f: (a: A) => B) => reduce((bs: Array<B>, a: A) => bs.concat(f(a)), []);

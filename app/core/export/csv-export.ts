@@ -1,8 +1,9 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap, isDefined, arrayList, when} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take,
+    to, flow, compose, flatMap, isDefined, arrayList, when, flatReduce, range} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize, range, flatReduce} from './export-helper';
+import {fillUpToSize} from './export-helper';
 
 
 /**
@@ -14,7 +15,6 @@ export module CSVExport {
     const SEP = ',';
     const OBJ_SEP = '.';
     const REL_SEP = ';';
-    const BOGUS = 'tmpval';
 
     const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';

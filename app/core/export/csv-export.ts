@@ -1,8 +1,8 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap, isDefined} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize, makeEmptyDenseArray} from './export-helper';
+import {fillUpToSize, makeEmptyDenseArray, when} from './export-helper';
 
 
 /**
@@ -244,11 +244,9 @@ export module CSVExport {
             where,
             nrOfNewItems,
             flatMap(compose<any>(
-                itm => itm ? computeReplacement(itm) : [],
+                when(isDefined, computeReplacement, []),
                 fillTo(widthOfEachNewItem))));
     }
-
-    // TODO add if and when combinators if_(p, t: F, e: F) and when(p, t: F, default?)
 
 
     function replaceItems<A>(where: number,

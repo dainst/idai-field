@@ -40,4 +40,7 @@ export function fillUpToSize(targetSize: number, defaultVal: any) { // TODO mayb
 }
 
 
-export const flatten = reduce((acc: any, val: any) => acc.concat(val), [] as any); // TODO perhaps move to other place, perhaps rename
+export const when = <A, B>(p: (_: A) => boolean, f: (_: A) => B, otherwise: B) => (v: A): B => p(v) ? f(v) : otherwise; // TODO move to tsfun
+
+
+export const flatten = reduce((acc: any, val: any) => acc.concat(val), [] as any); // TODO move to tsfun

@@ -68,8 +68,8 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
-        if (dating.begin && dating.begin.year < 0) return false;
-        if (dating.end && dating.end.year < 0) return false;
+        if (dating.begin && (!Number.isInteger(dating.begin.year) || dating.begin.year < 0)) return false;
+        if (dating.end && (!Number.isInteger(dating.end.year) || dating.end.year < 0)) return false;
         return dating.type !== 'range' || DatingComponent.validateRangeDating(dating);
     }
 

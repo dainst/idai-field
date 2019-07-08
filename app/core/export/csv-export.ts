@@ -24,6 +24,7 @@ export module CSVExport {
     const M = 1;
     type HeadingsAndMatrix = [string[],string[][]];
 
+
     /**
      * Creates a header line and lines for each record.
      * If resources is empty, still a header line gets created.

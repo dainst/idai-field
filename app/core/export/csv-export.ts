@@ -20,6 +20,9 @@ export module CSVExport {
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
     const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
+    const H = 0;
+    const M = 1;
+    type HeadingsAndMatrix = [string[],string[][]];
 
     /**
      * Creates a header line and lines for each record.
@@ -38,40 +41,42 @@ export module CSVExport {
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        return flow([headings, matrix],
+        return flow<any>([headings, matrix],
             expandDating,
-            expandDimension(resourceType),
+            expandDimension(resourceType.fields),
             combine);
     }
 
 
-    function combine(headings_and_matrix: any) {
+    function combine(headings_and_matrix: HeadingsAndMatrix) {
 
-        return [headings_and_matrix[0]].concat(headings_and_matrix[1]).map(toCsvLine);
+        return [headings_and_matrix[H]].concat(headings_and_matrix[M]).map(toCsvLine);
     }
 
 
-    function expandDating(headings_and_matrix: any) {
+    function expandDating(headings_and_matrix: HeadingsAndMatrix) {
 
-        const indexOfDatingElement = headings_and_matrix[0].indexOf('dating');
-        return indexOfDatingElement !== -1
-            ? expand(
+        const indexOfDatingElement = headings_and_matrix[H].indexOf('dating');
+        if (indexOfDatingElement === -1) return headings_and_matrix;
+
+        return expand(
                 getInsertableDatingItems,
                 rowsWithDatingElementsExpanded,
                 headings_and_matrix)([indexOfDatingElement])
-            : headings_and_matrix;
     }
 
 
-    function expandDimension(resourceType: IdaiType) {
+    function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
 
-        return (headings_and_matrix: any) => {
+        const getDimensionIndices = getIndices(fieldDefinitions, 'dimension');
+
+        return (headings_and_matrix: HeadingsAndMatrix) => {
 
             return expand(
                     getInsertableDimensionItems,
                     rowsWithDimensionElementsExpanded,
                     headings_and_matrix
-                )(getIndices(resourceType.fields, 'dimension')(headings_and_matrix[0]));
+                )(getDimensionIndices(headings_and_matrix[H]));
         }
     }
 
@@ -110,9 +115,9 @@ export module CSVExport {
      * @param rowsExpansion
      * @param headings_and_matrix
      */
-    function expand(headingExpansion: Function, rowsExpansion: Function, headings_and_matrix: any) {
+    function expand(headingExpansion: Function, rowsExpansion: Function, headings_and_matrix: HeadingsAndMatrix) {
 
-        return reduce((headings_and_matrix: any, columnIndex: number) => {
+        return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
 
                 const [headings, matrix] = headings_and_matrix;
 

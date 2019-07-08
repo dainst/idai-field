@@ -1,8 +1,8 @@
 import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap, isDefined} from 'tsfun';
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, to, flow, map, compose, flatMap, isDefined, arrayList, when} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
-import {fillUpToSize, makeEmptyDenseArray, when} from './export-helper';
+import {fillUpToSize} from './export-helper';
 
 
 /**
@@ -306,7 +306,7 @@ export module CSVExport {
 
         return (resource: FieldResource) => {
 
-            const newRow = makeEmptyDenseArray(fieldNames.length);
+            const newRow = arrayList(fieldNames.length);
 
             return getUsableFieldNames(Object.keys(resource))
                 .reduce((row, fieldName) =>  {

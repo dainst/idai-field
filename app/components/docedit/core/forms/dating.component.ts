@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
 import {DatingUtil} from '../../../../core/util/dating-util';
+import {Validations} from '../../../../core/model/validations';
 
 
 export interface Dating {
@@ -68,24 +69,6 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
-        if (dating.begin && (!Number.isInteger(dating.begin.year) || dating.begin.year < 0)) return false;
-        if (dating.end && (!Number.isInteger(dating.end.year) || dating.end.year < 0)) return false;
-        return dating.type !== 'range' || DatingComponent.validateRangeDating(dating);
-    }
-
-
-    private static validateRangeDating(dating: Dating): boolean {
-
-        return dating.begin !== undefined && dating.end !== undefined &&
-            this.getNormalizedYear(dating.begin) < this.getNormalizedYear(dating.end);
-    }
-
-
-    private static getNormalizedYear(date: any): number {
-
-        if (date.type === 'bce') return 0 - date.year;
-        if (date.type === 'bp') return 1950 - date.year;
-
-        return date.year;
+        return Validations.validateDating(dating, false);
     }
 }

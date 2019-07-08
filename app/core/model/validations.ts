@@ -3,6 +3,7 @@ import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, Relat
     Resource, NewDocument, Document} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
+import {Dating} from '../../components/docedit/core/forms/dating.component';
 
 
 export module Validations {
@@ -314,5 +315,30 @@ export module Validations {
 
         return coordinates.length !== 0
             && coordinates.every(validatePolygonCoordinates);
+    }
+
+
+    export function validateDating(dating: Dating, allowLabel: boolean): boolean {
+
+        if (allowLabel && dating.label) return true;
+        if (dating.begin && (!Number.isInteger(dating.begin.year) || dating.begin.year < 0)) return false;
+        if (dating.end && (!Number.isInteger(dating.end.year) || dating.end.year < 0)) return false;
+        return dating.type !== 'range' || validateRangeDating(dating);
+    }
+
+
+    function validateRangeDating(dating: Dating): boolean {
+
+        return dating.begin !== undefined && dating.end !== undefined &&
+            getNormalizedYear(dating.begin) < getNormalizedYear(dating.end);
+    }
+
+
+    function getNormalizedYear(date: any): number {
+
+        if (date.type === 'bce') return 0 - date.year;
+        if (date.type === 'bp') return 1950 - date.year;
+
+        return date.year;
     }
 }

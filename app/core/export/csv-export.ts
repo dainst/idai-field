@@ -20,6 +20,7 @@ export module CSVExport {
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
     const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
+
     /**
      * Creates a header line and lines for each record.
      * If resources is empty, still a header line gets created.

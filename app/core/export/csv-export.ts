@@ -116,7 +116,7 @@ export module CSVExport {
                 const [headings, matrix] = headings_and_matrix;
 
                 const max = getMax(columnIndex)(matrix);
-                if (isNaN(max)) return [headings, matrix];
+                if (isNaN(max)) return [headings, matrix]; // TODO write test
 
                 return [
                     replaceItems(columnIndex, 1, headingExpansion(max))(headings),

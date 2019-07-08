@@ -54,15 +54,22 @@ export module CSVExport {
     }
 
 
+    const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 4);
+
+    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 11);
+
+    const expandLevelOne = (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
+
+
     function expandDating(headings_and_matrix: HeadingsAndMatrix) {
 
         const indexOfDatingElement = headings_and_matrix[H].indexOf('dating');
         if (indexOfDatingElement === -1) return headings_and_matrix;
 
         return expand(
-                getInsertableDatingItems,
-                rowsWithDatingElementsExpanded,
-                headings_and_matrix)([indexOfDatingElement])
+            getInsertableDatingItems,
+            expandDatingItems,
+            headings_and_matrix)([indexOfDatingElement])
     }
 
 
@@ -74,7 +81,7 @@ export module CSVExport {
 
             return expand(
                     getInsertableDimensionItems,
-                    rowsWithDimensionElementsExpanded,
+                    expandDimensionItems,
                     headings_and_matrix
                 )(getDimensionIndices(headings_and_matrix[H]));
         }
@@ -111,11 +118,13 @@ export module CSVExport {
      *  [[7,   2       , 3],
      *   [8,   5,      , undefined]]]
      *
-     * @param headingExpansion
-     * @param rowsExpansion
+     * @param expandHeading
+     * @param expandLevelTwo
      * @param headings_and_matrix
      */
-    function expand(headingExpansion: Function, rowsExpansion: Function, headings_and_matrix: HeadingsAndMatrix) {
+    function expand(expandHeading: Function,
+                    expandLevelTwo: Function,
+                    headings_and_matrix: HeadingsAndMatrix) {
 
         return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
 
@@ -125,10 +134,10 @@ export module CSVExport {
                 if (isNaN(max)) return [headings, matrix]; // TODO write test
 
                 return [
-                    replaceItems(columnIndex, 1, headingExpansion(max))(headings),
+                    replaceItems(columnIndex, 1, expandHeading(max))(headings),
                     matrix
-                        .map(expandArrayToSize(columnIndex, max))
-                        .map(rowsExpansion(columnIndex, max))];
+                        .map(expandLevelOne(columnIndex, max))
+                        .map(expandLevelTwo(columnIndex, max))];
 
             }, headings_and_matrix);
     }
@@ -188,44 +197,30 @@ export module CSVExport {
     }}
 
 
-    function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
+    function rowsWithDatingElementsExpanded(removed: any): string[] {
 
-        return expandHomogeneousItems(indexOfDatingElement, max, 4,
-            (removed: any) => {
-
-                return [
-                    removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
-                    removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
-                    removed['source'],
-                    removed['label']];
-            });
+        return [
+            removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
+            removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
+            removed['source'],
+            removed['label']];
     }
 
 
-    function rowsWithDimensionElementsExpanded(indexOfDimensionElement: number, max: number) {
+    function rowsWithDimensionElementsExpanded(removed: any): string[] {
 
-        return expandHomogeneousItems(indexOfDimensionElement, max, 11,
-            (removed: any) => {
-
-                return [
-                    removed['value'],
-                    removed['inputValue'],
-                    removed['inputRangeEndValue'],
-                    removed['measurementPosition'],
-                    removed['measurementComment'],
-                    removed['inputUnit'],
-                    removed['isImprecise'],
-                    removed['isRange'],
-                    removed['label'],
-                    removed['rangeMin'],
-                    removed['rangeMax']];
-            });
-    }
-
-
-    function expandArrayToSize(where: number, targetSize: number) {
-
-        return expandHomogeneousItems(where, 1, targetSize, identity);
+        return [
+            removed['value'],
+            removed['inputValue'],
+            removed['inputRangeEndValue'],
+            removed['measurementPosition'],
+            removed['measurementComment'],
+            removed['inputUnit'],
+            removed['isImprecise'],
+            removed['isRange'],
+            removed['label'],
+            removed['rangeMin'],
+            removed['rangeMax']];
     }
 
 
@@ -239,22 +234,24 @@ export module CSVExport {
      * where the R1 entries replace the C entry
      *   and the R2 entries replace the D enty
      *
-     * @param where
-     * @param nrOfNewItems
      * @param widthOfEachNewItem
      * @param computeReplacement should return an array of size widthOfEachNewItem
      */
-    function expandHomogeneousItems(where: number,
-                                    nrOfNewItems: number,
-                                    widthOfEachNewItem: number,
-                                    computeReplacement: (removed: any) => any[]|undefined) {
+    function expandHomogeneousItems(computeReplacement: (removed: any) => any[],
+                                    widthOfEachNewItem: number) {
+        /**
+         * @param where
+         * @param nrOfNewItems
+         */
+        return (where: number, nrOfNewItems: number) => {
 
-        return replaceItems(
-            where,
-            nrOfNewItems,
-            flatMap(compose<any>(
-                when(isDefined, computeReplacement, []),
-                fillTo(widthOfEachNewItem))));
+            return replaceItems(
+                where,
+                nrOfNewItems,
+                flatMap(compose<any>(
+                    when(isDefined, computeReplacement, []),
+                    fillTo(widthOfEachNewItem))));
+        }
     }
 
 

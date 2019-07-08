@@ -68,7 +68,7 @@ export module CSVExport {
         if (indexOfDatingElement === -1) return headings_and_matrix;
 
         return expand(
-            getInsertableDatingItems,
+            expandDatingHeadings,
             expandDatingItems,
             headings_and_matrix)([indexOfDatingElement])
     }
@@ -81,7 +81,7 @@ export module CSVExport {
         return (headings_and_matrix: HeadingsAndMatrix) => {
 
             return expand(
-                    getInsertableDimensionItems,
+                    expandDimensionHeadings,
                     expandDimensionItems,
                     headings_and_matrix
                 )(getDimensionIndices(headings_and_matrix[H]));
@@ -169,7 +169,7 @@ export module CSVExport {
     }
 
 
-    function getInsertableDatingItems(n: number) { return (fieldName: string) => {
+    function expandDatingHeadings(n: number) { return (fieldName: string) => {
 
         return flatReduce((i: number) => [
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
@@ -180,7 +180,7 @@ export module CSVExport {
     }}
 
 
-    function getInsertableDimensionItems(n:number) { return (fieldName: string) => {
+    function expandDimensionHeadings(n:number) { return (fieldName: string) => {
 
         return flatReduce((i: number) => [
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'value',

@@ -10,10 +10,9 @@ export module CsvRowsConversion {
 
     /**
      * @param sep
-     * @param operationId converted into isChildOf entry if not empty
+
      */
-    export function parse(sep: string,
-                          operationId: string) {
+    export function parse(sep: string) {
 
         return (rows: string[]): Array<Resource> => {
 
@@ -24,8 +23,6 @@ export module CsvRowsConversion {
             return rows.reduce((resources, row) => {
 
                 const resource = makeResource(headings)(row.split(sep));
-
-                if (operationId) (resource as any).relations = { isChildOf: operationId };
 
                 return resources.concat([resource as any]);
 

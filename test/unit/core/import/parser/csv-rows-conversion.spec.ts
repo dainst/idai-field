@@ -6,23 +6,14 @@ import SEP = CsvParser.SEP;
 
 describe('CsvRowsConversion', () => {
 
-    const EMPTY = '';
 
     it('basics', () => {
 
-        const resources = CsvRowsConversion.parse(SEP, EMPTY)(['identifier,shortDescription,custom', '10,zehn,bla']);
+        const resources = CsvRowsConversion.parse(SEP)(['identifier,shortDescription,custom', '10,zehn,bla']);
         expect(resources.length).toBe(1);
         expect(resources[0].identifier).toBe('10');
         expect(resources[0].shortDescription).toBe('zehn');
         expect(resources[0].custom).toBe('bla');
-    });
-
-
-    it('assign operation id', () => {
-
-        const resources = CsvRowsConversion.parse(SEP, 'operationId1')(['identifier,shortDescription,custom', '10,zehn,bla']);
-        expect(resources.length).toBe(1);
-        expect(resources[0].relations['isChildOf']).toBe('operationId1');
     });
 
 
@@ -31,7 +22,7 @@ describe('CsvRowsConversion', () => {
         const lines = ['identifier,dating.0.begin.year,dating.0.end.year,dating.0.source,dating.0.label',
             'identifier1,100,200,S,L'];
 
-        const resources = CsvRowsConversion.parse(SEP, EMPTY)(lines);
+        const resources = CsvRowsConversion.parse(SEP)(lines);
         expect(resources.length).toBe(1);
 
         const resource = resources[0];
@@ -47,7 +38,7 @@ describe('CsvRowsConversion', () => {
 
         const lines = ['identifier,dimensionX.value', 'identifier1,100'];
 
-        const resources = CsvRowsConversion.parse(SEP, EMPTY)(lines);
+        const resources = CsvRowsConversion.parse(SEP)(lines);
         const resource = resources[0];
         expect(resource['dimensionX']['value']).toBe('100');
     });
@@ -57,7 +48,7 @@ describe('CsvRowsConversion', () => {
 
         const lines = ['identifier,relations.isChildOf', 'identifier1,identifier2'];
 
-        const resources = CsvRowsConversion.parse( SEP, EMPTY)(lines);
+        const resources = CsvRowsConversion.parse( SEP)(lines);
         const resource = resources[0];
         expect(resource.relations[PARENT]).toBe('identifier2');
     });

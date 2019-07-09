@@ -15,13 +15,28 @@ export module CsvParser {
     const insertTypeName = (type: IdaiType) => (resource: Resource) => { resource.type = type.name; return resource; };
 
 
+    function insertIsChildOf(operationId: string) {
+
+        return (resource: Resource) => {
+
+            if (operationId) resource.relations = { isChildOf: operationId as any };
+            return resource;
+        }
+    }
+
+
+    /**
+     * @param type
+     * @param operationId converted into isChildOf entry if not empty
+     */
     export const getParse = (type: IdaiType, operationId: string): Parser =>
             (content: string) => {
 
                 const documents = flow<any>(content,
                     makeLines,
-                    CsvRowsConversion.parse(SEP, operationId),
+                    CsvRowsConversion.parse(SEP),
                     map(insertTypeName(type)), // TODO make assoc function
+                    map(insertIsChildOf(operationId)),
                     map(toResource)
                     // TODO convert numbers and booleans
                 );

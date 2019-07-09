@@ -341,14 +341,14 @@ export module Validations {
         return projectConfiguration.getFieldDefinitions(resource.type)
             .filter(field => field.inputType === 'dating')
             .filter(field => resource[field.name] !== undefined &&
-                !Validations.validateDating(resource[field.name], true))
+                !Validations.validateDating(resource[field.name]))
             .map(field => field.name);
     }
 
 
-    export function validateDating(dating: Dating, allowLabel: boolean): boolean {
+    export function validateDating(dating: Dating): boolean {
 
-        if (allowLabel && dating.label) return true;
+        if (dating.label) return true;
         if (dating.begin && (!Number.isInteger(dating.begin.year) || dating.begin.year < 0)) return false;
         if (dating.end && (!Number.isInteger(dating.end.year) || dating.end.year < 0)) return false;
         return dating.type !== 'range' || validateRangeDating(dating);

@@ -41,21 +41,6 @@ export class DimensionComponent {
     }
 
 
-    private convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m', inputValue: number): number {
-
-        switch (inputUnit) {
-            case 'mm':
-                return inputValue * 1000;
-            case 'cm':
-                return inputValue * 10000;
-            case 'm':
-                return inputValue * 1000000;
-            default:
-                return inputValue;
-        }
-    }
-
-
     public getLabel(dimension: Dimension): string {
 
         return dimension.label ? dimension.label : DimensionUtil.generateLabel(dimension, this.decimalPipe);
@@ -99,13 +84,13 @@ export class DimensionComponent {
     	if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
 
         if (dimension.isRange) {
-            dimension.rangeMin = this.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+            dimension.rangeMin = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputValue);
-            dimension.rangeMax = this.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+            dimension.rangeMax = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputRangeEndValue);
             delete(dimension.value);
         } else {
-    	    dimension.value = this.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+    	    dimension.value = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputValue);
         }
 
@@ -117,6 +102,22 @@ export class DimensionComponent {
             this.newDimension = undefined;
     	} else {
             this.stopEditing(dimension);
+        }
+    }
+
+
+    private static convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
+                                                         inputValue: number): number {
+
+        switch (inputUnit) {
+            case 'mm':
+                return inputValue * 1000;
+            case 'cm':
+                return inputValue * 10000;
+            case 'm':
+                return inputValue * 1000000;
+            default:
+                return inputValue;
         }
     }
 }

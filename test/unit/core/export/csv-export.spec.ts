@@ -211,29 +211,27 @@ describe('CSVExport', () => {
         expect(result[0][6]).toBe('dimensionX.0.inputUnit');
         expect(result[0][7]).toBe('dimensionX.0.isImprecise');
         expect(result[0][8]).toBe('dimensionX.0.isRange');
-        expect(result[0][9]).toBe('dimensionX.0.label');
-        expect(result[0][10]).toBe('dimensionX.0.rangeMin');
-        expect(result[0][11]).toBe('dimensionX.0.rangeMax');
-        expect(result[0][12]).toBe('dimensionX.1.value');
-        expect(result[0][13]).toBe('dimensionX.1.inputValue');
-        expect(result[0][14]).toBe('dimensionX.1.inputRangeEndValue');
-        expect(result[0][15]).toBe('dimensionX.1.measurementPosition');
-        expect(result[0][16]).toBe('dimensionX.1.measurementComment');
-        expect(result[0][17]).toBe('dimensionX.1.inputUnit');
-        expect(result[0][18]).toBe('dimensionX.1.isImprecise');
-        expect(result[0][19]).toBe('dimensionX.1.isRange');
-        expect(result[0][20]).toBe('dimensionX.1.label');
-        expect(result[0][21]).toBe('dimensionX.1.rangeMin');
-        expect(result[0][22]).toBe('dimensionX.1.rangeMax');
+        expect(result[0][9]).toBe('dimensionX.0.rangeMin');
+        expect(result[0][10]).toBe('dimensionX.0.rangeMax');
+        expect(result[0][11]).toBe('dimensionX.1.value');
+        expect(result[0][12]).toBe('dimensionX.1.inputValue');
+        expect(result[0][13]).toBe('dimensionX.1.inputRangeEndValue');
+        expect(result[0][14]).toBe('dimensionX.1.measurementPosition');
+        expect(result[0][15]).toBe('dimensionX.1.measurementComment');
+        expect(result[0][16]).toBe('dimensionX.1.inputUnit');
+        expect(result[0][17]).toBe('dimensionX.1.isImprecise');
+        expect(result[0][18]).toBe('dimensionX.1.isRange');
+        expect(result[0][19]).toBe('dimensionX.1.rangeMin');
+        expect(result[0][20]).toBe('dimensionX.1.rangeMax');
 
         expect(result[1][1]).toBe('100');
         expect(result[1][5]).toBe('abc');
-        expect(result[1][13]).toBe('200');
-        expect(result[1][15]).toBe('def');
+        expect(result[1][12]).toBe('200');
+        expect(result[1][14]).toBe('def');
 
         expect(result[2][1]).toBe('300');
         expect(result[2][3]).toBe('ghc');
-        expect(result[2][23]).toBe('custom');
+        expect(result[2][21]).toBe('custom');
 
         expect(result[3][1]).toBe('');
     });

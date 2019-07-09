@@ -1,4 +1,4 @@
-import {FieldDefinition, FieldResource, IdaiType, Dating} from 'idai-components-2';
+import {FieldDefinition, FieldResource, IdaiType, Dating, Dimension} from 'idai-components-2';
 import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take,
     to, flow, compose, flatMap, isDefined, arrayList, when, flatReduce, range} from 'tsfun';
 import {clone} from '../util/object-util';
@@ -57,7 +57,7 @@ export module CSVExport {
 
     const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
-    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 11);
+    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 10);
 
     const expandLevelOne =
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
@@ -197,7 +197,6 @@ export module CSVExport {
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'label',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMin',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMax']
             )(range(n));
@@ -206,33 +205,37 @@ export module CSVExport {
 
     function rowsWithDatingElementsExpanded(dating: Dating): string[] {
 
+        const {type, begin, end, margin, source, isImprecise, isUncertain} = dating;
+
         return [
-            dating.type ? dating.type : '',
-            dating.begin && dating.begin.type ? dating.begin.type : '',
-            dating.begin && dating.begin.year ? dating.begin.year.toString() : '',
-            dating.end && dating.end.type ? dating.end.type : '',
-            dating.end && dating.end.year ? dating.end.year.toString() : '',
-            dating.margin ? dating.margin.toString() : '',
-            dating.source ? dating.source : '',
-            dating.isImprecise ? 'true' : 'false', // TODO test if import works
-            dating.isUncertain ? 'true' : 'false'];
+            type ? type : '',
+            begin && begin.type ? begin.type : '',
+            begin && begin.year ? begin.year.toString() : '',
+            end && end.type ? end.type : '',
+            end && end.year ? end.year.toString() : '',
+            margin ? margin.toString() : '',
+            source ? source : '',
+            isImprecise ? 'true' : 'false', // TODO test if import works
+            isUncertain ? 'true' : 'false'];
     }
 
 
-    function rowsWithDimensionElementsExpanded(dimension: any): string[] {
+    function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
+
+        const {value, inputValue, inputRangeEndValue, measurementPosition, measurementComment,
+            inputUnit, isImprecise, isRange, rangeMin, rangeMax} = dimension;
 
         return [
-            dimension['value'],
-            dimension['inputValue'],
-            dimension['inputRangeEndValue'],
-            dimension['measurementPosition'],
-            dimension['measurementComment'],
-            dimension['inputUnit'],
-            dimension['isImprecise'],
-            dimension['isRange'],
-            dimension['label'],
-            dimension['rangeMin'],
-            dimension['rangeMax']];
+            value ? value.toString() : '',
+            inputValue ? inputValue.toString() : '',
+            inputRangeEndValue ? inputRangeEndValue.toString() : '',
+            measurementPosition ? measurementPosition : '',
+            measurementComment ? measurementComment : '',
+            inputUnit ? inputUnit : '',
+            isImprecise ? 'true' : 'false',
+            isRange ? 'true' : 'false',
+            rangeMin ? rangeMin.toString() : '',
+            rangeMax ? rangeMax.toString() : ''];
     }
 
 

@@ -30,6 +30,14 @@ export module DefaultImportCalc {
     const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN]; // TODO use existing definitions from c.ts
 
 
+    export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
+
+        if (mainTypeDocumentId && mergeMode) {
+            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
+        }
+    }
+
+
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
                           generateId: GenerateId,
@@ -41,9 +49,7 @@ export module DefaultImportCalc {
                           mainTypeDocumentId: Id,
                           useIdentifiersInRelations: boolean) {
 
-        if (mainTypeDocumentId && mergeMode) {
-            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
-        }
+        assertLegalCombination(mainTypeDocumentId, mergeMode);
 
         return async function process(documents: Array<Document>)
             : Promise<[Array<Document>, Array<Document>, Array<string>|undefined]> {

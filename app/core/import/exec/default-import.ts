@@ -13,6 +13,8 @@ import {DefaultImportCalc} from './default-import-calc';
 export module DefaultImport {
 
 
+
+
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
                           getInverseRelation: (_: string) => string|undefined,
@@ -23,9 +25,7 @@ export module DefaultImport {
                 mainTypeDocumentId: string = '' /* '' => no assignment */,
                 useIdentifiersInRelations: boolean = false): ImportFunction => {
 
-            if (mainTypeDocumentId && mergeMode) { // TODO extract redundancy into function
-                throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
-            }
+            DefaultImportCalc.assertLegalCombination(mainTypeDocumentId, mergeMode);
 
             /**
              * @param datastore

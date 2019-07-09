@@ -30,8 +30,10 @@ describe('CsvParser', () => {
         const parse = CsvParser.getParse(t, 'opId1');
         const docs = await parse('custom1,custom2\n1,2');
 
-        // console.log("",docs[0]['resource']);
-
+        expect(docs[0].resource['type']).toBe('Feature');
+        expect(docs[0].resource['custom1']).toBe('1');
+        expect(docs[0].resource['custom2']).toBe('2');
+        // TODO test liesWithin
         done();
     });
 });

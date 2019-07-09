@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Resource} from 'idai-components-2';
 import {reduce} from 'tsfun';
 
 /**
@@ -9,30 +9,28 @@ export module CsvRowsConversion {
     const PATH_SEP = '.';
 
     /**
-     * @param type
      * @param sep
      * @param operationId converted into isChildOf entry if not empty
      */
-    export function parse(type: string,
+    export function parse(
                           sep: string,
                           operationId: string) {
 
-        return (rows: string[]): Array<Document> => {
+        return (rows: string[]): Array<Resource> => {
 
             if (rows.length < 1) return [];
             const headings = rows[0].split(sep);
             rows.shift();
 
-            return rows.reduce((documents, row) => {
+            return rows.reduce((resources, row) => {
 
-                const document = makeDocument(headings)(row.split(sep));
+                const resource = makeResource(headings)(row.split(sep));
 
-                (document.resource as any)['type'] = type;
-                if (operationId) (document.resource as any).relations = { isChildOf: operationId };
+                if (operationId) (resource as any).relations = { isChildOf: operationId };
 
-                return documents.concat([document as any]);
+                return resources.concat([resource as any]);
 
-            }, [] as Array<Document>);
+            }, [] as Array<Resource>);
         }
     }
 
@@ -65,13 +63,13 @@ export module CsvRowsConversion {
     }
 
 
-    function makeDocument(headings: string[]) {
+    function makeResource(headings: string[]) {
 
-        return reduce((document, fieldOfRow, i: number) => {
+        return reduce((resource, fieldOfRow, i: number) => {
 
-            if (fieldOfRow) insertFieldIntoDocument(document.resource, headings[i], fieldOfRow);
-            return document;
+            if (fieldOfRow) insertFieldIntoDocument(resource, headings[i], fieldOfRow);
+            return resource;
 
-        }, { resource: {} });
+        }, {});
     }
 }

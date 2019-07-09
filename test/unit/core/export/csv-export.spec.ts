@@ -3,26 +3,25 @@ import {CSVExport} from '../../../../app/core/export/csv-export';
 import {Static} from '../../static';
 
 
+export function makeType(fieldNames: string[]) {
+
+    return new IdaiType({
+        type: 'Feature',
+        fields: fieldNames.map(fieldName => {
+            return {
+                name: fieldName,
+                inputType: fieldName.startsWith('dimension') ? 'dimension' : 'input'
+            }
+        })
+    })
+}
+
+
 /**
  * @author Daniel de Oliveira
  */
 
 describe('CSVExport', () => {
-
-
-    function makeType(fieldNames: string[]) {
-
-        return new IdaiType({
-            type: 'Feature',
-            fields: fieldNames.map(fieldName => {
-                return {
-                    name: fieldName,
-                    inputType: fieldName.startsWith('dimension') ? 'dimension' : 'input'
-                }
-            })
-        })
-    }
-
 
     function ifResource(id: string, identifier: string, sd: string, type: string) {
 

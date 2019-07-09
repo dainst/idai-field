@@ -1,26 +1,12 @@
 import {IdaiType} from 'idai-components-2';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
+import {makeType} from '../../export/csv-export.spec';
 
 /**
  * @author Daniel de Oliveira
  */
 
 describe('CsvParser', () => {
-
-
-    // TODO remove redundancy with CSVExport test
-    function makeType(fieldNames: string[]) {
-
-        return new IdaiType({
-            type: 'Feature',
-            fields: fieldNames.map(fieldName => {
-                return {
-                    name: fieldName,
-                    inputType: fieldName.startsWith('dimension') ? 'dimension' : 'input'
-                }
-            })
-        })
-    }
 
 
     it('basics', async done => {

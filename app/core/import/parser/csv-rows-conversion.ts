@@ -12,8 +12,7 @@ export module CsvRowsConversion {
      * @param sep
      * @param operationId converted into isChildOf entry if not empty
      */
-    export function parse(
-                          sep: string,
+    export function parse(sep: string,
                           operationId: string) {
 
         return (rows: string[]): Array<Resource> => {

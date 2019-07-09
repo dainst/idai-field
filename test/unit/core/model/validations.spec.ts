@@ -21,6 +21,12 @@ describe('Validations', () => {
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
                         { name: 'number2', label: 'number2', inputType: 'float' },
+                        { name: 'dating1', label: 'dating1', inputType: 'dating' },
+                        { name: 'dating2', label: 'dating2', inputType: 'dating' },
+                        { name: 'dating3', label: 'dating3', inputType: 'dating' },
+                        { name: 'dating4', label: 'dating4', inputType: 'dating' },
+                        { name: 'dating5', label: 'dating5', inputType: 'dating' },
+                        { name: 'dating6', label: 'dating6', inputType: 'dating' }
                     ]
                 },
                 {
@@ -167,7 +173,7 @@ describe('Validations', () => {
             Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
         done();
     });
@@ -190,7 +196,42 @@ describe('Validations', () => {
             Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
+        }
+        done();
+    });
+
+
+    it('should report invalid dating fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                // Accept datings with label (deprecated)
+                dating1: { label: 'Dating 1' },
+                // Correct dating
+                dating2: { type: 'range', begin: { year: 30, type: 'bce' }, end: { year: 20, type: 'ce'} },
+                // Invalid range
+                dating3: { type: 'range', begin: { year: 20, type: 'ce' }, end: { year: 30, type: 'bce'} },
+                // Incomplete range
+                dating4: { type: 'range', begin: { year: 10, type: 'ce'} },
+                // No integer value
+                dating5: { type: 'exact', end: { year: 10.5, type: 'ce'} },
+                // Negative value
+                dating6: { type: 'exact', end: { year: -10, type: 'ce'} },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDatingValues(doc, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_DATING_VALUES, 'T', 'dating3, dating4, dating5, dating6']
+            );
         }
         done();
     });

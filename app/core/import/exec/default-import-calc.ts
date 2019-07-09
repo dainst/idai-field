@@ -5,7 +5,15 @@ import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
-import {INCLUDES, LIES_WITHIN, PARENT, RECORDED_IN, RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
+import {
+    HIERARCHICAL_RELATIONS,
+    INCLUDES,
+    LIES_WITHIN,
+    PARENT,
+    RECORDED_IN,
+    RESOURCE_ID,
+    RESOURCE_IDENTIFIER
+} from '../../../c';
 
 
 
@@ -26,8 +34,6 @@ export module DefaultImportCalc {
     type IdMap = { [id: string]: Document };
     type Identifier = string;
     type IdentifierMap = { [identifier: string]: string };
-
-    const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN]; // TODO use existing definitions from c.ts
 
 
     export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
@@ -172,7 +178,7 @@ export module DefaultImportCalc {
     function assertHasNoForbiddenRelations(document: Document) {
 
         const foundForbiddenRelations = Object.keys(document.resource.relations)
-            .filter(includedIn(forbiddenRelations))
+            .filter(includedIn(HIERARCHICAL_RELATIONS))
             .join(', ');
         if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
     }

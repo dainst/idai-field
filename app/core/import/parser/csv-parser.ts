@@ -13,7 +13,7 @@ export module CsvParser {
             (content: string) => {
 
                 const documents = flow<any>(content,
-                    makeLines, // TODO test separation works properly)
+                    makeLines,
                     CsvRowsConversion.parse(typeName, SEP, operationId));
 
                 return Promise.resolve(documents);

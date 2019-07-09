@@ -74,7 +74,7 @@ export module Importer {
         const docsToUpdate: Document[] = [];
         try {
 
-            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument)); // TODO use lambda
+            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
 
         } catch (msgWithParams) {
 

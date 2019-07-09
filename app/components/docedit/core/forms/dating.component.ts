@@ -1,19 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {Resource} from 'idai-components-2';
+import {Resource, Dating} from 'idai-components-2';
 import {DatingUtil} from '../../../../core/util/dating-util';
 import {Validations} from '../../../../core/model/validations';
-
-
-export interface Dating {
-    type: 'range'|'exact'|'before'|'after'|'scientific',
-    begin?: { year: number, type: 'bce'|'ce'|'bp' },
-    end?: { year: number, type: 'bce'|'ce'|'bp' },
-    margin?: number,
-    source?: string,
-    isImprecise?: boolean,
-    isUncertain?: boolean,
-    label?: string  // Deprecated
-}
 
 
 @Component({

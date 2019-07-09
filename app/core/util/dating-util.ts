@@ -1,4 +1,4 @@
-import {Dating} from '../../components/docedit/core/forms/dating.component';
+import {Dating} from 'idai-components-2';
 
 
 /**

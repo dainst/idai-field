@@ -1,9 +1,8 @@
 import {on, is} from 'tsfun';
 import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
-    Resource, NewDocument, Document} from 'idai-components-2';
+    Resource, NewDocument, Document, Dating} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {Dating} from '../../components/docedit/core/forms/dating.component';
 
 
 export module Validations {

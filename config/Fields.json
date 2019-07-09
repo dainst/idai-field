@@ -1240,7 +1240,7 @@
   },
   "Feature": {
     "color": "black",
-    "commons": ["beginningDate", "endDate", "dating", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent","area"],
+    "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
       "comparison": {
         "inputType": "text"

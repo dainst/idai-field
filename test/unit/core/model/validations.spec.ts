@@ -14,35 +14,35 @@ describe('Validations', () => {
                 {
                     type: 'T',
                     fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'type',},
-                        {name: 'optional'},
-                        {name: 'mandatory', mandatory: true},
-                        {name: 'number1', label: 'number1', inputType: 'float'},
-                        {name: 'number2', label: 'number2', inputType: 'float'}
+                        { name: 'id' },
+                        { name: 'identifier' },
+                        { name: 'type' },
+                        { name: 'optional' },
+                        { name: 'mandatory', mandatory: true },
+                        { name: 'number1', label: 'number1', inputType: 'float' },
+                        { name: 'number2', label: 'number2', inputType: 'float' },
                     ]
                 },
                 {
                     type: 'T2',
                     fields: [
-                        {name: 'id'},
-                        {name: 'type'}
+                        { name: 'id' },
+                        { name: 'type' }
                     ]
                 },
                 {
                     type: 'T3',
                     fields: [
-                        {name: 'id'},
-                        {name: 'type'},
-                        {name: 'dating'}
+                        { name: 'id' },
+                        { name: 'type' },
+                        { name: 'dating' }
                     ]
                 },
             ],
             relations: [
-                {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
-                {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}
+                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         }
     );
@@ -51,7 +51,7 @@ describe('Validations', () => {
     it('validate defined fields', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
             resource: {
@@ -71,7 +71,7 @@ describe('Validations', () => {
     it('validate defined fields - exclude period, periodEnd if dating defined for type', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
             resource: {
@@ -80,7 +80,7 @@ describe('Validations', () => {
                 dating: 'abc',
                 period: 'abc',
                 periodEnd: 'abc',
-                relations: {isRecordedIn: ['0']},
+                relations: { isRecordedIn: ['0'] },
             }
         };
 
@@ -92,14 +92,14 @@ describe('Validations', () => {
     it('should report nothing when omitting optional property', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
             resource: {
                 id: '1',
                 type: 'T',
                 mandatory: 'm',
-                relations: {isRecordedIn: ['0']},
+                relations: { isRecordedIn: ['0'] },
             }
         };
 
@@ -159,7 +159,7 @@ describe('Validations', () => {
                 type: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -182,7 +182,7 @@ describe('Validations', () => {
                 mandatory: 'm',
                 number1: 'ABC',
                 number2: 'DEF',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -194,4 +194,4 @@ describe('Validations', () => {
         }
         done();
     });
-})
+});

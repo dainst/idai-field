@@ -57,6 +57,6 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
-        return Validations.validateDating(dating, false);
+        return Validations.validateDating(dating);
     }
 }

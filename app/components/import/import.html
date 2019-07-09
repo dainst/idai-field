@@ -45,8 +45,9 @@
                     </div>
 
                     <div class="form-group" *ngIf="format === 'csv'">
-                        <label class="control-label col-form-label" for="importTypeSelect">Ressourcentyp</label>
-                        <!--TODO translate-->
+                        <label class="control-label col-form-label"
+                               for="importTypeSelect"
+                               i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
 
                         <select id="importTypeSelect" class="form-control"
                                 [(ngModel)]="selectedType">

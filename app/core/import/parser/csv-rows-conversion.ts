@@ -4,7 +4,7 @@ import {reduce} from 'tsfun';
 /**
  * @author Daniel de Oliveira
  */
-export module CsvRowsConversion { // TODO make sure number typed fields get converted into number fields
+export module CsvRowsConversion {
 
     const PATH_SEP = '.';
 

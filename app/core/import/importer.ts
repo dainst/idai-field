@@ -74,7 +74,7 @@ export module Importer {
         const docsToUpdate: Document[] = [];
         try {
 
-            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument)); // TODO use lambda
+            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
 
         } catch (msgWithParams) {
 
@@ -110,7 +110,7 @@ export module Importer {
             case 'idig':
                 return IdigCsvParser.parse;
             case 'csv':
-                if (!selectedType) throw "SELECTED TYPE MUST BE SET"; // TODO improve
+                if (!selectedType) throw "IMPORTER.TS: SELECTED TYPE MUST BE SET FOR CSV IMPORT";
                 return CsvParser.getParse(selectedType as any, operationId);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(

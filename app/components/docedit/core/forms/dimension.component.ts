@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension} from 'idai-components-2';
+import {DimensionUtil} from '../../../../core/util/dimension-util';
 
 
 @Component({
@@ -35,8 +36,7 @@ export class DimensionComponent {
 			measurementComment: '',
 			inputUnit: 'cm',
 			isImprecise: false,
-            isRange: false,
-			label: ''
+            isRange: false
     	};
     }
 
@@ -56,25 +56,9 @@ export class DimensionComponent {
     }
 
 
-    private generateLabel(dimension: Dimension) {
+    public getLabel(dimension: Dimension): string {
 
-        let label = (dimension.isImprecise ? 'ca. ' : '');
-
-        if (dimension.isRange) {
-            label += this.decimalPipe.transform(dimension.inputValue) + '-'
-                + this.decimalPipe.transform(dimension.inputRangeEndValue);
-        } else {
-            label += this.decimalPipe.transform(dimension.inputValue);
-        }
-
-        label += ` ${dimension.inputUnit}`;
-
-        if (this.field.unitSuffix && this.field.unitSuffix != '') label += ' ' +  this.field.unitSuffix;
-
-    	if (dimension.measurementPosition) label += ', Gemessen an ' + dimension.measurementPosition;
-    	if (dimension.measurementComment) label += ' (' + dimension.measurementComment + ')';
-
-        dimension.label = label;
+        return dimension.label ? dimension.label : DimensionUtil.generateLabel(dimension, this.decimalPipe);
     }
 
 
@@ -124,8 +108,6 @@ export class DimensionComponent {
     	    dimension.value = this.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputValue);
         }
-
-    	this.generateLabel(dimension);
 
         // TODO Remove?
         if (this.field.unitSuffix && this.field.unitSuffix !== '') dimension.unitSuffix = this.field.unitSuffix;

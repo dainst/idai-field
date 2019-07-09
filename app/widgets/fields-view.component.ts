@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, on, isNot, undefinedOrEmpty} from 'tsfun';
 import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
@@ -7,6 +8,7 @@ import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
 import {DatingUtil} from '../core/util/dating-util';
+import {DimensionUtil} from '../core/util/dimension-util';
 
 
 type FieldViewGroupDefinition = {
@@ -52,6 +54,7 @@ export class FieldsViewComponent implements OnChanges {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore,
                 private routingService: RoutingService,
+                private decimalPipe: DecimalPipe,
                 private i18n: I18n) {}
 
 
@@ -110,6 +113,8 @@ export class FieldsViewComponent implements OnChanges {
 
         if (arrayItem.begin || arrayItem.end) {
             return DatingUtil.generateLabel(arrayItem);
+        } else if (arrayItem.inputUnit) {
+            return DimensionUtil.generateLabel(arrayItem, this.decimalPipe);
         } else {
             return arrayItem;
         }

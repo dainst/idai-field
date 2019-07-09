@@ -1,23 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {Resource} from 'idai-components-2';
-
-
-export interface Dimension {
-
-    value?: number;
-    rangeMin?: number;
-    rangeMax?: number;
-    inputValue: number;
-    inputRangeEndValue: number;
-    measurementPosition?: string;
-    measurementComment?: string;
-    inputUnit: 'mm'|'cm'|'m';
-    isImprecise: boolean;
-    isRange: boolean;
-    label?: string; // Deprecated,
-    unitSuffix?: string; // Not used
-}
+import {Resource, Dimension} from 'idai-components-2';
 
 
 @Component({

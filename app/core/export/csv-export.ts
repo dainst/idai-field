@@ -1,4 +1,4 @@
-import {FieldDefinition, FieldResource, IdaiType} from 'idai-components-2';
+import {FieldDefinition, FieldResource, IdaiType, Dating} from 'idai-components-2';
 import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take,
     to, flow, compose, flatMap, isDefined, arrayList, when, flatReduce, range} from 'tsfun';
 import {clone} from '../util/object-util';
@@ -55,11 +55,12 @@ export module CSVExport {
     }
 
 
-    const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 4);
+    const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
     const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 11);
 
-    const expandLevelOne = (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
+    const expandLevelOne =
+        (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
 
 
     function expandDating(headings_and_matrix: HeadingsAndMatrix) {
@@ -172,10 +173,15 @@ export module CSVExport {
     function expandDatingHeadings(n: number) { return (fieldName: string) => {
 
         return flatReduce((i: number) => [
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'type',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.type',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.type',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'end.year',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'margin',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'label']
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'isUncertain']
             )(range(n));
     }}
 
@@ -198,30 +204,35 @@ export module CSVExport {
     }}
 
 
-    function rowsWithDatingElementsExpanded(removed: any): string[] {
+    function rowsWithDatingElementsExpanded(dating: Dating): string[] {
 
         return [
-            removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
-            removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
-            removed['source'],
-            removed['label']];
+            dating.type ? dating.type : '',
+            dating.begin && dating.begin.type ? dating.begin.type : '',
+            dating.begin && dating.begin.year ? dating.begin.year.toString() : '',
+            dating.end && dating.end.type ? dating.end.type : '',
+            dating.end && dating.end.year ? dating.end.year.toString() : '',
+            dating.margin ? dating.margin.toString() : '',
+            dating.source ? dating.source : '',
+            dating.isImprecise ? 'true' : 'false', // TODO test if import works
+            dating.isUncertain ? 'true' : 'false'];
     }
 
 
-    function rowsWithDimensionElementsExpanded(removed: any): string[] {
+    function rowsWithDimensionElementsExpanded(dimension: any): string[] {
 
         return [
-            removed['value'],
-            removed['inputValue'],
-            removed['inputRangeEndValue'],
-            removed['measurementPosition'],
-            removed['measurementComment'],
-            removed['inputUnit'],
-            removed['isImprecise'],
-            removed['isRange'],
-            removed['label'],
-            removed['rangeMin'],
-            removed['rangeMax']];
+            dimension['value'],
+            dimension['inputValue'],
+            dimension['inputRangeEndValue'],
+            dimension['measurementPosition'],
+            dimension['measurementComment'],
+            dimension['inputUnit'],
+            dimension['isImprecise'],
+            dimension['isRange'],
+            dimension['label'],
+            dimension['rangeMin'],
+            dimension['rangeMax']];
     }
 
 

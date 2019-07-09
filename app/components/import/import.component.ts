@@ -198,7 +198,7 @@ export class ImportComponent implements OnInit {
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
             () => this.idGenerator.generateId(),
-            this.format === 'csv' && this.selectedType ? this.selectedType.name : undefined);
+            this.format === 'csv' ? this.selectedType : undefined);
     }
 
 

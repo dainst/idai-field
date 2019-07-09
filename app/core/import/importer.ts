@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Document, ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
@@ -66,7 +66,7 @@ export module Importer {
                                    allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
                                    generateId: () => string,
-                                   selectedType?: string|undefined) {
+                                   selectedType?: IdaiType|undefined) {
 
         const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
 
@@ -102,7 +102,7 @@ export module Importer {
 
     function createParser(format: ImportFormat,
                           operationId: string,
-                          selectedType?: string|undefined): any {
+                          selectedType?: IdaiType|undefined): any {
 
         switch (format) {
             case 'meninxfind':
@@ -111,7 +111,7 @@ export module Importer {
                 return IdigCsvParser.parse;
             case 'csv':
                 if (!selectedType) throw "IMPORTER.TS: SELECTED TYPE MUST BE SET FOR CSV IMPORT";
-                return CsvParser.getParse(selectedType as any, operationId);
+                return CsvParser.getParse(selectedType, operationId);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,

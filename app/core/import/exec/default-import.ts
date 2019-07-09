@@ -13,8 +13,6 @@ import {DefaultImportCalc} from './default-import-calc';
 export module DefaultImport {
 
 
-
-
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
                           getInverseRelation: (_: string) => string|undefined,
@@ -38,7 +36,7 @@ export module DefaultImport {
              *   .errors of ImportError or Validation Error
              */
             return async function importFunction(documents: Array<Document>,
-                                                 datastore: DocumentDatastore, // TODO maybe get rid of datastore and username and let caller take care for storing to db
+                                                 datastore: DocumentDatastore,
                                                  username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
                 const process = DefaultImportCalc.build(

@@ -94,9 +94,6 @@ export class DimensionComponent {
                 dimension.inputValue);
         }
 
-        // TODO Remove?
-        if (this.field.unitSuffix && this.field.unitSuffix !== '') dimension.unitSuffix = this.field.unitSuffix;
-
     	if (this.newDimension === dimension) {
     		this.resource[this.field.name].push(dimension);
             this.newDimension = undefined;

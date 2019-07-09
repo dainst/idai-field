@@ -6,8 +6,8 @@ import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
 import {
+    Either,
     HIERARCHICAL_RELATIONS,
-    INCLUDES,
     LIES_WITHIN,
     PARENT,
     RECORDED_IN,
@@ -16,14 +16,11 @@ import {
 } from '../../../c';
 
 
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module DefaultImportCalc {
-
-    type Either<T1, T2> = [T1, undefined]|[undefined, T2]; // TODO move to helper
 
     type Get = (resourceId: string) => Promise<Document>;
     type Find = (identifier: string) => Promise<Document|undefined>;

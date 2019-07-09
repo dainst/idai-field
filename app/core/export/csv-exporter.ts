@@ -23,7 +23,7 @@ export module CsvExporter {
 
             await writeFile(
                 outputFilePath,
-                CSVExport.createExportable(resources, resourceType, relations)); // TODO maybe call it separately
+                CSVExport.createExportable(resources, resourceType, relations));
         }
     }
 

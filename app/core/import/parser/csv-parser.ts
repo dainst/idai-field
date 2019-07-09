@@ -15,7 +15,12 @@ export module CsvParser {
 
                 const documents = flow<any>(content,
                     makeLines,
-                    CsvRowsConversion.parse(type.name, SEP, operationId));
+                    CsvRowsConversion.parse(
+                        type.name, // TODO add type here, not in rowsConversion, make rowsConversion totally generic
+                        SEP, operationId)
+
+                    // TODO convert numbers and booleans
+                );
 
                 return Promise.resolve(documents);
             }

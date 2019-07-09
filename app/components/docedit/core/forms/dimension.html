@@ -1,12 +1,12 @@
 <div *ngFor="let dimension of resource[field.name]; index as i"  class="mb-2">
 
-	<div class="input-group mb-2" *ngIf="!dimension.editing">
+	<div class="input-group mb-2" *ngIf="!isInEditing(dimension)">
 		<input value="{{dimension.label}}" type="text" disabled class="form-control">
 		<button class="btn btn-danger" (click)="removeDimensionAtIndex(i)"><span class="mdi mdi-delete"></span></button>
-		<button class="btn btn-info" (click)="dimension.editing = !dimension.editing"><span class="mdi mdi-pencil"></span></button>
+		<button class="btn btn-info" (click)="startEditing(dimension)"><span class="mdi mdi-pencil"></span></button>
 	</div>
 
-	<div *ngIf="dimension.editing">
+	<div *ngIf="isInEditing(dimension)">
 	    <ng-container [ngTemplateOutlet]="dimensionFormTemplate"
 	                  [ngTemplateOutletContext]="{ dimension: dimension }">
 	    </ng-container>

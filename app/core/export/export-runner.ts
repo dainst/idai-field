@@ -15,7 +15,7 @@ import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './expo
  *
  * @author Daniel de Oliveira
  */
-export module ExportRunner { // TODO set up test
+export module ExportRunner {
 
     export const BASE_EXCLUSION = ['Operation', 'Project', 'Image', 'Drawing', 'Photo'];
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];

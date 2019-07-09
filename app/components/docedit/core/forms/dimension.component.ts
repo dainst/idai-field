@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {Resource, Dimension} from 'idai-components-2';
+import {Resource, Dimension, FieldDefinition} from 'idai-components-2';
 import {DimensionUtil} from '../../../../core/util/dimension-util';
 
 
@@ -17,7 +17,7 @@ import {DimensionUtil} from '../../../../core/util/dimension-util';
 export class DimensionComponent {
 
     @Input() resource: Resource;
-    @Input() field: any;
+    @Input() field: FieldDefinition;
 
     public newDimension: Dimension|undefined = undefined;
     public dimensionsInEditing: Array<Dimension> = [];

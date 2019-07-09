@@ -54,6 +54,24 @@ export module Validations {
 
 
     /**
+     * @throws [INVALID_DATING_VALUES]
+     */
+    export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateDatings(document.resource, projectConfiguration);
+
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_DATING_VALUES,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
      * @throws [MISSING_PROPERTY]
      */
     export function assertNoFieldsMissing(document: Document|NewDocument,
@@ -315,6 +333,17 @@ export module Validations {
 
         return coordinates.length !== 0
             && coordinates.every(validatePolygonCoordinates);
+    }
+
+
+    export function validateDatings(resource: Resource|NewResource,
+                                    projectConfiguration: ProjectConfiguration): string[] {
+
+        return projectConfiguration.getFieldDefinitions(resource.type)
+            .filter(field => field.inputType === 'dating')
+            .filter(field => resource[field.name] !== undefined &&
+                !Validations.validateDating(resource[field.name], true))
+            .map(field => field.name);
     }
 
 

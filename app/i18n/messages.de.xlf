@@ -635,7 +635,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -655,7 +655,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -2243,7 +2243,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.uncertain" datatype="html">
@@ -2251,7 +2251,7 @@
         <target state="final">Unsicher</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.period" datatype="html">
@@ -2259,7 +2259,7 @@
         <target state="final">Zeitraum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.exact" datatype="html">
@@ -2267,7 +2267,7 @@
         <target state="final">Exakt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.before" datatype="html">
@@ -2275,7 +2275,7 @@
         <target state="final">Vor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.after" datatype="html">
@@ -2283,7 +2283,7 @@
         <target state="final">Nach</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.scientific" datatype="html">
@@ -2291,7 +2291,7 @@
         <target state="final">Naturwissenschaftlich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.until" datatype="html">
@@ -2299,7 +2299,7 @@
         <target state="final">bis</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.source" datatype="html">
@@ -2307,7 +2307,7 @@
         <target state="final">Grundlage:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -2315,7 +2315,7 @@
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.date.notParsedInfo" datatype="html">
@@ -3442,6 +3442,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDatingValue" datatype="html">
+        <source>Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDatingValues" datatype="html">
+        <source>Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
         <source>Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</source>
         <target state="final">Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</target>
@@ -3637,6 +3653,22 @@
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</source>
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDatingValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDatingValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3979,10 +4011,12 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
-        <source>Abbrechen
-    </source>
-        <target state="final">Abbrechen
-    </target>
+        <source>Abbrechen</source>
+        <target state="final">Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
@@ -4022,10 +4056,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
           <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">125</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
@@ -4226,6 +4256,10 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/projects-modal.html</context>
           <context context-type="linenumber">49</context>
         </context-group>
@@ -4240,10 +4274,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
           <context context-type="linenumber">35</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">121</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>

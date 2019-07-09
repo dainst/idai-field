@@ -130,14 +130,14 @@ export module CSVExport {
 
         return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
 
-                const [headings, matrix] = headings_and_matrix;
+                const max = getMax(columnIndex)(headings_and_matrix[M]);
 
-                const max = getMax(columnIndex)(matrix);
-                if (isNaN(max)) return [headings, matrix]; // TODO write test
+                // const [headings, matrix] = headings_and_matrix;
+                // if (isNaN(max)) return [headings, matrix]; seems to be not necessary anymore
 
                 return [
-                    replaceItems(columnIndex, 1, expandHeading(max))(headings),
-                    matrix
+                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]),
+                    headings_and_matrix[M]
                         .map(expandLevelOne(columnIndex, max))
                         .map(expandLevelTwo(columnIndex, max))];
 

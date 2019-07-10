@@ -152,7 +152,7 @@ export module CsvParser {
         const val = getOnOr(path, undefined)(container);
         if (!val) return; // TODO review
         const converted = parseInt(val);
-        if (isNaN(converted)) throw 'is NaN';
+        if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, val, path];
         setOn(container, path)(converted);
     }
 

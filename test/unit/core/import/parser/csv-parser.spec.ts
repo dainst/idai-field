@@ -56,8 +56,8 @@ describe('CsvParser', () => {
         expect(docs[0].resource['Bool2']).toBe(false);
         done();
     });
-    
-    
+
+
     it('field type dating', async done => {
 
         const type = {
@@ -71,7 +71,7 @@ describe('CsvParser', () => {
         const parse = CsvParser.getParse(type, '');
         const docs = await parse(
             'dating.0.type,dating.0.begin.type,dating.0.begin.year,dating.0.end.type,dating.0.end.year,dating.0.margin,dating.0.source,dating.0.isImprecise,dating.0.isUncertain\n'
-        + 'range,bce,0,bce,1,1,abc,true,false');
+            + 'range,bce,0,bce,1,1,abc,true,false');
 
         const dating: Dating = docs[0].resource.dating[0];
         expect(dating.type).toBe('range');
@@ -146,10 +146,10 @@ describe('CsvParser', () => {
                 name: 'dd1',
                 inputType: 'dropdownRange'
             },
-            {
-                name: 'dd2',
-                inputType: 'dropdownRange'
-            }],
+                {
+                    name: 'dd2',
+                    inputType: 'dropdownRange'
+                }],
         } as IdaiType;
 
         const parse = CsvParser.getParse(type, '');
@@ -160,6 +160,27 @@ describe('CsvParser', () => {
         expect(docs[0].resource['dd1']).toBe('a');
         expect(docs[0].resource['dd2']).toBe('b');
         expect(docs[0].resource['dd2End']).toBe('c');
+        done();
+    });
+
+
+    it('field type dating', async done => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'd',
+                inputType: 'date'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'd\n'
+            + '10.07.2019');
+
+        // TODO validate date format
+        expect(docs[0].resource['d']).toBe('10.07.2019'); // currently leave it as is
         done();
     });
 });

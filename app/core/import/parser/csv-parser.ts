@@ -55,6 +55,11 @@ export module CsvParser {
     }
 
 
+    /**
+     * TODO make case switch statement and define all known types of resources in a typescript string union type. Let's use this typing to make sure via compiler that all known types are covered
+     *
+     * @param type
+     */
     function convertFieldTypes(type: IdaiType) { return (resource: Resource) => { // TODO handle errors
 
         for (let fieldName of

@@ -10,7 +10,6 @@ export module CsvRowsConversion {
 
     /**
      * @param sep
-
      */
     export function parse(sep: string) {
 

@@ -115,4 +115,25 @@ describe('CsvParser', () => {
         expect(dimension.isRange).toBe(false);
         done();
     });
+
+
+    it('field type checkboxes', async done => { // TODO make sure export works for checkboxes
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'CB',
+                inputType: 'checkboxes'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'CB\n'
+            + 'a;b;c');
+
+        const cb = docs[0].resource['CB'];
+        expect(cb).toEqual(['a', 'b', 'c']);
+        done();
+    });
 });

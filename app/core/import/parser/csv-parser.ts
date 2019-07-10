@@ -52,7 +52,7 @@ export module CsvParser {
 
             const fieldDefinition = type.fields.find(on('name', is(fieldName)));
             if (!fieldDefinition) continue; // TODO review
-                // throw "CSV Parser - missing field definition " + fieldName;
+            // throw "CSV Parser - missing field definition " + fieldName;
 
             if (fieldDefinition.inputType === 'boolean') {
                 if (resource[fieldName] === 'true') resource[fieldName] = true;
@@ -87,8 +87,12 @@ export module CsvParser {
                 }
             }
 
+            if (fieldDefinition.inputType === 'checkboxes') {
 
-                    // console.log(fieldDefinition);
+                resource[fieldName] = resource[fieldName].split(';'); // TODO review if this should be done here
+
+            }
+            // console.log(fieldDefinition);
         }
 
         return resource;

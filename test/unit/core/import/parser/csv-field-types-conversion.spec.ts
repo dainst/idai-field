@@ -1,6 +1,6 @@
 import {Dating, Dimension, IdaiType, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
-import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
+import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 
 
 /**
@@ -230,4 +230,49 @@ describe('CsvFieldTypesConversion', () => {
 
         expect(resource['uf']).toBe(100.0);
     });
+
+
+    it('field type unsignedInt - not a number', () => { // TODO write test for negative number too
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'ui',
+                inputType: 'unsignedInt'
+            }],
+        } as IdaiType;
+
+        expectNotANumberError(type, 'ui', 'abc');
+    });
+
+
+    it('field type unsignedFloat - not a number', () => { // TODO write test for neg nmbr too
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'uf',
+                inputType: 'unsignedFloat'
+            }],
+        } as IdaiType;
+
+        expectNotANumberError(type, 'uf', 'a100.0');
+    });
+
+
+    async function expectNotANumberError(type: IdaiType, fieldName: string, value: string) {
+
+        try {
+
+            const resource: Resource = {} as unknown as Resource;
+            (resource as any)[fieldName] = value;
+            CsvFieldTypesConversion.convertFieldTypes(type)(resource);
+
+            fail();
+        } catch (msgWithParams) {
+
+            expect(msgWithParams).toEqual([ParserErrors.CSV_NOT_A_NUMBER, value, fieldName]);
+
+        }
+    }
 });

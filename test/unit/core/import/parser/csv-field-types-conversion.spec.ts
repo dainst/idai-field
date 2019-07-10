@@ -1,5 +1,6 @@
 import {Dating, Dimension, IdaiType, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
+import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 
 
 /**
@@ -67,7 +68,7 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('field type dimension', async done => {
+    it('field type dimension', () => {
 
         const type = {
             name: 'TypeName',
@@ -104,6 +105,129 @@ describe('CsvFieldTypesConversion', () => {
         expect(dimension.inputUnit).toBe('mm'); // TODO add validation for range of values
         expect(dimension.isImprecise).toBe(true);
         expect(dimension.isRange).toBe(false);
-        done();
+    });
+
+
+    it('field type radio', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'r',
+                inputType: 'radio'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                r: 'rr'
+            } as unknown as Resource);
+
+        expect(resource['r']).toBe('rr'); // currently leave it as is
+    });
+
+
+    it('field type date', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'd',
+                inputType: 'date'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                d: '10.07.2019'
+            } as unknown as Resource);
+
+        // TODO validate date format
+        expect(resource['d']).toBe('10.07.2019'); // currently leave it as is
+    });
+
+
+    it('field type dropdown range', () => { // TODO test import and export manually once
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dd1',
+                inputType: 'dropdownRange'
+            },
+                {
+                    name: 'dd2',
+                    inputType: 'dropdownRange'
+                }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                dd1: 'a',
+                dd2: 'b',
+                dd2End: 'c'
+            } as unknown as Resource);
+
+        expect(resource['dd1']).toBe('a');
+        expect(resource['dd2']).toBe('b');
+        expect(resource['dd2End']).toBe('c');
+    });
+
+
+    it('field type checkboxes', () => { // TODO make sure export works for checkboxes
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'CB',
+                inputType: 'checkboxes'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                CB: 'a;b;c'
+            } as unknown as Resource);
+
+        const cb = resource['CB'];
+        expect(cb).toEqual(['a', 'b', 'c']);
+    });
+
+
+    it('field type unsignedInt', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'ui',
+                inputType: 'unsignedInt'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                ui: '100'
+            } as unknown as Resource);
+
+        expect(resource['ui']).toBe(100);
+    });
+
+
+    it('field type unsignedFloat', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'uf',
+                inputType: 'unsignedFloat'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                uf: '100.0'
+            } as unknown as Resource);
+
+        expect(resource['uf']).toBe(100.0);
     });
 });

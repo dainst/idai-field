@@ -1,4 +1,4 @@
-import {IdaiType, Document, Resource} from 'idai-components-2';
+import {IdaiType, Document, Resource, Dating} from 'idai-components-2';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
 import {flow, map, on, is, isNot, includedIn} from 'tsfun';
@@ -60,9 +60,25 @@ export module CsvParser {
                 else throw "CSV Parser - boolean not parsable";
             }
 
+            if (fieldDefinition.inputType === 'dating') {
+                for (let dating of resource['dating'] as Array<Dating>) {
+                    // const dating = resource['dating']; // TODO should exist
+
+                    if (dating.begin && dating.begin.year) dating.begin.year = parseInt(dating.begin.year as any); // TODO handle errors
+                    if (dating.end && dating.end.year) dating.end.year = parseInt(dating.end.year as any);
+                    if (dating.margin) dating.margin = parseInt(dating.margin as any);
+
+                    if (dating.isImprecise && (dating.isImprecise as any) === 'true') dating.isImprecise = true; else dating.isImprecise = false;
+                    if (dating.isUncertain && (dating.isUncertain as any) === 'true') dating.isUncertain = true; else dating.isUncertain = false;
+                }
+            }
+
             // console.log(fieldDefinition);
         }
 
         return resource;
     }}
+
+
+
 }

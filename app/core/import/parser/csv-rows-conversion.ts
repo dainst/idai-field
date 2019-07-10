@@ -1,5 +1,5 @@
 import {Resource} from 'idai-components-2';
-import {reduce} from 'tsfun';
+import {reduce, flatReduce} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -20,13 +20,7 @@ export module CsvRowsConversion {
             const headings = rows[0].split(sep);
             rows.shift();
 
-            return rows.reduce((resources, row) => {
-
-                const resource = makeResource(headings)(row.split(sep));
-
-                return resources.concat([resource as any]); // TODO make use of flatReduce
-
-            }, [] as Array<Resource>);
+            return flatReduce((row: string) => makeResource(headings)(row.split(sep)))(rows);
         }
     }
 
@@ -64,8 +58,8 @@ export module CsvRowsConversion {
         return reduce((resource, fieldOfRow, i: number) => {
 
             if (fieldOfRow) insertFieldIntoDocument(resource, headings[i], fieldOfRow);
-            return resource;
+            return resource as unknown as Resource;
 
-        }, {});
+        }, {} as Resource);
     }
 }

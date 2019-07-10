@@ -12,7 +12,7 @@ export module CsvRowsConversion {
     /**
      * @param sep
      */
-    export function parse(sep: string) { return (rows: string[]): Array<Resource> => {
+    export function parse(sep: string) { return (rows: string[]): Array<Resource> => { // TODO should not type to Resource
 
         if (rows.length < 1) return [];
         const headings = rows[0].split(sep);

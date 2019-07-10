@@ -8,20 +8,18 @@ export module CsvRowsConversion {
 
     const PATH_SEP = '.';
 
+
     /**
      * @param sep
      */
-    export function parse(sep: string) {
+    export function parse(sep: string) { return (rows: string[]): Array<Resource> => {
 
-        return (rows: string[]): Array<Resource> => {
+        if (rows.length < 1) return [];
+        const headings = rows[0].split(sep);
+        rows.shift();
 
-            if (rows.length < 1) return [];
-            const headings = rows[0].split(sep);
-            rows.shift();
-
-            return flatReduce((row: string) => makeResource(headings)(row.split(sep)))(rows);
-        }
-    }
+        return flatReduce((row: string) => makeResource(headings)(row.split(sep)))(rows);
+    }}
 
 
     function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) {

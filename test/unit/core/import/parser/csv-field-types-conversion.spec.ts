@@ -1,6 +1,5 @@
 import {Dating, Dimension, IdaiType, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
-import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 
 
 /**

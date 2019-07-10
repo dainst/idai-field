@@ -86,6 +86,24 @@ export module CsvParser {
         if (inputType === 'dating')     convertDating(resource, fieldName);
         if (inputType === 'dimension')  convertDimension(resource, fieldName);
         if (inputType === 'checkboxes') convertCheckboxes(resource, fieldName);
+        if (inputType === 'unsignedInt') convertUnsignedInt(resource, fieldName);
+        if (inputType === 'unsignedFloat') convertUnsignedFloat(resource, fieldName);
+    }
+
+
+    function convertUnsignedInt(resource: Resource, fieldName: string) {
+
+        convertNumber(resource, fieldName);
+        // const val = getOn(fieldName, undefined)(resource);
+        // if negative, throw
+    }
+
+
+    function convertUnsignedFloat(resource: Resource, fieldName: string) {
+
+        convertNumber(resource, fieldName);
+        // const val = getOn(fieldName, undefined)(resource);
+        // if negative, throw
     }
 
 

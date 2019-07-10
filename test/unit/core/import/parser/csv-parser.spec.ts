@@ -203,4 +203,44 @@ describe('CsvParser', () => {
         expect(docs[0].resource['r']).toBe('rr'); // currently leave it as is
         done();
     });
+
+
+    it('field type unsignedInt', async done => { // TODO write tests for rainy day too
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'ui',
+                inputType: 'unsignedInt'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'ui\n'
+            + '100');
+
+        expect(docs[0].resource['ui']).toBe(100);
+        done();
+    });
+
+
+    it('field type unsignedFloat', async done => { // TODO write tests for rainy day too
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'uf',
+                inputType: 'unsignedFloat'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'uf\n'
+            + '100.0');
+
+        expect(docs[0].resource['uf']).toBe(100.0);
+        done();
+    });
 });

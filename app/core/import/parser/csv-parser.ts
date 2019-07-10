@@ -1,7 +1,8 @@
 import {IdaiType, Document, Resource} from 'idai-components-2';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
-import {flow, map, on, is, isnt, isNot, includedIn} from 'tsfun';
+import {flow, map, on, is, isNot, includedIn} from 'tsfun';
+
 
 /**
  * @author Daniel de Oliveira
@@ -15,14 +16,11 @@ export module CsvParser {
     const insertTypeName = (type: IdaiType) => (resource: Resource) => { resource.type = type.name; return resource; };
 
 
-    function insertIsChildOf(operationId: string) {
+    function insertIsChildOf(operationId: string) { return (resource: Resource) => {
 
-        return (resource: Resource) => {
-
-            if (operationId) resource.relations = { isChildOf: operationId as any };
-            return resource;
-        }
-    }
+        if (operationId) resource.relations = { isChildOf: operationId as any };
+        return resource;
+    }}
 
 
     /**

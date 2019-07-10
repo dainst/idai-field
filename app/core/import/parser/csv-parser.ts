@@ -29,20 +29,21 @@ export module CsvParser {
      * @param type
      * @param operationId converted into isChildOf entry if not empty
      */
-    export const getParse = (type: IdaiType, operationId: string): Parser =>
-            (content: string) => {
+    export const getParse = (type: IdaiType, operationId: string): Parser => {
 
-                const documents = flow<any>(content,
-                    makeLines,
-                    CsvRowsConversion.parse(SEP),
-                    map(insertTypeName(type)), // TODO make assoc function
-                    map(insertIsChildOf(operationId)),
-                    map(convertFieldType(type)),
-                    map(toResource));
+        return (content: string) => {
 
-                return Promise.resolve(documents);
-            };
+            const documents = flow<any>(content,
+                makeLines,
+                CsvRowsConversion.parse(SEP),
+                map(insertTypeName(type)), // TODO make assoc function
+                map(insertIsChildOf(operationId)),
+                map(convertFieldType(type)),
+                map(toResource));
 
+            return Promise.resolve(documents);
+        };
+    };
 
 
     function convertFieldType(type: IdaiType) { return (resource: Resource) => { // TODO handle errors

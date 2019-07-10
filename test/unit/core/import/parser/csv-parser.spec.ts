@@ -136,4 +136,30 @@ describe('CsvParser', () => {
         expect(cb).toEqual(['a', 'b', 'c']);
         done();
     });
+
+
+    it('field type dropdown range', async done => { // TODO test import and export manually once
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dd1',
+                inputType: 'dropdownRange'
+            },
+            {
+                name: 'dd2',
+                inputType: 'dropdownRange'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'dd1,dd2,dd2End\n'
+            + 'a,b,c');
+
+        expect(docs[0].resource['dd1']).toBe('a');
+        expect(docs[0].resource['dd2']).toBe('b');
+        expect(docs[0].resource['dd2End']).toBe('c');
+        done();
+    });
 });

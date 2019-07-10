@@ -25,7 +25,6 @@ export module CsvParser {
 
 
     /**
-     * TODO make field type conversion a param
      * @param type
      * @param operationId converted into isChildOf entry if not empty
      */

@@ -4,7 +4,7 @@ import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 import SEP = CsvParser.SEP;
 
 
-describe('CsvRowsConversion', () => {
+describe('CsvRowsConversion', () => { // TODO make the tests agnostic of traits which are not part of csvrowsconversion per se, like dimension, dating, relations
 
 
     it('basics', () => {

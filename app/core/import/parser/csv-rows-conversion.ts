@@ -24,7 +24,7 @@ export module CsvRowsConversion {
 
                 const resource = makeResource(headings)(row.split(sep));
 
-                return resources.concat([resource as any]);
+                return resources.concat([resource as any]); // TODO make use of flatReduce
 
             }, [] as Array<Resource>);
         }

@@ -1,7 +1,7 @@
 import {IdaiType, Document, Resource} from 'idai-components-2';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
-import {flow, map} from 'tsfun';
+import {flow, map, on, is, isnt, isNot, includedIn} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -37,10 +37,33 @@ export module CsvParser {
                     CsvRowsConversion.parse(SEP),
                     map(insertTypeName(type)), // TODO make assoc function
                     map(insertIsChildOf(operationId)),
-                    map(toResource)
-                    // TODO convert numbers and booleans
-                );
+                    map(convertFieldType(type)),
+                    map(toResource));
 
                 return Promise.resolve(documents);
+            };
+
+
+
+    function convertFieldType(type: IdaiType) { return (resource: Resource) => { // TODO handle errors
+
+        for (let fieldName of
+            Object.keys(resource)
+                .filter(isNot(includedIn(['relation', 'geometry', 'type'])))) {
+
+            const fieldDefinition = type.fields.find(on('name', is(fieldName)));
+            if (!fieldDefinition) continue; // TODO review
+                // throw "CSV Parser - missing field definition " + fieldName;
+
+            if (fieldDefinition.inputType === 'boolean') {
+                if (resource[fieldName] === 'true') resource[fieldName] = true;
+                else if (resource[fieldName] === 'false') resource[fieldName] = false;
+                else throw "CSV Parser - boolean not parsable";
             }
+
+            // console.log(fieldDefinition);
+        }
+
+        return resource;
+    }}
 }

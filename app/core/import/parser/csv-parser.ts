@@ -12,7 +12,7 @@ export module CsvParser {
 
     export const SEP = ',';
 
-    const toResource = (resource: Resource) => { return { resource: resource } as Document; };
+    const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
     const insertTypeName = (type: IdaiType) => (resource: Resource) => { resource.type = type.name; return resource; };
 
@@ -55,7 +55,7 @@ export module CsvParser {
             map(insertTypeName(type)), // TODO make assoc function
             map(insertIsChildOf(operationId)),
             map(convertFieldTypes(type)),
-            map(toResource));
+            map(toDocument));
     }
 
 

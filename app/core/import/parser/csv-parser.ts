@@ -32,6 +32,7 @@ export module CsvParser {
 
         /**
          * @throws [CSV_GENERIC]
+         * @throws [CSV_NOT_A_NUMBER]
          */
         return (content: string) => {
 

@@ -15,7 +15,11 @@ export module CsvFieldTypesConversion {
 
     /**
      * @param type
+     *
      * // TODO make it return an Either for each resource, and at the end evaluate it
+     *
+     * @throws [CSV_GENERIC]
+     * @throws [CSV_NOT_A_NUMBER]
      */
     export function convertFieldTypes(type: IdaiType) { return (resource: Resource) => { // TODO handle errors
 

@@ -71,32 +71,8 @@ export module CsvParser {
             // throw "CSV Parser - missing field definition " + fieldName;
 
             if (fieldDefinition.inputType === 'boolean') convertBoolean(resource, fieldName);
-
-            if (fieldDefinition.inputType === 'dating') {
-                for (let dating of resource[fieldName] as Array<Dating>) {
-                    // const dating = resource['dating']; // TODO should exist
-
-                    convertNumber(dating, 'begin.year');
-                    convertNumber(dating, 'end.year');
-                    convertNumber(dating, 'margin');
-                    convertBoolean(dating, 'isImprecise');
-                    convertBoolean(dating, 'isUncertain');
-                }
-            }
-
-            if (fieldDefinition.inputType === 'dimension') {
-                for (let dimension of resource[fieldName] as Array<Dimension>) {
-                    // const dimension // TODO should exist
-
-                    convertNumber(dimension, 'value');
-                    convertNumber(dimension, 'rangeMin');
-                    convertNumber(dimension, 'rangeMax');
-                    convertNumber(dimension, 'inputValue');
-                    convertNumber(dimension, 'inputRangeEndValue');
-                    convertBoolean(dimension, 'isImprecise');
-                    convertBoolean(dimension, 'isRange');
-                }
-            }
+            if (fieldDefinition.inputType === 'dating') convertDating(resource, fieldName);
+            if (fieldDefinition.inputType === 'dimension') convertDimension(resource, fieldName);
 
             if (fieldDefinition.inputType === 'checkboxes') {
 
@@ -108,6 +84,36 @@ export module CsvParser {
 
         return resource;
     }}
+
+
+    function convertDimension(resource: Resource, fieldName: string) {
+
+        for (let dimension of resource[fieldName] as Array<Dimension>) {
+            // const dimension // TODO should exist
+
+            convertNumber(dimension, 'value');
+            convertNumber(dimension, 'rangeMin');
+            convertNumber(dimension, 'rangeMax');
+            convertNumber(dimension, 'inputValue');
+            convertNumber(dimension, 'inputRangeEndValue');
+            convertBoolean(dimension, 'isImprecise');
+            convertBoolean(dimension, 'isRange');
+        }
+    }
+
+
+    function convertDating(resource: Resource, fieldName: string) {
+
+        for (let dating of resource[fieldName] as Array<Dating>) {
+            // const dating = resource['dating']; // TODO should exist
+
+            convertNumber(dating, 'begin.year');
+            convertNumber(dating, 'end.year');
+            convertNumber(dating, 'margin');
+            convertBoolean(dating, 'isImprecise');
+            convertBoolean(dating, 'isUncertain');
+        }
+    }
 
 
     function convertNumber(container: any, path: string) {

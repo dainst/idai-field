@@ -183,4 +183,24 @@ describe('CsvParser', () => {
         expect(docs[0].resource['d']).toBe('10.07.2019'); // currently leave it as is
         done();
     });
+
+
+    it('field type radio', async done => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'r',
+                inputType: 'radio'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'r\n'
+            + 'rr');
+
+        expect(docs[0].resource['r']).toBe('rr'); // currently leave it as is
+        done();
+    });
 });

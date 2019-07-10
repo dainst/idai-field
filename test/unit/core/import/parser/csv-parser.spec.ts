@@ -37,87 +37,6 @@ describe('CsvParser', () => {
     });
 
 
-    it('field type boolean', async done => {
-
-        const type = {
-            name: 'TypeName',
-            fields: [{
-                name: 'Bool1',
-                inputType: 'boolean'
-            }, {
-                name: 'Bool2',
-                inputType: 'boolean'
-            }],
-        } as IdaiType;
-
-        const parse = CsvParser.getParse(type, '');
-        const docs = await parse('Bool1,Bool2\ntrue,false');
-
-        expect(docs[0].resource['Bool1']).toBe(true);
-        expect(docs[0].resource['Bool2']).toBe(false);
-        done();
-    });
-
-
-    it('field type dating', async done => {
-
-        const type = {
-            name: 'TypeName',
-            fields: [{
-                name: 'dating',
-                inputType: 'dating'
-            }],
-        } as IdaiType;
-
-        const parse = CsvParser.getParse(type, '');
-        const docs = await parse(
-            'dating.0.type,dating.0.begin.type,dating.0.begin.year,dating.0.end.type,dating.0.end.year,dating.0.margin,dating.0.source,dating.0.isImprecise,dating.0.isUncertain\n'
-            + 'range,bce,0,bce,1,1,abc,true,false');
-
-        const dating: Dating = docs[0].resource.dating[0];
-        expect(dating.type).toBe('range');
-        expect(dating.begin.type).toBe('bce');
-        expect(dating.begin.year).toBe(0);
-        expect(dating.end.type).toBe('bce');
-        expect(dating.end.year).toBe(1);
-        expect(dating.margin).toBe(1);
-        expect(dating.source).toBe('abc');
-        expect(dating.isImprecise).toBe(true);
-        expect(dating.isUncertain).toBe(false);
-        done();
-    });
-
-
-    it('field type dimension', async done => {
-
-        const type = {
-            name: 'TypeName',
-            fields: [{
-                name: 'Dim',
-                inputType: 'dimension'
-            }],
-        } as IdaiType;
-
-        const parse = CsvParser.getParse(type, '');
-        const docs = await parse(
-            'Dim.0.value,Dim.0.rangeMin,Dim.0.rangeMax,Dim.0.inputValue,Dim.0.inputRangeEndValue,Dim.0.measurementPosition,Dim.0.measurementComment,Dim.0.inputUnit,Dim.0.isImprecise,Dim.0.isRange\n'
-            + '1,2,3,4,5,a,b,mm,true,false');
-
-        const dimension: Dimension = docs[0].resource['Dim'][0];
-        expect(dimension.value).toBe(1);
-        expect(dimension.rangeMin).toBe(2);
-        expect(dimension.rangeMax).toBe(3);
-        expect(dimension.inputValue).toBe(4);
-        expect(dimension.inputRangeEndValue).toBe(5);
-        expect(dimension.measurementPosition).toBe('a');
-        expect(dimension.measurementComment).toBe('b');
-        expect(dimension.inputUnit).toBe('mm'); // TODO add validation for range of values
-        expect(dimension.isImprecise).toBe(true);
-        expect(dimension.isRange).toBe(false);
-        done();
-    });
-
-
     it('field type checkboxes', async done => { // TODO make sure export works for checkboxes
 
         const type = {
@@ -165,7 +84,7 @@ describe('CsvParser', () => {
     });
 
 
-    it('field type dating', async done => {
+    it('field type date', async done => {
 
         const type = {
             name: 'TypeName',

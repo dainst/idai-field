@@ -1,4 +1,4 @@
-import {IdaiType, Dating} from 'idai-components-2';
+import {IdaiType, Dating, Dimension} from 'idai-components-2';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 import {makeType} from '../../export/csv-export.spec';
 
@@ -83,6 +83,36 @@ describe('CsvParser', () => {
         expect(dating.source).toBe('abc');
         expect(dating.isImprecise).toBe(true);
         expect(dating.isUncertain).toBe(false);
+        done();
+    });
+
+
+    it('field type dimension', async done => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'Dim',
+                inputType: 'dimension'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.getParse(type, '');
+        const docs = await parse(
+            'Dim.0.value,Dim.0.rangeMin,Dim.0.rangeMax,Dim.0.inputValue,Dim.0.inputRangeEndValue,Dim.0.measurementPosition,Dim.0.measurementComment,Dim.0.inputUnit,Dim.0.isImprecise,Dim.0.isRange\n'
+            + '1,2,3,4,5,a,b,mm,true,false');
+
+        const dimension: Dimension = docs[0].resource['Dim'][0];
+        expect(dimension.value).toBe(1);
+        expect(dimension.rangeMin).toBe(2);
+        expect(dimension.rangeMax).toBe(3);
+        expect(dimension.inputValue).toBe(4);
+        expect(dimension.inputRangeEndValue).toBe(5);
+        expect(dimension.measurementPosition).toBe('a');
+        expect(dimension.measurementComment).toBe('b');
+        expect(dimension.inputUnit).toBe('mm'); // TODO add validation for range of values
+        expect(dimension.isImprecise).toBe(true);
+        expect(dimension.isRange).toBe(false);
         done();
     });
 });

@@ -1,4 +1,4 @@
-import {IdaiType, Document, Resource, Dating} from 'idai-components-2';
+import {IdaiType, Document, Resource, Dating, Dimension} from 'idai-components-2';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
 import {flow, map, on, is, isNot, includedIn} from 'tsfun';
@@ -61,7 +61,7 @@ export module CsvParser {
             }
 
             if (fieldDefinition.inputType === 'dating') {
-                for (let dating of resource['dating'] as Array<Dating>) {
+                for (let dating of resource[fieldName] as Array<Dating>) {
                     // const dating = resource['dating']; // TODO should exist
 
                     if (dating.begin && dating.begin.year) dating.begin.year = parseInt(dating.begin.year as any); // TODO handle errors
@@ -73,7 +73,22 @@ export module CsvParser {
                 }
             }
 
-            // console.log(fieldDefinition);
+            if (fieldDefinition.inputType === 'dimension') {
+                for (let dimension of resource[fieldName] as Array<Dimension>) {
+                    // const dimension // TODO should exist
+
+                    if (dimension.value) dimension.value = parseInt(dimension.value as any);
+                    if (dimension.rangeMin) dimension.rangeMin = parseInt(dimension.rangeMin as any);
+                    if (dimension.rangeMax) dimension.rangeMax = parseInt(dimension.rangeMax as any);
+                    if (dimension.inputValue) dimension.inputValue = parseInt(dimension.inputValue as any);
+                    if (dimension.inputRangeEndValue) dimension.inputRangeEndValue = parseInt(dimension.inputRangeEndValue as any);
+                    if (dimension.isImprecise && (dimension.isImprecise as any) === 'true') dimension.isImprecise = true; else dimension.isImprecise = false;
+                    if (dimension.isRange && (dimension.isRange as any) === 'true') dimension.isRange = true; else dimension.isRange = false;
+                }
+            }
+
+
+                    // console.log(fieldDefinition);
         }
 
         return resource;

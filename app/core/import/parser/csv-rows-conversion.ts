@@ -33,7 +33,7 @@ export module CsvRowsConversion {
         }
 
         const nextIndex = parseInt(pathSegments[1]);
-        const newItem = isNaN(nextIndex) ? {} : Array(nextIndex + 1);
+        const newItem = isNaN(nextIndex) ? {} : Array(nextIndex + 1); // TODO review if dense array needed
 
         if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
 

@@ -55,9 +55,11 @@ export module CsvParser {
     }
 
 
+    type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
+        | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
+
+
     /**
-     * TODO make case switch statement and define all known types of resources in a typescript string union type. Let's use this typing to make sure via compiler that all known types are covered
-     *
      * @param type
      */
     function convertFieldTypes(type: IdaiType) { return (resource: Resource) => { // TODO handle errors
@@ -70,20 +72,27 @@ export module CsvParser {
             if (!fieldDefinition) continue; // TODO review
             // throw "CSV Parser - missing field definition " + fieldName;
 
-            if (fieldDefinition.inputType === 'boolean') convertBoolean(resource, fieldName);
-            if (fieldDefinition.inputType === 'dating') convertDating(resource, fieldName);
-            if (fieldDefinition.inputType === 'dimension') convertDimension(resource, fieldName);
-
-            if (fieldDefinition.inputType === 'checkboxes') {
-
-                resource[fieldName] = resource[fieldName].split(';'); // TODO review if this should be done here
-
-            }
-            // console.log(fieldDefinition);
+            const inputType = fieldDefinition.inputType as unknown as FieldType;
+            convertTypeDependent(resource, fieldName, inputType);
         }
 
         return resource;
     }}
+
+
+    function convertTypeDependent(resource: Resource, fieldName: string, inputType: FieldType) {
+
+        if (inputType === 'boolean')    convertBoolean(resource, fieldName);
+        if (inputType === 'dating')     convertDating(resource, fieldName);
+        if (inputType === 'dimension')  convertDimension(resource, fieldName);
+        if (inputType === 'checkboxes') convertCheckboxes(resource, fieldName);
+    }
+
+
+    function convertCheckboxes(resource: Resource, fieldName: string) {
+
+        resource[fieldName] = resource[fieldName].split(';'); // TODO review if this should be done here
+    }
 
 
     function convertDimension(resource: Resource, fieldName: string) {

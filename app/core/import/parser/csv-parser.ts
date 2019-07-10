@@ -2,6 +2,7 @@ import {IdaiType, Document, Resource, Dating, Dimension} from 'idai-components-2
 import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
 import {flow, map, on, is, isNot, includedIn, setOn, getOnOr} from 'tsfun';
+import {ParserErrors} from './parser-errors';
 
 
 /**
@@ -29,6 +30,9 @@ export module CsvParser {
      */
     export const getParse = (type: IdaiType, operationId: string): Parser => {
 
+        /**
+         * @throws [CSV_GENERIC]
+         */
         return (content: string) => {
 
             try {
@@ -156,7 +160,7 @@ export module CsvParser {
     function convertBoolean(container: any, path: string) {
 
         const val = getOnOr(path, undefined)(container);
-        if (!val) throw "not existing";
+        if (!val) throw [ParserErrors.CSV_GENERIC]; // TODO replace
         if (isNot(includedIn(['true', 'false']))(val)) throw "cannot parse boolean";
         setOn(container, path)(val === 'true');
     }

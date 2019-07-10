@@ -18,8 +18,11 @@ export module CsvRowsConversion {
         const headings = rows[0].split(sep);
         rows.shift();
 
-        return flatReduce((row: string) => makeResource(headings)(row.split(sep)))(rows);
+        return flatReduce(splitRows(headings, sep))(rows);
     }}
+
+
+    const splitRows = (headings: string[], sep: string) => (row: string) => makeResource(headings)(row.split(sep));
 
 
     function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) {

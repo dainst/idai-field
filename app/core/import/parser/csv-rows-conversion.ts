@@ -1,4 +1,4 @@
-import {reduce, flatReduce} from 'tsfun'; // TODO use ObjectStruct
+import {reduce, flatReduce, ObjectStruct} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -11,7 +11,7 @@ export module CsvRowsConversion {
     /**
      * @param sep
      */
-    export function parse(sep: string) { return (rows: string[]): Array<any> => {
+    export function parse(sep: string) { return (rows: string[]): Array<ObjectStruct> => {
 
         if (rows.length < 1) return [];
         const headings = rows[0].split(sep); // TODO maybe split outside, or also do the splitting of arrays by ; here
@@ -54,7 +54,7 @@ export module CsvRowsConversion {
         return reduce((objectStruct, fieldOfRow, i: number) => {
 
             if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
-            return objectStruct as any;
+            return objectStruct as ObjectStruct;
 
         }, {});
     }

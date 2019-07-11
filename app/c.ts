@@ -23,5 +23,3 @@ export module GROUP_NAME {
     export const POSITION = 4;
     export const TIME = 5;
 }
-
-export type Either<T1, T2> = [T1, undefined]|[undefined, T2];

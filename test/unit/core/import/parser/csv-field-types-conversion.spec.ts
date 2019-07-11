@@ -7,7 +7,6 @@ import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 /**
  * @author Daniel de Oliveira
  */
-
 describe('CsvFieldTypesConversion', () => {
 
     it('field type boolean', () => {

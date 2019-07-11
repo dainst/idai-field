@@ -136,7 +136,7 @@ export module CsvFieldTypesConversion {
      */
     function convertBoolean(container: any, path: string) {
 
-        const val = getOnOr(path, undefined)(container);
+        const val = getOnOr(path, undefined)(container); // TODO can getOnOr work with arrays?
         if (!val) return;
         if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
         setOn(container, path)(val === 'true');

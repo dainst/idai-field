@@ -12,9 +12,9 @@ describe('CsvRowsConversion', () => {
 
         const struct = CsvRowsConversion.parse(SEP)(['identifier,shortDescription,custom', '10,zehn,bla']);
         expect(struct.length).toBe(1);
-        expect(struct[0].identifier).toBe('10');
-        expect(struct[0].shortDescription).toBe('zehn');
-        expect(struct[0].custom).toBe('bla');
+        expect(struct[0]['identifier']).toBe('10');
+        expect(struct[0]['shortDescription']).toBe('zehn');
+        expect(struct[0]['custom']).toBe('bla');
     });
 
 
@@ -46,10 +46,10 @@ describe('CsvRowsConversion', () => {
         expect(structs.length).toBe(1);
 
         const struct = structs[0];
-        expect(struct.identifier).toBe('identifier1');
-        expect(struct.array[0].begin.year).toBe('100');
-        expect(struct.array[0].end.year).toBe('200');
-        expect(struct.array[0].source).toBe('S');
-        expect(struct.array[0].label).toBe('L');
+        expect(struct['identifier']).toBe('identifier1');
+        expect(struct['array'][0].begin.year).toBe('100');
+        expect(struct['array'][0].end.year).toBe('200');
+        expect(struct['array'][0].source).toBe('S');
+        expect(struct['array'][0].label).toBe('L');
     });
 });

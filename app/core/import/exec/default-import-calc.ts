@@ -1,12 +1,11 @@
 import {ImportValidator} from './import-validator';
 import {asyncForEach, asyncMap, duplicates, equal, hasNot, includedIn, isArray,
-    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt} from 'tsfun';
+    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
 import {
-    Either,
     HIERARCHICAL_RELATIONS,
     LIES_WITHIN,
     PARENT,

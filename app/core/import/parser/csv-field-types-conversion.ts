@@ -8,7 +8,7 @@ import {ParserErrors} from './parser-errors';
 /**
  * @author Daniel de Oliveira
  */
-export module CsvFieldTypesConversion { // TODO review negative number, should not be validated here by in exec step by regular validation
+export module CsvFieldTypesConversion {
 
     type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
         | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
@@ -33,6 +33,11 @@ export module CsvFieldTypesConversion { // TODO review negative number, should n
     }}
 
 
+    const convertUnsignedInt = convertNumber;    // here only string to number, validation in exec
+
+    const convertUnsignedFloat = convertNumber;  // here only string to number, validation in exec
+
+
     function convertTypeDependent(resource: Resource, fieldName: string, inputType: FieldType) {
 
         if (inputType === 'boolean')       convertBoolean(resource, fieldName);
@@ -41,22 +46,6 @@ export module CsvFieldTypesConversion { // TODO review negative number, should n
         if (inputType === 'checkboxes')    convertCheckboxes(resource, fieldName);
         if (inputType === 'unsignedInt')   convertUnsignedInt(resource, fieldName);
         if (inputType === 'unsignedFloat') convertUnsignedFloat(resource, fieldName);
-    }
-
-
-    function convertUnsignedInt(resource: Resource, fieldName: string) {
-
-        convertNumber(resource, fieldName);
-        // const val = getOn(fieldName, undefined)(resource);
-        // if negative, throw
-    }
-
-
-    function convertUnsignedFloat(resource: Resource, fieldName: string) {
-
-        convertNumber(resource, fieldName);
-        // const val = getOn(fieldName, undefined)(resource);
-        // if negative, throw
     }
 
 

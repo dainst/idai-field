@@ -253,7 +253,7 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('field type unsignedInt - not a number', () => { // TODO write test for negative number too
+    it('field type unsignedInt - not a number', () => {
 
         const type = {
             name: 'TypeName',
@@ -267,7 +267,7 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('field type unsignedFloat - not a number', () => { // TODO write test for neg nmbr too
+    it('field type unsignedFloat - not a number', () => {
 
         const type = {
             name: 'TypeName',

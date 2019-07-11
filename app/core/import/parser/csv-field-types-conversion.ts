@@ -6,6 +6,8 @@ import {Dating} from 'idai-components-2/src/model/dating';
 import {ParserErrors} from './parser-errors';
 
 /**
+ * Converts string values to values of other types, based on field type information.
+ *
  * @author Daniel de Oliveira
  */
 export module CsvFieldTypesConversion {

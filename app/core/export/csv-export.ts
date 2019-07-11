@@ -322,24 +322,21 @@ export module CSVExport {
     }
 
 
-    function toRowsArrangedBy(fieldNames: string[]) {
+    function toRowsArrangedBy(fieldNames: string[]) { return (resource: FieldResource) => {
 
-        return (resource: FieldResource) => {
+        const newRow = arrayList(fieldNames.length);
 
-            const newRow = arrayList(fieldNames.length);
+        return getUsableFieldNames(Object.keys(resource))
+            .reduce((row, fieldName) => {
 
-            return getUsableFieldNames(Object.keys(resource))
-                .reduce((row, fieldName) =>  {
+                const indexOfFoundElement = fieldNames.indexOf(fieldName);
+                if (indexOfFoundElement !== -1) {
 
-                    const indexOfFoundElement = fieldNames.indexOf(fieldName);
-                    if (indexOfFoundElement !== -1) {
-
-                        row[indexOfFoundElement] = (resource as any)[fieldName];
-                    }
-                    return row;
-                }, newRow);
-        }
-    }
+                    row[indexOfFoundElement] = (resource as any)[fieldName];
+                }
+                return row;
+            }, newRow);
+    }}
 
 
     function makeFieldNamesList(resourceType: IdaiType) {

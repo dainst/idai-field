@@ -160,7 +160,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dating field even if no value present', () => { // TODO this must work even in only header mode
+    it('expand dating field even if no value present', () => {
 
         const t = makeType(['identifier', 'dating']);
 
@@ -181,6 +181,24 @@ describe('CSVExport', () => {
         expect(result[0][9]).toBe('dating.0.isUncertain');
 
         expect(result[1][1]).toBe('');
+    });
+
+
+    it('expand dating field even if no value present, in header only mode', () => {
+
+        const t = makeType(['identifier', 'dating']);
+
+        const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('dating.0.type');
+        expect(result[0][2]).toBe('dating.0.begin.type');
+        expect(result[0][3]).toBe('dating.0.begin.year');
+        expect(result[0][4]).toBe('dating.0.end.type');
+        expect(result[0][5]).toBe('dating.0.end.year');
+        expect(result[0][6]).toBe('dating.0.margin');
+        expect(result[0][7]).toBe('dating.0.source');
+        expect(result[0][8]).toBe('dating.0.isImprecise');
+        expect(result[0][9]).toBe('dating.0.isUncertain');
     });
 
 
@@ -282,6 +300,25 @@ describe('CSVExport', () => {
         expect(result[0][10]).toBe('dimensionX.0.rangeMax');
 
         expect(result[1][1]).toBe('');
+    });
+
+
+    it('expand one dimension field even if no values present, in header only mode', () => {
+
+        const t = makeType(['identifier', 'dimensionX']);
+
+        const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('dimensionX.0.value');
+        expect(result[0][2]).toBe('dimensionX.0.inputValue');
+        expect(result[0][3]).toBe('dimensionX.0.inputRangeEndValue');
+        expect(result[0][4]).toBe('dimensionX.0.measurementPosition');
+        expect(result[0][5]).toBe('dimensionX.0.measurementComment');
+        expect(result[0][6]).toBe('dimensionX.0.inputUnit');
+        expect(result[0][7]).toBe('dimensionX.0.isImprecise');
+        expect(result[0][8]).toBe('dimensionX.0.isRange');
+        expect(result[0][9]).toBe('dimensionX.0.rangeMin');
+        expect(result[0][10]).toBe('dimensionX.0.rangeMax');
     });
 
 

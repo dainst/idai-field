@@ -14,8 +14,7 @@ export module CsvFieldTypesConversion {
         | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
 
 
-     // TODO make it return an Either for each resource, and at the end evaluate it
-    export function convertFieldTypes(type: IdaiType) { return (resource: Resource) => { // TODO handle errors
+    export function convertFieldTypes(type: IdaiType) { return (resource: Resource) => {
 
         for (let fieldName of
             Object.keys(resource)

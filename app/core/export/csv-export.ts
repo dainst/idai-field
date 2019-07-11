@@ -330,10 +330,8 @@ export module CSVExport {
             .reduce((row, fieldName) => {
 
                 const indexOfFoundElement = fieldNames.indexOf(fieldName);
-                if (indexOfFoundElement !== -1) {
+                if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
 
-                    row[indexOfFoundElement] = (resource as any)[fieldName];
-                }
                 return row;
             }, newRow);
     }}

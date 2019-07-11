@@ -21,7 +21,7 @@ export module CsvFieldTypesConversion {
                 .filter(isNot(includedIn(['relation', 'geometry', 'type'])))) {
 
             const fieldDefinition = type.fields.find(on('name', is(fieldName)));
-            if (!fieldDefinition) continue; // TODO review
+            if (!fieldDefinition) continue; // TODO review, maybe this gets handled in exec step
             // throw "CSV Parser - missing field definition " + fieldName;
 
             const inputType = fieldDefinition.inputType as unknown as FieldType;

@@ -45,6 +45,8 @@ export module CsvFieldTypesConversion {
 
     function convertTypeDependent(resource: Resource, fieldName: string, inputType: FieldType) {
 
+        // leave 'date' as is
+        // leave 'radio' as is
         if (inputType === 'boolean')       convertBoolean(resource, fieldName);
         if (inputType === 'dating')        convertDating(resource, fieldName);
         if (inputType === 'dimension')     convertDimension(resource, fieldName);

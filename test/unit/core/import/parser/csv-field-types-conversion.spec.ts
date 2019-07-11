@@ -143,7 +143,7 @@ describe('CsvFieldTypesConversion', () => {
                 r: 'rr'
             } as unknown as Resource);
 
-        expect(resource['r']).toBe('rr'); // currently leave it as is
+        expect(resource['r']).toBe('rr');
     });
 
 
@@ -162,8 +162,7 @@ describe('CsvFieldTypesConversion', () => {
                 d: '10.07.2019'
             } as unknown as Resource);
 
-        // TODO validate date format
-        expect(resource['d']).toBe('10.07.2019'); // currently leave it as is
+        expect(resource['d']).toBe('10.07.2019');
     });
 
 

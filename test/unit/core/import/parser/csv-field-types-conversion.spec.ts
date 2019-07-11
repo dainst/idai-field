@@ -40,7 +40,6 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        // TODO write test for csv parser that makes sure dating is build up properly
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
                 dating: [{

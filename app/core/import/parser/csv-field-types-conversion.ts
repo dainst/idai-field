@@ -7,6 +7,7 @@ import {ParserErrors} from './parser-errors';
 
 /**
  * Converts string values to values of other types, based on field type information.
+ * No validation other than errors resulting from parsing values from strings is handled here.
  *
  * @author Daniel de Oliveira
  */

@@ -17,15 +17,18 @@ export module CsvFieldTypesConversion {
         | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
 
 
+    const UNCHECKED_FIELDS = ['relation', 'geometry', 'type'];
+
+
+    const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includedIn(UNCHECKED_FIELDS)));
+
+
     export function convertFieldTypes(type: IdaiType) { return (resource: Resource) => {
 
-        for (let fieldName of
-            Object.keys(resource)
-                .filter(isNot(includedIn(['relation', 'geometry', 'type'])))) {
+        for (let fieldName of fields(resource)) {
 
             const fieldDefinition = type.fields.find(on('name', is(fieldName)));
-            if (!fieldDefinition) continue; // TODO review, maybe this gets handled in exec step
-            // throw "CSV Parser - missing field definition " + fieldName;
+            if (!fieldDefinition) continue;
 
             const inputType = fieldDefinition.inputType as unknown as FieldType;
             convertTypeDependent(resource, fieldName, inputType);

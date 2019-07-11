@@ -1,5 +1,5 @@
 import {FieldDefinition, FieldResource, IdaiType, Dating, Dimension} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take,
+import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, reverse,
     to, flow, compose, flatMap, isDefined, arrayList, when, flatReduce, range} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
@@ -81,11 +81,13 @@ export module CSVExport {
 
         return (headings_and_matrix: HeadingsAndMatrix) => {
 
+            const dimensionIndices = reverse(getDimensionIndices(headings_and_matrix[H]));
+
             return expand(
                     expandDimensionHeadings,
                     expandDimensionItems,
                     headings_and_matrix
-                )(getDimensionIndices(headings_and_matrix[H]));
+                )(dimensionIndices);
         }
     }
 
@@ -133,7 +135,7 @@ export module CSVExport {
                 const max = getMax(columnIndex)(headings_and_matrix[M]);
 
                 // const [headings, matrix] = headings_and_matrix;
-                // if (isNaN(max)) return [headings, matrix]; seems to be not necessary anymore
+                // if (isNaN(max)) return [headings, matrix]; // seems to be not necessary anymore
 
                 return [
                     replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]),

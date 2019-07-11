@@ -234,4 +234,45 @@ describe('CSVExport', () => {
 
         expect(result[3][1]).toBe('');
     });
+
+
+    it('expand multiple dimension fields', () => {
+
+        const t = makeType(['identifier', 'dimensionX', 'dimensionY']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+            ifResource('i2', 'identifier2', 'shortDescription2', 'type'),
+        ];
+        resources[0]['dimensionX'] = [{value: 100, measurementComment: 'abc'}];
+        resources[1]['dimensionY'] = [{value: 300, inputRangeEndValue: 'ghc'}];
+
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('dimensionX.0.value');
+        expect(result[0][2]).toBe('dimensionX.0.inputValue');
+        expect(result[0][3]).toBe('dimensionX.0.inputRangeEndValue');
+        expect(result[0][4]).toBe('dimensionX.0.measurementPosition');
+        expect(result[0][5]).toBe('dimensionX.0.measurementComment');
+        expect(result[0][6]).toBe('dimensionX.0.inputUnit');
+        expect(result[0][7]).toBe('dimensionX.0.isImprecise');
+        expect(result[0][8]).toBe('dimensionX.0.isRange');
+        expect(result[0][9]).toBe('dimensionX.0.rangeMin');
+        expect(result[0][10]).toBe('dimensionX.0.rangeMax');
+        expect(result[0][11]).toBe('dimensionY.0.value');
+        expect(result[0][12]).toBe('dimensionY.0.inputValue');
+        expect(result[0][13]).toBe('dimensionY.0.inputRangeEndValue');
+        expect(result[0][14]).toBe('dimensionY.0.measurementPosition');
+        expect(result[0][15]).toBe('dimensionY.0.measurementComment');
+        expect(result[0][16]).toBe('dimensionY.0.inputUnit');
+        expect(result[0][17]).toBe('dimensionY.0.isImprecise');
+        expect(result[0][18]).toBe('dimensionY.0.isRange');
+        expect(result[0][19]).toBe('dimensionY.0.rangeMin');
+        expect(result[0][20]).toBe('dimensionY.0.rangeMax');
+
+        expect(result[1][1]).toBe('100');
+        expect(result[1][5]).toBe('abc');
+        expect(result[2][11]).toBe('300');
+        expect(result[2][13]).toBe('ghc');
+    });
 });

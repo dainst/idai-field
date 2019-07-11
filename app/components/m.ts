@@ -46,14 +46,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
-    public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
-    public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
-    public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
     public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
     public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
+    public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
+    public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
+    public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
+    public static IMPORT_PARSER_NOT_A_NUMBER = 'M.Import.ParserErrors.notANumber';
+    public static IMPORT_PARSER_NOT_A_BOOLEAN = 'M.Import.ParserErrors.notABoolean';
 
     // ImportPackage - ReaderErrors
     public static IMPORT_READER_GENERIC_START_ERROR = 'M.Import.ReaderErrors.genericStartError';
@@ -453,6 +455,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_NOT_A_BOOLEAN] = {
+            content: i18n({
+                id: 'messages.import.error.parser.csv.notaboolean',
+                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_NOT_A_NUMBER] = {
+            content: i18n({
+                id: 'messages.import.error.parser.csv.notanumber',
+                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
             hidden: false
         };
         this.msgs[M.IMPORT_PARSER_GENERIC_CSV_ERROR] = {

@@ -7,7 +7,6 @@ export module ParserErrors {
     export const FILE_INVALID_JSON = 'importerrors/invalidjson';
     export const FILE_INVALID_JSONL = 'importerrors/invalidjsonl';
     export const INVALID_GEOJSON_IMPORT_STRUCT = 'importerrors/invalidgeojsonimportstruct';
-    export const MANDATORY_CSV_FIELD_MISSING = 'importerrors/mandatorycsvfieldmissing';
     export const INVALID_GEOMETRY = 'importerrors/invalidgeometry';
     export const MISSING_IDENTIFIER = 'importerrors/parser/missingidentifier';
     export const ID_MUST_NOT_BE_SET = 'importerrors/parser/idnottobeset';
@@ -15,7 +14,9 @@ export module ParserErrors {
     export const SHAPEFILE_GENERIC = 'importerrors/shapefile/generic';
 
     // CSV
+    export const MANDATORY_CSV_FIELD_MISSING = 'importerrors/mandatorycsvfieldmissing';
     export const CSV_GENERIC = 'importerrors/csv/genericerror';
     export const CSV_INVALID = 'importerrors/csv/invalid';
     export const CSV_NOT_A_NUMBER = 'importerrors/csv/notanumber'; // [error, value, column]
+    export const CSV_NOT_A_BOOLEAN = 'importerrors/csvs/notaboolean';
 }

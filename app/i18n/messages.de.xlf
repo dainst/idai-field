@@ -2377,7 +2377,7 @@
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -2385,7 +2385,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2393,7 +2393,7 @@
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -3205,6 +3205,22 @@
       <trans-unit id="messages.import.error.invalidCsv" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
+        <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</source>
+        <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
+        <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</source>
+        <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4024,10 +4040,6 @@
         <target state="final">Abbrechen
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
@@ -4068,8 +4080,12 @@
           <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
@@ -4266,10 +4282,6 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/projects-modal.html</context>
           <context context-type="linenumber">49</context>
         </context-group>
@@ -4286,8 +4298,12 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">

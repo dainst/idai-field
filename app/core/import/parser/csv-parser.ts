@@ -31,7 +31,7 @@ export module CsvParser {
     export const getParse = (type: IdaiType, operationId: string): Parser => {
 
         /**
-         * @throws [CSV_GENERIC]
+         * @throws [CSV_GENERIC] // currently unused
          * @throws [CSV_NOT_A_NUMBER]
          */
         return (content: string) => {

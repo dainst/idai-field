@@ -1,6 +1,7 @@
 import {Dating, Dimension, IdaiType, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
+import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 
 
 /**
@@ -65,6 +66,27 @@ describe('CsvFieldTypesConversion', () => {
         expect(dating.source).toBe('abc');
         expect(dating.isImprecise).toBe(true);
         expect(dating.isUncertain).toBe(false);
+    });
+
+
+    it('dating.isUncertain is not a boolean', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dating',
+                inputType: 'dating'
+            }],
+        } as IdaiType;
+
+        try {
+
+            CsvFieldTypesConversion
+                .convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }]} as unknown as Resource);
+            fail();
+        } catch (msgWithParams) {
+            expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
+        }
     });
 
 

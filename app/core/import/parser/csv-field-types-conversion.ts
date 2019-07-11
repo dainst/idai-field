@@ -8,7 +8,7 @@ import {ParserErrors} from './parser-errors';
 /**
  * @author Daniel de Oliveira
  */
-export module CsvFieldTypesConversion {
+export module CsvFieldTypesConversion { // TODO review negative number, should not be validated here by in exec step by regular validation
 
     type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
         | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'

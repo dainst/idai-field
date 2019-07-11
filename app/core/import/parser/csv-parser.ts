@@ -1,8 +1,10 @@
 import {Document, IdaiType, Resource} from 'idai-components-2';
-import {CsvRowsConversion} from './csv-rows-conversion';
 import {makeLines, Parser} from './parser';
 import {flow, map} from 'tsfun';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
+import {CsvRowsConversion} from './csv-rows-conversion';
+import parse = CsvRowsConversion.parse;
+import convertFieldTypes = CsvFieldTypesConversion.convertFieldTypes;
 
 
 /**
@@ -52,10 +54,10 @@ export module CsvParser {
 
         return flow<any>(content,
             makeLines,
-            CsvRowsConversion.parse(SEP),
+            parse(SEP),
             map(insertTypeName(type)), // TODO make assoc function
             map(insertIsChildOf(operationId)),
-            map(CsvFieldTypesConversion.convertFieldTypes(type)),
+            map(convertFieldTypes(type)),
             map(toDocument));
     }
 }

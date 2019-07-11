@@ -214,7 +214,7 @@ export module CSVExport {
             end && end.year ? end.year.toString() : '',
             margin ? margin.toString() : '',
             source ? source : '',
-            isImprecise ? 'true' : 'false', // TODO test if import works
+            isImprecise ? 'true' : 'false',
             isUncertain ? 'true' : 'false'];
     }
 

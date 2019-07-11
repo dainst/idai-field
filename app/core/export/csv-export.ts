@@ -324,7 +324,7 @@ export module CSVExport {
 
     function toRowsArrangedBy(fieldNames: string[]) { return (resource: FieldResource) => {
 
-        const newRow = arrayList(fieldNames.length);
+        const row = arrayList(fieldNames.length);
 
         return getUsableFieldNames(Object.keys(resource))
             .reduce((row, fieldName) => {
@@ -333,7 +333,7 @@ export module CSVExport {
                 if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
 
                 return row;
-            }, newRow);
+            }, row);
     }}
 
 

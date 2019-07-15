@@ -58,7 +58,7 @@ export module CsvFieldTypesConversion {
 
     function convertCheckboxes(resource: Resource, fieldName: string) {
 
-        resource[fieldName] = resource[fieldName].split(';'); // TODO review if this should be done here
+        resource[fieldName] = resource[fieldName].split(';');
     }
 
 

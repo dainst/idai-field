@@ -76,7 +76,6 @@ describe('DefaultImport', () => {
 
     it('does not overwrite if exists', async done => {
 
-        // TODO The test runs without this. Check again how the test works.
         mockDatastore.get.and.returnValue(Promise.resolve(
             { resource: { id: '0', identifier: '0', type: 'Trench' }})
         );
@@ -119,7 +118,4 @@ describe('DefaultImport', () => {
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
         done();
     });
-
-
-    // TODO test in general that err from default import calc gets propagated
 });

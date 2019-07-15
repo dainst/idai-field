@@ -312,7 +312,7 @@ export module DefaultImportCalc {
 
         return async (relations: Relations): Promise<void> => {
 
-            return iterateRelationsInImport(relations, async (relation: string, identifier: Identifier, i: number) => {
+            return iterateRelationsInImport(relations, (relation: string) => async (identifier: Identifier, i: number) => {
                 if (identifierMap[identifier]) {
                     relations[relation][i] = identifierMap[identifier];
                 } else {
@@ -330,7 +330,7 @@ export module DefaultImportCalc {
         return async (relations: Relations): Promise<void> => {
 
             return iterateRelationsInImport(relations,
-                async (relation: string, id: Id) => {
+                (_: never) => async (id: Id, _: never) => {
 
                 try { await get(id) }
                 catch { throw [E.MISSING_RELATION_TARGET, id] }
@@ -341,12 +341,10 @@ export module DefaultImportCalc {
 
     async function iterateRelationsInImport(
         relations: Relations,
-        asyncIterationFunction:
-            (relation: string, idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
+        asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
-            await asyncForEach((idOrIdentifier: string, i) =>
-                asyncIterationFunction(relation, idOrIdentifier, i))(relations[relation]);
+            await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
         }
     }
     

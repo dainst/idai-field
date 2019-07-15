@@ -1,8 +1,5 @@
-import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
-import {Resource} from 'idai-components-2/src/model/core/resource';
 import {getOnOr, includedIn, is, isNot, on, setOn} from 'tsfun';
-import {Dimension} from 'idai-components-2/src/model/dimension';
-import {Dating} from 'idai-components-2/src/model/dating';
+import {IdaiType, Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 
 /**

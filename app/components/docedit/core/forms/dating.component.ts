@@ -35,8 +35,8 @@ export class DatingComponent {
 
         this.newDating = {
             type: 'range',
-            begin: { year: 0, type: 'bce' },
-            end: { year: 0, type: 'bce' }
+            begin: { year: 0, inputYear: 0, inputType: 'bce' },
+            end: { year: 0, inputYear: 0, inputType: 'bce' }
         };
     }
 
@@ -57,6 +57,20 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
+        DatingComponent.setNormalizedYear(dating);
+
         return Validations.validateDating(dating);
+    }
+
+
+    private static setNormalizedYear(dating: Dating) {
+
+        if (dating.begin) {
+            dating.begin.year = DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
+        }
+
+        if (dating.end) {
+            dating.end.year = DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
+        }
     }
 }

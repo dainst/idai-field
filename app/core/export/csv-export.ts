@@ -208,9 +208,9 @@ export module CSVExport {
 
         return [
             type ? type : '',
-            begin && begin.type ? begin.type : '',
+            begin && begin.inputType ? begin.inputType : '',
             begin && begin.year ? begin.year.toString() : '',
-            end && end.type ? end.type : '',
+            end && end.inputType ? end.inputType : '',
             end && end.year ? end.year.toString() : '',
             margin ? margin.toString() : '',
             source ? source : '',

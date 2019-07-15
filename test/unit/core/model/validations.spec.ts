@@ -212,15 +212,17 @@ describe('Validations', () => {
                 // Accept datings with label (deprecated)
                 dating1: { label: 'Dating 1' },
                 // Correct dating
-                dating2: { type: 'range', begin: { year: 30, type: 'bce' }, end: { year: 20, type: 'ce'} },
+                dating2: { type: 'range', begin: { year: -30, inputYear: 30, inputType: 'bce' },
+                    end: { year: 20, inputYear: 20, inputType: 'ce'} },
                 // Invalid range
-                dating3: { type: 'range', begin: { year: 20, type: 'ce' }, end: { year: 30, type: 'bce'} },
+                dating3: { type: 'range', begin: { year: 20, inputYear: 20, inputType: 'ce' },
+                    end: { year: -30, inputYear: 30, inputType: 'bce'} },
                 // Incomplete range
-                dating4: { type: 'range', begin: { year: 10, type: 'ce'} },
+                dating4: { type: 'range', begin: { year: 10, inputYear: 10, inputType: 'ce'} },
                 // No integer value
-                dating5: { type: 'exact', end: { year: 10.5, type: 'ce'} },
+                dating5: { type: 'exact', end: { year: 10.5, inputYear: 10.5, inputType: 'ce'} },
                 // Negative value
-                dating6: { type: 'exact', end: { year: -10, type: 'ce'} },
+                dating6: { type: 'exact', end: { year: -10, inputYear: -10, inputType: 'ce'} },
                 relations: { isRecordedIn: ['0'] }
             }
         };

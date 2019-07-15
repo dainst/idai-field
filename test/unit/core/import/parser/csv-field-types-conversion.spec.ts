@@ -44,8 +44,8 @@ describe('CsvFieldTypesConversion', () => {
             .convertFieldTypes(type)({
                 dating: [{
                     type: 'range',
-                    begin: { type: 'bce', year: '0' },
-                    end: { type: 'bce', year: '1' },
+                    begin: { inputType: 'bce', inputYear: '0' },
+                    end: { inputType: 'bce', inputYear: '1' },
                     margin: '1',
                     source: 'abc',
                     isImprecise: 'true',
@@ -56,10 +56,10 @@ describe('CsvFieldTypesConversion', () => {
 
         const dating: Dating = resource.dating[0];
         expect(dating.type).toBe('range');
-        expect(dating.begin.type).toBe('bce');
-        expect(dating.begin.year).toBe(0);
-        expect(dating.end.type).toBe('bce');
-        expect(dating.end.year).toBe(1);
+        expect(dating.begin.inputType).toBe('bce');
+        expect(dating.begin.inputYear).toBe(0);
+        expect(dating.end.inputType).toBe('bce');
+        expect(dating.end.inputYear).toBe(1);
         expect(dating.margin).toBe(1);
         expect(dating.source).toBe('abc');
         expect(dating.isImprecise).toBe(true);

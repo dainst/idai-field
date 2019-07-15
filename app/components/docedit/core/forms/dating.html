@@ -1,7 +1,7 @@
 <ng-template #editDate let-date="date" let-index="index">
     <input class="form-control year-input" type="number" size="6" min="0" max="100000"
-           [(ngModel)]="date.year" value="0" name="year_{{index}}" required>
-    <select class="form-control ml-1 type-select" [(ngModel)]="date.type" name="type_{{index}}">
+           [(ngModel)]="date.inputYear" value="0" name="year_{{index}}" required>
+    <select class="form-control ml-1 type-select" [(ngModel)]="date.inputType" name="type_{{index}}">
         <option value="bce">v.Chr.</option>
         <option value="ce">n.Chr.</option>
         <option value="bp">BP</option>

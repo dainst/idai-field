@@ -1,4 +1,4 @@
-import {Dating} from 'idai-components-2';
+import {Dating, DatingElement} from 'idai-components-2';
 
 
 /**
@@ -12,6 +12,15 @@ export module DatingUtil {
         'ce': 'n.Chr.',
         'bp': 'BP'
     };
+
+
+    export function getNormalizedYear(inputYear: number, inputType: 'bce'|'ce'|'bp'): number {
+
+        if (inputType === 'bce') return 0 - inputYear;
+        if (inputType === 'bp') return 1950 - inputYear;
+
+        return inputYear;
+    }
 
 
     export function generateLabel(dating: Dating): string {
@@ -42,12 +51,14 @@ export module DatingUtil {
     }
 
 
-    function generateLabelForDate(date: any): string {
+    function generateLabelForDate(date: DatingElement|undefined): string {
 
-        if (date.year === 0) {
+        if (!date) {
+            return '';
+        } else if (date.inputYear === 0) {
             return '0';
         } else {
-            return date.year + ' ' + DATE_TYPES[date.type];
+            return date.inputYear + ' ' + DATE_TYPES[date.inputType];
         }
     }
 }

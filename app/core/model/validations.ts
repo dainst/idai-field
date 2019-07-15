@@ -349,8 +349,10 @@ export module Validations {
     export function validateDating(dating: Dating): boolean {
 
         if (dating.label) return true;
-        if (dating.begin && (!Number.isInteger(dating.begin.year) || dating.begin.year < 0)) return false;
-        if (dating.end && (!Number.isInteger(dating.end.year) || dating.end.year < 0)) return false;
+        if (dating.begin && (!Number.isInteger(dating.begin.year)
+            || !Number.isInteger(dating.begin.inputYear) || dating.begin.inputYear < 0)) return false;
+        if (dating.end && (!Number.isInteger(dating.end.year)
+            || !Number.isInteger(dating.end.inputYear) || dating.end.inputYear < 0)) return false;
         return dating.type !== 'range' || validateRangeDating(dating);
     }
 
@@ -358,15 +360,6 @@ export module Validations {
     function validateRangeDating(dating: Dating): boolean {
 
         return dating.begin !== undefined && dating.end !== undefined &&
-            getNormalizedYear(dating.begin) < getNormalizedYear(dating.end);
-    }
-
-
-    function getNormalizedYear(date: any): number {
-
-        if (date.type === 'bce') return 0 - date.year;
-        if (date.type === 'bp') return 1950 - date.year;
-
-        return date.year;
+            dating.begin.year < dating.end.year;
     }
 }

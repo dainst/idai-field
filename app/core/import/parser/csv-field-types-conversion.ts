@@ -89,8 +89,8 @@ export module CsvFieldTypesConversion {
 
             try {
 
-                convertNumber(dating, 'begin.year');
-                convertNumber(dating, 'end.year');
+                convertNumber(dating, 'begin.inputYear');
+                convertNumber(dating, 'end.inputYear');
                 convertNumber(dating, 'margin');
                 convertBoolean(dating, 'isImprecise');
                 convertBoolean(dating, 'isUncertain');

@@ -26,4 +26,20 @@ export module DimensionUtil {
 
         return label;
     }
+
+
+    export function convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
+                                                          inputValue: number): number {
+
+        switch (inputUnit) {
+            case 'mm':
+                return inputValue * 1000;
+            case 'cm':
+                return inputValue * 10000;
+            case 'm':
+                return inputValue * 1000000;
+            default:
+                return inputValue;
+        }
+    }
 }

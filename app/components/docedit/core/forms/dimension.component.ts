@@ -84,13 +84,13 @@ export class DimensionComponent {
     	if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
 
         if (dimension.isRange) {
-            dimension.rangeMin = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+            dimension.rangeMin = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputValue);
-            dimension.rangeMax = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+            dimension.rangeMax = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputRangeEndValue);
             delete(dimension.value);
         } else {
-    	    dimension.value = DimensionComponent.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+    	    dimension.value = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
                 dimension.inputValue);
         }
 
@@ -99,22 +99,6 @@ export class DimensionComponent {
             this.newDimension = undefined;
     	} else {
             this.stopEditing(dimension);
-        }
-    }
-
-
-    private static convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
-                                                         inputValue: number): number {
-
-        switch (inputUnit) {
-            case 'mm':
-                return inputValue * 1000;
-            case 'cm':
-                return inputValue * 10000;
-            case 'm':
-                return inputValue * 1000000;
-            default:
-                return inputValue;
         }
     }
 }

@@ -1,5 +1,6 @@
 import {DecimalPipe} from '@angular/common';
 import {Dimension} from 'idai-components-2';
+import {UtilTranslations} from './util-translations';
 
 
 /**
@@ -23,7 +24,8 @@ export module DimensionUtil {
     }
 
 
-    export function generateLabel(dimension: Dimension, decimalPipe: DecimalPipe): string {
+    export function generateLabel(dimension: Dimension, decimalPipe: DecimalPipe,
+                                  translations: UtilTranslations): string {
 
         let label = (dimension.isImprecise ? 'ca. ' : '');
 
@@ -36,7 +38,10 @@ export module DimensionUtil {
 
         label += ' ' + dimension.inputUnit;
 
-        if (dimension.measurementPosition) label += ', Gemessen an ' + dimension.measurementPosition;
+        if (dimension.measurementPosition) {
+            label += ', ' + translations.getTranslation('asMeasuredBy') +  ' '
+                + dimension.measurementPosition;
+        }
         if (dimension.measurementComment) label += ' (' + dimension.measurementComment + ')';
 
         return label;
@@ -44,7 +49,7 @@ export module DimensionUtil {
 
 
     function convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
-                                                          inputValue: number): number {
+                                                   inputValue: number): number {
 
         switch (inputUnit) {
             case 'mm':

@@ -1026,7 +1026,7 @@
       <trans-unit id="buttons.cancel" datatype="html">
         <source>Abbrechen
     </source>
-        <target state="translated">Cancel</target>
+        <target state="final">Cancel</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
@@ -2959,6 +2959,54 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
           <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.bce" datatype="html">
+        <source>v. Chr.</source>
+        <target state="final">BCE</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.ce" datatype="html">
+        <source>n. Chr.</source>
+        <target state="final">CE</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.bp" datatype="html">
+        <source>BP</source>
+        <target state="final">BP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.before" datatype="html">
+        <source>Vor</source>
+        <target state="final">Before</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.after" datatype="html">
+        <source>Nach</source>
+        <target state="final">After</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
+        <source>gemessen an</source>
+        <target state="final">as measured by</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.stem" datatype="html">

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension, FieldDefinition} from 'idai-components-2';
 import {DimensionUtil} from '../../../../core/util/dimension-util';
+import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class DimensionComponent {
     public dimensionsInEditing: Array<Dimension> = [];
 
 
-    constructor(private decimalPipe: DecimalPipe) {}
+    constructor(private decimalPipe: DecimalPipe,
+                private utilTranslations: UtilTranslations) {}
 
 
     public createNewDimension() {
@@ -43,7 +45,9 @@ export class DimensionComponent {
 
     public getLabel(dimension: Dimension): string {
 
-        return dimension.label ? dimension.label : DimensionUtil.generateLabel(dimension, this.decimalPipe);
+        return dimension.label
+            ? dimension.label
+            : DimensionUtil.generateLabel(dimension, this.decimalPipe, this.utilTranslations);
     }
 
 

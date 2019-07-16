@@ -9,6 +9,7 @@ import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
 import {DatingUtil} from '../core/util/dating-util';
 import {DimensionUtil} from '../core/util/dimension-util';
+import {UtilTranslations} from '../core/util/util-translations';
 
 
 type FieldViewGroupDefinition = {
@@ -55,6 +56,7 @@ export class FieldsViewComponent implements OnChanges {
                 private datastore: ReadDatastore,
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
+                private utilTranslations: UtilTranslations,
                 private i18n: I18n) {}
 
 
@@ -112,9 +114,9 @@ export class FieldsViewComponent implements OnChanges {
     public getArrayItemLabel(arrayItem: any): string {
 
         if (arrayItem.begin || arrayItem.end) {
-            return DatingUtil.generateLabel(arrayItem);
+            return DatingUtil.generateLabel(arrayItem, this.utilTranslations);
         } else if (arrayItem.inputUnit) {
-            return DimensionUtil.generateLabel(arrayItem, this.decimalPipe);
+            return DimensionUtil.generateLabel(arrayItem, this.decimalPipe, this.utilTranslations);
         } else {
             return arrayItem;
         }

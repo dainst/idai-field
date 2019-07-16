@@ -2818,6 +2818,54 @@
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="util.dating.bce" datatype="html">
+        <source>v. Chr.</source>
+        <target state="final">v. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.ce" datatype="html">
+        <source>n. Chr.</source>
+        <target state="final">n. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.bp" datatype="html">
+        <source>BP</source>
+        <target state="final">BP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.before" datatype="html">
+        <source>Vor</source>
+        <target state="final">Vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.after" datatype="html">
+        <source>Nach</source>
+        <target state="final">Nach</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
+        <source>gemessen an</source>
+        <target state="final">gemessen an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.group.stem" datatype="html">
         <source>Stammdaten</source>
         <target state="final">Stammdaten</target>

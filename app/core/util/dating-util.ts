@@ -1,4 +1,5 @@
 import {Dating, DatingElement, DatingType} from 'idai-components-2';
+import {UtilTranslations} from './util-translations';
 
 
 /**
@@ -7,13 +8,6 @@ import {Dating, DatingElement, DatingType} from 'idai-components-2';
  */
 export module DatingUtil {
 
-    const DATE_TYPES: { [dateType: string]: string } = {
-        'bce': 'v.Chr.',
-        'ce': 'n.Chr.',
-        'bp': 'BP'
-    };
-
-
     export function addNormalizedValues(dating: Dating) {
 
         this.setNormalizedYears(dating);
@@ -21,27 +15,30 @@ export module DatingUtil {
     }
 
 
-    export function generateLabel(dating: Dating): string {
+    export function generateLabel(dating: Dating, translations: UtilTranslations): string {
 
         let prefix = '';
         let year = '';
         let postfix = '';
 
         if (dating.type === 'range') {
-            year = generateLabelForDate(dating.begin) + ' – ' + generateLabelForDate(dating.end);
+            year = generateLabelForDate(dating.begin, translations) + ' – '
+                + generateLabelForDate(dating.end, translations);
         }
-        if (dating.type === 'before' || dating.type == 'exact') year = generateLabelForDate(dating.end);
-        if (dating.type === 'after') year = generateLabelForDate(dating.begin);
+        if (dating.type === 'before' || dating.type == 'exact') {
+            year = generateLabelForDate(dating.end, translations);
+        }
+        if (dating.type === 'after') year = generateLabelForDate(dating.begin, translations);
         if (dating.type === 'scientific') {
-            year = generateLabelForDate(dating.end);
+            year = generateLabelForDate(dating.end, translations);
             if (dating.margin && dating.margin > 0) year += ' ± ' + dating.margin;
         }
 
         if (dating['isImprecise']) prefix = 'ca. ';
         if (dating['isUncertain']) postfix = ' (?)';
 
-        if (dating.type === 'before') prefix = 'Vor ' + prefix;
-        if (dating.type === 'after') prefix = 'Nach ' + prefix;
+        if (dating.type === 'before') prefix = translations.getTranslation('before')  + ' ' + prefix;
+        if (dating.type === 'after') prefix = translations.getTranslation('after') + ' ' + prefix;
 
         if (dating['source']) postfix += ' [' + dating['source'] + ']';
 
@@ -49,14 +46,14 @@ export module DatingUtil {
     }
 
 
-    function generateLabelForDate(date: DatingElement|undefined): string {
+    function generateLabelForDate(date: DatingElement|undefined, translations: UtilTranslations): string {
 
         if (!date) {
             return '';
         } else if (date.inputYear === 0) {
             return '0';
         } else {
-            return date.inputYear + ' ' + DATE_TYPES[date.inputType];
+            return date.inputYear + ' ' + translations.getTranslation(date.inputType);
         }
     }
 

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Resource, Dating} from 'idai-components-2';
 import {DatingUtil} from '../../../../core/util/dating-util';
 import {Validations} from '../../../../core/model/validations';
+import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class DatingComponent {
     public newDating: Dating|undefined = undefined;
 
 
-    constructor() {}
+    constructor(private utilTranslations: UtilTranslations) {}
 
 
     public removeDating(index: number) {
@@ -51,7 +52,7 @@ export class DatingComponent {
 
     public getLabel(dating: Dating): string {
 
-        return dating.label ? dating.label : DatingUtil.generateLabel(dating);
+        return dating.label ? dating.label : DatingUtil.generateLabel(dating, this.utilTranslations);
     }
 
 

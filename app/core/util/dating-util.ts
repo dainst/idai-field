@@ -21,15 +21,6 @@ export module DatingUtil {
     }
 
 
-    export function getNormalizedYear(inputYear: number, inputType: 'bce'|'ce'|'bp'): number {
-
-        if (inputType === 'bce') return 0 - inputYear;
-        if (inputType === 'bp') return 1950 - inputYear;
-
-        return inputYear;
-    }
-
-
     export function generateLabel(dating: Dating): string {
 
         let prefix = '';
@@ -73,12 +64,21 @@ export module DatingUtil {
     function setNormalizedYears(dating: Dating) {
 
         if (dating.begin) {
-            dating.begin.year = DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
+            dating.begin.year = getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
         }
 
         if (dating.end) {
-            dating.end.year = DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
+            dating.end.year = getNormalizedYear(dating.end.inputYear, dating.end.inputType);
         }
+    }
+
+
+    function getNormalizedYear(inputYear: number, inputType: 'bce'|'ce'|'bp'): number {
+
+        if (inputType === 'bce') return 0 - inputYear;
+        if (inputType === 'bp') return 1950 - inputYear;
+
+        return inputYear;
     }
 
 

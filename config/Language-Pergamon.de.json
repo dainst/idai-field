@@ -298,6 +298,67 @@
         }
       }
     },
+    "Stone": {
+      "fields": {
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "colorOutside": {
+          "label": "Steinfarbe(n) Außen"
+        },
+        "colorInside": {
+          "label": "Steinfarbe(n) Innen"
+        },
+        "colorBreak": {
+          "label": "Steinfarbe(n) Kern"
+        },
+        "usedAsSpolia": {
+          "label": "Verwendung als Spolie"
+        },
+        "constructionDetails": {
+          "label": "Konstruktive Details"
+        },
+        "treatment": {
+          "label": "Bearbeitungsspuren"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {

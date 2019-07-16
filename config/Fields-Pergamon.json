@@ -707,7 +707,6 @@
     }
   },
   "Wood": {
-    "commons": ["provenance"],
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -1052,6 +1051,8 @@
       "depictedBeingFormat": {
         "inputType": "radio",
         "valuelist": [
+          "kolossal (über 300m)",
+          "überlebensgroß (über 180 cm)",
           "lebensgroß (bis 180 cm)",
           "unterlebensgroß (bis 130 cm)",
           "miniatur (bis 80 cm)"
@@ -1118,6 +1119,279 @@
       },
       "manufacturingMethod": {
         "inputType": "input"
+      }
+    }
+  },
+  "Stone": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Altar/Basis/Stele",
+          "Architektur",
+          "Gefäß",
+          "Gerät",
+          "Grabmarkierung",
+          "Inkrustation/Platte",
+          "Inschrift",
+          "Mobiliar",
+          "Plastik",
+          "Produktionsrest",
+          "Schmuck",
+          "Tessera",
+          "Waffen",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abschlag",
+          "Akroter",
+          "Anhänger",
+          "Architrav",
+          "Basis",
+          "Bauplastik",
+          "Becken",
+          "Einlage",
+          "Einsatzkopf",
+          "Fries",
+          "Gesims",
+          "Grabaltar",
+          "Grabgefäß",
+          "Grabstele",
+          "Grabplatte",
+          "Gussform",
+          "Herme",
+          "Idealstatue",
+          "Inkrustation",
+          "Inschriftenstele",
+          "Kalypter",
+          "Kandelaber",
+          "Kapitell",
+          "Konsole",
+          "Mahlstein",
+          "Mörser",
+          "Opferaltar",
+          "Perle",
+          "Portraitstatue",
+          "Profilstück",
+          "Produktionsfragment",
+          "Quaderblock",
+          "Reibstein",
+          "Relief",
+          "Ring",
+          "Rührstab",
+          "Sarkophag",
+          "Säulentrommel",
+          "Schale",
+          "Schrankenplatte",
+          "Schwellenblock",
+          "Siegel",
+          "Sima",
+          "Spielbrett",
+          "Spielstein",
+          "Spinnwirtel",
+          "Statuenbasis",
+          "Stroter",
+          "Stele",
+          "Tischfuß",
+          "Votivaltar",
+          "Votivstele",
+          "Waffe",
+          "Webgewicht",
+          "Weihrelief",
+          "Werkzeug",
+          "Ölpresse",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "usedAsSpolia": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher"
+        ]
+      },
+      "material": {
+        "inputType": "radio",
+        "valuelist": [
+          "Alabaster",
+          "Andesit",
+          "Basalt",
+          "Bimsstein",
+          "Edelstein",
+          "Feldspat",
+          "Silex/Flint",
+          "Granit",
+          "Kalk",
+          "Kalkstein",
+          "Kalzit",
+          "Kreide",
+          "Marmor",
+          "Obsidian",
+          "Pophyr",
+          "Quarz",
+          "Quellgestein",
+          "Rhyolith (Quarzporphyr)",
+          "Sandstein",
+          "Schiefer",
+          "Serpentinit",
+          "Sinter",
+          "Trachyt",
+          "Tuff",
+          "Vulkangestein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "origin": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anatolien",
+          "Antiochia",
+          "Athen",
+          "Ägypten",
+          "Attisch",
+          "Britannien",
+          "Chios",
+          "Deutschland",
+          "Ephesos",
+          "Etruskisch",
+          "Gallien",
+          "Ionien",
+          "Irland",
+          "Italien",
+          "Kampanisch",
+          "Karthagisch",
+          "Kleinasien",
+          "Knidos",
+          "Korinth",
+          "Kos",
+          "Lesbos",
+          "Levante",
+          "Lokal",
+          "Lokal/Regional",
+          "Milet",
+          "Mäandertal",
+          "Nordafrika",
+          "Nordafrikanisch",
+          "Palästina",
+          "Pannonien",
+          "Peleponnes",
+          "Regional",
+          "Rhodos",
+          "Samos",
+          "Sizilien",
+          "Skandinavien",
+          "Slawisch",
+          "Spanien",
+          "Syrien",
+          "Südtunesisch",
+          "Südägäis"
+        ]
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "constructionDetails": {
+        "inputType": "radio",
+        "valuelist": [
+          "Anathyrose",
+          "Dübelloch",
+          "Hebebosse",
+          "Hebeloch",
+          "Klammerloch",
+          "Randschlag",
+          "Stemmloch"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bemalung",
+          "Applike",
+          "Inschrift",
+          "Relief",
+          "partiell unfertig"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "kolossal (über 300m)",
+          "überlebensgroß (über 180 cm)",
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
       }
     }
   },

@@ -271,6 +271,73 @@
         }
       }
     },
+    "Stone": {
+      "fields": {
+        "objectType": {
+          "label": "Object Type"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "usedAsSpolia": {
+          "label": "Used as Spolia"
+        },
+        "treatment": {
+          "label": "Traces of survace treatment"
+        },
+        "colorOutside": {
+          "label": "Color(s) outside"
+        },
+        "colorInside": {
+          "label": "Color(s) inside"
+        },
+        "colorBreak": {
+          "label": "Color(s) core"
+        },
+        "usedAsSpolia": {
+          "label": "Used as spolia"
+        },
+        "constructionDetails": {
+          "label": "Construction details"
+        },
+        "treatment": {
+          "label": "Traces of surface treatment"
+        },
+        "decorationTechnique": {
+          "label": "Decoration"
+        },
+        "paintColor": {
+          "label": "Paint color"
+        },
+        "paintColorMunsell": {
+          "label": "Paint color Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Paint condition"
+        },
+        "depictedBeing": {
+          "label": "Depicted being"
+        },
+        "depictedBeingSpecific": {
+          "label": "Being: specific"
+        },
+        "depictedBeingSex": {
+          "label": "Being: sex"
+        },
+        "depictedBeingAge": {
+          "label": "Being: age"
+        },
+        "depictedBeingFormat": {
+          "label": "Being: format"
+        },
+        "artist": {
+          "label": "Artist/implementation according to type"
+        },
+        "depictedBeingClothing": {
+          "label": "Being: clothing"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {

@@ -1,4 +1,4 @@
-import {reduce, flatReduce, ObjectStruct} from 'tsfun';
+import {reduce, flatReduce, ObjectStruct, arrayList} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -33,7 +33,7 @@ export module CsvRowsConversion {
         }
 
         const nextIndex = parseInt(pathSegments[1]);
-        const newItem = isNaN(nextIndex) ? {} : Array(nextIndex + 1); // TODO review if dense array needed
+        const newItem = isNaN(nextIndex) ? {} : arrayList(nextIndex + 1);
 
         if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
 
@@ -56,6 +56,6 @@ export module CsvRowsConversion {
             if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
             return objectStruct as ObjectStruct;
 
-        }, {});
+        }, {}); // TODO make reduceObject function
     }
 }

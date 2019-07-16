@@ -338,6 +338,22 @@
         }
       }
     },
+    "Bone": {
+      "fields": {
+        "treatment": {
+          "label": "Form treatment"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "decorationTechnique": {
+          "label": "Decoration"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {

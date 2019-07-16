@@ -57,7 +57,7 @@ export module CSVExport {
 
     const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
-    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 10);
+    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 7);
 
     const expandLevelOne =
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
@@ -173,10 +173,10 @@ export module CSVExport {
 
         return flatReduce((i: number) => [
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'type',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.type',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.year',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.type',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.year',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputType',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputYear',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.inputType',
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.inputYear',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'margin',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
@@ -188,16 +188,13 @@ export module CSVExport {
     function expandDimensionHeadings(n:number) { return (fieldName: string) => {
 
         return flatReduce((i: number) => [
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'value',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementComment',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMin',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'rangeMax']
+                fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange']
             )(range(n));
     }}
 
@@ -225,16 +222,13 @@ export module CSVExport {
             inputUnit, isImprecise, isRange, rangeMin, rangeMax} = dimension;
 
         return [
-            value ? value.toString() : '',
             inputValue ? inputValue.toString() : '',
             inputRangeEndValue ? inputRangeEndValue.toString() : '',
             measurementPosition ? measurementPosition : '',
             measurementComment ? measurementComment : '',
             inputUnit ? inputUnit : '',
             isImprecise ? 'true' : 'false',
-            isRange ? 'true' : 'false',
-            rangeMin ? rangeMin.toString() : '',
-            rangeMax ? rangeMax.toString() : ''];
+            isRange ? 'true' : 'false'];
     }
 
 

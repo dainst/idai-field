@@ -114,9 +114,12 @@ export class FieldsViewComponent implements OnChanges {
     public getArrayItemLabel(arrayItem: any): string {
 
         if (arrayItem.begin || arrayItem.end) {
-            return DatingUtil.generateLabel(arrayItem, this.utilTranslations);
+            return DatingUtil.generateLabel(arrayItem, (key: string) => this.utilTranslations.getTranslation(key));
         } else if (arrayItem.inputUnit) {
-            return DimensionUtil.generateLabel(arrayItem, this.decimalPipe, this.utilTranslations);
+            return DimensionUtil.generateLabel(
+                arrayItem,
+                (value: any) => this.decimalPipe.transform(value),
+                (key: string) => this.utilTranslations.getTranslation(key));
         } else {
             return arrayItem;
         }

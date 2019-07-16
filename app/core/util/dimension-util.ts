@@ -24,22 +24,23 @@ export module DimensionUtil {
     }
 
 
-    export function generateLabel(dimension: Dimension, decimalPipe: DecimalPipe,
-                                  translations: UtilTranslations): string {
+    export function generateLabel(dimension: Dimension,
+                                  transform: (value: any) => string|null,
+                                  getTranslation: (key: string) => string): string {
 
         let label = (dimension.isImprecise ? 'ca. ' : '');
 
         if (dimension.isRange) {
-            label += decimalPipe.transform(dimension.inputValue) + '-'
-                + decimalPipe.transform(dimension.inputRangeEndValue);
+            label += transform(dimension.inputValue) + '-'
+                + transform(dimension.inputRangeEndValue);
         } else {
-            label += decimalPipe.transform(dimension.inputValue);
+            label += transform(dimension.inputValue);
         }
 
         label += ' ' + dimension.inputUnit;
 
         if (dimension.measurementPosition) {
-            label += ', ' + translations.getTranslation('asMeasuredBy') +  ' '
+            label += ', ' + getTranslation('asMeasuredBy') +  ' '
                 + dimension.measurementPosition;
         }
         if (dimension.measurementComment) label += ' (' + dimension.measurementComment + ')';

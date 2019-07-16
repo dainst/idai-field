@@ -52,7 +52,7 @@ export class DatingComponent {
 
     public getLabel(dating: Dating): string {
 
-        return dating.label ? dating.label : DatingUtil.generateLabel(dating, this.utilTranslations);
+        return dating.label ? dating.label : DatingUtil.generateLabel(dating, (key: string) => this.utilTranslations.getTranslation(key));
     }
 
 

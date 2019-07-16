@@ -47,7 +47,10 @@ export class DimensionComponent {
 
         return dimension.label
             ? dimension.label
-            : DimensionUtil.generateLabel(dimension, this.decimalPipe, this.utilTranslations);
+            : DimensionUtil.generateLabel(
+                dimension,
+                (value: any) => this.decimalPipe.transform(value),
+                (key: string) => this.utilTranslations.getTranslation(key));
     }
 
 

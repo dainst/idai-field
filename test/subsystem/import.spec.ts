@@ -1,3 +1,4 @@
+import {Document} from 'idai-components-2';
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {Importer} from '../../app/core/import/importer';
@@ -214,6 +215,31 @@ describe('Import/Subsystem', () => {
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');
+        done();
+    });
+
+
+    it('postprocess documents', async done => {
+
+        await datastore.create({ resource: { id: 't1', identifier: 'trench1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            't1',
+            false, false,
+            '{ "type": "Feature", "identifier" : "f2"}',
+            () => '101',
+            (document: Document) => {
+                document.resource['a'] = 'b';
+                return document;
+            });
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource['a']).toBe('b');
         done();
     });
 });

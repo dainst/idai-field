@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
+import {empty, filter, flow, forEach, is, isNot, map, on, take} from 'tsfun';
 import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
@@ -26,6 +26,10 @@ import {ExportRunner} from '../../core/export/export-runner';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 import {includedIn} from 'tsfun/src/comparator';
+import {DatingUtil} from '../../core/util/dating-util';
+import {DimensionUtil} from '../../core/util/dimension-util';
+import {UtilTranslations} from '../../core/util/util-translations';
+import {DecimalPipe} from '@angular/common';
 
 
 @Component({
@@ -72,7 +76,9 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-        private tabManager: TabManager) {}
+        private tabManager: TabManager,
+        private decimalPipe: DecimalPipe,
+        private utilTranslations: UtilTranslations) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -198,8 +204,31 @@ export class ImportComponent implements OnInit {
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
             () => this.idGenerator.generateId(),
+            (document: Document) => this.postProcessDocument(document),
             this.format === 'csv' ? this.selectedType : undefined);
     }
+
+
+    private postProcessDocument(document: Document) { // TODO test
+
+        const resource = document.resource;
+        for (let field of Object.keys(resource)) {
+            const fieldDefinition = this.projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+            if (!fieldDefinition) {
+                console.error("no field definition found for", field);
+                continue;
+            }
+            if (fieldDefinition.inputType === 'dating') {
+
+                DatingUtil.generateLabel(resource[field], this.utilTranslations);
+            }
+            if (fieldDefinition.inputType === 'dimension') {
+
+                DimensionUtil.generateLabel(resource[field], this.decimalPipe, this.utilTranslations);
+            }
+        }
+        return document;
+    };
 
 
     private showImportResult(importReport: ImportReport) {

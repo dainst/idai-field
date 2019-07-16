@@ -10,7 +10,7 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {isnt} from 'tsfun';
+import {isnt, identity} from 'tsfun';
 import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
@@ -50,6 +50,7 @@ export module Importer {
      * @param allowUpdatingRelationsOnMerge
      * @param fileContent
      * @param generateId
+     * @param postProcessDocument
      * @param selectedType should be defined in case format === csv
      *
      * @returns ImportReport
@@ -66,6 +67,7 @@ export module Importer {
                                    allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
                                    generateId: () => string,
+                                   postProcessDocument: (document: Document) => Document = identity,
                                    selectedType?: IdaiType|undefined) {
 
         const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
@@ -93,7 +95,8 @@ export module Importer {
             allowMergingExistingResources,
             allowUpdatingRelationsOnMerge,
             getInverseRelation,
-            generateId);
+            generateId,
+            postProcessDocument);
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
         return { errors: errors, warnings: [], successfulImports: successfulImports };
@@ -133,9 +136,10 @@ export module Importer {
                                  mergeMode: boolean,
                                  updateRelationsOnMergeMode: boolean,
                                  getInverseRelation: (_: string) => string|undefined,
-                                 generateId: () => string): ImportFunction {
+                                 generateId: () => string,
+                                 postProcessDocument: (document: Document) => Document): ImportFunction {
 
-        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId);
+        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
 
         switch (format) {
             case 'meninxfind':

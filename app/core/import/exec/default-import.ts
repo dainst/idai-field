@@ -4,6 +4,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {ImportUpdater} from './import-updater';
 import {ImportFunction} from './import-function';
 import {DefaultImportCalc} from './default-import-calc';
+import {identity} from 'tsfun';
 
 
 /**
@@ -16,7 +17,8 @@ export module DefaultImport {
     export function build(validator: ImportValidator,
                           operationTypeNames: string[],
                           getInverseRelation: (_: string) => string|undefined,
-                          generateId: () => string) {
+                          generateId: () => string,
+                          postProcessDocument: (_: Document) => Document = identity) {
 
         return (mergeMode: boolean,
                 allowOverwriteRelationsInMergeMode: boolean,
@@ -53,6 +55,8 @@ export module DefaultImport {
 
                 const result = await process(documents);
                 if (result[2]) return {errors: [result[2]], successfulImports: 0};
+
+                result[0] = result[0].map(postProcessDocument);
 
                 const updateErrors = [];
                 try {

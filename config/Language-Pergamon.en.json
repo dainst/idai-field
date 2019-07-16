@@ -206,6 +206,71 @@
         }
       }
     },
+    "Metal": {
+      "fields": {
+        "form": {
+          "label": "Form"
+        },
+        "colorOutside": {
+          "label": "Color(s) outside"
+        },
+        "colorInside": {
+          "label": "Color(s) inside"
+        },
+        "colorBreak": {
+          "label": "Color(s) core"
+        },
+        "decorationTechnique": {
+          "label": "Surface and decoration"
+        },
+        "paintColor": {
+          "label": "Paint color"
+        },
+        "paintColorMunsell": {
+          "label": "Paint color Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Paint condition"
+        },
+        "depictedBeing": {
+          "label": "Depicted being"
+        },
+        "depictedBeingSpecific": {
+          "label": "Being: specific"
+        },
+        "depictedBeingSex": {
+          "label": "Being: sex"
+        },
+        "depictedBeingAge": {
+          "label": "Being: age"
+        },
+        "depictedBeingFormat": {
+          "label": "Being: format"
+        },
+        "artist": {
+          "label": "Artist/implementation according to type"
+        },
+        "depictedBeingClothing": {
+          "label": "Being: clothing"
+        }
+      }
+    },
+    "Mollusk": {
+      "fields": {
+        "treatment": {
+          "label": "Traces of surface treatment"
+        },
+        "objectType": {
+          "label": "Object Type"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {

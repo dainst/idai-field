@@ -2320,6 +2320,30 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.dating.bce" datatype="html">
+        <source>v. Chr.</source>
+        <target state="final">BCE</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.ce" datatype="html">
+        <source>n. Chr.</source>
+        <target state="final">CE</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.bp" datatype="html">
+        <source>BP</source>
+        <target state="final">BP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
         <source>Ungenau</source>
         <target state="final">Imprecise</target>

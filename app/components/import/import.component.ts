@@ -23,13 +23,11 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
-import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
-import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 import {includedIn} from 'tsfun/src/comparator';
 import {DatingUtil} from '../../core/util/dating-util';
 import {DimensionUtil} from '../../core/util/dimension-util';
-import {UtilTranslations} from '../../core/util/util-translations';
-import {DecimalPipe} from '@angular/common';
+import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
+import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 
 
 @Component({
@@ -207,7 +205,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private postProcessDocument(document: Document) { // TODO test, move into import and remove parameter
+    private postProcessDocument(document: Document) { // TODO test, move into import and remove parameter postProcessDocument from doImport
 
         const resource = document.resource;
         for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {

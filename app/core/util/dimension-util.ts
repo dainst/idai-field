@@ -8,6 +8,21 @@ import {Dimension} from 'idai-components-2';
  */
 export module DimensionUtil {
 
+    export function addNormalizedValues(dimension: Dimension) {
+
+        if (dimension.isRange) {
+            dimension.rangeMin = convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+                dimension.inputValue);
+            dimension.rangeMax = convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+                dimension.inputRangeEndValue);
+            delete(dimension.value);
+        } else {
+            dimension.value = convertValueFromInputUnitToMicrometre(dimension.inputUnit,
+                dimension.inputValue);
+        }
+    }
+
+
     export function generateLabel(dimension: Dimension, decimalPipe: DecimalPipe): string {
 
         let label = (dimension.isImprecise ? 'ca. ' : '');
@@ -28,7 +43,7 @@ export module DimensionUtil {
     }
 
 
-    export function convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
+    function convertValueFromInputUnitToMicrometre(inputUnit: 'mm'|'cm'|'m',
                                                           inputValue: number): number {
 
         switch (inputUnit) {

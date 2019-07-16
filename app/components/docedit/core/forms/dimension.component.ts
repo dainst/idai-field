@@ -81,20 +81,10 @@ export class DimensionComponent {
 
     public saveDimension(dimension: Dimension) {
 
-    	if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-
-        if (dimension.isRange) {
-            dimension.rangeMin = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
-                dimension.inputValue);
-            dimension.rangeMax = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
-                dimension.inputRangeEndValue);
-            delete(dimension.value);
-        } else {
-    	    dimension.value = DimensionUtil.convertValueFromInputUnitToMicrometre(dimension.inputUnit,
-                dimension.inputValue);
-        }
+        DimensionUtil.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {
+            if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
     		this.resource[this.field.name].push(dimension);
             this.newDimension = undefined;
     	} else {

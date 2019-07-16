@@ -56,6 +56,6 @@ export module CsvRowsConversion {
             if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
             return objectStruct as ObjectStruct;
 
-        }, {}); // TODO make reduceObject function
+        }, {});
     }
 }

@@ -14,11 +14,28 @@ export module CsvRowsConversion {
     export function parse(sep: string) { return (rows: string[]): Array<ObjectStruct> => {
 
         if (rows.length < 1) return [];
-        const headings = rows[0].split(sep); // TODO maybe split outside, or also do the splitting of arrays by ; here
+        const headings = rows[0].split(sep);
         rows.shift();
 
         return flatReduce((row: string) => makeObjectStruct(headings)(row.split(sep)))(rows);
     }}
+
+
+    function makeObjectStruct(headings: string[]) {
+
+        return reduce((objectStruct, fieldOfRow, i: number) => {
+
+            if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
+            return objectStruct as ObjectStruct;
+
+        }, {});
+    }
+
+    function insertFieldIntoDocument(objectStruct: any, field: any, fieldOfRow: any) {
+
+        if (field.includes(PATH_SEP)) implodePaths(objectStruct, field.split(PATH_SEP), fieldOfRow);
+        else (objectStruct as any)[field] = fieldOfRow;
+    }
 
 
     function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) {
@@ -39,23 +56,5 @@ export module CsvRowsConversion {
 
         pathSegments.shift();
         implodePaths(currentSegmentObject[index], pathSegments, val);
-    }
-
-
-    function insertFieldIntoDocument(objectStruct: any, field: any, fieldOfRow: any) {
-
-        if (field.includes(PATH_SEP)) implodePaths(objectStruct, field.split(PATH_SEP), fieldOfRow);
-        else (objectStruct as any)[field] = fieldOfRow;
-    }
-
-
-    function makeObjectStruct(headings: string[]) {
-
-        return reduce((objectStruct, fieldOfRow, i: number) => {
-
-            if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
-            return objectStruct as ObjectStruct;
-
-        }, {});
     }
 }

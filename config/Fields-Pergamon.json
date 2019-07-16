@@ -1070,6 +1070,57 @@
       }
     }
   },
+  "Mollusk": {
+    "fields": {
+      "classification": {
+        "inputType": "radio",
+        "valuelist": [
+          "Auster",
+          "Herzmuschel",
+          "Jakobsmuschel",
+          "Kammmuschel",
+          "Muschelschale (Bivalvia)",
+          "Purpurschnecke",
+          "Schneckenhaus (Gastropoda)"
+        ]
+      },
+      "treatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gefäß",
+          "Plastik",
+          "Mobiliar",
+          "Schmuck",
+          "Speiserest",
+          "Spielzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Armreif",
+          "Einlage",
+          "Kette",
+          "Knopf",
+          "Perle",
+          "Spielstein"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "input"
+      }
+    }
+  },
   "ProcessUnit": {
     "color": "#08306b",
     "fields": {

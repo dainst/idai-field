@@ -27,7 +27,7 @@
     "Wood": ["color", "typeOfWood", "objectType", "manufacturingMethod", "provenance", "colorOutside", "colorOutsideMunsell", "colorInside", "colorInsideMunsell", "colorBreak", "colorBreakMunsell", "surfaceCondition", "decorationTechnique", "paintColor", "paintColorMunsell", "paintCondition", "depictedBeing", "depictedBeingSpecific", "depictedBeingSex", "depictedBeingAge", "depictedBeingFormat", "artist", "depictedBeingClothing"],
     "Coin": ["metalMaterial", "manufacturingMethod", "preservedDiameter", "frontSideDescription", "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint", "mintingRuler"],
     "PlasterFragment": ["plasterComponents", "color", "composition", "hasDecoration", "decorationColor","decorationDescription"],
-    "Mollusk": ["classification"],
+    "Mollusk": ["classification", "treatment", "objectType", "form", "manufacturingMethod"],
     "Inscription": ["objectType", "condition", "conditionAmount", "conditionComment", "language", "content", "comparison"],
     "ProcessUnit": ["operationClassification"],
     "Profile": [],

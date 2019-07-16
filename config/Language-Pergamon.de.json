@@ -282,6 +282,22 @@
         }
       }
     },
+    "Mollusk": {
+      "fields": {
+        "treatment": {
+          "label": "Bearbeitungsspuren"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Herstellungstechnik"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {

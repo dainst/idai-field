@@ -354,6 +354,58 @@
         }
       }
     },
+    "PlasterFragment": {
+      "fields": {
+        "objectType": {
+          "label": "Object type"
+        },
+        "materialPlasterUndercoat1": {
+          "label": "Material of plaster undercoat 1"
+        },
+        "colorPlasterUndercoat1": {
+          "label": "Color(s) of plaster undercoat 1"
+        },
+        "colorPlasterUndercoat1Munsell": {
+          "label": "Color of plaster undercoat 1 Munsell-Nr."
+        },
+        "materialPlasterUndercoat2": {
+          "label": "Material of plaster undercoat 2"
+        },
+        "colorPlasterUndercoat2": {
+          "label": "Color(s) of plaster undercoat 2"
+        },
+        "colorPlasterUndercoat2Munsell": {
+          "label": "Color of plaster undercoat 2 Munsell-Nr."
+        },
+        "materialFinePlaster": {
+          "label": "Material of fine plaster"
+        },
+        "colorFinePlaster": {
+          "label": "Color(s) of fine plaster"
+        },
+        "colorFinePlasterMunsell": {
+          "label": "Color of fine plaster Munsell-Nr."
+        },
+        "decorationTechnique": {
+          "label": "Decoration"
+        },
+        "paintingTechnique": {
+          "label": "Painting technique"
+        },
+        "paintColor": {
+          "label": "Paint color"
+        },
+        "paintColorMunsell": {
+          "label": "Paint color Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Paint condition"
+        },
+        "specialFeatures": {
+          "label": "Special features"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Process unit",
       "fields": {

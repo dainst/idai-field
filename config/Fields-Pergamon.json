@@ -1452,6 +1452,95 @@
       }
     }
   },
+  "PlasterFragment": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektureinfassung",
+          "Mobiliar",
+          "Wandputz",
+          "Sonstiges",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "materialPlasterUndercoat1": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat1": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat1Munsell": {
+        "inputType": "input"
+      },
+      "materialPlasterUndercoat2": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat2": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat2Munsell": {
+        "inputType": "input"
+      },
+      "materialFinePlaster": {
+        "inputType": "input"
+      },
+      "colorFinePlaster": {
+        "inputType": "input"
+      },
+      "colorFinePlasterMunsell": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Einfarbig",
+          "Figürlich",
+          "Floral",
+          "Marmoriert",
+          "Mehrfarbig",
+          "Linear",
+          "Ornamental",
+          "Flächendeckend"
+        ]
+      },
+      "paintingTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Seccomalerei",
+          "Freskomalerei",
+          "Sonstiges"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "specialFeatures": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Graffito",
+          "Pickung",
+          "Übermalung",
+          "Ritzlinien",
+          "Stoßkanten"
+        ]
+      }
+    }
+  },
   "ProcessUnit": {
     "color": "#08306b",
     "fields": {

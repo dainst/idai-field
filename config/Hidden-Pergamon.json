@@ -32,5 +32,18 @@
     "vesselForm",
     "vesselFormSpecific",
     "formDescription"
+  ],
+  "Stone": [
+    "purpose",
+    "workmanship",
+    "formDescription",
+    "color",
+    "architectureElement",
+    "temperAmount"
+  ],
+  "PlasterFragment": [
+    "color",
+    "plasterComponents",
+    "hasDecoration"
   ]
 }

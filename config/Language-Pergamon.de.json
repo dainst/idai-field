@@ -375,6 +375,58 @@
         }
       }
     },
+    "PlasterFragment": {
+      "fields": {
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "materialPlasterUndercoat1": {
+          "label": "Material 1. Unterputz"
+        },
+        "colorPlasterUndercoat1": {
+          "label": "Farbe(n) 1. Unterputz"
+        },
+        "colorPlasterUndercoat1Munsell": {
+          "label": "Farbe(n) 1. Unterputz Munsell-Nr."
+        },
+        "materialPlasterUndercoat2": {
+          "label": "Material 2. Unterputz"
+        },
+        "colorPlasterUndercoat2": {
+          "label": "Farbe(n) 2. Unterputz"
+        },
+        "colorPlasterUndercoat2Munsell": {
+          "label": "Farbe(n) 2. Unterputz Munsell-Nr."
+        },
+        "materialFinePlaster": {
+          "label": "Material Feinputz"
+        },
+        "colorFinePlaster": {
+          "label": "Farbe(n) Feinputz"
+        },
+        "colorFinePlasterMunsell": {
+          "label": "Farbe(n) Feinputz Munsell-Nr."
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintingTechnique": {
+          "label": "Maltechnik"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "specialFeatures": {
+          "label": "Besonderheiten"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {

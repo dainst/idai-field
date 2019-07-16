@@ -7,7 +7,7 @@ import {Dating, DatingElement, DatingType} from 'idai-components-2';
  */
 export module DatingUtil {
 
-    const DATE_TYPES: { [dateType: DatingType]: string } = {
+    const DATE_TYPES: { [dateType: string]: string } = {
         'bce': 'v.Chr.',
         'ce': 'n.Chr.',
         'bp': 'BP'

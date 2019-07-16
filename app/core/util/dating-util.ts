@@ -1,4 +1,4 @@
-import {Dating, DatingElement} from 'idai-components-2';
+import {Dating, DatingElement, DatingType} from 'idai-components-2';
 
 
 /**
@@ -7,7 +7,7 @@ import {Dating, DatingElement} from 'idai-components-2';
  */
 export module DatingUtil {
 
-    const DATE_TYPES: { [dateType: string]: string } = {
+    const DATE_TYPES: { [dateType: DatingType]: string } = {
         'bce': 'v.Chr.',
         'ce': 'n.Chr.',
         'bp': 'BP'
@@ -73,7 +73,7 @@ export module DatingUtil {
     }
 
 
-    function getNormalizedYear(inputYear: number, inputType: 'bce'|'ce'|'bp'): number {
+    function getNormalizedYear(inputYear: number, inputType: DatingType): number {
 
         if (inputType === 'bce') return 0 - inputYear;
         if (inputType === 'bp') return 1950 - inputYear;

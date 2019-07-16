@@ -1395,6 +1395,63 @@
       }
     }
   },
+  "Bone": {
+    "fields": {
+      "treatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gefäß",
+          "Gerät",
+          "Plastik",
+          "Mobiliar",
+          "Produktionsrest",
+          "Schmuck",
+          "Spielzeug",
+          "Waffen",
+          "Werkzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Applik",
+          "Armreif",
+          "Einlage",
+          "Kamm",
+          "Knopf",
+          "Löffel",
+          "Nadel",
+          "Perle",
+          "Pyxis",
+          "Ring",
+          "Schreibgerät",
+          "Spatel",
+          "Spielstein",
+          "Statuette"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Relief",
+          "Sgraffito"
+        ]
+      }
+    }
+  },
   "ProcessUnit": {
     "color": "#08306b",
     "fields": {

@@ -359,6 +359,22 @@
         }
       }
     },
+    "Bone": {
+      "fields": {
+        "treatment": {
+          "label": "Formgebende Bearbeitung"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Herstellungstechnik"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {

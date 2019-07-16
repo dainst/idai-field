@@ -1,5 +1,4 @@
 import {Dating, DatingElement, DatingType} from 'idai-components-2';
-import {UtilTranslations} from './util-translations';
 
 
 /**

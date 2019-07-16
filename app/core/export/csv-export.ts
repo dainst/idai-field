@@ -206,9 +206,9 @@ export module CSVExport {
         return [
             type ? type : '',
             begin && begin.inputType ? begin.inputType : '',
-            begin && begin.year ? begin.year.toString() : '',
+            begin && begin.inputYear ? begin.inputYear.toString() : '',
             end && end.inputType ? end.inputType : '',
-            end && end.year ? end.year.toString() : '',
+            end && end.inputYear ? end.inputYear.toString() : '',
             margin ? margin.toString() : '',
             source ? source : '',
             isImprecise ? 'true' : 'false',
@@ -218,8 +218,8 @@ export module CSVExport {
 
     function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
 
-        const {value, inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-            inputUnit, isImprecise, isRange, rangeMin, rangeMax} = dimension;
+        const {inputValue, inputRangeEndValue, measurementPosition, measurementComment,
+            inputUnit, isImprecise, isRange} = dimension;
 
         return [
             inputValue ? inputValue.toString() : '',

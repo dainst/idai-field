@@ -105,14 +105,13 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'type')
         ];
         resources[0].dating = [
-            {begin: {year: 10}, end: {year: 20}, source: 'some1'},
-            {begin: {year: 20}, end: {year: 30}, source: 'some2'}];
+            {begin: {inputYear: 10}, end: {inputYear: 20}, source: 'some1'},
+            {begin: {inputYear: 20}, end: {inputYear: 30}, source: 'some2'}];
         resources[1].dating = [
-            {begin: {year: 40}, end: {year: 50}, source: 'some3'}];
+            {begin: {inputYear: 40}, end: {inputYear: 50}, source: 'some3'}];
         resources[1].custom = 'custom';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
-
 
         expect(result[0][1]).toBe('dating.0.type');
         expect(result[0][2]).toBe('dating.0.begin.inputType');

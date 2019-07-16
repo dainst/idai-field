@@ -212,19 +212,22 @@ export class ImportComponent implements OnInit {
     private postProcessDocument(document: Document) { // TODO test
 
         const resource = document.resource;
-        for (let field of Object.keys(resource)) {
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
             const fieldDefinition = this.projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
             if (!fieldDefinition) {
                 console.error("no field definition found for", field);
                 continue;
             }
+
             if (fieldDefinition.inputType === 'dating') {
 
-                DatingUtil.generateLabel(resource[field], this.utilTranslations);
+                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
+                // TODO generate label
             }
             if (fieldDefinition.inputType === 'dimension') {
 
-                DimensionUtil.generateLabel(resource[field], this.decimalPipe, this.utilTranslations);
+                // for (let dimension of resource[field]) DimensionUtil.generateLabel(dimension, this.decimalPipe, this.utilTranslations);
+                // TODO do normalize
             }
         }
         return document;

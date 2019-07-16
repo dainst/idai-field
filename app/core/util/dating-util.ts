@@ -58,7 +58,7 @@ export module DatingUtil {
     }
 
 
-    function setNormalizedYears(dating: Dating) {
+    export function setNormalizedYears(dating: Dating) {
 
         if (dating.begin && dating.begin.inputYear && dating.begin.inputType) {
             dating.begin.year = getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);

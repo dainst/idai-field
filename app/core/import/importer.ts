@@ -10,10 +10,12 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {isnt, identity} from 'tsfun';
+import {isnt, identity, isNot, includedIn, on, is} from 'tsfun';
 import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
+import {DatingUtil} from '../util/dating-util';
+import {DimensionUtil} from '../util/dimension-util';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
@@ -50,7 +52,6 @@ export module Importer {
      * @param allowUpdatingRelationsOnMerge
      * @param fileContent
      * @param generateId
-     * @param postProcessDocument
      * @param selectedType should be defined in case format === csv
      *
      * @returns ImportReport
@@ -67,7 +68,6 @@ export module Importer {
                                    allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
                                    generateId: () => string,
-                                   postProcessDocument: (document: Document) => Document = identity,
                                    selectedType?: IdaiType|undefined) {
 
         const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
@@ -96,11 +96,34 @@ export module Importer {
             allowUpdatingRelationsOnMerge,
             getInverseRelation,
             generateId,
-            postProcessDocument);
+            postProcessDocument(projectConfiguration));
 
         const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
+
+
+    function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => { // TODO review; maybe move to another location
+
+        const resource = document.resource;
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
+            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+            if (!fieldDefinition) {
+                console.error("no field definition found for", field);
+                continue;
+            }
+
+            if (fieldDefinition.inputType === 'dating') {
+
+                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
+            }
+            if (fieldDefinition.inputType === 'dimension') {
+
+                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
+            }
+        }
+        return document;
+    }}
 
 
     function createParser(format: ImportFormat,

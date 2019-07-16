@@ -221,7 +221,7 @@ describe('Import/Subsystem', () => {
 
     it('postprocess documents', async done => {
 
-        await datastore.create({ resource: { id: 't1', identifier: 'trench1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
+        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
 
         await Importer.doImport(
             'native',
@@ -229,17 +229,13 @@ describe('Import/Subsystem', () => {
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
-            't1',
+            'tr1',
             false, false,
-            '{ "type": "Feature", "identifier" : "f2"}',
-            () => '101',
-            (document: Document) => {
-                document.resource['a'] = 'b';
-                return document;
-            });
+            '{ "type": "Feature", "identifier": "abc", "dating" : [{"begin": {"inputYear": 100, "inputType": "bce"}}]}',
+            () => '101');
 
         const result = await datastore.find({});
-        expect(result.documents[0].resource['a']).toBe('b');
+        expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);
         done();
     });
 });

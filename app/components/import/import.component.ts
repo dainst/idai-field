@@ -200,32 +200,8 @@ export class ImportComponent implements OnInit {
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
             () => this.idGenerator.generateId(),
-            (document: Document) => this.postProcessDocument(document),
             this.format === 'csv' ? this.selectedType : undefined);
     }
-
-
-    private postProcessDocument(document: Document) { // TODO test, move into import and remove parameter postProcessDocument from doImport
-
-        const resource = document.resource;
-        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
-            const fieldDefinition = this.projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
-            if (!fieldDefinition) {
-                console.error("no field definition found for", field);
-                continue;
-            }
-
-            if (fieldDefinition.inputType === 'dating') {
-
-                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
-            }
-            if (fieldDefinition.inputType === 'dimension') {
-
-                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
-            }
-        }
-        return document;
-    };
 
 
     private showImportResult(importReport: ImportReport) {

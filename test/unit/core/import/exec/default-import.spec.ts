@@ -62,10 +62,10 @@ describe('DefaultImport', () => {
             documents: [{ resource: { identifier: '123', id: '1' } }]
         }));
 
-        const res = await (DefaultImport.build(
+        await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
-             () => '101')(true, false) as any)(
+             () => '101')(true, false))(
             [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
@@ -76,17 +76,12 @@ describe('DefaultImport', () => {
 
     it('does not overwrite if exists', async done => {
 
-        // TODO The test runs without this. Check again how the test works.
-        mockDatastore.get.and.returnValue(Promise.resolve(
-            { resource: { id: '0', identifier: '0', type: 'Trench' }})
-        );
-
         await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101')(false, false) as any)([
+            () => '101')(false, false))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-                mockDatastore,'user1');
+                mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).not.toHaveBeenCalled();

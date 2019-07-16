@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
@@ -10,7 +10,7 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {isnt, identity, isNot, includedIn, on, is} from 'tsfun';
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
@@ -103,7 +103,7 @@ export module Importer {
     }
 
 
-    function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => { // TODO review; maybe move to another location
+    function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => { // TODO review; refactor; maybe move to another location
 
         const resource = document.resource;
         for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {

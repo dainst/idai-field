@@ -233,6 +233,55 @@
         }
       }
     },
+    "Metal": {
+      "fields": {
+        "form": {
+          "label": "Form"
+        },
+        "colorOutside": {
+          "label": "Metallfarbe(n) außen "
+        },
+        "colorInside": {
+          "label": "Metallfarbe(n) innen"
+        },
+        "colorBreak": {
+          "label": "Metallfarbe(n) Kern"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
     "ProcessUnit": {
       "label": "Arbeitsgang",
       "fields": {

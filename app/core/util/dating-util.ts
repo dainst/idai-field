@@ -14,6 +14,13 @@ export module DatingUtil {
     };
 
 
+    export function addNormalizedValues(dating: Dating) {
+
+        this.setNormalizedYears(dating);
+        if (dating.type === 'scientific') this.applyMargin(dating);
+    }
+
+
     export function getNormalizedYear(inputYear: number, inputType: 'bce'|'ce'|'bp'): number {
 
         if (inputType === 'bce') return 0 - inputYear;
@@ -60,5 +67,27 @@ export module DatingUtil {
         } else {
             return date.inputYear + ' ' + DATE_TYPES[date.inputType];
         }
+    }
+
+
+    function setNormalizedYears(dating: Dating) {
+
+        if (dating.begin) {
+            dating.begin.year = DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
+        }
+
+        if (dating.end) {
+            dating.end.year = DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
+        }
+    }
+
+
+    function applyMargin(dating: Dating) {
+
+        if (!dating.begin || !dating.end || !dating.margin) return;
+
+        dating.begin.inputYear = dating.end.inputYear;
+        dating.begin.year = dating.begin.inputYear - dating.margin;
+        dating.end.year = dating.end.inputYear + dating.margin;
     }
 }

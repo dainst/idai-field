@@ -57,37 +57,8 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
-        DatingComponent.preprocess(dating);
+        DatingUtil.addNormalizedValues(dating);
 
         return Validations.validateDating(dating);
-    }
-
-
-    private static preprocess(dating: Dating) {
-
-        this.setNormalizedYears(dating);
-        if (dating.type === 'scientific') this.applyMargin(dating);
-    }
-
-
-    private static setNormalizedYears(dating: Dating) {
-
-        if (dating.begin) {
-            dating.begin.year = DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
-        }
-
-        if (dating.end) {
-            dating.end.year = DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
-        }
-    }
-
-
-    private static applyMargin(dating: Dating) {
-
-        if (!dating.begin || !dating.end || !dating.margin) return;
-
-        dating.begin.inputYear = dating.end.inputYear;
-        dating.begin.year = dating.begin.inputYear - dating.margin;
-        dating.end.year = dating.end.inputYear + dating.margin;
     }
 }

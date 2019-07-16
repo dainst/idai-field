@@ -10,8 +10,8 @@ export module DatingUtil {
 
     export function addNormalizedValues(dating: Dating) {
 
-        this.setNormalizedYears(dating);
-        if (dating.type === 'scientific') this.applyMargin(dating);
+        setNormalizedYears(dating);
+        if (dating.type === 'scientific') applyMargin(dating);
     }
 
 

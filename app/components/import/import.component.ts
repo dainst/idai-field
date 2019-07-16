@@ -76,9 +76,7 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-        private tabManager: TabManager,
-        private decimalPipe: DecimalPipe,
-        private utilTranslations: UtilTranslations) {}
+        private tabManager: TabManager) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -209,7 +207,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private postProcessDocument(document: Document) { // TODO test
+    private postProcessDocument(document: Document) { // TODO test, move into import and remove parameter
 
         const resource = document.resource;
         for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
@@ -222,12 +220,10 @@ export class ImportComponent implements OnInit {
             if (fieldDefinition.inputType === 'dating') {
 
                 for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
-                // TODO generate label
             }
             if (fieldDefinition.inputType === 'dimension') {
 
-                // for (let dimension of resource[field]) DimensionUtil.generateLabel(dimension, this.decimalPipe, this.utilTranslations);
-                // TODO do normalize
+                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
             }
         }
         return document;

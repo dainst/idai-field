@@ -102,7 +102,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('not well formed ', async done => {
+    it('not well formed ', async done => { // shows that err from default-import-calc gets propagated
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
@@ -114,7 +114,4 @@ describe('DefaultImport', () => {
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
         done();
     });
-
-
-    // TODO test in general that err from default import calc gets propagated
 });

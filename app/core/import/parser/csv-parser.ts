@@ -17,13 +17,13 @@ export module CsvParser {
     const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
 
-    function insertIsChildOf(operationId: string) { return (resource: Resource) => {
+    function insertIsChildOf(operationId: string) {
 
-        return (operationId
+        return operationId
             ? assoc('relations', { isChildOf: operationId as any})
-            : identity)(resource);
+            : identity;
 
-    }} // TODO modify when to implement this. when should take a function for otherwise or something which is identity by default, then we could pass isDefined(operationId) for p
+    } // TODO modify when to implement this. when should take a function for otherwise or something which is identity by default, then we could pass isDefined(operationId) for p
 
 
     /**

@@ -31,6 +31,7 @@ export module CsvRowsConversion {
         }, {});
     }
 
+
     function insertFieldIntoDocument(objectStruct: any, field: any, fieldOfRow: any) {
 
         if (field.includes(PATH_SEP)) implodePaths(objectStruct, field.split(PATH_SEP), fieldOfRow);

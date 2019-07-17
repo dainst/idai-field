@@ -1,8 +1,6 @@
 import {includedIn, isNot, on, asyncMap, to} from 'tsfun';
-import {Query} from 'idai-components-2/src/datastore/query';
+import {Query, IdaiType, FieldDocument} from 'idai-components-2';
 import {ISRECORDEDIN_CONTAIN} from '../../c';
-import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
 import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './export-helper';
 
@@ -62,7 +60,6 @@ export module ExportRunner {
 
         return types.filter(on('name', isNot(includedIn(exclusion))))
     }
-
 
 
     /**

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, is, isNot, map, on, take} from 'tsfun';
+import {empty, filter, flow, forEach, isNot, map, take, includedIn} from 'tsfun';
 import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
@@ -23,9 +23,6 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
-import {includedIn} from 'tsfun/src/comparator';
-import {DatingUtil} from '../../core/util/dating-util';
-import {DimensionUtil} from '../../core/util/dimension-util';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 

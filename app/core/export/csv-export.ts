@@ -365,6 +365,10 @@ export module CSVExport {
 
     function toCsvLine(as: string[]): string {
 
-        return as.map(field => field ? '"' + field + '"' : '""').join(SEP);
+        return as.map(field => {
+            return field
+                ? '"' + field.replace(new RegExp('"', 'g'), '""') + '"'
+                : '""'
+        }).join(SEP);
     }
 }

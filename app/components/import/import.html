@@ -44,20 +44,6 @@
                         </select>
                     </div>
 
-                    <div class="form-group" *ngIf="format === 'csv'">
-                        <label class="control-label col-form-label"
-                               for="importTypeSelect"
-                               i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
-
-                        <select id="importTypeSelect" class="form-control"
-                                [(ngModel)]="selectedType">
-
-                            <option *ngFor="let t of resourceTypes" [ngValue]="t">
-                                {{t.label}}
-                            </option>
-                        </select>
-                    </div>
-
                     <div *ngIf="sourceType === 'file'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
 
@@ -80,6 +66,20 @@
                         <input class="form-control" id="importUrlInput"
                                type="text"
                                [(ngModel)]="url">
+                    </div>
+
+                    <div class="form-group" *ngIf="format === 'csv' && file && !typeFromFileName">
+                        <label class="control-label col-form-label"
+                               for="importTypeSelect"
+                               i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
+
+                        <select id="importTypeSelect" class="form-control"
+                                [(ngModel)]="selectedType">
+
+                            <option *ngFor="let t of resourceTypes" [ngValue]="t">
+                                {{t.label}}
+                            </option>
+                        </select>
                     </div>
 
                     <div *ngIf="showMergeOption()" class="form-group form-check-inline">

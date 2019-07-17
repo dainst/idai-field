@@ -53,6 +53,7 @@ export class ImportComponent implements OnInit {
     public selectedOperationId: string = '';
     public selectedType: IdaiType|undefined = undefined; // for csv import, the technical type name
     public resourceTypes: Array<IdaiType> = []; // for csv import
+    public typeFromFileName: boolean = false; // for csv import
     public allowMergingExistingResources = false;
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
@@ -98,7 +99,7 @@ export class ImportComponent implements OnInit {
                 this.projectConfiguration.getTypesList(),
                 BASE_EXCLUSION);
 
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+        this.selectFirstResourceType();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -158,10 +159,21 @@ export class ImportComponent implements OnInit {
 
     public selectFile(event: any) {
 
+        this.typeFromFileName = false;
+
         const files = event.target.files;
         this.file = !files || files.length === 0
             ? undefined
             : files[0];
+
+        if (this.file) {
+            this.selectedType = this.getResourceTypeFromFileName(this.file.name);
+            if (this.selectedType) {
+                this.typeFromFileName = true;
+            } else {
+                this.selectFirstResourceType();
+            }
+        }
     }
 
 
@@ -239,6 +251,24 @@ export class ImportComponent implements OnInit {
             this.messages.add(msgWithParams);
             return [];
         }
+    }
+
+
+    private getResourceTypeFromFileName(fileName: string): IdaiType|undefined {
+
+        for (let segment of fileName.split('.')) {
+            const type: IdaiType|undefined = this.projectConfiguration.getTypesList()
+                .find(type => type.name.toLowerCase() === segment.toLowerCase());
+            if (type) return type;
+        }
+
+        return undefined;
+    }
+
+
+    private selectFirstResourceType() {
+
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
     }
 
 

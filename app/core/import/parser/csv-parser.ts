@@ -1,6 +1,6 @@
 import {Document, IdaiType, Resource} from 'idai-components-2';
 import {makeLines, Parser} from './parser';
-import {flow, map} from 'tsfun';
+import {assoc, flow, map, identity} from 'tsfun';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import parse = CsvRowsConversion.parse;
@@ -16,14 +16,14 @@ export module CsvParser {
 
     const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
-    const insertTypeName = (type: IdaiType) => (resource: Resource) => { resource.type = type.name; return resource; };
 
+    function insertIsChildOf(operationId: string) {
 
-    function insertIsChildOf(operationId: string) { return (resource: Resource) => {
+        return operationId
+            ? assoc('relations', { isChildOf: operationId as any})
+            : identity;
 
-        if (operationId) resource.relations = { isChildOf: operationId as any };
-        return resource;
-    }}
+    } // TODO modify when to implement this. when should take a function for otherwise or something which is identity by default, then we could pass isDefined(operationId) for p
 
 
     /**
@@ -55,7 +55,7 @@ export module CsvParser {
         return flow<any>(content,
             makeLines,
             parse(SEP),
-            map(insertTypeName(type)), // TODO make assoc function
+            map(assoc('type', type.name)),
             map(insertIsChildOf(operationId)),
             map(convertFieldTypes(type)),
             map(toDocument));

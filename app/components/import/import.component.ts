@@ -99,7 +99,7 @@ export class ImportComponent implements OnInit {
                 this.projectConfiguration.getTypesList(),
                 BASE_EXCLUSION);
 
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+        this.selectFirstResourceType();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -168,7 +168,11 @@ export class ImportComponent implements OnInit {
 
         if (this.file) {
             this.selectedType = this.getResourceTypeFromFileName(this.file.name);
-            if (this.selectedType) this.typeFromFileName = true;
+            if (this.selectedType) {
+                this.typeFromFileName = true;
+            } else {
+                this.selectFirstResourceType();
+            }
         }
     }
 
@@ -259,6 +263,12 @@ export class ImportComponent implements OnInit {
         }
 
         return undefined;
+    }
+
+
+    private selectFirstResourceType() {
+
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
     }
 
 

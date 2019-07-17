@@ -363,5 +363,8 @@ export module CSVExport {
     }
 
 
-    const toCsvLine = (as: string[]): string => as.join(SEP);
+    function toCsvLine(as: string[]): string {
+
+        return as.map(field => field ? '"' + field + '"' : '""').join(SEP);
+    }
 }

@@ -1,6 +1,6 @@
+import {assoc, flow, map} from 'tsfun';
 import {Document, IdaiType, Resource} from 'idai-components-2';
 import {makeLines, Parser} from './parser';
-import {assoc, flow, map, identity} from 'tsfun';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import parse = CsvRowsConversion.parse;

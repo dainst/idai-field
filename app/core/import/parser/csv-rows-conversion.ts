@@ -1,4 +1,4 @@
-import {reduce, flatReduce, ObjectStruct, arrayList} from 'tsfun';
+import {reduce, map, ObjectStruct, arrayList} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -17,7 +17,7 @@ export module CsvRowsConversion {
         const headings = rows[0].split(sep);
         rows.shift();
 
-        return flatReduce((row: string) => makeObjectStruct(headings)(row.split(sep)))(rows);
+        return map((row: string) => makeObjectStruct(headings)(row.split(sep)))(rows);
     }}
 
 

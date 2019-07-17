@@ -1,6 +1,6 @@
 import {FieldDefinition, FieldResource, IdaiType, Dating, Dimension} from 'idai-components-2';
 import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, reverse,
-    to, flow, compose, flatMap, isDefined, arrayList, when, flatReduce, range} from 'tsfun';
+    to, flow, compose, flatMap, isDefined, arrayList, when, range} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize} from './export-helper';
@@ -171,7 +171,7 @@ export module CSVExport {
 
     function expandDatingHeadings(n: number) { return (fieldName: string) => {
 
-        return flatReduce((i: number) => [
+        return flatMap<any>((i: number) => [
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'type',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputType',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputYear',
@@ -187,7 +187,7 @@ export module CSVExport {
 
     function expandDimensionHeadings(n:number) { return (fieldName: string) => {
 
-        return flatReduce((i: number) => [
+        return flatMap<any>((i: number) => [
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
                 fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',

@@ -3153,6 +3153,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.dialog.untitled" datatype="html">
+        <source>Ohne Titel</source>
+        <target state="final">Untitled</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.dialog.filter.geojson" datatype="html">
         <source>GeoJSON-Datei</source>
         <target state="final">GeoJSON file</target>

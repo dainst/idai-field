@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {to} from 'tsfun';
 import {FieldDocument, IdaiType, Messages, ProjectConfiguration, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
@@ -13,7 +14,6 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {to} from 'tsfun';
 import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
@@ -41,8 +41,6 @@ export class ExportComponent implements OnInit {
 
     public resourceTypeCounts: Array<ResourceTypeCount> = [];
     public selectedType: IdaiType|undefined = undefined;
-
-
     public selectedOperationId: string = 'project';
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
@@ -141,7 +139,7 @@ export class ExportComponent implements OnInit {
 
     private async startCsvExport(filePath: string) {
 
-        if (!this.selectedType) return console.error("No resource type selected");
+        if (!this.selectedType) return console.error('No resource type selected');
 
         await ExportRunner.performExport(
             this.find,
@@ -157,9 +155,13 @@ export class ExportComponent implements OnInit {
 
         return new Promise<string>(async resolve => {
 
-            const filePath = await remote.dialog.showSaveDialog({
-                filters: [this.getFileFilter()]
-            });
+            const options: any = { filters: [this.getFileFilter()] };
+            if (this.selectedType) {
+                options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' })
+                    + '.' + this.selectedType.name.toLowerCase();
+            }
+
+            const filePath = await remote.dialog.showSaveDialog(options);
             resolve(filePath);
         });
     }

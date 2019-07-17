@@ -32,7 +32,7 @@ describe('CsvParser', () => {
         const parse = CsvParser.getParse(type, '');
         const docs = await parse('custom1,custom2\n1,2');
 
-        expect(docs[0].resource.relations).toBeUndefined();
+        expect(docs[0].resource.relations).toEqual({});
         done();
     });
 

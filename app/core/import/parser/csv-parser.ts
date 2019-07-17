@@ -19,11 +19,12 @@ export module CsvParser {
 
     function insertIsChildOf(operationId: string) {
 
-        return operationId
-            ? assoc('relations', { isChildOf: operationId as any})
-            : identity;
-
-    } // TODO modify when to implement this. when should take a function for otherwise or something which is identity by default, then we could pass isDefined(operationId) for p
+        return assoc(
+            'relations',
+            operationId
+                ? { isChildOf: operationId as any}
+                : {});
+    }
 
 
     /**

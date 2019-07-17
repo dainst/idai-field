@@ -74,6 +74,16 @@ describe('CSVExport', () => {
     }
 
 
+    it('handle double quotes in field values', () => {
+
+        const {t, resource} = makeSimpleTypeAndResource();
+        resource.shortDescription = 'ABC " "DEF"';
+        const result = CSVExport.createExportable([resource], t, []);
+        expect(result[0]).toEqual('"identifier","shortDescription","relations.isChildOf"');
+        expect(result[1]).toEqual('"identifier1","ABC "" ""DEF""",""');
+    });
+
+
     it('is nested in another resource', () => {
 
         const {t, resource} = makeSimpleTypeAndResource();

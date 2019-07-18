@@ -124,12 +124,14 @@ describe('CSVExport', () => {
         const t = makeType(['identifier', 'period', 'custom']);
 
         const resources = [
-            ifResource('i1', 'identifier1', 'shortDescription1', 'type')
-            // TODO add more resources
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+            ifResource('i2', 'identifier2', 'shortDescription2', 'type'),
+            ifResource('i3', 'identifier3', 'shortDescription3', 'type')
         ];
 
         resources[0].period = 'A';
         resources[0].periodEnd = 'B';
+        resources[1].period = 'A';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
@@ -140,6 +142,14 @@ describe('CSVExport', () => {
         expect(result[1][1]).toBe('"A"');
         expect(result[1][2]).toBe('"B"');
         expect(result[1][3]).toBe('""');
+
+        expect(result[2][1]).toBe('"A"');
+        expect(result[2][2]).toBe('""');
+        expect(result[2][3]).toBe('""');
+
+        expect(result[3][1]).toBe('""');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('""');
     });
 
 

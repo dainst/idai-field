@@ -37,6 +37,30 @@ describe('CsvParser', () => {
     });
 
 
+    it('take existing isChildOf', async done => {
+
+        const type = makeFieldDefinitions([]);
+
+        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, '');
+        const docs = await parse('relations.isChildOf\nopId1');
+
+        expect(docs[0].resource.relations['isChildOf']).toBe('opId1');
+        done();
+    });
+
+
+    it('take existing isChildOf, which overrides set isChildOf', async done => {
+
+        const type = makeFieldDefinitions([]);
+
+        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, 'opId1');
+        const docs = await parse('relations.isChildOf\nfeatureId1');
+
+        expect(docs[0].resource.relations['isChildOf']).toBe('featureId1');
+        done();
+    });
+
+
     it('error during field type conversion', async done => {
 
         const type = {

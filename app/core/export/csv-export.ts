@@ -34,10 +34,10 @@ export module CSVExport {
      * @param relations
      */
     export function createExportable(resources: FieldResource[],
-                                     resourceType: IdaiType,
+                                     resourceType: IdaiType, // TODO narrow down abd make fieldDefinitions the param
                                      relations: Array<string>) {
 
-        const headings: string[] = makeHeadings(resourceType, relations);
+        const headings: string[] = makeHeadings(resourceType.fields, relations);
         const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
@@ -158,9 +158,9 @@ export module CSVExport {
     }
 
 
-    function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
+    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: Array<string>) {
 
-        const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(resourceType), resourceType.fields);
+        const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(fieldDefinitions), fieldDefinitions);
 
         return fieldNames
             .concat(
@@ -354,9 +354,9 @@ export module CSVExport {
     }}
 
 
-    function makeFieldNamesList(resourceType: IdaiType) {
+    function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>) {
 
-        let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
+        let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
         const indexOfShortDescription = fieldNames.indexOf('shortDescription');
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);

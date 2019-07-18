@@ -160,12 +160,13 @@ export module CSVExport {
 
     function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
 
-        let fieldNamesList = makeFieldNamesList(resourceType);
+        let fieldNamesList= makeFieldNamesList(resourceType);
         const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
-        for (let index of reverse(dropdownRangeIndices)) {
-            fieldNamesList = replaceItems(index, 1,
-                (names: string[]) => [names[0], names[0] + 'End'])(fieldNamesList) as string[];
-        }
+
+        fieldNamesList = dropdownRangeIndices
+            .reduce(
+                (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
+                fieldNamesList);
 
         return fieldNamesList
             .concat(
@@ -270,7 +271,17 @@ export module CSVExport {
     }
 
 
-    function replaceItems<A>(where: number, // TODO make version which takes exactly one A, nrOfItems = 1
+    function replaceItem<A>(where: number,
+                            replace: (_: A) => A[]) {
+
+        return replaceItems(where, 1,
+            (items: any[]) =>
+                items.length === 0
+                    ? []
+                    : replace(items[0]));
+    }
+
+    function replaceItems<A>(where: number,
                              nrOfNewItems: number,
                              replace: (_: A[]) => A[]) {
 

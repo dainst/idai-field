@@ -44,10 +44,282 @@
   "Pottery": {
     "fields": {
       "isImport": {
-        "inputType": "boolean"
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Insicher"
+        ]
       },
       "isMisfired": {
         "inputType": "boolean"
+      },
+      "materialType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Überzugsware",
+          "Bemalte Keramik",
+          "Glasurkeramik",
+          "Kochkeramik",
+          "Küchen-/Vorrats-/Transportkeramik",
+          "Glättware",
+          "Dünnwandige Keramik",
+          "Porzellan"
+        ]
+      },
+      "specificType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Applikenkeramik",
+          "ARS",
+          "Barbotine Ware",
+          "Bleiglasurkeramik",
+          "Eierschalenkeramik",
+          "ESA",
+          "ESB",
+          "ESC",
+          "Graue ESC?",
+          "Figuralgefäß",
+          "Gilded Ware",
+          "Glanzton",
+          "Italische Sigillata",
+          "Light Coloured Ware",
+          "LRC",
+          "Reliefkeramik",
+          "Rotfigurige Keramik",
+          "Sanded Ware",
+          "Schwarzfigurige Keramik",
+          "Sgraffito Keramik",
+          "Sigillata",
+          "Streifenware",
+          "Thornware",
+          "Weißgrundige Keramik",
+          "Westanhangkeramik"
+        ]
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Trinkgefäß",
+          "Schüssel",
+          "Teller",
+          "Napf/Schüssel/Teller",
+          "Platte",
+          "Krug",
+          "Kanne",
+          "Amphora",
+          "Krug/Amphora",
+          "Topf/Chytra",
+          "Kochständer",
+          "Kohlebecken",
+          "Deckel/Verschluss",
+          "Siebgefäß",
+          "Mortarium",
+          "Kasserolle",
+          "Pfanne",
+          "Rost",
+          "Vorratsgefäß",
+          "Unguentarium",
+          "Pyxis",
+          "Thymiaterion",
+          "Askos",
+          "Guttus",
+          "unbestimmt"
+        ]
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "vesselFormSpecific": {
+        "inputType": "input"
+      },
+      "conditionPercentRim": {
+        "inputType": "input"
+      },
+      "conditionPercentBase": {
+        "inputType": "input"
+      },
+      "conditionpercentVessel": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelist": [
+          "Scheibengedreht",
+          "Handgeformt",
+          "In Form gedreht",
+          "Nachgedreht (überdreht)"
+        ]
+      },
+      "manufacturingDescription": {
+        "inputType": "input"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
+      },
+      "porosity": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Dicht",
+          "Weniger dicht",
+          "Porös",
+          "Sehr porös"
+        ]
+      },
+      "clayHardness": {
+        "inputType": "radio",
+        "valuelist": [
+          "Klingend hart (mit Stahlklinge nicht ritzbar)",
+          "hart (mit Stahlklinge schwierig ritzbar, mit Fingernagel nicht ritzbar)",
+          "mittel (mit Stahlklinge leicht ritzbar, mit Fingernagel schwer ritzbar)",
+          "weich (mit Fingernagel leicht ritzbar)"
+        ]
+      },
+      "fragmentSize": {
+        "inputType": "radio",
+        "valuelist": [
+          "klein (bis 1 cm Kantenlänge)",
+          "mittel (bis 5 cm Kantenlänge)",
+          "groß (ab 5 cm Kantenlänge)"
+        ]
+      },
+      "breakStructure": {
+        "inputType": "radio",
+        "valuelist": [
+          "glatt",
+          "schiefrig"
+        ]
+      },
+      "breakEdge": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Scharfkantig",
+          "Wenig abgerollt",
+          "Abgerollt",
+          "Stark abgerollt"
+        ]
+      },
+      "sintering": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Nutzungsspuren",
+          "Fehlbrand",
+          "Schadensbrand",
+          "Unsicher"
+        ]
+      },
+      "coatType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "ohne Überzug und Glasur",
+          "mit partiellem Überzug",
+          "mit vollständigem Überzug",
+          "mit partieller Schlemme",
+          "mit vollständiger Schlemme",
+          "mit partieller Glasur",
+          "mit vollständiger Glasur",
+          "mit Glanzton",
+          "mit sog. Self-Slip",
+          "poliert"
+        ]
+      },
+      "coatQuality": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn",
+          "schwach",
+          "stark"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Applikation",
+          "Barbotine",
+          "Bemalung",
+          "Daumendellen",
+          "Rädchen/Rouletting",
+          "Relief",
+          "Riefen",
+          "Ritzung",
+          "Sandbewurf",
+          "Sgraffito",
+          "Spachteldekor",
+          "Stempel",
+          "Thornwaredekor"
+        ]
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "decorationPlacement": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Innenseite",
+          "Außenseite",
+          "Oberseite",
+          "Unterseite",
+          "Boden/Fuß",
+          "Henkel/Griff",
+          "Rand",
+          "Wandung"
+        ]
+      },
+      "paintColorOutside": {
+        "inputType": "input"
+      },
+      "paintColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "paintColorInside": {
+        "inputType": "input"
+      },
+      "paintColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
       }
     }
   },
@@ -566,16 +838,14 @@
         ]
       },
       "coatQuality": {
-        "inputType": "dropdown",
+        "inputType": "checkboxes",
         "valuelist": [
-          "glänzend dicht",
-          "glänzend dünn",
-          "matt dicht",
-          "matt dünn",
-          "schwach glänzend dicht",
-          "schwach glänzend dünn",
-          "stark glänzend dicht",
-          "stark glänzend dünn"
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn",
+          "schwach",
+          "stark"
         ]
       },
       "coatCondition": {
@@ -856,16 +1126,14 @@
         ]
       },
       "coatQuality": {
-        "inputType": "dropdown",
+        "inputType": "checkboxes",
         "valuelist": [
-          "glänzend dicht",
-          "glänzend dünn",
-          "matt dicht",
-          "matt dünn",
-          "schwach glänzend dicht",
-          "schwach glänzend dünn",
-          "stark glänzend dicht",
-          "stark glänzend dünn"
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn",
+          "schwach",
+          "stark"
         ]
       },
       "coatCondition": {
@@ -889,6 +1157,18 @@
         "inputType": "input"
       },
       "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
         "inputType": "input"
       }
     }

@@ -45,5 +45,30 @@
     "color",
     "plasterComponents",
     "hasDecoration"
+  ],
+  "Pottery": [
+    "amountSherdsLip",
+    "amountSherdsPedestal",
+    "amountSherdsRimBase",
+    "amountSherdsRimShoulder",
+    "amountSherdsShoulder",
+    "clayColorOutside",
+    "clayColorInside",
+    "clayColorBreak",
+    "clayColorBreakMunsell",
+    "clayColorInsideMunsell",
+    "clayColorOutsideMunsell",
+    "temperAmount",
+    "temperParticles",
+    "objectType",
+    "coatInside",
+    "coatInsideType",
+    "coatOutside",
+    "coatOutsideType",
+    "temperTypeClay",
+    "formDescription",
+    "usage",
+    "hasCoat",
+    "amountSherdsPercent"
   ]
 }

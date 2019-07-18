@@ -25,6 +25,72 @@
         },
         "isMisfired": {
           "label": "Misfired"
+        },
+        "specificType": {
+          "label": "Type specific"
+        },
+        "vesselForm": {
+          "label": "Functional category"
+        },
+        "typeNumber": {
+          "label": "Typenkatalog-Nr."
+        },
+        "conditionPercentRim": {
+          "label": "Percentage of preserved rim"
+        },
+        "conditionPercentBase": {
+          "label": "Percentage of preserved base"
+        },
+        "conditionpercentVessel": {
+          "label": "Percentage preserved of vessel"
+        },
+        "manufacturingDescription": {
+          "label": "Details manufacturing"
+        },
+        "clayHardness": {
+          "label": "Clay hardness (after Rice 2005, 356)"
+        },
+        "fragmentSize": {
+          "label": "Fragment size"
+        },
+        "breakEdge": {
+          "label": "Breaking edge"
+        },
+        "temperTypeClay": {
+          "label": "Fabrikat"
+        },
+        "porosity": {
+          "label": "Porosität"
+        },
+        "sintering": {
+          "label": "Sintering"
+        },
+        "surfaceCondition": {
+          "label": "Surface condition"
+        },
+        "coatType": {
+          "label": "Coat type /surface"
+        },
+        "coatQuality": {
+          "label": "Coat quality"
+        },
+        "decorationPlacement": {
+          "label": "Decoration placement"
+        },
+        "paintColorOutside": {
+          "label": "Paint color outside"
+        },
+        "paintColorOutsideMunsell": {
+          "label": "Paint color outside Munsell-Nr."
+        },
+        "paintColorInside": {
+          "label": "Paint color inside"
+        },
+        "paintColorInsideMunsell": {
+          "label": "Paint color inside Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Paint condition"
         }
       }
     },

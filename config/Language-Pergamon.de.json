@@ -28,6 +28,126 @@
         },
         "isMisfired": {
           "label": "Fehlbrand/Schadensbrand: BITTE INFORMATIONEN ÜBERTRAGEN"
+        },
+        "materialType": {
+          "label": "Ware"
+        },
+        "specificType": {
+          "label": "Gattung"
+        },
+        "vesselForm": {
+          "label": "Funktionale Kategorie"
+        },
+        "typeNumber": {
+          "label": "Typenkatalog-Nr."
+        },
+        "amountSherdsWall": {
+         "label": "Anzahl Wandungsfragmente"
+        },
+        "amountSherdsRim": {
+          "label": "Anzahl Randfragmente"
+        },
+        "amountSherdsBase": {
+          "label": "Anzahl Fuß-/Bodenfragmente"
+        },
+        "amountSherdsHandles": {
+          "label": "Anzahl Henkelfragmente"
+        },
+        "amountSherdsOther": {
+          "label": "Anzahl Sonstiges"
+        },
+        "conditionPercentRim": {
+          "label": "Erhaltung Rand in %"
+        },
+        "conditionPercentBase": {
+          "label": "Erhaltung Boden/Fuß in %"
+        },
+        "conditionpercentVessel": {
+          "label": "Erhaltung Gefäß in %"
+        },
+        "manufacturingDescription": {
+          "label": "Details Herstellung"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "colorOutside": {
+          "label": "Tonfarbe(n) außen"
+        },
+        "colorOutsideMunsell": {
+          "label": "Tonfarbe(n) außen Munsell-Nr."
+        },
+        "colorInside": {
+          "label": "Tonfarbe(n) innen"
+        },
+        "colorInsideMunsell": {
+          "label": "Tonfarbe(n) innen Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Tonfarne(n) Kern Munsell-Nr."
+        },
+        "temper": {
+          "label": "Magerung"
+        },
+        "clayHardness": {
+          "label": "Tonhärte (nach Rice 2005, 356)"
+        },
+        "fragmentSize": {
+          "label": "Fragmentgröße"
+        },
+        "breakEdge": {
+          "label": "Bruchkanten"
+        },
+        "porosity": {
+          "label": "Porosität"
+        },
+        "sintering": {
+          "label": "Versinterung"
+        },
+        "coatType": {
+          "label": "Oberfläche"
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug innen"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug außen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Farbe(n) Überzug außen Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Farbe(n) Überzug innen Munsell-Nr"
+        },
+        "decorationTechnique": {
+          "label": "Dekor"
+        },
+        "decorationPlacement": {
+          "label": "Verortung des Dekors"
+        },
+        "paintColorOutside": {
+          "label": "Farbe(n) Bemalung außen"
+        },
+        "paintColorOutsideMunsell": {
+          "label": "Farbe(n) Bemalung außen Munsell-Nr."
+        },
+        "paintColorInside": {
+          "label": "Farbe(n) Bemalung innen"
+        },
+        "paintColorInsideMunsell": {
+          "label": "Farbe(n) Bemalung innen Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "breakStructure": {
+          "label": "Struktur des Bruches"
         }
       }
     },
@@ -230,6 +350,9 @@
         },
         "coatCondition": {
           "label": "Zustand Überzug"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
         }
       }
     },

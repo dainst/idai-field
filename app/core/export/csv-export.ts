@@ -160,7 +160,14 @@ export module CSVExport {
 
     function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
 
-        return makeFieldNamesList(resourceType)
+        let fieldNamesList = makeFieldNamesList(resourceType);
+        const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
+        for (let index of reverse(dropdownRangeIndices)) {
+            fieldNamesList = replaceItems(index, 1,
+                (names: string[]) => [names[0], names[0] + 'End'])(fieldNamesList) as string[];
+        }
+
+        return fieldNamesList
             .concat(
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
@@ -263,7 +270,7 @@ export module CSVExport {
     }
 
 
-    function replaceItems<A>(where: number,
+    function replaceItems<A>(where: number, // TODO make version which takes exactly one A, nrOfItems = 1
                              nrOfNewItems: number,
                              replace: (_: A[]) => A[]) {
 

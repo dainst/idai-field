@@ -5,13 +5,16 @@ import {Static} from '../../static';
 
 export function makeType(fieldNames: string[]) {
 
+
     return new IdaiType({
         type: 'Feature',
         fields: fieldNames.map(fieldName => {
-            return {
-                name: fieldName,
-                inputType: fieldName.startsWith('dimension') ? 'dimension' : 'input'
-            }
+
+            let inputType = 'input';
+            if (fieldName.startsWith('dimension')) inputType = 'dimension';
+            if (fieldName === 'period') inputType = 'dropdownRange';
+
+            return { name: fieldName, inputType: inputType }
         })
     })
 }
@@ -113,6 +116,30 @@ describe('CSVExport', () => {
             isRecordedIn: ['operation1']
         } as any;
         expectCorrectChildOfTarget(resource, t, '"operation1"')
+    });
+
+
+    it('expand dropdownRange', () => {
+
+        const t = makeType(['identifier', 'period', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type')
+            // TODO add more resources
+        ];
+
+        resources[0].period = 'A';
+        resources[0].periodEnd = 'B';
+
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"period"');
+        expect(result[0][2]).toBe('"periodEnd"');
+        expect(result[0][3]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('""');
     });
 
 

@@ -1,16 +1,15 @@
 import {CsvRowsConversion} from '../../../../../app/core/import/parser/csv-rows-conversion';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
-import SEP = CsvParser.SEP;
+import SEPARATOR = CsvParser.SEPARATOR;
 
 /**
  * @author Daniel de Oliveira
  */
 describe('CsvRowsConversion', () => {
 
-
     it('three fields', () => {
 
-        const struct = CsvRowsConversion.parse(SEP)([
+        const struct = CsvRowsConversion.parse(SEPARATOR)([
             'identifier,shortDescription,custom',
             '10,zehn,bla']);
 
@@ -23,7 +22,7 @@ describe('CsvRowsConversion', () => {
 
     it('two lines', () => {
 
-        const structs = CsvRowsConversion.parse(SEP)([
+        const structs = CsvRowsConversion.parse(SEPARATOR)([
             'a',
             '10',
             '11']);
@@ -34,13 +33,29 @@ describe('CsvRowsConversion', () => {
     });
 
 
+    it('parse lines with quotes', () => {
+
+        const structs = CsvRowsConversion.parse(SEPARATOR)([
+            'field1,field2,field3,field4,field5,field6',
+            '"Value","ValueX,ValueY,ValueZ","Value: ""XYZ""","""XYZ""","W,""X,Y"",Z",""']);
+
+        expect(structs.length).toBe(1);
+        expect(structs[0]['field1']).toBe('Value');
+        expect(structs[0]['field2']).toBe('ValueX,ValueY,ValueZ');
+        expect(structs[0]['field3']).toBe('Value: "XYZ"');
+        expect(structs[0]['field4']).toBe('"XYZ"');
+        expect(structs[0]['field5']).toBe('W,"X,Y",Z');
+        expect(structs[0]['field6']).toBe(undefined);
+    });
+
+
     it('implode struct', () => {
 
         const lines = [
             'a.b',
             '100'];
 
-        const structs = CsvRowsConversion.parse(SEP)(lines);
+        const structs = CsvRowsConversion.parse(SEPARATOR)(lines);
         const struct = structs[0];
         expect(struct['a']['b']).toBe('100');
     });
@@ -52,7 +67,7 @@ describe('CsvRowsConversion', () => {
             'identifier,array.0.begin.year,array.0.end.year,array.0.source,array.0.label',
             'identifier1,100,200,S,L'];
 
-        const structs = CsvRowsConversion.parse(SEP)(lines);
+        const structs = CsvRowsConversion.parse(SEPARATOR)(lines);
         expect(structs.length).toBe(1);
 
         const struct = structs[0];
@@ -70,7 +85,7 @@ describe('CsvRowsConversion', () => {
             'a.1.b.c',
             '10'];
 
-        const structs = CsvRowsConversion.parse(SEP)(lines);
+        const structs = CsvRowsConversion.parse(SEPARATOR)(lines);
         const struct = structs[0];
         const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
         expect(nrEnumeratedItems).toBe(2);

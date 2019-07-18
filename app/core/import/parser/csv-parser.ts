@@ -12,7 +12,7 @@ import convertFieldTypes = CsvFieldTypesConversion.convertFieldTypes;
  */
 export module CsvParser {
 
-    export const SEP = ',';
+    export const SEPARATOR = ',';
 
     const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
@@ -55,7 +55,7 @@ export module CsvParser {
 
         return flow<any>(content,
             makeLines,
-            parse(SEP),
+            parse(SEPARATOR),
             map(assoc('type', type.name)),
             map(insertIsChildOf(operationId)),
             map(convertFieldTypes(type)),

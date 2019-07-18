@@ -1,6 +1,6 @@
-import {FieldDefinition, FieldResource, IdaiType, Dating, Dimension} from 'idai-components-2';
-import {drop, identity, includedIn, indices, is, isNot, isnt, on, reduce, take, reverse,
-    to, flow, compose, flatMap, isDefined, arrayList, when, range} from 'tsfun';
+import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
+import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
+    isnt, on, range, reduce, reverse, take, to, when} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize} from './export-helper';
@@ -30,21 +30,21 @@ export module CSVExport {
      * If resources is empty, still a header line gets created.
      *
      * @param resources
-     * @param resourceType
+     * @param fieldDefinitions
      * @param relations
      */
     export function createExportable(resources: FieldResource[],
-                                     resourceType: IdaiType, // TODO narrow down abd make fieldDefinitions the param
+                                     fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
-        const headings: string[] = makeHeadings(resourceType.fields, relations);
+        const headings: string[] = makeHeadings(fieldDefinitions, relations);
         const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
         return flow<any>([headings, matrix],
             expandDating,
-            expandDimension(resourceType.fields),
+            expandDimension(fieldDefinitions),
             combine);
     }
 

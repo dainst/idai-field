@@ -1,22 +1,19 @@
-import {IdaiType} from 'idai-components-2';
 import {CSVExport} from '../../../../app/core/export/csv-export';
 import {Static} from '../../static';
+import {FieldDefinition} from 'idai-components-2';
 
 
-export function makeType(fieldNames: string[]) {
+export function makeFieldDefinitions(fieldNames: string[]) {
 
 
-    return new IdaiType({
-        type: 'Feature',
-        fields: fieldNames.map(fieldName => {
+    return fieldNames.map(fieldName => {
 
             let inputType = 'input';
             if (fieldName.startsWith('dimension')) inputType = 'dimension';
             if (fieldName.startsWith('period')) inputType = 'dropdownRange';
 
             return { name: fieldName, inputType: inputType }
-        })
-    })
+        }) as Array<FieldDefinition>;
 }
 
 
@@ -34,7 +31,7 @@ describe('CSVExport', () => {
 
     function makeSimpleTypeAndResource() {
 
-        const t = makeType(['identifier', 'shortDescription']);
+        const t = makeFieldDefinitions(['identifier', 'shortDescription']);
         const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
         return {t: t, resource: resource};
     }
@@ -42,7 +39,7 @@ describe('CSVExport', () => {
 
     it('create header line if documents empty', () => {
 
-        const t = makeType(['identifier', 'shortDescription', 'custom', 'id']);
+        const t = makeFieldDefinitions(['identifier', 'shortDescription', 'custom', 'id']);
 
         const result = CSVExport.createExportable([], t, []);
         expect(result[0]).toBe('"identifier","shortDescription","custom","relations.isChildOf"');
@@ -89,7 +86,7 @@ describe('CSVExport', () => {
 
     it('export array fields', () => {
 
-        const t = makeType(['identifier', 'shortDescription', 'color']);
+        const t = makeFieldDefinitions(['identifier', 'shortDescription', 'color']);
         const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
         resource.color = ['blue', 'red', 'yellow'];
         const result = CSVExport.createExportable([resource], t, []);
@@ -121,7 +118,7 @@ describe('CSVExport', () => {
 
     it('expand dropdownRange', () => {
 
-        const t = makeType(['identifier', 'period', 'custom']);
+        const t = makeFieldDefinitions(['identifier', 'period', 'custom']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -155,7 +152,7 @@ describe('CSVExport', () => {
 
     it('expand multiple dropdownRanges', () => {
 
-        const t = makeType(['identifier', 'periodA', 'periodB', 'custom']);
+        const t = makeFieldDefinitions(['identifier', 'periodA', 'periodB', 'custom']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -185,7 +182,7 @@ describe('CSVExport', () => {
 
     it('expand dating', () => {
 
-        const t = makeType(['identifier', 'dating', 'custom']);
+        const t = makeFieldDefinitions(['identifier', 'dating', 'custom']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -249,7 +246,7 @@ describe('CSVExport', () => {
 
     it('expand dating field even if no value present', () => {
 
-        const t = makeType(['identifier', 'dating']);
+        const t = makeFieldDefinitions(['identifier', 'dating']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -273,7 +270,7 @@ describe('CSVExport', () => {
 
     it('expand dating field even if no value present, in header only mode', () => {
 
-        const t = makeType(['identifier', 'dating']);
+        const t = makeFieldDefinitions(['identifier', 'dating']);
 
         const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
 
@@ -315,7 +312,7 @@ describe('CSVExport', () => {
 
     it('expand dimension', () => {
 
-        const t = makeType(['identifier', 'dimensionX', 'custom']);
+        const t = makeFieldDefinitions(['identifier', 'dimensionX', 'custom']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -361,7 +358,7 @@ describe('CSVExport', () => {
 
     it('expand one dimension field even if no values present', () => {
 
-        const t = makeType(['identifier', 'dimensionX']);
+        const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
@@ -383,7 +380,7 @@ describe('CSVExport', () => {
 
     it('expand one dimension field even if no values present, in header only mode', () => {
 
-        const t = makeType(['identifier', 'dimensionX']);
+        const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
         const result = CSVExport.createExportable([], t, []).map(row => row.split(','));
 
@@ -399,7 +396,7 @@ describe('CSVExport', () => {
 
     it('expand multiple dimension fields', () => {
 
-        const t = makeType(['identifier', 'dimensionX', 'dimensionY']);
+        const t = makeFieldDefinitions(['identifier', 'dimensionX', 'dimensionY']);
 
         const resources = [
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),

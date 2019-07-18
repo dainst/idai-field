@@ -1,6 +1,6 @@
 import {IdaiType} from 'idai-components-2';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
-import {makeType} from '../../export/csv-export.spec';
+import {makeFieldDefinitions} from '../../export/csv-export.spec';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 
 /**
@@ -12,9 +12,9 @@ describe('CsvParser', () => {
 
     it('basics', async done => {
 
-        const type = makeType(['custom1, custom2']);
+        const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse(type, 'opId1');
+        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, 'opId1');
         const docs = await parse('custom1,custom2\n1,2');
 
         expect(docs[0].resource['type']).toBe('Feature');
@@ -27,9 +27,9 @@ describe('CsvParser', () => {
 
     it('no lies within', async done => {
 
-        const type = makeType(['custom1, custom2']);
+        const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse(type, '');
+        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, '');
         const docs = await parse('custom1,custom2\n1,2');
 
         expect(docs[0].resource.relations).toEqual({});

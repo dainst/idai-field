@@ -160,20 +160,24 @@ export module CSVExport {
 
     function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
 
-        let fieldNamesList= makeFieldNamesList(resourceType);
-        const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
-
-        fieldNamesList = reverse(dropdownRangeIndices)
-            .reduce(
-                (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
-                fieldNamesList);
-
-        return fieldNamesList
+        return makeHeadingsWithExpandedDropdownRange(resourceType)
             .concat(
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
                     .map(relation => 'relations.' + relation))
             .concat([RELATIONS_IS_CHILD_OF]);
+    }
+
+
+    function makeHeadingsWithExpandedDropdownRange(resourceType: IdaiType) {
+
+        const fieldNamesList= makeFieldNamesList(resourceType);
+        const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
+
+        return reverse(dropdownRangeIndices)
+            .reduce(
+                (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
+                fieldNamesList);
     }
 
 

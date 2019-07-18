@@ -84,6 +84,17 @@ describe('CSVExport', () => {
     });
 
 
+    it('export array fields', () => {
+
+        const t = makeType(['identifier', 'shortDescription', 'color']);
+        const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
+        resource.color = ['blue', 'red', 'yellow'];
+        const result = CSVExport.createExportable([resource], t, []);
+        expect(result[0]).toEqual('"identifier","shortDescription","color","relations.isChildOf"');
+        expect(result[1]).toEqual('"identifier1","shortDescription1","blue;red;yellow",""');
+    });
+
+
     it('is nested in another resource', () => {
 
         const {t, resource} = makeSimpleTypeAndResource();

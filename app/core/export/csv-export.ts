@@ -160,7 +160,9 @@ export module CSVExport {
 
     function makeHeadings(resourceType: IdaiType, relations: Array<string>) {
 
-        return makeHeadingsWithExpandedDropdownRange(resourceType)
+        const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(resourceType), resourceType.fields);
+
+        return fieldNames
             .concat(
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
@@ -169,15 +171,14 @@ export module CSVExport {
     }
 
 
-    function makeHeadingsWithExpandedDropdownRange(resourceType: IdaiType) {
+    function insertDropdownRangeEnds(fieldNames: string[], fieldDefinitions: Array<FieldDefinition>) {
 
-        const fieldNamesList= makeFieldNamesList(resourceType);
-        const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
+        const dropdownRangeIndices = getIndices(fieldDefinitions, 'dropdownRange')(fieldNames);
 
         return reverse(dropdownRangeIndices)
             .reduce(
                 (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
-                fieldNamesList);
+                fieldNames);
     }
 
 

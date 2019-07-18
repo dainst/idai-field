@@ -163,7 +163,7 @@ export module CSVExport {
         let fieldNamesList= makeFieldNamesList(resourceType);
         const dropdownRangeIndices = getIndices(resourceType.fields, 'dropdownRange')(fieldNamesList);
 
-        fieldNamesList = dropdownRangeIndices
+        fieldNamesList = reverse(dropdownRangeIndices)
             .reduce(
                 (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
                 fieldNamesList);

@@ -12,7 +12,7 @@ export function makeType(fieldNames: string[]) {
 
             let inputType = 'input';
             if (fieldName.startsWith('dimension')) inputType = 'dimension';
-            if (fieldName === 'period') inputType = 'dropdownRange';
+            if (fieldName.startsWith('period')) inputType = 'dropdownRange';
 
             return { name: fieldName, inputType: inputType }
         })
@@ -150,6 +150,36 @@ describe('CSVExport', () => {
         expect(result[3][1]).toBe('""');
         expect(result[3][2]).toBe('""');
         expect(result[3][3]).toBe('""');
+    });
+
+
+    it('expand multiple dropdownRanges', () => {
+
+        const t = makeType(['identifier', 'periodA', 'periodB', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+        ];
+
+        resources[0].periodA = 'A';
+        resources[0].periodAEnd = 'B';
+        resources[0].periodB = 'C';
+        resources[0].periodBEnd = 'D';
+        resources[0].custom = 'custom';
+
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"periodA"');
+        expect(result[0][2]).toBe('"periodAEnd"');
+        expect(result[0][3]).toBe('"periodB"');
+        expect(result[0][4]).toBe('"periodBEnd"');
+        expect(result[0][5]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('"C"');
+        expect(result[1][4]).toBe('"D"');
+        expect(result[1][5]).toBe('"custom"');
     });
 
 

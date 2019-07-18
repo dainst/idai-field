@@ -1,10 +1,11 @@
-import {assoc, flow, map} from 'tsfun';
-import {Document, IdaiType, Resource} from 'idai-components-2';
+import {assoc, update, flow, map} from 'tsfun';
+import {Document, IdaiType, Resource, Relations} from 'idai-components-2';
 import {makeLines, Parser} from './parser';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import parse = CsvRowsConversion.parse;
 import convertFieldTypes = CsvFieldTypesConversion.convertFieldTypes;
+import {jsonClone} from 'tsfun';
 
 
 /**
@@ -19,11 +20,14 @@ export module CsvParser {
 
     function insertIsChildOf(operationId: string) {
 
-        return assoc(
+        return update(
             'relations',
-            operationId
-                ? { isChildOf: operationId as any}
-                : {});
+            (relations: Relations|undefined) => { // TODO test different cases for (non) existing relations manually
+
+                const relations_ = relations ? jsonClone(relations) : {};
+                if (operationId && !relations_['isChildOf']) relations_['isChildOf'] = operationId as any;
+                return relations_;
+            });
     }
 
 

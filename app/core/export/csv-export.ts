@@ -12,9 +12,9 @@ import {fillUpToSize} from './export-helper';
 export module CSVExport {
 
     const EMPTY = '';
-    const SEP = ',';
-    const OBJ_SEP = '.';
-    const REL_SEP = ';';
+    const SEPARATOR = ',';
+    const OBJECT_SEPARATOR = '.';
+    const ARRAY_SEPARATOR = ';';
 
     const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
@@ -96,7 +96,7 @@ export module CSVExport {
 
         return indices((heading: string) => {
 
-                if (heading.includes(OBJ_SEP)) return false;
+                if (heading.includes(OBJECT_SEPARATOR)) return false;
                 const field = fieldDefinitions.find(on('name', is(heading)));
                 if (!field) return false;
 
@@ -172,15 +172,15 @@ export module CSVExport {
     function expandDatingHeadings(n: number) { return (fieldName: string) => {
 
         return flatMap<any>((i: number) => [
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'type',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputType',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'begin.inputYear',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.inputType',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'end.inputYear',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'margin',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'source',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'isUncertain']
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'type',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputType',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputYear',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputType',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
             )(range(n));
     }}
 
@@ -188,13 +188,13 @@ export module CSVExport {
     function expandDimensionHeadings(n:number) { return (fieldName: string) => {
 
         return flatMap<any>((i: number) => [
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputValue',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputRangeEndValue',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementPosition',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'measurementComment',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'inputUnit',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'isImprecise',
-                fieldName + OBJ_SEP + i + OBJ_SEP + 'isRange']
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isRange']
             )(range(n));
     }}
 
@@ -299,7 +299,7 @@ export module CSVExport {
 
         if (!cloned.relations) return cloned;
         for (let relation of Object.keys(cloned.relations)) {
-            cloned['relations.' + relation] = cloned.relations[relation].join(REL_SEP);
+            cloned['relations.' + relation] = cloned.relations[relation].join(ARRAY_SEPARATOR);
         }
         delete cloned.relations;
 
@@ -365,10 +365,13 @@ export module CSVExport {
 
     function toCsvLine(as: string[]): string {
 
-        return as.map(field => {
-            return field
-                ? '"' + field.replace(new RegExp('"', 'g'), '""') + '"'
-                : '""'
-        }).join(SEP);
+        return as.map(field => field ? '"' + getFieldValue(field) + '"' : '""').join(SEPARATOR);
+    }
+
+
+    function getFieldValue(field: any): string {
+
+        const value: string = Array.isArray(field) ? field.join(ARRAY_SEPARATOR) : field;
+        return value.replace(new RegExp('"', 'g'), '""');
     }
 }

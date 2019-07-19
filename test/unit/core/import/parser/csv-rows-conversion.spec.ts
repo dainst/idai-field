@@ -4,6 +4,7 @@ import SEPARATOR = CsvParser.SEPARATOR;
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('CsvRowsConversion', () => {
 
@@ -33,7 +34,7 @@ describe('CsvRowsConversion', () => {
     });
 
 
-    it('parse lines with quotes', () => {
+    it('parse content with quotes', () => {
 
         const structs = CsvRowsConversion.parse(SEPARATOR)(
             'field1,field2,field3,field4,field5,field6\n' +
@@ -46,6 +47,27 @@ describe('CsvRowsConversion', () => {
         expect(structs[0]['field4']).toBe('"XYZ"');
         expect(structs[0]['field5']).toBe('W,"X,Y",Z');
         expect(structs[0]['field6']).toBe(undefined);
+    });
+
+
+    it('parse linebreaks in field values', () => {
+
+        const structs = CsvRowsConversion.parse(SEPARATOR)(
+            'field1,field2,field3\n' +
+            '"Line 1\nLine 2","Line 1\rLine 2","Line 1\n\rLine 2"\r' +
+            'ValueX,ValueY,ValueZ\n\r' +
+            'ValueA,ValueB,ValueC');
+
+        expect(structs.length).toBe(3);
+        expect(structs[0]['field1']).toBe('Line 1\nLine 2');
+        expect(structs[0]['field2']).toBe('Line 1\nLine 2');
+        expect(structs[0]['field3']).toBe('Line 1\nLine 2');
+        expect(structs[1]['field1']).toBe('ValueX');
+        expect(structs[1]['field2']).toBe('ValueY');
+        expect(structs[1]['field3']).toBe('ValueZ');
+        expect(structs[2]['field1']).toBe('ValueA');
+        expect(structs[2]['field2']).toBe('ValueB');
+        expect(structs[2]['field3']).toBe('ValueC');
     });
 
 

@@ -287,7 +287,7 @@ export module CSVExport {
     }
 
 
-    function replaceItems<A>(where: number,
+    function replaceItems<A>(where: number, // TODO maybe extract to tsfun
                              nrOfNewItems: number,
                              replace: (_: A[]) => A[]) {
 

@@ -166,7 +166,7 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('field type dropdown range', () => { // TODO test import and export manually once
+    it('field type dropdown range', () => {
 
         const type = {
             name: 'TypeName',
@@ -184,7 +184,7 @@ describe('CsvFieldTypesConversion', () => {
             .convertFieldTypes(type)({
                 dd1: 'a',
                 dd2: 'b',
-                dd2End: 'c'
+                dd2End: 'c' // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
             } as unknown as Resource);
 
         expect(resource['dd1']).toBe('a');

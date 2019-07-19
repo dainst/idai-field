@@ -9,14 +9,17 @@ export module CsvRowsConversion {
     const PATH_SEPARATOR = '.';
 
 
-    export function parse(separator: string) { return (rows: string[]): Array<ObjectStruct> => {
+    export function parse(separator: string) {
 
-        if (rows.length < 1) return [];
-        const headings = splitRow(rows[0], separator);
-        rows.shift();
+        return (content: string): Array<ObjectStruct> => {
+            const rows: string[][] = getRows(content, separator);
+            if (rows.length < 0) return [];
 
-        return map((row: string) => makeObjectStruct(headings)(splitRow(row, separator)))(rows);
-    }}
+            const headings: string[] = rows.shift() as string[];
+
+            return map((row: string[]) => makeObjectStruct(headings)(row))(rows);
+        }
+    }
 
 
     function makeObjectStruct(headings: string[]) {
@@ -59,49 +62,68 @@ export module CsvRowsConversion {
     }
 
 
-    function splitRow(row: string, separator: string): string[] {
+    function getRows(content: string, separator: string): string[][] {
 
-        let result: string[] = [];
+        let rows: string[][] = [];
+        let currentRow: string[] = [];
         let currentField: string = '';
-        let inQuotes: boolean = false;
-        let lastQuote: boolean = false;
 
-        for (let character of row) {
+        let inQuotes: boolean = false;
+        let lastCharacter: 'quote'|'linebreak'|'other' = 'other';
+
+        for (let character of content) {
             switch(character) {
                 case '"':
-                    if (lastQuote) {
+                    if (lastCharacter === 'quote') {
                         currentField += '"';
-                        lastQuote = false;
+                        lastCharacter = 'other';
                     } else {
-                        lastQuote = true;
+                        lastCharacter = 'quote';
                     }
                     break;
                 case separator:
-                    if (lastQuote) {
-                        inQuotes = !inQuotes;
-                        lastQuote = false;
-                    }
+                    if (lastCharacter === 'quote') inQuotes = !inQuotes;
                     if (inQuotes) {
                         currentField += separator;
                     } else {
-                        if (currentField === '"') currentField = '';
-                        result.push(currentField);
+                        addFieldToRow(currentField, currentRow);
                         currentField = '';
+                    }
+                    lastCharacter = 'other';
+                    break;
+                case '\n':
+                case '\r':
+                    if (lastCharacter === 'quote') inQuotes = !inQuotes;
+                    if (lastCharacter !== 'linebreak') {
+                        if (inQuotes) {
+                            currentField += '\n';
+                        } else {
+                            addFieldToRow(currentField, currentRow);
+                            rows.push(currentRow);
+                            currentField = '';
+                            currentRow = [];
+                        }
+                        lastCharacter = 'linebreak';
                     }
                     break;
                 default:
-                    if (lastQuote) {
-                        inQuotes = !inQuotes;
-                        lastQuote = false;
-                    }
+                    if (lastCharacter === 'quote') inQuotes = !inQuotes;
+                    lastCharacter = 'other';
                     currentField += character;
                     break;
             }
         }
 
-        if (currentField === '"') currentField = '';
-        result.push(currentField);
+        if (currentField !== '') addFieldToRow(currentField, currentRow);
+        if (currentRow.length > 0) rows.push(currentRow);
 
-        return result;
+        return rows;
+    }
+
+
+    function addFieldToRow(field: string, row: string[]) {
+
+        if (field === '"') field = '';
+        row.push(field);
     }
 }

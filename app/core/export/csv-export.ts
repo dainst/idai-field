@@ -286,6 +286,7 @@ export module CSVExport {
                     : replace(items[0]));
     }
 
+
     function replaceItems<A>(where: number,
                              nrOfNewItems: number,
                              replace: (_: A[]) => A[]) {

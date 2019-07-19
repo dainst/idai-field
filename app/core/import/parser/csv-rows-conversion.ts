@@ -102,8 +102,8 @@ export module CsvRowsConversion {
                             rows.push(currentRow);
                             currentField = '';
                             currentRow = [];
-                            lastCharacter = 'linebreak';
                         }
+                        lastCharacter = 'linebreak';
                     }
                     break;
                 default:

@@ -126,6 +126,13 @@
                         </select>
                     </div>
 
+                    <div *ngIf="format === 'csv'" class="form-group">
+                        <label class="control-label col-form-label"
+                               i18n="@@import.csv.separator">Feldtrennzeichen</label>
+                        <input class="form-control" id="separatorInput"
+                               type="text" [maxlength]="1" [(ngModel)]="separator">
+                    </div>
+
                     <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene

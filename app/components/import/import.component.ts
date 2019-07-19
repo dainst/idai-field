@@ -51,12 +51,15 @@ export class ImportComponent implements OnInit {
     public url: string|undefined;
     public operations: Array<Document> = [];
     public selectedOperationId: string = '';
-    public selectedType: IdaiType|undefined = undefined; // for csv import, the technical type name
-    public resourceTypes: Array<IdaiType> = []; // for csv import
-    public typeFromFileName: boolean = false; // for csv import
     public allowMergingExistingResources = false;
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
+
+    // CSV Import
+    public resourceTypes: Array<IdaiType> = [];
+    public selectedType: IdaiType|undefined = undefined;
+    public typeFromFileName: boolean = false;
+    public separator: string = ',';
 
 
     constructor(
@@ -209,7 +212,8 @@ export class ImportComponent implements OnInit {
             this.allowUpdatingRelationOnMerge,
             await reader.go(),
             () => this.idGenerator.generateId(),
-            this.format === 'csv' ? this.selectedType : undefined);
+            this.format === 'csv' ? this.selectedType : undefined,
+            this.format === 'csv' ? this.separator : undefined);
     }
 
 

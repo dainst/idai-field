@@ -1,3 +1,4 @@
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
@@ -10,7 +11,6 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
@@ -68,18 +68,17 @@ export module Importer {
                                    allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
                                    generateId: () => string,
-                                   selectedType?: IdaiType|undefined) {
+                                   selectedType?: IdaiType,
+                                   separator?: string) {
 
         const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
 
-        const parse = createParser(format, mainTypeDocumentId_, selectedType);
+        const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
         const docsToUpdate: Document[] = [];
+
         try {
-
             (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
-
         } catch (msgWithParams) {
-
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
@@ -98,7 +97,9 @@ export module Importer {
             generateId,
             postProcessDocument(projectConfiguration));
 
-        const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
+        const { errors, successfulImports } = await importFunction(
+            docsToUpdate, datastore, usernameProvider.getUsername()
+        );
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
@@ -126,9 +127,8 @@ export module Importer {
     }}
 
 
-    function createParser(format: ImportFormat,
-                          operationId: string,
-                          selectedType?: IdaiType|undefined): any {
+    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType,
+                          separator?: string): any {
 
         switch (format) {
             case 'meninxfind':
@@ -136,8 +136,9 @@ export module Importer {
             case 'idig':
                 return IdigCsvParser.parse;
             case 'csv':
-                if (!selectedType) throw "IMPORTER.TS: SELECTED TYPE MUST BE SET FOR CSV IMPORT";
-                return CsvParser.getParse(selectedType, operationId);
+                if (!selectedType) throw 'Selected type must be set for csv import';
+                if (!separator) throw 'Separator must be set for csv import';
+                return CsvParser.getParse(selectedType, operationId, separator);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,

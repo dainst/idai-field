@@ -6,15 +6,17 @@ import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors'
 /**
  * @author Daniel de Oliveira
  */
-
 describe('CsvParser', () => {
-
 
     it('basics', async done => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, 'opId1');
+        const parse = CsvParser.getParse({
+            name: 'Feature', fields:type } as IdaiType,
+            'opId1',
+            ','
+        );
         const docs = await parse('custom1,custom2\n1,2');
 
         expect(docs[0].resource['type']).toBe('Feature');
@@ -29,7 +31,11 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, '');
+        const parse = CsvParser.getParse({
+            name: 'Feature', fields: type } as IdaiType,
+            '',
+            ','
+        );
         const docs = await parse('custom1,custom2\n1,2');
 
         expect(docs[0].resource.relations).toEqual({});
@@ -41,7 +47,11 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, '');
+        const parse = CsvParser.getParse({
+            name: 'Feature', fields: type} as IdaiType,
+            '',
+            ','
+        );
         const docs = await parse('relations.isChildOf\nopId1');
 
         expect(docs[0].resource.relations['isChildOf']).toBe('opId1');
@@ -53,7 +63,11 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse({name: 'Feature', fields:type} as IdaiType, 'opId1');
+        const parse = CsvParser.getParse(
+            { name: 'Feature', fields: type } as IdaiType,
+            'opId1',
+            ','
+        );
         const docs = await parse('relations.isChildOf\nfeatureId1');
 
         expect(docs[0].resource.relations['isChildOf']).toBe('featureId1');
@@ -71,16 +85,17 @@ describe('CsvParser', () => {
             }],
         } as IdaiType;
 
-        const parse = CsvParser.getParse(type, '');
+        const parse = CsvParser.getParse(
+            type,
+            '',
+            ',');
+
         try {
             await parse('uf\na100.0');
             fail();
         } catch (msgWithParams) {
-
             expect(msgWithParams).toEqual([ParserErrors.CSV_NOT_A_NUMBER, 'a100.0', 'uf']);
-
         } finally {
-
             done();
         }
     });

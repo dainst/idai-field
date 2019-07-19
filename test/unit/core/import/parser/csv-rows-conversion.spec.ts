@@ -1,6 +1,5 @@
 import {CsvRowsConversion} from '../../../../../app/core/import/parser/csv-rows-conversion';
-import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
-import SEPARATOR = CsvParser.SEPARATOR;
+
 
 /**
  * @author Daniel de Oliveira
@@ -10,7 +9,7 @@ describe('CsvRowsConversion', () => {
 
     it('three fields', () => {
 
-        const struct = CsvRowsConversion.parse(SEPARATOR)(
+        const struct = CsvRowsConversion.parse(',')(
             'identifier,shortDescription,custom\n' +
             '10,zehn,bla');
 
@@ -23,7 +22,7 @@ describe('CsvRowsConversion', () => {
 
     it('two lines', () => {
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(
+        const structs = CsvRowsConversion.parse(',')(
             'a\n' +
             '10\n' +
             '11');
@@ -36,7 +35,7 @@ describe('CsvRowsConversion', () => {
 
     it('parse content with quotes', () => {
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(
+        const structs = CsvRowsConversion.parse(',')(
             'field1,field2,field3,field4,field5,field6\n' +
             '"Value","ValueX,ValueY,ValueZ","Value: ""XYZ""","""XYZ""","W,""X,Y"",Z",""');
 
@@ -52,7 +51,7 @@ describe('CsvRowsConversion', () => {
 
     it('parse linebreaks in field values', () => {
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(
+        const structs = CsvRowsConversion.parse(',')(
             'field1,field2,field3\n' +
             '"Line 1\nLine 2","Line 1\rLine 2","Line 1\n\rLine 2"\r' +
             'ValueX,ValueY,ValueZ\n\r' +
@@ -77,7 +76,7 @@ describe('CsvRowsConversion', () => {
             'a.b\n' +
             '100';
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(content);
+        const structs = CsvRowsConversion.parse(',')(content);
         const struct = structs[0];
         expect(struct['a']['b']).toBe('100');
     });
@@ -89,7 +88,7 @@ describe('CsvRowsConversion', () => {
             'identifier,array.0.begin.year,array.0.end.year,array.0.source,array.0.label\n' +
             'identifier1,100,200,S,L';
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(content);
+        const structs = CsvRowsConversion.parse(',')(content);
         expect(structs.length).toBe(1);
 
         const struct = structs[0];
@@ -107,7 +106,7 @@ describe('CsvRowsConversion', () => {
             'a.1.b.c\n' +
             '10';
 
-        const structs = CsvRowsConversion.parse(SEPARATOR)(content);
+        const structs = CsvRowsConversion.parse(',')(content);
         const struct = structs[0];
         const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
         expect(nrEnumeratedItems).toBe(2);

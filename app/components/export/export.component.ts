@@ -126,7 +126,7 @@ export class ExportComponent implements OnInit {
 
     private async startGeojsonExport(filePath: string) {
 
-        await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId); // TODO make use of ExportRunner
+        await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
     }
 
 

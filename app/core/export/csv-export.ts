@@ -1,6 +1,6 @@
 import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
 import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
-    isnt, on, range, reduce, reverse, take, to, when} from 'tsfun';
+    isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize} from './export-helper';
@@ -270,8 +270,8 @@ export module CSVExport {
                 where,
                 nrOfNewItems,
                 flatMap(compose<any>(
-                    when(isDefined, computeReplacement, []),
-                    fillTo(widthOfEachNewItem))));
+                    cond(isDefined, computeReplacement, val([])),
+                    fillUpToSize(widthOfEachNewItem, EMPTY))));
         }
     }
 
@@ -374,15 +374,6 @@ export module CSVExport {
             .filter(isnt('type'))
             .filter(isnt('geometry'))
             .filter(isnt('id'));
-    }
-
-
-    function fillTo(targetSize: number) {
-
-        /**
-         * @param items may be undefined
-         */
-        return (items: any[]|undefined) => fillUpToSize(targetSize, EMPTY)(items ? items : [])
     }
 
 

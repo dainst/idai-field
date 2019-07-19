@@ -1,6 +1,6 @@
 import {assoc, update, flow, map} from 'tsfun';
 import {Document, IdaiType, Resource, Relations} from 'idai-components-2';
-import {makeLines, Parser} from './parser';
+import {Parser} from './parser';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import parse = CsvRowsConversion.parse;
@@ -58,7 +58,6 @@ export module CsvParser {
     function doParse(type: IdaiType, operationId: string, content: string) {
 
         return flow<any>(content,
-            makeLines,
             parse(SEPARATOR),
             map(assoc('type', type.name)),
             map(insertIsChildOf(operationId)),

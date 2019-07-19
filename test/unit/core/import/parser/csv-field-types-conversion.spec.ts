@@ -193,7 +193,7 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('field type checkboxes', () => { // TODO make sure export works for checkboxes
+    it('field type checkboxes', () => {
 
         const type = {
             name: 'TypeName',

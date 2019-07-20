@@ -58,6 +58,9 @@ export class DatingComponent {
 
     public validate(dating: Dating): boolean {
 
+        if (dating.type === 'exact' || dating.type === 'before') delete dating.begin;
+        if (dating.type === 'after') delete dating.end;
+
         DatingUtil.addNormalizedValues(dating);
 
         return Validations.validateDating(dating);

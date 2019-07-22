@@ -31,6 +31,7 @@ export module CsvParser {
     /**
      * @param type
      * @param operationId converted into isChildOf entry if not empty
+     * @param separator
      */
     export const getParse = (type: IdaiType, operationId: string, separator: string): Parser => {
 

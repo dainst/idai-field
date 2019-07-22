@@ -53,6 +53,7 @@ export module Importer {
      * @param fileContent
      * @param generateId
      * @param selectedType should be defined in case format === csv
+     * @param separator
      *
      * @returns ImportReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors

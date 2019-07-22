@@ -1,4 +1,3 @@
-import {Document} from 'idai-components-2';
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {Importer} from '../../app/core/import/importer';
@@ -231,7 +230,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             'tr1',
             false, false,
-            '{ "type": "Feature", "identifier": "abc", "dating" : [{"begin": {"inputYear": 100, "inputType": "bce"}}]}',
+            '{ "type": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" }}]}',
             () => '101');
 
         const result = await datastore.find({});

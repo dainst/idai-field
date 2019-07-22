@@ -3,6 +3,7 @@ import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, Relat
     Resource, NewDocument, Document, Dating} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
+import {DatingUtil} from '../util/dating-util';
 
 
 export module Validations {
@@ -340,19 +341,32 @@ export module Validations {
 
         return projectConfiguration.getFieldDefinitions(resource.type)
             .filter(field => field.inputType === 'dating')
-            .filter(field => resource[field.name] !== undefined &&
-                !Validations.validateDating(resource[field.name]))
-            .map(field => field.name);
+            .filter(field => {
+                return resource[field.name] !== undefined &&
+                    resource[field.name].filter((dating: Dating) => {
+                        return !Validations.validateDating(dating);
+                    }).length > 0;
+            }).map(field => field.name);
     }
 
 
     export function validateDating(dating: Dating): boolean {
 
         if (dating.label) return true;
-        if (dating.begin && (!Number.isInteger(dating.begin.year)
-            || !Number.isInteger(dating.begin.inputYear) || dating.begin.inputYear < 0)) return false;
-        if (dating.end && (!Number.isInteger(dating.end.year)
-            || !Number.isInteger(dating.end.inputYear) || dating.end.inputYear < 0)) return false;
+        if (!dating.type || !['range', 'exact', 'after', 'before', 'scientific'].includes(dating.type)) {
+            return false;
+        }
+        if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
+        if (['range', 'exact', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
+        if (dating.type === 'scientific' && !dating.margin) return false;
+
+        if (dating.begin && (!dating.begin.inputYear || !dating.begin.inputType
+            || !Number.isInteger(dating.begin.inputYear)
+            || dating.begin.inputYear < 0)) return false;
+        if (dating.end && (!dating.end.inputYear || !dating.end.inputType
+            || !Number.isInteger(dating.end.inputYear)
+            || dating.end.inputYear < 0)) return false;
+
         return dating.type !== 'range' || validateRangeDating(dating);
     }
 
@@ -360,6 +374,7 @@ export module Validations {
     function validateRangeDating(dating: Dating): boolean {
 
         return dating.begin !== undefined && dating.end !== undefined &&
-            dating.begin.year < dating.end.year;
+            DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType)
+            <  DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
     }
 }

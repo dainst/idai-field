@@ -17,6 +17,7 @@ import {TabManager} from '../tab-manager';
 import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -55,7 +56,8 @@ export class ExportComponent implements OnInit {
                 private messages: Messages,
                 private i18n: I18n,
                 private viewFacade: ViewFacade,
-                private datastore: FieldReadDatastore,
+                private fieldDatastore: FieldReadDatastore,
+                private documentDatastore: DocumentReadDatastore,
                 private typeUtility: TypeUtility,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -67,7 +69,7 @@ export class ExportComponent implements OnInit {
 
     public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
 
-    public find = (query: Query) => this.datastore.find(query);
+    public find = (query: Query) => this.fieldDatastore.find(query);
 
     public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
 
@@ -141,7 +143,7 @@ export class ExportComponent implements OnInit {
 
     private async startGeojsonExport(filePath: string) {
 
-        await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
+        await GeoJsonExporter.performExport(this.fieldDatastore, filePath, this.selectedOperationId);
     }
 
 
@@ -162,7 +164,7 @@ export class ExportComponent implements OnInit {
                 this.getOperationIdForMode(),
                 this.selectedType,
                 (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
-                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
+                (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath));
         } catch(err) {
             console.error(err);
@@ -232,7 +234,7 @@ export class ExportComponent implements OnInit {
     private async fetchOperations(): Promise<Array<FieldDocument>> {
 
         try {
-            return (await this.datastore.find({
+            return (await this.fieldDatastore.find({
                 types: this.typeUtility.getOperationTypeNames()
             })).documents;
         } catch (msgWithParams) {

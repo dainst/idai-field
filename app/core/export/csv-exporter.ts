@@ -1,6 +1,6 @@
+import * as fs from 'fs';
 import {FieldResource, IdaiType} from 'idai-components-2';
 import {CSVExport} from './csv-export';
-import * as fs from 'fs';
 import {M} from '../../components/m';
 import {PerformExport} from './export-helper';
 

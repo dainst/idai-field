@@ -387,7 +387,10 @@ export module CSVExport {
 
     function getFieldValue(field: any): string {
 
-        const value: string = Array.isArray(field) ? field.join(ARRAY_SEPARATOR) : field;
+        const value: string = Array.isArray(field)
+            ? field.join(ARRAY_SEPARATOR)
+            : field + '';   // Convert numbers to strings
+
         return value.replace(new RegExp('"', 'g'), '""');
     }
 }

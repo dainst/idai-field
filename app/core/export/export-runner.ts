@@ -83,7 +83,8 @@ export module ExportRunner {
             const query = getQuery(resourceType.name, selectedOperationId);
             resourceTypeCounts.push([
                 resourceType,
-                (await find(query)).documents.length]);
+                (await find(query)).totalCount
+            ]);
         }
         return resourceTypeCounts.filter(_ => _[1] > 0);
     }
@@ -143,7 +144,8 @@ export module ExportRunner {
 
         const query: Query = {
             types: [typeName],
-            constraints: {}
+            constraints: {},
+            limit: 0
         };
         if (selectedOperationId !== 'project') {
             (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;

@@ -80,7 +80,7 @@ export module ExportRunner {
 
         const resourceTypeCounts: Array<ResourceTypeCount> = [];
         for (let resourceType of resourceTypes) {
-            const query = getQuery(resourceType.name, selectedOperationId);
+            const query = getQuery(resourceType.name, selectedOperationId, 0);
             resourceTypeCounts.push([
                 resourceType,
                 (await find(query)).totalCount
@@ -109,10 +109,8 @@ export module ExportRunner {
                                   selectedType: IdaiType): Promise<Array<FieldDocument>> {
 
         try {
-
             const query = getQuery(selectedType.name, selectedOperationId);
             return (await find(query)).documents as Array<FieldDocument>;
-
         } catch (msgWithParams) {
             console.error(msgWithParams);
             return [];
@@ -140,12 +138,12 @@ export module ExportRunner {
     }
 
 
-    function getQuery(typeName: string, selectedOperationId: string) {
+    function getQuery(typeName: string, selectedOperationId: string, limit?: number) {
 
         const query: Query = {
             types: [typeName],
             constraints: {},
-            limit: 0
+            limit: limit
         };
         if (selectedOperationId !== 'project') {
             (query.constraints as any)[ISRECORDEDIN_CONTAIN] = selectedOperationId;

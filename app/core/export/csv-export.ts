@@ -1,6 +1,6 @@
-import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
 import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
     isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
+import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize} from './export-helper';
@@ -22,7 +22,7 @@ export module CSVExport {
 
     const H = 0;
     const M = 1;
-    type HeadingsAndMatrix = [string[],string[][]];
+    type HeadingsAndMatrix = [string[], string[][]];
 
 
     /**
@@ -355,7 +355,7 @@ export module CSVExport {
     }}
 
 
-    function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>) {
+    function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
 
         let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
         const indexOfShortDescription = fieldNames.indexOf('shortDescription');
@@ -365,6 +365,7 @@ export module CSVExport {
         }
         fieldNames = fieldNames.filter(isnt('identifier'));
         fieldNames.unshift('identifier');
+
         return fieldNames;
     }
 

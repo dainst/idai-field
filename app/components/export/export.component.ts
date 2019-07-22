@@ -35,6 +35,7 @@ const remote = require('electron').remote;
 export class ExportComponent implements OnInit {
 
     public format: 'geojson' | 'shapefile' | 'csv' = 'geojson';
+    public initializing: boolean = false;
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
@@ -64,6 +65,8 @@ export class ExportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
+    public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
+
     public find = (query: Query) => this.datastore.find(query);
 
     public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
@@ -71,9 +74,13 @@ export class ExportComponent implements OnInit {
 
     async ngOnInit() {
 
+        this.initializing = true;
+
         this.operations = await this.fetchOperations();
         await this.setTypeCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+
+        this.initializing = false;
     }
 
 
@@ -88,10 +95,18 @@ export class ExportComponent implements OnInit {
     }
 
 
-
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') await this.tabManager.openActiveTab();
+    }
+
+
+    public isExportButtonEnabled() {
+
+        return !this.isJavaInstallationMissing()
+            && !this.initializing
+            && !this.running
+            && this.resourceTypeCounts.length > 0;
     }
 
 

@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col default-nav bg-light text-right">
                 <button id="exportStartButton"
-                        class="btn btn-primary" [class.disabled]="isJavaInstallationMissing() || running"
-                        (click)="isJavaInstallationMissing() || running || startExport()">
+                        class="btn btn-primary" [class.disabled]="!isExportButtonEnabled()"
+                        (click)="!isExportButtonEnabled() || startExport()">
                     <span class="mdi mdi-file-export"></span>
                     <span class="button-label" i18n="@@export.startExport">Export starten</span>
                 </button>
@@ -58,20 +58,26 @@
                     </div>
 
 
-                    <div *ngIf="format === 'csv'" class="form-group">
+                    <div *ngIf="format === 'csv' && resourceTypeCounts.length > 0" class="form-group">
                         <label class="control-label col-form-label"
                                for="resourceTypeSelect"
                                i18n="@@export.format.resourceTypeSelect">Ressourcentyp</label>
                         <select id="resourceTypeSelect" class="form-control"
                                 [(ngModel)]="selectedType">
-                            <option *ngFor="let resourceTypeCount of resourceTypeCounts" [ngValue]="resourceTypeCount[0]">
+                            <option *ngFor="let resourceTypeCount of resourceTypeCounts"
+                                    [ngValue]="resourceTypeCount[0]">
                                 {{resourceTypeCount[0].label}} {{resourceTypeCount[1] !== -1 ? '(' + resourceTypeCount[1] + ')' : ''}}
                             </option>
                         </select>
                     </div>
 
+                    <div *ngIf="noResourcesFound()"
+                         class="export-info text-danger"
+                         i18n="@@export.csv.noResources">
+                        Keine Ressourcen gefunden.
+                    </div>
 
-                    <div *ngIf="format === 'geojson'" class="export-info"
+                    <div *ngIf="format === 'geojson' && !noResourcesFound()" class="export-info"
                          i18n="@@export.geojson.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortDescription) und <em>Typ</em> (type) der jeweiligen
@@ -86,8 +92,8 @@
                     </div>
 
 
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="export-info"
-                         i18n="@@export.shapefile.info">
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing() && !noResourcesFound()"
+                         class="export-info" i18n="@@export.shapefile.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortdesc) und <em>Typ</em> (type) der jeweiligen
                         Ressourcen.

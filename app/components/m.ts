@@ -79,6 +79,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -128,6 +130,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'docedit.validation.error.invalidDimensionValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
@@ -763,6 +767,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDimensionValue',
+                value: 'Ungültige Maßangabe im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDimensionValues',
+                value: 'Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
             content: i18n({
                 id: 'messages.import.validation.error.missingProperty',
@@ -1001,6 +1023,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidDatingValues',
                 value: 'Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDimensionValue',
+                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige Maßangabe ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDimensionValues',
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].'
             }),
             level: 'danger',
             params: [],

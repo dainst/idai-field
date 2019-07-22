@@ -95,6 +95,11 @@ export module MessagesConversion {
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE
         }
+        if (msg === ValidationErrors.INVALID_DIMENSION_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE
+        }
 
         if (replacement) msgWithParams[0] = replacement;
         return msgWithParams;

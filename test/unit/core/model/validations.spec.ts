@@ -26,7 +26,13 @@ describe('Validations', () => {
                         { name: 'dating3', label: 'dating3', inputType: 'dating' },
                         { name: 'dating4', label: 'dating4', inputType: 'dating' },
                         { name: 'dating5', label: 'dating5', inputType: 'dating' },
-                        { name: 'dating6', label: 'dating6', inputType: 'dating' }
+                        { name: 'dating6', label: 'dating6', inputType: 'dating' },
+                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
+                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
+                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
+                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension'},
+                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
+                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension'}
                     ]
                 },
                 {
@@ -233,6 +239,41 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_DATING_VALUES, 'T', 'dating3, dating4, dating5, dating6']
+            );
+        }
+        done();
+    });
+
+
+    it('should report invalid dimension fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                // Accept dimensions with label (deprecated)
+                dimension1: [{ label: 'Dating 1' }],
+                // Correct dimension
+                dimension2: [{ inputValue: 50.25, inputUnit: 'mm' }],
+                // Missing input value
+                dimension3: [{ inputUnit: 'mm' }],
+                // Missing input unit
+                dimension4: [{ inputValue: 15 }],
+                // No number value
+                dimension5: [{ inputValue: '15', inputUnit: 'mm' }],
+                // No number value in range end value
+                dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDimensionValues(doc, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_DIMENSION_VALUES, 'T', 'dimension3, dimension4, dimension5, dimension6']
             );
         }
         done();

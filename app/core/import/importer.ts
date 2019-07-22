@@ -108,6 +108,7 @@ export module Importer {
     function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
         const resource = document.resource;
+
         for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
             const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
 

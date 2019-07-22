@@ -23,7 +23,7 @@ describe('CsvFieldTypesConversion', () => {
         } as IdaiType;
 
         const result = CsvFieldTypesConversion
-            .convertFieldTypes(type)({Bool1: 'true', Bool2: 'false'} as unknown as Resource);
+            .convertFieldTypes(type)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
 
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
@@ -50,7 +50,8 @@ describe('CsvFieldTypesConversion', () => {
                     source: 'abc',
                     isImprecise: 'true',
                     isUncertain: 'false'
-                }]
+                }],
+                relations: {}
             } as unknown as Resource);
 
 
@@ -80,7 +81,7 @@ describe('CsvFieldTypesConversion', () => {
         try {
 
             CsvFieldTypesConversion
-                .convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }]} as unknown as Resource);
+                .convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
             fail();
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
@@ -111,7 +112,8 @@ describe('CsvFieldTypesConversion', () => {
                     inputUnit: 'mm',
                     isImprecise: 'true',
                     isRange: 'false'
-                }]
+                }],
+                relations: {}
             } as unknown as Resource);
 
         const dimension: Dimension = resource['Dim'][0];
@@ -140,7 +142,8 @@ describe('CsvFieldTypesConversion', () => {
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                r: 'rr'
+                r: 'rr',
+                relations: {}
             } as unknown as Resource);
 
         expect(resource['r']).toBe('rr');
@@ -159,7 +162,8 @@ describe('CsvFieldTypesConversion', () => {
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                d: '10.07.2019'
+                d: '10.07.2019',
+                relations: {}
             } as unknown as Resource);
 
         expect(resource['d']).toBe('10.07.2019');
@@ -174,17 +178,18 @@ describe('CsvFieldTypesConversion', () => {
                 name: 'dd1',
                 inputType: 'dropdownRange'
             },
-                {
-                    name: 'dd2',
-                    inputType: 'dropdownRange'
-                }],
+            {
+                name: 'dd2',
+                inputType: 'dropdownRange'
+            }],
         } as IdaiType;
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
                 dd1: 'a',
                 dd2: 'b',
-                dd2End: 'c' // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
+                dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
+                relations: {}
             } as unknown as Resource);
 
         expect(resource['dd1']).toBe('a');
@@ -205,7 +210,8 @@ describe('CsvFieldTypesConversion', () => {
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                CB: 'a;b;c'
+                CB: 'a;b;c',
+                relations: {}
             } as unknown as Resource);
 
         const cb = resource['CB'];
@@ -225,11 +231,38 @@ describe('CsvFieldTypesConversion', () => {
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                ui: '100'
+                ui: '100',
+                relations: {}
             } as unknown as Resource);
 
         expect(resource['ui']).toBe(100);
     });
+
+
+    it('relations', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'uf',
+                inputType: 'unsignedFloat'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                relations: {
+                    isAbove: "a;b",
+                    isBelow: "d"
+                }
+            } as unknown as Resource);
+
+        expect(resource.relations['isAbove']).toEqual(['a', 'b']);
+        expect(resource.relations['isBelow']).toEqual(['d']);
+    });
+
+
+    // err cases
 
 
     it('field type unsignedFloat', () => {
@@ -244,7 +277,8 @@ describe('CsvFieldTypesConversion', () => {
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                uf: '100.0'
+                uf: '100.0',
+                relations: {}
             } as unknown as Resource);
 
         expect(resource['uf']).toBe(100.0);

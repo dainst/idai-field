@@ -11,5 +11,6 @@ export module ValidationErrors {
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
     export const INVALID_DECIMAL_SEPARATORS = 'validationerror/invaliddecimalseparators';
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
+    export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
 }

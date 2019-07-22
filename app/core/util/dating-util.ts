@@ -71,7 +71,7 @@ export module DatingUtil {
     }
 
 
-    function getNormalizedYear(inputYear: number, inputType: DatingType): number {
+    export function getNormalizedYear(inputYear: number, inputType: DatingType): number {
 
         if (inputType === 'bce') return 0 - inputYear;
         if (inputType === 'bp') return 1950 - inputYear;

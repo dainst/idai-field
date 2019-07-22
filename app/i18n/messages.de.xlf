@@ -3582,6 +3582,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
+        <source>Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
+        <source>Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
         <source>Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</source>
         <target state="final">Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</target>
@@ -3793,6 +3809,22 @@
       <trans-unit id="messages.docedit.validation.error.invalidDatingValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</source>
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDimensionValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDimensionValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

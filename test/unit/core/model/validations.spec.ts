@@ -26,7 +26,13 @@ describe('Validations', () => {
                         { name: 'dating3', label: 'dating3', inputType: 'dating' },
                         { name: 'dating4', label: 'dating4', inputType: 'dating' },
                         { name: 'dating5', label: 'dating5', inputType: 'dating' },
-                        { name: 'dating6', label: 'dating6', inputType: 'dating' }
+                        { name: 'dating6', label: 'dating6', inputType: 'dating' },
+                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
+                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
+                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
+                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension'},
+                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
+                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension'}
                     ]
                 },
                 {
@@ -210,19 +216,19 @@ describe('Validations', () => {
                 type: 'T',
                 mandatory: 'm',
                 // Accept datings with label (deprecated)
-                dating1: { label: 'Dating 1' },
+                dating1: [{ label: 'Dating 1' }],
                 // Correct dating
-                dating2: { type: 'range', begin: { year: -30, inputYear: 30, inputType: 'bce' },
-                    end: { year: 20, inputYear: 20, inputType: 'ce'} },
+                dating2: [{ type: 'range', begin: { inputYear: 30, inputType: 'bce' },
+                    end: { inputYear: 20, inputType: 'ce'} }],
                 // Invalid range
-                dating3: { type: 'range', begin: { year: 20, inputYear: 20, inputType: 'ce' },
-                    end: { year: -30, inputYear: 30, inputType: 'bce'} },
+                dating3: [{ type: 'range', begin: { inputYear: 20, inputType: 'ce' },
+                    end: { inputYear: 30, inputType: 'bce'} }],
                 // Incomplete range
-                dating4: { type: 'range', begin: { year: 10, inputYear: 10, inputType: 'ce'} },
+                dating4: [{ type: 'range', begin: { inputYear: 10, inputType: 'ce'} }],
                 // No integer value
-                dating5: { type: 'exact', end: { year: 10.5, inputYear: 10.5, inputType: 'ce'} },
+                dating5: [{ type: 'exact', end: { inputYear: 10.5, inputType: 'ce'} }],
                 // Negative value
-                dating6: { type: 'exact', end: { year: -10, inputYear: -10, inputType: 'ce'} },
+                dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -233,6 +239,41 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_DATING_VALUES, 'T', 'dating3, dating4, dating5, dating6']
+            );
+        }
+        done();
+    });
+
+
+    it('should report invalid dimension fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                // Accept dimensions with label (deprecated)
+                dimension1: [{ label: 'Dating 1' }],
+                // Correct dimension
+                dimension2: [{ inputValue: 50.25, inputUnit: 'mm' }],
+                // Missing input value
+                dimension3: [{ inputUnit: 'mm' }],
+                // Missing input unit
+                dimension4: [{ inputValue: 15 }],
+                // No number value
+                dimension5: [{ inputValue: '15', inputUnit: 'mm' }],
+                // No number value in range end value
+                dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDimensionValues(doc, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_DIMENSION_VALUES, 'T', 'dimension3, dimension4, dimension5, dimension6']
             );
         }
         done();

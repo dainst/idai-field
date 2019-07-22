@@ -22,7 +22,7 @@ describe('CsvParser', () => {
         expect(docs[0].resource['type']).toBe('Feature');
         expect(docs[0].resource['custom1']).toBe('1');
         expect(docs[0].resource['custom2']).toBe('2');
-        expect(docs[0].resource.relations['isChildOf']).toBe('opId1');
+        expect(docs[0].resource.relations).toEqual({});
         done();
     });
 

@@ -1,4 +1,4 @@
-import {assoc, update, flow, map, jsonClone} from 'tsfun';
+import {assoc, update, flow, map} from 'tsfun';
 import {Document, IdaiType, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
@@ -15,17 +15,9 @@ export module CsvParser {
     const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
 
-    function insertIsChildOf(operationId: string) {
-
-        return update(
+    const insertRelations = update(
             'relations',
-            (relations: Relations|undefined) => { // TODO test different cases for (non) existing relations manually
-
-                const relations_ = relations ? jsonClone(relations) : {};
-                if (operationId && !relations_['isChildOf']) relations_['isChildOf'] = operationId as any;
-                return relations_;
-            });
-    }
+            (relations: Relations|undefined) => relations ? relations : {});
 
 
     /**
@@ -42,7 +34,7 @@ export module CsvParser {
         return (content: string) => {
 
             try {
-                return Promise.resolve(doParse(type, operationId, content, separator));
+                return Promise.resolve(doParse(type, content, separator));
             } catch (msgWithParams) {
                 return Promise.reject(msgWithParams);
             }
@@ -50,12 +42,12 @@ export module CsvParser {
     };
 
 
-    function doParse(type: IdaiType, operationId: string, content: string, separator: string) {
+    function doParse(type: IdaiType, content: string, separator: string) {
 
         return flow<any>(content,
             parse(separator),
             map(assoc('type', type.name)),
-            map(insertIsChildOf(operationId)),
+            map(insertRelations),
             map(convertFieldTypes(type)),
             map(toDocument));
     }

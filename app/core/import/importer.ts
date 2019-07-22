@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, isnt, on} from 'tsfun';
+import {includedIn, is, isNot, isnt, on, jsonClone} from 'tsfun';
 import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
@@ -87,7 +87,7 @@ export module Importer {
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
-        const importFunction = buildImportFunction( // TODO extract this out of doImport
+        const importFunction = buildImportFunction(
             format,
             importValidator,
             operationTypeNames,

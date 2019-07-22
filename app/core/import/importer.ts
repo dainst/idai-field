@@ -87,7 +87,7 @@ export module Importer {
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
-        const importFunction = buildImportFunction(
+        const importFunction = buildImportFunction( // TODO extract this out of doImport
             format,
             importValidator,
             operationTypeNames,

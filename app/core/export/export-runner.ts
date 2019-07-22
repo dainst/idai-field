@@ -42,17 +42,12 @@ export module ExportRunner {
             return asyncMap(rewriteIdentifiers_)(docs)
         };
 
-        try {
-            await performExport(
-                selectedOperationId
-                    ? (await fetchDocs(selectedOperationId)).map(to('resource'))
-                    : [],
-                selectedType,
-                relations);
-
-        } catch (err) {
-            console.error(err);
-        }
+        await performExport(
+            selectedOperationId
+                ? (await fetchDocs(selectedOperationId)).map(to('resource'))
+                : [],
+            selectedType,
+            relations);
     }
 
 

@@ -156,13 +156,18 @@ export class ExportComponent implements OnInit {
 
         if (!this.selectedType) return console.error('No resource type selected');
 
-        await ExportRunner.performExport(
-            this.find,
-            this.getOperationIdForMode(),
-            this.selectedType,
-            (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
-            (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
-            CsvExporter.performExport(filePath));
+        try {
+            await ExportRunner.performExport(
+                this.find,
+                this.getOperationIdForMode(),
+                this.selectedType,
+                (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
+                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
+                CsvExporter.performExport(filePath));
+        } catch(err) {
+            console.error(err);
+            throw [M.EXPORT_ERROR_GENERIC];
+        }
     }
 
 

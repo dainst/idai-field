@@ -124,7 +124,12 @@ export module ExportRunner {
 
                 const newTargets = [];
                 for (let target of clonedDocument.resource.relations[relation]) {
-                    newTargets.push(await getIdentifierForId(target));
+                    try {
+                        newTargets.push(await getIdentifierForId(target));
+                    } catch(err) {
+                        console.warn('Relation target "' + target + '" of resource "'
+                            + document.resource.id + '" not found', err);
+                    }
                 }
                 clonedDocument.resource.relations[relation] = newTargets;
             }

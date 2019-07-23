@@ -120,10 +120,14 @@
           "label": "Farbe(n) Überzug außen"
         },
         "coatColorInsideMunsell": {
-          "label": "Farbe(n) Überzug außen Munsell-Nr."
+          "label": "Farbe(n) Überzug innen Munsell-Nr."
         },
         "coatColorOutsideMunsell": {
-          "label": "Farbe(n) Überzug innen Munsell-Nr"
+          "label": "Farbe(n) Überzug außen Munsell-Nr"
+        },
+
+        "coatCondition": {
+          "label": "Zustand Überzug"
         },
         "decorationTechnique": {
           "label": "Dekor"
@@ -270,6 +274,9 @@
         },
         "depictedBeingClothing": {
           "label": "Wesen: Bekleidung"
+        },
+        "temper": {
+          "label": "Magerung"
         }
       }
     },
@@ -353,6 +360,9 @@
         },
         "surfaceCondition": {
           "label": "Brandspuren"
+        },
+        "temper": {
+          "label": "Magerung"
         }
       }
     },

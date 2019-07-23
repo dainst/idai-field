@@ -184,6 +184,17 @@
           "Sehr porös"
         ]
       },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
       "clayHardness": {
         "inputType": "radio",
         "valuelist": [
@@ -223,10 +234,10 @@
       "surfaceCondition": {
         "inputType": "radio",
         "valuelist": [
-          "Nutzungsspuren",
-          "Fehlbrand",
           "Schadensbrand",
-          "Unsicher"
+          "Fehlbrand",
+          "Nutzungsspuren",
+          "Unsicher bzw. unbestimmbar"
         ]
       },
       "coatType": {
@@ -247,12 +258,12 @@
       "coatQuality": {
         "inputType": "checkboxes",
         "valuelist": [
+          "schwach",
+          "stark",
           "glänzend",
           "matt",
           "dicht",
-          "dünn",
-          "schwach",
-          "stark"
+          "dünn"
         ]
       },
       "decorationTechnique": {
@@ -342,6 +353,7 @@
         "valuelist": [
           "Schadensbrand",
           "Fehlbrand",
+          "Nutzungsspuren",
           "Unsicher bzw. unbestimmbar"
         ]
       },
@@ -834,18 +846,19 @@
         "valuelist": [
           "Schadensbrand",
           "Fehlbrand",
+          "Nutzungsspuren",
           "Unsicher bzw. unbestimmbar"
         ]
       },
       "coatQuality": {
         "inputType": "checkboxes",
         "valuelist": [
+          "schwach",
+          "stark",
           "glänzend",
           "matt",
           "dicht",
-          "dünn",
-          "schwach",
-          "stark"
+          "dünn"
         ]
       },
       "coatCondition": {
@@ -973,6 +986,9 @@
           "teils unbekleidet",
           "unbekleidet"
         ]
+      },
+      "temper": {
+        "inputType": "text"
       }
     }
   },
@@ -1106,6 +1122,7 @@
         "valuelist": [
           "Schadensbrand",
           "Fehlbrand",
+          "Nutzungsspuren",
           "Unsicher bzw. unbestimmbar"
         ]
       },
@@ -1128,12 +1145,12 @@
       "coatQuality": {
         "inputType": "checkboxes",
         "valuelist": [
+          "schwach",
+          "stark",
           "glänzend",
           "matt",
           "dicht",
-          "dünn",
-          "schwach",
-          "stark"
+          "dünn"
         ]
       },
       "coatCondition": {
@@ -1170,6 +1187,9 @@
       },
       "coatColorOutsideMunsell": {
         "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
       }
     }
   },

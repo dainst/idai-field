@@ -59,11 +59,21 @@ export module DefaultImportCalc {
             try {
                 assertNoDuplicates(documents);
 
+                const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
+                const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
+                const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
+
+                const preprocessAndValidateRelations_ = preprocessAndValidateRelations(
+                    mergeMode,
+                    allowOverwriteRelationsInMergeMode,
+                    useIdentifiersInRelations,
+                    assertNoMissingRelTargets,
+                    rewriteIdentifiersInRels);
+
                 const documentsForUpdate = await processDocuments(
-                    documents,
                     validator,
-                    mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
-                    find, get, generateId);
+                    mergeMode, allowOverwriteRelationsInMergeMode, preprocessAndValidateRelations_,
+                    find)(documents);
 
                 const relatedDocuments = await processRelations(
                     documentsForUpdate,
@@ -85,28 +95,15 @@ export module DefaultImportCalc {
     /**
      * @returns clones of the documents with their properties adjusted
      */
-    async function processDocuments(documents: Array<Document>,
-                                    validator: ImportValidator,
-                                    mergeMode: boolean,
-                                    allowOverwriteRelationsInMergeMode: boolean,
-                                    useIdentifiersInRelations: boolean,
-                                    find: Find,
-                                    get: Get,
-                                    generateId: GenerateId): Promise<Array<Document>> {
+    function processDocuments(validator: ImportValidator,
+                              mergeMode: boolean,
+                              allowOverwriteRelationsInMergeMode: boolean,
+                              preprocessAndValidateRelations: (_: Document) => Promise<Document>,
+                              find: Find): (_: Array<Document>) => Promise<Array<Document>> {
 
-        const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
-        const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
-        const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
+        return asyncMap(async (document: Document) => {
 
-        const process = asyncMap(async (document: Document) => {
-
-            const preprocessedDocument = await preprocessAndValidateRelations(
-                document,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode,
-                useIdentifiersInRelations,
-                assertNoMissingRelTargets,
-                rewriteIdentifiersInRels);
+            const preprocessedDocument = await preprocessAndValidateRelations(document);
 
             // we want dropdown fields to be complete before merge
             validator.assertDropdownRangeComplete(preprocessedDocument.resource);
@@ -119,8 +116,6 @@ export module DefaultImportCalc {
 
             return validate(possiblyMergedDocument, validator, mergeMode);
         });
-
-        return await process(documents);
     }
 
 
@@ -191,32 +186,34 @@ export module DefaultImportCalc {
     }
 
 
-    async function preprocessAndValidateRelations(document: Document,
-                                                  mergeMode: boolean,
+    function preprocessAndValidateRelations(mergeMode: boolean,
                                                   allowOverwriteRelationsInMergeMode: boolean,
                                                   useIdentifiersInRelations: boolean,
                                                   assertNoMissingRelTargets: Function,
-                                                  rewriteIdentifiersInRelations: Function): Promise<Document> {
+                                                  rewriteIdentifiersInRelations: Function) {
 
-        const relations = document.resource.relations;
-        if (!relations) return document;
+        return async (document: Document): Promise<Document> => {
 
-        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+            const relations = document.resource.relations;
+            if (!relations) return document;
 
-            adjustRelations(document, relations);
+            if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+
+                adjustRelations(document, relations);
+            }
+
+            if ((!mergeMode || allowOverwriteRelationsInMergeMode) && useIdentifiersInRelations) {
+
+                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(relations);
+
+            } else if (!mergeMode) {
+
+                await assertNoMissingRelTargets(relations);
+            }
+
+            return document;
         }
-
-        if ((!mergeMode || allowOverwriteRelationsInMergeMode) && useIdentifiersInRelations) {
-
-            removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-            await rewriteIdentifiersInRelations(relations);
-
-        } else if (!mergeMode) {
-
-            await assertNoMissingRelTargets(relations);
-        }
-
-        return document;
     }
 
 

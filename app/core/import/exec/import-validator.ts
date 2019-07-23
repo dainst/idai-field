@@ -7,8 +7,7 @@ import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
-import {INPUT_TYPE, INPUT_TYPES, LIES_WITHIN, RECORDED_IN} from '../../../c';
-import {ModelUtil} from '../../model/model-util';
+import {INPUT_TYPES, LIES_WITHIN, RECORDED_IN} from '../../../c';
 
 
 type ResourceId = string;

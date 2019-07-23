@@ -52,6 +52,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
+        if (msg === ImportErrors.INVALID_DROPDOWN_RANGE_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
 
         if (msg === ImportErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;

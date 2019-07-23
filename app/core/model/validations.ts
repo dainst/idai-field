@@ -1,12 +1,16 @@
-import {on, is} from 'tsfun';
-import {FieldDefinition, FieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
-    Resource, NewDocument, Document, Dating, Dimension} from 'idai-components-2';
+import {includedIn, is, isNot, on} from 'tsfun';
+import {Dating, Dimension, Document, FieldDefinition, FieldGeometry, NewDocument, NewResource,
+    ProjectConfiguration, RelationDefinition, Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 import {DatingUtil} from '../util/dating-util';
+import {INPUT_TYPE, INPUT_TYPES} from '../../c';
+import {subtract} from 'tsfun/src/arrayset';
 
 
 export module Validations {
+
+    type FieldName = string;
 
     /**
      * @throws [INVALID_NUMERICAL_VALUES]
@@ -219,12 +223,26 @@ export module Validations {
             }
         }
 
-        if (projectConfiguration.getFieldDefinitions(resource.type)
-                .find(fd => fd.name === 'dating')) {
-            invalidFields = invalidFields
-                .filter(_ => _ !== 'period' && _!== 'periodEnd');
-        }
+        const dropDownRangeEndFields = getDropdownRangeEndFields(resource, projectFields);
+        invalidFields = subtract(dropDownRangeEndFields)(invalidFields);
         return (invalidFields.length > 0) ? invalidFields : [];
+    }
+
+
+    /**
+     * @returns dropDownRange 'End'-fields
+     */
+    function getDropdownRangeEndFields(resource: Resource|NewResource,
+        fieldDefinitions: Array<FieldDefinition>): FieldName[] {
+
+        return reduceForFieldsOfType(
+            resource,
+            fieldDefinitions,
+            INPUT_TYPES.DROPDOWN_RANGE,
+            (dropdownRangeEndFields: any, dropdownRangeFieldName: any) => {
+                return dropdownRangeEndFields.concat(dropdownRangeFieldName + 'End')
+            },
+            []);
     }
 
 
@@ -408,5 +426,26 @@ export module Validations {
         return dating.begin !== undefined && dating.end !== undefined &&
             DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType)
             <  DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
+    }
+
+
+    function reduceForFieldsOfType<A>(resource: Resource|NewResource,
+                                      fieldDefinitions: Array<FieldDefinition>,
+                                      fieldType: string,
+                                      doForField: (acc: A, matchedFieldName: string) => A,
+                                      acc: A): A {
+
+        return fieldDefinitions
+            .filter(on(INPUT_TYPE, is(fieldType)))
+            .reduce((acc: A, dropdownRangeFieldDefinition) => {
+
+                const matchedFieldName = Object.keys(resource)
+                    .filter(isNot(includedIn(['relations', 'geometry'])))
+                    .find(is(dropdownRangeFieldDefinition.name));
+
+                if (!matchedFieldName) return acc;
+                return doForField(acc, matchedFieldName);
+
+            }, acc);
     }
 }

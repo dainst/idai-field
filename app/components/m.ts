@@ -81,6 +81,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -780,6 +781,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.validation.error.invalidDimensionValues',
                 value: 'Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDropdownValues',
+                value: 'Ungültige Werte für DropdownRange-Feld (\'[0]\'). Ein -End Wert kann nicht allein vorkommen.'
             }),
             level: 'danger',
             params: [],

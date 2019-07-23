@@ -23,3 +23,11 @@ export module GROUP_NAME {
     export const POSITION = 4;
     export const TIME = 5;
 }
+
+
+export const INPUT_TYPE = 'inputType';
+
+export module INPUT_TYPES {
+
+    export const DROPDOWN_RANGE = 'dropdownRange';
+}

@@ -4,6 +4,7 @@
  */
 export module ImportErrors {
 
+    export const INVALID_DROPDOWN_RANGE_VALUES = 'ImportErrors.invalidDropdownRangeValues';
     export const INVALID_TYPE = 'ImportErrors.invalidType';
     export const OPERATIONS_NOT_ALLOWED = 'ImportErrors.operationsNotAllowed';
     export const NO_PARENT_ASSIGNED = 'ImportErrors.noParentAssigned';

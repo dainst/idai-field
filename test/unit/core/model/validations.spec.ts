@@ -47,7 +47,8 @@ describe('Validations', () => {
                     fields: [
                         { name: 'id' },
                         { name: 'type' },
-                        { name: 'dating' }
+                        { name: 'dating' },
+                        { name: 'period', inputType: 'dropdownRange' }
                     ]
                 },
             ],

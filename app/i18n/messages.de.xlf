@@ -3598,6 +3598,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
+        <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</source>
+        <target state="final">Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
         <source>Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</source>
         <target state="final">Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</target>

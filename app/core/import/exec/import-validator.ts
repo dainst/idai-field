@@ -1,13 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
+import {Document, FieldDefinition, NewDocument, NewResource, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
 import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {isnt} from 'tsfun';
-import {RECORDED_IN} from '../../../c';
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
+import {INPUT_TYPE, INPUT_TYPES, LIES_WITHIN, RECORDED_IN} from '../../../c';
+import {ModelUtil} from '../../model/model-util';
+
+
+type ResourceId = string;
 
 
 @Injectable()
@@ -22,6 +26,7 @@ import {RECORDED_IN} from '../../../c';
  * @author Thomas Kleinke
  */
 export class ImportValidator extends Validator {
+
 
     constructor(projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentDatastore,
@@ -83,6 +88,7 @@ export class ImportValidator extends Validator {
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
+     * @throws [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
      * @throws [ImportErrors.INVALID_RELATIONS]
      * @throws [ImportErrors.INVALID_FIELDS]
      * @throws [ValidationErrors.MISSING_PROPERTY]
@@ -94,7 +100,11 @@ export class ImportValidator extends Validator {
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
+        ImportValidator.assertDropdownRangeComplete(
+            document.resource, this.projectConfiguration.getFieldDefinitions(document.resource.type));
+
         const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
+
         if (invalidFields.length > 0) {
             throw [
                 ImportErrors.INVALID_FIELDS,
@@ -129,21 +139,45 @@ export class ImportValidator extends Validator {
     public assertHasLiesWithin(document: Document|NewDocument) {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)
-            && !Document.hasRelations(document as Document, 'liesWithin')) { // isRecordedIn gets constructed from liesWithin
+            && !Document.hasRelations(document as Document, LIES_WITHIN)) { // isRecordedIn gets constructed from liesWithin
 
             throw [ImportErrors.NO_PARENT_ASSIGNED];
         }
     }
 
 
-    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument, mainTypeDocumentId: string) {
+    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument, mainTypeDocumentId: ResourceId) {
 
         const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
         if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
-            mainTypeDocument.resource.type, 'isRecordedIn')) {
+            mainTypeDocument.resource.type, RECORDED_IN)) {
 
             throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                 mainTypeDocument.resource.type];
+        }
+    }
+
+
+    private static assertDropdownRangeComplete(resource: NewResource,
+                                               fieldDefinitions: Array<FieldDefinition>): void {
+
+
+        for (let fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
+
+            let fieldDefinition = fieldDefinitions.find(on('name', is(fieldName)));
+            const dropdownRangeFieldName = fieldName.replace('End', '');
+
+            if (!fieldDefinition) {
+                if (fieldName.endsWith('End')) {
+                    fieldDefinition = fieldDefinitions.find(on('name', is(dropdownRangeFieldName)))
+                }
+                if (!fieldDefinition) continue;
+            }
+            if (fieldDefinition.inputType !== INPUT_TYPES.DROPDOWN_RANGE) continue;
+
+            if (resource[dropdownRangeFieldName + 'End'] && !(resource[dropdownRangeFieldName])) {
+                throw [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, dropdownRangeFieldName];
+            }
         }
     }
 }

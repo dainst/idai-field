@@ -14,7 +14,7 @@ export module CSVExport {
     const EMPTY = '';
     const SEPARATOR = ',';
     const OBJECT_SEPARATOR = '.';
-    const ARRAY_SEPARATOR = ';';
+    export const ARRAY_SEPARATOR = ';';
 
     const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
@@ -293,7 +293,7 @@ export module CSVExport {
     }
 
 
-    function replaceItems<A>(where: number, // TODO maybe extract to tsfun
+    function replaceItems<A>(where: number,
                              nrOfNewItems: number,
                              replace: (_: A[]) => A[]) {
 

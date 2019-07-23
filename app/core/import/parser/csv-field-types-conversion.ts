@@ -2,6 +2,9 @@ import {getOnOr, includedIn, is, isNot, on, setOn, isnt} from 'tsfun';
 import {IdaiType, Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../../c';
+import {CSVExport} from '../../export/csv-export';
+import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
+
 
 /**
  * Converts string values to values of other types, based on field type information.
@@ -10,8 +13,6 @@ import {PARENT} from '../../../c';
  * @author Daniel de Oliveira
  */
 export module CsvFieldTypesConversion {
-
-    const REL_SEP = ';'; // TODO remove redundant field
 
     type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
         | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
@@ -38,7 +39,7 @@ export module CsvFieldTypesConversion {
         }
 
         for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
-            resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(REL_SEP)
+            resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
         }
 
         return resource;

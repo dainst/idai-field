@@ -216,16 +216,19 @@ export module CSVExport {
 
         const {type, begin, end, margin, source, isImprecise, isUncertain} = dating;
 
-        return [
+        const expandedDating = [
             type ? type : '',
             begin && begin.inputType ? begin.inputType : '',
             begin && begin.inputYear ? begin.inputYear.toString() : '',
             end && end.inputType ? end.inputType : '',
             end && end.inputYear ? end.inputYear.toString() : '',
             margin ? margin.toString() : '',
-            source ? source : '',
-            isImprecise ? 'true' : 'false',
-            isUncertain ? 'true' : 'false'];
+            source ? source : ''];
+
+        if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
+        if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
+
+        return expandedDating;
     }
 
 
@@ -234,14 +237,17 @@ export module CSVExport {
         const {inputValue, inputRangeEndValue, measurementPosition, measurementComment,
             inputUnit, isImprecise, isRange} = dimension;
 
-        return [
+        const expandedDimension = [
             inputValue ? inputValue.toString() : '',
             inputRangeEndValue ? inputRangeEndValue.toString() : '',
             measurementPosition ? measurementPosition : '',
             measurementComment ? measurementComment : '',
-            inputUnit ? inputUnit : '',
-            isImprecise ? 'true' : 'false',
-            isRange ? 'true' : 'false'];
+            inputUnit ? inputUnit : ''];
+
+        if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
+        if (isRange !== undefined) expandedDimension.push(isRange ? 'true' : 'false');
+
+        return expandedDimension;
     }
 
 

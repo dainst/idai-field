@@ -24,7 +24,8 @@ describe('ImportValidation', () => {
                         {name: 'mandatory', mandatory: true},
                         {name: 'number1', label: 'number1', inputType: 'float'},
                         {name: 'number2', label: 'number2', inputType: 'float'},
-                        {name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE}
+                        {name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE},
+                        {name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE}
                     ]
                 },
                 {
@@ -221,6 +222,28 @@ describe('ImportValidation', () => {
     });
 
 
+    it('valid dropdown range fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                ddr: 'value',
+                ddrEnd: 'endValue',
+                ddr2: 'value',
+                relations: {isRecordedIn: ['0']}
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
+        } catch (errWithParams) {
+            fail(errWithParams);
+        }
+        done();
+    });
+
     it('invalid dropdown range field', async done => {
 
         const doc = {
@@ -235,7 +258,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])
@@ -257,7 +280,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])

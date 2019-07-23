@@ -87,7 +87,6 @@ export class ImportValidator extends Validator {
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
-     * @throws [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
      * @throws [ImportErrors.INVALID_RELATIONS]
      * @throws [ImportErrors.INVALID_FIELDS]
      * @throws [ValidationErrors.MISSING_PROPERTY]
@@ -98,9 +97,6 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.INVALID_NUMERICAL_VALUE]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
-
-        ImportValidator.assertDropdownRangeComplete(
-            document.resource, this.projectConfiguration.getFieldDefinitions(document.resource.type));
 
         const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
 
@@ -157,9 +153,12 @@ export class ImportValidator extends Validator {
     }
 
 
-    private static assertDropdownRangeComplete(resource: NewResource,
-                                               fieldDefinitions: Array<FieldDefinition>): void {
+    /**
+     * @throws [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
+     */
+    public assertDropdownRangeComplete(resource: NewResource): void {
 
+        const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(resource.type);
 
         for (let fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
 

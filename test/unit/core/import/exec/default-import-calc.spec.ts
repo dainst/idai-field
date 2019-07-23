@@ -72,7 +72,7 @@ describe('DefaultImportCalc', () => {
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
-            'assertSettingIsRecordedInIsPermissibleForType',
+            'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
 
         process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
@@ -539,4 +539,18 @@ describe('DefaultImportCalc', () => {
         expect(result[2][1]).toEqual('invalidField');
         done();
     });
+
+
+    it('validation error - dropdown not complete', async done => {
+
+        validator.assertDropdownRangeComplete.and.callFake(() => { throw [E.INVALID_DROPDOWN_RANGE_VALUES, 'abc'] });
+
+        const result = await processWithMainType([
+            d('Feature', 'one')
+        ]);
+
+        expect(result[2][0]).toEqual(E.INVALID_DROPDOWN_RANGE_VALUES);
+        expect(result[2][1]).toEqual('abc');
+        done();
+    })
 });

@@ -108,14 +108,16 @@ export module DefaultImportCalc {
                 assertNoMissingRelTargets,
                 rewriteIdentifiersInRels);
 
-            return validate(
-                await mergeOrUseAsIs(
-                    preprocessedDocument,
-                    find,
-                    mergeMode,
-                    allowOverwriteRelationsInMergeMode),
-                validator,
-                mergeMode);
+            // we want dropdown fields to be complete before merge
+            validator.assertDropdownRangeComplete(preprocessedDocument.resource);
+
+            const possiblyMergedDocument = await mergeOrUseAsIs(
+                preprocessedDocument,
+                find,
+                mergeMode,
+                allowOverwriteRelationsInMergeMode);
+
+            return validate(possiblyMergedDocument, validator, mergeMode);
         });
 
         return await process(documents);

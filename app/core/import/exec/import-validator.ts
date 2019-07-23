@@ -7,6 +7,7 @@ import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {isnt} from 'tsfun';
+import {RECORDED_IN} from '../../../c';
 
 
 @Injectable()
@@ -104,8 +105,8 @@ export class ImportValidator extends Validator {
 
         const invalidRelationFields = Validations
             .validateDefinedRelations(document.resource, this.projectConfiguration)
-            // operations have empty isRecordedIn which however is not defined. image types must not be imported. regular types all have isRecordedIn
-            .filter(isnt('isRecordedIn'));
+            // operations have empty RECORDED_IN which however is not defined. image types must not be imported. regular types all have RECORDED_IN
+            .filter(isnt(RECORDED_IN));
 
         if (invalidRelationFields.length > 0) {
             throw [

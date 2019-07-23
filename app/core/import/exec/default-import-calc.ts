@@ -31,6 +31,11 @@ export module DefaultImportCalc {
     type Identifier = string;
     type IdentifierMap = { [identifier: string]: string };
 
+    type ImportDocuments = Array<Document>;
+    type TargetDocuments = Array<Document>;
+    type MsgWithParams = string[];
+    type ProcessResult = [ImportDocuments, TargetDocuments, MsgWithParams|undefined];
+
 
     export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
 
@@ -53,8 +58,7 @@ export module DefaultImportCalc {
 
         assertLegalCombination(mainTypeDocumentId, mergeMode);
 
-        return async function process(documents: Array<Document>)
-            : Promise<[Array<Document>, Array<Document>, Array<string>|undefined]> {
+        return async function process(documents: Array<Document>): Promise<ProcessResult> {
 
             try {
                 assertNoDuplicates(documents);

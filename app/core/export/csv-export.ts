@@ -22,7 +22,9 @@ export module CSVExport {
 
     const H = 0;
     const M = 1;
-    type HeadingsAndMatrix = [string[], string[][]];
+    type Cell = string;
+    type Heading = string;
+    type HeadingsAndMatrix = [Heading[], Cell[][]];
 
 
     /**
@@ -37,7 +39,7 @@ export module CSVExport {
                                      fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations); // TODO add type for heading
+        const headings: string[] = makeHeadings(fieldDefinitions, relations);
         const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
@@ -346,14 +348,14 @@ export module CSVExport {
     }
 
 
-    function toRowsArrangedBy(fieldNames: string[]) { return (resource: FieldResource) => {
+    function toRowsArrangedBy(headings: Heading[]) { return (resource: FieldResource) => {
 
-        const row = arrayList(fieldNames.length);
+        const row = arrayList(headings.length);
 
         return getUsableFieldNames(Object.keys(resource))
             .reduce((row, fieldName) => {
 
-                const indexOfFoundElement = fieldNames.indexOf(fieldName);
+                const indexOfFoundElement = headings.indexOf(fieldName);
                 if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
 
                 return row;

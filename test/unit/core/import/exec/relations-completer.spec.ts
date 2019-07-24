@@ -12,6 +12,7 @@ describe('RelationsCompleter', () => {
     const IS_ABOVE = 'isAbove';
     const LIES_WITHIN = 'liesWithin';
     const RECORDED_IN = 'isRecordedIn';
+    const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
     
     let get;
     let isRelationProperty;
@@ -264,9 +265,9 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('set inverse relation within import itself - both directions set', async done => {
+    it('set inverse relation within import itself - both directions set - doc in import', async done => {
 
-        doc1.resource.relations[IS_BELOW] = ['2'];
+        doc1.resource.relations[IS_BELOW] = ['2']; // choose '2' as a document from import
         doc1.resource.relations[IS_ABOVE] = ['2'];
         try {
             await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
@@ -274,7 +275,48 @@ describe('RelationsCompleter', () => {
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
             expect(errWithParams[1]).toEqual('one');
-            expect(errWithParams[2]).toEqual('two');
+        }
+        done();
+    });
+
+
+    it('set inverse relation within import itself - both directions set - doc not in import', async done => {
+
+        doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
+        doc1.resource.relations[IS_ABOVE] = ['7'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
+            expect(errWithParams[1]).toEqual('one');
+        }
+        done();
+    });
+
+
+    it('set inverse relation within import itself - however, it is ok if both directions pointing to different resources', async done => {
+
+        doc1.resource.relations[IS_BELOW] = ['2'];
+        doc1.resource.relations[IS_ABOVE] = ['3'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
+        } catch (errWithParams) {
+            fail(errWithParams);
+        }
+        done();
+    });
+
+
+    it('set inverse relation within import itself - also ignore if conflict is coming from a relation which is its own inverser', async done => {
+
+        delete doc1.resource.relations[IS_BELOW];
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
+        } catch (errWithParams) {
+            fail(errWithParams);
         }
         done();
     });

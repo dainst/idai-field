@@ -573,7 +573,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_EXEC_NOT_INTERRELATED] = {
             content: i18n({
                 id: 'messages.import.error.notInterrelated',
-                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen \'[0]\' und \'[1]\' fehlerhaft.'
+                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung bei \'[0]\' fehlerhaft.'
             }),
             level: 'danger',
             params: ['?', '?'],

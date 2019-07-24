@@ -3415,8 +3415,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
-        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>
+        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

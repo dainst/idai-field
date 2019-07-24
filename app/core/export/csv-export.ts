@@ -135,7 +135,7 @@ export module CSVExport {
                 const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
 
                 return [
-                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]),
+                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]), // TODO use replaceItem?
                     headings_and_matrix[M]
                         .map(expandLevelOne(columnIndex, max))
                         .map(expandLevelTwo(columnIndex, max))];

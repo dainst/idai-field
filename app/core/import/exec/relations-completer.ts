@@ -45,7 +45,6 @@ export module RelationsCompleter {
                                                    getInverseRelation: (_: string) => string|undefined,
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
 
-
         const documentsLookup: DocumentsLookup = documents
             .reduce((documentsMap: {[id: string]: Document}, document: Document) => {
                 documentsMap[document.resource.id] = document;
@@ -158,7 +157,6 @@ export module RelationsCompleter {
                                                   documentsLookup: DocumentsLookup,
                                                   getInverseRelation: (_: string) => string|undefined,
                                                   relations: string[]): void {
-
 
         relations
             .map(relationName => {

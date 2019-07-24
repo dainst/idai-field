@@ -107,7 +107,7 @@ export module RelationsCompleter {
 
         let totalDocsToUpdate: Array<Document> = [];
         for (let document of documents) {
-            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
+            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document)); // TODO do this with reduce
         }
         return totalDocsToUpdate;
     }

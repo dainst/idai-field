@@ -37,7 +37,7 @@ export module CSVExport {
                                      fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations);
+        const headings: string[] = makeHeadings(fieldDefinitions, relations); // TODO add type for heading
         const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
@@ -126,7 +126,7 @@ export module CSVExport {
      * @param expandLevelTwo
      * @param headings_and_matrix
      */
-    function expand(expandHeading: Function,
+    function expand(expandHeading: Function, // TODO add better typing information
                     expandLevelTwo: Function,
                     headings_and_matrix: HeadingsAndMatrix) {
 
@@ -135,7 +135,7 @@ export module CSVExport {
                 const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
 
                 return [
-                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]),
+                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]), // TODO use replaceItem?
                     headings_and_matrix[M]
                         .map(expandLevelOne(columnIndex, max))
                         .map(expandLevelTwo(columnIndex, max))];

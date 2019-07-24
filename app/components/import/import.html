@@ -21,8 +21,8 @@
                                for="importFormatSelect" i18n="@@import.format">Format</label>
                         <select id="importFormatSelect" class="form-control"
                                 [(ngModel)]="format" (change)="onFormatChange()">
-                            <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
-                            <option value="csv">CSV</option>
+                            <option value="native" i18n="@@import.formats.native">JSONL</option>
+                            <option value="csv" i18n="@@import.formats.csv">CSV</option>
                             <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
                             <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
                             <option *ngIf="isTestProject()" value="idig"

@@ -38,7 +38,7 @@ export module RelationsCompleter {
      * @throws ImportErrors.*
      * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws [EMPTY_RELATION, resourceId]
-     * @throws [BAD_INTERRELATION, sourceId, targetId]
+     * @throws [BAD_INTERRELATION, sourceId]
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,

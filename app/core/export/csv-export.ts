@@ -37,7 +37,7 @@ export module CSVExport {
                                      fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations);
+        const headings: string[] = makeHeadings(fieldDefinitions, relations); // TODO add type for heading
         const matrix = resources
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));

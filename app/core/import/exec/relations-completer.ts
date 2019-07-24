@@ -161,12 +161,15 @@ export module RelationsCompleter {
 
 
         relations
-            .forEach(relationName => {
+            .map(relationName => {
 
                 if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
 
                 const inverseRelationName = getInverseRelation(relationName);
-                if (!inverseRelationName) return;
+                return [relationName, inverseRelationName] as [string, string];
+            })
+            .filter(([_, inverseRelationName]) => isDefined(inverseRelationName))
+            .forEach(([relationName, inverseRelationName]) => {
 
                 assertNotBadlyInterrelated(document, relationName, inverseRelationName);
 

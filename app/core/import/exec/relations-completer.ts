@@ -149,7 +149,7 @@ export module RelationsCompleter {
 
         return flow(relationNamesExceptRecordedIn(document),
             flatMap(lookup(document.resource.relations)),
-            filter(targetId => !documentsLookup[targetId])); // TODO could we use use isNot(lookup
+            filter(targetId => !documentsLookup[targetId])); // TODO see if we could define sort of an inverted lookup
     }
 
 

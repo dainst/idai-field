@@ -148,8 +148,8 @@ export module RelationsCompleter {
                                         documentsLookup: DocumentsLookup) {
 
         return flow(relationNamesExceptRecordedIn(document),
-            flatMap(relationName => document.resource.relations[relationName]),
-            filter(targetId => !documentsLookup[targetId]));
+            flatMap(lookup(document.resource.relations)),
+            filter(targetId => !documentsLookup[targetId])); // TODO could we use use isNot(lookup
     }
 
 

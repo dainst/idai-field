@@ -3439,7 +3439,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
-        <target state="final">An error has occured during import: one or more resources with unpermitted entries for resource.id found.</target>
+        <target state="final">An error has occurred during import: one or more resources with unpermitted entries for resource.id found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3519,7 +3519,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
         <source>Mehrfach vorhandener Identifier in Importdatei: '[0]'.</source>
-        <target state="final">Multiple occurences of identifier in import file: '[0]'.</target>
+        <target state="final">Multiple occurrences of identifier in import file: '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3559,7 +3559,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</source>
-        <target state="final">An error has occured during import: Relation at '[0]' erroneous.</target>
+        <target state="final">An error has occurred during import: Relation at '[0]' erroneous.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3567,7 +3567,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptyRelation" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</source>
-        <target state="final">An error has occured during import: Empty relation at '[0]'.</target>
+        <target state="final">An error has occurred during import: Empty relation at '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3607,7 +3607,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</source>
-        <target state="final">An error has occured during import: The relation with resource.identifier '[0]' could not be found.</target>
+        <target state="final">An error has occurred during import: The relation with resource.identifier '[0]' could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

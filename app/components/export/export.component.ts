@@ -35,7 +35,7 @@ const remote = require('electron').remote;
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'geojson' | 'shapefile' | 'csv' = 'geojson';
+    public format: 'geojson' | 'shapefile' | 'csv' = 'csv';
     public initializing: boolean = false;
     public running: boolean = false;
     public javaInstalled: boolean = true;

@@ -22,11 +22,11 @@
                         <select id="importFormatSelect" class="form-control"
                                 [(ngModel)]="format" (change)="onFormatChange()">
                             <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
-                            <option *ngIf="isTestProject()" value="idig"
-                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
+                            <option value="csv">CSV</option>
                             <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
                             <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
-                            <option value="csv">CSV</option>
+                            <option *ngIf="isTestProject()" value="idig"
+                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
                             <option *ngIf="isMeninxProject()" value="meninxfind"
                                     i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
                         </select>

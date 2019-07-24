@@ -126,7 +126,7 @@ export module CSVExport {
      * @param expandLevelTwo
      * @param headings_and_matrix
      */
-    function expand(expandHeading: Function,
+    function expand(expandHeading: Function, // TODO add better typing information
                     expandLevelTwo: Function,
                     headings_and_matrix: HeadingsAndMatrix) {
 

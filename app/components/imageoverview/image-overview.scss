@@ -67,6 +67,15 @@
   #image-pager {
     margin-top: 3px;
     width: 100%;
+
+    .btn.disabled:active,
+    .btn.disabled:active:focus {
+      box-shadow: none !important;
+    }
+
+    .btn-outline-primary {
+      color: #37588e !important;
+    }
   }
 
   .slider {

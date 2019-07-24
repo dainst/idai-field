@@ -16,7 +16,13 @@
   "Terracotta": [
     "vesselForm",
     "formDescription",
-    "vesselFormSpecific"
+    "vesselFormSpecific",
+    "temperAmount",
+    "temperParticles",
+    "clayStructure",
+    "clayColorBreak",
+    "clayColorInside",
+    "clayColorOutside"
   ],
   "Wood": [
     "color",
@@ -46,6 +52,10 @@
     "plasterComponents",
     "hasDecoration"
   ],
+  "Bone": [
+    "boneClassification",
+    "burningGrade"
+  ],
   "Pottery": [
     "amountSherdsLip",
     "amountSherdsPedestal",
@@ -69,6 +79,7 @@
     "formDescription",
     "usage",
     "hasCoat",
-    "amountSherdsPercent"
+    "amountSherdsPercent",
+    "usage"
   ]
 }

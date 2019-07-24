@@ -1,7 +1,7 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
-    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, intersection, arrayEqual, is
+    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, intersection, arrayEqual, is, lookup
 } from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -171,7 +171,7 @@ export module RelationsCompleter {
                 assertNotBadlyInterrelated(document, relationName, inverseRelationName);
 
                 document.resource.relations[relationName]
-                    .map(targetId => documentsLookup[targetId]) // TODO make HOF
+                    .map(lookup(documentsLookup))
                     .filter(isDefined)
                     .forEach(targetDocument => {
                         assertInSameOperation(document, targetDocument);
@@ -179,6 +179,9 @@ export module RelationsCompleter {
                     });
             })
     }
+
+
+
 
 
     function assertNotBadlyInterrelated(document: Document,

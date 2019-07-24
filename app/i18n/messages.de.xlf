@@ -495,11 +495,19 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.native" datatype="html">
-        <source>iDAI.field – JSONL</source>
-        <target state="final">iDAI.field – JSONL</target>
+        <source>JSONL</source>
+        <target state="final">JSONL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.csv" datatype="html">
+        <source>CSV</source>
+        <target state="final">CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.iDig" datatype="html">
@@ -507,7 +515,7 @@
         <target state="final">iDig (experimentell) – CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.geoJson" datatype="html">
@@ -515,7 +523,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.shapefile" datatype="html">
@@ -523,7 +531,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.meninx" datatype="html">
@@ -719,7 +727,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -727,7 +735,7 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.csv" datatype="html">
@@ -735,7 +743,7 @@
         <target state="final">CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csvimportmode.complete" datatype="html">

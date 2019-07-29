@@ -90,14 +90,25 @@
                         </label>
                     </div>
 
-                    <div *ngIf="showMergeOption()" class="import-info" i18n="@@import.mergeOption.info">
+                    <div *ngIf="showMergeOption() && format === 'native'" class="import-info"
+                         i18n="@@import.mergeOption.native.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
-                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
-                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <em>identifier</em>).
+                    </div>
+
+                    <div *ngIf="showMergeOption() && format === 'csv'" class="import-info"
+                         i18n="@@import.mergeOption.csv.info">
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Spalte <em>identifier</em>).
                     </div>
 
                     <div *ngIf="showMergeRelationsOption()" class="form-group form-check-inline">

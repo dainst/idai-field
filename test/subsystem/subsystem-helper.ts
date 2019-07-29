@@ -24,6 +24,7 @@ import {TabManager} from '../../app/components/tab-manager';
 import {MediaState} from '../../app/components/mediaoverview/view/media-state';
 import {MediaDocumentsManager} from '../../app/components/mediaoverview/view/media-documents-manager';
 import {MediaOverviewFacade} from '../../app/components/mediaoverview/view/media-overview-facade';
+import {IdaiFieldMediaDocumentDatastore} from '../../app/core/datastore/idai-field-media-document-datastore';
 
 
 class IdGenerator {
@@ -95,7 +96,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
-    const idaiFieldImageDocumentDatastore = new ImageDatastore(
+    const idaiFieldMediaDocumentDatastore = new IdaiFieldMediaDocumentDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
@@ -161,7 +162,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const mediaState = new MediaState();
 
-    const mediaDocumentsManager = new MediaDocumentsManager(mediaState, imageDatastore);
+    const mediaDocumentsManager = new MediaDocumentsManager(mediaState, idaiFieldMediaDocumentDatastore);
 
     const mediaOverviewFacade = new MediaOverviewFacade(mediaDocumentsManager, mediaState, typeUtility);
 
@@ -172,7 +173,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentHolder,
         documentDatastore,
         fieldDocumentDatastore,
-        idaiFieldImageDocumentDatastore,
+        imageDatastore,
         settingsService,
         resourcesStateManager,
         stateSerializer,

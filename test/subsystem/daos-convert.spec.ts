@@ -1,5 +1,5 @@
-import {createApp, setupSyncTestDb} from './subsystem-helper';
 import * as PouchDB from 'pouchdb';
+import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
 
 
@@ -38,12 +38,12 @@ describe('DAOs/Convert/Subsystem', () => {
             documentHolder,
             documentDatastore,
             fieldDocumentDatastore,
-            idaiFieldImageDocumentDatastore
+            imageDatastore
         } = await createApp();
 
         _documentDatastore = documentDatastore;
         _fieldDocumentDatastore = fieldDocumentDatastore;
-        _idaiFieldImageDocumentDatastore = idaiFieldImageDocumentDatastore;
+        _idaiFieldImageDocumentDatastore = imageDatastore;
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');

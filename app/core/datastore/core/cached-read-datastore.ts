@@ -164,7 +164,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         let idsToFetch: string[] = ids;
 
         if (offset) idsToFetch.splice(0, offset);
-        if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
+
+        if (limit !== undefined) {
+            if (limit === 0) return { documents: [], totalCount: totalCount };
+            if (limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
+        }
 
         const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
         let documents: Array<T> = documentsFromCache;

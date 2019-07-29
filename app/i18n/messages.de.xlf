@@ -439,19 +439,19 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.native" datatype="html">
-        <source>iDAI.field – JSONL</source>
-        <target state="final">iDAI.field – JSONL</target>
+        <source>JSONL</source>
+        <target state="final">JSONL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.formats.iDig" datatype="html">
-        <source>iDig (experimentell) – CSV</source>
-        <target state="final">iDig (experimentell) – CSV</target>
+      <trans-unit id="import.formats.csv" datatype="html">
+        <source>CSV</source>
+        <target state="final">CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.geoJson" datatype="html">
@@ -459,7 +459,7 @@
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.shapefile" datatype="html">
@@ -467,7 +467,15 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.iDig" datatype="html">
+        <source>iDig (experimentell) – CSV</source>
+        <target state="final">iDig (experimentell) – CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.meninx" datatype="html">
@@ -526,6 +534,14 @@
           <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.format.importTypeSelect" datatype="html">
+        <source>Ressourcentyp</source>
+        <target state="final">Ressourcentyp</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>
                             Vorhandene Ressourcen ergänzen
@@ -535,7 +551,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.info" datatype="html">
@@ -546,8 +562,7 @@
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
                         Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
-                        zugeordnet werden können, werden ignoriert.
+                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </source>
         <target state="final">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
@@ -556,12 +571,11 @@
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
                         Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
-                        zugeordnet werden können, werden ignoriert.
+                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.relationsLabel" datatype="html">
@@ -573,7 +587,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
@@ -587,7 +601,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -595,7 +609,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -603,7 +617,15 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.csv.separator" datatype="html">
+        <source>Feldtrennzeichen</source>
+        <target state="final">Feldtrennzeichen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -623,7 +645,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -637,7 +659,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -657,7 +679,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -684,12 +706,20 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.formats.csv" datatype="html">
+        <source>CSV</source>
+        <target state="final">CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.formats.geojson" datatype="html">
         <source>GeoJSON</source>
         <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
@@ -697,15 +727,23 @@
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.formats.csv" datatype="html">
-        <source>CSV</source>
-        <target state="final">CSV</target>
+      <trans-unit id="export.csvimportmode.complete" datatype="html">
+        <source>Komplett</source>
+        <target state="final">Komplett</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csvimportmode.schema" datatype="html">
+        <source>Nur Schema</source>
+        <target state="final">Nur Schema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
@@ -713,7 +751,7 @@
         <target state="final">Maßnahme</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
@@ -721,7 +759,7 @@
         <target state="final">Alle Maßnahmen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.format.resourceTypeSelect" datatype="html">
@@ -729,7 +767,19 @@
         <target state="final">Ressourcentyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.csv.noResources" datatype="html">
+        <source>
+                        Keine Ressourcen gefunden.
+                    </source>
+        <target state="final">
+                        Keine Ressourcen gefunden.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
@@ -745,7 +795,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -759,7 +809,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
@@ -775,7 +825,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -1075,11 +1125,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">122</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
@@ -1257,11 +1307,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
@@ -1317,7 +1367,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.filter.all" datatype="html">
@@ -2374,12 +2424,36 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.dating.bce" datatype="html">
+        <source>v. Chr.</source>
+        <target state="final">v. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.ce" datatype="html">
+        <source>n. Chr.</source>
+        <target state="final">n. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.bp" datatype="html">
+        <source>BP</source>
+        <target state="final">BP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
         <source>Ungenau</source>
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.uncertain" datatype="html">
@@ -2387,7 +2461,7 @@
         <target state="final">Unsicher</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.period" datatype="html">
@@ -2395,7 +2469,7 @@
         <target state="final">Zeitraum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.exact" datatype="html">
@@ -2403,7 +2477,7 @@
         <target state="final">Exakt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.before" datatype="html">
@@ -2411,7 +2485,7 @@
         <target state="final">Vor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.after" datatype="html">
@@ -2419,7 +2493,7 @@
         <target state="final">Nach</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.scientific" datatype="html">
@@ -2427,7 +2501,7 @@
         <target state="final">Naturwissenschaftlich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.until" datatype="html">
@@ -2435,7 +2509,7 @@
         <target state="final">bis</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.source" datatype="html">
@@ -2443,7 +2517,7 @@
         <target state="final">Grundlage:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">
@@ -2451,7 +2525,7 @@
         <target state="final">Hinzufügen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.date.notParsedInfo" datatype="html">
@@ -2505,7 +2579,7 @@
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -2513,7 +2587,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2521,7 +2595,7 @@
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -2954,6 +3028,54 @@
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="util.dating.bce" datatype="html">
+        <source>v. Chr.</source>
+        <target state="final">v. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.ce" datatype="html">
+        <source>n. Chr.</source>
+        <target state="final">n. Chr.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.bp" datatype="html">
+        <source>BP</source>
+        <target state="final">BP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.before" datatype="html">
+        <source>Vor</source>
+        <target state="final">Vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dating.after" datatype="html">
+        <source>Nach</source>
+        <target state="final">Nach</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
+        <source>gemessen an</source>
+        <target state="final">gemessen an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.group.stem" datatype="html">
         <source>Stammdaten</source>
         <target state="final">Stammdaten</target>
@@ -3071,6 +3193,14 @@
         <target state="final">Verknüpfungen löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/tabs/docedit-media-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.dialog.untitled" datatype="html">
+        <source>Ohne Titel</source>
+        <target state="final">Ohne Titel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3346,6 +3476,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
+        <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</source>
+        <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
+        <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</source>
+        <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.genericCsvError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.</target>
@@ -3427,8 +3573,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
-        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</target>
+        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3597,6 +3743,46 @@
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
         <source>Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
         <target state="final">Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDatingValue" datatype="html">
+        <source>Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDatingValues" datatype="html">
+        <source>Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
+        <source>Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
+        <source>Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
+        <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</source>
+        <target state="final">Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3797,6 +3983,38 @@
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</source>
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDatingValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDatingValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDimensionValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDimensionValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -1,61 +1,55 @@
-import {Observable, Observer} from 'rxjs';
-import {NewDocument, Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
+import {NewDocument} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
+import {makeLines, Parser} from './parser';
 
 /**
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class NativeJsonlParser extends AbstractParser {
+export module NativeJsonlParser {
 
     /**
      * @throws [FILE_INVALID_JSONL]
      * @throws [ID_MUST_NOT_BE_SET]
      */
-    public parse(content: string): Observable<Document> {
+    export const parse: Parser = (content:string) => {
 
-        return Observable.create((observer: Observer<NewDocument>) => {
-            NativeJsonlParser.parseContent(NativeJsonlParser.makeLines(content), observer);
-            observer.complete();
+        return new Promise((resolve: Function, reject: Function) => {
+            resolve(parseContent(makeLines(content), reject));
         });
-    }
+    };
 
 
-    private static parseContent(lines: string[], observer: Observer<NewDocument>) {
+    function parseContent(lines: string[], reject: Function) {
+
+        const docs: Array<NewDocument> = [];
 
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].length === 0) continue;
 
             let document: NewDocument;
             try {
-                document = NativeJsonlParser.makeDoc(lines[i]);
+                document = makeDoc(lines[i]);
             } catch (e) {
                 console.error('parse content error. reason: ', e);
-                observer.error([ParserErrors.FILE_INVALID_JSONL, i + 1]);
+                reject([ParserErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
-            NativeJsonlParser.assertIsValid(document);
-            observer.next(document);
+            assertIsValid(document);
+            docs.push(document);
         }
+
+        return docs;
     }
 
 
-    private static makeLines(content: string) {
-
-        return content
-            .replace(/\r\n|\n\r|\n|\r/g,'\n') // accept unix and windows line endings
-            .split('\n');
-    }
-
-
-    private static assertIsValid(document: NewDocument) {
+    function assertIsValid(document: NewDocument) {
 
         if (document.resource.id) throw [ParserErrors.ID_MUST_NOT_BE_SET];
     }
 
 
-    private static makeDoc(line: string): NewDocument {
+    function makeDoc(line: string): NewDocument {
 
         const resource = JSON.parse(line);
         if (!resource.relations) resource.relations = {};

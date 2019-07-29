@@ -343,6 +343,42 @@
         },
         "typeOfWood": {
           "label": "Type of wood"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "colorOutside": {
+          "label": "Wood color(s) outside"
+        },
+        "colorInside": {
+          "label": "Wood color(s) inside"
+        },
+        "colorOutsideMunsell": {
+          "label": "Wood color outside Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+            "label": "Wood color inside Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Wood color(s) core"
+        },
+        "colorBreakMunsell": {
+          "label": "Wood color(s) core Munsell-Nr."
+        },
+        "surfaceCondition": {
+          "label": "Burn marks"
+        },
+        "decorationTechnique": {
+          "label": "Decoration"
+        },
+        "paintColor": {
+          "label": "Paint color"
+        },
+        "paintColorMunsell": {
+          "label": "Paint color Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Paint condition"
         }
       }
     },
@@ -889,9 +925,6 @@
         },
         "temperParticles": {
           "label": "Temper particles"
-        },
-        "terracottaType": {
-          "label": "Terracotta type"
         },
         "vesselForm": {
           "label": "Basic vessel form"

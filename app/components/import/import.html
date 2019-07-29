@@ -21,13 +21,13 @@
                                for="importFormatSelect" i18n="@@import.format">Format</label>
                         <select id="importFormatSelect" class="form-control"
                                 [(ngModel)]="format" (change)="onFormatChange()">
-                            <option value="native" i18n="@@import.formats.native">iDAI.field – JSONL</option>
-                            <option *ngIf="getProject().indexOf('test') !== -1" value="idig"
-                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
+                            <option value="native" i18n="@@import.formats.native">JSONL</option>
+                            <option value="csv" i18n="@@import.formats.csv">CSV</option>
                             <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
                             <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
-                            <option value="csv">CSV</option>
-                            <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind"
+                            <option *ngIf="isTestProject()" value="idig"
+                                    i18n="@@import.formats.iDig">iDig (experimentell) – CSV</option>
+                            <option *ngIf="isMeninxProject()" value="meninxfind"
                                     i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
                         </select>
                     </div>
@@ -68,7 +68,21 @@
                                [(ngModel)]="url">
                     </div>
 
-                    <div *ngIf="format === 'native'" class="form-group form-check-inline">
+                    <div class="form-group" *ngIf="format === 'csv' && file && !typeFromFileName">
+                        <label class="control-label col-form-label"
+                               for="importTypeSelect"
+                               i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
+
+                        <select id="importTypeSelect" class="form-control"
+                                [(ngModel)]="selectedType">
+
+                            <option *ngFor="let t of resourceTypes" [ngValue]="t">
+                                {{t.label}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="showMergeOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
                                [(ngModel)]="allowMergingExistingResources">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
@@ -76,18 +90,17 @@
                         </label>
                     </div>
 
-                    <div *ngIf="format === 'native'" class="import-info" i18n="@@import.mergeOption.info">
+                    <div *ngIf="showMergeOption()" class="import-info" i18n="@@import.mergeOption.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
                         Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Feld <em>identifier</em>). Datensätze in der Importdatei, die nicht
-                        zugeordnet werden können, werden ignoriert.
+                        geschieht per Bezeichner (Feld <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="form-group form-check-inline">
+                    <div *ngIf="showMergeRelationsOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
                                [(ngModel)]="allowUpdatingRelationOnMerge">
                         <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.relationsLabel">
@@ -95,12 +108,12 @@
                         </label>
                     </div>
 
-                    <div *ngIf="format === 'native' && allowMergingExistingResources" class="import-info" i18n="@@import.mergeOption.relationsInfo">
+                    <div *ngIf="showMergeRelationsOption()" class="import-info" i18n="@@import.mergeOption.relationsInfo">
                         Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
                         Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
                     </div>
 
-                    <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
+                    <div class="form-group" *ngIf="showImportIntoOperation()">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>
@@ -113,6 +126,13 @@
                         </select>
                     </div>
 
+                    <div *ngIf="format === 'csv'" class="form-group">
+                        <label class="control-label col-form-label"
+                               i18n="@@import.csv.separator">Feldtrennzeichen</label>
+                        <input class="form-control" id="separatorInput"
+                               type="text" [maxlength]="1" [(ngModel)]="separator">
+                    </div>
+
                     <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
@@ -121,14 +141,12 @@
                         Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </div>
 
-                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger"
-                         i18n="@@import.shapefile.javaWarning">
+                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger" i18n="@@import.shapefile.javaWarning">
                         Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
                         erforderlich.
                     </div>
 
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="import-info"
-                         i18n="@@import.shapefile.info">
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
                         Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per

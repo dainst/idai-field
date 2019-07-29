@@ -53,6 +53,7 @@ import {FieldDatastore} from './core/datastore/field/field-datastore';
 import {TabManager} from './components/tab-manager';
 import {MenuService} from './menu-service';
 import {TabSpaceCalculator} from './components/tab-space-calculator';
+import {UtilTranslations} from './core/util/util-translations';
 
 
 const remote = require('electron').remote;
@@ -216,7 +217,8 @@ registerLocaleData(localeDe, 'de');
         SynchronizationStatus,
         TabManager,
         TabSpaceCalculator,
-        MenuService
+        MenuService,
+        UtilTranslations
     ],
     entryComponents: [
         ProjectsModalComponent

@@ -12,13 +12,13 @@ describe('GeojsonParser', () => {
 
     function expectErr(fileContent, which, done) {
 
-        const parser = new GeojsonParser(undefined, undefined);
-        parser.parse(fileContent).subscribe(() => {
+        const parse = GeojsonParser.getParse(undefined, undefined);
+        parse(fileContent).then(() => {
             fail('should not emit next');
         }, err => {
             expect(err[0]).toBe(which);
             done();
-        }, () => fail('should not complete'));
+        });
     }
 
 
@@ -31,15 +31,11 @@ describe('GeojsonParser', () => {
             '"coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, ' +
             '"properties" : {"identifier":"123"} } ] }';
 
-        const parser = new GeojsonParser(undefined, undefined);
+        const parse = GeojsonParser.getParse(undefined, undefined);
         const docs: Document[] = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-            docs.push(resultDocument);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
+        parse(fileContent).then(docs => {
+            // expect(resultDocument).not.toBe(undefined);
+            // docs.push(resultDocument);
             expect(docs[0].resource['identifier']).toEqual('122');
             expect(docs[0].resource['geometry']['type']).toEqual('Point');
 
@@ -47,6 +43,9 @@ describe('GeojsonParser', () => {
             expect(docs[1].resource['geometry']['type']).toEqual('Polygon');
 
             expect(docs.length).toEqual(2);
+            done();
+        }, err => {
+            fail(err);
             done();
         });
     });

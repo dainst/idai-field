@@ -5,7 +5,6 @@ import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
 import {ImportErrors} from '../../app/core/import/exec/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {ImportValidator} from '../../app/core/import/exec/import-validator';
 
 /**
  * @author Daniel de Oliveira
@@ -215,6 +214,27 @@ describe('Import/Subsystem', () => {
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');
+        done();
+    });
+
+
+    it('postprocess documents', async done => {
+
+        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            'tr1',
+            false, false,
+            '{ "type": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" }}]}',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);
         done();
     });
 });

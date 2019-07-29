@@ -17,7 +17,7 @@ describe('DefaultImport', () => {
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
+            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertDropdownRangeComplete',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
 
         mockValidator.assertHasLiesWithin.and.returnValue();
@@ -34,9 +34,12 @@ describe('DefaultImport', () => {
         });
 
         importFunction = DefaultImport.build(
-            mockValidator, operationTypeNames,
+            mockValidator,
+            operationTypeNames,
             () => undefined,
-            () => '101');
+            () => '101')(
+            false,
+            false);
     });
 
 
@@ -59,10 +62,10 @@ describe('DefaultImport', () => {
             documents: [{ resource: { identifier: '123', id: '1' } }]
         }));
 
-        const res = await (DefaultImport.build(
+        await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
-             () => '101', true) as any)(
+             () => '101')(true, false))(
             [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
@@ -73,17 +76,12 @@ describe('DefaultImport', () => {
 
     it('does not overwrite if exists', async done => {
 
-        // TODO The test runs without this. Check again how the test works.
-        mockDatastore.get.and.returnValue(Promise.resolve(
-            { resource: { id: '0', identifier: '0', type: 'Trench' }})
-        );
-
         await (DefaultImport.build(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101', false) as any)([
+            () => '101')(false, false))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-                mockDatastore,'user1');
+                mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).not.toHaveBeenCalled();
@@ -104,7 +102,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('not well formed ', async done => {
+    it('not well formed ', async done => { // shows that err from default-import-calc gets propagated
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
@@ -116,7 +114,4 @@ describe('DefaultImport', () => {
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
         done();
     });
-
-
-    // TODO test in general that err from default import calc gets propagated
 });

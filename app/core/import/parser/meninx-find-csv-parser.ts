@@ -1,30 +1,31 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {AbstractParser} from './abstract-parser';
 import {ParserErrors} from './parser-errors';
+import {Parser} from './parser';
 // import * as Papa from 'papaparse'; this does not work in production, fixes only unit test
 
 /**
  * @author Daniel de Oliveira
  */
-export class MeninxFindCsvParser extends AbstractParser {
+export module MeninxFindCsvParser {
 
-    public parse(content: string): Observable<Document> {
+    export const parse: Parser = (content: string) => {
 
-        return Observable.create((observer: Observer<Document>) => {
+        return new Promise((resolve: Function, reject: Function) => {
 
-            let errorCallback = (e: any) => observer.error([ParserErrors.CSV_INVALID, e.row]);
+            let errorCallback = (e: any) => reject([ParserErrors.CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
-                result.data.forEach( (object: any, i:any) => {
 
+                const docs: Array<Document> = [];
+                result.data.forEach( (object: any, i:any) => {
 
                     if (object.se
                         && object.se.length === 4
                         && object.id) {
 
-                        observer.next({
+                        docs.push({
                             resource: {
                                 identifier: object.se + '-' + object.id,
                                 shortDescription: object.category,
@@ -47,7 +48,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                     } else {/* skip doc with no id (or no se) */}
 
                 });
-                observer.complete();
+                resolve(docs);
             };
 
             try {
@@ -59,7 +60,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ParserErrors.CSV_GENERIC]);
+                reject([ParserErrors.CSV_GENERIC]);
             }
         });
     }

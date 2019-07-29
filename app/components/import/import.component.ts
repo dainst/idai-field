@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, isNot, map, take, forEach} from 'tsfun';
-import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
+import {empty, filter, flow, forEach, isNot, map, take, includedIn} from 'tsfun';
+import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -22,6 +22,9 @@ import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
+import {ExportRunner} from '../../core/export/export-runner';
+import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
+import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 
 
 @Component({
@@ -52,6 +55,12 @@ export class ImportComponent implements OnInit {
     public allowUpdatingRelationOnMerge = false;
     public javaInstalled: boolean = true;
 
+    // CSV Import
+    public resourceTypes: Array<IdaiType> = [];
+    public selectedType: IdaiType|undefined = undefined;
+    public typeFromFileName: boolean = false;
+    public separator: string = ',';
+
 
     constructor(
         private messages: Messages,
@@ -71,14 +80,29 @@ export class ImportComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    public getProject = () => this.settingsService.getSelectedProject();
-
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
+
+    public showMergeOption = () => this.format === 'native' || this.format === 'csv';
+
+    public showMergeRelationsOption = () => includedIn(['native', 'csv'])(this.format) && this.allowMergingExistingResources;
+
+    public isMeninxProject = () => this.settingsService.getSelectedProject().indexOf('meninx-project') !== -1;
+
+    public isTestProject = () => this.settingsService.getSelectedProject().indexOf('test') !== -1;
+
+    public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.allowMergingExistingResources;
 
 
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
+
+        this.resourceTypes =
+            getTypesWithoutExcludedTypes(
+                this.projectConfiguration.getTypesList(),
+                BASE_EXCLUSION);
+
+        this.selectFirstResourceType();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -109,18 +133,9 @@ export class ImportComponent implements OnInit {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await Importer.doImport(
-            this.format,
-            this.typeUtility,
-            this.datastore,
-            this.usernameProvider,
-            this.projectConfiguration,
-            this.selectedOperationId,
-            this.allowMergingExistingResources,
-            this.allowUpdatingRelationOnMerge,
-            await reader.go(),
-            () => this.idGenerator.generateId()
-        );
+
+        const importReport = await this.doImport(reader);
+
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;
@@ -147,10 +162,21 @@ export class ImportComponent implements OnInit {
 
     public selectFile(event: any) {
 
+        this.typeFromFileName = false;
+
         const files = event.target.files;
         this.file = !files || files.length === 0
             ? undefined
             : files[0];
+
+        if (this.file) {
+            this.selectedType = this.getResourceTypeFromFileName(this.file.name);
+            if (this.selectedType) {
+                this.typeFromFileName = true;
+            } else {
+                this.selectFirstResourceType();
+            }
+        }
     }
 
 
@@ -170,6 +196,24 @@ export class ImportComponent implements OnInit {
             case 'csv':
                 return '.csv';
         }
+    }
+
+
+    private async doImport(reader: Reader) {
+
+        return Importer.doImport(
+            this.format,
+            this.typeUtility,
+            this.datastore,
+            this.usernameProvider,
+            this.projectConfiguration,
+            this.selectedOperationId,
+            this.allowMergingExistingResources,
+            this.allowUpdatingRelationOnMerge,
+            await reader.go(),
+            () => this.idGenerator.generateId(),
+            this.format === 'csv' ? this.selectedType : undefined,
+            this.format === 'csv' ? this.separator : undefined);
     }
 
 
@@ -211,6 +255,24 @@ export class ImportComponent implements OnInit {
             this.messages.add(msgWithParams);
             return [];
         }
+    }
+
+
+    private getResourceTypeFromFileName(fileName: string): IdaiType|undefined {
+
+        for (let segment of fileName.split('.')) {
+            const type: IdaiType|undefined = this.projectConfiguration.getTypesList()
+                .find(type => type.name.toLowerCase() === segment.toLowerCase());
+            if (type) return type;
+        }
+
+        return undefined;
+    }
+
+
+    private selectFirstResourceType() {
+
+        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
     }
 
 

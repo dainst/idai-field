@@ -1,7 +1,7 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
-    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, arrayEqual, is
+    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, intersection, arrayEqual, is, lookup
 } from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -37,14 +37,13 @@ export module RelationsCompleter {
      *
      * @throws ImportErrors.*
      * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
-     * @throws [NOT_INTERRELATED, sourceId, targetId]
      * @throws [EMPTY_RELATION, resourceId]
+     * @throws [BAD_INTERRELATION, sourceId]
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
                                                    getInverseRelation: (_: string) => string|undefined,
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
-
 
         const documentsLookup: DocumentsLookup = documents
             .reduce((documentsMap: {[id: string]: Document}, document: Document) => {
@@ -108,7 +107,7 @@ export module RelationsCompleter {
 
         let totalDocsToUpdate: Array<Document> = [];
         for (let document of documents) {
-            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
+            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document)); // TODO do this with reduce
         }
         return totalDocsToUpdate;
     }
@@ -149,8 +148,8 @@ export module RelationsCompleter {
                                         documentsLookup: DocumentsLookup) {
 
         return flow(relationNamesExceptRecordedIn(document),
-            flatMap(relationName => document.resource.relations[relationName]),
-            filter(targetId => !documentsLookup[targetId]));
+            flatMap(lookup(document.resource.relations)),
+            filter(targetId => !documentsLookup[targetId])); // TODO see if we could define sort of an inverted lookup
     }
 
 
@@ -159,19 +158,21 @@ export module RelationsCompleter {
                                                   getInverseRelation: (_: string) => string|undefined,
                                                   relations: string[]): void {
 
-
         relations
-            .forEach(relationName => {
+            .map(relationName => {
 
                 if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
 
                 const inverseRelationName = getInverseRelation(relationName);
-                if (!inverseRelationName) return;
+                return [relationName, inverseRelationName] as [string, string];
+            })
+            .filter(([_, inverseRelationName]) => isDefined(inverseRelationName))
+            .forEach(([relationName, inverseRelationName]) => {
 
-                assertNotBadlyInterrelated(document, relationName, inverseRelationName, documentsLookup);
+                assertNotBadlyInterrelated(document, relationName, inverseRelationName);
 
                 document.resource.relations[relationName]
-                    .map(targetId => documentsLookup[targetId])
+                    .map(lookup(documentsLookup))
                     .filter(isDefined)
                     .forEach(targetDocument => {
                         assertInSameOperation(document, targetDocument);
@@ -181,18 +182,19 @@ export module RelationsCompleter {
     }
 
 
+
+
+
     function assertNotBadlyInterrelated(document: Document,
                                         relationName: string,
-                                        inverseRelationName: string,
-                                        documentsLookup: DocumentsLookup) {
+                                        inverseRelationName: string) {
 
-        if (!isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) {
-            const u  = union([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
-            if (u.length > 0) {
-                throw [E.BAD_INTERRELATION,
-                    document.resource.identifier,
-                    documentsLookup[u[0]].resource.identifier];
-            }
+        if (relationName === inverseRelationName) return;
+        if (isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) return;
+
+        const intersect  = intersection([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
+        if (intersect.length > 0) {
+            throw [E.BAD_INTERRELATION, document.resource.identifier];
         }
     }
 

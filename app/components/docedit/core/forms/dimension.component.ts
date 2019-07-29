@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {Resource} from 'idai-components-2';
+import {Resource, Dimension, FieldDefinition} from 'idai-components-2';
+import {DimensionUtil} from '../../../../core/util/dimension-util';
+import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
 @Component({
@@ -11,68 +13,69 @@ import {Resource} from 'idai-components-2';
 
 /**
  * @author Fabian Z.
+ * @author Thomas Kleinke
  */
 export class DimensionComponent {
 
     @Input() resource: Resource;
-    @Input() field: any;
+    @Input() field: FieldDefinition;
 
-    public newDimension: any = null;
+    public newDimension: Dimension|undefined = undefined;
+    public dimensionsInEditing: Array<Dimension> = [];
 
 
-    constructor(private decimalPipe: DecimalPipe) {}
+    constructor(private decimalPipe: DecimalPipe,
+                private utilTranslations: UtilTranslations) {}
 
 
     public createNewDimension() {
 
     	this.newDimension = {
-    		'new': true,
-    		'value': 0,
-            'inputValue': 0,
-            'inputRangeEndValue': 0,
-			'measurementPosition': '',
-			'measurementComment': '',
-			'inputUnit': 'cm',
-			'isImprecise': false,
-            'isRange': false,
-			'label': ''
+    		value: 0,
+            inputValue: 0,
+            inputRangeEndValue: 0,
+			measurementPosition: '',
+			measurementComment: '',
+			inputUnit: 'cm',
+			isImprecise: false,
+            isRange: false
     	};
     }
 
 
-    private convertValueFromInputUnitToMicrometre(inputUnit: string, inputValue: string): Number|undefined {
+    public getLabel(dimension: Dimension): string {
 
-    	let _val = parseFloat(inputValue);
-        if (inputUnit == 'mm') return _val * 1000;
-    	if (inputUnit == 'cm') return _val * 10000;
-    	if (inputUnit == 'm') return _val * 1000000;
-    }
-
-
-    private generateLabel(dimension: any) {
-
-        let label = (dimension['isImprecise'] ? 'ca. ' : '');
-
-        if (dimension.isRange) {
-            label += `${this.decimalPipe.transform(dimension['inputValue'])}-${this.decimalPipe.transform(dimension['inputRangeEndValue'])}`;
-        } else {
-            label += this.decimalPipe.transform(dimension['inputValue']);
-        }
-
-        label += ` ${dimension['inputUnit']}`;
-
-        if (this.field.unitSuffix && this.field.unitSuffix != '') label += ` ${this.field.unitSuffix}`;
-
-    	if (dimension['measurementPosition']) label += `, Gemessen an ${dimension['measurementPosition']}`;
-    	if (dimension['measurementComment']) label += ` (${dimension['measurementComment']})`;
-
-        dimension['label'] = label;
+        return dimension.label
+            ? dimension.label
+            : DimensionUtil.generateLabel(
+                dimension,
+                (value: any) => this.decimalPipe.transform(value),
+                (key: string) => this.utilTranslations.getTranslation(key));
     }
 
 
     public cancelNewDimension() {
 
-        this.newDimension = null;
+        this.newDimension = undefined;
+    }
+
+
+    public startEditing(dimension: Dimension) {
+
+        this.dimensionsInEditing.push(dimension);
+    }
+
+
+    private stopEditing(dimension: Dimension) {
+
+        const index: number = this.dimensionsInEditing.indexOf(dimension);
+        if (index > -1) this.dimensionsInEditing.splice(index, 1);
+    }
+
+
+    public isInEditing(dimension: Dimension) {
+
+        return this.dimensionsInEditing.includes(dimension);
     }
 
 
@@ -83,31 +86,16 @@ export class DimensionComponent {
     }
 
 
-    public saveDimension(dimension: any) {
+    public saveDimension(dimension: Dimension) {
 
-    	if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
+        DimensionUtil.addNormalizedValues(dimension);
 
-        if (dimension.isRange) {
-            dimension['rangeMin'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
-                dimension['inputValue']);
-            dimension['rangeMax'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
-                dimension['inputRangeEndValue']);
-            delete(dimension['value']);
-        } else {
-    	    dimension['value'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
-                dimension['inputValue']);
-        }
-
-    	this.generateLabel(dimension);
-
-        if (this.field.unitSuffix && this.field.unitSuffix != '') dimension['unitSuffix'] = this.field.unitSuffix;
-
-    	if (dimension['new']) {
-    		delete dimension['new'];
+    	if (this.newDimension === dimension) {
+            if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
     		this.resource[this.field.name].push(dimension);
-            this.newDimension = null;
+            this.newDimension = undefined;
     	} else {
-    	    delete dimension['editing'];
+            this.stopEditing(dimension);
         }
     }
 }

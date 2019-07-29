@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, on, isNot, undefinedOrEmpty} from 'tsfun';
 import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
@@ -6,6 +7,9 @@ import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, 
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
+import {DatingUtil} from '../core/util/dating-util';
+import {DimensionUtil} from '../core/util/dimension-util';
+import {UtilTranslations} from '../core/util/util-translations';
 
 
 type FieldViewGroupDefinition = {
@@ -51,6 +55,8 @@ export class FieldsViewComponent implements OnChanges {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore,
                 private routingService: RoutingService,
+                private decimalPipe: DecimalPipe,
+                private utilTranslations: UtilTranslations,
                 private i18n: I18n) {}
 
 
@@ -102,6 +108,21 @@ export class FieldsViewComponent implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         this.onJumpToResource.emit(document);
+    }
+
+
+    public getArrayItemLabel(arrayItem: any): string {
+
+        if (arrayItem.begin || arrayItem.end) {
+            return DatingUtil.generateLabel(arrayItem, (key: string) => this.utilTranslations.getTranslation(key));
+        } else if (arrayItem.inputUnit) {
+            return DimensionUtil.generateLabel(
+                arrayItem,
+                (value: any) => this.decimalPipe.transform(value),
+                (key: string) => this.utilTranslations.getTranslation(key));
+        } else {
+            return arrayItem;
+        }
     }
 
 
@@ -235,8 +256,8 @@ export class FieldsViewComponent implements OnChanges {
 
     private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
 
-        // TODO remove projectConfiguration.isVisibleRelation
-        return relations.filter(on(NAME, isnt(RECORDED_IN)))
+        return relations
+            .filter(on(NAME, isnt(RECORDED_IN)))
             .filter(on(NAME, isnt(LIES_WITHIN)))
             .filter(on(NAME, isnt(INCLUDES)))
             .filter(relation => isNot(undefinedOrEmpty)(resource.relations[relation.name]))

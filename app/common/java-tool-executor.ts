@@ -42,21 +42,21 @@ export module JavaToolExecutor {
 
     export async function isJavaInstalled(): Promise<boolean> {
 
-        const javaVersion = await getJavaVersion();
-
-        return javaVersion !== undefined
-            && parseInt(javaVersion.split('.')[1]) >= REQUIRED_JAVA_VERSION;
+        return await getJavaVersion() >= REQUIRED_JAVA_VERSION;
     }
 
 
-    function getJavaVersion(): Promise<string> {
+    function getJavaVersion(): Promise<number> {
 
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
-                const javaVersion = new RegExp('java version').test(stderr)
-                    ? stderr.split(' ')[2].replace(/"/g, '')
-                    : undefined;
-                resolve(javaVersion);
+                if (new RegExp('java version').test(stderr)) {
+                    resolve(parseInt(getVersionString(stderr).split('.')[1]));
+                } else if (new RegExp('openjdk version').test(stderr)) {
+                    resolve(parseInt(getVersionString(stderr).split('.')[0]));
+                } else {
+                    resolve(0);
+                }
             });
         });
     }
@@ -71,5 +71,11 @@ export module JavaToolExecutor {
     function getJarPath(jarName: string): string {
 
         return remote.getGlobal('toolsPath') + '/' + jarName;
+    }
+
+
+    function getVersionString(stderr: string): string {
+
+        return stderr.split(' ')[2].replace(/"/g, '');
     }
 }

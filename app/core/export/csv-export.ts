@@ -1,5 +1,9 @@
-import {FieldDocument, IdaiType} from 'idai-components-2';
-import {isnt, flow, to, map} from 'tsfun';
+import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
+    isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
+import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
+import {clone} from '../util/object-util';
+import {HIERARCHICAL_RELATIONS} from '../../c';
+import {fillUpToSize} from './export-helper';
 
 
 /**
@@ -7,132 +11,361 @@ import {isnt, flow, to, map} from 'tsfun';
  */
 export module CSVExport {
 
+    const EMPTY = '';
+    const SEPARATOR = ',';
+    const OBJECT_SEPARATOR = '.';
+    export const ARRAY_SEPARATOR = ';';
+
+    const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
+    const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
+    const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
+
+    const H = 0;
+    const M = 1;
+    type Cell = string;
+    type Heading = string;
+    type HeadingsAndMatrix = [Heading[], Cell[][]];
+
+
     /**
      * Creates a header line and lines for each record.
-     * If documents is empty, still a header line gets created.
+     * If resources is empty, still a header line gets created.
      *
-     * @param documents
-     * @param resourceType
+     * @param resources
+     * @param fieldDefinitions
+     * @param relations
      */
-    export function createExportable(documents: FieldDocument[],
-                                     resourceType: IdaiType) {
+    export function createExportable(resources: FieldResource[],
+                                     fieldDefinitions: Array<FieldDefinition>,
+                                     relations: Array<string>) {
 
-        const fieldNames: string[] = makeFieldNamesList(resourceType);
-        let matrix = documents.map(toRowsArrangedBy(fieldNames));
+        const headings: string[] = makeHeadings(fieldDefinitions, relations);
+        const matrix = resources
+            .map(toDocumentWithFlattenedRelations)
+            .map(toRowsArrangedBy(headings));
 
-        const indexOfDatingElement = fieldNames.indexOf('dating');
-        if (indexOfDatingElement !== -1) {
-            const max = getMax(matrix, indexOfDatingElement);
-            expandDatingHeader(fieldNames, indexOfDatingElement, max);
-
-            matrix = flow(matrix,
-                map(expandArrayToSize(indexOfDatingElement, max)),
-                map(rowsWithDatingElementsExpanded(indexOfDatingElement, max)));
-        }
-
-        return ([fieldNames].concat(matrix)).map(toCsvLine);
+        return flow<any>([headings, matrix],
+            expandDating,
+            expandDimension(fieldDefinitions),
+            combine);
     }
 
 
-    function getMax(matrix: any, indexOfDatingElement: any) {
+    function combine(headings_and_matrix: HeadingsAndMatrix) {
 
-        return matrix.reduce((max: number, row: any) =>
+        return [headings_and_matrix[H]].concat(headings_and_matrix[M]).map(toCsvLine);
+    }
+
+
+    const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
+
+    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 7);
+
+    const expandLevelOne =
+        (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
+
+
+    function expandDating(headings_and_matrix: HeadingsAndMatrix) {
+
+        const indexOfDatingElement = headings_and_matrix[H].indexOf('dating');
+        if (indexOfDatingElement === -1) return headings_and_matrix;
+
+        return expand(
+            expandDatingHeadings,
+            expandDatingItems,
+            headings_and_matrix)([indexOfDatingElement])
+    }
+
+
+    function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
+
+        const getDimensionIndices = getIndices(fieldDefinitions, 'dimension');
+
+        return (headings_and_matrix: HeadingsAndMatrix) => {
+
+            const dimensionIndices = reverse(getDimensionIndices(headings_and_matrix[H]));
+
+            return expand(
+                    expandDimensionHeadings,
+                    expandDimensionItems,
+                    headings_and_matrix
+                )(dimensionIndices);
+        }
+    }
+
+
+    function getIndices(fieldDefinitions: Array<FieldDefinition>, inputType: string) {
+
+        return indices((heading: string) => {
+
+                if (heading.includes(OBJECT_SEPARATOR)) return false;
+                const field = fieldDefinitions.find(on('name', is(heading)));
+                if (!field) return false;
+
+                return field.inputType === inputType;
+            });
+    }
+
+
+    /**
+     * Returns a function that when provided an array of columnIndices,
+     * expands headings_and_matrix at the columns, assuming that
+     * these columns contain array values.
+     *
+     * For example:
+     *
+     * [['h1', 'h2'],
+     *  [[7,   [{b: 2}, {b: 3}],
+     *   [8,   [{b: 5}]]]
+     *
+     * Expanding at index 1, with appropriate expansion functions we can transform into
+     *
+     * [['h1', 'h2.0.b', 'h2.1.b'],
+     *  [[7,   2       , 3],
+     *   [8,   5,      , undefined]]]
+     *
+     * @param expandHeading
+     * @param expandLevelTwo
+     * @param headings_and_matrix
+     */
+    function expand(expandHeading: Function, // TODO add better typing information
+                    expandLevelTwo: Function,
+                    headings_and_matrix: HeadingsAndMatrix) {
+
+        return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
+
+                const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
+
+                return [
+                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]), // TODO use replaceItem?
+                    headings_and_matrix[M]
+                        .map(expandLevelOne(columnIndex, max))
+                        .map(expandLevelTwo(columnIndex, max))];
+
+            }, headings_and_matrix);
+    }
+
+
+    function getMax(columnIndex: any) {
+
+        return reduce((max: number, row: any) =>
 
                 Math.max(
                     max,
-                    row[indexOfDatingElement]
-                        ? row[indexOfDatingElement].length
+                    row[columnIndex]
+                        ? row[columnIndex].length
                         : 0)
 
             , 0);
     }
 
 
+    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: Array<string>) {
+
+        const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(fieldDefinitions), fieldDefinitions);
+
+        return fieldNames
+            .concat(
+                relations
+                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
+                    .map(relation => 'relations.' + relation))
+            .concat([RELATIONS_IS_CHILD_OF]);
+    }
+
+
+    function insertDropdownRangeEnds(fieldNames: string[], fieldDefinitions: Array<FieldDefinition>) {
+
+        const dropdownRangeIndices = getIndices(fieldDefinitions, 'dropdownRange')(fieldNames);
+
+        return reverse(dropdownRangeIndices)
+            .reduce(
+                (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
+                fieldNames);
+    }
+
+
+    function expandDatingHeadings(n: number) { return (fieldName: string) => {
+
+        return flatMap<any>((i: number) => [
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'type',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputType',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputYear',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputType',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
+            )(range(n));
+    }}
+
+
+    function expandDimensionHeadings(n:number) { return (fieldName: string) => {
+
+        return flatMap<any>((i: number) => [
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isRange']
+            )(range(n));
+    }}
+
+
+    function rowsWithDatingElementsExpanded(dating: Dating): string[] {
+
+        const {type, begin, end, margin, source, isImprecise, isUncertain} = dating;
+
+        const expandedDating = [
+            type ? type : '',
+            begin && begin.inputType ? begin.inputType : '',
+            begin && begin.inputYear ? begin.inputYear.toString() : '',
+            end && end.inputType ? end.inputType : '',
+            end && end.inputYear ? end.inputYear.toString() : '',
+            margin ? margin.toString() : '',
+            source ? source : ''];
+
+        if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
+        if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
+
+        return expandedDating;
+    }
+
+
+    function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
+
+        const {inputValue, inputRangeEndValue, measurementPosition, measurementComment,
+            inputUnit, isImprecise, isRange} = dimension;
+
+        const expandedDimension = [
+            inputValue ? inputValue.toString() : '',
+            inputRangeEndValue ? inputRangeEndValue.toString() : '',
+            measurementPosition ? measurementPosition : '',
+            measurementComment ? measurementComment : '',
+            inputUnit ? inputUnit : ''];
+
+        if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
+        if (isRange !== undefined) expandedDimension.push(isRange ? 'true' : 'false');
+
+        return expandedDimension;
+    }
+
+
     /**
-     * @param fieldNames gets modified
-     * @param indexOfDatingElement
-     * @param max
+     * Takes itms, for example [A,B,C,D,E]
+     * and replaces one or more entries by a number of same-structured entries.
+     *
+     * Lets assume where is 2, nrOfNewItems is 2 and widthOfEachNewitem is 2, then
+     * we get
+     * [A,B,R1a,R1b,R2a,R2b,E]
+     * where the R1 entries replace the C entry
+     *   and the R2 entries replace the D enty
+     *
+     * @param widthOfEachNewItem
+     * @param computeReplacement should return an array of size widthOfEachNewItem
      */
-    function expandDatingHeader(fieldNames: any, indexOfDatingElement: number, max: number) {
+    function expandHomogeneousItems(computeReplacement: (removed: any) => any[],
+                                    widthOfEachNewItem: number) {
+        /**
+         * @param where
+         * @param nrOfNewItems
+         */
+        return (where: number, nrOfNewItems: number) => {
 
-        const dating_fields: string[] = [];
-        for (let i = 0; i < max; i++) dating_fields.push('dating.' + i);
-        fieldNames.splice(indexOfDatingElement, 1, ...dating_fields);
-
-        for (let i = max - 1; i >= 0; i--) {
-
-            const indexOfCurrentDatingElement = indexOfDatingElement + i;
-            fieldNames.splice(indexOfCurrentDatingElement, 1, [
-                    'dating.' + i + '.begin.year',
-                    'dating.' + i + '.end.year',
-                    'dating.' + i + '.source',
-                    'dating.' + i + '.label']);
+            return replaceItems(
+                where,
+                nrOfNewItems,
+                flatMap(compose<any>(
+                    cond(isDefined, computeReplacement, val([])),
+                    fillUpToSize(widthOfEachNewItem, EMPTY))));
         }
     }
 
 
-    function rowsWithDatingElementsExpanded(indexOfDatingElement: number, max: number) {
+    function replaceItem<A>(where: number,
+                            replace: (_: A) => A[]) {
 
-        return expandHomogeneousItems(indexOfDatingElement, max, 4,
-            (removed: any) => {
-
-                return [
-                    removed['begin'] && removed['begin']['year'] ? removed['begin']['year'] : undefined,
-                    removed['end'] && removed['end']['year'] ? removed['end']['year'] : undefined,
-                    removed['source'],
-                    removed['label']];
-            });
+        return replaceItems(where, 1,
+            (items: any[]) =>
+                items.length === 0
+                    ? []
+                    : replace(items[0]));
     }
 
 
-    function expandArrayToSize(where: number, targetSize: number) {
+    function replaceItems<A>(where: number,
+                             nrOfNewItems: number,
+                             replace: (_: A[]) => A[]) {
 
-        return expandHomogeneousItems(where, 1, targetSize, identity);
-    }
+        /**
+         * @param itms
+         */
+        return (itms: A[]) => {
 
+            const replacements =
+                flow(itms,
+                    drop(where),
+                    take(nrOfNewItems),
+                    replace);
 
-    function expandHomogeneousItems(where: number, nrOfNewItems: number, widthOfEachNewItem: number,
-                    computeReplacement: (removed: any) => any[]) {
-
-        return (itms: any[]) => { // TODO make copy so to not work in place
-
-            for (let i = nrOfNewItems - 1; i >= 0; i--) {
-
-                const removed = itms.splice(where + i, 1, ...Array(widthOfEachNewItem))[0];
-                if (removed) {
-                    const newEls = computeReplacement(removed);
-                    for (let j = 0; j < newEls.length; j++) itms[where + i + j] = newEls[j];
-                }
-            }
-
-            return itms;
+            return take(where)(itms)
+                .concat(replacements)
+                .concat(drop(where + nrOfNewItems)(itms));
         }
     }
 
 
-    function toRowsArrangedBy(fieldNames: string[]) {
+    /**
+     * resource.relations = { someRel: ['val1', 'val2] }
+     * ->
+     * resource['relations.someRel'] = 'val1; val2'
+     *
+     * @param resource
+     * @returns a new resource instance, where relations are turned into fields.
+     */
+    function toDocumentWithFlattenedRelations(resource: FieldResource): FieldResource {
 
-        return (document: FieldDocument) => {
+        const cloned = clone(resource); // so we can modify in place
 
-            const newLine = new Array(fieldNames.length);
-
-            return getUsableFieldNames(Object.keys(document.resource))
-                .reduce((line, fieldName) =>  {
-
-                    const indexOfFoundElement = fieldNames.indexOf(fieldName);
-                    if (indexOfFoundElement !== -1) {
-
-                        line[indexOfFoundElement] = (document.resource as any)[fieldName];
-                    }
-                    return line;
-                }, newLine);
+        if (!cloned.relations) return cloned;
+        for (let relation of Object.keys(cloned.relations)) {
+            cloned['relations.' + relation] = cloned.relations[relation].join(ARRAY_SEPARATOR);
         }
+        delete cloned.relations;
+
+        if (cloned[RELATIONS_LIES_WITHIN]) {
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
+        }
+        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+        }
+
+        return cloned;
     }
 
 
-    function makeFieldNamesList(resourceType: IdaiType) {
+    function toRowsArrangedBy(headings: Heading[]) { return (resource: FieldResource) => {
 
-        let fieldNames: string[] = getUsableFieldNames(resourceType.fields.map(to('name')));
+        const row = arrayList(headings.length);
+
+        return getUsableFieldNames(Object.keys(resource))
+            .reduce((row, fieldName) => {
+
+                const indexOfFoundElement = headings.indexOf(fieldName);
+                if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
+
+                return row;
+            }, row);
+    }}
+
+
+    function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
+
+        let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
         const indexOfShortDescription = fieldNames.indexOf('shortDescription');
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);
@@ -140,6 +373,7 @@ export module CSVExport {
         }
         fieldNames = fieldNames.filter(isnt('identifier'));
         fieldNames.unshift('identifier');
+
         return fieldNames;
     }
 
@@ -147,16 +381,24 @@ export module CSVExport {
     function getUsableFieldNames(fieldNames: string[]): string[] {
 
         return fieldNames
-            .filter(isnt('relations'))
             .filter(isnt('type'))
-            .filter(isnt('geometry'))  // TODO probably enable later
-            .filter(isnt('relations')) // TODO probably enable later
+            .filter(isnt('geometry'))
             .filter(isnt('id'));
     }
 
 
-    const toCsvLine = (as: string[]): string => as.join(',');
+    function toCsvLine(as: string[]): string {
+
+        return as.map(field => field ? '"' + getFieldValue(field) + '"' : '""').join(SEPARATOR);
+    }
 
 
-    const identity = (_: any) => _; // TODO move to tsfun or expose tsfuns identical
+    function getFieldValue(field: any): string {
+
+        const value: string = Array.isArray(field)
+            ? field.join(ARRAY_SEPARATOR)
+            : field + '';   // Convert numbers to strings
+
+        return value.replace(new RegExp('"', 'g'), '""');
+    }
 }

@@ -1,1 +1,1 @@
-{ "type": "Find", "identifier" : "ImportedFind", "shortDescription" : "O.B. Three", "relations" : { "liesWithin" : ["SU0"] } }
+{ "type": "Find", "identifier" : "ImportedFind", "shortDescription" : "O.B. Three", "relations" : { "isChildOf" : "SE0" } }

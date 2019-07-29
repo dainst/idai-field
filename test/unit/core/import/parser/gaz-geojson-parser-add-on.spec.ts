@@ -12,13 +12,13 @@ describe('GazGeojsonParserAddOn', () => {
 
     function expectErr(fileContent, which, done) {
 
-        const parser = new GeojsonParser(GazGeojsonParserAddOn.preValidateAndTransformFeature, GazGeojsonParserAddOn.postProcess);
-        parser.parse(fileContent).subscribe(() => {
+        const parse = GeojsonParser.getParse(GazGeojsonParserAddOn.preValidateAndTransformFeature, GazGeojsonParserAddOn.postProcess);
+        parse(fileContent).then(() => {
             fail('should not emit next');
         }, err => {
             expect(err[0]).toBe(which);
             done();
-        }, () => fail('should not complete'));
+        });
     }
 
 
@@ -28,23 +28,23 @@ describe('GazGeojsonParserAddOn', () => {
             '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "gazId": "2312125", "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
             '] }';
 
-        const parser = new GeojsonParser(
+        const parse = GeojsonParser.getParse(
             GazGeojsonParserAddOn.preValidateAndTransformFeature,
             GazGeojsonParserAddOn.postProcess);
         const docs: Document[] = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-            docs.push(resultDocument);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
+        parse(fileContent).then(docs => {
+            // expect(resultDocument).not.toBe(undefined);
+            // docs.push(resultDocument);
 
             expect(docs[0].resource['id']).toEqual('gazetteer2312125');
             expect(docs[0].resource['identifier']).toEqual('2312125');
             expect(docs[0].resource['geometry']['type']).toEqual('Point');
 
             expect(docs.length).toEqual(1);
+            done();
+
+        }, err => {
+            fail(err);
             done();
         });
     });

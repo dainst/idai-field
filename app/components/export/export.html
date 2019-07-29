@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col default-nav bg-light text-right">
                 <button id="exportStartButton"
-                        class="btn btn-primary" [class.disabled]="isJavaInstallationMissing() || running"
-                        (click)="isJavaInstallationMissing() || running || startExport()">
+                        class="btn btn-primary" [class.disabled]="!isExportButtonEnabled()"
+                        (click)="!isExportButtonEnabled() || startExport()">
                     <span class="mdi mdi-file-export"></span>
                     <span class="button-label" i18n="@@export.startExport">Export starten</span>
                 </button>
@@ -19,31 +19,36 @@
                         <label class="control-label col-form-label"
                                for="ExportFormatSelect" i18n="@@export.format">Format</label>
                         <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
+                            <option value="csv" i18n="@@export.formats.csv">CSV</option>
                             <option value="geojson" i18n="@@export.formats.geojson">GeoJSON</option>
                             <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
-                            <option value="csv" i18n="@@export.formats.csv">CSV</option>
                         </select>
                     </div>
 
-                    <!--
                     <div *ngIf="format === 'csv'" class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" [(ngModel)]="csvExportMode" value="complete" id="completeselect"/>
+                            <input class="form-check-input" type="radio"
+                                   [(ngModel)]="csvExportMode"
+                                   (change)="setTypeCounts()"
+                                   value="complete" id="completeselect"/>
                             <label class="form-check-label" for="completeselect" i18n="@@export.csvimportmode.complete">Komplett</label>
                         <div class="form-check">
                         </div>
-                            <input class="form-check-input" type="radio" [(ngModel)]="csvExportMode" value="schema" id="schemaselect"/>
+                            <input class="form-check-input" type="radio"
+                                   [(ngModel)]="csvExportMode"
+                                   (change)="setTypeCounts()"
+                                   value="schema" id="schemaselect"/>
                             <label class="form-check-label" for="schemaselect" i18n="@@export.csvimportmode.schema">Nur Schema</label>
                         </div>
                     </div>
-                    -->
 
-                    <div *ngIf="format !== 'csv'" class="form-group">
+                    <div *ngIf="showOperations()" class="form-group">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@export.operationSelect.label">Maßnahme</label>
                         <select id="operationSelect" class="form-control"
-                                [(ngModel)]="selectedOperationId">
+                                [(ngModel)]="selectedOperationId"
+                                (change)="setTypeCounts()">
                             <option value="project"
                                     i18n="@@export.operationSelect.all">Alle Maßnahmen</option>
                             <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
@@ -53,20 +58,26 @@
                     </div>
 
 
-                    <div *ngIf="format === 'csv'" class="form-group">
+                    <div *ngIf="format === 'csv' && resourceTypeCounts.length > 0" class="form-group">
                         <label class="control-label col-form-label"
                                for="resourceTypeSelect"
                                i18n="@@export.format.resourceTypeSelect">Ressourcentyp</label>
                         <select id="resourceTypeSelect" class="form-control"
                                 [(ngModel)]="selectedType">
-                            <option *ngFor="let resourceType of resourceTypes" [ngValue]="resourceType">
-                                {{resourceType.label}}
+                            <option *ngFor="let resourceTypeCount of resourceTypeCounts"
+                                    [ngValue]="resourceTypeCount[0]">
+                                {{resourceTypeCount[0].label}} {{resourceTypeCount[1] !== -1 ? '(' + resourceTypeCount[1] + ')' : ''}}
                             </option>
                         </select>
                     </div>
 
+                    <div *ngIf="noResourcesFound()"
+                         class="export-info text-danger"
+                         i18n="@@export.csv.noResources">
+                        Keine Ressourcen gefunden.
+                    </div>
 
-                    <div *ngIf="format === 'geojson'" class="export-info"
+                    <div *ngIf="format === 'geojson' && !noResourcesFound()" class="export-info"
                          i18n="@@export.geojson.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortDescription) und <em>Typ</em> (type) der jeweiligen
@@ -81,8 +92,8 @@
                     </div>
 
 
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="export-info"
-                         i18n="@@export.shapefile.info">
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing() && !noResourcesFound()"
+                         class="export-info" i18n="@@export.shapefile.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortdesc) und <em>Typ</em> (type) der jeweiligen
                         Ressourcen.

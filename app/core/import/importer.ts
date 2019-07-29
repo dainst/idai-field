@@ -1,6 +1,6 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {includedIn, is, isNot, isnt, on, jsonClone} from 'tsfun';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
-import {Parser} from './parser/parser';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
@@ -11,10 +11,11 @@ import {ImportValidator} from './exec/import-validator';
 import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {isnt} from 'tsfun';
-import {ImportFunction} from "./exec/import-function";
+import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
+import {DatingUtil} from '../util/dating-util';
+import {DimensionUtil} from '../util/dimension-util';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
@@ -51,6 +52,8 @@ export module Importer {
      * @param allowUpdatingRelationsOnMerge
      * @param fileContent
      * @param generateId
+     * @param selectedType should be defined in case format === csv
+     * @param separator
      *
      * @returns ImportReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
@@ -65,23 +68,22 @@ export module Importer {
                                    allowMergingExistingResources: boolean,
                                    allowUpdatingRelationsOnMerge: boolean,
                                    fileContent: string,
-                                   generateId: () => string) {
+                                   generateId: () => string,
+                                   selectedType?: IdaiType,
+                                   separator?: string) {
 
-        const parser = createParser(format);
+        const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
+
+        const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
         const docsToUpdate: Document[] = [];
+
         try {
-
-            await parser
-                .parse(fileContent)
-                .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
-
+            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
         } catch (msgWithParams) {
-
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
         const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));
-        const mainTypeDocumentId_ = !allowMergingExistingResources ? mainTypeDocumentId : '';
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
@@ -93,33 +95,62 @@ export module Importer {
             allowMergingExistingResources,
             allowUpdatingRelationsOnMerge,
             getInverseRelation,
-            generateId);
+            generateId,
+            postProcessDocument(projectConfiguration));
 
-        const { errors, successfulImports } = await importFunction(docsToUpdate, datastore, usernameProvider.getUsername());
+        const { errors, successfulImports } = await importFunction(
+            docsToUpdate, datastore, usernameProvider.getUsername()
+        );
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
 
+    function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
-    function createParser(format: ImportFormat): Parser {
+        const resource = document.resource;
+
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
+            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+
+            // This could be and -End suffixed field of a dropdownRange input
+            // However, all the necessary validation validation is assumed to have taken place already
+            if (!fieldDefinition) continue;
+
+            if (fieldDefinition.inputType === 'dating') {
+
+                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
+            }
+            if (fieldDefinition.inputType === 'dimension') {
+
+                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
+            }
+        }
+        return document;
+    }}
+
+
+    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType,
+                          separator?: string): any {
 
         switch (format) {
             case 'meninxfind':
-                return new MeninxFindCsvParser();
+                return MeninxFindCsvParser.parse;
             case 'idig':
-                return new IdigCsvParser();
+                return IdigCsvParser.parse;
             case 'csv':
-                return new CsvParser();
+                if (!selectedType) throw 'Selected type must be set for csv import';
+                if (!separator) throw 'Separator must be set for csv import';
+                return CsvParser.getParse(selectedType, operationId, separator);
             case 'geojson-gazetteer':
-                return new GeojsonParser(
+                return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
                     GazGeojsonParserAddOn.postProcess);
             case 'geojson':
-                return new GeojsonParser(undefined, undefined);
+                return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
-                return new ShapefileParser();
+                return ShapefileParser.parse;
             case 'native':
-                return new NativeJsonlParser() as any;
+                return NativeJsonlParser.parse;
         }
     }
 
@@ -128,32 +159,25 @@ export module Importer {
                                  validator: ImportValidator,
                                  operationTypeNames: string[],
                                  mainTypeDocumentId: string,
-                                 mergeMode = false,
-                                 updateRelationsOnMergeMode = false,
+                                 mergeMode: boolean,
+                                 updateRelationsOnMergeMode: boolean,
                                  getInverseRelation: (_: string) => string|undefined,
-                                 generateId: () => string): ImportFunction {
+                                 generateId: () => string,
+                                 postProcessDocument: (document: Document) => Document): ImportFunction {
+
+        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
 
         switch (format) {
-            case 'csv':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, true);
             case 'meninxfind':
                 return MeninxFindImport.build();
             case 'idig':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId);
-            case 'shapefile':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, true);
-            case 'geojson':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, true);
             case 'geojson-gazetteer':
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId);
-            default: // native
-                return DefaultImport.build(validator, operationTypeNames, getInverseRelation,
-                    generateId, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                return defaultImport()(false, false);
+            case 'shapefile':
+            case 'geojson':
+                return defaultImport()(true, false);
+            default: // native | csv
+                return defaultImport()(mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
     }
 }

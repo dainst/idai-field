@@ -1,11 +1,18 @@
 import {ImportValidator} from './import-validator';
 import {asyncForEach, asyncMap, duplicates, equal, hasNot, includedIn, isArray,
-    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt} from 'tsfun';
+    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
-import {clone} from '../../util/object-util';
+import {
+    HIERARCHICAL_RELATIONS,
+    LIES_WITHIN,
+    PARENT,
+    RECORDED_IN,
+    RESOURCE_ID,
+    RESOURCE_IDENTIFIER
+} from '../../../c';
 
 
 /**
@@ -13,8 +20,6 @@ import {clone} from '../../util/object-util';
  * @author Thomas Kleinke
  */
 export module DefaultImportCalc {
-
-    type Either<T1, T2> = [T1, undefined]|[undefined, T2];
 
     type Get = (resourceId: string) => Promise<Document>;
     type Find = (identifier: string) => Promise<Document|undefined>;
@@ -26,14 +31,18 @@ export module DefaultImportCalc {
     type Identifier = string;
     type IdentifierMap = { [identifier: string]: string };
 
-    const RECORDED_IN = 'isRecordedIn';
-    const LIES_WITHIN = 'liesWithin';
-    const INCLUDES = 'includes';
-    const PARENT = 'isChildOf';
-    const RESOURCE_IDENTIFIER = 'resource.identifier';
-    const RESOURCE_ID = 'resource.id';
+    type ImportDocuments = Array<Document>;
+    type TargetDocuments = Array<Document>;
+    type MsgWithParams = string[];
+    type ProcessResult = [ImportDocuments, TargetDocuments, MsgWithParams|undefined];
 
-    const forbiddenRelations = [LIES_WITHIN, INCLUDES, RECORDED_IN];
+
+    export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
+
+        if (mainTypeDocumentId && mergeMode) {
+            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
+        }
+    }
 
 
     export function build(validator: ImportValidator,
@@ -47,19 +56,28 @@ export module DefaultImportCalc {
                           mainTypeDocumentId: Id,
                           useIdentifiersInRelations: boolean) {
 
-        if (mainTypeDocumentId && mergeMode) {
-            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
-        }
+        assertLegalCombination(mainTypeDocumentId, mergeMode);
 
-        return async function process(documents: Array<Document>)
-            : Promise<[Array<Document>, Array<Document>, Array<string>|undefined]> {
+        return async function process(documents: Array<Document>): Promise<ProcessResult> {
 
             try {
+                assertNoDuplicates(documents);
+
+                const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
+                const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
+                const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
+
+                const preprocessAndValidateRelations_ = preprocessAndValidateRelations(
+                    mergeMode,
+                    allowOverwriteRelationsInMergeMode,
+                    useIdentifiersInRelations,
+                    assertNoMissingRelTargets,
+                    rewriteIdentifiersInRels);
+
                 const documentsForUpdate = await processDocuments(
-                    documents,
                     validator,
-                    mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations,
-                    find, get, generateId);
+                    mergeMode, allowOverwriteRelationsInMergeMode, preprocessAndValidateRelations_,
+                    find)(documents);
 
                 const relatedDocuments = await processRelations(
                     documentsForUpdate,
@@ -69,7 +87,9 @@ export module DefaultImportCalc {
                     mainTypeDocumentId);
 
                 return [documentsForUpdate, relatedDocuments, undefined];
+
             } catch (errWithParams) {
+
                 return [[],[], errWithParams];
             }
         }
@@ -79,58 +99,34 @@ export module DefaultImportCalc {
     /**
      * @returns clones of the documents with their properties adjusted
      */
-    async function processDocuments(documents: Array<Document>,
-                                    validator: ImportValidator,
-                                    mergeMode: boolean,
-                                    allowOverwriteRelationsInMergeMode: boolean,
-                                    useIdentifiersInRelations: boolean,
-                                    find: Find,
-                                    get: Get,
-                                    generateId: GenerateId): Promise<Array<Document>> {
+    function processDocuments(validator: ImportValidator,
+                              mergeMode: boolean,
+                              allowOverwriteRelationsInMergeMode: boolean,
+                              preprocessAndValidateRelations: (_: Document) => Promise<Document>,
+                              find: Find): (_: Array<Document>) => Promise<Array<Document>> {
+
+        return asyncMap(async (document: Document) => {
+
+            const preprocessedDocument = await preprocessAndValidateRelations(document);
+
+            // we want dropdown fields to be complete before merge
+            validator.assertDropdownRangeComplete(preprocessedDocument.resource);
+
+            const possiblyMergedDocument = await mergeOrUseAsIs(
+                preprocessedDocument,
+                find,
+                mergeMode,
+                allowOverwriteRelationsInMergeMode);
+
+            return validate(possiblyMergedDocument, validator, mergeMode);
+        });
+    }
 
 
-        async function preprocessAndValidateRelations(document: Document): Promise<Document> {
-
-            const relations = document.resource.relations;
-            if (!relations) return document;
-
-            if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-                const foundForbiddenRelations = Object.keys(document.resource.relations)
-                    .filter(includedIn(forbiddenRelations))
-                    .join(', ');
-                if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
-
-                for (let name of Object.keys(document.resource.relations)) {
-                    if (name === PARENT) continue;
-                    if (not(isArray)(relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
-                }
-                if (isArray(relations[PARENT])) throw [E.PARENT_MUST_NOT_BE_ARRAY, document.resource.identifier];
-                if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
-            }
-
-            if ((!mergeMode || allowOverwriteRelationsInMergeMode)  && useIdentifiersInRelations) {
-
-                if (useIdentifiersInRelations) {
-                    removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-                    await rewriteIdentifiersInRelations(relations, find, identifierMap);
-                }
-            } else if (!mergeMode) {
-                await assertNoMissingRelationTargets(relations, get);
-            }
-            return document;
-        }
-
+    function assertNoDuplicates(documents: Array<Document>) {
 
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
-        const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
-
-        return await asyncMap(async (document: Document) => {
-            let _ = clone(document); 
-            _ = await preprocessAndValidateRelations(_);
-            _ = await mergeOrUseAsIs(_, find, mergeMode, allowOverwriteRelationsInMergeMode);
-            return validate(_, validator, mergeMode);
-        })(documents);
     }
 
 
@@ -153,6 +149,75 @@ export module DefaultImportCalc {
                 get, getInverseRelation,
                 mergeMode)
             : [];
+    }
+
+
+    function adjustRelations(document: Document, relations: Relations) {
+
+        assertHasNoForbiddenRelations(document);
+        const assertIsntArrayRelation = assertIsNotArrayRelation(document);
+
+        Object.keys(document.resource.relations)
+            .filter(isnt(PARENT))
+            .forEach(assertIsntArrayRelation);
+
+        assertParentNotArray(relations[PARENT], document.resource.identifier);
+        if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    }
+
+
+    function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
+
+        if (isArray(parentRelation)) throw [E.PARENT_MUST_NOT_BE_ARRAY, resourceIdentifier];
+    }
+
+
+    function assertHasNoForbiddenRelations(document: Document) {
+
+        const foundForbiddenRelations = Object.keys(document.resource.relations)
+            .filter(includedIn(HIERARCHICAL_RELATIONS))
+            .join(', ');
+        if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+    }
+
+
+    function assertIsNotArrayRelation(document: Document) {
+
+        return (name: string) => {
+
+            if (not(isArray)(document.resource.relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+        }
+    }
+
+
+    function preprocessAndValidateRelations(mergeMode: boolean,
+                                                  allowOverwriteRelationsInMergeMode: boolean,
+                                                  useIdentifiersInRelations: boolean,
+                                                  assertNoMissingRelTargets: Function,
+                                                  rewriteIdentifiersInRelations: Function) {
+
+        return async (document: Document): Promise<Document> => {
+
+            const relations = document.resource.relations;
+            if (!relations) return document;
+
+            if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+
+                adjustRelations(document, relations);
+            }
+
+            if ((!mergeMode || allowOverwriteRelationsInMergeMode) && useIdentifiersInRelations) {
+
+                removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+                await rewriteIdentifiersInRelations(relations);
+
+            } else if (!mergeMode) {
+
+                await assertNoMissingRelTargets(relations);
+            }
+
+            return document;
+        }
     }
 
 
@@ -245,39 +310,44 @@ export module DefaultImportCalc {
     }
 
 
-    async function rewriteIdentifiersInRelations(relations: Relations,
-                                                 find: Find,
-                                                 identifierMap: IdentifierMap): Promise<void> {
+    function rewriteIdentifiersInRelations(find: Find,
+                                           identifierMap: IdentifierMap) {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, identifier: Identifier) => {
-            if (identifierMap[identifier]) {
-                relations[relation][i] = identifierMap[identifier];
-            } else {
-                const _ = await find(identifier);
-                if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
-                relations[relation][i] = _.resource.id;
-            }
-        });
+        return async (relations: Relations): Promise<void> => {
+
+            return iterateRelationsInImport(relations, (relation: string) => async (identifier: Identifier, i: number) => {
+                if (identifierMap[identifier]) {
+                    relations[relation][i] = identifierMap[identifier];
+                } else {
+                    const _ = await find(identifier);
+                    if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
+                    relations[relation][i] = _.resource.id;
+                }
+            });
+        }
     }
 
 
-    async function assertNoMissingRelationTargets(relations: Relations,
-                                                  get: Get): Promise<void> {
+    function assertNoMissingRelationTargets(get: Get) {
 
-        return iterateRelationsInImport(relations, async (relation: string, i: number, id: Id) => {
-            try { await get(id) }
-            catch { throw [E.MISSING_RELATION_TARGET, id] }
-        });
+        return async (relations: Relations): Promise<void> => {
+
+            return iterateRelationsInImport(relations,
+                (_: never) => async (id: Id, _: never) => {
+
+                try { await get(id) }
+                catch { throw [E.MISSING_RELATION_TARGET, id] }
+            });
+        }
     }
 
 
     async function iterateRelationsInImport(
         relations: Relations,
-        asyncIterationFunction: (relation: string, i: number, idOrIdentifier: Id|Identifier) => Promise<void>): Promise<void> {
+        asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
         for (let relation of Object.keys(relations)) {
-            await asyncForEach((idOrIdentifier: string, i) =>
-                asyncIterationFunction(relation, i, idOrIdentifier))(relations[relation]);
+            await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
         }
     }
     

@@ -1,9 +1,23 @@
 {
   "types": {
     "Find": {
-      "amount": {
-        "label": "Anzahl (gesamt)",
-        "decription": "Was unter 'Zustand' zusammengefasst wird kann hier zusammengerechnet werden, wenn dies gewollt ist"
+      "fields": {
+        "date": {
+          "label": "Funddatum"
+        },
+        "amount": {
+          "label": "Anzahl (gesamt)",
+          "decription": "Was unter 'Zustand' zusammengefasst wird kann hier zusammengerechnet werden, wenn dies gewollt ist"
+        },
+        "specialStatus": {
+          "label": "Sonderstatus"
+        },
+        "deviatingStoragePlace": {
+          "label": "Abweichende/r Aufbewahrungsort/Inventarnummer"
+        },
+        "conditionComment": {
+          "label": "Kommentar Erhaltungszustand und Anpassungen/Zugehörigkeiten"
+        }
       }
     },
     "Pottery": {
@@ -13,7 +27,536 @@
           "label": "Import"
         },
         "isMisfired": {
-          "label": "Fehlbrand/Schadensbrand"
+          "label": "Fehlbrand/Schadensbrand: BITTE INFORMATIONEN ÜBERTRAGEN"
+        },
+        "materialType": {
+          "label": "Ware"
+        },
+        "specificType": {
+          "label": "Gattung"
+        },
+        "vesselForm": {
+          "label": "Funktionale Kategorie"
+        },
+        "typeNumber": {
+          "label": "Typenkatalog-Nr."
+        },
+        "amountSherdsWall": {
+         "label": "Anzahl Wandungsfragmente"
+        },
+        "amountSherdsRim": {
+          "label": "Anzahl Randfragmente"
+        },
+        "amountSherdsBase": {
+          "label": "Anzahl Fuß-/Bodenfragmente"
+        },
+        "amountSherdsHandles": {
+          "label": "Anzahl Henkelfragmente"
+        },
+        "amountSherdsOther": {
+          "label": "Anzahl Sonstiges"
+        },
+        "conditionPercentRim": {
+          "label": "Erhaltung Rand in %"
+        },
+        "conditionPercentBase": {
+          "label": "Erhaltung Boden/Fuß in %"
+        },
+        "conditionpercentVessel": {
+          "label": "Erhaltung Gefäß in %"
+        },
+        "manufacturingDescription": {
+          "label": "Details Herstellung"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "colorOutside": {
+          "label": "Tonfarbe(n) außen"
+        },
+        "colorOutsideMunsell": {
+          "label": "Tonfarbe(n) außen Munsell-Nr."
+        },
+        "colorInside": {
+          "label": "Tonfarbe(n) innen"
+        },
+        "colorInsideMunsell": {
+          "label": "Tonfarbe(n) innen Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Tonfarne(n) Kern Munsell-Nr."
+        },
+        "temper": {
+          "label": "Magerung"
+        },
+        "clayHardness": {
+          "label": "Tonhärte (nach Rice 2005, 356)"
+        },
+        "fragmentSize": {
+          "label": "Fragmentgröße"
+        },
+        "breakEdge": {
+          "label": "Bruchkanten"
+        },
+        "porosity": {
+          "label": "Porosität"
+        },
+        "sintering": {
+          "label": "Versinterung"
+        },
+        "coatType": {
+          "label": "Oberfläche"
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug innen"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug außen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Farbe(n) Überzug innen Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Farbe(n) Überzug außen Munsell-Nr"
+        },
+
+        "coatCondition": {
+          "label": "Zustand Überzug"
+        },
+        "decorationTechnique": {
+          "label": "Dekor"
+        },
+        "decorationPlacement": {
+          "label": "Verortung des Dekors"
+        },
+        "paintColorOutside": {
+          "label": "Farbe(n) Bemalung außen"
+        },
+        "paintColorOutsideMunsell": {
+          "label": "Farbe(n) Bemalung außen Munsell-Nr."
+        },
+        "paintColorInside": {
+          "label": "Farbe(n) Bemalung innen"
+        },
+        "paintColorInsideMunsell": {
+          "label": "Farbe(n) Bemalung innen Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "breakStructure": {
+          "label": "Struktur des Bruches"
+        }
+      }
+    },
+    "Glass": {
+      "fields": {
+        "colorOutside": {
+          "label": "Farbe(n) außen"
+        },
+        "colorOutsideMunsell": {
+          "label": "Farbe außen Munsell-Nr."
+        },
+        "colorInside": {
+          "label": "Farbe(n) innen"
+        },
+        "colorInsideMunsell": {
+          "label": "Farbe innen Munsell-Nr."
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        }
+      }
+    },
+    "Terracotta": {
+      "fields": {
+        "manufacturing": {
+          "label": "Fabrikat"
+        },
+        "colorOutside": {
+          "label": "Tonfarbe(n) Außen"
+        },
+        "colorInside": {
+          "label": "Tonfarbe(n) Innen"
+        },
+        "colorOutsideMunsell": {
+          "label": "Tonfarbe Außen Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+            "label": "Tonfarbe Innen Munsell-Nr."
+        },
+        "colorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Tonfarbe(n) Kern Munsell-Nr."
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug Innen"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug Außen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Überzug (innen) Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Überzug (außen) Munsell-Nr."
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatCondition": {
+          "label": "Zustand Überzug"
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objekts"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche"
+        },
+        "decorationDescription": {
+          "label": "Beschreibung Oberfläche und Dekor"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        },
+        "temper": {
+          "label": "Magerung"
+        }
+      }
+    },
+    "Wood": {
+      "fields": {
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Brick": {
+      "fields": {
+        "formDescription": {
+          "label": "Form"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "colorInside": {
+          "label": "Tonfarbe(n) innen"
+        },
+        "colorOutside": {
+          "label": "Tonfarbe(n) außen"
+        },
+        "colorBreak": {
+          "label": "Tonfarbe(n) Kern"
+        },
+        "colorBreakMunsell": {
+          "label": "Tonfarbe Kern Munsell-Nr."
+        },
+        "colorInsideMunsell": {
+          "label": "Tonfarbe Innen Munsell-Nr."
+        },
+        "colorOutsideMunsell": {
+          "label": "Tonfarbe Außen Munsell-Nr."
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "featureText": {
+          "label": "Stempeltext/Produzent"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "coatQuality": {
+          "label": "Qualität Überzug"
+        },
+        "coatColorOutside": {
+          "label": "Farbe(n) Überzug außen"
+        },
+        "coatColorInside": {
+          "label": "Farbe(n) Überzug innen"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Farbe Überzug innen Munsell-Nr."
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Farbe Überzug außen Munsell-Nr."
+        },
+        "coatCondition": {
+          "label": "Zustand Überzug"
+        },
+        "surfaceCondition": {
+          "label": "Brandspuren"
+        },
+        "temper": {
+          "label": "Magerung"
+        }
+      }
+    },
+    "Metal": {
+      "fields": {
+        "form": {
+          "label": "Form"
+        },
+        "colorOutside": {
+          "label": "Metallfarbe(n) außen "
+        },
+        "colorInside": {
+          "label": "Metallfarbe(n) innen"
+        },
+        "colorBreak": {
+          "label": "Metallfarbe(n) Kern"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Mollusk": {
+      "fields": {
+        "treatment": {
+          "label": "Bearbeitungsspuren"
+        },
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Herstellungstechnik"
+        }
+      }
+    },
+    "Stone": {
+      "fields": {
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "colorOutside": {
+          "label": "Steinfarbe(n) Außen"
+        },
+        "colorInside": {
+          "label": "Steinfarbe(n) Innen"
+        },
+        "colorBreak": {
+          "label": "Steinfarbe(n) Kern"
+        },
+        "usedAsSpolia": {
+          "label": "Verwendung als Spolie"
+        },
+        "constructionDetails": {
+          "label": "Konstruktive Details"
+        },
+        "treatment": {
+          "label": "Bearbeitungsspuren"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "depictedBeing": {
+          "label": "Wesen"
+        },
+        "depictedBeingSpecific": {
+          "label": "Wesen: spezifisch"
+        },
+        "depictedBeingSex": {
+          "label": "Wesen: Geschlecht"
+        },
+        "depictedBeingAge": {
+          "label": "Wesen: Lebensalter"
+        },
+        "depictedBeingFormat": {
+          "label": "Wesen: Format"
+        },
+        "artist": {
+          "label": "Künstler/Umsetzung nach Typus"
+        },
+        "depictedBeingClothing": {
+          "label": "Wesen: Bekleidung"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "treatment": {
+          "label": "Formgebende Bearbeitung"
+        },
+        "form": {
+          "label": "Form"
+        },
+        "manufacturingMethod": {
+          "label": "Herstellungstechnik"
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "objectType": {
+          "label": "Ansprache bzw. Art des Objektes"
+        },
+        "materialPlasterUndercoat1": {
+          "label": "Material 1. Unterputz"
+        },
+        "colorPlasterUndercoat1": {
+          "label": "Farbe(n) 1. Unterputz"
+        },
+        "colorPlasterUndercoat1Munsell": {
+          "label": "Farbe(n) 1. Unterputz Munsell-Nr."
+        },
+        "materialPlasterUndercoat2": {
+          "label": "Material 2. Unterputz"
+        },
+        "colorPlasterUndercoat2": {
+          "label": "Farbe(n) 2. Unterputz"
+        },
+        "colorPlasterUndercoat2Munsell": {
+          "label": "Farbe(n) 2. Unterputz Munsell-Nr."
+        },
+        "materialFinePlaster": {
+          "label": "Material Feinputz"
+        },
+        "colorFinePlaster": {
+          "label": "Farbe(n) Feinputz"
+        },
+        "colorFinePlasterMunsell": {
+          "label": "Farbe(n) Feinputz Munsell-Nr."
+        },
+        "decorationTechnique": {
+          "label": "Oberfläche und Dekor"
+        },
+        "paintingTechnique": {
+          "label": "Maltechnik"
+        },
+        "paintColor": {
+          "label": "Farbe(n) Bemalung"
+        },
+        "paintColorMunsell": {
+          "label": "Farbe(n) Bemalung Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "Zustand Bemalung"
+        },
+        "specialFeatures": {
+          "label": "Besonderheiten"
         }
       }
     },

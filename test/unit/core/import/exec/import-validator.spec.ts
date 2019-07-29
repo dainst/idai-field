@@ -2,6 +2,7 @@ import {ProjectConfiguration} from 'idai-components-2';
 import {ImportValidator} from '../../../../../app/core/import/exec/import-validator';
 import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {INPUT_TYPES} from '../../../../../app/c';
 
 
 /**
@@ -22,7 +23,9 @@ describe('ImportValidation', () => {
                         {name: 'optional'},
                         {name: 'mandatory', mandatory: true},
                         {name: 'number1', label: 'number1', inputType: 'float'},
-                        {name: 'number2', label: 'number2', inputType: 'float'}
+                        {name: 'number2', label: 'number2', inputType: 'float'},
+                        {name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE},
+                        {name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE}
                     ]
                 },
                 {
@@ -196,7 +199,7 @@ describe('ImportValidation', () => {
     });
 
 
-    it('should report invalid numeric fields', async done => {
+    it('invalid numeric fields', async done => {
 
         const doc = {
             resource: {
@@ -218,4 +221,70 @@ describe('ImportValidation', () => {
         done();
     });
 
+
+    it('valid dropdown range fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                ddr: 'value',
+                ddrEnd: 'endValue',
+                ddr2: 'value',
+                relations: {isRecordedIn: ['0']}
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
+        } catch (errWithParams) {
+            fail(errWithParams);
+        }
+        done();
+    });
+
+    it('invalid dropdown range field', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                ddr: '',
+                ddrEnd: 'endValue',
+                relations: {isRecordedIn: ['0']}
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])
+        }
+        done();
+    });
+
+
+    it('invalid dropdown range field - key missing altogether', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                ddrEnd: 'endValue',
+                relations: {isRecordedIn: ['0']}
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])
+        }
+        done();
+    });
 });

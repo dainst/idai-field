@@ -46,14 +46,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
-    public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
-    public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
-    public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
     public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
     public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
+    public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
+    public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
+    public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
+    public static IMPORT_PARSER_NOT_A_NUMBER = 'M.Import.ParserErrors.notANumber';
+    public static IMPORT_PARSER_NOT_A_BOOLEAN = 'M.Import.ParserErrors.notABoolean';
 
     // ImportPackage - ReaderErrors
     public static IMPORT_READER_GENERIC_START_ERROR = 'M.Import.ReaderErrors.genericStartError';
@@ -75,6 +77,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'M.Import.ValidationErrors.invalidRelationFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'M.Import.ValidationErrors.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'M.Import.ValidationErrors.invalidNumericValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -122,6 +129,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'docedit.validation.error.invalidDimensionValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
@@ -461,6 +472,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
+        this.msgs[M.IMPORT_PARSER_NOT_A_BOOLEAN] = {
+            content: i18n({
+                id: 'messages.import.error.parser.csv.notaboolean',
+                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_NOT_A_NUMBER] = {
+            content: i18n({
+                id: 'messages.import.error.parser.csv.notanumber',
+                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
         this.msgs[M.IMPORT_PARSER_GENERIC_CSV_ERROR] = {
             content: i18n({
                 id: 'messages.import.error.genericCsvError',
@@ -554,7 +583,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_EXEC_NOT_INTERRELATED] = {
             content: i18n({
                 id: 'messages.import.error.notInterrelated',
-                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen \'[0]\' und \'[1]\' fehlerhaft.'
+                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung bei \'[0]\' fehlerhaft.'
             }),
             level: 'danger',
             params: ['?', '?'],
@@ -744,6 +773,51 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValues',
                 value: 'Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDatingValue',
+                value: 'Ungültige Datierung im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDatingValues',
+                value: 'Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDimensionValue',
+                value: 'Ungültige Maßangabe im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDimensionValues',
+                value: 'Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES] = {
+            content: i18n({
+                id: 'messages.import.validation.error.invalidDropdownValues',
+                value: 'Ungültige Werte für DropdownRange-Feld (\'[0]\'). Ein -End Wert kann nicht allein vorkommen.'
             }),
             level: 'danger',
             params: [],
@@ -969,6 +1043,42 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.validation.error.invalidNumericValues',
                 value: 'Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDatingValue',
+                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige Datierung ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDatingValues',
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDimensionValue',
+                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige Maßangabe ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidDimensionValues',
+                value: 'Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].'
             }),
             level: 'danger',
             params: [],

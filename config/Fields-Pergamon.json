@@ -1,11 +1,1843 @@
 {
+  "Find": {
+    "fields": {
+      "specialStatus": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Envanterlik",
+          "Etütlük"
+
+        ]
+      },
+      "deviatingStoragePlace": {
+        "inputType": "input"
+      },
+      "hasRestoration": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Nicht vorgesehen"
+        ]
+      },
+      "conditionAmount": {
+        "inputType": "radio",
+        "valuelist": [
+          "vollständig",
+          "unvollständig"
+        ]
+      },
+      "storagePlace": {
+        "inputType": "radio",
+        "valuelist": [
+          "in situ",
+          "Museum Bergama",
+          "nicht aufgehoben",
+          "Pergamon Depot",
+          "Privatbesitz",
+          "sonstige/s Museum/Sammlung",
+          "Unbekannt"
+        ]
+      }
+    }
+  },
   "Pottery": {
     "fields": {
       "isImport": {
-        "inputType": "boolean"
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Insicher"
+        ]
       },
       "isMisfired": {
         "inputType": "boolean"
+      },
+      "materialType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Überzugsware",
+          "Bemalte Keramik",
+          "Glasurkeramik",
+          "Kochkeramik",
+          "Küchen-/Vorrats-/Transportkeramik",
+          "Glättware",
+          "Dünnwandige Keramik",
+          "Porzellan"
+        ]
+      },
+      "specificType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Applikenkeramik",
+          "ARS",
+          "Barbotine Ware",
+          "Bleiglasurkeramik",
+          "Eierschalenkeramik",
+          "ESA",
+          "ESB",
+          "ESC",
+          "Graue ESC?",
+          "Figuralgefäß",
+          "Gilded Ware",
+          "Glanzton",
+          "Italische Sigillata",
+          "Light Coloured Ware",
+          "LRC",
+          "Reliefkeramik",
+          "Rotfigurige Keramik",
+          "Sanded Ware",
+          "Schwarzfigurige Keramik",
+          "Sgraffito Keramik",
+          "Sigillata",
+          "Streifenware",
+          "Thornware",
+          "Weißgrundige Keramik",
+          "Westanhangkeramik"
+        ]
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Trinkgefäß",
+          "Schüssel",
+          "Teller",
+          "Napf/Schüssel/Teller",
+          "Platte",
+          "Krug",
+          "Kanne",
+          "Amphora",
+          "Krug/Amphora",
+          "Topf/Chytra",
+          "Kochständer",
+          "Kohlebecken",
+          "Deckel/Verschluss",
+          "Siebgefäß",
+          "Mortarium",
+          "Kasserolle",
+          "Pfanne",
+          "Rost",
+          "Vorratsgefäß",
+          "Unguentarium",
+          "Pyxis",
+          "Thymiaterion",
+          "Askos",
+          "Guttus",
+          "unbestimmt"
+        ]
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "vesselFormSpecific": {
+        "inputType": "input"
+      },
+      "conditionPercentRim": {
+        "inputType": "input"
+      },
+      "conditionPercentBase": {
+        "inputType": "input"
+      },
+      "conditionpercentVessel": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelist": [
+          "Scheibengedreht",
+          "Handgeformt",
+          "In Form gedreht",
+          "Nachgedreht (überdreht)"
+        ]
+      },
+      "manufacturingDescription": {
+        "inputType": "input"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
+      },
+      "porosity": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Dicht",
+          "Weniger dicht",
+          "Porös",
+          "Sehr porös"
+        ]
+      },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "clayHardness": {
+        "inputType": "radio",
+        "valuelist": [
+          "Klingend hart (mit Stahlklinge nicht ritzbar)",
+          "hart (mit Stahlklinge schwierig ritzbar, mit Fingernagel nicht ritzbar)",
+          "mittel (mit Stahlklinge leicht ritzbar, mit Fingernagel schwer ritzbar)",
+          "weich (mit Fingernagel leicht ritzbar)"
+        ]
+      },
+      "fragmentSize": {
+        "inputType": "radio",
+        "valuelist": [
+          "klein (bis 1 cm Kantenlänge)",
+          "mittel (bis 5 cm Kantenlänge)",
+          "groß (ab 5 cm Kantenlänge)"
+        ]
+      },
+      "breakStructure": {
+        "inputType": "radio",
+        "valuelist": [
+          "glatt",
+          "schiefrig"
+        ]
+      },
+      "breakEdge": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Scharfkantig",
+          "Wenig abgerollt",
+          "Abgerollt",
+          "Stark abgerollt"
+        ]
+      },
+      "sintering": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schadensbrand",
+          "Fehlbrand",
+          "Nutzungsspuren",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "coatType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "ohne Überzug und Glasur",
+          "mit partiellem Überzug",
+          "mit vollständigem Überzug",
+          "mit partieller Schlemme",
+          "mit vollständiger Schlemme",
+          "mit partieller Glasur",
+          "mit vollständiger Glasur",
+          "mit Glanzton",
+          "mit sog. Self-Slip",
+          "poliert"
+        ]
+      },
+      "coatQuality": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "schwach",
+          "stark",
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Applikation",
+          "Barbotine",
+          "Bemalung",
+          "Daumendellen",
+          "Rädchen/Rouletting",
+          "Relief",
+          "Riefen",
+          "Ritzung",
+          "Sandbewurf",
+          "Sgraffito",
+          "Spachteldekor",
+          "Stempel",
+          "Thornwaredekor"
+        ]
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "decorationPlacement": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Innenseite",
+          "Außenseite",
+          "Oberseite",
+          "Unterseite",
+          "Boden/Fuß",
+          "Henkel/Griff",
+          "Rand",
+          "Wandung"
+        ]
+      },
+      "paintColorOutside": {
+        "inputType": "input"
+      },
+      "paintColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "paintColorInside": {
+        "inputType": "input"
+      },
+      "paintColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      }
+    }
+  },
+  "Glass": {
+    "fields": {
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schadensbrand",
+          "Fehlbrand",
+          "Nutzungsspuren",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Fensterglas",
+          "Gefäß",
+          "Gerät",
+          "Plastik",
+          "Produktionsrest",
+          "Rohglas",
+          "Scheibe",
+          "Schmuck",
+          "Spielstein",
+          "Tessera",
+          "unsicher"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "--Gefäße--",
+          "Trinkgefäß",
+          "Schüssel",
+          "Teller",
+          "Platte",
+          "Krug",
+          "Kanne",
+          "Amphora",
+          "Deckel/Verschluss",
+          "Siebgefäß",
+          "Unguentarium",
+          "Pyxis",
+          "Thymiaterion",
+          "Askos",
+          "Guttus",
+          "--Geräte--",
+          "Lampe",
+          "Löffel",
+          "Rührstab",
+          "Weinheber",
+          "--Schmuck--",
+          "Anhänger",
+          "Armreif",
+          "Gemme",
+          "Perle",
+          "Ring",
+          "--Plastik--",
+          "Einlage",
+          "--Produktionsreste--",
+          "Tropfen",
+          "Schlacke",
+          "Unbestimmt"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Formgeblasen (mit Reliefdekor)",
+          "Formgeschmolzen",
+          "Freigeblasen",
+          "Kerngeformt",
+          "Gedreht (auf Drehscheibe)"
+        ]
+      },
+      "transparency": {
+        "inputType": "radio",
+        "valuelist": [
+          "durchscheinend",
+          "durchsichtig",
+          "opak"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bemalung (Emaille)",
+          "Diatretdekor",
+          "Facettschliffdekor",
+          "Fadendekor (aufgelegt)",
+          "Fadendekor (verschmolzen)",
+          "Figürlicher Schliffdekor",
+          "Mosaikdekor",
+          "Reliefdekor",
+          "Reticelladekor",
+          "Riefeldekor",
+          "Ritzungen",
+          "Schlangenfadendekor",
+          "Schliffrillendekor",
+          "Stempeldekor",
+          "Tupfendekor",
+          "Warzendekor",
+          "Zwischengoldglas"
+        ]
+      }
+    }
+  },
+  "Coin": {
+    "fields": {
+      "denomination": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "1 1/2 Skripula",
+          "1 1/2 Solidus",
+          "1/2 Stater (Hemistater)",
+          "1/30 Drachme",
+          "1/4  Stater (Tetarte)",
+          "1/4 Einheit",
+          "1/5 Drachme",
+          "2 Solidus",
+          "3 Solidus",
+          "4 1/2 Solidus",
+          "60 As",
+          "9 Siliqua",
+          "9 Solidus",
+          "AE Gross",
+          "AE Klein",
+          "AE Medium",
+          "Aes 1",
+          "Aes 2",
+          "Aes 3",
+          "Aes 3-4",
+          "Aes 4",
+          "Antoninian",
+          "Argenteus",
+          "As",
+          "Aureus",
+          "Aureus¹",
+          "Aureus²",
+          "Bruchteil",
+          "Cistophor",
+          "Denar",
+          "Denar (serratus)",
+          "Doppeldenar",
+          "Didrachme",
+          "Diobol",
+          "Distater",
+          "Doppelter Sesterz",
+          "Drachme",
+          "Dupondius",
+          "Gold-mehrfaches",
+          "Grosser Aes 2",
+          "Halber Solidus",
+          "Hekte (1/6 Stater)",
+          "Hemidrachme",
+          "Hemiobol",
+          "Kleiner Aes 2",
+          "Kontorniat",
+          "Litra",
+          "Medaillon",
+          "Miliarense (leicht)",
+          "Miliarense (schwer)",
+          "Obolus",
+          "Quadrans",
+          "Quinar",
+          "Quinar Aureus",
+          "Reduzierte Siliqua",
+          "Reduzierter Aes 2",
+          "Semis",
+          "Semissis",
+          "Semuncia",
+          "Sesterz",
+          "Sextans",
+          "Silber-Mehrfaches",
+          "Siliqua",
+          "Solidus",
+          "Stater",
+          "Tetradrachme",
+          "Tremissis",
+          "Triens",
+          "Uncia",
+          "Unsicher bzw. unbestimmbar",
+          "Victoriatus"
+        ]
+      },
+      "mintingRuler": {
+        "inputType": "input"
+      },
+      "mint": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abdera",
+          "Abydos",
+          "Afrika",
+          "Agrigent",
+          "Aigai (Vergina)",
+          "Aiolis",
+          "Aitolischer Bund",
+          "Akanthus",
+          "Akkon",
+          "Alabanda",
+          "Alexandria",
+          "Alexandria Troas",
+          "Alexandrien",
+          "Amasra",
+          "Amathus",
+          "Ambianum (Amiens)",
+          "Ambracia",
+          "Amiens",
+          "Amisus",
+          "Amphipolis",
+          "Amrit",
+          "Anaktorio",
+          "Antiochia",
+          "Antiochia (Antakya)",
+          "Antiochia am Orontes",
+          "Apameia Kibotos",
+          "Apameia am Orontes",
+          "Apollonia",
+          "Apollonia am Rhyndakos (Mysien)",
+          "Apollonia Pontica",
+          "Apulien",
+          "Aquileia",
+          "Archaiischer Bund",
+          "Arelate (Arles)",
+          "Argos",
+          "Argos Amphilochicum",
+          "Arles",
+          "Arpi",
+          "Aruad",
+          "Asia Minor",
+          "Asien",
+          "Aspendos",
+          "Assos",
+          "Astibus",
+          "Athen",
+          "Aydın",
+          "Babylon",
+          "Barcino (Barcelona)",
+          "Beirut",
+          "Bozcaada",
+          "Byblos",
+          "Byzantion",
+          "Böotien",
+          "Caesaraugusta",
+          "Caesarea in Kappadokien",
+          "Cales",
+          "Camulodunum (Colchester)",
+          "Canosa di Puglia",
+          "Carnuntum",
+          "Carthago (Tunis)",
+          "Catania",
+          "Caulonia",
+          "Chalcedon",
+          "Chalkida",
+          "Chalkidiki",
+          "Chersones",
+          "Chios",
+          "Colchester",
+          "Colonia Agrippina (Köln)",
+          "Colonia Patricia",
+          "Comitatenses",
+          "Constantinopolis (Istanbul)",
+          "Crotone",
+          "Cyme",
+          "Damaskus",
+          "Diesseitiges Gallian / Norditalien",
+          "Dionysopolis",
+          "Dyrrhachium",
+          "Ekbatana",
+          "Elaia (Äolis)",
+          "Elis",
+          "Emerita",
+          "Empüries",
+          "Ephesos",
+          "Eretria",
+          "Erythrai",
+          "Etrurien",
+          "Euböa",
+          "Foça",
+          "Gallien",
+          "Gela",
+          "Germe",
+          "Gortyn",
+          "Halikarnassos",
+          "Harran",
+          "Heraclea",
+          "Herakleia",
+          "Herakleia Perinthos (Thrakien)",
+          "Herakleia Pontike",
+          "Hermokapeleia (Lydien)",
+          "Hierokaisareia (Hierakome; Lydien)",
+          "Himera",
+          "Hispanien",
+          "Hispanien-Punisch",
+          "Histria",
+          "Homs",
+          "Ibiza",
+          "Idalion",
+          "Italien",
+          "Italien (Südosten)",
+          "Kabile",
+          "Kamarina",
+          "Karien",
+          "Karthago",
+          "Karystos",
+          "Kelenderis",
+          "Kertsch",
+          "Klazomenai",
+          "Knidos",
+          "Kolchis",
+          "Kolophon",
+          "Konstantinopel",
+          "Korfu",
+          "Korinth",
+          "Korinthischer Bund",
+          "Kos",
+          "Kydonia",
+          "Kyrenaika",
+          "Kyrene",
+          "Kyzikos",
+          "Köln",
+          "Lampsakos",
+          "Laodikeia am Lykos",
+          "Lapta",
+          "Larissa",
+          "Larnaka",
+          "Latakia",
+          "Lefkada",
+          "Lentini",
+          "Lete",
+          "Locri",
+          "Locri Opuntii (Opus)",
+          "Londinium",
+          "Lucera",
+          "Lugdunum",
+          "Lydien",
+          "Lykien",
+          "Lysimacheia",
+          "Lyttos",
+          "Magnesia am Mäander",
+          "Magnesia am Sipylos (Lydien)",
+          "Mainz",
+          "Makedonien",
+          "Makedonien (1. Region)",
+          "Mangalia",
+          "Marmetini",
+          "Maroneia",
+          "Marseille",
+          "Mediolanum",
+          "Megalopoli",
+          "Memphis",
+          "Messene",
+          "Messina",
+          "Metapont",
+          "Milas",
+          "Milet",
+          "Mithymna",
+          "Mittelitalien",
+          "Myriandrus",
+          "Myrina",
+          "Mytilini",
+          "Narbo",
+          "Nakrasa (Lydien)",
+          "Naxos",
+          "Neapel",
+          "Nessebar",
+          "Nikomedia",
+          "Nisibis",
+          "Nuceria",
+          "Olbia",
+          "Oreus",
+          "Oria",
+          "Ostia Antica",
+          "Ouranoupolis",
+          "Paestum",
+          "Paphos",
+          "Parion",
+          "Paros",
+          "Pella",
+          "Peloponnes",
+          "Pergamon",
+          "Perge",
+          "Persien",
+          "Phanagoria",
+          "Phaselis",
+          "Phokis",
+          "Priene",
+          "Prusias ad Hypium",
+          "Ravenna",
+          "Reggio Calabria",
+          "Republik Zypern",
+          "Rhodos",
+          "Rom",
+          "Rouen",
+          "Salamis",
+          "Samos",
+          "Sardis",
+          "Sardinien",
+          "Segesta",
+          "Seleukia Pieria",
+          "Seleukia am Tigris",
+          "Selinus",
+          "Sestos",
+          "Side",
+          "Sidon",
+          "Sikyon",
+          "Sinop",
+          "Sirmium",
+          "Sisak",
+          "Sizilien",
+          "Sizilien 2 (Republican period)",
+          "Sizilisch-Punisch",
+          "Smyrna",
+          "Sofia",
+          "Soloi",
+          "Sosopol",
+          "Susa (Persien)",
+          "Sybaris",
+          "Syrakus",
+          "Syrien",
+          "Südgallische Münzstätte",
+          "Tanagra",
+          "Taras",
+          "Tarraco",
+          "Tarsus",
+          "Tegea",
+          "Temnus",
+          "Teos",
+          "Terina",
+          "Tessin",
+          "Thasos",
+          "Theben (Böotien)",
+          "Thessalische Liga",
+          "Thessalonica",
+          "Thessaloniki",
+          "Thiva",
+          "Thrakien",
+          "Thurioi",
+          "Thyrrheium",
+          "Trier",
+          "Tripoli (Libanon)",
+          "Tyros",
+          "Unsicher bzw. unbestimmbar",
+          "Viminatium",
+          "Vindobona",
+          "Warna",
+          "Zancle",
+          "Äegina",
+          "Äeneas",
+          "Äetolien"
+        ]
+      }
+    }
+  },
+  "Terracotta": {
+    "fields": {
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schadensbrand",
+          "Fehlbrand",
+          "Nutzungsspuren",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "coatQuality": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "schwach",
+          "stark",
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn"
+        ]
+      },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektur",
+          "Ausstattungsgegenstand",
+          "Gerät",
+          "Plastik",
+          "Schmuck",
+          "Produktionsrest",
+          "Rohton",
+          "Spielzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abstandshalter",
+          "Akroter",
+          "Antefix",
+          "Badewanne",
+          "Becken",
+          "Formschüssel",
+          "Matrize/Model",
+          "Rohr",
+          "Sima",
+          "Webgewicht"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "frei geformt",
+          "gedreht (auf Drehscheibe)",
+          "matritzengeformt"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Bemalung",
+          "Überzug",
+          "Glasur",
+          "Vergoldung/metallischer Überzug",
+          "Relief",
+          "Ritzung",
+          "Stempel"
+        ]
+      },
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
+      },
+      "temper": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Wood": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektur",
+          "Gefäß",
+          "Gerät",
+          "Grabbehältnis",
+          "Mobiliar",
+          "Plastik",
+          "Schmuck",
+          "Produktionsrest",
+          "Spielzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
+      }
+    }
+  },
+  "Brick": {
+    "fields": {
+      "formDescription": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Dreieckig",
+          "Quadratisch",
+          "Rechteckig",
+          "Rund",
+          "Vieleckig",
+          "Sonstiges"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Bodenziegel",
+          "Dachziegel (Imbrex)",
+          "Dachziegel (Kalypter)",
+          "Dachziegel (Stroter)",
+          "Dachziegel (Tegula)",
+          "Hypokaustziegel",
+          "Mauerziegel",
+          "Unsicher",
+          "Wandziegel"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelist": [
+          "Gebrannt",
+          "Gepresst",
+          "handgeformt",
+          "luftgetrocknet"
+        ]
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schadensbrand",
+          "Fehlbrand",
+          "Nutzungsspuren",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Überzug",
+          "Glasur",
+          "Fingerabdruck",
+          "Sonstige Abdrücke",
+          "Wischzeichen",
+          "Relief",
+          "Ritzung",
+          "Stempel"
+        ]
+      },
+      "coatQuality": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "schwach",
+          "stark",
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn"
+        ]
+      },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Metal": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektur",
+          "Gefäß",
+          "Gerät",
+          "Gewicht",
+          "Plastik",
+          "Militaria",
+          "Mobiliar",
+          "Produktionsrest",
+          "Schmuck",
+          "Spielzeug",
+          "Waffen",
+          "Werkzeug",
+          "unsicher"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Armreif",
+          "Barren",
+          "Beschlag",
+          "Blechband",
+          "Dolch",
+          "Einlage",
+          "Fibel",
+          "Gefäß",
+          "Geschossbolzenspitze",
+          "Gewicht",
+          "Glocke",
+          "Gussform",
+          "Gusszapfen",
+          "Haken",
+          "Hufbeschlag",
+          "Kette",
+          "Klammer",
+          "Knopf",
+          "Lampe/Leuchter",
+          "Löffel",
+          "Meißel",
+          "Messer",
+          "Nadel",
+          "Nagel",
+          "Perle",
+          "Pfeilspitze",
+          "Pinzette",
+          "Produktionsabfall",
+          "Reibe",
+          "Ring",
+          "Schlacke",
+          "Schloss",
+          "Schlüssel",
+          "Schnalle",
+          "Schreibgerät",
+          "Schwert",
+          "Siegel",
+          "Spatel",
+          "Speerspitze",
+          "Spiegel",
+          "Spielstein",
+          "Strigilis",
+          "Verguss"
+        ]
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Treibarbeit",
+          "Gußtechnik",
+          "Prägearbeit",
+          "Schmiedetechnik",
+          "Ziehtechnik"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bemalung",
+          "Emaille",
+          "Gravur",
+          "Niello",
+          "Punzierung",
+          "Reliefdekor",
+          "Riefeldekor",
+          "Ritzungen",
+          "Stempel",
+          "Tauschierung",
+          "Torsion",
+          "Vergoldung"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "kolossal (über 300m)",
+          "überlebensgroß (über 180 cm)",
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
+      }
+    }
+  },
+  "Mollusk": {
+    "fields": {
+      "classification": {
+        "inputType": "radio",
+        "valuelist": [
+          "Auster",
+          "Herzmuschel",
+          "Jakobsmuschel",
+          "Kammmuschel",
+          "Muschelschale (Bivalvia)",
+          "Purpurschnecke",
+          "Schneckenhaus (Gastropoda)"
+        ]
+      },
+      "treatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gefäß",
+          "Plastik",
+          "Mobiliar",
+          "Schmuck",
+          "Speiserest",
+          "Spielzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Armreif",
+          "Einlage",
+          "Kette",
+          "Knopf",
+          "Perle",
+          "Spielstein"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Stone": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Altar/Basis/Stele",
+          "Architektur",
+          "Gefäß",
+          "Gerät",
+          "Grabmarkierung",
+          "Inkrustation/Platte",
+          "Inschrift",
+          "Mobiliar",
+          "Plastik",
+          "Produktionsrest",
+          "Schmuck",
+          "Tessera",
+          "Waffen",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abschlag",
+          "Akroter",
+          "Anhänger",
+          "Architrav",
+          "Basis",
+          "Bauplastik",
+          "Becken",
+          "Einlage",
+          "Einsatzkopf",
+          "Fries",
+          "Gesims",
+          "Grabaltar",
+          "Grabgefäß",
+          "Grabstele",
+          "Grabplatte",
+          "Gussform",
+          "Herme",
+          "Idealstatue",
+          "Inkrustation",
+          "Inschriftenstele",
+          "Kalypter",
+          "Kandelaber",
+          "Kapitell",
+          "Konsole",
+          "Mahlstein",
+          "Mörser",
+          "Opferaltar",
+          "Perle",
+          "Portraitstatue",
+          "Profilstück",
+          "Produktionsfragment",
+          "Quaderblock",
+          "Reibstein",
+          "Relief",
+          "Ring",
+          "Rührstab",
+          "Sarkophag",
+          "Säulentrommel",
+          "Schale",
+          "Schrankenplatte",
+          "Schwellenblock",
+          "Siegel",
+          "Sima",
+          "Spielbrett",
+          "Spielstein",
+          "Spinnwirtel",
+          "Statuenbasis",
+          "Stroter",
+          "Stele",
+          "Tischfuß",
+          "Votivaltar",
+          "Votivstele",
+          "Waffe",
+          "Webgewicht",
+          "Weihrelief",
+          "Werkzeug",
+          "Ölpresse",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "usedAsSpolia": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher"
+        ]
+      },
+      "material": {
+        "inputType": "radio",
+        "valuelist": [
+          "Alabaster",
+          "Andesit",
+          "Basalt",
+          "Bimsstein",
+          "Edelstein",
+          "Feldspat",
+          "Silex/Flint",
+          "Granit",
+          "Kalk",
+          "Kalkstein",
+          "Kalzit",
+          "Kreide",
+          "Marmor",
+          "Obsidian",
+          "Pophyr",
+          "Quarz",
+          "Quellgestein",
+          "Rhyolith (Quarzporphyr)",
+          "Sandstein",
+          "Schiefer",
+          "Serpentinit",
+          "Sinter",
+          "Trachyt",
+          "Tuff",
+          "Vulkangestein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "origin": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anatolien",
+          "Antiochia",
+          "Athen",
+          "Ägypten",
+          "Attisch",
+          "Britannien",
+          "Chios",
+          "Deutschland",
+          "Ephesos",
+          "Etruskisch",
+          "Gallien",
+          "Ionien",
+          "Irland",
+          "Italien",
+          "Kampanisch",
+          "Karthagisch",
+          "Kleinasien",
+          "Knidos",
+          "Korinth",
+          "Kos",
+          "Lesbos",
+          "Levante",
+          "Lokal",
+          "Lokal/Regional",
+          "Milet",
+          "Mäandertal",
+          "Nordafrika",
+          "Nordafrikanisch",
+          "Palästina",
+          "Pannonien",
+          "Peleponnes",
+          "Regional",
+          "Rhodos",
+          "Samos",
+          "Sizilien",
+          "Skandinavien",
+          "Slawisch",
+          "Spanien",
+          "Syrien",
+          "Südtunesisch",
+          "Südägäis"
+        ]
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "constructionDetails": {
+        "inputType": "radio",
+        "valuelist": [
+          "Anathyrose",
+          "Dübelloch",
+          "Hebebosse",
+          "Hebeloch",
+          "Klammerloch",
+          "Randschlag",
+          "Stemmloch"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bemalung",
+          "Applike",
+          "Inschrift",
+          "Relief",
+          "partiell unfertig"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "depictedBeing": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gottheit",
+          "Heros/Heroine",
+          "Mischwesen",
+          "Mensch",
+          "Tier",
+          "Gegenstand"
+        ]
+      },
+      "depictedBeingSpecific": {
+        "inputType": "input"
+      },
+      "depictedBeingSex": {
+        "inputType": "radio",
+        "valuelist": [
+          "männlich",
+          "weiblich",
+          "Hermaphrodit",
+          "Unbekannt"
+        ]
+      },
+      "depictedBeingAge": {
+        "inputType": "radio",
+        "valuelist": [
+          "kleinkindlich (bis 3 Jahre)",
+          "kindlich (4-12 Jahre)",
+          "jugendlich (12-18 Jahre)",
+          "erwachsen (18-44 Jahre)",
+          "alt (ab 45 Jahre)"
+        ]
+      },
+      "depictedBeingFormat": {
+        "inputType": "radio",
+        "valuelist": [
+          "kolossal (über 300m)",
+          "überlebensgroß (über 180 cm)",
+          "lebensgroß (bis 180 cm)",
+          "unterlebensgroß (bis 130 cm)",
+          "miniatur (bis 80 cm)"
+        ]
+      },
+      "artist": {
+        "inputType": "input"
+      },
+      "depictedBeingClothing": {
+        "inputType": "radio",
+        "valuelist": [
+          "bekleidet",
+          "teils unbekleidet",
+          "unbekleidet"
+        ]
+      }
+    }
+  },
+  "Bone": {
+    "fields": {
+      "treatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "Ja",
+          "Nein",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Gefäß",
+          "Gerät",
+          "Plastik",
+          "Mobiliar",
+          "Produktionsrest",
+          "Schmuck",
+          "Spielzeug",
+          "Waffen",
+          "Werkzeug",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "form": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Applik",
+          "Armreif",
+          "Einlage",
+          "Kamm",
+          "Knopf",
+          "Löffel",
+          "Nadel",
+          "Perle",
+          "Pyxis",
+          "Ring",
+          "Schreibgerät",
+          "Spatel",
+          "Spielstein",
+          "Statuette"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Relief",
+          "Sgraffito"
+        ]
+      }
+    }
+  },
+  "PlasterFragment": {
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Architektureinfassung",
+          "Mobiliar",
+          "Wandputz",
+          "Sonstiges",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "materialPlasterUndercoat1": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat1": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat1Munsell": {
+        "inputType": "input"
+      },
+      "materialPlasterUndercoat2": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat2": {
+        "inputType": "input"
+      },
+      "colorPlasterUndercoat2Munsell": {
+        "inputType": "input"
+      },
+      "materialFinePlaster": {
+        "inputType": "input"
+      },
+      "colorFinePlaster": {
+        "inputType": "input"
+      },
+      "colorFinePlasterMunsell": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Einfarbig",
+          "Figürlich",
+          "Floral",
+          "Marmoriert",
+          "Mehrfarbig",
+          "Linear",
+          "Ornamental",
+          "Flächendeckend"
+        ]
+      },
+      "paintingTechnique": {
+        "inputType": "radio",
+        "valuelist": [
+          "Seccomalerei",
+          "Freskomalerei",
+          "Sonstiges"
+        ]
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut erhalten",
+          "abblätternd",
+          "verrieben",
+          "verwaschen",
+          "stark abgerieben",
+          "nicht erhalten"
+        ]
+      },
+      "specialFeatures": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Graffito",
+          "Pickung",
+          "Übermalung",
+          "Ritzlinien",
+          "Stoßkanten"
+        ]
       }
     }
   },

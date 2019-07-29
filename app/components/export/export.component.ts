@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
+import {to} from 'tsfun';
+import {FieldDocument, IdaiType, Messages, ProjectConfiguration, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -13,10 +14,13 @@ import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
 import {TabManager} from '../tab-manager';
-import {is, on, isNot, includedIn} from 'tsfun';
-import {CSVExporter} from '../../core/export/csv-exporter';
+import {CsvExporter} from '../../core/export/csv-exporter';
+import {ResourceTypeCount} from '../../core/export/export-helper';
+import {ExportRunner} from '../../core/export/export-runner';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 const remote = require('electron').remote;
+
 
 
 @Component({
@@ -31,13 +35,15 @@ const remote = require('electron').remote;
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'geojson' | 'shapefile' | 'csv' = 'geojson';
+    public format: 'geojson' | 'shapefile' | 'csv' = 'csv';
+    public initializing: boolean = false;
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
-    public resourceTypes: Array<IdaiType> = [];
-    public selectedOperationId: string = 'project';
+
+    public resourceTypeCounts: Array<ResourceTypeCount> = [];
     public selectedType: IdaiType|undefined = undefined;
+    public selectedOperationId: string = 'project';
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -50,7 +56,8 @@ export class ExportComponent implements OnInit {
                 private messages: Messages,
                 private i18n: I18n,
                 private viewFacade: ViewFacade,
-                private datastore: FieldReadDatastore,
+                private fieldDatastore: FieldReadDatastore,
+                private documentDatastore: DocumentReadDatastore,
                 private typeUtility: TypeUtility,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -60,25 +67,54 @@ export class ExportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
+    public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
+
+    public find = (query: Query) => this.fieldDatastore.find(query);
+
+    public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
+
 
     async ngOnInit() {
 
+        this.initializing = true;
+
         this.operations = await this.fetchOperations();
-
-        this.resourceTypes =
-            this.projectConfiguration
-                .getTypesList()
-                .filter(on('name',
-                    isNot(includedIn(['Operation', 'Project', 'Image', 'Drawing', 'Photo']))));
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
-
+        await this.setTypeCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+
+        this.initializing = false;
+    }
+
+
+    public async setTypeCounts() {
+
+        this.resourceTypeCounts = await ExportRunner.determineTypeCounts(
+            this.find,
+            this.getOperationIdForMode(),
+            this.projectConfiguration.getTypesList());
+
+        if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
     }
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') await this.tabManager.openActiveTab();
+    }
+
+
+    public isExportButtonEnabled() {
+
+        return !this.isJavaInstallationMissing()
+            && !this.initializing
+            && !this.running
+            && this.resourceTypeCounts.length > 0;
+    }
+
+
+    private getOperationIdForMode() {
+
+        return this.csvExportMode === 'complete' ? this.selectedOperationId : undefined;
     }
 
 
@@ -91,30 +127,10 @@ export class ExportComponent implements OnInit {
         this.openModal();
 
         try {
-            switch (this.format) {
-                case 'geojson':
-                    await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
-                    break;
-                case 'shapefile':
-                    await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
-                        this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
-                    break;
-                case 'csv':
-                    if (this.selectedType) {
-                        try {
-                            CSVExporter.performExport(
-                                this.csvExportMode === 'complete'
-                                    ? await this.fetchDocuments()
-                                    : [],
-                                this.selectedType,
-                                filePath);
+            if (this.format === 'geojson') await this.startGeojsonExport(filePath);
+            else if (this.format === 'shapefile') await this.startShapeFileExport(filePath);
+            else if (this.format === 'csv') await this.startCsvExport(filePath);
 
-                        } catch (err) {
-                            console.error(err);
-                        }
-                    } else console.error("No resource type selected");
-                    break;
-            }
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -125,13 +141,49 @@ export class ExportComponent implements OnInit {
     }
 
 
+    private async startGeojsonExport(filePath: string) {
+
+        await GeoJsonExporter.performExport(this.fieldDatastore, filePath, this.selectedOperationId);
+    }
+
+
+    private async startShapeFileExport(filePath: string) {
+
+        await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
+            this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
+    }
+
+
+    private async startCsvExport(filePath: string) {
+
+        if (!this.selectedType) return console.error('No resource type selected');
+
+        try {
+            await ExportRunner.performExport(
+                this.find,
+                this.getOperationIdForMode(),
+                this.selectedType,
+                (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
+                (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
+                CsvExporter.performExport(filePath));
+        } catch(err) {
+            console.error(err);
+            throw [M.EXPORT_ERROR_GENERIC];
+        }
+    }
+
+
     private chooseFilepath(): Promise<string> {
 
         return new Promise<string>(async resolve => {
 
-            const filePath = await remote.dialog.showSaveDialog({
-                filters: [this.getFileFilter()]
-            });
+            const options: any = { filters: [this.getFileFilter()] };
+            if (this.selectedType) {
+                options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' })
+                    + '.' + this.selectedType.name.toLowerCase();
+            }
+
+            const filePath = await remote.dialog.showSaveDialog(options);
             resolve(filePath);
         });
     }
@@ -179,26 +231,10 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private async fetchDocuments(): Promise<Array<FieldDocument>> {
-
-        if (!this.selectedType) return [];
-
-        try {
-
-            const docs = (await this.datastore.find({})).documents;
-            return docs.filter(on('resource.type', is(this.selectedType.name))); // TODO review. maybe index type
-
-        } catch (msgWithParams) {
-            console.error(msgWithParams);
-            return [];
-        }
-    }
-
-
     private async fetchOperations(): Promise<Array<FieldDocument>> {
 
         try {
-            return (await this.datastore.find({
+            return (await this.fieldDatastore.find({
                 types: this.typeUtility.getOperationTypeNames()
             })).documents;
         } catch (msgWithParams) {

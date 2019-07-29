@@ -1,9 +1,11 @@
 import {Component, Renderer2} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Messages} from 'idai-components-2';
 import {AppController} from './app-controller';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {MenuService} from './menu-service';
+import {UtilTranslations} from './core/util/util-translations';
 
 const remote = require('electron').remote;
 
@@ -25,6 +27,8 @@ export class AppComponent {
                 private messages: Messages,
                 private renderer: Renderer2,
                 private menuService: MenuService,
+                private i18n: I18n,
+                private utilTranslations: UtilTranslations,
                 appController: AppController,
                 imagestore: ReadImagestore) {
 
@@ -45,6 +49,7 @@ export class AppComponent {
         menuService.initialize();
 
         AppComponent.preventDefaultDragAndDropBehavior();
+        this.initializeUtilTranslations();
 
         if (remote.getGlobal('mode') === 'test') this.enableMenuShortCutsForTests();
     }
@@ -79,5 +84,28 @@ export class AppComponent {
                     break;
             }
         });
+    }
+
+
+    private initializeUtilTranslations() {
+
+        this.utilTranslations.addTranslation(
+            'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.'})
+        );
+        this.utilTranslations.addTranslation(
+            'ce', this.i18n({ id: 'util.dating.ce', value: 'n. Chr.'})
+        );
+        this.utilTranslations.addTranslation(
+            'bp', this.i18n({ id: 'util.dating.bp', value: 'BP'})
+        );
+        this.utilTranslations.addTranslation(
+            'before', this.i18n({ id: 'util.dating.before', value: 'Vor'})
+        );
+        this.utilTranslations.addTranslation(
+            'after', this.i18n({ id: 'util.dating.after', value: 'Nach'})
+        );
+        this.utilTranslations.addTranslation(
+            'asMeasuredBy', this.i18n({ id: 'util.dimension.asMeasuredBy', value: 'gemessen an'})
+        );
     }
 }

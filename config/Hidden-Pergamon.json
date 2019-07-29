@@ -1,1 +1,85 @@
-{}
+{
+  "Find" : [
+    "condition",
+    "storageInventoryNumber",
+    "catalogueNumber"
+  ],
+  "Glass": [
+    "vesselForm",
+    "vesselFormSpecific",
+    "formDescription",
+    "color"
+  ],
+  "Coin": [
+    "preservedDiameter"
+  ],
+  "Terracotta": [
+    "vesselForm",
+    "formDescription",
+    "vesselFormSpecific",
+    "temperAmount",
+    "temperParticles",
+    "clayStructure",
+    "clayColorBreak",
+    "clayColorInside",
+    "clayColorOutside"
+  ],
+  "Wood": [
+    "color",
+    "catalogueNumber"
+  ],
+  "Brick": [
+    "brickForm",
+    "clayColorInside",
+    "clayColorOutside",
+    "specificType"
+  ],
+  "Metal": [
+    "vesselForm",
+    "vesselFormSpecific",
+    "formDescription"
+  ],
+  "Stone": [
+    "purpose",
+    "workmanship",
+    "formDescription",
+    "color",
+    "architectureElement",
+    "temperAmount"
+  ],
+  "PlasterFragment": [
+    "color",
+    "plasterComponents",
+    "hasDecoration"
+  ],
+  "Bone": [
+    "boneClassification",
+    "burningGrade"
+  ],
+  "Pottery": [
+    "amountSherdsLip",
+    "amountSherdsPedestal",
+    "amountSherdsRimBase",
+    "amountSherdsRimShoulder",
+    "amountSherdsShoulder",
+    "clayColorOutside",
+    "clayColorInside",
+    "clayColorBreak",
+    "clayColorBreakMunsell",
+    "clayColorInsideMunsell",
+    "clayColorOutsideMunsell",
+    "temperAmount",
+    "temperParticles",
+    "objectType",
+    "coatInside",
+    "coatInsideType",
+    "coatOutside",
+    "coatOutsideType",
+    "temperTypeClay",
+    "formDescription",
+    "usage",
+    "hasCoat",
+    "amountSherdsPercent",
+    "usage"
+  ]
+}

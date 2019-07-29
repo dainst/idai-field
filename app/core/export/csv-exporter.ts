@@ -1,21 +1,30 @@
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
-import {IdaiType} from 'idai-components-2/src/configuration/idai-type';
+import * as fs from 'fs';
+import {FieldResource, IdaiType} from 'idai-components-2';
 import {CSVExport} from './csv-export';
-import * as fs from "fs";
 import {M} from '../../components/m';
+import {PerformExport} from './export-helper';
 
 /**
+ * Small wrapper to separate async and file handling, including
+ * the choice of line endings, from the main logic
+ *
  * @author Daniel de Oliveira
  */
-export module CSVExporter {
+export module CsvExporter {
 
-    export function performExport(documents: FieldDocument[],
-                                  resourceType: IdaiType,
-                                  outputFilePath: string) {
+    /**
+     * @param outputFilePath
+     */
+    export function performExport(outputFilePath: string): PerformExport {
 
-        const result = CSVExport.createExportable(documents, resourceType); // TODO return string instead of string[]
-        // console.log("result", result);
-        writeFile(outputFilePath, result);
+        return async (resources: Array<FieldResource>,
+                      resourceType: IdaiType,
+                      relations: string[]) => {
+
+            await writeFile(
+                outputFilePath,
+                CSVExport.createExportable(resources, resourceType.fields, relations));
+        }
     }
 
 

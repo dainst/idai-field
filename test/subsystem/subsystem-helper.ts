@@ -159,9 +159,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
 
-    // TODO create imageoverview-facade
-
-    const mediaState = new MediaState(); // TODO check why both imagedocumentsmanager and imageoverviewfacade need this as constructor arg
+    const mediaState = new MediaState();
 
     const mediaDocumentsManager = new MediaDocumentsManager(mediaState, imageDatastore);
 

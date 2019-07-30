@@ -141,7 +141,8 @@
                         <label class="control-label col-form-label"
                                i18n="@@import.csv.separator">Feldtrennzeichen</label>
                         <input class="form-control" id="separatorInput"
-                               type="text" [maxlength]="1" [(ngModel)]="separator">
+                               type="text" maxlength="1"
+                               [value]="getSeparator()" (change)="setSeparator($event.srcElement.value)">
                     </div>
 
                     <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">

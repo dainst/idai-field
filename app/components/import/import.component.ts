@@ -23,6 +23,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
+import {ImportState} from './import-state';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 
@@ -59,7 +60,6 @@ export class ImportComponent implements OnInit {
     public resourceTypes: Array<IdaiType> = [];
     public selectedType: IdaiType|undefined = undefined;
     public typeFromFileName: boolean = false;
-    public separator: string = ',';
 
 
     constructor(
@@ -75,7 +75,8 @@ export class ImportComponent implements OnInit {
         private settingsService: SettingsService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
-        private tabManager: TabManager) {}
+        private tabManager: TabManager,
+        private importState: ImportState) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -91,6 +92,10 @@ export class ImportComponent implements OnInit {
     public isTestProject = () => this.settingsService.getSelectedProject().indexOf('test') !== -1;
 
     public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.allowMergingExistingResources;
+
+    public getSeparator = () => this.importState.getSeparator();
+
+    public setSeparator = (separator: string) => this.importState.setSeparator(separator);
 
 
     async ngOnInit() {
@@ -213,7 +218,7 @@ export class ImportComponent implements OnInit {
             await reader.go(),
             () => this.idGenerator.generateId(),
             this.format === 'csv' ? this.selectedType : undefined,
-            this.format === 'csv' ? this.separator : undefined);
+            this.format === 'csv' ? this.getSeparator() : undefined);
     }
 
 

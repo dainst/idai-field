@@ -12,7 +12,7 @@ describe('DAOs/Access/Subsystem', () => {
 
     function expectErr1(err) {
 
-        if (!err) fail("Wrong Err - undefined");
+        if (!err) fail('Wrong Err - undefined');
         if (err.indexOf('Wrong') === -1) fail('Wrong Err - ' + err);
     }
 
@@ -22,9 +22,6 @@ describe('DAOs/Access/Subsystem', () => {
         await setupSyncTestDb();
 
         const {
-            remoteChangesStream,
-            viewFacade,
-            documentHolder,
             documentDatastore,
             fieldDocumentDatastore,
             imageDatastore

@@ -78,8 +78,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const {settingsService, projectConfiguration} = await setupSettingsService(
         pouchdbmanager, projectName, startSync);
 
-    const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
-        IndexerConfiguration.configureIndexers(projectConfiguration);
+    const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(
         pouchdbmanager.getDbProxy(),
@@ -87,9 +86,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-
     const typeUtility = new TypeUtility(projectConfiguration);
-
     const typeConverter = new FieldTypeConverter(typeUtility);
 
     const fieldDocumentDatastore = new FieldDatastore(
@@ -154,13 +151,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore
     );
 
-
     const imagesState = new ImagesState();
-
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
-
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, typeUtility);
-
 
     return {
         remoteChangesStream,

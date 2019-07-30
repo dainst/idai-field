@@ -23,7 +23,7 @@ describe('DAOs/Convert/Subsystem', () => {
 
     function expectErr(err) {
 
-        if (!err) fail("Wrong Err - undefined");
+        if (!err) fail('Wrong Err - undefined');
         if (err.indexOf('Unknown type') === -1) fail('Wrong Err' + err);
     }
 
@@ -33,9 +33,6 @@ describe('DAOs/Convert/Subsystem', () => {
         await setupSyncTestDb();
 
         const {
-            remoteChangesStream,
-            viewFacade,
-            documentHolder,
             documentDatastore,
             fieldDocumentDatastore,
             imageDatastore

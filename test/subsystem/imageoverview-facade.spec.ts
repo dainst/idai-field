@@ -23,7 +23,7 @@ describe('ImageOverviewFacade/Subsystem', () => {
         await setupSyncTestDb();
         const result = await createApp();
 
-        const datastore: CachedDatastore<ImageDocument> = result.idaiFieldImageDocumentDatastore;
+        const datastore: CachedDatastore<ImageDocument> = result.imageDatastore;
         imageOverviewFacade = result.imageOverviewFacade;
 
         for (let i = 0; i < 60; i++) { // create 60 documents

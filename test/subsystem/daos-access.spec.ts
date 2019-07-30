@@ -27,12 +27,12 @@ describe('DAOs/Access/Subsystem', () => {
             documentHolder,
             documentDatastore,
             fieldDocumentDatastore,
-            idaiFieldImageDocumentDatastore
+            imageDatastore
         } = await createApp();
 
         _documentDatastore = documentDatastore;
         _fieldDocumentDatastore = fieldDocumentDatastore;
-        _idaiFieldImageDocumentDatastore = idaiFieldImageDocumentDatastore;
+        _idaiFieldImageDocumentDatastore = imageDatastore;
 
         spyOn(console, 'error');
 

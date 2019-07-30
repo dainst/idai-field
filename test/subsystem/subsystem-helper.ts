@@ -94,8 +94,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
-    const idaiFieldImageDocumentDatastore = new ImageDatastore(
-        datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
@@ -170,7 +168,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentHolder,
         documentDatastore,
         fieldDocumentDatastore,
-        idaiFieldImageDocumentDatastore,
+        imageDatastore,
         settingsService,
         resourcesStateManager,
         stateSerializer,

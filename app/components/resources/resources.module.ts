@@ -12,7 +12,6 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ThumbnailViewComponent} from './map/list/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -68,7 +67,6 @@ const remote = require('electron').remote;
         ListComponent,
         RowComponent,
         PlusButtonComponent,
-        ThumbnailViewComponent,
         SidebarListComponent,
         SidebarListButtonGroupComponent,
         NavigationComponent,

@@ -31,7 +31,6 @@ export class ImageViewComponent implements OnInit {
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
-    public activeTab: string;
     public openSection: string|undefined = 'stem';
 
     private subModalOpened: boolean = false;

@@ -1,10 +1,10 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {filter, flatMap, flow, getOnOr, isDefined, asyncMap, isNot, undefinedOrEmpty,
-    isEmpty, isnt, isUndefinedOrEmpty, on, subtractBy, union, intersection, arrayEqual, is, lookup
-} from 'tsfun';
+import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersection, is, isDefined, isEmpty, isNot, isnt,
+    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
+import {makeLookup} from '../util';
 
 
 /**
@@ -45,11 +45,7 @@ export module RelationsCompleter {
                                                    getInverseRelation: (_: string) => string|undefined,
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
 
-        const documentsLookup: DocumentsLookup = documents
-            .reduce((documentsMap: {[id: string]: Document}, document: Document) => {
-                documentsMap[document.resource.id] = document;
-                return documentsMap;
-            }, {});
+        const documentsLookup = makeDocumentsLookup(documents);
 
         for (let document of documents) {
 
@@ -218,4 +214,7 @@ export module RelationsCompleter {
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
     }
+
+
+    const makeDocumentsLookup = makeLookup('resource.id');
 }

@@ -158,20 +158,27 @@ export module RelationsCompleter {
                                                   addInverse: (_: Document) => (_: string) => [string, string],
                                                   relations: string[]): void {
 
+        const addInverse_ = addInverse(importDocument);
+        const inverseIsDefined = compose(nth(1), isDefined);
+        const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
+        const setInverses_ = setInverses(importDocument, importDocumentsLookup);
+
         flow<any>(relations,
-            map(addInverse(importDocument)),
-            filter(compose(nth(1), isDefined)),
-            forEach(assertNotBadlyInterrelated(importDocument)),
-            forEach(setInverses(importDocument, importDocumentsLookup)));
+            map(addInverse_),
+            filter(inverseIsDefined),
+            forEach(assertNotBadyInterrelated_),
+            forEach(setInverses_));
     }
 
 
     function setInverses(importDocument: Document, importDocumentsLookup: DocumentsLookup) {
 
+        const lookup_ = lookup(importDocumentsLookup);
+
         return ([relationName, inverseRelationName]: [string, string]) => {
 
             importDocument.resource.relations[relationName]
-                .map(lookup(importDocumentsLookup))
+                .map(lookup_)
                 .filter(isDefined)
                 .forEach(targetDocument => {
                     assertInSameOperation(importDocument, targetDocument);

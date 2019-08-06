@@ -16,7 +16,7 @@ import {compose} from 'tsfun/src/composition';
  */
 export module RelationsCompleter {
 
-    type DocumentsLookup = {[id: string]: Document};
+    type LookupDocument = (_: string) => Document;
 
 
     /**
@@ -47,8 +47,7 @@ export module RelationsCompleter {
          */
         return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
 
-            const importDocumentsLookup = makeDocumentsLookup(importDocuments);
-            const lookupDocument = lookup(importDocumentsLookup);
+            const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
             for (let importDocument of importDocuments) {
 
@@ -61,7 +60,7 @@ export module RelationsCompleter {
 
             return await setInverseRelationsForDbResources(
                 importDocuments,
-                importDocumentsLookup,
+                lookupDocument,
                 get,
                 getInverseRelation,
                 mergeMode);
@@ -70,20 +69,20 @@ export module RelationsCompleter {
 
 
     async function setInverseRelationsForDbResources(importDocuments: Array<Document>,
-                                                     importDocumentsLookup: DocumentsLookup,
+                                                     lookupDocument: LookupDocument,
                                                      get: (_: string) => Promise<Document>,
                                                      getInverseRelation: (_: string) => string|undefined,
                                                      mergeMode: boolean): Promise<Array<Document>> {
 
         async function getTargetIds(document: Document) {
 
-            let targetIds = targetIdsReferingToDbResources(document, importDocumentsLookup);
+            let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
             if (mergeMode) {
                 let oldVersion;
                 try {
                     oldVersion = await get(document.resource.id);
                 } catch { throw "FATAL existing version of document not found" }
-                targetIds = union([targetIds, targetIdsReferingToDbResources(oldVersion as any, importDocumentsLookup)]);
+                targetIds = union([targetIds, targetIdsReferingToDbResources(oldVersion as any, lookupDocument)]);
             }
             return targetIds;
         }
@@ -139,23 +138,23 @@ export module RelationsCompleter {
     function relationNamesExceptRecordedIn(document: Document) {
 
         return Object
-            .keys(document.resource.relations) // TODO replace with flow
+            .keys(document.resource.relations) // TODO replace with flow, keys
             .filter(isnt(LIES_WITHIN))
             .filter(isnt(RECORDED_IN)) // TODO review, possibly all hierarchical relations
     }
 
 
     function targetIdsReferingToDbResources(document: Document,
-                                            documentsLookup: DocumentsLookup) {
+                                            lookupDocument: LookupDocument) {
 
         return flow(relationNamesExceptRecordedIn(document),
             flatMap(lookup(document.resource.relations)),
-            remove(compose(lookup(documentsLookup), isDefined)));
+            remove(compose(lookupDocument, isDefined)));
     }
 
 
     function setInverseRelationsForImportResource(importDocument: Document,
-                                                  lookupDocument: (_: string) => Document,
+                                                  lookupDocument: LookupDocument,
                                                   addInverse: (_: Document) => (_: string) => [string, string],
                                                   relations: string[]): void {
 
@@ -172,7 +171,7 @@ export module RelationsCompleter {
     }
 
 
-    function setInverses(importDocument: Document, lookupDocument: (_: string) => Document) {
+    function setInverses(importDocument: Document, lookupDocument: LookupDocument) {
 
         return ([relationName, inverseRelationName]: [string, string]) => {
 

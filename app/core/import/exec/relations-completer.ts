@@ -1,13 +1,11 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt,
-    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove} from 'tsfun';
+    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {makeLookup} from '../util';
 import {LIES_WITHIN, RECORDED_IN} from '../../../c';
-import {nth} from 'tsfun/src/arraylist';
-import {compose} from 'tsfun/src/composition';
 
 
 /**
@@ -16,7 +14,7 @@ import {compose} from 'tsfun/src/composition';
  */
 export module RelationsCompleter {
 
-    type LookupDocument = (_: string) => Document;
+    type LookupDocument = (_: string) => Document|undefined;
 
 
     /**
@@ -178,7 +176,7 @@ export module RelationsCompleter {
             importDocument.resource.relations[relationName]
                 .map(lookupDocument)
                 .filter(isDefined)
-                .forEach(targetDocument => {
+                .forEach((targetDocument: Document) => {
                     assertInSameOperation(importDocument, targetDocument);
                     setInverse(importDocument.resource.id, targetDocument.resource.relations, inverseRelationName);
                 });

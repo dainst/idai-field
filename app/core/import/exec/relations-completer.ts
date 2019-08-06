@@ -23,45 +23,48 @@ export module RelationsCompleter {
      * Iterates over all relation (ex) of the given resources. Between import resources, it validates the relations.
      * Between import resources and db resources, it adds the inverses.
      *
-     * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
-     *   for contradictory relations and missing inverses are added.
      * @param get
      * @param getInverseRelation
-     * @param mergeMode
-     *
-     * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
-     *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
-     *
-     * side-effects: if an inverse of one of importDocuments is not set, it gets completed automatically.
-     *   The document from importDocuments then gets modified in place.
-     *
-     * @throws ImportErrors.*
-     * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
-     * @throws [EMPTY_RELATION, resourceId]
-     * @throws [BAD_INTERRELATION, sourceId]
      */
-    export async function completeInverseRelations(importDocuments: Array<Document>,
-                                                   get: (_: string) => Promise<Document>,
-                                                   getInverseRelation: (_: string) => string|undefined,
-                                                   mergeMode: boolean = false): Promise<Array<Document>> {
+    export function completeInverseRelations(get: (_: string) => Promise<Document>,
+                                             getInverseRelation: (_: string) => string|undefined) {
 
-        const importDocumentsLookup = makeDocumentsLookup(importDocuments);
+        /**
+         * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
+         *   for contradictory relations and missing inverses are added.
+         * @param mergeMode
+         *
+         * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
+         *   The document from importDocuments then gets modified in place.
+         *
+         * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
+         *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
+         *
+         * @throws ImportErrors.*
+         * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
+         * @throws [EMPTY_RELATION, resourceId]
+         * @throws [BAD_INTERRELATION, sourceId]
+         */
+        return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
 
-        for (let importDocument of importDocuments) {
+            const importDocumentsLookup = makeDocumentsLookup(importDocuments);
 
-            setInverseRelationsForImportResource(
-                importDocument,
+            for (let importDocument of importDocuments) {
+
+                setInverseRelationsForImportResource(
+                    importDocument,
+                    importDocumentsLookup,
+                    getInverseRelation,
+                    relationNamesExceptRecordedIn(importDocument));
+            }
+
+            return await setInverseRelationsForDbResources(
+                importDocuments,
                 importDocumentsLookup,
+                get,
                 getInverseRelation,
-                relationNamesExceptRecordedIn(importDocument));
+                mergeMode);
         }
-
-        return await setInverseRelationsForDbResources(
-            importDocuments,
-            importDocumentsLookup,
-            get,
-            getInverseRelation,
-            mergeMode);
     }
 
 

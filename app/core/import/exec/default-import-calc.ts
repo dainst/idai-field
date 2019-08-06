@@ -144,10 +144,8 @@ export module DefaultImportCalc {
         await inferRecordedIns(documents, operationTypeNames, get, mainTypeDocumentId);
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
-            ? await RelationsCompleter.completeInverseRelations(
-                documents,
-                get, getInverseRelation,
-                mergeMode)
+            ? await RelationsCompleter
+                .completeInverseRelations(get, getInverseRelation)(documents, mergeMode)
             : [];
     }
 

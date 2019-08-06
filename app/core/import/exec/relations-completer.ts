@@ -137,7 +137,7 @@ export module RelationsCompleter {
         return Object
             .keys(document.resource.relations)
             .filter(isnt(LIES_WITHIN))
-            .filter(isnt(RECORDED_IN))
+            .filter(isnt(RECORDED_IN)) // TODO review, possibly all hierarchical relations
     }
 
 

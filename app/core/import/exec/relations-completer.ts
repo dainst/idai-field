@@ -138,7 +138,7 @@ export module RelationsCompleter {
     function relationNamesExceptRecordedIn(document: Document) {
 
         return Object
-            .keys(document.resource.relations)
+            .keys(document.resource.relations) // TODO replace with flow
             .filter(isnt(LIES_WITHIN))
             .filter(isnt(RECORDED_IN)) // TODO review, possibly all hierarchical relations
     }

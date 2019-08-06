@@ -23,63 +23,63 @@ export module RelationsCompleter {
      * Iterates over all relation (ex) of the given resources. Between import resources, it validates the relations.
      * Between import resources and db resources, it adds the inverses.
      *
-     * @param documents If one of these references another from the import file, the validity of the relations gets checked
+     * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
      *   for contradictory relations and missing inverses are added.
      * @param get
      * @param getInverseRelation
      * @param mergeMode
      *
-     * @returns the target documents which should be updated. Only those fetched from the db are included. If a target document comes from
-     *   the import file itself, <code>documents</code> gets modified in place accordingly.
+     * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
+     *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
      *
-     * side-effects: if an inverse of one of documents is not set, it gets completed automatically.
-     *   The document from documents then gets modified in place.
+     * side-effects: if an inverse of one of importDocuments is not set, it gets completed automatically.
+     *   The document from importDocuments then gets modified in place.
      *
      * @throws ImportErrors.*
      * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws [EMPTY_RELATION, resourceId]
      * @throws [BAD_INTERRELATION, sourceId]
      */
-    export async function completeInverseRelations(documents: Array<Document>,
+    export async function completeInverseRelations(importDocuments: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
                                                    getInverseRelation: (_: string) => string|undefined,
                                                    mergeMode: boolean = false): Promise<Array<Document>> {
 
-        const documentsLookup = makeDocumentsLookup(documents);
+        const importDocumentsLookup = makeDocumentsLookup(importDocuments);
 
-        for (let document of documents) {
+        for (let importDocument of importDocuments) {
 
             setInverseRelationsForImportResource(
-                document,
-                documentsLookup,
+                importDocument,
+                importDocumentsLookup,
                 getInverseRelation,
-                relationNamesExceptRecordedIn(document));
+                relationNamesExceptRecordedIn(importDocument));
         }
 
         return await setInverseRelationsForDbResources(
-            documents,
-            documentsLookup,
+            importDocuments,
+            importDocumentsLookup,
             get,
             getInverseRelation,
             mergeMode);
     }
 
 
-    async function setInverseRelationsForDbResources(documents: Array<Document>,
-                                                     documentsLookup: DocumentsLookup,
+    async function setInverseRelationsForDbResources(importDocuments: Array<Document>,
+                                                     importDocumentsLookup: DocumentsLookup,
                                                      get: (_: string) => Promise<Document>,
                                                      getInverseRelation: (_: string) => string|undefined,
                                                      mergeMode: boolean): Promise<Array<Document>> {
 
         async function getTargetIds(document: Document) {
 
-            let targetIds = targetIdsReferingToObjects(document, documentsLookup);
+            let targetIds = targetIdsReferingToObjects(document, importDocumentsLookup);
             if (mergeMode) {
                 let oldVersion;
                 try {
                     oldVersion = await get(document.resource.id);
                 } catch { throw "FATAL existing version of document not found" }
-                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, documentsLookup)]);
+                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, importDocumentsLookup)]);
             }
             return targetIds;
         }
@@ -102,7 +102,7 @@ export module RelationsCompleter {
 
 
         let totalDocsToUpdate: Array<Document> = [];
-        for (let document of documents) {
+        for (let document of importDocuments) {
             totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
         }
         return totalDocsToUpdate;
@@ -149,15 +149,15 @@ export module RelationsCompleter {
     }
 
 
-    function setInverseRelationsForImportResource(document: Document,
-                                                  documentsLookup: DocumentsLookup,
+    function setInverseRelationsForImportResource(importDocument: Document,
+                                                  importDocumentsLookup: DocumentsLookup,
                                                   getInverseRelation: (_: string) => string|undefined,
                                                   relations: string[]): void {
 
         relations
             .map(relationName => {
 
-                if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
+                if (isEmpty(importDocument.resource.relations[relationName])) throw [E.EMPTY_RELATION, importDocument.resource.identifier];
 
                 const inverseRelationName = getInverseRelation(relationName);
                 return [relationName, inverseRelationName] as [string, string];
@@ -165,14 +165,14 @@ export module RelationsCompleter {
             .filter(([_, inverseRelationName]) => isDefined(inverseRelationName))
             .forEach(([relationName, inverseRelationName]) => {
 
-                assertNotBadlyInterrelated(document, relationName, inverseRelationName);
+                assertNotBadlyInterrelated(importDocument, relationName, inverseRelationName);
 
-                document.resource.relations[relationName]
-                    .map(lookup(documentsLookup))
+                importDocument.resource.relations[relationName]
+                    .map(lookup(importDocumentsLookup))
                     .filter(isDefined)
                     .forEach(targetDocument => {
-                        assertInSameOperation(document, targetDocument);
-                        setInverse(document.resource.id, targetDocument.resource.relations, inverseRelationName);
+                        assertInSameOperation(importDocument, targetDocument);
+                        setInverse(importDocument.resource.id, targetDocument.resource.relations, inverseRelationName);
                     });
             })
     }

@@ -1,7 +1,7 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt,
-    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach} from 'tsfun';
+    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {makeLookup} from '../util';
@@ -76,13 +76,13 @@ export module RelationsCompleter {
 
         async function getTargetIds(document: Document) {
 
-            let targetIds = targetIdsReferingToObjects(document, importDocumentsLookup);
+            let targetIds = targetIdsReferingToDbResources(document, importDocumentsLookup);
             if (mergeMode) {
                 let oldVersion;
                 try {
                     oldVersion = await get(document.resource.id);
                 } catch { throw "FATAL existing version of document not found" }
-                targetIds = union([targetIds, targetIdsReferingToObjects(oldVersion as any, importDocumentsLookup)]);
+                targetIds = union([targetIds, targetIdsReferingToDbResources(oldVersion as any, importDocumentsLookup)]);
             }
             return targetIds;
         }
@@ -144,12 +144,12 @@ export module RelationsCompleter {
     }
 
 
-    function targetIdsReferingToObjects(document: Document,
-                                        documentsLookup: DocumentsLookup) {
+    function targetIdsReferingToDbResources(document: Document,
+                                            documentsLookup: DocumentsLookup) {
 
         return flow(relationNamesExceptRecordedIn(document),
             flatMap(lookup(document.resource.relations)),
-            filter(targetId => !documentsLookup[targetId]));
+            remove(compose(lookup(documentsLookup), isDefined)));
     }
 
 

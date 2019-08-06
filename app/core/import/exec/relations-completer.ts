@@ -5,6 +5,7 @@ import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersection, is, 
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {makeLookup} from '../util';
+import {LIES_WITHIN, RECORDED_IN} from '../../../c';
 
 
 /**
@@ -14,9 +15,6 @@ import {makeLookup} from '../util';
 export module RelationsCompleter {
 
     type DocumentsLookup = {[id: string]: Document};
-
-    const LIES_WITHIN = 'liesWithin';
-    const RECORDED_IN = 'isRecordedIn';
 
 
     /**

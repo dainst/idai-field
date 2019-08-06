@@ -87,17 +87,17 @@ export module RelationsCompleter {
 
         async function getDocumentTargetDocsToUpdate(document: Document) {
 
-            const documentTargetDocs: Array<Document> = await asyncMap(
-                async (targetId: any) => getTargetDocument(targetId, totalDocsToUpdate, get))
-            (await getTargetIds(document));
+            const targetIds = await getTargetIds(document);
+
+            const documentTargetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(targetIds);
 
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-                document, documentTargetDocs, getInverseRelation);
+                document, documentTargetDocuments, getInverseRelation);
 
             for (let targetDocument of documentTargetDocsToUpdate) {
                 assertInSameOperation(document, targetDocument);
             }
-            return documentTargetDocs;
+            return documentTargetDocuments;
         }
 
 
@@ -116,18 +116,19 @@ export module RelationsCompleter {
     }
 
 
-    async function getTargetDocument(targetId: string,
-                                     totalDocsToUpdate: Array<Document>,
-                                     get: Function): Promise<Document> {
+    function getTargetDocument(documents: Array<Document>, get: Function) {
 
-        let targetDocument = totalDocsToUpdate
-            .find(on('resource.id', is(targetId)));
-        if (!targetDocument) try {
-            targetDocument = clone(await get(targetId));
-        } catch {
-            throw [E.EXEC_MISSING_RELATION_TARGET, targetId]
+        return async (targetId: string): Promise<Document> => {
+
+            let targetDocument = documents
+                .find(on('resource.id', is(targetId)));
+            if (!targetDocument) try {
+                targetDocument = clone(await get(targetId));
+            } catch {
+                throw [E.EXEC_MISSING_RELATION_TARGET, targetId]
+            }
+            return targetDocument as Document;
         }
-        return targetDocument as Document;
     }
 
 

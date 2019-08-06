@@ -48,12 +48,13 @@ export module RelationsCompleter {
         return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
 
             const importDocumentsLookup = makeDocumentsLookup(importDocuments);
+            const lookupDocument = lookup(importDocumentsLookup);
 
             for (let importDocument of importDocuments) {
 
                 setInverseRelationsForImportResource(
                     importDocument,
-                    importDocumentsLookup,
+                    lookupDocument,
                     addInverse(getInverseRelation),
                     relationNamesExceptRecordedIn(importDocument));
             }
@@ -154,14 +155,14 @@ export module RelationsCompleter {
 
 
     function setInverseRelationsForImportResource(importDocument: Document,
-                                                  importDocumentsLookup: DocumentsLookup,
+                                                  lookupDocument: (_: string) => Document,
                                                   addInverse: (_: Document) => (_: string) => [string, string],
                                                   relations: string[]): void {
 
         const addInverse_ = addInverse(importDocument);
         const inverseIsDefined = compose(nth(1), isDefined);
         const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
-        const setInverses_ = setInverses(importDocument, importDocumentsLookup);
+        const setInverses_ = setInverses(importDocument, lookupDocument);
 
         flow<any>(relations,
             map(addInverse_),
@@ -171,14 +172,12 @@ export module RelationsCompleter {
     }
 
 
-    function setInverses(importDocument: Document, importDocumentsLookup: DocumentsLookup) {
-
-        const lookup_ = lookup(importDocumentsLookup);
+    function setInverses(importDocument: Document, lookupDocument: (_: string) => Document) {
 
         return ([relationName, inverseRelationName]: [string, string]) => {
 
             importDocument.resource.relations[relationName]
-                .map(lookup_)
+                .map(lookupDocument)
                 .filter(isDefined)
                 .forEach(targetDocument => {
                     assertInSameOperation(importDocument, targetDocument);

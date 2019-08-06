@@ -14,7 +14,7 @@ import {LIES_WITHIN, RECORDED_IN} from '../../../c';
  */
 export module RelationsCompleter {
 
-    type LookupDocument = (_: string) => Document|undefined;
+    type LookupDocument = (_: string) => Document|undefined; // TODO fix typing of lookup itself, see tsfun todos
 
 
     /**

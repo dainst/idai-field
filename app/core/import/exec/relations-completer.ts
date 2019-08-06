@@ -1,6 +1,6 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersection, is, isDefined, isEmpty, isNot, isnt,
+import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt,
     isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -199,13 +199,15 @@ export module RelationsCompleter {
 
     function assertNotBadlyInterrelated(document: Document) {
 
+        const relations = document.resource.relations;
+
         return ([relationName, inverseRelationName]: [string, string]) => {
 
             if (relationName === inverseRelationName) return;
-            if (isUndefinedOrEmpty(document.resource.relations[inverseRelationName])) return;
+            if (isUndefinedOrEmpty(relations[inverseRelationName])) return;
 
-            const intersect  = intersection([document.resource.relations[relationName], document.resource.relations[inverseRelationName]]);
-            if (intersect.length > 0) {
+            const intersection  = intersect(relations[relationName])(relations[inverseRelationName]);
+            if (intersection.length > 0) {
                 throw [E.BAD_INTERRELATION, document.resource.identifier];
             }
         }

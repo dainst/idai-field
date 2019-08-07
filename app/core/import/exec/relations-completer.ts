@@ -186,15 +186,12 @@ export module RelationsCompleter {
 
     function addInverse(getInverseRelation: (_: string) => string|undefined) {
 
-        return (importDocument: Document) => {
+        return (document: Document) =>  (relationName: string) => {
 
-            return (relationName: string) => {
+            if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
 
-                if (isEmpty(importDocument.resource.relations[relationName])) throw [E.EMPTY_RELATION, importDocument.resource.identifier];
-
-                const inverseRelationName = getInverseRelation(relationName);
-                return [relationName, inverseRelationName] as [string, string];
-            }
+            const inverseRelationName = getInverseRelation(relationName);
+            return [relationName, inverseRelationName] as [string, string];
         }
     }
 

@@ -1,19 +1,17 @@
 import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
+import {LIES_WITHIN, POSITION_RELATIONS_, RECORDED_IN, TIME_RELATIONS_} from '../../../../../app/c';
+import IS_BELOW = POSITION_RELATIONS_.IS_BELOW;
+import IS_ABOVE = POSITION_RELATIONS_.IS_ABOVE;
+import IS_AFTER = TIME_RELATIONS_.IS_AFTER;
+import IS_BEFORE = TIME_RELATIONS_.IS_BEFORE;
+import IS_CONTEMPORARY_WITH = TIME_RELATIONS_.IS_CONTEMPORARY_WITH;
 
 
 describe('RelationsCompleter', () => {
 
 
-    const IS_BEFORE = 'isBefore';
-    const IS_AFTER = 'isAfter';
-    const IS_BELOW = 'isBelow';
-    const IS_ABOVE = 'isAbove';
-    const LIES_WITHIN = 'liesWithin';
-    const RECORDED_IN = 'isRecordedIn';
-    const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
-    
     let isRelationProperty;
     let completeInverseRelations;
 

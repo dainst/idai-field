@@ -8,6 +8,21 @@ export const RECORDED_IN = 'isRecordedIn';
 export const LIES_WITHIN = 'liesWithin';
 export const INCLUDES = 'includes';
 
+
+export module TIME_RELATIONS_ {
+
+    export const IS_BEFORE = 'isBefore';
+    export const IS_AFTER = 'isAfter';
+    export const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
+}
+
+export module POSITION_RELATIONS_ {
+
+    export const IS_BELOW = 'isBelow';
+    export const IS_ABOVE = 'isAbove';
+}
+
+
 export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
 export const POSITION_RELATIONS = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];

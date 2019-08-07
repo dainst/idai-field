@@ -314,7 +314,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
         doc1.resource.relations[IS_ABOVE] = ['7'];
 
-        await expectBadInterrelation([doc1, doc2], 'one');
+        await expectBadInterrelation([doc1], 'one');
         done();
     });
 
@@ -325,7 +325,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['7'];
 
-        await expectBadInterrelation([doc1, doc2], 'one');
+        await expectBadInterrelation([doc1], 'one');
         done();
     });
 

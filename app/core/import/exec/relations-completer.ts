@@ -4,7 +4,7 @@ import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isD
     isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
-import {makeLookup} from '../util';
+import {gt, keys, len, makeLookup} from '../util';
 import {LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../../../c';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
@@ -17,7 +17,7 @@ import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
  */
 export module RelationsCompleter {
 
-    type LookupDocument = (_: string) => Document|undefined; // TODO fix typing of lookup itself, see tsfun todos
+    type LookupDocument = (_: string) => Document|undefined;
 
 
     /**
@@ -147,10 +147,11 @@ export module RelationsCompleter {
 
     function relationNamesExceptRecordedIn(document: Document) {
 
-        return Object
-            .keys(document.resource.relations) // TODO replace with flow, keys
-            .filter(isnt(LIES_WITHIN))
-            .filter(isnt(RECORDED_IN)) // TODO review, possibly all hierarchical relations
+        return flow(
+            document.resource.relations,
+            keys,
+            filter(isnt(LIES_WITHIN)),
+            filter(isnt(RECORDED_IN))) as string[]; // TODO review, possibly all hierarchical relations
     }
 
 
@@ -229,7 +230,8 @@ export module RelationsCompleter {
             .map(lookup(document.resource.relations))
             .filter(isNot(undefinedOrEmpty))
             .map(intersect(relationTargets))
-            .filter(intersection => intersection.length > 0) // TODO make length, see above make it together with keys
+            .map(len)
+            .filter(gt(0))
             .forEach(_ => { throw [E.BAD_INTERRELATION, document.resource.identifier] });
     }
 

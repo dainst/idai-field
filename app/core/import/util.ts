@@ -5,6 +5,8 @@ import {getOn} from 'tsfun/src/objectstruct';
 // @author: Daniel de Oliveira
 
 
+// TODO fix typing of lookup itself, see tsfun todos
+
 export const makeLookup = (path: string) => {
 
     return <A>(as: Array<A>): ObjectCollection<A> => {
@@ -17,3 +19,15 @@ export const makeLookup = (path: string) => {
         }, {})(as);
     }
 };
+
+
+export function len<A>(as: Array<A>) {
+
+    return as.length;
+}
+
+
+export function gt(o: number) { return (a: number) => a > o; }
+
+
+export function keys(o: ObjectCollection<any>) { return Object.keys(o) as string[]; }

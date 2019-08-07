@@ -267,31 +267,43 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['2'];
         doc1.resource.relations[IS_ABOVE] = ['2'];
 
-        expectBadInterrelation([doc1, doc2], 'one');
+        await expectBadInterrelation([doc1, doc2], 'one');
         done();
     });
 
 
     it('opposing directions targeting same resource' +
         ' - import resource to import resource' +
-        ' - set one direction in one resource each', async done => {
+        ' - set one direction in each resource', async done => {
 
         doc1.resource.relations[IS_ABOVE] = ['2'];
         doc2.resource.relations[IS_ABOVE] = ['1'];
 
-        expectBadInterrelation([doc1, doc2], 'two');
+        await expectBadInterrelation([doc1, doc2], 'two');
         done();
     });
 
 
-    // TODO also test that it does not matter if these are set in one or in both objects
-    xit('mutually exclusive directions targeting same resource' +
-        ' - import resource to import resource', async done => {
+    it('mutually exclusive directions targeting same resource' +
+        ' - import resource to import resource' +
+        ' - set both directions in one resource', async done => {
 
-        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2']; // choose '2' as a document from import
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         doc1.resource.relations[IS_ABOVE] = ['2'];
 
-        expectBadInterrelation([doc1, doc2], 'one');
+        await expectBadInterrelation([doc1, doc2], 'one');
+        done();
+    });
+
+
+    it('mutually exclusive directions targeting same resource' +
+        ' - import resource to import resource' +
+        ' - set one direction in each resource', async done => {
+
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
+        doc2.resource.relations[IS_ABOVE] = ['1'];
+
+        await expectBadInterrelation([doc1, doc2], 'two');
         done();
     });
 
@@ -302,7 +314,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
         doc1.resource.relations[IS_ABOVE] = ['7'];
 
-        expectBadInterrelation([doc1, doc2], 'one');
+        await expectBadInterrelation([doc1, doc2], 'one');
         done();
     });
 

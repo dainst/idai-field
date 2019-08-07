@@ -5,7 +5,10 @@ import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isD
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {makeLookup} from '../util';
-import {LIES_WITHIN, RECORDED_IN} from '../../../c';
+import {LIES_WITHIN, POSITION_RELATIONS_, RECORDED_IN, TIME_RELATIONS_} from '../../../c';
+import IS_BELOW = POSITION_RELATIONS_.IS_BELOW;
+import IS_ABOVE = POSITION_RELATIONS_.IS_ABOVE;
+import IS_CONTEMPORARY_WITH = TIME_RELATIONS_.IS_CONTEMPORARY_WITH;
 
 
 /**
@@ -18,7 +21,8 @@ export module RelationsCompleter {
 
 
     /**
-     * Iterates over all relation (ex) of the given resources. Between import resources, it validates the relations.
+     * Iterates over all relations (ex) of the given resources.
+     * Between import resources, it validates the relations.
      * Between import resources and db resources, it adds the inverses.
      *
      * @param get
@@ -30,6 +34,7 @@ export module RelationsCompleter {
         /**
          * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
          *   for contradictory relations and missing inverses are added.
+         *
          * @param mergeMode
          *
          * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
@@ -39,9 +44,18 @@ export module RelationsCompleter {
          *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
          *
          * @throws ImportErrors.*
+         *
          * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
+         *
          * @throws [EMPTY_RELATION, resourceId]
+         *   If relations empty for some relation is empty.
+         *   For example relations: {isAbove: []}
+         *
          * @throws [BAD_INTERRELATION, sourceId]
+         *   - If opposing relations are pointing to the same resource.
+         *     For example IS_BEFORE and IS_AFTER pointing both from document '1' to '2'.
+         *   - If mutually exluding relations are pointing to the same resource.
+         *     For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
          */
         return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
 
@@ -203,13 +217,21 @@ export module RelationsCompleter {
 
         return ([relationName, inverseRelationName]: [string, string]) => {
 
-            if (relationName === inverseRelationName) return;
-            if (isUndefinedOrEmpty(relations[inverseRelationName])) return;
+            const forbiddenRelations = [];
+            if (relationName !== inverseRelationName)        forbiddenRelations.push(inverseRelationName);
+            if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
+            else if (IS_CONTEMPORARY_WITH === relationName)  forbiddenRelations.push(IS_ABOVE, IS_BELOW);
 
-            const intersection  = intersect(relations[relationName])(relations[inverseRelationName]);
-            if (intersection.length > 0) {
-                throw [E.BAD_INTERRELATION, document.resource.identifier];
-            }
+            forbiddenRelations.forEach(forbiddenRelation => {
+
+                if (!isUndefinedOrEmpty(relations[forbiddenRelation])) {
+
+                    const intersection = intersect(relations[relationName])(relations[forbiddenRelation]);
+                    if (intersection.length > 0) {
+                        throw [E.BAD_INTERRELATION, document.resource.identifier];
+                    }
+                }
+            });
         }
     }
 

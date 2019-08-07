@@ -39,7 +39,7 @@ describe('RelationsCompleter', () => {
                 id: '1',
                 identifier: 'one',
                 type: 'Object',
-                relations: { isBelow: []}
+                relations: {}
             }
         };
 
@@ -75,6 +75,7 @@ describe('RelationsCompleter', () => {
             if (_ === RECORDED_IN) throw 'E';
             if (_ === LIES_WITHIN) throw 'E';
             //
+            if (_ === IS_CONTEMPORARY_WITH) return IS_CONTEMPORARY_WITH;
             if (_ === IS_AFTER) return IS_BEFORE;
             return _ === IS_ABOVE ? IS_BELOW : IS_ABOVE;
         };
@@ -122,7 +123,7 @@ describe('RelationsCompleter', () => {
 
     it('set inverse relation with database resource', async done => {
 
-        doc1.resource.relations[IS_BELOW][0] = '2';
+        doc1.resource.relations[IS_BELOW] = ['2'];
         const documents = await completeInverseRelations([doc1 as any]);
 
         expect(documents.length).toBe(1);
@@ -136,7 +137,7 @@ describe('RelationsCompleter', () => {
     it('set inverse relation with database resource - add to already existing relation array', async done => {
 
         doc2.resource.relations[IS_ABOVE] = ['3'];
-        doc1.resource.relations[IS_BELOW][0] = '2';
+        doc1.resource.relations[IS_BELOW] = ['2'];
         const documents = await completeInverseRelations([doc1 as any]);
 
         expect(documents.length).toBe(1);
@@ -226,7 +227,6 @@ describe('RelationsCompleter', () => {
 
     it('illegal relation between import resources', async done => {
 
-        delete doc1.resource.relations[IS_BELOW];
         doc1.resource.relations[RECORDED_IN] = ['t1'];
         doc1.resource.relations[IS_AFTER] = ['2'];
         doc2.resource.relations[RECORDED_IN] = ['t2'];
@@ -262,7 +262,7 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('opposing directions targeting same resource set' +
+    it('opposing directions targeting same resource' +
         ' - import resource to import resource', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['2']; // choose '2' as a document from import
@@ -278,7 +278,25 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('opposing directions targeting same resource set' +
+    // TODO also test that it does not matter if these are set in one or in both objects
+    xit('mutually exclusive directions targeting same resource' +
+        ' - import resource to import resource', async done => {
+
+
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2']; // choose '2' as a document from import
+        doc1.resource.relations[IS_ABOVE] = ['2'];
+        try {
+            await completeInverseRelations([doc1, doc2]);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
+            expect(errWithParams[1]).toEqual('one');
+        }
+        done();
+    });
+
+
+    it('opposing directions targeting same resource' +
         ' - import resource to db resource', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
@@ -294,7 +312,7 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('opposing directions targeting same resource set' +
+    it('opposing directions targeting same resource' +
         ' - however, it is ok if both directions pointing to different resources' +
         ' - import resource to import resource', async done => {
 
@@ -311,7 +329,6 @@ describe('RelationsCompleter', () => {
 
     it('set inverse relation within import itself - also ignore if conflict is coming from a relation which is its own inverser', async done => {
 
-        delete doc1.resource.relations[IS_BELOW];
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         try {
@@ -325,7 +342,7 @@ describe('RelationsCompleter', () => {
     
     it('inverse relation not found', async done => {
 
-        doc1.resource.relations[IS_BELOW][0] = '17';
+        doc1.resource.relations[IS_BELOW] = ['17'];
         try {
 
             await completeInverseRelations([doc1 as any]);

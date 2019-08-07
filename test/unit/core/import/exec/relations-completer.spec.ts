@@ -329,8 +329,6 @@ describe('RelationsCompleter', () => {
         done();
     });
 
-    // TODO add test for exclude is_contemp_with in db resource and is_below in import
-
 
     it('opposing directions targeting same resource' +
         ' - however, it is ok if both directions pointing to different resources' +

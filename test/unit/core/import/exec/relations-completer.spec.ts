@@ -319,6 +319,19 @@ describe('RelationsCompleter', () => {
     });
 
 
+    it('mutually exclusive directions targeting same resource' +
+        ' - import resource to db resource', async done => {
+
+        doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
+        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['7'];
+
+        await expectBadInterrelation([doc1, doc2], 'one');
+        done();
+    });
+
+    // TODO add test for exclude is_contemp_with in db resource and is_below in import
+
+
     it('opposing directions targeting same resource' +
         ' - however, it is ok if both directions pointing to different resources' +
         ' - import resource to import resource', async done => {

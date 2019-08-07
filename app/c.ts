@@ -20,6 +20,8 @@ export module POSITION_RELATIONS_ {
 
     export const IS_BELOW = 'isBelow';
     export const IS_ABOVE = 'isAbove';
+
+    // TODO remove _ and make ALL field containing the now TIME_RELATIONS field
 }
 
 

@@ -90,9 +90,7 @@ export module RelationsCompleter {
 
             let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
             if (mergeMode) {
-                let oldVersion;
-                try {
-                    oldVersion = await get(document.resource.id);
+                let oldVersion; try { oldVersion = await get(document.resource.id);
                 } catch { throw "FATAL existing version of document not found" }
                 targetIds = union([targetIds, targetIdsReferingToDbResources(oldVersion as any, lookupDocument)]);
             }
@@ -103,13 +101,12 @@ export module RelationsCompleter {
         async function getDocumentTargetDocsToUpdate(document: Document) {
 
             const targetIds = await getTargetIds(document);
-
             const documentTargetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(targetIds);
 
-            const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-                document, documentTargetDocuments, getInverseRelation);
+            ConnectedDocsResolution
+                .determineDocsToUpdate(document, documentTargetDocuments, getInverseRelation)
+                .forEach(assertInSameOperationWith(document));
 
-            documentTargetDocsToUpdate.forEach(assertInSameOperationWith(document));
             return documentTargetDocuments;
         }
 

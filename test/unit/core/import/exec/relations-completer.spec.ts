@@ -266,16 +266,10 @@ describe('RelationsCompleter', () => {
         ' - import resource to import resource' +
         ' - set both directions in one resource', async done => {
 
-        // Set both directions in one resource
         doc1.resource.relations[IS_BELOW] = ['2'];
         doc1.resource.relations[IS_ABOVE] = ['2'];
-        try {
-            await completeInverseRelations([doc1, doc2]);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
-            expect(errWithParams[1]).toEqual('one');
-        }
+
+        expectBadInterrelation([doc1, doc2], 'one');
         done();
     });
 
@@ -284,16 +278,10 @@ describe('RelationsCompleter', () => {
         ' - import resource to import resource' +
         ' - set one direction in one resource each', async done => {
 
-        // Set one direction in one resource each
         doc1.resource.relations[IS_ABOVE] = ['2'];
         doc2.resource.relations[IS_ABOVE] = ['1'];
-        try {
-            await completeInverseRelations([doc1, doc2]);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
-            expect(errWithParams[1]).toEqual('two');
-        }
+
+        expectBadInterrelation([doc1, doc2], 'two');
         done();
     });
 
@@ -302,16 +290,10 @@ describe('RelationsCompleter', () => {
     xit('mutually exclusive directions targeting same resource' +
         ' - import resource to import resource', async done => {
 
-
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2']; // choose '2' as a document from import
         doc1.resource.relations[IS_ABOVE] = ['2'];
-        try {
-            await completeInverseRelations([doc1, doc2]);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
-            expect(errWithParams[1]).toEqual('one');
-        }
+
+        expectBadInterrelation([doc1, doc2], 'one');
         done();
     });
 
@@ -321,13 +303,8 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
         doc1.resource.relations[IS_ABOVE] = ['7'];
-        try {
-            await completeInverseRelations([doc1, doc2]);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
-            expect(errWithParams[1]).toEqual('one');
-        }
+
+        expectBadInterrelation([doc1, doc2], 'one');
         done();
     });
 
@@ -386,4 +363,16 @@ describe('RelationsCompleter', () => {
         }
         done();
     });
+
+
+    async function expectBadInterrelation(docs, err2) {
+
+        try {
+            await completeInverseRelations(docs);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);
+            expect(errWithParams[1]).toEqual(err2);
+        }
+    }
 });

@@ -5,10 +5,10 @@ import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isD
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {makeLookup} from '../util';
-import {LIES_WITHIN, POSITION_RELATIONS_, RECORDED_IN, TIME_RELATIONS_} from '../../../c';
-import IS_BELOW = POSITION_RELATIONS_.IS_BELOW;
-import IS_ABOVE = POSITION_RELATIONS_.IS_ABOVE;
-import IS_CONTEMPORARY_WITH = TIME_RELATIONS_.IS_CONTEMPORARY_WITH;
+import {LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../../../c';
+import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
+import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
+import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
 
 
 /**

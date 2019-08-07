@@ -112,9 +112,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     private setRelations() {
 
         this.groups[GROUP_NAME.POSITION].relations =
-            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS)));
+            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS.ALL)));
         this.groups[GROUP_NAME.TIME].relations =
-            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS)));
+            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS.ALL)));
     }
 
 

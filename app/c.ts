@@ -9,26 +9,24 @@ export const LIES_WITHIN = 'liesWithin';
 export const INCLUDES = 'includes';
 
 
-export module TIME_RELATIONS_ {
+export module TIME_RELATIONS {
 
     export const IS_BEFORE = 'isBefore';
     export const IS_AFTER = 'isAfter';
     export const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
+    export const ALL = ['isAfter', 'isBefore', 'isContemporaryWith'];
 }
 
-export module POSITION_RELATIONS_ {
+export module POSITION_RELATIONS {
 
     export const IS_BELOW = 'isBelow';
     export const IS_ABOVE = 'isAbove';
-
-    // TODO remove _ and make ALL field containing the now TIME_RELATIONS field
+    export const ALL = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];
 }
 
 
 export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
-export const POSITION_RELATIONS = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];
-export const TIME_RELATIONS = ['isAfter', 'isBefore', 'isContemporaryWith'];
 export const HIERARCHICAL_RELATIONS = [LIES_WITHIN, RECORDED_IN, INCLUDES];
 
 export module GROUP_NAME {

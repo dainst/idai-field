@@ -243,8 +243,8 @@ export class FieldsViewComponent implements OnChanges {
         for (let relation of this.computeRelationsToShow(resource, relations)) {
 
             let group: string|undefined = undefined;
-            if (TIME_RELATIONS.includes(relation.name)) group = 'time';
-            if (POSITION_RELATIONS.includes(relation.name)) group = 'position';
+            if (TIME_RELATIONS.ALL.includes(relation.name)) group = 'time';
+            if (POSITION_RELATIONS.ALL.includes(relation.name)) group = 'position';
             if (!group) continue;
 
             this.relations[group].push({

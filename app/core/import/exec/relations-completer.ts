@@ -1,6 +1,6 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt,
+import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt, to,
     isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
@@ -109,9 +109,7 @@ export module RelationsCompleter {
             const documentTargetDocsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
                 document, documentTargetDocuments, getInverseRelation);
 
-            for (let targetDocument of documentTargetDocsToUpdate) {
-                assertInSameOperation(document, targetDocument);
-            }
+            documentTargetDocsToUpdate.forEach(assertInSameOperationWith(document));
             return documentTargetDocuments;
         }
 
@@ -187,13 +185,13 @@ export module RelationsCompleter {
 
         return ([relationName, inverseRelationName]: [string, string]) => {
 
-            importDocument.resource.relations[relationName]
-                .map(lookupDocument)
-                .filter(isDefined)
-                .forEach((targetDocument: Document) => {
-                    assertInSameOperation(importDocument, targetDocument);
-                    setInverse(importDocument.resource.id, targetDocument.resource.relations, inverseRelationName);
-                });
+            flow(
+                importDocument.resource.relations[relationName],
+                map(lookupDocument),
+                filter(isDefined),
+                forEach(assertInSameOperationWith(importDocument)),
+                map(to('resource.relations')),
+                forEach(setInverse(importDocument.resource.id, inverseRelationName)));
         }
     }
 
@@ -242,7 +240,7 @@ export module RelationsCompleter {
     }
 
 
-    function setInverse(resourceId: string, targetDocumentRelations: Relations, inverseRelationName: string) {
+    function setInverse(resourceId: string, inverseRelationName: string) { return (targetDocumentRelations: Relations) => {
 
         if (isUndefinedOrEmpty(targetDocumentRelations[inverseRelationName])) {
             targetDocumentRelations[inverseRelationName] = [];
@@ -250,17 +248,17 @@ export module RelationsCompleter {
         if (!targetDocumentRelations[inverseRelationName].includes(resourceId)) {
             targetDocumentRelations[inverseRelationName].push(resourceId);
         }
-    }
+    }}
 
 
-    function assertInSameOperation(document: Document, targetDocument: Document) {
+    function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
         const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);
         const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
         if (isNot(undefinedOrEmpty)(targetDocumentRecordedIn) && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
-    }
+    }}
 
 
     const makeDocumentsLookup = makeLookup('resource.id');

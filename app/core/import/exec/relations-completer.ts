@@ -213,8 +213,6 @@ export module RelationsCompleter {
 
     function assertNotBadlyInterrelated(document: Document) {
 
-        const relations = document.resource.relations;
-
         return ([relationName, inverseRelationName]: [string, string]) => {
 
             const forbiddenRelations = [];
@@ -222,17 +220,25 @@ export module RelationsCompleter {
             if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
             else if (IS_CONTEMPORARY_WITH === relationName)  forbiddenRelations.push(IS_ABOVE, IS_BELOW);
 
-            forbiddenRelations.forEach(forbiddenRelation => {
-
-                if (!isUndefinedOrEmpty(relations[forbiddenRelation])) {
-
-                    const intersection = intersect(relations[relationName])(relations[forbiddenRelation]);
-                    if (intersection.length > 0) {
-                        throw [E.BAD_INTERRELATION, document.resource.identifier];
-                    }
-                }
-            });
+            assertNoForbiddenRelations(forbiddenRelations, relationName, document);
         }
+    }
+
+
+    function assertNoForbiddenRelations(forbiddenRelations: string[], relationName: string, document: Document) {
+
+        const relations = document.resource.relations;
+
+        forbiddenRelations.forEach(forbiddenRelation => {
+
+            if (!isUndefinedOrEmpty(relations[forbiddenRelation])) {
+
+                const intersection = intersect(relations[relationName])(relations[forbiddenRelation]);
+                if (intersection.length > 0) {
+                    throw [E.BAD_INTERRELATION, document.resource.identifier];
+                }
+            }
+        });
     }
 
 

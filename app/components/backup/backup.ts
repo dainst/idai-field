@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import {Name} from '../../c';
+import {assoc} from 'tsfun';
 
 const PouchDB = require('pouchdb');
 const replicationStream = require('pouchdb-replication-stream');
@@ -12,7 +14,7 @@ export module Backup {
 
     export const FILE_NOT_EXIST = 'filenotexist';
 
-    export async function dump(filePath: string, project: string) {
+    export async function dump(filePath: string, project: Name) {
 
         PouchDB.plugin(replicationStream.plugin);
         PouchDB.adapter('writableStream', replicationStream.adapters.writableStream);
@@ -37,7 +39,7 @@ export module Backup {
     }
 
 
-    export async function readDump(filePath: string, project: string) {
+    export async function readDump(filePath: string, project: Name) {
 
         if (!fs.existsSync(filePath)) throw FILE_NOT_EXIST;
         if (!fs.lstatSync(filePath).isFile()) throw FILE_NOT_EXIST;
@@ -49,5 +51,9 @@ export module Backup {
         PouchDB.plugin(require('pouchdb-load'));
 
         await db2.load(filePath);
+
+        const setIdentifier = assoc('resource.identifier', project);
+        const projectDocument = await db2.get('project');
+        await db2.put(setIdentifier(projectDocument), { force: true });
     }
 }

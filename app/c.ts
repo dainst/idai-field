@@ -46,3 +46,8 @@ export module INPUT_TYPES {
 
     export const DROPDOWN_RANGE = 'dropdownRange';
 }
+
+
+// Types
+
+export type Name = string;

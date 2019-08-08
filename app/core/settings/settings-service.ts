@@ -10,6 +10,7 @@ import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader
 import {Converter} from '../imagestore/converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
+import {Name} from '../../c';
 
 const {remote, ipcRenderer} = require('electron');
 
@@ -137,35 +138,35 @@ export class SettingsService {
     }
 
 
-    public async addProject(name: string) {
+    public async addProject(project: Name) {
 
-        this.settings.dbs = unique(this.settings.dbs.concat([name]));
+        this.settings.dbs = unique(this.settings.dbs.concat([project]));
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async selectProject(name: string) {
+    public async selectProject(project: Name) {
 
-        this.settings.dbs = unique([name].concat(this.settings.dbs));
+        this.settings.dbs = unique([project].concat(this.settings.dbs));
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async deleteProject(name: string) {
+    public async deleteProject(project: Name) {
 
-        await this.pouchdbManager.destroyDb(name);
-        this.settings.dbs.splice(this.settings.dbs.indexOf(name), 1);
+        await this.pouchdbManager.destroyDb(project);
+        this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async createProject(name: string, destroyBeforeCreate: boolean) {
+    public async createProject(project: Name, destroyBeforeCreate: boolean) {
 
-        await this.selectProject(name);
+        await this.selectProject(project);
 
         await this.pouchdbManager.createDb(
-            name,
-            SettingsService.createProjectDocument(name, this.getUsername()),
+            project,
+            SettingsService.createProjectDocument(project, this.getUsername()),
             destroyBeforeCreate
         );
     }

@@ -62,10 +62,19 @@ $teaser-width: $resources-listing-item-slim-width;
       user-select: none;
       cursor: default;
 
+
+      .btn.left {
+        left: 0;
+      }
+      .btn.right {
+        right: 0;
+      }
+
       .btn {
         position: absolute;
         top: 0;
-        right: 0;
+
+
         height: 39px;
         background-color: $popover-header-bg-color;
         border: none;
@@ -74,10 +83,13 @@ $teaser-width: $resources-listing-item-slim-width;
           background-color: $popover-header-hover-bg-color;
         }
 
-        .mdi-close {
+        .mdi {
           position: relative;
           top: 3px;
           color: #000;
+        }
+        .mdi.active {
+          background-color: darken($popover-header-hover-bg-color, 10%);
         }
       }
     }

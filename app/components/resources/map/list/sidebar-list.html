@@ -11,8 +11,11 @@
 
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
+            <div class="btn btn-light left" (click)="toggleGroupSectionsShouldStayOpenAllTheTime()">
+                <span class="mdi mdi-format-line-spacing" [class.active]="getGroupSectionsShouldStayOpenAllTheTime()"></span>
+            </div>
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>
-            <div class="btn btn-light" (click)="closePopover()">
+            <div class="btn btn-light right" (click)="closePopover()">
                 <span class="mdi mdi-close"></span>
             </div>
         </div>
@@ -22,8 +25,10 @@
         </thumbnail>
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
-            <fields-view [resource]="viewFacade.getSelectedDocument().resource"
-                         (onJumpToResource)="jumpToResource($event)"></fields-view>
+            <fields-view
+                    [groupSectionsShouldStayOpenAllTheTime]="getGroupSectionsShouldStayOpenAllTheTime()"
+                    [resource]="viewFacade.getSelectedDocument().resource"
+                    (onJumpToResource)="jumpToResource($event)"></fields-view>
         </div>
     </div>
 </div>

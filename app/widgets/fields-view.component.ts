@@ -12,6 +12,9 @@ import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
 
 
+type Name = string;
+
+
 type FieldViewGroupDefinition = {
     name: string;
     label: string;
@@ -34,6 +37,7 @@ export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() openSection: string|undefined = 'stem';
+    @Input() groupSectionsShouldStayOpenAllTheTime = false;
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -76,6 +80,12 @@ export class FieldsViewComponent implements OnChanges {
             await this.processFields(this.resource);
             this.updateGroupLabels(this.resource.type);
         }
+    }
+
+
+    public showGroupSection(group: Name) {
+
+        return this.groupSectionsShouldStayOpenAllTheTime || this.openSection === group;
     }
 
 

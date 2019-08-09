@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, on, isNot, includedIn, undefinedOrEmpty} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, on, isNot, includedIn, undefinedOrEmpty, flow, filter, lookup, compose} from 'tsfun';
 import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
     Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
@@ -272,9 +272,12 @@ export class FieldsViewComponent implements OnChanges {
 
     private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
 
-        return relations
-            .filter(on(NAME, isNot(includedIn(HIERARCHICAL_RELATIONS))))
-            .filter(relation => isNot(undefinedOrEmpty)(resource.relations[relation.name]))
+        const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS));
+        const hasTargets = compose(lookup<any>(resource.relations), isNot(undefinedOrEmpty));
+
+        return flow(relations,
+            filter(on(NAME, isNotHierarchical)),
+            filter(on(NAME, hasTargets)))
     }
 
 

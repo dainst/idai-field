@@ -51,3 +51,4 @@ export module INPUT_TYPES {
 // Types
 
 export type Name = string;
+export type ResourceId = string;

@@ -5,12 +5,9 @@ import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
-import {
-    HIERARCHICAL_RELATIONS,
-    PARENT,
-    RESOURCE_ID,
-    RESOURCE_IDENTIFIER
-} from '../../../c';
+import {HIERARCHICAL_RELATIONS, PARENT, RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 /**
@@ -19,8 +16,6 @@ import {
  */
 export module DefaultImportCalc {
 
-    import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-    import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
     type Get = (resourceId: string) => Promise<Document>;
     type Find = (identifier: string) => Promise<Document|undefined>;
     type GenerateId = () => string;

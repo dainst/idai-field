@@ -9,6 +9,7 @@ export module ModelUtil {
 
     export type Label = string;
 
+
     export function getDocumentLabel(document: Document): Label {
 
         return (document.resource.shortDescription)

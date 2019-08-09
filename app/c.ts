@@ -14,14 +14,14 @@ export module TIME_RELATIONS {
     export const IS_BEFORE = 'isBefore';
     export const IS_AFTER = 'isAfter';
     export const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
-    export const ALL = ['isAfter', 'isBefore', 'isContemporaryWith'];
+    export const ALL = [IS_AFTER, IS_BEFORE, IS_CONTEMPORARY_WITH];
 }
 
 export module POSITION_RELATIONS {
 
     export const IS_BELOW = 'isBelow';
     export const IS_ABOVE = 'isAbove';
-    export const ALL = ['borders', 'cuts', 'isCutBy', 'isAbove', 'isBelow'];
+    export const ALL = ['borders', 'cuts', 'isCutBy', IS_ABOVE, IS_BELOW];
 }
 
 

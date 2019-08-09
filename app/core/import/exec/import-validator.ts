@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, FieldDefinition, NewDocument, NewResource, ProjectConfiguration, Query} from 'idai-components-2';
+import {Document, NewDocument, NewResource, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
@@ -7,7 +7,9 @@ import {ImportErrors} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
-import {INPUT_TYPES, LIES_WITHIN, RECORDED_IN} from '../../../c';
+import {HIERARCHICAL_RELATIONS, INPUT_TYPES} from '../../../c';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 
 type ResourceId = string;

@@ -5,7 +5,7 @@ import {arrayEqual, asyncMap, filter, flatMap, flow, getOnOr, intersect, is, isD
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {gt, keys, len, makeLookup} from '../util';
-import {LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../../../c';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../c';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
@@ -17,6 +17,8 @@ import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
  */
 export module RelationsCompleter {
 
+    import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+    import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
     type LookupDocument = (_: string) => Document|undefined;
 
 

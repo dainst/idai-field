@@ -260,7 +260,7 @@ export class FieldsViewComponent implements OnChanges {
 
     private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
 
-        const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS));
+        const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS.ALL));
         const hasTargets = compose(lookup<any>(resource.relations), isNot(undefinedOrEmpty));
 
         return relations

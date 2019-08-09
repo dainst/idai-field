@@ -167,7 +167,7 @@ export module CSVExport {
         return fieldNames
             .concat(
                 relations
-                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
+                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS.ALL)))
                     .map(relation => 'relations.' + relation))
             .concat([RELATIONS_IS_CHILD_OF]);
     }

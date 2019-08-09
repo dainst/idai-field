@@ -3,10 +3,7 @@
 export const RESOURCE_IDENTIFIER = 'resource.identifier';
 export const RESOURCE_ID = 'resource.id';
 
-export const PARENT = 'isChildOf';
-export const RECORDED_IN = 'isRecordedIn';
-export const LIES_WITHIN = 'liesWithin';
-export const INCLUDES = 'includes';
+
 
 
 export module TIME_RELATIONS {
@@ -25,9 +22,20 @@ export module POSITION_RELATIONS {
 }
 
 
+export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
+
+
+export module HIERARCHICAL_RELATIONS {
+
+    export const RECORDED_IN = 'isRecordedIn';
+    export const LIES_WITHIN = 'liesWithin';
+    export const INCLUDES = 'includes';
+    export const ALL = [LIES_WITHIN, RECORDED_IN, INCLUDES];
+}
+
+
 export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
-export const HIERARCHICAL_RELATIONS = [LIES_WITHIN, RECORDED_IN, INCLUDES];
 
 export module GROUP_NAME {
 

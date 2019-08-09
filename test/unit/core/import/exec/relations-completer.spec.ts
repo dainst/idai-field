@@ -1,12 +1,14 @@
 import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
-import {LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../../../../../app/c';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../../../app/c';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_AFTER = TIME_RELATIONS.IS_AFTER;
 import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 
 describe('RelationsCompleter', () => {

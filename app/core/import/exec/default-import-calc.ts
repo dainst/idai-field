@@ -7,9 +7,7 @@ import {RelationsCompleter} from './relations-completer';
 import {DocumentMerge} from './document-merge';
 import {
     HIERARCHICAL_RELATIONS,
-    LIES_WITHIN,
     PARENT,
-    RECORDED_IN,
     RESOURCE_ID,
     RESOURCE_IDENTIFIER
 } from '../../../c';
@@ -21,6 +19,8 @@ import {
  */
 export module DefaultImportCalc {
 
+    import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+    import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
     type Get = (resourceId: string) => Promise<Document>;
     type Find = (identifier: string) => Promise<Document|undefined>;
     type GenerateId = () => string;
@@ -173,7 +173,7 @@ export module DefaultImportCalc {
     function assertHasNoForbiddenRelations(document: Document) {
 
         const foundForbiddenRelations = Object.keys(document.resource.relations)
-            .filter(includedIn(HIERARCHICAL_RELATIONS))
+            .filter(includedIn(HIERARCHICAL_RELATIONS.ALL))
             .join(', ');
         if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
     }

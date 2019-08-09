@@ -83,7 +83,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.resource) {
             await this.processRelations(this.resource);
-            await this.processFields(this.resource);
+            this.processFields(this.resource);
             this.updateGroupLabels(this.resource.type);
         }
     }
@@ -154,7 +154,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private async processFields(resource: Resource) {
+    private processFields(resource: Resource) {
 
         this.addBaseFields(resource);
 

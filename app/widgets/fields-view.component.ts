@@ -6,13 +6,10 @@ import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, 
     Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
-import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
+import {GROUP_NAME, INCLUDES, LIES_WITHIN, Name, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
 import {DatingUtil} from '../core/util/dating-util';
 import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
-
-
-type Name = string;
 
 
 type FieldViewGroupDefinition = {
@@ -136,7 +133,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private updateGroupLabels(typeName: string) {
+    private updateGroupLabels(typeName: Name) {
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
         if (type.parentType) {
@@ -225,22 +222,22 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private getLabel(type: string, fieldName: string): string {
+    private getLabel(type: string, field: Name): string {
 
         return this.projectConfiguration
             .getTypesMap()[type].fields
-            .find(on(NAME, is(fieldName))).label;
+            .find(on(NAME, is(field))).label;
     }
 
 
-    private static getValue(resource: Resource, fieldName: string): any {
+    private static getValue(resource: Resource, field: Name): any {
 
-        if (typeof resource[fieldName] === 'string') {
-            return resource[fieldName]
+        if (typeof resource[field] === 'string') {
+            return resource[field]
                 .replace(/^\s+|\s+$/g, '')
                 .replace(/\n/g, '<br>');
         } else {
-            return resource[fieldName];
+            return resource[field];
         }
     }
 

@@ -213,9 +213,9 @@ export module ResourcesState {
     }
 
 
-    export function setGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState, groupSectionsShouldStayOpenAllTheTime: boolean) {
+    export function toggleGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState) {
 
-        viewState(state).groupSectionsShouldStayOpenAllTheTime = groupSectionsShouldStayOpenAllTheTime;
+        viewState(state).groupSectionsShouldStayOpenAllTheTime = !viewState(state).groupSectionsShouldStayOpenAllTheTime;
     }
 
 

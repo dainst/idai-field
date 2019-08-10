@@ -53,22 +53,11 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public getGroupSectionsShouldStayOpenAllTheTime() {
+    public getGroupSectionsShouldStayOpenAllTheTime = () => this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
 
-        return this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
-    }
+    public toggleGroupSectionsShouldStayOpenAllTheTime = () => this.viewFacade.toggleGroupSectionsShouldStayOpenAllTheTime();
 
-
-    public toggleGroupSectionsShouldStayOpenAllTheTime() {
-
-        let groupSectionsShouldStayOpenAllTheTime = this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
-        groupSectionsShouldStayOpenAllTheTime = !groupSectionsShouldStayOpenAllTheTime; // TODO do in view facade
-        this.viewFacade.setGroupSectionsShouldStayOpenAllTheTime(groupSectionsShouldStayOpenAllTheTime);
-    }
-
-
-    public hasThumbnail = (document: FieldDocument): boolean =>
-        Document.hasRelations(document, 'isDepictedIn');
+    public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 
 
     public async editDocument(document: FieldDocument) {

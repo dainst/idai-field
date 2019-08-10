@@ -107,7 +107,7 @@ export class ViewFacade {
 
     public getGroupSectionsShouldStayOpenAllTheTime = () => ResourcesState.getGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get());
 
-    public setGroupSectionsShouldStayOpenAllTheTime = (groupSectionsShouldStayOpenAllTheTime: boolean) => ResourcesState.setGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get(), groupSectionsShouldStayOpenAllTheTime);
+    public toggleGroupSectionsShouldStayOpenAllTheTime = () => ResourcesState.toggleGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get());
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 

@@ -15,18 +15,20 @@ export interface ViewState {
     mode: 'map' | 'list';
 
     bypassHierarchy: boolean;
+    groupSectionsShouldStayOpenAllTheTime: boolean;
     searchContext: ViewContext;
     customConstraints: { [name: string]: string }
 }
 
 
-export class ViewState {
+export class ViewState { // TODO convert to module
 
     public static default(): ViewState {
 
         return {
             operation: undefined,
             bypassHierarchy: false,
+            groupSectionsShouldStayOpenAllTheTime: false,
             navigationPath: NavigationPath.empty(),
             mode: 'map',
             layerIds: [],
@@ -43,6 +45,7 @@ export class ViewState {
         }
 
         if (!viewState.mode) viewState.mode = 'map';
+        viewState.groupSectionsShouldStayOpenAllTheTime = false;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

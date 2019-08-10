@@ -53,8 +53,7 @@ export class ViewFacade {
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
-    public getCurrentOperation = (): FieldDocument|undefined =>
-        this.resourcesStateManager.getCurrentOperation();
+    public getCurrentOperation = (): FieldDocument|undefined => this.resourcesStateManager.getCurrentOperation();
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
@@ -72,7 +71,7 @@ export class ViewFacade {
 
     public getChildrenCount = (document: FieldDocument) => this.documentsManager.getChildrenCount(document);
 
-    public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
+    public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab; // TODO review, seems unused
 
     public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
 
@@ -94,8 +93,7 @@ export class ViewFacade {
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 
-    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) =>
-        this.documentsManager.moveInto(document, resetFiltersAndSelection);
+    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) => this.documentsManager.moveInto(document, resetFiltersAndSelection);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
@@ -106,6 +104,10 @@ export class ViewFacade {
     public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
+
+    public getGroupSectionsShouldStayOpenAllTheTime = () => ResourcesState.getGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get());
+
+    public setGroupSectionsShouldStayOpenAllTheTime = (groupSectionsShouldStayOpenAllTheTime: boolean) => ResourcesState.setGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get(), groupSectionsShouldStayOpenAllTheTime);
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 

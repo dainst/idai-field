@@ -11,8 +11,6 @@ import {RoutingService} from '../../../routing-service';
 import {ContextMenuAction} from '../context-menu.component';
 
 
-let groupSectionsShouldStayOpenAllTheTime = false;
-
 @Component({
     selector: 'sidebar-list',
     moduleId: module.id,
@@ -57,13 +55,15 @@ export class SidebarListComponent extends BaseList {
 
     public getGroupSectionsShouldStayOpenAllTheTime() {
 
-        return groupSectionsShouldStayOpenAllTheTime;
+        return this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
     }
 
 
     public toggleGroupSectionsShouldStayOpenAllTheTime() {
 
-        groupSectionsShouldStayOpenAllTheTime = !groupSectionsShouldStayOpenAllTheTime;
+        let groupSectionsShouldStayOpenAllTheTime = this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
+        groupSectionsShouldStayOpenAllTheTime = !groupSectionsShouldStayOpenAllTheTime; // TODO do in view facade
+        this.viewFacade.setGroupSectionsShouldStayOpenAllTheTime(groupSectionsShouldStayOpenAllTheTime);
     }
 
 

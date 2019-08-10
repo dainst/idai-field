@@ -19,6 +19,7 @@ export interface ResourcesState { // 'the' resources state
 
 export module ResourcesState {
 
+
     export function getQueryString(state: ResourcesState) {
 
         return viewState(state).bypassHierarchy
@@ -61,6 +62,12 @@ export module ResourcesState {
     export function getCurrentOperation(state: ResourcesState): FieldDocument|undefined {
 
         return viewState(state).operation;
+    }
+
+
+    export function getGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState) {
+
+        return viewState(state).groupSectionsShouldStayOpenAllTheTime;
     }
 
 
@@ -156,6 +163,7 @@ export module ResourcesState {
                 layerIds: ['o25'],
                 mode: 'map',
                 bypassHierarchy: false,
+                groupSectionsShouldStayOpenAllTheTime: false,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -166,6 +174,7 @@ export module ResourcesState {
                     layerIds: ['o25'],
                     mode: 'map',
                     bypassHierarchy: false,
+                    groupSectionsShouldStayOpenAllTheTime: false,
                     navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
@@ -201,6 +210,12 @@ export module ResourcesState {
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
 
         viewState(state).bypassHierarchy = bypassHierarchy;
+    }
+
+
+    export function setGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState, groupSectionsShouldStayOpenAllTheTime: boolean) {
+
+        viewState(state).groupSectionsShouldStayOpenAllTheTime = groupSectionsShouldStayOpenAllTheTime;
     }
 
 

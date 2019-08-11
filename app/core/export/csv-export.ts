@@ -51,9 +51,9 @@ export module CSVExport {
     }
 
 
-    function combine(headings_and_matrix: HeadingsAndMatrix) {
+    function combine(headingsAndMatrix: HeadingsAndMatrix) {
 
-        return [headings_and_matrix[H]].concat(headings_and_matrix[M]).map(toCsvLine);
+        return [headingsAndMatrix[H]].concat(headingsAndMatrix[M]).map(toCsvLine);
     }
 
 
@@ -65,15 +65,15 @@ export module CSVExport {
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
 
 
-    function expandDating(headings_and_matrix: HeadingsAndMatrix) {
+    function expandDating(headingsAndMatrix: HeadingsAndMatrix) {
 
-        const indexOfDatingElement = headings_and_matrix[H].indexOf('dating');
-        if (indexOfDatingElement === -1) return headings_and_matrix;
+        const indexOfDatingElement = headingsAndMatrix[H].indexOf('dating');
+        if (indexOfDatingElement === -1) return headingsAndMatrix;
 
         return expand(
             expandDatingHeadings,
             expandDatingItems,
-            headings_and_matrix)([indexOfDatingElement])
+            headingsAndMatrix)([indexOfDatingElement])
     }
 
 
@@ -109,7 +109,7 @@ export module CSVExport {
 
     /**
      * Returns a function that when provided an array of columnIndices,
-     * expands headings_and_matrix at the columns, assuming that
+     * expands headingsAndMatrix at the columns, assuming that
      * these columns contain array values.
      *
      * For example:
@@ -126,24 +126,24 @@ export module CSVExport {
      *
      * @param expandHeadings
      * @param expandLevelTwo
-     * @param headings_and_matrix
+     * @param headingsAndMatrix
      */
     function expand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
                     expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                    headings_and_matrix: HeadingsAndMatrix) {
+                    headingsAndMatrix: HeadingsAndMatrix) {
 
-        return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce((headingsAndMatrix: HeadingsAndMatrix, columnIndex: number) => {
 
-                const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
+                const max = Math.max(1, getMax(columnIndex)(headingsAndMatrix[M]));
 
-                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headings_and_matrix[H]);
-                const expandedRows   = headings_and_matrix[M]
+                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headingsAndMatrix[H]);
+                const expandedRows   = headingsAndMatrix[M]
                     .map(expandLevelOne(columnIndex, max))
                     .map(expandLevelTwo(columnIndex, max));
 
                 return [expandedHeader, expandedRows];
 
-            }, headings_and_matrix);
+            }, headingsAndMatrix);
     }
 
 

@@ -385,10 +385,13 @@ export module CSVExport {
     }
 
 
-    function toCsvLine(as: string[]): string {
+    function toCsvLine(fields: string[]): string {
 
-        return as
-            .map(field => field ? '"' + getFieldValue(field) + '"' : '""')
+        const wrapContents  = (field: string) => '"' + getFieldValue(field) + '"';
+        const createEmptyField = val('""');
+
+        return fields
+            .map(cond(isDefined, wrapContents, createEmptyField))
             .join(SEPARATOR);
     }
 

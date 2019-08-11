@@ -124,12 +124,12 @@ export module CSVExport {
      *  [[7,   2       , 3],
      *   [8,   5,      , undefined]]]
      *
-     * @param expandHeading
+     * @param expandHeadings
      * @param expandLevelTwo
      * @param headings_and_matrix
      */
-    function expand(expandHeading: Function, // TODO add better typing information
-                    expandLevelTwo: Function,
+    function expand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
+                    expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
                     headings_and_matrix: HeadingsAndMatrix) {
 
         return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
@@ -137,7 +137,7 @@ export module CSVExport {
                 const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
 
                 return [
-                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]), // TODO use replaceItem?
+                    replaceItem(columnIndex, expandHeadings(max))(headings_and_matrix[H]),
                     headings_and_matrix[M]
                         .map(expandLevelOne(columnIndex, max))
                         .map(expandLevelTwo(columnIndex, max))];

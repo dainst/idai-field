@@ -136,11 +136,12 @@ export module CSVExport {
 
                 const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
 
-                return [
-                    replaceItem(columnIndex, expandHeadings(max))(headings_and_matrix[H]),
-                    headings_and_matrix[M]
-                        .map(expandLevelOne(columnIndex, max))
-                        .map(expandLevelTwo(columnIndex, max))];
+                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headings_and_matrix[H]);
+                const expandedRows   = headings_and_matrix[M]
+                    .map(expandLevelOne(columnIndex, max))
+                    .map(expandLevelTwo(columnIndex, max));
+
+                return [expandedHeader, expandedRows];
 
             }, headings_and_matrix);
     }

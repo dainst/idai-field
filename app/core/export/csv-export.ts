@@ -381,16 +381,15 @@ export module CSVExport {
 
     function getUsableFieldNames(fieldNames: string[]): string[] {
 
-        return fieldNames
-            .filter(isnt('type'))
-            .filter(isnt('geometry'))
-            .filter(isnt('id'));
+        return fieldNames.filter(isNot(includedIn(['type', 'geometry', 'id'])));
     }
 
 
     function toCsvLine(as: string[]): string {
 
-        return as.map(field => field ? '"' + getFieldValue(field) + '"' : '""').join(SEPARATOR);
+        return as
+            .map(field => field ? '"' + getFieldValue(field) + '"' : '""')
+            .join(SEPARATOR);
     }
 
 

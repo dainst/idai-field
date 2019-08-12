@@ -11,8 +11,10 @@
 
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
-            <div class="btn btn-light left" (click)="toggleGroupSectionsShouldStayOpenAllTheTime()">
-                <span class="mdi mdi-format-line-spacing" [class.active]="getGroupSectionsShouldStayOpenAllTheTime()"></span>
+            <div class="btn btn-light left"
+                 [class.active]="getGroupSectionsShouldStayOpenAllTheTime()"
+                 (click)="toggleGroupSectionsShouldStayOpenAllTheTime()">
+                <span class="mdi mdi-format-line-spacing"></span>
             </div>
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>
             <div class="btn btn-light right" (click)="closePopover()">

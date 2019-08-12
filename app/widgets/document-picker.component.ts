@@ -21,6 +21,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
+    @Input() showProjectOption: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -104,6 +105,9 @@ export class DocumentPickerComponent implements OnChanges {
             this.query.id = this.currentQueryId;
 
             const result = await this.datastore.find(clone(this.query));
+            if (this.showProjectOption) {
+                result.documents = [DocumentPickerComponent.getProjectOption()].concat(result.documents);
+            }
             if (result.queryId === this.currentQueryId) this.documents = result.documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -120,5 +124,17 @@ export class DocumentPickerComponent implements OnChanges {
                 ? [type.name].concat(type.children.map(child => child.name))
                 : [type.name];
         }));
+    }
+
+
+    private static getProjectOption(): FieldDocument {
+
+        return {
+            resource: {
+                id: 'project',
+                identifier: 'Project',
+                type: 'project'
+            }
+        } as any;
     }
 }

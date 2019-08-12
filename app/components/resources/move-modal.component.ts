@@ -7,6 +7,7 @@ import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {MoveUtility} from './move-utility';
+import {ViewFacade} from './view/view-facade';
 
 
 @Component({
@@ -35,8 +36,12 @@ export class MoveModalComponent {
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
                 private datastore: FieldReadDatastore,
-                private messages: Messages) {
+                private messages: Messages,
+                private viewFacade: ViewFacade) {
     }
+
+
+    public isInOverview = () => this.viewFacade.isInOverview();
 
 
     public getConstraints = () => {

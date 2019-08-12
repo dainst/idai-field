@@ -22,8 +22,11 @@ export module MoveUtility {
     function updateRelations(document: FieldDocument, newParent: FieldDocument,
                              isRecordedInTargetTypes: Array<IdaiType>) {
 
-        if (isRecordedInTargetTypes.map(type => type.name)
-            .includes(newParent.resource.type)) {
+        if (newParent.resource.type === 'project') {
+            document.resource.relations['isRecordedIn'] = [];
+            document.resource.relations['liesWithin'] = [];
+        } else if (isRecordedInTargetTypes.map(type => type.name)
+                .includes(newParent.resource.type)) {
             document.resource.relations['isRecordedIn'] = [newParent.resource.id];
             document.resource.relations['liesWithin'] = [];
         } else {

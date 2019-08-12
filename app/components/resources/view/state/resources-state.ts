@@ -1,3 +1,4 @@
+import {lookup, flow, map, forEach} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
@@ -200,8 +201,11 @@ export module ResourcesState {
     export function complete(state: ResourcesState): ResourcesState {
 
         ViewState.complete(state.overviewState);
-        Object.keys(state.operationViewStates)
-            .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
+
+        flow<any>(state.operationViewStates,
+            Object.keys,
+            map(lookup(state.operationViewStates)),
+            forEach(ViewState.complete));
 
         return state;
     }

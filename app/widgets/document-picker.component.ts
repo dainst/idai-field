@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {union} from 'tsfun';
 import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint, Messages} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
@@ -34,7 +35,8 @@ export class DocumentPickerComponent implements OnChanges {
     constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
-                private messages: Messages) {}
+                private messages: Messages,
+                private i18n: I18n) {}
 
 
     public isLoading = () => this.loading.isLoading();
@@ -105,9 +107,7 @@ export class DocumentPickerComponent implements OnChanges {
             this.query.id = this.currentQueryId;
 
             const result = await this.datastore.find(clone(this.query));
-            if (this.showProjectOption) {
-                result.documents = [DocumentPickerComponent.getProjectOption()].concat(result.documents);
-            }
+            if (this.showProjectOption) result.documents = [this.getProjectOption()].concat(result.documents);
             if (result.queryId === this.currentQueryId) this.documents = result.documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -127,12 +127,12 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private static getProjectOption(): FieldDocument {
+    private getProjectOption(): FieldDocument {
 
         return {
             resource: {
                 id: 'project',
-                identifier: 'Project',
+                identifier: this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' }),
                 type: 'Project'
             }
         } as any;

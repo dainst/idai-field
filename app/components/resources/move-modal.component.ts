@@ -51,7 +51,7 @@ export class MoveModalComponent {
     };
 
 
-    public showProjectOption(): boolean {
+    public isProjectOptionAllowed(): boolean {
 
         return this.viewFacade.isInOverview()
             && Document.hasRelations(this.document,'liesWithin');

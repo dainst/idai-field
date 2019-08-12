@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {unique} from 'tsfun';
-import {IdaiType, FieldDocument, Constraint, Messages} from 'idai-components-2';
+import {IdaiType, Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -41,9 +41,6 @@ export class MoveModalComponent {
     }
 
 
-    public isInOverview = () => this.viewFacade.isInOverview();
-
-
     public getConstraints = () => {
 
         if (!this.constraints) {
@@ -52,6 +49,13 @@ export class MoveModalComponent {
 
         return this.constraints;
     };
+
+
+    public showProjectOption(): boolean {
+
+        return this.viewFacade.isInOverview()
+            && Document.hasRelations(this.document,'liesWithin');
+    }
 
 
     public initialize(document: FieldDocument) {

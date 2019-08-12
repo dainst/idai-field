@@ -13,7 +13,15 @@
         <div class="sidebar-popover-header">
             <div class="btn btn-light left"
                  [class.active]="getGroupSectionsShouldStayOpenAllTheTime()"
-                 (click)="toggleGroupSectionsShouldStayOpenAllTheTime()">
+                 (click)="tt.close(); toggleGroupSectionsShouldStayOpenAllTheTime()"
+                 ngbTooltip="Alle Gruppen ausklappen"
+                 i18n-ngbTooltip="@@sidebar-list.expand-groups"
+                 #tt="ngbTooltip"
+                 placement="right"
+                 container="body"
+                 triggers="manual"
+                 (mouseover)="tt.open()"
+                 (mouseleave)="tt.close()">
                 <span class="mdi mdi-format-line-spacing"></span>
             </div>
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>

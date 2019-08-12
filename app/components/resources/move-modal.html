@@ -5,7 +5,7 @@
     </p>
     <document-picker [filterOptions]="filterOptions"
                      [getConstraints]="getConstraints"
-                     [showProjectOption]="isProjectOptionAllowed()"
+                     [showProjectOption]="showProjectOption"
                      (documentSelected)="moveDocument($event)"></document-picker>
 </div>
 

@@ -26,6 +26,7 @@ export class MoveModalComponent {
     public document: FieldDocument;
     public filterOptions: Array<IdaiType> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
+    public showProjectOption: boolean = false;
 
     private isRecordedInTargetTypes: Array<IdaiType>;
     private liesWithinTargetTypes: Array<IdaiType>;
@@ -51,16 +52,10 @@ export class MoveModalComponent {
     };
 
 
-    public isProjectOptionAllowed(): boolean {
-
-        return this.viewFacade.isInOverview()
-            && Document.hasRelations(this.document,'liesWithin');
-    }
-
-
     public initialize(document: FieldDocument) {
 
         this.document = document;
+        this.showProjectOption = this.isProjectOptionAllowed();
         this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
         this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
         this.filterOptions = unique(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
@@ -88,6 +83,13 @@ export class MoveModalComponent {
         }
 
         this.activeModal.close();
+    }
+
+
+    private isProjectOptionAllowed(): boolean {
+
+        return this.viewFacade.isInOverview()
+            && Document.hasRelations(this.document,'liesWithin');
     }
 
 

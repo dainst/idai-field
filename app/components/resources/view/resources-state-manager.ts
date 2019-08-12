@@ -76,7 +76,7 @@ export class ResourcesStateManager {
 
         if (viewName !== 'project') {
             if (!this.resourcesState.operationViewStates[viewName]) {
-                this.resourcesState.operationViewStates[viewName] = ViewState.default();
+                this.resourcesState.operationViewStates[viewName] = ViewState.default_();
             }
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];

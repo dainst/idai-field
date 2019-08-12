@@ -21,9 +21,9 @@ export interface ViewState {
 }
 
 
-export class ViewState { // TODO convert to module
+export module ViewState {
 
-    public static default(): ViewState {
+    export function default_(): ViewState {
 
         return {
             operation: undefined,
@@ -35,10 +35,10 @@ export class ViewState { // TODO convert to module
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
-    };
+    }
 
 
-    public static complete(viewState: ViewState) {
+    export function complete(viewState: ViewState) {
 
         if (!viewState.layerIds || !Array.isArray(viewState.layerIds)) {
             viewState.layerIds = [];

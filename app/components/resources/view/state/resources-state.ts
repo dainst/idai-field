@@ -189,7 +189,7 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.default(),
+            overviewState: ViewState.default_(),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -221,7 +221,7 @@ export module ResourcesState {
 
     export function deactivate(state: ResourcesState, viewName: string) {
 
-        const deactivatedState: ViewState = ViewState.default();
+        const deactivatedState: ViewState = ViewState.default_();
         deactivatedState.operation = state.operationViewStates[viewName].operation;
         deactivatedState.layerIds = state.operationViewStates[viewName].layerIds;
 

@@ -144,6 +144,13 @@ export class ResourcesStateManager {
     }
 
 
+    public toggleExpandAllGroups() {
+
+        ResourcesState.toggleExpandAllGroups(this.resourcesState);
+        this.serialize();
+    }
+
+
     public setMode(mode: 'map' | 'list') {
 
         ResourcesState.setMode(this.resourcesState, mode);
@@ -301,7 +308,12 @@ export class ResourcesStateManager {
 
     private static createObjectToSerializeForViewState(viewState: ViewState): any {
 
-        const objectToSerialize: any = { mode: viewState.mode };
+        const objectToSerialize: any =
+            {
+                mode: viewState.mode,
+                expandAllGroups: viewState.expandAllGroups
+            };
+
         if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
 
         return objectToSerialize;

@@ -107,7 +107,7 @@ export class ViewFacade {
 
     public getExpandAllGroups = () => ResourcesState.getExpandAllGroups(this.resourcesStateManager.get());
 
-    public toggleExpandAllGroups = () => ResourcesState.toggleExpandAllGroups(this.resourcesStateManager.get());
+    public toggleExpandAllGroups = () => this.resourcesStateManager.toggleExpandAllGroups();
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 

@@ -45,7 +45,7 @@ export module ViewState {
         }
 
         if (!viewState.mode) viewState.mode = 'map';
-        viewState.expandAllGroups = false;
+        if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

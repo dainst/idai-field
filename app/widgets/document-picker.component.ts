@@ -133,7 +133,7 @@ export class DocumentPickerComponent implements OnChanges {
             resource: {
                 id: 'project',
                 identifier: 'Project',
-                type: 'project'
+                type: 'Project'
             }
         } as any;
     }

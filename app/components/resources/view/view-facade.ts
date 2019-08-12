@@ -105,9 +105,9 @@ export class ViewFacade {
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
-    public getGroupSectionsShouldStayOpenAllTheTime = () => ResourcesState.getGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get());
+    public getExpandAllGroups = () => ResourcesState.getExpandAllGroups(this.resourcesStateManager.get());
 
-    public toggleGroupSectionsShouldStayOpenAllTheTime = () => ResourcesState.toggleGroupSectionsShouldStayOpenAllTheTime(this.resourcesStateManager.get());
+    public toggleExpandAllGroups = () => ResourcesState.toggleExpandAllGroups(this.resourcesStateManager.get());
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 

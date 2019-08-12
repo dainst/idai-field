@@ -53,9 +53,9 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    public getGroupSectionsShouldStayOpenAllTheTime = () => this.viewFacade.getGroupSectionsShouldStayOpenAllTheTime();
+    public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
 
-    public toggleGroupSectionsShouldStayOpenAllTheTime = () => this.viewFacade.toggleGroupSectionsShouldStayOpenAllTheTime();
+    public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
 
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 

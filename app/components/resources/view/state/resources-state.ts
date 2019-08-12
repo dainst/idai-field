@@ -66,9 +66,9 @@ export module ResourcesState {
     }
 
 
-    export function getGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState) {
+    export function getExpandAllGroups(state: ResourcesState) {
 
-        return viewState(state).groupSectionsShouldStayOpenAllTheTime;
+        return viewState(state).expandAllGroups;
     }
 
 
@@ -164,7 +164,7 @@ export module ResourcesState {
                 layerIds: ['o25'],
                 mode: 'map',
                 bypassHierarchy: false,
-                groupSectionsShouldStayOpenAllTheTime: false,
+                expandAllGroups: false,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -175,7 +175,7 @@ export module ResourcesState {
                     layerIds: ['o25'],
                     mode: 'map',
                     bypassHierarchy: false,
-                    groupSectionsShouldStayOpenAllTheTime: false,
+                    expandAllGroups: false,
                     navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
@@ -217,9 +217,9 @@ export module ResourcesState {
     }
 
 
-    export function toggleGroupSectionsShouldStayOpenAllTheTime(state: ResourcesState) {
+    export function toggleExpandAllGroups(state: ResourcesState) {
 
-        viewState(state).groupSectionsShouldStayOpenAllTheTime = !viewState(state).groupSectionsShouldStayOpenAllTheTime;
+        viewState(state).expandAllGroups = !viewState(state).expandAllGroups;
     }
 
 

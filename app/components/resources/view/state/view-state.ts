@@ -15,7 +15,7 @@ export interface ViewState {
     mode: 'map' | 'list';
 
     bypassHierarchy: boolean;
-    groupSectionsShouldStayOpenAllTheTime: boolean;
+    expandAllGroups: boolean;
     searchContext: ViewContext;
     customConstraints: { [name: string]: string }
 }
@@ -28,7 +28,7 @@ export module ViewState {
         return {
             operation: undefined,
             bypassHierarchy: false,
-            groupSectionsShouldStayOpenAllTheTime: false,
+            expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: 'map',
             layerIds: [],
@@ -45,7 +45,7 @@ export module ViewState {
         }
 
         if (!viewState.mode) viewState.mode = 'map';
-        viewState.groupSectionsShouldStayOpenAllTheTime = false;
+        viewState.expandAllGroups = false;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

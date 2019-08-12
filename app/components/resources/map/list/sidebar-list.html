@@ -12,8 +12,8 @@
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
             <div class="btn btn-light left"
-                 [class.active]="getGroupSectionsShouldStayOpenAllTheTime()"
-                 (click)="tt.close(); toggleGroupSectionsShouldStayOpenAllTheTime()"
+                 [class.active]="getExpandAllGroups()"
+                 (click)="tt.close(); toggleExpandAllGroups()"
                  ngbTooltip="Alle Gruppen ausklappen"
                  i18n-ngbTooltip="@@sidebar-list.expand-groups"
                  #tt="ngbTooltip"
@@ -36,7 +36,7 @@
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
             <fields-view
-                    [groupSectionsShouldStayOpenAllTheTime]="getGroupSectionsShouldStayOpenAllTheTime()"
+                    [groupSectionsShouldStayOpenAllTheTime]="getExpandAllGroups()"
                     [resource]="viewFacade.getSelectedDocument().resource"
                     (onJumpToResource)="jumpToResource($event)"></fields-view>
         </div>

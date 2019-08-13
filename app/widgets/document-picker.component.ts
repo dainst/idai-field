@@ -6,6 +6,7 @@ import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
 import {AngularUtility} from '../common/angular-utility';
+import {FieldDocumentFindResult} from '../core/datastore/field/field-read-datastore';
 
 
 @Component({
@@ -105,19 +106,23 @@ export class DocumentPickerComponent implements OnChanges {
         try {
             if (this.getConstraints) this.query.constraints = await this.getConstraints();
             this.query.id = this.currentQueryId;
-
             const result = await this.datastore.find(clone(this.query));
-            if (this.isProjectOptionVisible()) {
-                result.documents = [this.getProjectOption()].concat(
-                    result.documents.filter(document => document.resource.type !== 'Project')
-                );
-            }
-            if (result.queryId === this.currentQueryId) this.documents = result.documents;
+            if (result.queryId === this.currentQueryId) this.documents = this.getDocuments(result);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
             this.loading.stop();
         }
+    }
+
+
+    private getDocuments(result: FieldDocumentFindResult): Array<FieldDocument> {
+
+        return this.isProjectOptionVisible()
+            ? [this.getProjectOption()].concat(
+                result.documents.filter(document => document.resource.type !== 'Project')
+            )
+            : result.documents;
     }
 
 

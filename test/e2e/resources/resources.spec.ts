@@ -414,6 +414,33 @@ describe('resources --', () => {
     });
 
 
+    it('contextMenu/moveModal - move an operation to root level', () => {
+
+        NavbarPage.clickTab('project');
+        browser.sleep(delays.shortRest * 2);
+        ResourcesPage.performCreateResource('P1', 'Place');
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('P');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            for (let label of labels) expect(label.getText()).not.toEqual('Projekt');
+        });
+        ResourcesPage.typeInMoveModalSearchBarInput('P1');
+        ResourcesPage.clickResourceListItemInMoveModal('P1');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(1));
+
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('P');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            expect(labels[0].getText()).toEqual('Projekt');
+        });
+        ResourcesPage.clickResourceListItemInMoveModal('Projekt');
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(5));
+    });
+
+
     it('contextMenu/moveModal - show only type filter options for allowed parent types in move modal', () => {
 
         browser.sleep(delays.shortRest * 2);

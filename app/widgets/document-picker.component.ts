@@ -107,7 +107,9 @@ export class DocumentPickerComponent implements OnChanges {
             this.query.id = this.currentQueryId;
 
             const result = await this.datastore.find(clone(this.query));
-            if (this.showProjectOption) result.documents = [this.getProjectOption()].concat(result.documents);
+            if (this.isProjectOptionVisible()) {
+                result.documents = [this.getProjectOption()].concat(result.documents);
+            }
             if (result.queryId === this.currentQueryId) this.documents = result.documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -136,5 +138,14 @@ export class DocumentPickerComponent implements OnChanges {
                 type: 'Project'
             }
         } as any;
+    }
+
+
+    private isProjectOptionVisible(): boolean {
+
+        return this.showProjectOption
+            && (this.query.q !== undefined && this.query.q.length > 0
+                && this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
+                    .toLowerCase().startsWith(this.query.q.toLowerCase()));
     }
 }

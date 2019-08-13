@@ -418,7 +418,7 @@ describe('resources --', () => {
 
         NavbarPage.clickTab('project');
         browser.sleep(delays.shortRest * 2);
-        ResourcesPage.performCreateResource('P1', 'Place');
+        ResourcesPage.performCreateResource('P1', 'place');
         ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuMoveButton();
         ResourcesPage.typeInMoveModalSearchBarInput('P');
@@ -437,6 +437,7 @@ describe('resources --', () => {
             expect(labels[0].getText()).toEqual('Projekt');
         });
         ResourcesPage.clickResourceListItemInMoveModal('Projekt');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(5));
     });
 

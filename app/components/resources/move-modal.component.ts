@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {unique} from 'tsfun';
-import {IdaiType, Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
+import {IdaiType, Document, FieldDocument, Constraint, Messages, ProjectConfiguration} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -38,7 +38,8 @@ export class MoveModalComponent {
                 private settingsService: SettingsService,
                 private datastore: FieldReadDatastore,
                 private messages: Messages,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private projectConfiguration: ProjectConfiguration) {
     }
 
 
@@ -58,7 +59,12 @@ export class MoveModalComponent {
         this.showProjectOption = this.isProjectOptionAllowed();
         this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
         this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
+
         this.filterOptions = unique(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
+        if (this.showProjectOption) {
+            this.filterOptions = [this.projectConfiguration.getTypesMap()['Project']]
+                .concat(this.filterOptions);
+        }
     }
 
 

@@ -3,6 +3,8 @@
 # Explicitly mention files which should be part of the repo.
 
 !Configuration.json
+!Fields-Campidoglio.json	
+!Fields-Castiglione.json	
 !Fields-Custom.json
 !Fields-Pergamon.json
 !Fields-Meninx.json
@@ -16,6 +18,10 @@
 !Hidden-Boha.json
 !Language.de.json
 !Language.en.json
+!Language-Campidoglio.de.json	
+!Language-Campidoglio.en.json	
+!Language-Castiglione.de.json	
+!Language-Castiglione.en.json	
 !Language-Custom.de.json
 !Language-Custom.en.json
 !Language-Meninx.de.json
@@ -29,6 +35,8 @@
 !Order.json
 !Search.json
 !Periods.json
+!Periods-Campidoglio.json	
+!Periods-Castiglione.json
 !Periods-Meninx.json
 !Periods-Pergamon.json
 !Periods-WES.json

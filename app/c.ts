@@ -4,6 +4,8 @@ export const RESOURCE_IDENTIFIER = 'resource.identifier';
 export const RESOURCE_ID = 'resource.id';
 
 
+// Relations
+
 /**
  * Regarding stratigraphical units (Feature type)
  *
@@ -46,6 +48,13 @@ export module HIERARCHICAL_RELATIONS {
 }
 
 export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
+
+
+
+// To be used later
+// Used to signal sameness in a generic manner, for example in order to say
+// two resources, recorded in different operations, are the same
+export const SAME_AS = 'isSameAs';
 
 
 // Indexing

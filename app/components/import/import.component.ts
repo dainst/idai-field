@@ -137,11 +137,11 @@ export class ImportComponent implements OnInit {
                 { backdrop: 'static', keyboard: false });
         }, 200);
 
-        this.remoteChangesStream.setAutoCacheUpdate(false);
+        this.settingsService.stopSync();
 
         const importReport = await this.doImport(reader);
 
-        this.remoteChangesStream.setAutoCacheUpdate(true);
+        this.settingsService.startSync();
 
         uploadReady = true;
         if(uploadModalRef) uploadModalRef.close();

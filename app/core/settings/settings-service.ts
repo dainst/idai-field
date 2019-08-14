@@ -103,7 +103,7 @@ export class SettingsService {
             this.getSelectedProject(),
             new FieldSampleDataLoader(this.converter, this.settings.imagestorePath, this.settings.locale));
 
-        if (this.settings.isSyncActive) await this.startSync();
+        if (this.settings.isSyncActive) await this.startSync_();
         await this.loadProjectDocument(true);
     }
 
@@ -201,31 +201,7 @@ export class SettingsService {
     }
 
 
-    public startSync(): Promise<any> {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-
-        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
-        if (!this.currentSyncUrl) return Promise.resolve();
-        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
-
-        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
-            .then(syncState => {
-
-            // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
-
-            syncState.onError.subscribe(() => {
-                clearTimeout(msg); // stop 'connected' msg if error
-                syncState.cancel();
-                this.synchronizationStatus.setConnected(false);
-                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
-            });
-        });
-    }
-
-
-    public restartSync() {
+    public startSync() {
 
         this.stopSync();
 
@@ -236,7 +212,7 @@ export class SettingsService {
 
         return new Promise<any>(resolve => {
                 setTimeout(() => {
-                    this.startSync().then(() => resolve());
+                    this.startSync_().then(() => resolve());
                 }, 1000);
             });
     }
@@ -247,6 +223,30 @@ export class SettingsService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.synchronizationStatus.setConnected(false);
+    }
+
+
+    private startSync_(): Promise<any> {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+
+        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
+        if (!this.currentSyncUrl) return Promise.resolve();
+        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
+
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
+            .then(syncState => {
+
+                // avoid issuing 'connected' too early
+                const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
+
+                syncState.onError.subscribe(() => {
+                    clearTimeout(msg); // stop 'connected' msg if error
+                    syncState.cancel();
+                    this.synchronizationStatus.setConnected(false);
+                    this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
+                });
+            });
     }
 
 

@@ -16,7 +16,6 @@ import {UsernameProvider} from '../../settings/username-provider';
  */
 export class RemoteChangesStream {
 
-    private autoCacheUpdate: boolean = true;
     private observers: Array<Observer<Document>> = [];
 
 
@@ -48,12 +47,8 @@ export class RemoteChangesStream {
 
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
-    public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
-
 
     private welcomeRemoteDocument(document: Document) {
-
-        if (!this.autoCacheUpdate) return;
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);

@@ -4,8 +4,11 @@ export const RESOURCE_IDENTIFIER = 'resource.identifier';
 export const RESOURCE_ID = 'resource.id';
 
 
-
-
+/**
+ * Regarding stratigraphical units (Feature type)
+ *
+ * Time relations are interpretations of users, based on position relations
+ */
 export module TIME_RELATIONS {
 
     export const IS_BEFORE = 'isBefore';
@@ -14,17 +17,26 @@ export module TIME_RELATIONS {
     export const ALL = [IS_AFTER, IS_BEFORE, IS_CONTEMPORARY_WITH];
 }
 
+/**
+ * Regarding stratigraphical units (Feature type)
+ */
 export module POSITION_RELATIONS {
 
-    export const IS_BELOW = 'isBelow';
-    export const IS_ABOVE = 'isAbove';
-    export const ALL = ['borders', 'cuts', 'isCutBy', IS_ABOVE, IS_BELOW];
+    export const IS_BELOW = 'isBelow';                // is read off by a user by sight
+    export const IS_ABOVE = 'isAbove';                // is read off by a user by sight
+    export const IS_EQUIVALENT_TO = 'isEquivalentTo'; // a users interpretation that two stratigraphical units (Feature) are the same
+
+    export const BORDERS = 'borders';                 // TODO review 05.09
+    export const CUTS = 'cuts';                       // .
+    export const IS_CUT_BY = 'isCutBy';               // .
+
+    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW];
 }
 
 
-export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
-
-
+/**
+ *
+ */
 export module HIERARCHICAL_RELATIONS {
 
     export const RECORDED_IN = 'isRecordedIn';
@@ -33,9 +45,15 @@ export module HIERARCHICAL_RELATIONS {
     export const ALL = [LIES_WITHIN, RECORDED_IN, INCLUDES];
 }
 
+export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
+
+
+// Indexing
 
 export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
+
+// Document Edit / Document View
 
 export module GROUP_NAME {
 
@@ -47,6 +65,8 @@ export module GROUP_NAME {
     export const TIME = 5;
 }
 
+
+// --
 
 export const INPUT_TYPE = 'inputType';
 

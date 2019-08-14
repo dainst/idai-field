@@ -1,0 +1,32 @@
+{
+  "Feature": ["color", "hasDisturbance"],
+  "Architecture": [
+    "mortarBinder",
+    "mortarColor",
+    "mortarConsistency",
+    "construction",
+    "brickwork",
+    "blockProcessing",
+    "wallClassification",
+    "wallType"
+  ],
+  "Floor": ["mortarBinder", "layerClassification"],
+  "Pottery": [
+    "temper",
+    "temperAmount",
+    "temperParticles",
+    "coatInsideType",
+    "coatOutsideType",
+    "formDescription",
+    "purpose",
+    "residueAnalysis",
+    "amountSherdsLip",
+    "amountSherdsRimBase",
+    "amountSherdsRimShoulder",
+    "amountSherdsShoulder",
+    "coatInside",
+    "coatOutside"
+  ],
+  "Brick": ["specificType"],
+  "Stone": ["temperAmount", "purpose", "provenance"]
+}

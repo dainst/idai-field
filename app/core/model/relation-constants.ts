@@ -26,7 +26,7 @@ export module POSITION_RELATIONS {
     export const CUTS = 'cuts';                       // .
     export const IS_CUT_BY = 'isCutBy';               // .
 
-    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW];
+    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO];
 }
 
 

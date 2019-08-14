@@ -1,7 +1,7 @@
 import {RelationsCompleter} from '../../../../../app/core/import/exec/relations-completer';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
-import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../../../app/c';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../../../app/core/model/relation-constants';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_AFTER = TIME_RELATIONS.IS_AFTER;

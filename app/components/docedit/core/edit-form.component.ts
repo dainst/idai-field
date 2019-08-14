@@ -5,7 +5,8 @@ import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
     IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
-import {GROUP_NAME, POSITION_RELATIONS, TIME_RELATIONS} from '../../../c';
+import {GROUP_NAME} from '../../../c';
+import {POSITION_RELATIONS, TIME_RELATIONS} from '../../../core/model/relation-constants';
 
 
 interface GroupDefinition {

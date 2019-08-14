@@ -6,11 +6,12 @@ import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, 
     Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
-import {GROUP_NAME, HIERARCHICAL_RELATIONS, Name, POSITION_RELATIONS, ResourceId, TIME_RELATIONS} from '../c';
+import {GROUP_NAME, Name, ResourceId} from '../c';
 import {isBoolean} from '../utils';
 import {DatingUtil} from '../core/util/dating-util';
 import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../core/model/relation-constants';
 
 
 type FieldViewGroupDefinition = {

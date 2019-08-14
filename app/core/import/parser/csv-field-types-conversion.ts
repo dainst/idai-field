@@ -1,9 +1,9 @@
 import {getOnOr, includedIn, is, isNot, on, setOn, isnt} from 'tsfun';
 import {IdaiType, Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {PARENT} from '../../../c';
 import {CSVExport} from '../../export/csv-export';
 import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
+import {PARENT} from '../../model/relation-constants';
 
 
 /**

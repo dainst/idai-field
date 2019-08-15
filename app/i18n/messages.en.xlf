@@ -954,12 +954,20 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
+        <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter.</source>
+        <target state="final">An error occurred while downloading version <x id="INTERPOLATION" equiv-text="{{version}}"/>. Please download the newest version from http://field.dainst.org.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
         <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
         <target state="final">The automatic update check is deactivated. You are possibly not using the latest version of iDAI.field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
@@ -4482,14 +4490,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.relations.isEquivalentTo" datatype="html">
-          <source>Gleich wie</source>
-          <target state="final">Equivalent to</target>
-          <context-group purpose="location">
-            <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-            <context context-type="linenumber">1</context>
-          </context-group>
-        </trans-unit>
       <trans-unit id="configuration.relations.isAbove" datatype="html">
         <source>Liegt über</source>
         <target state="final">Above</target>

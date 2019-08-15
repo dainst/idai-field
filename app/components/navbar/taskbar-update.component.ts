@@ -23,13 +23,12 @@ export class TaskbarUpdateComponent {
     private errorTimeout: any = undefined;
 
 
-    constructor(private settingsService: SettingsService,
-        changeDetectorRef: ChangeDetectorRef) {
+    constructor(private settingsService: SettingsService, changeDetectorRef: ChangeDetectorRef) {
 
         ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
             this.progressPercent = Math.round(downloadInfo.progressPercent);
             this.version = downloadInfo.version;
-            if (this.progressPercent === 100) this.waitForError();
+            if (this.progressPercent === 100) this.waitForError(changeDetectorRef);
             changeDetectorRef.detectChanges();
         });
 
@@ -52,10 +51,11 @@ export class TaskbarUpdateComponent {
     public isAutoUpdateActive = () => this.settingsService.isAutoUpdateActive();
 
 
-    public waitForError() {
+    public waitForError(changeDetectorRef: ChangeDetectorRef) {
 
         this.errorTimeout = setTimeout(() => {
             this.downloadError = true;
+            changeDetectorRef.detectChanges();
         }, 5000);
     }
 

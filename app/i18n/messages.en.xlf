@@ -4482,6 +4482,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.relations.isEquivalentTo" datatype="html">
+        <source>Gleich wie</source>
+        <target state="final">Equivalent to</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
         <source>Zeitgleich mit</source>
         <target state="final">Contemporary with</target>

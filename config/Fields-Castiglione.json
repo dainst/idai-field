@@ -233,7 +233,6 @@
   "Layer": {
     "color": "#663300",
     "parent": "Feature",
-    "commons": ["dimensionThickness"],
     "fields": {
       "consistency": {
         "inputType": "checkboxes",
@@ -411,16 +410,6 @@
   },
   "Sample": {
     "parent": "Find",
-    "commons": [
-      "processor",
-      "date",
-      "description",
-      "dating",
-      "dimensionLength",
-      "dimensionWidth",
-      "dimensionVerticalExtent",
-      "spatialLocation"
-    ],
     "color": "#9ecae1",
     "fields": {
       "descriptionSample": {
@@ -468,7 +457,6 @@
   },
   "Pottery": {
     "parent": "Find",
-    "commons": ["provenance"],
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -1155,7 +1143,6 @@
   "Metal": {
     "color": "#995f25",
     "parent": "Find",
-    "commons": ["provenance"],
     "fields": {
       "materialDescription": {
         "inputType": "input"

@@ -232,7 +232,6 @@
   },
   "Layer": {
     "color": "#663300",
-    "parent": "Feature",
     "fields": {
       "consistency": {
         "inputType": "checkboxes",
@@ -456,7 +455,6 @@
     }
   },
   "Pottery": {
-    "parent": "Find",
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -1142,7 +1140,6 @@
   },
   "Metal": {
     "color": "#995f25",
-    "parent": "Find",
     "fields": {
       "materialDescription": {
         "inputType": "input"

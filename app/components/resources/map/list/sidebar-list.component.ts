@@ -57,6 +57,8 @@ export class SidebarListComponent extends BaseList {
 
     public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
 
+    public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
+
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 
 

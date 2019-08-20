@@ -103,9 +103,9 @@ export class FieldsViewComponent implements OnChanges {
 
     public toggleGroupSection(group: FieldViewGroupDefinition) {
 
-        this.openSection = this.openSection === group.name
+        this.openSection = (this.openSection === group.name && !this.groupSectionsShouldStayOpenAllTheTime)
             ? undefined
-            : this.openSection = group.name;
+            : group.name;
 
         this.onSectionToggled.emit(this.openSection);
     }

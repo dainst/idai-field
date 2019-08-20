@@ -38,7 +38,8 @@
             <fields-view
                     [groupSectionsShouldStayOpenAllTheTime]="getExpandAllGroups()"
                     [resource]="viewFacade.getSelectedDocument().resource"
-                    (onJumpToResource)="jumpToResource($event)"></fields-view>
+                    (onJumpToResource)="jumpToResource($event)"
+                    (onSectionToggled)="disableExpandAllGroups()"></fields-view>
         </div>
     </div>
 </div>

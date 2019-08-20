@@ -10,6 +10,7 @@ import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
 import {MenuService} from '../../menu-service';
+import {ImagesState} from '../imageoverview/view/images-state';
 
 
 @Component({
@@ -43,8 +44,17 @@ export class ImageViewComponent implements OnInit {
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private routingService: RoutingService
+        private routingService: RoutingService,
+        private imagesState: ImagesState
     ) {}
+
+
+    public toggleExpandAllGroups = () => this.imagesState.setExpandAllGroups(
+        !this.imagesState.getExpandAllGroups()
+    );
+
+
+    public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
 
 
     ngOnInit() {
@@ -89,6 +99,13 @@ export class ImageViewComponent implements OnInit {
 
         this.selectedImage = image;
         if (scroll) ImageViewComponent.scrollToThumbnail(image);
+    }
+
+
+    public setOpenSection(section: string) {
+
+        this.openSection = section;
+        if (this.getExpandAllGroups()) this.toggleExpandAllGroups();
     }
 
 

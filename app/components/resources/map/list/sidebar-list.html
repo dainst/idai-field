@@ -13,15 +13,15 @@
         <div class="sidebar-popover-header">
             <div class="btn btn-light left"
                  [class.active]="getExpandAllGroups()"
-                 (click)="tt.close(); toggleExpandAllGroups()"
+                 (click)="tooltip.close(); toggleExpandAllGroups()"
                  ngbTooltip="Alle Gruppen ausklappen"
                  i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-                 #tt="ngbTooltip"
+                 #tooltip="ngbTooltip"
                  placement="right"
                  container="body"
                  triggers="manual"
-                 (mouseover)="tt.open()"
-                 (mouseleave)="tt.close()">
+                 (mouseover)="tooltip.open()"
+                 (mouseleave)="tooltip.close()">
                 <span class="mdi mdi-format-line-spacing"></span>
             </div>
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>

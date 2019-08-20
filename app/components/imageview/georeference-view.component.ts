@@ -19,6 +19,7 @@ export class GeoreferenceViewComponent {
 
     @Input() document: any;
     @Input() openSection: string|undefined;
+    @Input() expandAllGroups: boolean;
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
 
@@ -36,7 +37,7 @@ export class GeoreferenceViewComponent {
 
     public toggle() {
 
-        if (this.openSection === 'georeference') {
+        if (this.openSection === 'georeference' && !this.expandAllGroups) {
             this.openSection = undefined;
         } else {
             this.openSection = 'georeference';

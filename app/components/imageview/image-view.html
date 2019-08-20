@@ -17,10 +17,19 @@
          [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
         <div id="popover">
             <div id="popover-header">
+                <button id="expand-all-groups-button" class="btn btn-light"
+                     [class.active]="getExpandAllGroups()"
+                     ngbTooltip="Alle Gruppen ausklappen"
+                     i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                     #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
+                     (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+                     (click)="tooltip.close(); toggleExpandAllGroups()">
+                    <span class="mdi mdi-format-line-spacing"></span>
+                </button>
                 <div *ngIf="selectedImage" id="identifier-label">
                     {{selectedImage.document.resource.identifier}}
                 </div>
-                <button class="btn btn-light" (click)="startEdit()">
+                <button id="edit-image-button" class="btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>
@@ -30,15 +39,18 @@
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
-                             (onSectionToggled)="openSection = $event"></fields-view>
+                             [groupSectionsShouldStayOpenAllTheTime]="getExpandAllGroups()"
+                             (onSectionToggled)="setOpenSection($event)"></fields-view>
                 <georeference-view *ngIf="selectedImage"
                                    [document]="selectedImage.document"
                                    [openSection]="openSection"
-                                   (onSectionToggled)="openSection = $event"></georeference-view>
+                                   [expandAllGroups]="getExpandAllGroups()"
+                                   (onSectionToggled)="setOpenSection($event)"></georeference-view>
                 <depicts-relations-view *ngIf="selectedImage"
                                         [resource]="selectedImage.document.resource"
                                         [openSection]="openSection"
-                                        (onSectionToggled)="openSection = $event"
+                                        [expandAllGroups]="getExpandAllGroups()"
+                                        (onSectionToggled)="setOpenSection($event)"
                                         (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
             </div>
         </div>

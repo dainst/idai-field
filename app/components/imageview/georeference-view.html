@@ -18,7 +18,7 @@
                 i18n="@@imageView.georeferenceView.georeferenceData"
                 (click)="toggle()">Georeferenzdaten</button>
     </div>
-    <div *ngIf="openSection === 'georeference'" class="collapse show">
+    <div *ngIf="openSection === 'georeference' || expandAllGroups" class="collapse show">
         <div class="card-body">
             <div *ngIf="document.resource.georeference" class="field">
                 <span class="field-value" i18n="@@imageView.georeferenceView.present">Vorhanden</span>

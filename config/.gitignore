@@ -6,12 +6,14 @@
 !Fields-Campidoglio.json	
 !Fields-Castiglione.json	
 !Fields-Custom.json
+!Fields-Kephissostal.json	
 !Fields-Pergamon.json
 !Fields-Meninx.json
 !Fields-WES.json
 !Fields-Boha.json
 !Hidden.json
 !Hidden-Custom.json
+!Hidden-Kephissostal.json	
 !Hidden-Meninx.json
 !Hidden-Pergamon.json
 !Hidden-WES.json
@@ -24,6 +26,8 @@
 !Language-Castiglione.en.json	
 !Language-Custom.de.json
 !Language-Custom.en.json
+!Language-Kephissostal.de.json	
+!Language-Kephissostal.en.json
 !Language-Meninx.de.json
 !Language-Meninx.en.json
 !Language-Pergamon.de.json

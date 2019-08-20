@@ -36,7 +36,7 @@ export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() openSection: string|undefined = 'stem';
-    @Input() groupSectionsShouldStayOpenAllTheTime = false;
+    @Input() expandAllGroups: boolean = false;
 
     @Output() onSectionToggled = new EventEmitter<string|undefined>();
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
@@ -87,7 +87,7 @@ export class FieldsViewComponent implements OnChanges {
 
     public showGroupSection(group: Name) {
 
-        return this.groupSectionsShouldStayOpenAllTheTime || this.openSection === group;
+        return this.expandAllGroups || this.openSection === group;
     }
 
 
@@ -103,7 +103,7 @@ export class FieldsViewComponent implements OnChanges {
 
     public toggleGroupSection(group: FieldViewGroupDefinition) {
 
-        this.openSection = (this.openSection === group.name && !this.groupSectionsShouldStayOpenAllTheTime)
+        this.openSection = (this.openSection === group.name && !this.expandAllGroups)
             ? undefined
             : group.name;
 

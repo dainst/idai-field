@@ -36,7 +36,7 @@
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
             <fields-view
-                    [groupSectionsShouldStayOpenAllTheTime]="getExpandAllGroups()"
+                    [expandAllGroups]="getExpandAllGroups()"
                     [resource]="viewFacade.getSelectedDocument().resource"
                     (onJumpToResource)="jumpToResource($event)"
                     (onSectionToggled)="disableExpandAllGroups()"></fields-view>

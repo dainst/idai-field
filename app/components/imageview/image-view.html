@@ -39,7 +39,7 @@
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
-                             [groupSectionsShouldStayOpenAllTheTime]="getExpandAllGroups()"
+                             [expandAllGroups]="getExpandAllGroups()"
                              (onSectionToggled)="setOpenSection($event)"></fields-view>
                 <georeference-view *ngIf="selectedImage"
                                    [document]="selectedImage.document"

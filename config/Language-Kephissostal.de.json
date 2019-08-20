@@ -502,7 +502,7 @@
           "description": "Beschreibung, ob der Fundplatz rezent Beschädigungen ausgesetzt war (z. B.: Steinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden)"
         },
         "cultivatedPlants": {
-          "label": "Kulutrpflanzen"
+          "label": "Kulturpflanzen"
         },
         "terrain": {
           "label": "Gelände"
@@ -540,7 +540,7 @@
           "description": "Beschreibung, ob der Fundplatz rezent Beschädigungen ausgesetzt war (z. B.: Steinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden)"
         },
         "cultivatedPlants": {
-          "label": "Kulutrpflanzen"
+          "label": "Kulturpflanzen"
         },
         "excavationHistory": {
           "label": "Ausgrabungsgeschichte",

@@ -71,7 +71,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         return (groupName === 'images'
                 && !this.typeUtility.getImageTypeNames().includes(this.document.resource.type))
             || (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFieldDefinitions(groupName).length > 0
+            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
     }
 

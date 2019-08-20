@@ -58,7 +58,6 @@ export class ImageOverviewFacade {
 
     public async initialize() {
 
-        await this.imagesState.initialize();
         if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
         this.setQueryConstraints();
         await this.fetchDocuments();

@@ -17,23 +17,8 @@ export class ImagesState {
     private gridSize: number = 4;
     private expandAllGroups: boolean = false;
 
-    private initialized: boolean = false;
-
 
     constructor() {}
-
-
-    public resetForE2E() {
-
-        this.initialized = true;
-    }
-
-
-    public async initialize(): Promise<any> {
-
-        if (this.initialized) return;
-        this.initialized = true;
-    }
 
 
     public getQuery(): Query {

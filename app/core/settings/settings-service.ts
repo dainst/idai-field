@@ -119,6 +119,7 @@ export class SettingsService {
         if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
         if (this.getSelectedProject().startsWith('campidoglio')) customProjectName = 'Campidoglio';
         if (this.getSelectedProject().startsWith('castiglione')) customProjectName = 'Castiglione';
+        if (this.getSelectedProject().startsWith('kephissostal')) customProjectName = 'Kephissostal';
 
         try {
             return await this.appConfigurator.go(

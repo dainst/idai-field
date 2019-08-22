@@ -24,7 +24,7 @@
                      #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
                      (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
                      (click)="tooltip.close(); toggleExpandAllGroups()">
-                    <span class="mdi mdi-format-line-spacing"></span>
+                    <span class="mdi mdi-unfold-more-horizontal"></span>
                 </button>
                 <div *ngIf="selectedImage" id="identifier-label">
                     {{selectedImage.document.resource.identifier}}

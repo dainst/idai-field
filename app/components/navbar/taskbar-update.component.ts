@@ -56,7 +56,7 @@ export class TaskbarUpdateComponent {
         this.errorTimeout = setTimeout(() => {
             this.downloadError = true;
             changeDetectorRef.detectChanges();
-        }, 5000);
+        }, 10000);
     }
 
 

@@ -303,32 +303,7 @@
   "Profile": {
     "color": "#c6dbef",
     "parent": "Feature",
-    "fields": {
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"]
-      },
-      "orientation": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "N-S",
-          "NNO - SSW",
-          "NNW-SSO",
-          "NO-SW",
-          "NW-SO",
-          "W-O",
-          "WNW-OSO",
-          "WSW-ONO"
-        ]
-      }
-    }
+    "commons": ["dimensionHeight", "orientation"],
+    "fields": {}
   }
 }

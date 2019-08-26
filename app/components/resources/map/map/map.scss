@@ -20,6 +20,15 @@
         stroke-width: 1px;
         stroke-dasharray: 5;
       }
+
+      &.polygon.faded-out {
+        fill-opacity: 0.1;
+        stroke-opacity: 0.25;
+      }
+
+      &.polyline.faded-out {
+        stroke-opacity: 0.25;
+      }
   }
 
   .leaflet-control-zoom {

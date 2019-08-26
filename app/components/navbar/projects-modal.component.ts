@@ -145,7 +145,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
         }
 
         this.subModalOpened = false;
-        MenuService.setContext('default');
+        MenuService.setContext('projects');
     }
 
 

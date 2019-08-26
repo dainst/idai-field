@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ProjectsModalComponent} from './projects-modal.component';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -29,9 +30,14 @@ export class ProjectsComponent implements OnInit {
     }
 
 
-    public openModal() {
+    public async openModal() {
+
+        MenuService.setContext('projects');
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
         ref.componentInstance.selectedProject = this.selectedProject;
+        await ref.result;
+
+        MenuService.setContext('default');
     }
 }

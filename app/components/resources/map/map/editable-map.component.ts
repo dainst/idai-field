@@ -248,7 +248,8 @@ export class EditableMapComponent extends LayerMapComponent {
             (polygons: FieldPolygon[]) => {
                 polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
                     .forEach((polygon: FieldPolygon) => {
-                        EditableMapComponent.setClassList(polygon, ['polygon faded-out']);
+                        EditableMapComponent.addClass(polygon, 'faded-out');
+                        EditableMapComponent.removeClass(polygon, 'leaflet-interactive');
                     });
             }
         );
@@ -257,7 +258,8 @@ export class EditableMapComponent extends LayerMapComponent {
             (polylines: FieldPolyline[]) => {
                 polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
                     .forEach((polyline: FieldPolyline) => {
-                        EditableMapComponent.setClassList(polyline, ['polyline faded-out']);
+                        EditableMapComponent.addClass(polyline, 'faded-out');
+                        EditableMapComponent.removeClass(polyline, 'leaflet-interactive');
                     });
             }
         );
@@ -267,6 +269,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 markers.filter((marker: FieldMarker) => this.isNotSelected(marker))
                     .forEach((marker: FieldMarker) => {
                         marker.setOpacity(0.5);
+                        EditableMapComponent.removeClass(marker, 'leaflet-interactive');
                     });
             }
         );
@@ -279,7 +282,8 @@ export class EditableMapComponent extends LayerMapComponent {
             (polygons: FieldPolygon[]) => {
                 polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
                     .forEach((polygon: FieldPolygon) => {
-                        EditableMapComponent.setClassList(polygon, ['polygon leaflet-interactive']);
+                        EditableMapComponent.removeClass(polygon, 'faded-out');
+                        EditableMapComponent.addClass(polygon, 'leaflet-interactive');
                     });
             }
         );
@@ -288,7 +292,8 @@ export class EditableMapComponent extends LayerMapComponent {
             (polylines: FieldPolyline[]) => {
                 polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
                     .forEach((polyline: FieldPolyline) => {
-                        EditableMapComponent.setClassList(polyline, ['polyline leaflet-interactive']);
+                        EditableMapComponent.removeClass(polyline, 'faded-out');
+                        EditableMapComponent.addClass(polyline, 'leaflet-interactive');
                     });
             }
         );
@@ -298,6 +303,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 markers.filter((marker: FieldMarker) => this.isNotSelected(marker))
                     .forEach((marker: FieldMarker) => {
                         marker.setOpacity(1);
+                        EditableMapComponent.addClass(marker, 'leaflet-interactive');
                 })  ;
             }
         );
@@ -641,8 +647,20 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private static setClassList(element: any, classList: string[]) {
+    private static addClass(element: any, classToAdd: string) {
 
-        element._path.classList = classList;
+        this.getClassList(element).add(classToAdd);
+    }
+
+
+    private static removeClass(element: any, classToRemove: string) {
+
+        this.getClassList(element).remove(classToRemove);
+    }
+
+
+    private static getClassList(element: any): DOMTokenList {
+
+        return element._path ? element._path.classList : element._icon.classList;
     }
 }

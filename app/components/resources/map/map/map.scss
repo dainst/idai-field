@@ -24,10 +24,12 @@
       &.polygon.faded-out {
         fill-opacity: 0.1;
         stroke-opacity: 0.25;
+        cursor: inherit;
       }
 
       &.polyline.faded-out {
         stroke-opacity: 0.25;
+        cursor: inherit;
       }
   }
 

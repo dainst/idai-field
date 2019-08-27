@@ -249,7 +249,6 @@ export class EditableMapComponent extends LayerMapComponent {
                 polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
                     .forEach((polygon: FieldPolygon) => {
                         EditableMapComponent.addClass(polygon, 'faded-out');
-                        EditableMapComponent.removeClass(polygon, 'leaflet-interactive');
                     });
             }
         );
@@ -259,7 +258,6 @@ export class EditableMapComponent extends LayerMapComponent {
                 polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
                     .forEach((polyline: FieldPolyline) => {
                         EditableMapComponent.addClass(polyline, 'faded-out');
-                        EditableMapComponent.removeClass(polyline, 'leaflet-interactive');
                     });
             }
         );
@@ -283,7 +281,6 @@ export class EditableMapComponent extends LayerMapComponent {
                 polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
                     .forEach((polygon: FieldPolygon) => {
                         EditableMapComponent.removeClass(polygon, 'faded-out');
-                        EditableMapComponent.addClass(polygon, 'leaflet-interactive');
                     });
             }
         );
@@ -293,7 +290,6 @@ export class EditableMapComponent extends LayerMapComponent {
                 polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
                     .forEach((polyline: FieldPolyline) => {
                         EditableMapComponent.removeClass(polyline, 'faded-out');
-                        EditableMapComponent.addClass(polyline, 'leaflet-interactive');
                     });
             }
         );

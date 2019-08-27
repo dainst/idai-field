@@ -276,11 +276,11 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private callForNotSelected(geometryMap: { [resourceId: string]: Array<any> },
-                               funct: (geometry: any) => void) {
+    private callForNotSelected(geometryMap: { [resourceId: string]: Array<L.Layer> },
+                               funct: (geometry: L.Layer) => void) {
 
         Object.values(geometryMap || {}).forEach(
-            (geometries: any[]) => {
+            (geometries: Array<L.Layer>) => {
                 geometries.filter((geometry: any) => this.isNotSelected(geometry))
                     .forEach((geometry: any) => funct(geometry));
             }
@@ -288,13 +288,13 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private isNotSelected(element: any) {
+    private isNotSelected(element: FieldPolygon|FieldPolyline|FieldMarker) {
 
         return element.document && element.document.resource.id !== this.selectedDocument.resource.id;
     }
 
 
-    protected async updateMap(changes: SimpleChanges): Promise<any> {
+    protected async updateMap(changes: SimpleChanges): Promise<void> {
 
         if (!this.update) return Promise.resolve();
 

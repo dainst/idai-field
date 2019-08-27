@@ -244,63 +244,45 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.selectedDocument) return;
 
-        Object.values(this.polygons || {}).forEach(
-            (polygons: FieldPolygon[]) => {
-                polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
-                    .forEach((polygon: FieldPolygon) => {
-                        EditableMapComponent.addClass(polygon, 'faded-out');
-                    });
-            }
-        );
+        this.callForNotSelected(this.polygons, (polygon: FieldPolygon) => {
+            EditableMapComponent.addClass(polygon, 'faded-out');
+        });
 
-        Object.values(this.polylines || {}).forEach(
-            (polylines: FieldPolyline[]) => {
-                polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
-                    .forEach((polyline: FieldPolyline) => {
-                        EditableMapComponent.addClass(polyline, 'faded-out');
-                    });
-            }
-        );
+        this.callForNotSelected(this.polylines, (polyline: FieldPolyline) => {
+            EditableMapComponent.addClass(polyline, 'faded-out');
+        });
 
-        Object.values(this.markers || {}).forEach(
-            (markers: FieldMarker[]) => {
-                markers.filter((marker: FieldMarker) => this.isNotSelected(marker))
-                    .forEach((marker: FieldMarker) => {
-                        marker.setOpacity(0.5);
-                        EditableMapComponent.removeClass(marker, 'leaflet-interactive');
-                    });
-            }
-        );
+        this.callForNotSelected(this.markers, (marker: FieldMarker) => {
+            marker.setOpacity(0.5);
+            EditableMapComponent.removeClass(marker, 'leaflet-interactive');
+        });
     }
 
 
     private fadeInMapElements() {
 
-        Object.values(this.polygons || {}).forEach(
-            (polygons: FieldPolygon[]) => {
-                polygons.filter((polygon: FieldPolygon) => this.isNotSelected(polygon))
-                    .forEach((polygon: FieldPolygon) => {
-                        EditableMapComponent.removeClass(polygon, 'faded-out');
-                    });
-            }
-        );
+        this.callForNotSelected(this.polygons, (polygon: FieldPolygon) => {
+            EditableMapComponent.removeClass(polygon, 'faded-out');
+        });
 
-        Object.values(this.polylines || {}).forEach(
-            (polylines: FieldPolyline[]) => {
-                polylines.filter((polyline: FieldPolyline) => this.isNotSelected(polyline))
-                    .forEach((polyline: FieldPolyline) => {
-                        EditableMapComponent.removeClass(polyline, 'faded-out');
-                    });
-            }
-        );
+        this.callForNotSelected(this.polylines, (polyline: FieldPolyline) => {
+            EditableMapComponent.removeClass(polyline, 'faded-out');
+        });
 
-        Object.values(this.markers || {}).forEach(
-            (markers: FieldMarker[]) => {
-                markers.filter((marker: FieldMarker) => this.isNotSelected(marker))
-                    .forEach((marker: FieldMarker) => {
-                        marker.setOpacity(1);
-                        EditableMapComponent.addClass(marker, 'leaflet-interactive');
-                })  ;
+        this.callForNotSelected(this.markers, (marker: FieldMarker) => {
+            marker.setOpacity(1);
+            EditableMapComponent.addClass(marker, 'leaflet-interactive');
+        });
+    }
+
+
+    private callForNotSelected(geometryMap: { [resourceId: string]: Array<any> },
+                               funct: (geometry: any) => void) {
+
+        Object.values(geometryMap || {}).forEach(
+            (geometries: any[]) => {
+                geometries.filter((geometry: any) => this.isNotSelected(geometry))
+                    .forEach((geometry: any) => funct(geometry));
             }
         );
     }

@@ -244,15 +244,15 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.selectedDocument) return;
 
-        this.callForNotSelected(this.polygons, (polygon: FieldPolygon) => {
+        this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
             EditableMapComponent.addClass(polygon, 'faded-out');
         });
 
-        this.callForNotSelected(this.polylines, (polyline: FieldPolyline) => {
+        this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
             EditableMapComponent.addClass(polyline, 'faded-out');
         });
 
-        this.callForNotSelected(this.markers, (marker: FieldMarker) => {
+        this.callForUnselected(this.markers, (marker: FieldMarker) => {
             marker.setOpacity(0.5);
             EditableMapComponent.removeClass(marker, 'leaflet-interactive');
         });
@@ -261,34 +261,34 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private fadeInMapElements() {
 
-        this.callForNotSelected(this.polygons, (polygon: FieldPolygon) => {
+        this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
             EditableMapComponent.removeClass(polygon, 'faded-out');
         });
 
-        this.callForNotSelected(this.polylines, (polyline: FieldPolyline) => {
+        this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
             EditableMapComponent.removeClass(polyline, 'faded-out');
         });
 
-        this.callForNotSelected(this.markers, (marker: FieldMarker) => {
+        this.callForUnselected(this.markers, (marker: FieldMarker) => {
             marker.setOpacity(1);
             EditableMapComponent.addClass(marker, 'leaflet-interactive');
         });
     }
 
 
-    private callForNotSelected(geometryMap: { [resourceId: string]: Array<L.Layer> },
+    private callForUnselected(geometryMap: { [resourceId: string]: Array<L.Layer> },
                                funct: (geometry: L.Layer) => void) {
 
         Object.values(geometryMap || {}).forEach(
             (geometries: Array<L.Layer>) => {
-                geometries.filter((geometry: any) => this.isNotSelected(geometry))
+                geometries.filter((geometry: any) => this.isUnselected(geometry))
                     .forEach((geometry: any) => funct(geometry));
             }
         );
     }
 
 
-    private isNotSelected(element: FieldPolygon|FieldPolyline|FieldMarker) {
+    private isUnselected(element: FieldPolygon|FieldPolyline|FieldMarker) {
 
         return element.document && element.document.resource.id !== this.selectedDocument.resource.id;
     }

@@ -126,13 +126,17 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
-        this.groups[GROUP_NAME.POSITION].fields.push({
-            name: 'geometry',
-            label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
-            group: 'position',
-            inputType: 'geometry',
-            editable: true
-        });
+
+        if (this.isGeometryFieldAvailable()) {
+            this.groups[GROUP_NAME.POSITION].fields.push({
+                name: 'geometry',
+                label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
+                group: 'position',
+                inputType: 'geometry',
+                editable: true
+            });
+        }
+
         this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
     }
 
@@ -153,5 +157,12 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement.getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
+    }
+
+
+    private isGeometryFieldAvailable(): boolean {
+
+        return this.document.resource.type !== 'Project'
+            && !this.typeUtility.isSubtype(this.document.resource.type, 'Image');
     }
 }

@@ -22,7 +22,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
     protected defaultFields: Array<FieldDefinition> = [
         {
             name: 'geometry',
-            label: this.i18n({ id: 'resources.searchBar.constraints.geometry', value: 'Geometrie '}),
+            label: this.i18n({ id: 'resources.searchBar.constraints.geometry', value: 'Geometrie' }),
             inputType: 'default',
             constraintIndexed: true,
             group: ''

@@ -21,7 +21,7 @@ export class TaskbarConflictsComponent {
 
     private cancelClickListener: Function;
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover', {static: false}) private popover: any;
 
 
     constructor(private routingService: RoutingService,

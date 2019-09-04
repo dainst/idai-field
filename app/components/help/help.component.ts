@@ -23,7 +23,7 @@ export class HelpComponent implements OnInit {
     public chapters: Array<Chapter> = [];
     public activeChapter: Chapter;
 
-    @ViewChild('help') rootElement: ElementRef;
+    @ViewChild('help', {static: false}) rootElement: ElementRef;
 
     private static scrollOffset: number = -15;
     private static headerTopOffset: number = -62;

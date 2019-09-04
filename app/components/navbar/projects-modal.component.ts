@@ -31,10 +31,10 @@ export class ProjectsModalComponent implements AfterViewChecked {
     private focusInput: boolean = false;
     private subModalOpened: boolean = false;
 
-    @ViewChild('createPopover') private createPopover: NgbPopover;
-    @ViewChild('deletePopover') private deletePopover: NgbPopover;
-    @ViewChild('newProjectInput') private newProjectInput: ElementRef;
-    @ViewChild('deleteProjectInput') private deleteProjectInput: ElementRef;
+    @ViewChild('createPopover', {static: false}) private createPopover: NgbPopover;
+    @ViewChild('deletePopover', {static: false}) private deletePopover: NgbPopover;
+    @ViewChild('newProjectInput', {static: false}) private newProjectInput: ElementRef;
+    @ViewChild('deleteProjectInput', {static: false}) private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,

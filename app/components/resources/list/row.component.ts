@@ -26,7 +26,7 @@ export class RowComponent implements AfterViewInit {
     @Input() document: FieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
 
-    @ViewChild('identifierInput') identifierInput: ElementRef;
+    @ViewChild('identifierInput', {static: false}) identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 

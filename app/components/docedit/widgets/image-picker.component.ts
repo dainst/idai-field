@@ -22,7 +22,7 @@ import {clone} from '../../../core/util/object-util';
  */
 export class ImagePickerComponent implements OnInit {
 
-    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
 
     public documents: Array<ImageDocument>;
     public document: FieldDocument;

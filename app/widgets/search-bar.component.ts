@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
+import {arrayEquivalent} from 'tsfun';
 import {IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../core/model/type-utility';
 
@@ -59,10 +60,13 @@ export class SearchBarComponent {
 
     public chooseTypeFilter(type: IdaiType) {
 
-        this.types = type
+        let newTypes: string[]|undefined = type
             ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
+        if (newTypes && newTypes.length > 0 && arrayEquivalent(this.types)(newTypes)) newTypes = [type.name];
+
+        this.types = newTypes;
         this.onTypesChanged.emit(this.types);
     }
 

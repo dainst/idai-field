@@ -2,23 +2,30 @@
     <li *ngIf="allTypesOptionVisible" id="choose-type-option-all"
         class="list-group-item popover-item"
         (click)="pickType(undefined)"
-        [ngClass]="{ 'selected-type': !selectedTypes || selectedTypes.length == 0 }">
+        [ngClass]="{ 'selected-type': !selectedTypes || selectedTypes.length === 0 }">
         <i class="all-types-label" i18n="@@widgets.typePicker.allTypes">Alle Typen</i>
     </li>
     <li *ngFor="let type of typesTreeList; let index = index"
         class="list-group-item popover-item"
-        [ngClass]="{ 'selected-type': selectedTypes && selectedTypes.indexOf(type.name) > -1,
-                     'abstract-idai-type': type.isAbstract }"
+        [ngClass]="{
+            'selected-type': selectedTypes && selectedTypes.indexOf(type.name) > -1
+                && (!type.children || selectedTypes.length > 1),
+            'abstract-idai-type': type.isAbstract
+        }"
         (click)="pickType(type)">
-        <div id="choose-type-option-{{type.name.toLowerCase()}}" class="type-item">
+        <div id="choose-type-option-{{type.name.toLowerCase()}}" class="type-item"
+             [ngClass]="{
+                'selected-type': selectedTypes && selectedTypes.indexOf(type.name) > -1,
+                'parent-type': type.children
+             }">
             <type-icon [type]="type.name" size="30"></type-icon>
             <div class="type-label">{{type.label}}</div>
         </div>
         <ul *ngIf="type.children" class="type-children-list">
             <li *ngFor="let childType of type.children"
                 class="list-group-item popover-item"
-                [ngClass]="{ 'selected-type': selectedTypes && selectedTypes.indexOf(type.name) > -1,
-                             'selected-child-type': selectedTypes && selectedTypes.indexOf(type.name) == -1
+                [ngClass]="{ 'selected-type': selectedTypes && selectedTypes.indexOf(childType.name) > -1,
+                             'selected-child-type': selectedTypes && selectedTypes.indexOf(childType.name) === -1
                               && selectedTypes.indexOf(childType.name) > -1 }"
                 (click)="pickType(childType)">
                 <div id="choose-type-option-{{type.name.toLowerCase()}}-{{childType.name.toLowerCase()}}"

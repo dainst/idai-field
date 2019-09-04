@@ -35,7 +35,7 @@ export module EdgesBuilder {
 
         return graphDocuments
             .map(getEdgesForDocument(graphDocuments, totalDocuments, relations))
-            .reduce(intoObj('resourceId', 'edges'), {});
+            .reduce(intoObj('resourceId', 'edges'), {}) as { [id: string]: Edges };
     }
 
 

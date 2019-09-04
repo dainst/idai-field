@@ -59,7 +59,7 @@ export class ImageViewComponent implements OnInit {
 
     ngOnInit() {
 
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges();
     }
 
 

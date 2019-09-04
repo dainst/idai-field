@@ -36,8 +36,11 @@ export class ProjectsComponent implements OnInit {
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
         ref.componentInstance.selectedProject = this.selectedProject;
-        await ref.result;
 
-        MenuService.setContext('default');
+        try {
+            await ref.result;
+        } finally {
+            MenuService.setContext('default');
+        }
     }
 }

@@ -17,8 +17,8 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",
-    "package-mac": "build -m",
-    "package-win": "build -w nsis",
+    "package-mac": "electron-builder -m",
+    "package-win": "electron-builder -w nsis",
     "i18n": "ng-xi18n --locale de --project app && ngx-extractor -i \"./app/**/*.ts\" \"./node_modules/idai-components-2/src/**/*.ts\" -o ./app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf app/messages.xlf"
   },
   "build": {

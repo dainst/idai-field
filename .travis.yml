@@ -5,7 +5,8 @@ node_js:
   
 matrix:
   include:
-  - osx_image: xcode10.2
+  - os: osx
+    osx_image: xcode10.2
 
 cache:
   directories:

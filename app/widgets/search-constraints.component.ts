@@ -284,8 +284,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getField(fieldName: string): FieldDefinition {
 
-        const defaultField: FieldDefinition|undefined = this.defaultFields
-            .find(field => field.name === fieldName);
+        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField;
 
         return this.projectConfiguration.getFieldDefinitions(this.type)
@@ -297,8 +296,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
 
-        const defaultField: FieldDefinition|undefined = this.defaultFields
-            .find(field => field.name === fieldName);
+        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField.label as string;
 
         return this.projectConfiguration.getTypesMap()[this.type].fields
@@ -313,6 +311,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
             ? 'exist'
             : ConstraintIndex.getIndexType(field);
+    }
+
+
+    private getDefaultField(fieldName: string): FieldDefinition|undefined {
+
+        return this.defaultFields.find(field => field.name === fieldName);
     }
 
 

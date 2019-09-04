@@ -108,7 +108,6 @@
     "electron": "6.0.7",
     "electron-builder": "21.2.0",
     "electron-packager": "14.0.5",
-    "electron-rebuild": "1.8.6",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
     "gulp": "3.9.1",

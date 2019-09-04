@@ -31,7 +31,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover', {static: false}) private popover: any;
 
     public selectedType: string|undefined;
     public typesTreeList: Array<IdaiType>;

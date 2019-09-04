@@ -22,7 +22,7 @@ import {TabUtil} from '../tab-util';
  */
 export class NavbarComponent implements DoCheck {
 
-    @ViewChild('tabSpace') tabSpaceElement: ElementRef;
+    @ViewChild('tabSpace', {static: false}) tabSpaceElement: ElementRef;
 
     public activeRoute: string;
 

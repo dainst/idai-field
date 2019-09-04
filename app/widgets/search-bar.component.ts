@@ -28,8 +28,8 @@ export class SearchBarComponent {
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
-    @ViewChild('p') protected popover: any;
-    @ViewChild('searchInput') fulltextSearchInput: ElementRef;
+    @ViewChild('p', {static: false}) protected popover: any;
+    @ViewChild('searchInput', {static: false}) fulltextSearchInput: ElementRef;
 
     public focused: boolean = false;
 

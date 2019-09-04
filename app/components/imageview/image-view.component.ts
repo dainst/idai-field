@@ -26,8 +26,8 @@ import {ImagesState} from '../imageoverview/view/images-state';
  */
 export class ImageViewComponent implements OnInit {
 
-    @ViewChild('thumbnailSliderContainer') thumbnailSliderContainer: ElementRef;
-    @ViewChild('imageInfo') imageInfo: ElementRef;
+    @ViewChild('thumbnailSliderContainer', {static: false}) thumbnailSliderContainer: ElementRef;
+    @ViewChild('imageInfo', {static: false}) imageInfo: ElementRef;
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;

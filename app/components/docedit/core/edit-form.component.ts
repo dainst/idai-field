@@ -30,7 +30,7 @@ interface GroupDefinition {
  */
 export class EditFormComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild('editor') rootElement: ElementRef;
+    @ViewChild('editor', {static: false}) rootElement: ElementRef;
 
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;

@@ -20,7 +20,7 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
     @Output() onTypeChanged: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover', {static: false}) private popover: any;
 
     private typesTreeList: Array<IdaiType>;
 

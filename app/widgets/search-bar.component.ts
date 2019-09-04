@@ -64,7 +64,7 @@ export class SearchBarComponent {
             ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
-        if (newTypes && newTypes.length > 0 && arrayEquivalent(this.types)(newTypes)) newTypes = [type.name];
+        if (newTypes && newTypes.length > 1 && arrayEquivalent(this.types)(newTypes)) newTypes = [type.name];
 
         this.types = newTypes;
         this.onTypesChanged.emit(this.types);

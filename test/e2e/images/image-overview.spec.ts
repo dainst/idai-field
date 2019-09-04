@@ -192,30 +192,6 @@ describe('images --', function() {
     });
 
 
-    it('link -- use link filter', () => {
-
-        ImageOverviewPage.createDepictsRelation('testf1');
-
-        ImageOverviewPage.clickSelectLinkFilterOption(1);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-
-        ImageOverviewPage.clickSelectLinkFilterOption(2);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-
-        ImageOverviewPage.clickSelectLinkFilterOption(0);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-    });
-
-
     it('link -- filter types in overview', done => {
 
         ImageOverviewPage.clickCell(0);

@@ -19,7 +19,18 @@ import {ImageOverviewFacade} from '../view/imageoverview-facade';
  */
 export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsComponent {
 
-    protected defaultFields: Array<FieldDefinition> = [];
+    protected defaultFields: Array<FieldDefinition> = [
+        {
+            name: 'depicts',
+            label: this.i18n({
+                id: 'imageOverview.searchBar.constraints.linkedResources',
+                value: 'Verknüpfte Ressourcen'
+            }),
+            inputType: 'default',
+            constraintIndexed: true,
+            group: ''
+        }
+    ];
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,

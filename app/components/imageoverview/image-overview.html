@@ -2,18 +2,7 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-
-            <div *ngIf="!hasSelectedImages()" class="col-sm-3 image-overview-nav-content">
-                <select id="link-filter-select" class="form-control"
-                        [ngModel]="getLinkFilter()"
-                        (ngModelChange)="setLinkFilter($event)">
-                    <option value="ALL"><em i18n="@@imageOverview.filter.all">Alle Bilder</em></option>
-                    <option value="UNLINKED"><em i18n="@@imageOverview.filter.unlinked">Unverknüpfte Bilder</em></option>
-                    <option value="LINKED"><em i18n="@@imageOverview.filter.linked">Verknüpfte Bilder</em></option>
-                </select>
-            </div>
-
-            <div *ngIf="!hasSelectedImages()" class="col-sm-5 image-overview-nav-content">
+            <div *ngIf="!hasSelectedImages()" class="col-sm-8 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [types]="getQuery().types"

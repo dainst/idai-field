@@ -6,11 +6,10 @@ import {ViewFacade} from '../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../routing-service';
 import {ImageUploadResult} from '../imageupload/image-uploader';
-import {M} from '../m';
-import {ImageFilterOption} from './view/images-state';
 import {TabManager} from '../tab-manager';
 import {ImageViewComponent} from '../imageview/image-view.component';
 import {MenuService} from '../../menu-service';
+import {M} from '../m';
 
 
 @Component({
@@ -71,8 +70,6 @@ export class ImageOverviewComponent implements OnInit {
 
     public setTypeFilters = (types: string[]) => this.imageOverviewFacade.setTypeFilters(types);
 
-    public getLinkFilter = () => this.imageOverviewFacade.getLinkFilter();
-
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
     public onResize = () => this.imageGrid.calcGrid();
@@ -86,8 +83,6 @@ export class ImageOverviewComponent implements OnInit {
     public canTurnPage = () => this.imageOverviewFacade.canTurnPage();
 
     public canTurnPageBack = () => this.imageOverviewFacade.canTurnPageBack();
-
-    public setLinkFilter = (filterOption: ImageFilterOption) => this.imageOverviewFacade.setLinkFilter(filterOption);
 
     public nrOfSelectedImages = () => this.getSelected().length;
 

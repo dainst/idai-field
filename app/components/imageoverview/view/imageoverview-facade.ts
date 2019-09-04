@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query, ImageDocument} from 'idai-components-2';
-import {ImageFilterOption, ImagesState} from './images-state';
+import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {clone} from '../../../core/util/object-util';
@@ -46,8 +46,6 @@ export class ImageOverviewFacade {
     public clearSelection = () => this.imageDocumentsManager.clearSelection();
 
     public getCustomConstraints = (): { [name: string]: string } => this.imagesState.getCustomConstraints();
-
-    public getLinkFilter = (): ImageFilterOption => this.imagesState.getLinkFilter();
 
     public getNrImagesPerRow = (): number => this.imagesState.getNrImagesPerRow();
 
@@ -178,17 +176,6 @@ export class ImageOverviewFacade {
     }
 
 
-    public setLinkFilter(filterOption: ImageFilterOption) {
-
-        this.currentOffset = 0;
-
-        this.imagesState.setLinkFilter(filterOption);
-        this.setQueryConstraints();
-
-        this.fetchDocuments();
-    }
-
-
     public fetchDocuments() {
 
         return this.imageDocumentsManager.fetchDocuments(
@@ -220,19 +207,6 @@ export class ImageOverviewFacade {
 
     private setQueryConstraints() {
 
-        const query: Query = this.imagesState.getQuery();
-
-        query.constraints = clone(this.getCustomConstraints());
-
-        switch(this.imagesState.getLinkFilter()) {
-            case 'UNLINKED':
-                query.constraints['depicts:exist'] = 'UNKNOWN';
-                break;
-            case 'LINKED':
-                query.constraints['depicts:exist'] = 'KNOWN';
-                break;
-            case 'ALL':
-                delete query.constraints['depicts:exist'];
-        }
+        this.imagesState.getQuery().constraints = clone(this.getCustomConstraints());
     }
 }

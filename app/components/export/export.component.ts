@@ -183,8 +183,8 @@ export class ExportComponent implements OnInit {
                     + '.' + this.selectedType.name.toLowerCase();
             }
 
-            const filePath = await remote.dialog.showSaveDialog(options);
-            resolve(filePath);
+            const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+            resolve(saveDialogReturnValue.filePath);
         });
     }
 

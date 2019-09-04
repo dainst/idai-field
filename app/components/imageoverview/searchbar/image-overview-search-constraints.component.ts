@@ -1,6 +1,6 @@
 import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
 import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.component';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
@@ -18,6 +18,8 @@ import {ImageOverviewFacade} from '../view/imageoverview-facade';
  * @author Thomas Kleinke
  */
 export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsComponent {
+
+    protected defaultFields: Array<FieldDefinition> = [];
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,

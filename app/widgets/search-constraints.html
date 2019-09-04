@@ -92,6 +92,17 @@
                     i18n="@@boolean.no">Nein</option>
         </select>
 
+        <select *ngIf="getSearchInputType(selectedField) === 'exists'"
+                id="constraint-search-term-exists-select" [(ngModel)]="searchTerm" class="form-control">
+            <option value="" hidden [selected]="searchTerm.length === 0"
+                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
+            <option value=""></option>
+            <option id="constraint-search-term-exists-select-option-true" value="KNOWN"
+                    i18n="@@boolean.yes">Ja</option>
+            <option id="constraint-search-term-exists-select-option-false" value="UNKNOWN"
+                    i18n="@@boolean.no">Nein</option>
+        </select>
+
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"
              (click)="addConstraint(); $event.stopPropagation();">
             <span>✓</span>

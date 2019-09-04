@@ -17,6 +17,7 @@ export module IndexerConfiguration {
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
+            'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },

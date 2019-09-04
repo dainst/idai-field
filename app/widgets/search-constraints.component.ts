@@ -13,6 +13,8 @@ type ConstraintListItem = {
     searchInputType?: string
 };
 
+type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
+
 
 /**
  * @author Thomas Kleinke
@@ -30,6 +32,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private stopListeningToKeyDownEvents: Function|undefined;
 
+    protected defaultFields: Array<FieldDefinition>;
+
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
     private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
 
@@ -37,7 +41,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
                           private renderer: Renderer2,
-                          private i18n: I18n) {}
+                          protected i18n: I18n) {}
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -60,11 +64,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|'boolean'|undefined {
+    public getSearchInputType(field: FieldDefinition|undefined): SearchInputType|undefined {
 
         if (!field) return undefined;
 
-        if (SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType as string)) {
+        if (field.inputType === 'default') {
+            return 'exists';
+        } else if (SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType as string)) {
             return 'input';
         } else if (SearchConstraintsComponent.dropdownInputTypes.includes(field.inputType as string)) {
             return 'dropdown';
@@ -110,9 +116,11 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
-        if (constraintListItem.name.includes(':exist')) {
+        if (constraintListItem.name.includes(':exist')
+                && constraintListItem.searchInputType !== 'exists') {
             return this.getExistIndexSearchTermLabel(constraintListItem.searchTerm);
-        } else if (constraintListItem.searchInputType === 'boolean') {
+        } else if (constraintListItem.searchInputType === 'boolean'
+                || constraintListItem.searchInputType === 'exists') {
             return this.getBooleanSearchTermLabel(constraintListItem.searchTerm);
         } else {
             return constraintListItem.searchTerm;
@@ -122,7 +130,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getBooleanSearchTermLabel(searchTerm: string): string {
 
-        return (searchTerm === 'true')
+        return (searchTerm === 'true' || searchTerm === 'KNOWN')
             ? this.i18n({
                 id: 'boolean.yes',
                 value: 'Ja'
@@ -235,7 +243,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private updateFields() {
 
-        this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
+        this.fields = this.defaultFields.concat(this.projectConfiguration.getFieldDefinitions(this.type))
             .filter(field => {
                 return field.constraintIndexed
                     && this.getSearchInputType(field)
@@ -276,6 +284,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getField(fieldName: string): FieldDefinition {
 
+        const defaultField: FieldDefinition|undefined = this.defaultFields
+            .find(field => field.name === fieldName);
+        if (defaultField) return defaultField;
+
         return this.projectConfiguration.getFieldDefinitions(this.type)
             .find(field => field.name === fieldName) as FieldDefinition;
     }
@@ -283,9 +295,15 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getLabel(constraintName: string): string {
 
+        const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
+
+        const defaultField: FieldDefinition|undefined = this.defaultFields
+            .find(field => field.name === fieldName);
+        if (defaultField) return defaultField.label as string;
+
         return this.projectConfiguration.getTypesMap()[this.type].fields
             .find((field: FieldDefinition) => {
-                return field.name === SearchConstraintsComponent.getFieldName(constraintName);
+                return field.name === fieldName
             }).label;
     }
 

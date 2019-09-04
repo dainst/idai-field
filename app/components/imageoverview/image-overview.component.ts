@@ -27,7 +27,7 @@ import {M} from '../m';
  */
 export class ImageOverviewComponent implements OnInit {
 
-    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', {static: true}) public imageGrid: ImageGridComponent;
 
     public filterOptions: Array<IdaiType> = [];
     public modalOpened: boolean = false;

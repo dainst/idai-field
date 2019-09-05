@@ -13,10 +13,6 @@
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6 i18n="@@resources.searchBar.constraints.header">Suchkriterien</h6>
 
-    <div *ngIf="!type" id="constraints-type-filter-info" i18n="@@resources.searchBar.constraints.typeFilterInfo">
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </div>
-
     <div *ngFor="let constraint of constraintListItems"
          id="remove-constraint-button-{{constraint.fieldName}}" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">

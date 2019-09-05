@@ -27,29 +27,33 @@ export module DuplicationUtil {
     }
 
 
-    export function splitIdentifier(identifier: string): { baseIdentifier: string, identifierNumber: number } {
+    export function splitIdentifier(identifier: string)
+            : { baseIdentifier: string, identifierNumber: number, minDigits: number } {
 
         const matches = identifier.match(/\d+$/);
         if (matches) {
             return {
                 baseIdentifier: identifier.substring(0, identifier.length - matches[0].length),
-                identifierNumber: parseInt(matches[0])
+                identifierNumber: parseInt(matches[0]),
+                minDigits: matches[0].length
             };
         } else {
-            return { baseIdentifier: identifier, identifierNumber: 1 };
+            return { baseIdentifier: identifier, identifierNumber: 1, minDigits: 1 };
         }
     }
 
 
     export async function setUniqueIdentifierForDuplicate(document: NewDocument, baseIdentifier: string,
-                                                          identifierNumber: number,
+                                                          identifierNumber: number, minDigits: number,
                                                           validator: Validator): Promise<number> {
 
         let uniqueIdentifier: boolean = false;
 
         do {
             identifierNumber++;
-            document.resource.identifier = baseIdentifier + identifierNumber;
+
+            document.resource.identifier = baseIdentifier
+                + getNumberAsString(identifierNumber, minDigits);
             try {
                 await validator.assertIdentifierIsUnique(document);
                 uniqueIdentifier = true;
@@ -59,5 +63,18 @@ export module DuplicationUtil {
         } while (!uniqueIdentifier);
 
         return identifierNumber;
+    }
+
+
+    function getNumberAsString(identifierNumber: number, minDigits: number): string {
+
+        let number: string = identifierNumber.toString();
+        const missingDigits: number = minDigits - number.length;
+
+        for (let i = 0; i < missingDigits; i++) {
+            number = '0' + number;
+        }
+
+        return number;
     }
 }

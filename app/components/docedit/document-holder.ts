@@ -95,12 +95,12 @@ export class DocumentHolder {
         const documentAfterSave: Document = await this.save();
         const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
 
-        let { baseIdentifier, identifierNumber } =
+        let { baseIdentifier, identifierNumber, minDigits } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);
 
         for (let i = 0; i < numberOfDuplicates; i++) {
             identifierNumber = await DuplicationUtil.setUniqueIdentifierForDuplicate(
-                template, baseIdentifier, identifierNumber, this.validator
+                template, baseIdentifier, identifierNumber, minDigits, this.validator
             );
 
             await this.persistenceManager.persist(

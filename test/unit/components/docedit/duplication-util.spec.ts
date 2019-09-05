@@ -58,32 +58,49 @@ describe('DuplicationUtil', () => {
     it('split identifiers', () => {
 
        expect(DuplicationUtil.splitIdentifier('test1'))
-           .toEqual({ baseIdentifier: 'test', identifierNumber: 1 });
+           .toEqual({ baseIdentifier: 'test', identifierNumber: 1, minDigits: 1 });
 
         expect(DuplicationUtil.splitIdentifier('test123'))
-            .toEqual({ baseIdentifier: 'test', identifierNumber: 123 });
+            .toEqual({ baseIdentifier: 'test', identifierNumber: 123, minDigits: 3 });
 
         expect(DuplicationUtil.splitIdentifier('test123-456'))
-            .toEqual({ baseIdentifier: 'test123-', identifierNumber: 456 });
+            .toEqual({ baseIdentifier: 'test123-', identifierNumber: 456, minDigits: 3 });
 
         expect(DuplicationUtil.splitIdentifier('test'))
-            .toEqual({ baseIdentifier: 'test', identifierNumber: 1 });
+            .toEqual({ baseIdentifier: 'test', identifierNumber: 1, minDigits: 1 });
 
         expect(DuplicationUtil.splitIdentifier('123'))
-            .toEqual({ baseIdentifier: '', identifierNumber: 123 });
+            .toEqual({ baseIdentifier: '', identifierNumber: 123, minDigits: 3 });
+
+        expect(DuplicationUtil.splitIdentifier('test-0001'))
+            .toEqual({ baseIdentifier: 'test-', identifierNumber: 1, minDigits: 4 });
     });
 
 
-    it('set unique identifier', async () => {
+    it('set unique identifier', async done => {
 
         identifiers = ['test1', 'test2', 'test3'];
         const document: NewDocument = { resource: { identifier: 'test1', relations: {}, type: 'Find' } };
 
         await DuplicationUtil.setUniqueIdentifierForDuplicate(
-            document, 'test', 1, validator
+            document, 'test', 1, 1, validator
         );
 
         expect(document.resource.identifier).toEqual('test4');
+        done();
     });
 
+
+    it('keep min number of digits', async done => {
+
+        identifiers = ['test-0001'];
+        const document: NewDocument = { resource: { identifier: 'test-0001', relations: {}, type: 'Find' } };
+
+        await DuplicationUtil.setUniqueIdentifierForDuplicate(
+            document, 'test-', 1, 4, validator
+        );
+
+        expect(document.resource.identifier).toEqual('test-0002');
+        done();
+    });
 });

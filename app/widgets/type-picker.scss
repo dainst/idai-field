@@ -1,12 +1,22 @@
 .type-picker {
 
-  li.list-group-item {
+  .list-group-item {
     border-top: 1px solid #eee !important;
     display: block;
 
     &.child-type {
       border: none !important;
       padding-left: 40px;
+    }
+
+    &:hover,
+    &.selected-type {
+      background-color: $list-item-hover-color !important;
+      transition: background-color .65s ease;
+    }
+
+    &.parent-selected:hover {
+      background-color: darken($list-item-hover-color, 5%) !important;
     }
 
     .type-item {
@@ -28,23 +38,5 @@
   .type-label,
   .all-types-label {
     user-select: none;
-  }
-
-  .type-children-list {
-    padding: 0;
-  }
-
-  li ul {
-    margin-top: 10px;
-  }
-
-  li:hover > ul li,
-  .selected-type {
-    background-color: $list-item-hover-color !important;
-    transition: background-color .65s ease;
-  }
-
-  li.parent-selected:hover {
-    background-color: darken($list-item-hover-color, 5%) !important;
   }
 }

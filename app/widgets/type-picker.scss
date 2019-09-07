@@ -1,8 +1,13 @@
 .type-picker {
 
   li.list-group-item {
-    border: 1px solid #eee !important;
+    border-top: 1px solid #eee !important;
     display: block;
+
+    &.child-type {
+      border: none !important;
+      padding-left: 40px;
+    }
 
     .type-item {
       margin-top: -5px;
@@ -16,15 +21,6 @@
         display: inline-block;
         margin-left: 40px;
         margin-top: 4px;
-      }
-
-      &.parent-type {
-        padding-top: 10px;
-        padding-bottom: 14px;
-        padding-left: 10px;
-        margin-top: -10px;
-        margin-left: -10px;
-        margin-bottom: -10px;
       }
     }
   }
@@ -42,18 +38,13 @@
     margin-top: 10px;
   }
 
-  li ul li.list-group-item {
-    border: none !important;
-  }
-
   li:hover > ul li,
   .selected-type {
     background-color: $list-item-hover-color !important;
     transition: background-color .65s ease;
   }
 
-  li ul li:hover,
-  .selected-child-type {
+  li.parent-selected:hover {
     background-color: darken($list-item-hover-color, 5%) !important;
   }
 }

@@ -20,8 +20,8 @@
     }
 
     .type-item {
-      margin-top: -5px;
-      padding: 2px 0;
+      display: flex;
+      align-items: center;
 
       type-icon {
         position: absolute;
@@ -30,7 +30,6 @@
       .type-label {
         display: inline-block;
         margin-left: 40px;
-        margin-top: 4px;
       }
     }
   }

@@ -4,6 +4,7 @@
     border-top: 1px solid #eee !important;
     display: block;
     transition: background-color .65s ease;
+    padding: 7px 20px;
 
     &.child-type {
       border: none !important;
@@ -22,6 +23,7 @@
     .type-item {
       display: flex;
       align-items: center;
+      min-height: 30px;
 
       type-icon {
         position: absolute;
@@ -32,6 +34,12 @@
         margin-left: 40px;
       }
     }
+  }
+
+  #choose-type-option-all {
+    display: flex;
+    align-items: center;
+    height: 44px;
   }
 
   .type-label,

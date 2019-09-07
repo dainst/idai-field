@@ -43,7 +43,8 @@ export class TypePickerComponent implements OnChanges {
 
     public getTypeId(type: IdaiType): string {
 
-        return (type.parentType ? type.parentType.name.toLowerCase() + '-' : '') + type.name.toLowerCase();
+        return (this.isChildType(type) ? (type.parentType as IdaiType).name.toLowerCase() + '-' : '')
+            + type.name.toLowerCase();
     }
 
 

@@ -164,5 +164,47 @@
       "Islamic",
       "Recent"
    ]
+  },
+  "colors-default-1": {
+    "values": [
+      "beige",
+      "blass-",
+      "blau",
+      "braun",
+      "cremefarben",
+      "dunkel-",
+      "gelb",
+      "grau",
+      "grün",
+      "hell-",
+      "leuchtend-",
+      "ocker",
+      "orange",
+      "rosa",
+      "rot",
+      "schwarz",
+      "türkis",
+      "violett",
+      "weiß"
+    ]
+  },
+  "colors-default-2": {
+    "values": [
+      "beige",
+      "dunkelbraun",
+      "dunkelrot",
+      "gelb",
+      "hellbraun",
+      "hellgrau",
+      "mittelbraun",
+      "ocker",
+      "orange",
+      "orangerot",
+      "rosa",
+      "rot",
+      "rotbraun",
+      "schwarz",
+      "weiß"
+    ]
   }
 }

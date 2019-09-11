@@ -31,27 +31,7 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
@@ -257,75 +237,15 @@
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
@@ -1025,23 +945,7 @@
       },
       "mortarColor": {
         "inputType": "dropdown",
-        "valuelist": [
-          "beige",
-          "dunkelbraun",
-          "dunkelrot",
-          "gelb",
-          "hellbraun",
-          "hellgrau",
-          "mittelbraun",
-          "ocker",
-          "orange",
-          "orangerot",
-          "rosa",
-          "rot",
-          "rotbraun",
-          "schwarz",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-2"
       },
       "mortarConsistency": {
         "inputType": "radio",
@@ -1257,27 +1161,7 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1556,75 +1440,15 @@
       },
       "clayColorBreak": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayHardness": {
         "inputType": "dropdown",
@@ -1640,51 +1464,11 @@
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "coatInside": {
         "inputType": "dropdown",
@@ -2247,75 +2031,15 @@
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "clayStructure": {
         "inputType": "radio",
@@ -2328,51 +2052,11 @@
       },
       "coatColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "coatColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "decorationTechnique": {
         "inputType": "dropdown",
@@ -2634,27 +2318,7 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "formDescription": {
         "inputType": "checkboxes",
@@ -3262,27 +2926,7 @@
       },
       "color": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-1"
       },
       "plasterComponents": {
         "inputType": "radio",

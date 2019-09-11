@@ -62,20 +62,7 @@
     "Spätkaiserzeitlich",
     "Spätklassisch"
   ],
-  "periods-campidoglio-1": [
-    "Bronze Age / Età del bronzo",
-    "Iron Age / Età del ferro",
-    "Villanova / Villanoviano",
-    "Orientalizing / Orientalizzante",
-    "Archaic / Arcaico",
-    "Classic / Classico",
-    "Late classic / Tardo-classico",
-    "Hellenistic / Ellenistico",
-    "Republican / Repubblicano",
-    "Imperial / Età imperiale",
-    "Late antique / Tardo antico"
-  ],
-  "periods-castiglione-1": [
+  "periods-campidoglio-and-castiglione-1": [
     "Bronze Age / Età del bronzo",
     "Iron Age / Età del ferro",
     "Villanova / Villanoviano",

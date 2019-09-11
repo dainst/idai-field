@@ -1242,6 +1242,10 @@
     "color": "black",
     "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
+      "period": {
+        "inputType": "dropdownRange",
+        "valuelistId": "periods-default-1"
+      },
       "comparison": {
         "inputType": "text"
       },

@@ -1,6 +1,10 @@
 {
   "Feature": {
     "fields": {
+      "period": {
+        "inputType": "dropdownRange",
+        "valuelistId": "periods-boha-1"
+      },
       "stratigraphicReliability": {
         "inputType": "radio",
         "valuelist": [

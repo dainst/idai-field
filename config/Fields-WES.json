@@ -1,4 +1,12 @@
 {
+  "Feature": {
+    "fields": {
+      "period": {
+        "inputType": "dropdownRange",
+        "valuelistId": "periods-wes-1"
+      }
+    }
+  },
 "Pottery": {
   "parent": "Find",
   "fields": {

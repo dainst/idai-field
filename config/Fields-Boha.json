@@ -569,78 +569,15 @@
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß",
-          "-lich"
-        ]
+        "valuelistId": "colors-boha-1"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß",
-          "-lich"
-        ]
+        "valuelistId": "colors-boha-1"
       },
       "clayColorOutside": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß",
-          "-lich"
-        ]
+        "valuelistId": "colors-boha-1"
       },
       "specificType": {
         "inputType": "radio",

@@ -206,5 +206,29 @@
       "schwarz",
       "weiß"
     ]
+  },
+  "colors-boha-1": {
+    "values": [
+      "beige",
+      "blass-",
+      "blau",
+      "braun",
+      "cremefarben",
+      "dunkel-",
+      "gelb",
+      "grau",
+      "grün",
+      "hell-",
+      "leuchtend-",
+      "ocker",
+      "orange",
+      "rosa",
+      "rot",
+      "schwarz",
+      "türkis",
+      "violett",
+      "weiß",
+      "-lich"
+    ]
   }
 }

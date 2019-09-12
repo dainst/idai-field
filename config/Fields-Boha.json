@@ -1,5 +1,6 @@
 {
-  "Feature": {
+  "Feature-Boha1": {
+    "derives": "Feature-default",
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -41,7 +42,8 @@
       }
     }
   },
-  "Layer": {
+  "Layer-Boha1": {
+    "derives": "Layer-default",
     "fields":{
       "layerClassification": {
         "inputType": "dropdown",
@@ -127,7 +129,8 @@
       }
     }
   },
-  "Floor": {
+  "Floor-Boha1": {
+    "derives": "Floor",
     "fields":{
       "distinguishingCriteria": {
         "inputType": "checkboxes",
@@ -157,7 +160,8 @@
       }
     }
   },
-  "Architecture": {
+  "Architecture-Boha1": {
+    "derives": "Architecture",
     "fields": {
       "architectureClassification": {
         "inputType": "radio",
@@ -222,7 +226,8 @@
       }
     }
   },
-  "Find": {
+  "Find-Boha1": {
+    "derives": "Find-default",
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -270,7 +275,8 @@
       }
     }
   },
-  "Bone": {
+  "Bone-Boha1": {
+    "derives": "Bone",
     "fields":{
       "boneClassification": {
         "inputType": "dropdown",
@@ -305,7 +311,8 @@
       }
     }
   },
-  "Brick": {
+  "Brick-Boha1": {
+    "derives": "Brick",
     "fields": {
       "brickForm": {
         "inputType": "checkboxes",
@@ -372,7 +379,8 @@
       }
     }
   },
-  "Stone": {
+  "Stone-Boha1": {
+    "derives": "Stone",
     "fields":{
       "color": {
         "inputType": "checkboxes",
@@ -490,7 +498,8 @@
       }
     }
   },
-  "PlasterFragment": {
+  "PlasterFragment-Boha1": {
+    "derives": "PlasterFragment",
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -525,7 +534,8 @@
       }
     }
   },
-  "Glass": {
+  "Glass-Boha1": {
+    "derives": "Glass",
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -554,7 +564,8 @@
       }
     }
   },
-  "Pottery": {
+  "Pottery-Boha1": {
+    "derives": "Pottery",
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -737,7 +748,7 @@
       }
     }
   },
-  "Sample": {
+  "SampleBoha": {
     "parent" : "Find",
     "commons": ["processor", "date","description", "dating", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "spatialLocation"],
     "color": "#9ecae1",
@@ -791,7 +802,8 @@
       }
     }
   },
-  "Mollusk": {
+  "Mollusk-Boha1": {
+    "derives": "Mollusk",
     "fields": {
       "treatment": {
         "inputType": "input"
@@ -801,7 +813,8 @@
       }
     }
   },
-  "Wood": {
+  "Wood-Boha1": {
+    "derives": "Wood",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -826,7 +839,8 @@
       }
     }
   },
-  "Coin": {
+  "Coin-Boha1": {
+    "derives": "Coin",
     "fields": {
       "mintingRuler": {
         "inputType": "dropdown",
@@ -1111,7 +1125,8 @@
       }
     }
   },
-  "Inscription": {
+  "Inscription-Boha1": {
+    "derives": "Inscription-default",
     "fields": {
       "objectType": {
         "inputType": "checkboxes",

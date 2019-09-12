@@ -1,5 +1,6 @@
 {
-  "Trench": {
+  "Trench-1": {
+    "derives": "Trench",
     "color": "blue",
     "parent": "Operation",
     "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent", "spatialLocation"],
@@ -347,7 +348,8 @@
       }
     }
   },
-  "Project": {
+  "Project-default": {
+    "derives": "Project",
     "commons": ["description"],
     "fields": {
       "contactMail": {
@@ -499,7 +501,8 @@
       }
     }
   },
-  "Building": {
+  "Building-default": {
+    "derives": "Building",
     "parent": "Operation",
     "commons": ["period", "dating", "dimensionWidth", "dimensionLength"],
     "fields": {
@@ -992,7 +995,8 @@
       }
     }
   },
-  "Operation": {
+  "Operation-default": {
+    "derives": "Operation",
     "commons": ["beginningDate", "endDate", "processor", "description", "area"],
     "fields": {
       "diaryAbstract": {
@@ -1006,7 +1010,8 @@
       }
     }
   },
-  "Place": {
+  "Place-default": {
+    "derives": "Place",
     "color": "#5572A1",
     "commons": ["dating", "description"],
     "fields": {
@@ -1142,7 +1147,8 @@
       }
     }
   },
-  "Feature": {
+  "Feature-default": {
+    "derives": "Feature",
     "color": "black",
     "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
@@ -1309,7 +1315,8 @@
       }
     }
   },
-  "Inscription": {
+  "Inscription-default": {
+    "derives": "Inscription",
     "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
     "fields": {
       "comparison": {
@@ -1360,7 +1367,8 @@
       }
     }
   },
-  "Image": {
+  "Image-default": {
+    "derives": "Image",
     "commons": ["processor", "description"],
     "fields": {
       "draughtsmen": {
@@ -1992,7 +2000,8 @@
       }
     }
   },
-  "Room": {
+  "Room-default": {
+    "derives": "Room",
     "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
       "conditionComment": {
@@ -2260,7 +2269,8 @@
       }
     }
   },
-  "Survey": {
+  "Survey-default": {
+    "derives": "Survey",
     "parent": "Operation",
     "fields": {
       "researchMethod": {
@@ -2843,7 +2853,8 @@
       }
     }
   },
-  "Find": {
+  "Find-default": {
+    "derives": "Find",
     "color": "black",
     "commons": ["spatialLocation", "processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
     "fields": {
@@ -3138,11 +3149,13 @@
       }
     }
   },
-  "BuildingPart": {
+  "BuildingPart-default": {
+    "derives": "BuildingPart",
     "color": "#707070",
     "fields": {}
   },
-  "Area": {
+  "Area-default": {
+    "derives": "Area",
     "commons": ["description", "area", "dimensionLength", "dimensionWidth"],
     "fields": {
       "dimensionVerticalExtent": {

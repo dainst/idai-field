@@ -1,5 +1,7 @@
 {
-  "Trench-1": {
+  "Trench:default": {
+    "creator": "IT-Referat, 2019",
+    "description": "Schnitt; IT-Referat, 2019",
     "derives": "Trench",
     "color": "blue",
     "parent": "Operation",
@@ -23,6 +25,8 @@
     }
   },
   "Glass": {
+    "creator": "IT-Referat, 2019",
+    "description": "Glass; IT-Referat, 2019",
     "color": "#99CC33",
     "parent": "Find",
     "commons": ["provenance"],
@@ -348,7 +352,7 @@
       }
     }
   },
-  "Project-default": {
+  "Project:default": {
     "derives": "Project",
     "commons": ["description"],
     "fields": {
@@ -501,7 +505,7 @@
       }
     }
   },
-  "Building-default": {
+  "Building:default": {
     "derives": "Building",
     "parent": "Operation",
     "commons": ["period", "dating", "dimensionWidth", "dimensionLength"],
@@ -995,7 +999,7 @@
       }
     }
   },
-  "Operation-default": {
+  "Operation:default": {
     "derives": "Operation",
     "commons": ["beginningDate", "endDate", "processor", "description", "area"],
     "fields": {
@@ -1010,7 +1014,7 @@
       }
     }
   },
-  "Place-default": {
+  "Place:default": {
     "derives": "Place",
     "color": "#5572A1",
     "commons": ["dating", "description"],
@@ -1147,7 +1151,7 @@
       }
     }
   },
-  "Feature-default": {
+  "Feature:default": {
     "derives": "Feature",
     "color": "black",
     "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
@@ -1315,7 +1319,7 @@
       }
     }
   },
-  "Inscription-default": {
+  "Inscription:default": {
     "derives": "Inscription",
     "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
     "fields": {

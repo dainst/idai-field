@@ -1,6 +1,8 @@
 {
-  "Feature-Boha1": {
-    "derives": "Feature-default",
+  "Feature:Boha-1": {
+    "creator": "IT-Referat, 2019",
+    "description": "Stratigraphische Einheit, Bogazkoy Hattusa",
+    "derives": "Feature:default",
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -42,8 +44,8 @@
       }
     }
   },
-  "Layer-Boha1": {
-    "derives": "Layer-default",
+  "Layer:Boha-1": {
+    "derives": "Layer:default",
     "fields":{
       "layerClassification": {
         "inputType": "dropdown",
@@ -129,7 +131,7 @@
       }
     }
   },
-  "Floor-Boha1": {
+  "Floor:Boha-1": {
     "derives": "Floor",
     "fields":{
       "distinguishingCriteria": {
@@ -160,7 +162,7 @@
       }
     }
   },
-  "Architecture-Boha1": {
+  "Architecture:Boha-1": {
     "derives": "Architecture",
     "fields": {
       "architectureClassification": {
@@ -226,8 +228,8 @@
       }
     }
   },
-  "Find-Boha1": {
-    "derives": "Find-default",
+  "Find:Boha-1": {
+    "derives": "Find:default",
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -275,7 +277,7 @@
       }
     }
   },
-  "Bone-Boha1": {
+  "Bone:Boha-1": {
     "derives": "Bone",
     "fields":{
       "boneClassification": {
@@ -311,7 +313,7 @@
       }
     }
   },
-  "Brick-Boha1": {
+  "Brick:Boha-1": {
     "derives": "Brick",
     "fields": {
       "brickForm": {
@@ -379,7 +381,7 @@
       }
     }
   },
-  "Stone-Boha1": {
+  "Stone:Boha-1": {
     "derives": "Stone",
     "fields":{
       "color": {
@@ -498,7 +500,7 @@
       }
     }
   },
-  "PlasterFragment-Boha1": {
+  "PlasterFragment:Boha-1": {
     "derives": "PlasterFragment",
     "fields": {
       "color": {
@@ -534,7 +536,7 @@
       }
     }
   },
-  "Glass-Boha1": {
+  "Glass:Boha1": {
     "derives": "Glass",
     "fields": {
       "color": {
@@ -564,7 +566,7 @@
       }
     }
   },
-  "Pottery-Boha1": {
+  "Pottery:Boha-1": {
     "derives": "Pottery",
     "fields": {
       "clayColorBreak": {
@@ -739,7 +741,7 @@
       }
     }
   },
-  "Mollusk-Boha1": {
+  "Mollusk:Boha-1": {
     "derives": "Mollusk",
     "fields": {
       "treatment": {
@@ -750,7 +752,7 @@
       }
     }
   },
-  "Wood-Boha1": {
+  "Wood:Boha-1": {
     "derives": "Wood",
     "fields": {
       "objectType": {
@@ -776,7 +778,7 @@
       }
     }
   },
-  "Coin-Boha1": {
+  "Coin:Boha-1": {
     "derives": "Coin",
     "fields": {
       "mintingRuler": {
@@ -1062,8 +1064,8 @@
       }
     }
   },
-  "Inscription-Boha1": {
-    "derives": "Inscription-default",
+  "Inscription:Boha-1": {
+    "derives": "Inscription:default",
     "fields": {
       "objectType": {
         "inputType": "checkboxes",

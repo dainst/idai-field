@@ -166,6 +166,7 @@
    ]
   },
   "colors-default-1": {
+    "description": "Farbset 1, verschiedene Anwendungen; IT-Referat, 2019",
     "values": [
       "beige",
       "blass-",
@@ -189,6 +190,8 @@
     ]
   },
   "colors-default-2": {
+    "creator": "IT-Refarat, 2019",
+    "description": "Farbset 2, verschiedene Anwendungen",
     "values": [
       "beige",
       "dunkelbraun",

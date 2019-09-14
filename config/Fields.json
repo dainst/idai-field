@@ -1,10 +1,10 @@
 {
   "Trench:default": {
-    "creator": "IT-Referat, 2019",
-    "description": "Schnitt; IT-Referat, 2019",
     "derives": "Trench",
-    "color": "blue",
     "parent": "Operation",
+    "createdBy": "IT-Referat, 2019",
+    "description": "Schnitt; IT-Referat, 2019",
+    "color": "blue",
     "commons": ["diary", "dimensionLength", "dimensionWidth", "orientation", "dimensionVerticalExtent", "spatialLocation"],
     "fields": {
       "researchQuestion": {
@@ -24,11 +24,11 @@
       }
     }
   },
-  "Glass": {
-    "creator": "IT-Referat, 2019",
+  "Glass:default": {
+    "parent": "Find",
+    "createdBy": "IT-Referat, 2019",
     "description": "Glass; IT-Referat, 2019",
     "color": "#99CC33",
-    "parent": "Find",
     "commons": ["provenance"],
     "fields": {
       "decorationDescription": {
@@ -185,9 +185,11 @@
       }
     }
   },
-  "Mollusk": {
-    "color": "#ff99ff",
+  "Mollusk:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
+    "color": "#ff99ff",
     "fields": {
       "classification": {
         "inputType": "radio",
@@ -200,9 +202,11 @@
       }
     }
   },
-  "Brick": {
-    "color": "#CC0000",
+  "Brick:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
+    "color": "#CC0000",
     "commons": ["provenance"],
     "fields": {
       "featureText": {
@@ -354,6 +358,8 @@
   },
   "Project:default": {
     "derives": "Project",
+    "description": "",
+    "createdBy": "",
     "commons": ["description"],
     "fields": {
       "contactMail": {
@@ -388,7 +394,9 @@
       }
     }
   },
-  "Burial": {
+  "Burial:default": {
+    "description": "",
+    "createdBy": "",
     "parent": "Feature",
     "fields": {
       "ageDetermination": {
@@ -508,6 +516,8 @@
   "Building:default": {
     "derives": "Building",
     "parent": "Operation",
+    "description": "",
+    "createdBy": "",
     "commons": ["period", "dating", "dimensionWidth", "dimensionLength"],
     "fields": {
       "buildingHistory": {
@@ -678,9 +688,11 @@
       }
     }
   },
-  "Wood": {
-    "color": "#660000",
+  "Wood:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
+    "color": "#660000",
     "commons": ["provenance"],
     "fields": {
       "color": {
@@ -815,9 +827,11 @@
       }
     }
   },
-  "Architecture": {
-    "color": "#707070",
+  "Architecture:default": {
     "parent": "Feature",
+    "description": "",
+    "createdBy": "",
+    "color": "#707070",
     "commons": ["orientation", "spatialLocation"],
     "fields": {
       "bibliography": {
@@ -1001,6 +1015,8 @@
   },
   "Operation:default": {
     "derives": "Operation",
+    "description": "",
+    "createdBy": "",
     "commons": ["beginningDate", "endDate", "processor", "description", "area"],
     "fields": {
       "diaryAbstract": {
@@ -1016,6 +1032,8 @@
   },
   "Place:default": {
     "derives": "Place",
+    "description": "",
+    "createdBy": "",
     "color": "#5572A1",
     "commons": ["dating", "description"],
     "fields": {
@@ -1064,9 +1082,11 @@
       }
     }
   },
-  "Layer": {
-    "color": "#663300",
+  "Layer:default": {
     "parent": "Feature",
+    "description": "",
+    "createdBy": "",
+    "color": "#663300",
     "commons": ["dimensionThickness"],
     "fields": {
       "appearance": {
@@ -1153,6 +1173,8 @@
   },
   "Feature:default": {
     "derives": "Feature",
+    "description": "",
+    "createdBy": "",
     "color": "black",
     "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
@@ -1220,9 +1242,9 @@
       }
     }
   },
-  "Floor": {
-    "color": "#6600cc",
+  "Floor:default": {
     "parent": "Feature",
+    "color": "#6600cc",
     "fields": {
       "conditionComment": {
         "inputType": "input"
@@ -1321,6 +1343,8 @@
   },
   "Inscription:default": {
     "derives": "Inscription",
+    "description": "",
+    "createdBy": "",
     "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
     "fields": {
       "comparison": {
@@ -1371,8 +1395,10 @@
       }
     }
   },
-  "Image-default": {
+  "Image:default": {
     "derives": "Image",
+    "description": "",
+    "createdBy": "",
     "commons": ["processor", "description"],
     "fields": {
       "draughtsmen": {
@@ -1380,8 +1406,10 @@
       }
     }
   },
-  "Pottery": {
+  "Pottery:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "commons": ["provenance"],
     "fields": {
       "amountSherdsWall": {
@@ -1766,9 +1794,11 @@
       }
     }
   },
-  "Grave": {
-    "color": "#339900",
+  "Grave:default": {
     "parent": "Feature",
+    "description": "",
+    "createdBy": "",
+    "color": "#339900",
     "commons": ["spatialLocation"],
     "fields": {
       "bibliography": {
@@ -1896,9 +1926,11 @@
       }
     }
   },
-  "Bone": {
-    "color": "#CCFFFF",
+  "Bone:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
+    "color": "#CCFFFF",
     "fields": {
       "biologicalAge": {
         "inputType": "dropdown",
@@ -2004,8 +2036,10 @@
       }
     }
   },
-  "Room-default": {
+  "Room:default": {
     "derives": "Room",
+    "description": "",
+    "createdBy": "",
     "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
       "conditionComment": {
@@ -2037,9 +2071,11 @@
       }
     }
   },
-  "Terracotta": {
-    "color": "#FF6600",
+  "Terracotta:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "",
+    "color": "#FF6600",
     "commons": ["provenance"],
     "fields": {
       "clayColorBreak": {
@@ -2224,6 +2260,8 @@
   },
   "Drawing": {
     "parent": "Image",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "drawingMaterial": {
         "inputType": "radio",
@@ -2273,9 +2311,11 @@
       }
     }
   },
-  "Survey-default": {
+  "Survey:default": {
     "derives": "Survey",
     "parent": "Operation",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
@@ -2294,9 +2334,11 @@
       }
     }
   },
-  "Stone": {
-    "color": "#5c5c8a",
+  "Stone:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "IT-Referat, 2019",
+    "color": "#5c5c8a",
     "commons": ["provenance"],
     "fields": {
       "purpose": {
@@ -2451,9 +2493,11 @@
       }
     }
   },
-  "Coin": {
-    "color": "#cc9900",
+  "Coin:default": {
     "parent": "Find",
+    "description": "",
+    "createdBy": "IT, Referat,  2019",
+    "color": "#cc9900",
     "commons": ["provenance"],
     "fields": {
       "frontSideDescription": {
@@ -2857,7 +2901,7 @@
       }
     }
   },
-  "Find-default": {
+  "Find:default": {
     "derives": "Find",
     "color": "black",
     "commons": ["spatialLocation", "processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
@@ -2928,9 +2972,9 @@
       }
     }
   },
-  "PlasterFragment": {
-    "color": "#737373",
+  "PlasterFragment:default": {
     "parent": "Find",
+    "color": "#737373",
     "commons": ["area"],
     "fields": {
       "composition": {
@@ -2953,7 +2997,7 @@
       }
     }
   },
-  "Photo": {
+  "Photo:default": {
     "parent": "Image",
     "fields": {
       "originalType": {
@@ -2971,7 +3015,7 @@
       }
     }
   },
-  "Metal": {
+  "Metal:default": {
     "color": "#995f25",
     "parent": "Find",
     "commons": ["provenance"],
@@ -3153,12 +3197,12 @@
       }
     }
   },
-  "BuildingPart-default": {
+  "BuildingPart:default": {
     "derives": "BuildingPart",
     "color": "#707070",
     "fields": {}
   },
-  "Area-default": {
+  "Area:default": {
     "derives": "Area",
     "commons": ["description", "area", "dimensionLength", "dimensionWidth"],
     "fields": {
@@ -3170,12 +3214,12 @@
       }
     }
   },
-  "SurveyUnit": {
-    "color": "#6baed6",
+  "SurveyUnit:defaul": {
     "parent": "Area",
+    "color": "#6baed6",
     "fields": {}
   },
-  "Excavation": {
+  "Excavation:default": {
     "parent": "Area",
     "fields": {
       "isIllegal": {

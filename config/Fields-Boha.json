@@ -1,5 +1,5 @@
 {
-  "Feature:Boha-1": {
+  "Feature:Boha": {
     "creator": "IT-Referat, 2019",
     "description": "Stratigraphische Einheit, Bogazkoy Hattusa",
     "derives": "Feature:default",
@@ -44,7 +44,8 @@
       }
     }
   },
-  "Layer:Boha-1": {
+  "Layer:Boha": {
+    "parent": "Feature",
     "derives": "Layer:default",
     "fields":{
       "layerClassification": {
@@ -131,8 +132,9 @@
       }
     }
   },
-  "Floor:Boha-1": {
-    "derives": "Floor",
+  "Floor:Boha": {
+    "parent": "Feature",
+    "derives": "Floor:default",
     "fields":{
       "distinguishingCriteria": {
         "inputType": "checkboxes",
@@ -162,8 +164,9 @@
       }
     }
   },
-  "Architecture:Boha-1": {
-    "derives": "Architecture",
+  "Architecture:Boha": {
+    "derives": "Architecture:default",
+    "parent": "Feature",
     "fields": {
       "architectureClassification": {
         "inputType": "radio",
@@ -228,7 +231,7 @@
       }
     }
   },
-  "Find:Boha-1": {
+  "Find:Boha": {
     "derives": "Find:default",
     "fields": {
       "drawn": {
@@ -277,8 +280,9 @@
       }
     }
   },
-  "Bone:Boha-1": {
-    "derives": "Bone",
+  "Bone:Boha": {
+    "derives": "Bone:default",
+    "parent": "Find",
     "fields":{
       "boneClassification": {
         "inputType": "dropdown",
@@ -313,8 +317,9 @@
       }
     }
   },
-  "Brick:Boha-1": {
-    "derives": "Brick",
+  "Brick:Boha": {
+    "derives": "Brick:default",
+    "parent": "Find",
     "fields": {
       "brickForm": {
         "inputType": "checkboxes",
@@ -381,8 +386,11 @@
       }
     }
   },
-  "Stone:Boha-1": {
-    "derives": "Stone",
+  "Stone:Boha": {
+    "parent": "Find",
+    "derives": "Stone:default",
+    "description": "",
+    "createdBy": "",
     "fields":{
       "color": {
         "inputType": "checkboxes",
@@ -500,8 +508,11 @@
       }
     }
   },
-  "PlasterFragment:Boha-1": {
-    "derives": "PlasterFragment",
+  "PlasterFragment:Boha": {
+    "parent": "Find",
+    "derives": "PlasterFragment:default",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -536,8 +547,11 @@
       }
     }
   },
-  "Glass:Boha1": {
-    "derives": "Glass",
+  "Glass:Boha": {
+    "derives": "Glass:default",
+    "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -566,8 +580,11 @@
       }
     }
   },
-  "Pottery:Boha-1": {
-    "derives": "Pottery",
+  "Pottery:Boha": {
+    "derives": "Pottery:default",
+    "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -689,6 +706,8 @@
   },
   "SampleBoha": {
     "parent" : "Find",
+    "description": "",
+    "createdBy": "",
     "commons": ["processor", "date","description", "dating", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "spatialLocation"],
     "color": "#9ecae1",
     "fields": {
@@ -741,8 +760,11 @@
       }
     }
   },
-  "Mollusk:Boha-1": {
-    "derives": "Mollusk",
+  "Mollusk:Boha": {
+    "derives": "Mollusk:default",
+    "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "treatment": {
         "inputType": "input"
@@ -752,8 +774,11 @@
       }
     }
   },
-  "Wood:Boha-1": {
-    "derives": "Wood",
+  "Wood:Boha": {
+    "derives": "Wood:default",
+    "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -778,8 +803,11 @@
       }
     }
   },
-  "Coin:Boha-1": {
-    "derives": "Coin",
+  "Coin:Boha": {
+    "derives": "Coin:default",
+    "parent": "Find",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "mintingRuler": {
         "inputType": "dropdown",
@@ -1064,8 +1092,10 @@
       }
     }
   },
-  "Inscription:Boha-1": {
+  "Inscription:Boha": {
     "derives": "Inscription:default",
+    "description": "",
+    "createdBy": "",
     "fields": {
       "objectType": {
         "inputType": "checkboxes",

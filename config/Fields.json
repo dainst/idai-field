@@ -15,12 +15,7 @@
       },
       "excavationType": {
         "inputType": "radio",
-        "valuelist": [
-          "Feldgrabung",
-          "Stadtgrabung",
-          "künstliche Schichten",
-          "natürliche Schichten"
-        ]
+        "valuelistId": "trench-excavationType-default"
       }
     }
   },
@@ -40,148 +35,31 @@
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Bemalung",
-          "Diatretdekor",
-          "Emaille",
-          "Facettschliffdekor",
-          "Fadendekor (aufgelegt)",
-          "Fadendekor (verschmolzen)",
-          "Mosaikdekor",
-          "Reliefdekor",
-          "Reticelladekor",
-          "Riefeldekor",
-          "Ritzungen",
-          "Schlangenfadendekor",
-          "Schliffrillendekor",
-          "Stempeldekor",
-          "Tupfendekor",
-          "Warzendekor",
-          "Zwischengoldglas",
-          "figürlicher Schliffdekor"
-        ]
+        "valuelistId": "glass-decorationTechnique-default"
       },
       "formDescription": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "ausladend",
-          "bauchig",
-          "breitoval",
-          "doppelkonisch",
-          "halbkugelig",
-          "hochoval",
-          "konisch",
-          "kugelförmig",
-          "quadratisch",
-          "rechteckig",
-          "rund",
-          "schlank",
-          "schmal",
-          "spindelförmig",
-          "tonnenförmig",
-          "zylinderförmig"
-        ]
+        "valuelistId": "glass-formDescription-default"
       },
       "manufacturingMethod": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Formgeblasen (mit Reliefdekor)",
-          "Formgeschmolzen",
-          "Freigeblasen",
-          "In Vorformen geblasen",
-          "In offene Halbformen geblasen",
-          "Kerngeformt",
-          "Sandkerngeschmolzen",
-          "gedreht (auf Drehscheibe)"
-        ]
+        "valuelistId": "glass-manufacturingMethod-default"
       },
       "objectType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Anhänger",
-          "Armreif",
-          "Einlage",
-          "Fensterglas",
-          "Gefäß",
-          "Gemme",
-          "Gerät",
-          "Glasschlacke",
-          "Lampe",
-          "Löffel",
-          "Perle",
-          "Produktionsfragment",
-          "Ring",
-          "Rohglas",
-          "Rührstab",
-          "Scheiben",
-          "Schmuck",
-          "Spielstein",
-          "Tessera",
-          "Unsicher bzw. unbestimmbar",
-          "Weinheber"
-        ]
+        "valuelistId": "glass-objectType-default"
       },
       "transparency": {
         "inputType": "radio",
-        "valuelist": [
-          "durchscheinend",
-          "durchsichtig",
-          "opak",
-          "versintert"
-        ]
+        "valuelistId": "glass-transparency-default"
       },
       "vesselForm": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Aschenurne",
-          "Becher",
-          "Deckel",
-          "Deckelgefäß",
-          "Flasche",
-          "Krug",
-          "Napf",
-          "Schale",
-          "Schüssel",
-          "Tasse",
-          "Teller",
-          "Topf",
-          "Unbestimmt",
-          "Vorratsgefäß"
-        ]
+        "valuelistId": "glass-vesselForm-default"
       },
       "vesselFormSpecific": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Alabastron",
-          "Amphoriskos",
-          "Aryballos",
-          "Balsamarium",
-          "Dattelflasche",
-          "Faltenbecher",
-          "Hydria",
-          "Kopfflasche",
-          "Kotyle",
-          "Kragenschale",
-          "Krater",
-          "Kylix",
-          "Lekythos",
-          "Luterion",
-          "Oinochoe",
-          "Pelike",
-          "Rippenschale",
-          "Schliffrillenschale",
-          "Schöpfer",
-          "Skyphos",
-          "Spitzamphora",
-          "Sprenkler",
-          "Stamnos",
-          "Tierflasche",
-          "Unguentarium",
-          "Vierkantflasche",
-          "hexagonale Flasche",
-          "zarte Rippenschale",
-          "zylindrische Flasche"
-        ]
+        "valuelistId": "glass-vesselFormSpecific-default"
       }
     }
   },

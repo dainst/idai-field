@@ -1,5 +1,7 @@
 {
   "periods-default-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Archaisch",
       "Bronzezeitlich",
@@ -29,6 +31,8 @@
     ]
   },
   "periods-boha-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Älteres Großreich",
       "Alt-hethitisch",
@@ -67,6 +71,8 @@
     ]
   },
   "periods-campidoglio-and-castiglione-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Bronze Age / Età del bronzo",
       "Iron Age / Età del ferro",
@@ -82,6 +88,8 @@
     ]
   },
   "periods-meninx-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
       "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -99,6 +107,8 @@
     ]
   },
   "periods-pergamon-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Bronzezeitlich",
       "Frühbronzezeitlich",
@@ -138,6 +148,8 @@
     ]
   },
   "periods-wes-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "Ubaid 0",
       "Ubaid 1",
@@ -166,7 +178,8 @@
    ]
   },
   "colors-default-1": {
-    "description": "Farbset 1, verschiedene Anwendungen; IT-Referat, 2019",
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "Farbset 1, verschiedene Anwendungen; IT-Referat, 2019", "en": "" },
     "values": [
       "beige",
       "blass-",
@@ -190,7 +203,7 @@
     ]
   },
   "colors-default-2": {
-    "creator": "IT-Refarat, 2019",
+    "createdBy": "IT-Refarat, 2019",
     "description": "Farbset 2, verschiedene Anwendungen",
     "values": [
       "beige",
@@ -211,6 +224,8 @@
     ]
   },
   "colors-boha-1": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
     "values": [
       "beige",
       "blass-",
@@ -232,6 +247,168 @@
       "violett",
       "weiß",
       "-lich"
+    ]
+  },
+  "trench-excavationType-default": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Feldgrabung",
+      "Stadtgrabung",
+      "künstliche Schichten",
+      "natürliche Schichten"
+    ]
+  },
+  "glass-decorationTechnique-default": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Bemalung",
+      "Diatretdekor",
+      "Emaille",
+      "Facettschliffdekor",
+      "Fadendekor (aufgelegt)",
+      "Fadendekor (verschmolzen)",
+      "Mosaikdekor",
+      "Reliefdekor",
+      "Reticelladekor",
+      "Riefeldekor",
+      "Ritzungen",
+      "Schlangenfadendekor",
+      "Schliffrillendekor",
+      "Stempeldekor",
+      "Tupfendekor",
+      "Warzendekor",
+      "Zwischengoldglas",
+      "figürlicher Schliffdekor"
+    ]
+  },
+  "glass-formDescription-default": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "ausladend",
+      "bauchig",
+      "breitoval",
+      "doppelkonisch",
+      "halbkugelig",
+      "hochoval",
+      "konisch",
+      "kugelförmig",
+      "quadratisch",
+      "rechteckig",
+      "rund",
+      "schlank",
+      "schmal",
+      "spindelförmig",
+      "tonnenförmig",
+      "zylinderförmig"
+    ]
+  },
+  "glass-manufacturingMethod-default": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Formgeblasen (mit Reliefdekor)",
+      "Formgeschmolzen",
+      "Freigeblasen",
+      "In Vorformen geblasen",
+      "In offene Halbformen geblasen",
+      "Kerngeformt",
+      "Sandkerngeschmolzen",
+      "gedreht (auf Drehscheibe)"
+    ]
+  },
+  "glass-objectType-default": {
+    "createdBy": "IT-Referat, DAI, 2019",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Anhänger",
+      "Armreif",
+      "Einlage",
+      "Fensterglas",
+      "Gefäß",
+      "Gemme",
+      "Gerät",
+      "Glasschlacke",
+      "Lampe",
+      "Löffel",
+      "Perle",
+      "Produktionsfragment",
+      "Ring",
+      "Rohglas",
+      "Rührstab",
+      "Scheiben",
+      "Schmuck",
+      "Spielstein",
+      "Tessera",
+      "Unsicher bzw. unbestimmbar",
+      "Weinheber"
+    ]
+  },
+  "glass-transparency-default": {
+    "createdBy": "",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "durchscheinend",
+      "durchsichtig",
+      "opak",
+      "versintert"
+    ]
+  },
+  "glass-vesselForm-default": {
+    "createdBy": "",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Aschenurne",
+      "Becher",
+      "Deckel",
+      "Deckelgefäß",
+      "Flasche",
+      "Krug",
+      "Napf",
+      "Schale",
+      "Schüssel",
+      "Tasse",
+      "Teller",
+      "Topf",
+      "Unbestimmt",
+      "Vorratsgefäß"
+    ]
+  },
+  "glass-vesselFormSpecific-default": {
+    "createdBy": "",
+    "description": { "de": "", "en": "" },
+    "values": [
+      "Alabastron",
+      "Amphoriskos",
+      "Aryballos",
+      "Balsamarium",
+      "Dattelflasche",
+      "Faltenbecher",
+      "Hydria",
+      "Kopfflasche",
+      "Kotyle",
+      "Kragenschale",
+      "Krater",
+      "Kylix",
+      "Lekythos",
+      "Luterion",
+      "Oinochoe",
+      "Pelike",
+      "Rippenschale",
+      "Schliffrillenschale",
+      "Schöpfer",
+      "Skyphos",
+      "Spitzamphora",
+      "Sprenkler",
+      "Stamnos",
+      "Tierflasche",
+      "Unguentarium",
+      "Vierkantflasche",
+      "hexagonale Flasche",
+      "zarte Rippenschale",
+      "zylindrische Flasche"
     ]
   }
 }

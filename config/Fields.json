@@ -2258,7 +2258,7 @@
       }
     }
   },
-  "Drawing": {
+  "Drawing:default": {
     "parent": "Image",
     "description": "",
     "createdBy": "",

@@ -704,7 +704,7 @@
       }
     }
   },
-  "SampleBoha": {
+  "SampleBoha:Boha": {
     "parent" : "Find",
     "description": "",
     "createdBy": "",

@@ -13,8 +13,6 @@ const valuelists = JSON.parse(fs.readFileSync('Valuelists.json'));
 const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
 
 
-// TODO search for intellij abbrev for console.log
-
 function pureName(s: string) { // TODO remove duplicate
 
     return  s.includes(':') ? s.substr(0, s.indexOf(':')) : s;

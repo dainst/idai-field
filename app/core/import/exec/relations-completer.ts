@@ -250,8 +250,12 @@ export module RelationsCompleter {
 
         const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);
         const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
+
+
         if (isNot(undefinedOrEmpty)(documentRecordedIn) && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)
-                && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
+                && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) { // TODO review conditionals
+
+
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
     }}

@@ -13,48 +13,11 @@
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "deutlich",
-          "diffus",
-          "eben",
-          "erahnbar",
-          "erkennbar",
-          "etwas verwaschen",
-          "fließend",
-          "geneigt",
-          "gezackt",
-          "regelmäßig",
-          "scharf",
-          "sehr deutlich",
-          "undeutlich",
-          "uneben",
-          "unklar",
-          "unregelmäßig",
-          "verwaschen",
-          "wellig"
-        ]
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Befundrest",
-          "U-förmig",
-          "V-förmig",
-          "annähernd",
-          "formlos",
-          "halbmondförmig",
-          "kesselförmig",
-          "langgezogen",
-          "oval",
-          "rechteckig",
-          "regelmäßig",
-          "rund",
-          "sanduhrförmig",
-          "trapezförmig",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
+        "valuelistId": "Feature-featureForm-default"
       },
       "ageDetermination": {
         "inputType": "input"
@@ -94,79 +57,31 @@
       },
       "amountIndividuals": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Doppelbestattung",
-          "Dreifachbestattung",
-          "Einzelbestattung",
-          "Grabdeponat",
-          "Kollektivbestattung",
-          "Massengrab",
-          "Mehrfachbestattung",
-          "Unsicher bzw. unbestimmbar",
-          "Wiedergängerbestattung"
-        ]
+        "valuelistId": "Burial-amountIndividuals-default"
       },
       "burialCharacteristic": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Primäre Bestattung",
-          "Sekundäre Bestattung",
-          "Unsicher bzw. unbestimmbar"
-        ]
+        "valuelistId": "Burial-burialCharacteristic-default"
       },
       "burialDocumentation": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Endoskopie",
-          "Foto",
-          "Histologie",
-          "LM",
-          "REM",
-          "Röntgen"
-        ]
+        "valuelistId": "Burial-burialDocumentation-default"
       },
       "graveFeature": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Brandbestattung",
-          "Kenotaph",
-          "Körperbestattung",
-          "Ossuar",
-          "Teil-Körperbestattung"
-        ]
+        "valuelistId": "Burial-graveFeature-default"
       },
       "positionArms": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Unsicher bzw. unbestimmbar",
-          "am Kinn",
-          "an den Seiten",
-          "auf dem Bauch",
-          "auf dem Becken",
-          "auf der Brust",
-          "ungleichmäßig"
-        ]
+        "valuelistId": "Burial-positionArms-default"
       },
       "positionLegs": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Beine angewinkelt",
-          "Beinhocker",
-          "Extremhocker",
-          "Hocker",
-          "Unsicher bzw. unbestimmbar",
-          "gestreckt"
-        ]
+        "valuelistId": "Burial-positionLegs-default"
       },
       "positioningIndividuals": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Bauchlage",
-          "Rückenlage",
-          "Seitenlage, links",
-          "Seitenlage, rechts",
-          "Unsicher bzw. unbestimmbar"
-        ]
+        "valuelistId": "Burial-positioningIndividuals-default"
       }
     }
   },
@@ -185,48 +100,11 @@
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "deutlich",
-          "diffus",
-          "eben",
-          "erahnbar",
-          "erkennbar",
-          "etwas verwaschen",
-          "fließend",
-          "geneigt",
-          "gezackt",
-          "regelmäßig",
-          "scharf",
-          "sehr deutlich",
-          "undeutlich",
-          "uneben",
-          "unklar",
-          "unregelmäßig",
-          "verwaschen",
-          "wellig"
-        ]
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Befundrest",
-          "U-förmig",
-          "V-förmig",
-          "annähernd",
-          "formlos",
-          "halbmondförmig",
-          "kesselförmig",
-          "langgezogen",
-          "oval",
-          "rechteckig",
-          "regelmäßig",
-          "rund",
-          "sanduhrförmig",
-          "trapezförmig",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
+        "valuelistId": "Feature-featureForm-default"
       },
       "bibliography": {
         "inputType": "text"
@@ -278,155 +156,60 @@
       },
       "blockProcessing": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Bruchsteine",
-          "Hausteine",
-          "Lesesteine",
-          "Werksteine"
-        ]
+        "valuelistId": "Architecture-blockProcessing-default"
       },
       "blockTreatment": {
         "inputType": "radio",
-        "valuelist": [
-          "bossiert",
-          "bruchbau",
-          "fein geglättet",
-          "gespitzt",
-          "gestockt",
-          "grob behauen",
-          "grob geglättet",
-          "scharriert",
-          "unbehauen"
-        ]
+        "valuelistId": "Architecture-blockTreatment-default"
       },
       "brickwork": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Binderverband",
-          "Blockverband",
-          "Flämischer Verband",
-          "Holländischer Verband",
-          "Kreuzverband",
-          "Läuferverband",
-          "Märkischer Verband"
-        ]
+        "valuelistId": "Architecture-brickwork-default"
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelist": [
-          "sehr gut",
-          "gut",
-          "mittel",
-          "schlecht",
-          "sehr schlecht"
-        ]
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fragmentarisch",
-          "Vollständig",
-          "Vollständig zerstört"
-        ]
+        "valuelistId": "Building-conditionAmount-default"
       },
       "construction": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fundament: Geschüttet",
-          "Fundament: gesetzt",
-          "Mauerkern: Lesesteine",
-          "einschalig vor Feld/Hang",
-          "ohne Schalen/keine durchgehenden Lagen",
-          "ohne Schalen/nur durchgehende Lagen",
-          "zweischalig",
-          "zweischalig mit Binderlagen"
-        ]
+        "valuelistId": "Architecture-construction-default"
       },
       "mark": {
         "inputType": "dropdown",
-        "valuelist": [
-          "A",
-          "AC"
-        ]
+        "valuelistId": "Architecture-mark-default"
       },
       "mortarBinder": {
         "inputType": "radio",
-        "valuelist": [
-          "dominant",
-          "gering",
-          "hoch",
-          "mittel"
-        ]
+        "valuelistId": "Architecture-mortarBinder-default"
       },
       "mortarColor": {
         "inputType": "dropdown",
-        "valuelist": [
-          "beige",
-          "dunkelbraun",
-          "dunkelrot",
-          "gelb",
-          "hellbraun",
-          "hellgrau",
-          "mittelbraun",
-          "ocker",
-          "orange",
-          "orangerot",
-          "rosa",
-          "rot",
-          "rotbraun",
-          "schwarz",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-2"
       },
       "mortarConsistency": {
         "inputType": "radio",
-        "valuelist": [
-          "brüchig",
-          "erdig/lehmig",
-          "fest",
-          "hart",
-          "locker",
-          "mittelfein",
-          "pulverig",
-          "sandig"
-        ]
+        "valuelistId": "Architecture-mortarConsistency-default"
       },
       "wallClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Aufgehendes",
-          "Fensterzusetzung",
-          "Flickung",
-          "Fundament",
-          "Gewölbe",
-          "Mauer",
-          "Mauerbettung",
-          "Mauerdurchbruch",
-          "Mosaik",
-          "Opus sectile",
-          "Türzusetzung",
-          "Wandgestaltung"
-        ]
+        "valuelistId": "Architecture-wallClassification-default"
       },
       "wallType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Außenmauer",
-          "Befestigugsmauer",
-          "Blockmauerwerk",
-          "Bruchsteinmauer",
-          "Fachwerk",
-          "Feldsteinmauer",
-          "Grenzmauer",
-          "Ziegelmauer"
-        ]
+        "valuelistId": "Architecture-wallType-default"
       }
     }
   },
   "Layer_Survey": {
     "color": "#663300",
     "parent": "Area",
-    "commons": ["dimensionThickness"],
+    "commons": [
+      "dimensionThickness"
+    ],
     "fields": {
       "hasDisturbance": {
         "inputType": "boolean"
@@ -439,48 +222,11 @@
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "deutlich",
-          "diffus",
-          "eben",
-          "erahnbar",
-          "erkennbar",
-          "etwas verwaschen",
-          "fließend",
-          "geneigt",
-          "gezackt",
-          "regelmäßig",
-          "scharf",
-          "sehr deutlich",
-          "undeutlich",
-          "uneben",
-          "unklar",
-          "unregelmäßig",
-          "verwaschen",
-          "wellig"
-        ]
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Befundrest",
-          "U-förmig",
-          "V-förmig",
-          "annähernd",
-          "formlos",
-          "halbmondförmig",
-          "kesselförmig",
-          "langgezogen",
-          "oval",
-          "rechteckig",
-          "regelmäßig",
-          "rund",
-          "sanduhrförmig",
-          "trapezförmig",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
+        "valuelistId": "Feature-featureForm-default"
       },
       "appearance": {
         "inputType": "input"
@@ -490,77 +236,19 @@
       },
       "consistency": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Durch Brand versiegelt",
-          "Oberfläche abgewaschen",
-          "Oberfläche verhärtet",
-          "fest",
-          "flüssig",
-          "gut formbar",
-          "hart",
-          "lehmig",
-          "locker",
-          "mittel bindend",
-          "mittel formbar",
-          "nicht bindend",
-          "nicht formbar",
-          "porös",
-          "sandig",
-          "schwach bindend",
-          "schwach formbar",
-          "sehr gut formbar",
-          "sehr hart",
-          "sehr schwach formbar",
-          "sehr weich",
-          "stark bindend",
-          "steif",
-          "weich"
-        ]
+        "valuelistId": "Layer-consistency-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "valuelist": [
-          "Farbe",
-          "Form",
-          "Grenzen",
-          "Konsistenz",
-          "Komposition"
-        ]
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "layerClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Brandschicht",
-          "Kulturschicht",
-          "Laufhorizont",
-          "Planierschicht"
-        ]
+        "valuelistId": "Layer-layerClassification-default"
       },
       "soilType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Feinsand",
-          "Feinstsand",
-          "Grobsand",
-          "Lehm",
-          "Lehmiger Sand",
-          "Lehmiger Schluff",
-          "Lehmiger Ton",
-          "Mergel",
-          "Mittlerer Sand",
-          "Sand",
-          "Sandiger Lehm",
-          "Sandiger Schluff",
-          "Sandiger Ton",
-          "Schluff",
-          "Schluffiger Lehm",
-          "Schluffiger Sand",
-          "Schluffiger Ton",
-          "Ton",
-          "Toniger Lehm",
-          "Toniger Sand",
-          "Toniger Schluff"
-        ]
+        "valuelistId": "Layer-soilType-default"
       }
     }
   },
@@ -579,148 +267,51 @@
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "deutlich",
-          "diffus",
-          "eben",
-          "erahnbar",
-          "erkennbar",
-          "etwas verwaschen",
-          "fließend",
-          "geneigt",
-          "gezackt",
-          "regelmäßig",
-          "scharf",
-          "sehr deutlich",
-          "undeutlich",
-          "uneben",
-          "unklar",
-          "unregelmäßig",
-          "verwaschen",
-          "wellig"
-        ]
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Befundrest",
-          "U-förmig",
-          "V-förmig",
-          "annähernd",
-          "formlos",
-          "halbmondförmig",
-          "kesselförmig",
-          "langgezogen",
-          "oval",
-          "rechteckig",
-          "regelmäßig",
-          "rund",
-          "sanduhrförmig",
-          "trapezförmig",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
+        "valuelistId": "Feature-featureForm-default"
       },
       "conditionComment": {
         "inputType": "input"
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelist": [
-          "sehr gut",
-          "gut",
-          "mittel",
-          "schlecht",
-          "sehr schlecht"
-        ]
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fragmentarisch",
-          "Vollständig",
-          "Vollständig zerstört"
-        ]
+        "valuelistId": "Building-conditionAmount-default"
       },
       "consistency": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Durch Brand versiegelt",
-          "Oberfläche abgewaschen",
-          "Oberfläche verhärtet",
-          "fest",
-          "flüssig",
-          "gut formbar",
-          "hart",
-          "lehmig",
-          "locker",
-          "mittel bindend",
-          "mittel formbar",
-          "nicht bindend",
-          "nicht formbar",
-          "porös",
-          "sandig",
-          "schwach bindend",
-          "schwach formbar",
-          "sehr gut formbar",
-          "sehr hart",
-          "sehr schwach formbar",
-          "sehr weich",
-          "stark bindend",
-          "steif",
-          "weich"
-        ]
+        "valuelistId": "Layer-consistency-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "valuelist": [
-          "Farbe",
-          "Form",
-          "Grenzen",
-          "Konsistenz",
-          "Komposition"
-        ]
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "floorClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Bastmatten",
-          "Korkboden",
-          "Mosaik",
-          "Opus sectile",
-          "Opus signinum",
-          "Pflaster",
-          "Stampflehm",
-          "Terrazzo",
-          "Webmatten",
-          "Ziegel"
-        ]
+        "valuelistId": "Floor-floorClassification-default"
       },
       "layerClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Brandschicht",
-          "Kulturschicht",
-          "Laufhorizont",
-          "Planierschicht"
-        ]
+        "valuelistId": "Layer-layerClassification-default"
       },
       "mortarBinder": {
         "inputType": "radio",
-        "valuelist": [
-          "dominant",
-          "gering",
-          "hoch",
-          "mittel"
-        ]
+        "valuelistId": "Architecture-mortarBinder-default"
       }
     }
   },
   "Grave_Survey": {
     "color": "#339900",
     "parent": "Area",
-    "commons": ["spatialLocation"],
+    "commons": [
+      "spatialLocation"
+    ],
     "fields": {
       "hasDisturbance": {
         "inputType": "boolean"
@@ -733,48 +324,11 @@
       },
       "featureBorders": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "deutlich",
-          "diffus",
-          "eben",
-          "erahnbar",
-          "erkennbar",
-          "etwas verwaschen",
-          "fließend",
-          "geneigt",
-          "gezackt",
-          "regelmäßig",
-          "scharf",
-          "sehr deutlich",
-          "undeutlich",
-          "uneben",
-          "unklar",
-          "unregelmäßig",
-          "verwaschen",
-          "wellig"
-        ]
+        "valuelistId": "Feature-featureBorders-default"
       },
       "featureForm": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Befundrest",
-          "U-förmig",
-          "V-förmig",
-          "annähernd",
-          "formlos",
-          "halbmondförmig",
-          "kesselförmig",
-          "langgezogen",
-          "oval",
-          "rechteckig",
-          "regelmäßig",
-          "rund",
-          "sanduhrförmig",
-          "trapezförmig",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
+        "valuelistId": "Feature-featureForm-default"
       },
       "bibliography": {
         "inputType": "text"
@@ -799,110 +353,47 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelist": [
-          "sehr gut",
-          "gut",
-          "mittel",
-          "schlecht",
-          "sehr schlecht"
-        ]
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fragmentarisch",
-          "Vollständig",
-          "Vollständig zerstört"
-        ]
+        "valuelistId": "Building-conditionAmount-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "valuelist": [
-          "Farbe",
-          "Form",
-          "Grenzen",
-          "Konsistenz",
-          "Komposition"
-        ]
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "graveType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Baumsargbestattung",
-          "Brandgrubengrab",
-          "Brandschüttung",
-          "Doliengrab",
-          "Dolmen",
-          "Erdgrab",
-          "Felsgrab",
-          "Felsnischengrab",
-          "Flachgrab",
-          "Ganggrab",
-          "Gefäßbestattung",
-          "Gemauertes Grab",
-          "Glockengrab",
-          "Gruft",
-          "Hügelgrab",
-          "Kistengrab",
-          "Mausoleum",
-          "Megalithgrab",
-          "Schachthöhlengrab",
-          "Steineinfassung",
-          "Steinplattengrab",
-          "Urnengrab",
-          "Ziegelplattengrab"
-        ]
+        "valuelistId": "Grave-graveType-default"
       },
       "specificType": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Amphorenbestattung",
-          "In Dinos",
-          "In Krug",
-          "a cappuccina",
-          "bruchsteingemauertes Grab",
-          "quadergemauertes Grab",
-          "ziegelgemauertes Grab"
-        ]
+        "valuelistId": "Grave-specificType-default"
       },
       "soilType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Feinsand",
-          "Feinstsand",
-          "Grobsand",
-          "Lehm",
-          "Lehmiger Sand",
-          "Lehmiger Schluff",
-          "Lehmiger Ton",
-          "Mergel",
-          "Mittlerer Sand",
-          "Sand",
-          "Sandiger Lehm",
-          "Sandiger Schluff",
-          "Sandiger Ton",
-          "Schluff",
-          "Schluffiger Lehm",
-          "Schluffiger Sand",
-          "Schluffiger Ton",
-          "Ton",
-          "Toniger Lehm",
-          "Toniger Sand",
-          "Toniger Schluff"
-        ]
+        "valuelistId": "Layer-soilType-default"
       },
       "tombBuilding": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Bruchsteingemauert",
-          "Quadergemauert",
-          "Ziegelgemauert"
-        ]
+        "valuelistId": "Grave-tombBuilding-default"
       }
     }
   },
   "Area": {
-    "commons": ["beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area", "spatialLocation"],
+    "commons": [
+      "beginningDate",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area",
+      "spatialLocation"
+    ],
     "fields": {
       "comparison": {
         "inputType": "text"
@@ -917,112 +408,31 @@
     "parent": "Area",
     "fields": {
       "researchMethod": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Funderfassung",
-          "Fundsammlung",
-          "Sondage",
-          "Bauaufnahme",
-          "Reinigung",
-          "Bohrsondage",
-          "Probenentnahme",
-          "Begehung",
-          "Geoelektrik",
-          "Geomagnetik",
-          "Georadar",
-          "Befliegung",
-          "LIDAR",
-          "Luft- oder Satellitenbilder",
-          "Seismik"
-        ]
+        "inputType": "checkboxes"
       },
       "measuring": {
-        "inputType": "radio",
-        "valuelist": [
-          "unnötig",
-          "erledigt",
-          "erforderlich"
-        ]
+        "inputType": "radio"
       },
       "findSituation": {
         "inputType": "text"
       },
       "siteClassification": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Bestattungsplatz",
-          "geschlossene Siedlung",
-          "Einzel-/Streubebauung",
-          "außerhalb Siedlungskontext",
-          "Heiligtum",
-          "Infrastruktur",
-          "Höhle(nareal)",
-          "unbestimmt"
-        ]
+        "inputType": "dropdown"
       },
       "findspotClassification": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "vollständiges Gebäude",
-          "einzelne Baureste",
-          "Felsabarbeitung",
-          "Inschrift",
-          "Befestigung",
-          "Terrassierung",
-          "Brücke",
-          "Damm/Wall",
-          "Graben",
-          "Sonstiges",
-          "Höhle/Doline",
-          "Steinbruch/Bergwerk",
-          "Brunnen/Quelle",
-          "Flurgrenze",
-          "Wasserbauten",
-          "Felsabarbeitung",
-          "Grab",
-          "Spolie in rezenter Mauer",
-          "Steinbruch",
-          "Straße/Platz",
-          "Wein- bzw. Ölpresse",
-          "einzelnes Steindenkmal"
-        ]
+        "inputType": "checkboxes"
       },
       "finds": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Feinkeramik",
-          "Gebrauchskeramik",
-          "Kochkeramik",
-          "Pithoi & Amphoren",
-          "Ziegel",
-          "Architekturfragmente",
-          "Knochen",
-          "Sonstiges"
-        ]
+        "inputType": "checkboxes"
       },
       "findsAmount": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "keine Funde",
-          "sehr vereinzelte Funde",
-          "durchschnittliche Menge",
-          "sehr hohe Fundmenge"
-        ]
+        "inputType": "dropdown"
       },
       "findsAmountm2": {
         "inputType": "unsignedInt"
       },
       "modernIntervention": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Steinbruch/Grube/Miene",
-          "Aufschüttung",
-          "Acherbau",
-          "Abraumhalden",
-          "Überbauung",
-          "Raubgrabung",
-          "Wiederaufforstung"
-        ]
+        "inputType": "checkboxes"
       },
       "cultivatedPlants": {
         "inputType": "input"
@@ -1050,33 +460,7 @@
       },
       "periods": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Archaisch",
-          "Bronzezeitlich",
-          "Byzantinisch",
-          "Eisenzeitlich",
-          "Frühbronzezeitlich",
-          "Frühbyzantinisch",
-          "Frühhellenistisch",
-          "Frühkaiserzeitlich",
-          "Frühklassisch",
-          "Geometrisch",
-          "Hellenistisch",
-          "Kaiserzeitlich",
-          "Klassisch",
-          "Neolithisch",
-          "Neuzeitlich",
-          "Osmanisch",
-          "Pleistozän",
-          "Rezent",
-          "Römisch",
-          "Spätantik",
-          "Spätbronzezeitlich",
-          "Spätbyzantinisch",
-          "Späthellenistisch",
-          "Spätkaiserzeitlich",
-          "Spätklassisch"
-        ]
+        "valuelistId": "periods-default-1"
       }
     }
   },
@@ -1089,7 +473,19 @@
     }
   },
   "BuildingPart": {
-    "commons": ["period", "beginningDate", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area", "spatialLocation"],
+    "commons": [
+      "period",
+      "beginningDate",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area",
+      "spatialLocation"
+    ],
     "fields": {
       "buildingHistory": {
         "inputType": "input"
@@ -1111,150 +507,30 @@
       },
       "architecturalOrders": {
         "inputType": "radio",
-        "valuelist": [
-          "Dorische Ordnung",
-          "Ionische Ordnung",
-          "Komposite Ordnung",
-          "Korinthische Ordnung",
-          "Toskanische Ordnung"
-        ]
+        "valuelistId": "Building-architecturalOrders-default"
       },
       "buildingCategory": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Altar",
-          "Amphitheater",
-          "Basilika",
-          "Bogen",
-          "Brücke",
-          "Circus",
-          "Grabbau",
-          "Gymnasium",
-          "Mauerkurtine",
-          "Nymphäum",
-          "Odeion",
-          "Strasse",
-          "Stützmauer",
-          "Säulenhalle",
-          "Tempel",
-          "Theater",
-          "Therme",
-          "Toranlage",
-          "Turm",
-          "Wohnbau",
-          "Werkstatt",
-          "Befestigung",
-          "Brunnen/Quellhaus",
-          "unbestimmt",
-          "unbestimmter Raum(komplex)",
-          "Terrassierung",
-          "Steindamm/Steinwall",
-          "Erdwerk",
-          "Kanal/Wasserleitung/Aquädukt",
-          "Aediculabau",
-          "Atriumhaus",
-          "Bogen",
-          "Dipteros",
-          "Ehrenbogen",
-          "Ehrensäule",
-          "Hoftempel",
-          "Palast",
-          "Palästra",
-          "Peripteros",
-          "Peripteros sine portico",
-          "Peristylhaus",
-          "Pseudo-Dipteros",
-          "Pseudo-Peripteros",
-          "Rednertribüne",
-          "Rundbau",
-          "Schatzhaus",
-          "Terassenheiligtum",
-          "Tholos",
-          "Torbogen",
-          "Triumphbogen",
-          "Tumulus",
-          "Villa",
-          "dreischiffig",
-          "fünfschiffig",
-          "griechisches Theater",
-          "römisches Theater",
-          "vierschiffig",
-          "zweischiffig",
-          "Befestigung",
-          "Haus",
-          "Lager",
-          "Werkstatt"
-        ]
+        "inputType": "dropdown"
       },
       "buildingTechnique": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Blockverbandmauerwerk",
-          "Bruchsteinmauerwerk",
-          "Feldsteinmauerwerk",
-          "Kyklopenmauerwerk",
-          "Lehmziegelmauerwerk",
-          "Mischform Polygonal-/Quadermauerwerk",
-          "Opus Caementitium",
-          "Polygonalmauerwerk",
-          "Quadermauerwerk",
-          "Spolienmauerwerk",
-          "Unregelmäßiges Polygonalmauerwerk",
-          "Würfel-/Handquadermauerwerk",
-          "Ziegelmauerwerk",
-          "irreguläres Mauerwerk",
-          "regelmäßiges Polygonalmauerwerk",
-          "regelmäßiges Quadermauerwerk",
-          "regelmäßiges Trapezoidalmauerwerk",
-          "unregelmäßiges Quadermauerwerk",
-          "unregelmäßiges Trapezoidalmauerwerk",
-          "unspezifisches Mauerwerk"
-        ]
+        "valuelistId": "Building-buildingTechnique-default"
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelist": [
-          "sehr gut",
-          "gut",
-          "mittel",
-          "schlecht",
-          "sehr schlecht"
-        ]
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fragmentarisch",
-          "Vollständig",
-          "Vollständig zerstört"
-        ]
+        "valuelistId": "Building-conditionAmount-default"
       },
       "context": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Akropolis",
-          "Forum",
-          "Handwerksviertel",
-          "Heiligtum",
-          "Nekropole",
-          "Wohnviertel"
-        ]
+        "valuelistId": "Building-context-default"
       },
       "material": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Granit",
-          "Kalk",
-          "Kalkmörtel",
-          "Kalkstein",
-          "Kalzit",
-          "Kreide",
-          "Marmor",
-          "Pophyr",
-          "Quarz",
-          "Sandstein",
-          "Ziegel"
-        ]
+        "valuelistId": "Building-material-default"
       },
       "interpretation": {
         "inputType": "text"
@@ -1265,62 +541,35 @@
     "parent": "Area",
     "fields": {
       "GeländemerkmalType": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Quelle",
-          "Teich/See",
-          "Wasserlauf",
-          "Höhle",
-          "Steinbruch/Bergwerk",
-          "Felsabarbeitung",
-          "Flurgrenze",
-          "Graben",
-          "Doline",
-          "Sonstiges",
-          "auffällige Geländeerhebung",
-          "auffällige Geländevertiefung",
-          "Steinkonzentration"
-        ]
+        "inputType": "checkboxes"
       }
     }
   },
   "Survey": {
-    "commons": ["beginningDate", "orientation", "endDate", "diary", "description", "processor", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area", "spatialLocation"],
+    "commons": [
+      "beginningDate",
+      "orientation",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area",
+      "spatialLocation"
+    ],
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Funderfassung",
-          "Fundsammlung",
-          "Sondage",
-          "Bauaufnahme",
-          "Reinigung",
-          "Bohrsondage",
-          "Probenentnahme",
-          "Begehung",
-          "Geoelektrik",
-          "Geomagnetik",
-          "Georadar",
-          "Befliegung",
-          "LIDAR",
-          "Luft- oder Satellitenbilder",
-          "Seismik"
-        ]
+        "valuelistId": "SurveyUnit-researchMethod-Kephissostal"
       },
       "researchMethodDescription": {
         "inputType": "input"
       },
       "modernIntervention": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Steinbruch/Grube/Miene",
-          "Aufschüttung",
-          "Acherbau",
-          "Abraumhalden",
-          "Überbauung",
-          "Raubgrabung",
-          "Wiederaufforstung"
-        ]
+        "valuelistId": "SurveyUnit-modernIntervention-Kephissostal"
       },
       "cultivatedPlants": {
         "inputType": "input"
@@ -1354,33 +603,7 @@
       },
       "periods": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Archaisch",
-          "Bronzezeitlich",
-          "Byzantinisch",
-          "Eisenzeitlich",
-          "Frühbronzezeitlich",
-          "Frühbyzantinisch",
-          "Frühhellenistisch",
-          "Frühkaiserzeitlich",
-          "Frühklassisch",
-          "Geometrisch",
-          "Hellenistisch",
-          "Kaiserzeitlich",
-          "Klassisch",
-          "Neolithisch",
-          "Neuzeitlich",
-          "Osmanisch",
-          "Pleistozän",
-          "Rezent",
-          "Römisch",
-          "Spätantik",
-          "Spätbronzezeitlich",
-          "Spätbyzantinisch",
-          "Späthellenistisch",
-          "Spätkaiserzeitlich",
-          "Spätklassisch"
-        ]
+        "valuelistId": "periods-default-1"
       }
     }
   }

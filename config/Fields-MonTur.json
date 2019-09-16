@@ -1,7 +1,10 @@
 {
   "BuildingPart": {
     "parent": "Feature",
-    "commons": ["orientation", "spatialLocation"],
+    "commons": [
+      "orientation",
+      "spatialLocation"
+    ],
     "fields": {
       "bibliography": {
         "inputType": "text"
@@ -53,157 +56,54 @@
       },
       "blockProcessing": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Bruchsteine",
-          "Hausteine",
-          "Lesesteine",
-          "Werksteine"
-        ]
+        "valuelistId": "Architecture-blockProcessing-default"
       },
       "blockTreatment": {
         "inputType": "radio",
-        "valuelist": [
-          "bossiert",
-          "bruchbau",
-          "fein geglättet",
-          "gespitzt",
-          "gestockt",
-          "grob behauen",
-          "grob geglättet",
-          "scharriert",
-          "unbehauen"
-        ]
+        "valuelistId": "Architecture-blockTreatment-default"
       },
       "brickwork": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Binderverband",
-          "Blockverband",
-          "Flämischer Verband",
-          "Holländischer Verband",
-          "Kreuzverband",
-          "Läuferverband",
-          "Märkischer Verband"
-        ]
+        "valuelistId": "Architecture-brickwork-default"
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelist": [
-          "sehr gut",
-          "gut",
-          "mittel",
-          "schlecht",
-          "sehr schlecht"
-        ]
+        "valuelistId": "Building-condition-default"
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fragmentarisch",
-          "Vollständig",
-          "Vollständig zerstört"
-        ]
+        "valuelistId": "Building-conditionAmount-default"
       },
       "construction": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Fundament: Geschüttet",
-          "Fundament: gesetzt",
-          "Mauerkern: Lesesteine",
-          "einschalig vor Feld/Hang",
-          "ohne Schalen/keine durchgehenden Lagen",
-          "ohne Schalen/nur durchgehende Lagen",
-          "zweischalig",
-          "zweischalig mit Binderlagen"
-        ]
+        "valuelistId": "Architecture-construction-default"
       },
       "mark": {
         "inputType": "dropdown",
-        "valuelist": [
-          "A",
-          "AC"
-        ]
+        "valuelistId": "Architecture-mark-default"
       },
       "mortarBinder": {
         "inputType": "radio",
-        "valuelist": [
-          "dominant",
-          "gering",
-          "hoch",
-          "mittel"
-        ]
+        "valuelistId": "Architecture-mortarBinder-default"
       },
       "mortarColor": {
         "inputType": "dropdown",
-        "valuelist": [
-          "beige",
-          "dunkelbraun",
-          "dunkelrot",
-          "gelb",
-          "hellbraun",
-          "hellgrau",
-          "mittelbraun",
-          "ocker",
-          "orange",
-          "orangerot",
-          "rosa",
-          "rot",
-          "rotbraun",
-          "schwarz",
-          "weiß"
-        ]
+        "valuelistId": "colors-default-2"
       },
       "mortarConsistency": {
         "inputType": "radio",
-        "valuelist": [
-          "brüchig",
-          "erdig/lehmig",
-          "fest",
-          "hart",
-          "locker",
-          "mittelfein",
-          "pulverig",
-          "sandig"
-        ]
+        "valuelistId": "Architecture-mortarConsistency-default"
       },
       "wallClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Aufgehendes",
-          "Fensterzusetzung",
-          "Flickung",
-          "Fundament",
-          "Gewölbe",
-          "Mauer",
-          "Mauerbettung",
-          "Mauerdurchbruch",
-          "Mosaik",
-          "Opus sectile",
-          "Türzusetzung",
-          "Wandgestaltung"
-        ]
+        "valuelistId": "Architecture-wallClassification-default"
       },
       "wallType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Außenmauer",
-          "Befestigugsmauer",
-          "Blockmauerwerk",
-          "Bruchsteinmauer",
-          "Fachwerk",
-          "Feldsteinmauer",
-          "Grenzmauer",
-          "Ziegelmauer"
-        ]
+        "valuelistId": "Architecture-wallType-default"
       },
       "wallSide": {
-        "inputType": "radio",
-        "valuelist": [
-          "Norden",
-          "Süden",
-          "Osten",
-          "Westen"
-        ]
+        "inputType": "radio"
       }
     }
   },
@@ -215,95 +115,29 @@
       },
       "consistency": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "Durch Brand versiegelt",
-          "Oberfläche abgewaschen",
-          "Oberfläche verhärtet",
-          "fest",
-          "flüssig",
-          "gut formbar",
-          "hart",
-          "lehmig",
-          "locker",
-          "mittel bindend",
-          "mittel formbar",
-          "nicht bindend",
-          "nicht formbar",
-          "porös",
-          "sandig",
-          "schwach bindend",
-          "schwach formbar",
-          "sehr gut formbar",
-          "sehr hart",
-          "sehr schwach formbar",
-          "sehr weich",
-          "stark bindend",
-          "steif",
-          "weich"
-        ]
+        "valuelistId": "Layer-consistency-default"
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "valuelist": [
-          "Farbe",
-          "Form",
-          "Grenzen",
-          "Konsistenz",
-          "Komposition"
-        ]
+        "valuelistId": "Layer-distinguishingCriteria-default"
       },
       "otherClassification": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Abfallgrube",
-          "Brunnen",
-          "Feuerstelle",
-          "Graben",
-          "Grube",
-          "Kalkbrennofen",
-          "Keramikofen",
-          "Materialentnahmegrube",
-          "Ofen",
-          "Pfosten",
-          "Pfostenstandspur",
-          "Rennfeuerofen",
-          "Schmelzofen",
-          "Spitzgraben",
-          "Wasserreservoir"
-        ]
+        "valuelistId": "Other-otherClassification-Meninx"
       },
       "soilType": {
         "inputType": "dropdown",
-        "valuelist": [
-          "Feinsand",
-          "Feinstsand",
-          "Grobsand",
-          "Lehm",
-          "Lehmiger Sand",
-          "Lehmiger Schluff",
-          "Lehmiger Ton",
-          "Mergel",
-          "Mittlerer Sand",
-          "Sand",
-          "Sandiger Lehm",
-          "Sandiger Schluff",
-          "Sandiger Ton",
-          "Schluff",
-          "Schluffiger Lehm",
-          "Schluffiger Sand",
-          "Schluffiger Ton",
-          "Ton",
-          "Toniger Lehm",
-          "Toniger Sand",
-          "Toniger Schluff"
-        ]
+        "valuelistId": "Layer-soilType-default"
       }
     }
   },
   "Profile": {
     "color": "#c6dbef",
     "parent": "Feature",
-    "commons": ["dimensionHeight", "orientation"],
+    "commons": [
+      "dimensionHeight",
+      "orientation"
+    ],
     "fields": {}
   }
 }

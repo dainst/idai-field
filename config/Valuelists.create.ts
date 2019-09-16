@@ -37,6 +37,7 @@ function insert(valuelists, field, newValuelistName, newValuelistValues) {
             description: { de: "", en: "" },
             values: newValuelistValues
         };
+        field['valuelistId'] = newValuelistName;
     }
 
     delete field['valuelist'];

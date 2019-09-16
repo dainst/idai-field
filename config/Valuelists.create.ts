@@ -7,7 +7,7 @@ import {pureName} from 'idai-components-2';
 const fs = require('fs');
 
 
-const projectName: string = 'Castiglione';
+const projectName: string = '';
 
 
 
@@ -23,13 +23,14 @@ const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : '
  */
 function insert(valuelists, field, newValuelistName, newValuelistValues) {
 
-    const conflictedList =
-        Object
-            .values(valuelists)
-            .find(vl => arrayEquivalent(vl['values'])(newValuelistValues));
+    const conflictedLists =
+            keysAndValues(valuelists)
+            .map(([_, vl]) => [_, vl['values']])
+            .filter(([_, values]) => arrayEquivalent(values)(newValuelistValues))
+            .map(([name, _]) => name);
 
-    if (conflictedList) {
-        field['valuelistId'] = conflictedList;
+    if (conflictedLists.length > 0) {
+        field['valuelistId'] = conflictedLists[0];
     } else {
         valuelists[newValuelistName] = {
             createdBy: "",

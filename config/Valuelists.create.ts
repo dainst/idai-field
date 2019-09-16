@@ -1,6 +1,6 @@
 'use strict';
 
-import {zip, ObjectCollection, arrayEquivalent} from 'tsfun';
+import {arrayEquivalent, keysAndValues} from 'tsfun';
 
 const fs = require('fs');
 
@@ -16,12 +16,6 @@ const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : '
 function pureName(s: string) { // TODO remove duplicate
 
     return  s.includes(':') ? s.substr(0, s.indexOf(':')) : s;
-}
-
-
-function keysAndValues<T>(o: ObjectCollection<T>) { // TODO put to utils
-
-    return zip(Object.keys(o))(Object.values(o));
 }
 
 

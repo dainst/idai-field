@@ -44,10 +44,82 @@
   "Pottery": {
     "fields": {
       "temperTypeClay": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "valuelist": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8",
+          "T9",
+          "T10",
+          "T11",
+          "T12",
+          "T13",
+          "T14",
+          "T15",
+          "T16",
+          "T17",
+          "T18",
+          "T19",
+          "T20",
+          "T21",
+          "T22",
+          "T23",
+          "T24",
+          "T25",
+          "T26",
+          "T27",
+          "T28",
+          "T29",
+          "T30"
+        ]
       },
       "potteryTypeSpecific": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "valuelist": [
+          "African Cooking Ware",
+          "Africana da cucina",
+          "Aretina schwarz",
+          "ARS A",
+          "ARS A/D",
+          "ARS C",
+          "ARS D",
+          "ARS E",
+          "Attisch farbig aufgehöhte Schwarzglanzton Ware",
+          "Attische Keramik",
+          "Attisch Rotfigurige Keramik",
+          "Attisch Schwarzfigurige Keramik",
+          "Attisch Schwarzglanzton Ware",
+          "Bemalte Keramik",
+          "Bemalte Ware (floral)",
+          "Bemalte Ware (linear)",
+          "Bichrome Ware",
+          "Campana A",
+          "Campana B",
+          "Campana B Imitation",
+          "Campana B-oid",
+          "Campana C",
+          "Dünnwandige Feinkeramik",
+          "Glasierte Keramik",
+          "Glattwandige Ware",
+          "Handgemachte Keramik",
+          "Korinthische Keramik",
+          "Küchenware",
+          "Ostgriechische Keramik",
+          "Pantellerian Ware",
+          "Prähistorische Keramik",
+          "Red Slip Ware",
+          "Schlichte Ware",
+          "Schwarzglanzton Ware",
+          "Terra sigillata",
+          "Terra sigillata Focea",
+          "Terra sigillata Italica",
+          "unbestimmt"
+        ]
       },
       "comment": {
         "inputType": "input"
@@ -63,11 +135,98 @@
   },
   "Bone": {
     "fields": {
-      "sex": {
-        "inputType": "radio"
+      "sex":{
+        "inputType": "radio",
+        "valuelist": [
+          "Männlich",
+          "Weiblich",
+          "Männlich oder Kastrat"
+        ]
       },
       "boneClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "valuelist": [
+          "Atlas",
+          "Axis (Epistropheus)",
+          "Calcaneus",
+          "Carpale",
+          "Carpale II+III",
+          "Carpometacarpus",
+          "Centroquartale",
+          "Clavicula",
+          "Coracoid",
+          "Costa",
+          "Coxa",
+          "Cranium",
+          "Dens inferior",
+          "Dens superior",
+          "Dens superior/inferior",
+          "Femur",
+          "Fibula",
+          "Humerus",
+          "indet.",
+          "Mandibula",
+          "Metacarpus II",
+          "Metacarpus III",
+          "Metacarpus III+IV",
+          "Metacarpus IV",
+          "Metapodium",
+          "Metapodium Hauptstrahl",
+          "Metapodium III+IV",
+          "Metapodium Nebenstrahl",
+          "Metatarsus Hauptstrahl",
+          "Metatarsus II",
+          "Metatarsus III",
+          "Metatarsus III+IV",
+          "Metatarsus indet. Nebenstrahl",
+          "Metatarsus IV",
+          "Metatarsus V",
+          "Os carpi intermedium",
+          "Os carpi radiale",
+          "Os carpi ulnare",
+          "Os hyoideum",
+          "Os tarsi centrale (Os naviculare)",
+          "Patella",
+          "Phalanx 1 ant./post.",
+          "Phalanx 1 Hauptstrahl",
+          "Phalanx 1 Nebenstrahl",
+          "Phalanx 1 post.",
+          "Phalanx 2 ant.",
+          "Phalanx 2 ant./post.",
+          "Phalanx 2 post.",
+          "Phalanx 3 ant.",
+          "Phalanx 3 ant./post.",
+          "Phalanx 3 Hauptstrahl",
+          "Phalanx 3 post.",
+          "Processus cornualis",
+          "Pygale",
+          "Radius",
+          "Radius+Ulna (verwachsen)",
+          "Sacrum/Synsacrum",
+          "Scapula",
+          "Schneckenhaus (Gastropoda)",
+          "Sesamoid",
+          "Talus (Astragalus)",
+          "Tarsale",
+          "Tarsale II+III",
+          "Tarsometatarsus",
+          "Tibia/Tibiotarsus",
+          "Tibia+Fibula (verwachsen)",
+          "Ulna",
+          "Vertebra",
+          "Vertebra caudalis",
+          "Vertebra cervicalis",
+          "Vertebra lumbalis",
+          "Vertebra thoracica",
+          "Vertebra thoracica 1",
+          "Vertebra thoracica 2",
+          "Vertebra thoracica 3",
+          "Vertebra thoracica 4",
+          "Vertebra thoracica 5",
+          "Vertebra thoracica 6",
+          "Vertebra thoracica 7",
+          "Vertebra thoracica 8"
+        ]
       }
     }
   },
@@ -105,26 +264,104 @@
       },
       "blockTreatment": {
         "inputType": "radio",
-        "valuelistId": "Architecture-blockTreatment-default"
+        "valuelist": [
+          "bossiert",
+          "bruchbau",
+          "fein geglättet",
+          "gespitzt",
+          "gestockt",
+          "grob behauen",
+          "grob geglättet",
+          "scharriert",
+          "unbehauen"
+        ]
       },
       "buildingTechnique": {
         "inputType": "dropdown",
-        "valuelistId": "Building-buildingTechnique-default"
+        "valuelist": [
+          "Blockverbandmauerwerk",
+          "Bruchsteinmauerwerk",
+          "Feldsteinmauerwerk",
+          "Kyklopenmauerwerk",
+          "Lehmziegelmauerwerk",
+          "Mischform Polygonal-/Quadermauerwerk",
+          "Opus Caementitium",
+          "Polygonalmauerwerk",
+          "Quadermauerwerk",
+          "Spolienmauerwerk",
+          "Unregelmäßiges Polygonalmauerwerk",
+          "Würfel-/Handquadermauerwerk",
+          "Ziegelmauerwerk",
+          "irreguläres Mauerwerk",
+          "regelmäßiges Polygonalmauerwerk",
+          "regelmäßiges Quadermauerwerk",
+          "regelmäßiges Trapezoidalmauerwerk",
+          "unregelmäßiges Quadermauerwerk",
+          "unregelmäßiges Trapezoidalmauerwerk",
+          "unspezifisches Mauerwerk"
+        ]
       },
       "color": {
         "inputType": "checkboxes",
-        "valuelistId": "colors-default-1"
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelistId": "BuildingPart-condition-Pergamon"
+        "valuelist": [
+          "gut",
+          "schlecht",
+          "sehr gut",
+          "sehr schlecht"
+        ]
       },
       "conditionAmount": {
         "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "valuelist": [
+          "Fragmentarisch",
+          "Vollständig",
+          "Vollständig zerstört"
+        ]
       },
       "constructionDetails": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abflussöffnung",
+          "Angelloch",
+          "Balkenloch",
+          "Bleirohr",
+          "Durchgang/Tür",
+          "Entlastungsbogen",
+          "Fallrohr",
+          "Fenster",
+          "Fontäne",
+          "Halnsäule",
+          "Laibung",
+          "Nische",
+          "Regalloch",
+          "Riegelloch",
+          "Sonstiges Loch",
+          "Sturzauflager"
+        ]
       },
       "period": {
         "inputType": "dropdownRange"
@@ -136,40 +373,90 @@
         "inputType": "dimension",
         "positionValues": [
           "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+          "Minimale Ausdehnung"]
       },
       "dimensionWidth": {
         "inputType": "dimension",
         "positionValues": [
           "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+          "Minimale Ausdehnung"]
       },
       "jointsCondition": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "valuelist": [
+          "Mörtel abplatzend",
+          "ausgewaschen",
+          "bündig verfugt",
+          "flächig ausgehöhlt",
+          "partiell ausgehöhlt"
+        ]
       },
       "jointsType": {
-        "inputType": "radio"
+        "inputType": "radio",
+        "valuelist": [
+          "Gerade",
+          "Gerundet",
+          "Hohl",
+          "Mit Mörtel gefüllt",
+          "Mit Steinen gefüllt",
+          "Schmal",
+          "Unregelmäßg",
+          "Weit"
+        ]
       },
       "mark": {
         "inputType": "dropdown",
-        "valuelistId": "Architecture-mark-default"
+        "valuelist": [
+          "A",
+          "AC"
+        ]
       },
       "plasterComponents": {
         "inputType": "radio",
-        "valuelistId": "PlasterFragment-plasterComponents-default"
+        "valuelist": [
+          "Feinsand",
+          "Grus",
+          "Sand"
+        ]
       },
       "wallOrientation": {
-        "inputType": "checkboxes"
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
       },
       "roomSide": {
         "inputType": "checkboxes",
-        "valuelistId": "Wall_surface-wallOrientation-Meninx"
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
       },
       "wallSide": {
         "inputType": "radio",
-        "valuelistId": "Wall_surface-wallOrientation-Meninx"
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
       }
     }
   },
@@ -180,18 +467,88 @@
       },
       "consistency": {
         "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-default"
+        "valuelist": [
+          "Durch Brand versiegelt",
+          "Oberfläche abgewaschen",
+          "Oberfläche verhärtet",
+          "fest",
+          "flüssig",
+          "gut formbar",
+          "hart",
+          "lehmig",
+          "locker",
+          "mittel bindend",
+          "mittel formbar",
+          "nicht bindend",
+          "nicht formbar",
+          "porös",
+          "sandig",
+          "schwach bindend",
+          "schwach formbar",
+          "sehr gut formbar",
+          "sehr hart",
+          "sehr schwach formbar",
+          "sehr weich",
+          "stark bindend",
+          "steif",
+          "weich"
+        ]
       },
       "distinguishingCriteria": {
         "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "valuelist": [
+          "Farbe",
+          "Form",
+          "Grenzen",
+          "Konsistenz",
+          "Komposition"
+        ]
       },
       "otherClassification": {
-        "inputType": "dropdown"
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abfallgrube",
+          "Brunnen",
+          "Feuerstelle",
+          "Graben",
+          "Grube",
+          "Kalkbrennofen",
+          "Keramikofen",
+          "Materialentnahmegrube",
+          "Ofen",
+          "Pfosten",
+          "Pfostenstandspur",
+          "Rennfeuerofen",
+          "Schmelzofen",
+          "Spitzgraben",
+          "Wasserreservoir"
+        ]
       },
       "soilType": {
         "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-default"
+        "valuelist": [
+          "Feinsand",
+          "Feinstsand",
+          "Grobsand",
+          "Lehm",
+          "Lehmiger Sand",
+          "Lehmiger Schluff",
+          "Lehmiger Ton",
+          "Mergel",
+          "Mittlerer Sand",
+          "Sand",
+          "Sandiger Lehm",
+          "Sandiger Schluff",
+          "Sandiger Ton",
+          "Schluff",
+          "Schluffiger Lehm",
+          "Schluffiger Sand",
+          "Schluffiger Ton",
+          "Ton",
+          "Toniger Lehm",
+          "Toniger Sand",
+          "Toniger Schluff"
+        ]
       }
     }
   },

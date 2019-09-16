@@ -33,7 +33,9 @@
   },
   "Find:Boha": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "catalogueNumber"
+    ]
   },
   "Feature:Boha": {
     "valuelists": {},
@@ -45,7 +47,9 @@
   },
   "Inscription:Boha": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "conditionAmount"
+    ]
   },
   "Image:default": {
     "valuelists": {},
@@ -73,7 +77,10 @@
   },
   "Architecture:Boha": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "brickwork",
+      "conditionAmount"
+    ]
   },
   "Layer:Boha": {
     "valuelists": {},
@@ -81,7 +88,9 @@
   },
   "Floor:Boha": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "conditionAmount"
+    ]
   },
   "Pottery:Boha": {
     "valuelists": {},
@@ -89,7 +98,12 @@
   },
   "Grave:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "distinguishingCriteria",
+      "specificType",
+      "tombBuilding",
+      "conditionAmount"
+    ]
   },
   "Bone:default": {
     "valuelists": {},
@@ -105,7 +119,9 @@
   },
   "Stone:Boha": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "workmanship"
+    ]
   },
   "Coin:Boha": {
     "valuelists": {},

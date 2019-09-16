@@ -1,6 +1,6 @@
 {
   "Trench:default": {
-    "derives": "Trench",
+    "extends": "Trench",
     "parent": "Operation",
     "createdBy": "IT-Referat, 2019",
     "description": "Schnitt; IT-Referat, 2019",
@@ -235,7 +235,7 @@
     }
   },
   "Project:default": {
-    "derives": "Project",
+    "extends": "Project",
     "description": "",
     "createdBy": "",
     "commons": ["description"],
@@ -392,7 +392,7 @@
     }
   },
   "Building:default": {
-    "derives": "Building",
+    "extends": "Building",
     "parent": "Operation",
     "description": "",
     "createdBy": "",
@@ -892,7 +892,7 @@
     }
   },
   "Operation:default": {
-    "derives": "Operation",
+    "extends": "Operation",
     "description": "",
     "createdBy": "",
     "commons": ["beginningDate", "endDate", "processor", "description", "area"],
@@ -909,7 +909,7 @@
     }
   },
   "Place:default": {
-    "derives": "Place",
+    "extends": "Place",
     "description": "",
     "createdBy": "",
     "color": "#5572A1",
@@ -1050,7 +1050,7 @@
     }
   },
   "Feature:default": {
-    "derives": "Feature",
+    "extends": "Feature",
     "description": "",
     "createdBy": "",
     "color": "black",
@@ -1220,7 +1220,7 @@
     }
   },
   "Inscription:default": {
-    "derives": "Inscription",
+    "extends": "Inscription",
     "description": "",
     "createdBy": "",
     "commons": ["description", "processor", "period", "dating", "dimensionWidth", "dimensionHeight"],
@@ -1274,7 +1274,7 @@
     }
   },
   "Image:default": {
-    "derives": "Image",
+    "extends": "Image",
     "description": "",
     "createdBy": "",
     "commons": ["processor", "description"],
@@ -1915,7 +1915,7 @@
     }
   },
   "Room:default": {
-    "derives": "Room",
+    "extends": "Room",
     "description": "",
     "createdBy": "",
     "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
@@ -2190,7 +2190,7 @@
     }
   },
   "Survey:default": {
-    "derives": "Survey",
+    "extends": "Survey",
     "parent": "Operation",
     "description": "",
     "createdBy": "",
@@ -2780,7 +2780,7 @@
     }
   },
   "Find:default": {
-    "derives": "Find",
+    "extends": "Find",
     "color": "black",
     "commons": ["spatialLocation", "processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter", "dimensionThickness", "dimensionVerticalExtent", "dimensionOther", "date"],
     "fields": {
@@ -3076,12 +3076,12 @@
     }
   },
   "BuildingPart:default": {
-    "derives": "BuildingPart",
+    "extends": "BuildingPart",
     "color": "#707070",
     "fields": {}
   },
   "Area:default": {
-    "derives": "Area",
+    "extends": "Area",
     "commons": ["description", "area", "dimensionLength", "dimensionWidth"],
     "fields": {
       "dimensionVerticalExtent": {

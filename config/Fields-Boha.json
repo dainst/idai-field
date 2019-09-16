@@ -2,7 +2,7 @@
   "Feature:Boha": {
     "creator": "IT-Referat, 2019",
     "description": "Stratigraphische Einheit, Bogazkoy Hattusa",
-    "derives": "Feature:default",
+    "extends": "Feature:default",
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -46,7 +46,7 @@
   },
   "Layer:Boha": {
     "parent": "Feature",
-    "derives": "Layer:default",
+    "extends": "Layer:default",
     "fields":{
       "layerClassification": {
         "inputType": "dropdown",
@@ -134,7 +134,7 @@
   },
   "Floor:Boha": {
     "parent": "Feature",
-    "derives": "Floor:default",
+    "extends": "Floor:default",
     "fields":{
       "distinguishingCriteria": {
         "inputType": "checkboxes",
@@ -165,7 +165,7 @@
     }
   },
   "Architecture:Boha": {
-    "derives": "Architecture:default",
+    "extends": "Architecture:default",
     "parent": "Feature",
     "fields": {
       "architectureClassification": {
@@ -232,7 +232,7 @@
     }
   },
   "Find:Boha": {
-    "derives": "Find:default",
+    "extends": "Find:default",
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -281,7 +281,7 @@
     }
   },
   "Bone:Boha": {
-    "derives": "Bone:default",
+    "extends": "Bone:default",
     "parent": "Find",
     "fields":{
       "boneClassification": {
@@ -318,7 +318,7 @@
     }
   },
   "Brick:Boha": {
-    "derives": "Brick:default",
+    "extends": "Brick:default",
     "parent": "Find",
     "fields": {
       "brickForm": {
@@ -388,7 +388,7 @@
   },
   "Stone:Boha": {
     "parent": "Find",
-    "derives": "Stone:default",
+    "extends": "Stone:default",
     "description": "",
     "createdBy": "",
     "fields":{
@@ -510,7 +510,7 @@
   },
   "PlasterFragment:Boha": {
     "parent": "Find",
-    "derives": "PlasterFragment:default",
+    "extends": "PlasterFragment:default",
     "description": "",
     "createdBy": "",
     "fields": {
@@ -548,7 +548,7 @@
     }
   },
   "Glass:Boha": {
-    "derives": "Glass:default",
+    "extends": "Glass:default",
     "parent": "Find",
     "description": "",
     "createdBy": "",
@@ -581,7 +581,7 @@
     }
   },
   "Pottery:Boha": {
-    "derives": "Pottery:default",
+    "extends": "Pottery:default",
     "parent": "Find",
     "description": "",
     "createdBy": "",
@@ -761,7 +761,7 @@
     }
   },
   "Mollusk:Boha": {
-    "derives": "Mollusk:default",
+    "extends": "Mollusk:default",
     "parent": "Find",
     "description": "",
     "createdBy": "",
@@ -775,7 +775,7 @@
     }
   },
   "Wood:Boha": {
-    "derives": "Wood:default",
+    "extends": "Wood:default",
     "parent": "Find",
     "description": "",
     "createdBy": "",
@@ -804,7 +804,7 @@
     }
   },
   "Coin:Boha": {
-    "derives": "Coin:default",
+    "extends": "Coin:default",
     "parent": "Find",
     "description": "",
     "createdBy": "",
@@ -1093,7 +1093,7 @@
     }
   },
   "Inscription:Boha": {
-    "derives": "Inscription:default",
+    "extends": "Inscription:default",
     "description": "",
     "createdBy": "",
     "fields": {

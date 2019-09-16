@@ -31,11 +31,11 @@
     "valuelists": {},
     "hidden": []
   },
-  "Find:default": {
+  "Find:Campidoglio": {
     "valuelists": {},
     "hidden": []
   },
-  "Feature:default": {
+  "Feature:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "color",
@@ -62,7 +62,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Brick:default": {
+  "Brick:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "specificType"
@@ -76,7 +76,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Architecture:default": {
+  "Architecture:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "mortarBinder",
@@ -89,18 +89,18 @@
       "wallType"
     ]
   },
-  "Layer:default": {
+  "Layer:Campidoglio": {
     "valuelists": {},
     "hidden": []
   },
-  "Floor:default": {
+  "Floor:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "mortarBinder",
       "layerClassification"
     ]
   },
-  "Pottery:default": {
+  "Pottery:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "temper",
@@ -135,7 +135,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Stone:default": {
+  "Stone:Campidoglio": {
     "valuelists": {},
     "hidden": [
       "temperAmount",
@@ -148,6 +148,14 @@
     "hidden": []
   },
   "PlasterFragment:default": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "Interface:Campidoglio": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "SampleCampidoglio:Campidoglio": {
     "valuelists": {},
     "hidden": []
   }

@@ -7,7 +7,7 @@ import {pureName} from 'idai-components-2';
 const fs = require('fs');
 
 
-const projectName: string = '';
+const projectName: string = 'WES';
 
 const selection = JSON.parse(fs.readFileSync(projectName === '' ? 'Selection-Default.json' : 'Selection-' + projectName + '.json'));
 const hidden = JSON.parse(fs.readFileSync(projectName === '' ? 'Hidden.json' : 'Hidden-' + projectName + '.json'));

@@ -21,18 +21,11 @@
   },
   "Trench:default": {
     "valuelists": {},
-    "hidden": [
-      "researchQuestion"
-    ]
+    "hidden": []
   },
   "Building:default": {
     "valuelists": {},
-    "hidden": [
-      "buildingHistory",
-      "excavationHistory",
-      "history",
-      "architecturalOrders"
-    ]
+    "hidden": []
   },
   "BuildingPart:default": {
     "valuelists": {},
@@ -42,14 +35,28 @@
     "valuelists": {},
     "hidden": [
       "publicationMaterialSummary",
-      "publicationRemark"
+      "publicationRemark",
+      "hasRestoration",
+      "storageInventoryNumber",
+      "weight",
+      "conditionAmount",
+      "dating",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionPerimeter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionWidth",
+      "dimensionOther",
+      "storagePlace",
+      "catalogueNumber",
+      "bibliography",
+      "conditionComment"
     ]
   },
   "Feature:default": {
     "valuelists": {},
-    "hidden": [
-      "featureAmount"
-    ]
+    "hidden": []
   },
   "Room:default": {
     "valuelists": {},
@@ -77,11 +84,7 @@
   },
   "Burial:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingStratigraphy",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Wood:default": {
     "valuelists": {},
@@ -89,21 +92,11 @@
   },
   "Architecture:default": {
     "valuelists": {},
-    "hidden": [
-      "markDescription",
-      "mark",
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Layer:default": {
     "valuelists": {},
-    "hidden": [
-      "appearance"
-    ]
+    "hidden": []
   },
   "Floor:default": {
     "valuelists": {},
@@ -111,17 +104,46 @@
   },
   "Pottery:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "amountSherdsWall",
+      "amountSherdsRim",
+      "amountSherdsBase",
+      "amountSherdsHandles",
+      "amountSherdsLip",
+      "amountSherdsPedestal",
+      "amountSherdsRimBase",
+      "amountSherdsRimShoulder",
+      "amountSherdsShoulder",
+      "amountSherdsOther",
+      "amountSherdsPercent",
+      "amountSherdsLid",
+      "clayColorOutsideMunsell",
+      "clayColorBreakMunsell",
+      "clayColorInsideMunsell",
+      "breakStructure",
+      "residueAnalysis",
+      "sample",
+      "purpose",
+      "typeNumber",
+      "clayColorBreak",
+      "clayHardness",
+      "coatColorInside",
+      "coatColorOutside",
+      "coatInside",
+      "coatOutside",
+      "formDescription",
+      "manufacturing",
+      "materialType",
+      "specificType",
+      "provenance",
+      "vesselFormSpecific",
+      "temperTypeClay",
+      "objectType"
+    ]
   },
   "Grave:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Bone:default": {
     "valuelists": {},

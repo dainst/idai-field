@@ -21,18 +21,11 @@
   },
   "Trench:default": {
     "valuelists": {},
-    "hidden": [
-      "researchQuestion"
-    ]
+    "hidden": []
   },
   "Building:default": {
     "valuelists": {},
-    "hidden": [
-      "buildingHistory",
-      "excavationHistory",
-      "history",
-      "architecturalOrders"
-    ]
+    "hidden": []
   },
   "BuildingPart:default": {
     "valuelists": {},
@@ -40,16 +33,11 @@
   },
   "Find:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationMaterialSummary",
-      "publicationRemark"
-    ]
+    "hidden": []
   },
   "Feature:default": {
     "valuelists": {},
-    "hidden": [
-      "featureAmount"
-    ]
+    "hidden": []
   },
   "Room:default": {
     "valuelists": {},
@@ -77,11 +65,7 @@
   },
   "Burial:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingStratigraphy",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Wood:default": {
     "valuelists": {},
@@ -89,21 +73,11 @@
   },
   "Architecture:default": {
     "valuelists": {},
-    "hidden": [
-      "markDescription",
-      "mark",
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Layer:default": {
     "valuelists": {},
-    "hidden": [
-      "appearance"
-    ]
+    "hidden": []
   },
   "Floor:default": {
     "valuelists": {},
@@ -115,13 +89,7 @@
   },
   "Grave:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Bone:default": {
     "valuelists": {},

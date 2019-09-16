@@ -21,18 +21,11 @@
   },
   "Trench:default": {
     "valuelists": {},
-    "hidden": [
-      "researchQuestion"
-    ]
+    "hidden": []
   },
   "Building:default": {
     "valuelists": {},
-    "hidden": [
-      "buildingHistory",
-      "excavationHistory",
-      "history",
-      "architecturalOrders"
-    ]
+    "hidden": []
   },
   "BuildingPart:default": {
     "valuelists": {},
@@ -40,15 +33,13 @@
   },
   "Find:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationMaterialSummary",
-      "publicationRemark"
-    ]
+    "hidden": []
   },
   "Feature:default": {
     "valuelists": {},
     "hidden": [
-      "featureAmount"
+      "color",
+      "hasDisturbance"
     ]
   },
   "Room:default": {
@@ -73,15 +64,13 @@
   },
   "Brick:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "specificType"
+    ]
   },
   "Burial:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingStratigraphy",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Wood:default": {
     "valuelists": {},
@@ -90,38 +79,49 @@
   "Architecture:default": {
     "valuelists": {},
     "hidden": [
-      "markDescription",
-      "mark",
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
+      "mortarBinder",
+      "mortarColor",
+      "mortarConsistency",
+      "construction",
+      "brickwork",
+      "blockProcessing",
+      "wallClassification",
+      "wallType"
     ]
   },
   "Layer:default": {
     "valuelists": {},
-    "hidden": [
-      "appearance"
-    ]
+    "hidden": []
   },
   "Floor:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "mortarBinder",
+      "layerClassification"
+    ]
   },
   "Pottery:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "temper",
+      "temperAmount",
+      "temperParticles",
+      "coatInsideType",
+      "coatOutsideType",
+      "formDescription",
+      "purpose",
+      "residueAnalysis",
+      "amountSherdsLip",
+      "amountSherdsRimBase",
+      "amountSherdsRimShoulder",
+      "amountSherdsShoulder",
+      "coatInside",
+      "coatOutside"
+    ]
   },
   "Grave:default": {
     "valuelists": {},
-    "hidden": [
-      "publicationDatingFinds",
-      "publicationDatingScientific",
-      "publicationDatingStratigraphy",
-      "publicationRemark",
-      "findingPlace"
-    ]
+    "hidden": []
   },
   "Bone:default": {
     "valuelists": {},
@@ -137,7 +137,11 @@
   },
   "Stone:default": {
     "valuelists": {},
-    "hidden": []
+    "hidden": [
+      "temperAmount",
+      "purpose",
+      "provenance"
+    ]
   },
   "Coin-default": {
     "valuelists": {},

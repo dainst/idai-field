@@ -1,6 +1,8 @@
 'use strict';
 
 import {arrayEquivalent, keysAndValues} from 'tsfun';
+import {pureName} from 'idai-components-2';
+
 
 const fs = require('fs');
 
@@ -11,12 +13,6 @@ const projectName: string = '';
 
 const valuelists = JSON.parse(fs.readFileSync('Valuelists.json'));
 const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
-
-
-function pureName(s: string) { // TODO remove duplicate
-
-    return  s.includes(':') ? s.substr(0, s.indexOf(':')) : s;
-}
 
 
 /**

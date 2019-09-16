@@ -169,7 +169,7 @@
       "temperAmount"
     ]
   },
-  "Coin-default": {
+  "Coin:default": {
     "valuelists": {},
     "hidden": []
   },

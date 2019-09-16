@@ -25,9 +25,6 @@ keysAndValues(hidden).forEach(([hiddenTypeName, hiddenValues]) => {
             if (isNot(undefinedOrEmpty)(selectionType['hidden'])) {
                 console.error('hidden already exists, ', hiddenTypeName)
             } else {
-                console.log("selectiont", selectionTypeName)
-                console.log("hidden", hiddenValues)
-
                 selectionType['hidden'] = hiddenValues;
             }
         }

@@ -7,7 +7,7 @@ import {pureName} from 'idai-components-2';
 const fs = require('fs');
 
 
-const projectName: string = '';
+const projectName: string = 'Castiglione';
 
 
 
@@ -23,13 +23,14 @@ const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : '
  */
 function insert(valuelists, field, newValuelistName, newValuelistValues) {
 
-    const conflictedLists = keysAndValues(valuelists).reduce((conflictedLists: any, [k, v]) => {
-        const conflicted = arrayEquivalent(v['values'])(newValuelistValues);
-        return conflicted ? conflictedLists.concat([k]) : conflictedLists
-    }, []);
+    const conflictedList =
+        Object
+            .values(valuelists)
+            .find(vl => arrayEquivalent(vl['values'])(newValuelistValues));
 
-
-    if (conflictedLists.length === 0) {
+    if (conflictedList) {
+        field['valuelistId'] = conflictedList;
+    } else {
         valuelists[newValuelistName] = {
             createdBy: "",
             description: { de: "", en: "" },
@@ -38,7 +39,6 @@ function insert(valuelists, field, newValuelistName, newValuelistValues) {
     }
 
     delete field['valuelist'];
-    field['valuelistId'] = newValuelistName;
 }
 
 
@@ -64,5 +64,5 @@ keysAndValues(fields).forEach(([typeName, type]) => {
 });
 
 
-fs.writeFileSync('Valuelists.out.json', JSON.stringify(valuelists, null, 2));
-fs.writeFileSync(projectName === '' ? 'Fields.out.json' : 'Fields-' + projectName + '.out.json', JSON.stringify(fields, null, 2));
+fs.writeFileSync('Valuelists.json', JSON.stringify(valuelists, null, 2));
+fs.writeFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json', JSON.stringify(fields, null, 2));

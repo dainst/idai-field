@@ -14,9 +14,6 @@
       "spatialLocation"
     ],
     "fields": {
-      "researchQuestion": {
-        "inputType": "input"
-      },
       "trenchComment": {
         "inputType": "text"
       },
@@ -205,17 +202,8 @@
       "dietReconstruction": {
         "inputType": "input"
       },
-      "findingPlace": {
-        "inputType": "input"
-      },
       "palaeopathologicalReport": {
         "inputType": "input"
-      },
-      "publicationDatingFinds": {
-        "inputType": "text"
-      },
-      "publicationDatingStratigraphy": {
-        "inputType": "text"
       },
       "sexDetermination": {
         "inputType": "input"
@@ -265,27 +253,14 @@
       "dimensionLength"
     ],
     "fields": {
-      "buildingHistory": {
-        "inputType": "input"
-      },
       "buildingResearchHistory": {
         "inputType": "text"
       },
       "conditionComment": {
         "inputType": "input"
       },
-      "excavationHistory": {
-        "inputType": "text"
-      },
-      "history": {
-        "inputType": "text"
-      },
       "hasRestoration": {
         "inputType": "boolean"
-      },
-      "architecturalOrders": {
-        "inputType": "radio",
-        "valuelistId": "Building-architecturalOrders-default"
       },
       "buildingCategory": {
         "inputType": "dropdown",
@@ -406,9 +381,6 @@
       "descriptionOfBuildingTechnique": {
         "inputType": "input"
       },
-      "findingPlace": {
-        "inputType": "input"
-      },
       "hasGrouting": {
         "inputType": "boolean"
       },
@@ -418,9 +390,6 @@
       "layerHeight": {
         "inputType": "unsignedFloat"
       },
-      "markDescription": {
-        "inputType": "input"
-      },
       "materialCharacteristic": {
         "inputType": "input"
       },
@@ -428,18 +397,6 @@
         "inputType": "input"
       },
       "muralCrown": {
-        "inputType": "input"
-      },
-      "publicationDatingFinds": {
-        "inputType": "text"
-      },
-      "publicationDatingScientific": {
-        "inputType": "text"
-      },
-      "publicationDatingStratigraphy": {
-        "inputType": "text"
-      },
-      "publicationRemark": {
         "inputType": "input"
       },
       "blockProcessing": {
@@ -465,10 +422,6 @@
       "construction": {
         "inputType": "dropdown",
         "valuelistId": "Architecture-construction-default"
-      },
-      "mark": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-mark-default"
       },
       "mortarBinder": {
         "inputType": "radio",
@@ -562,9 +515,6 @@
       "dimensionThickness"
     ],
     "fields": {
-      "appearance": {
-        "inputType": "input"
-      },
       "isNatural": {
         "inputType": "boolean"
       },
@@ -612,9 +562,6 @@
       },
       "hasDisturbance": {
         "inputType": "boolean"
-      },
-      "featureAmount": {
-        "inputType": "input"
       },
       "color": {
         "inputType": "checkboxes",
@@ -1252,12 +1199,6 @@
       "conditionPercent": {
         "inputType": "unsignedFloat"
       },
-      "publicationMaterialSummary": {
-        "inputType": "input"
-      },
-      "publicationRemark": {
-        "inputType": "input"
-      },
       "hasRestoration": {
         "inputType": "boolean"
       },
@@ -1306,12 +1247,7 @@
   },
   "Photo:default": {
     "parent": "Image",
-    "fields": {
-      "originalType": {
-        "inputType": "dropdown",
-        "valuelistId": "Photo-originalType-default"
-      }
-    }
+    "fields": {}
   },
   "Metal:default": {
     "color": "#995f25",
@@ -1320,9 +1256,6 @@
       "provenance"
     ],
     "fields": {
-      "materialDescription": {
-        "inputType": "input"
-      },
       "decorationTechnique": {
         "inputType": "dropdown",
         "valuelistId": "Metal-decorationTechnique-default"

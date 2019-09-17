@@ -2,8 +2,9 @@
   "Trench:default": {
     "extends": "Trench",
     "parent": "Operation",
-    "createdBy": "IT-Referat, 2019",
-    "description": "Schnitt; IT-Referat, 2019",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": { "de": "Schnitt; IT-Referat, 2019" },
     "color": "blue",
     "commons": [
       "diary",
@@ -25,8 +26,9 @@
   },
   "Glass:default": {
     "parent": "Find",
-    "createdBy": "IT-Referat, 2019",
-    "description": "Glass; IT-Referat, 2019",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": { "de": "Glass; IT-Referat, 2019" },
     "color": "#99CC33",
     "commons": [
       "provenance"
@@ -71,8 +73,9 @@
   },
   "Mollusk:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "color": "#ff99ff",
     "fields": {
       "classification": {
@@ -83,8 +86,9 @@
   },
   "Brick:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "color": "#CC0000",
     "commons": [
       "provenance"
@@ -141,8 +145,9 @@
   },
   "Project:default": {
     "extends": "Project",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "description"
     ],
@@ -180,8 +185,9 @@
     }
   },
   "Burial:default": {
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "parent": "Feature",
     "fields": {
       "ageDetermination": {
@@ -244,8 +250,9 @@
   "Building:default": {
     "extends": "Building",
     "parent": "Operation",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "period",
       "dating",
@@ -298,7 +305,8 @@
   },
   "Wood:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
+    "creationDate": "",
     "createdBy": "",
     "color": "#660000",
     "commons": [
@@ -361,8 +369,9 @@
   },
   "Architecture:default": {
     "parent": "Feature",
-    "description": "",
+    "description": { "de": "" },
     "createdBy": "",
+    "creationDate": "",
     "color": "#707070",
     "commons": [
       "orientation",
@@ -447,8 +456,9 @@
   },
   "Operation:default": {
     "extends": "Operation",
-    "description": "",
+    "description": { "de": "" },
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "beginningDate",
       "endDate",
@@ -470,7 +480,7 @@
   },
   "Place:default": {
     "extends": "Place",
-    "description": "",
+    "description": { "de": "" },
     "createdBy": "",
     "color": "#5572A1",
     "commons": [
@@ -508,8 +518,9 @@
   },
   "Layer:default": {
     "parent": "Feature",
-    "description": "",
+    "description": { "de": "" },
     "createdBy": "",
+    "creationDate": "",
     "color": "#663300",
     "commons": [
       "dimensionThickness"
@@ -538,8 +549,9 @@
   },
   "Feature:default": {
     "extends": "Feature",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "color": "black",
     "commons": [
       "beginningDate",
@@ -580,6 +592,9 @@
   "Floor:default": {
     "parent": "Feature",
     "color": "#6600cc",
+    "creationDate": "",
+    "createdBy": "",
+    "description": { "de":  "" },
     "fields": {
       "conditionComment": {
         "inputType": "input"
@@ -618,6 +633,7 @@
     "extends": "Inscription",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "description",
       "processor",
@@ -657,6 +673,7 @@
     "extends": "Image",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "processor",
       "description"
@@ -671,6 +688,7 @@
     "parent": "Find",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "provenance"
     ],
@@ -838,6 +856,7 @@
     "parent": "Feature",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "color": "#339900",
     "commons": [
       "spatialLocation"
@@ -898,6 +917,7 @@
     "parent": "Find",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "color": "#CCFFFF",
     "fields": {
       "biologicalAge": {
@@ -934,6 +954,7 @@
     "extends": "Room",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "commons": [
       "processor",
       "description",
@@ -967,6 +988,7 @@
     "parent": "Find",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "color": "#FF6600",
     "commons": [
       "provenance"
@@ -1038,6 +1060,7 @@
     "parent": "Image",
     "description": "",
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "drawingMaterial": {
         "inputType": "radio",
@@ -1162,6 +1185,9 @@
     }
   },
   "Find:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "extends": "Find",
     "color": "black",
     "commons": [
@@ -1223,6 +1249,9 @@
     }
   },
   "PlasterFragment:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "parent": "Find",
     "color": "#737373",
     "commons": [
@@ -1246,10 +1275,16 @@
     }
   },
   "Photo:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "parent": "Image",
     "fields": {}
   },
   "Metal:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "color": "#995f25",
     "parent": "Find",
     "commons": [
@@ -1287,11 +1322,17 @@
     }
   },
   "BuildingPart:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "extends": "BuildingPart",
     "color": "#707070",
     "fields": {}
   },
   "Area:default": {
+    "description": { "de": {} },
+    "createdBy": "",
+    "creationDate": "",
     "extends": "Area",
     "commons": [
       "description",
@@ -1310,11 +1351,17 @@
     }
   },
   "SurveyUnit:defaul": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "parent": "Area",
     "color": "#6baed6",
     "fields": {}
   },
   "Excavation:default": {
+    "description": { "de": {}},
+    "createdBy": "",
+    "creationDate": "",
     "parent": "Area",
     "fields": {
       "isIllegal": {

@@ -1,5 +1,6 @@
 import {Document, Relations} from 'idai-components-2';
-import {unique, to, on, unionBy, intoObj, is} from 'tsfun';
+import {unique, to, on, unionBy, is} from 'tsfun';
+import {intoObj} from 'tsfun-extra';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };

@@ -1,6 +1,7 @@
 import {ImportValidator} from './import-validator';
-import {asyncForEach, asyncMap, duplicates, equal, hasNot, includedIn, isArray,
+import {duplicates, equal, hasNot, includedIn, isArray,
     isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
+import {asyncForEach, asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
 import {Relations, NewDocument, Document} from 'idai-components-2';
 import {RelationsCompleter} from './relations-completer';

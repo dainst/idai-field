@@ -1,6 +1,6 @@
+import {getOnOr} from 'tsfun';
 import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
 import {IndexItem} from './index-item';
-import {getOnOr} from 'tsfun';
 
 
 export interface IndexDefinition {
@@ -125,9 +125,18 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(constraintIndex: ConstraintIndex,
-                    indexDefinition: IndexDefinition,
-                    doc: Document) {
+    export function getDescendantIds(constraintIndex: ConstraintIndex, indexName: string,
+                                     matchTerm: string): string[] {
+
+        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+
+        return getDescendants(constraintIndex, indexDefinition, matchTerm)
+            .map(indexItem => indexItem.id);
+    }
+
+
+    function putFor(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition, doc: Document) {
 
         const elForPath = getOnOr(indexDefinition.path, undefined)(doc);
 
@@ -268,6 +277,22 @@ export module ConstraintIndex {
                     }) as FieldDefinition
                 ) === index;
             });
+    }
+
+
+    function getDescendants(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+                            matchTerm: string): Array<IndexItem> {
+
+        const result: { [id: string]: IndexItem }|undefined
+            = getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+
+        const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
+        const descendantIndexItems: Array<IndexItem> =
+            indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => {
+                return items.concat(getDescendants(constraintIndex, indexDefinition, item.id))
+            }, []);
+
+        return indexItems.concat(descendantIndexItems);
     }
 
 

@@ -5,9 +5,9 @@ import {IdaiType, Document, FieldDocument, Constraint, Messages, ProjectConfigur
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {MoveUtility} from './move-utility';
 import {ViewFacade} from './view/view-facade';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class MoveModalComponent {
                 private typeUtility: TypeUtility,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
-                private datastore: FieldReadDatastore,
+                private indexFacade: IndexFacade,
                 private messages: Messages,
                 private viewFacade: ViewFacade,
                 private projectConfiguration: ProjectConfiguration) {
@@ -46,7 +46,7 @@ export class MoveModalComponent {
     public getConstraints = () => {
 
         if (!this.constraints) {
-            this.constraints = MoveUtility.createConstraints(this.document, this.datastore);
+            this.constraints = MoveUtility.createConstraints(this.document, this.indexFacade);
         }
 
         return this.constraints;

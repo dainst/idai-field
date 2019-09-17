@@ -436,4 +436,38 @@ describe('ConstraintIndexer', () => {
         expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '1')).toBe(2);
         expect(ConstraintIndex.getCount(ci, 'liesWithin:contain', '2')).toBe(0);
     });
+
+
+    it('get descendant ids', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2'),
+            doc('3'),
+            doc('4'),
+            doc('5')
+        ];
+
+        docs[1].resource.relations['liesWithin'] = ['1'];
+        docs[2].resource.relations['liesWithin'] = ['1'];
+        docs[3].resource.relations['liesWithin'] = ['3'];
+        docs[4].resource.relations['liesWithin'] = ['3'];
+
+        ci = ConstraintIndex.make({
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+        }, typesMap, false);
+
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+        ConstraintIndex.put(ci, docs[3]);
+        ConstraintIndex.put(ci, docs[4]);
+
+        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '1'))
+           .toEqual(['2', '3', '4', '5']);
+        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '2'))
+           .toEqual([]);
+        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '3'))
+            .toEqual(['4', '5']);
+    });
 });

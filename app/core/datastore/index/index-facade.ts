@@ -78,6 +78,12 @@ export class IndexFacade {
     }
 
 
+    public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
+
+        return ConstraintIndex.getDescendantIds(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+
     private static performConstraints(constraintIndex: ConstraintIndex,
                                       constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
 

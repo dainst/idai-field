@@ -139,6 +139,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         projectConfiguration,
         typeUtility,
+        createdIndexFacade
     );
 
     const documentHolder = new DocumentHolder(

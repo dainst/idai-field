@@ -83,6 +83,8 @@ export class ResourceDeletion {
             ? 0
             : this.typeUtility.isSubtype(document.resource.type, 'Operation')
                 ? this.indexFacade.getCount('isRecordedIn:contain', document.resource.id)
-                : this.indexFacade.getCount('liesWithin:contain', document.resource.id);
+                : this.indexFacade
+                    .getDescendantIds('liesWithin:contain',document.resource.id)
+                    .length;
     }
 }

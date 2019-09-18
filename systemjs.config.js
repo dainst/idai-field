@@ -32,6 +32,7 @@
         'rxjs/webSocket': defaultConfiguration,
         'rxjs-compat': defaultConfiguration,
         'tsfun': defaultConfiguration,
+        'tsfun-extra': defaultConfiguration,
         'idai-components-2': defaultConfiguration,
         'angular-uuid': defaultConfiguration
     };
@@ -67,6 +68,7 @@
         'ts-md5': 'node_modules/ts-md5',
         'idai-components-2' : 'node_modules/idai-components-2',
         'tsfun' : 'node_modules/tsfun',
+        'tsfun-extra' : 'node_modules/tsfun-extra',
         'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
         'fs' : '@node/fs',
         'express': '@node/express',

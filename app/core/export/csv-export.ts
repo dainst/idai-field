@@ -35,7 +35,7 @@ export module CSVExport {
      * @param fieldDefinitions
      * @param relations
      */
-    export function createExportable(resources: FieldResource[],
+    export function createExportable(resources: Array<FieldResource>,
                                      fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
@@ -73,7 +73,7 @@ export module CSVExport {
         return expand(
             expandDatingHeadings,
             expandDatingItems,
-            headingsAndMatrix)([indexOfDatingElement])
+            headingsAndMatrix)([indexOfDatingElement]);
     }
 
 
@@ -161,7 +161,7 @@ export module CSVExport {
     }
 
 
-    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: Array<string>) {
+    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: string[]) {
 
         const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(fieldDefinitions), fieldDefinitions);
 
@@ -170,7 +170,7 @@ export module CSVExport {
                 relations
                     .filter(isNot(includedIn(HIERARCHICAL_RELATIONS.ALL)))
                     .map(relation => 'relations.' + relation))
-            .concat([RELATIONS_IS_CHILD_OF]);
+            .concat(relations.find(includedIn(HIERARCHICAL_RELATIONS.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
 
@@ -381,7 +381,9 @@ export module CSVExport {
 
     function getUsableFieldNames(fieldNames: string[]): string[] {
 
-        return fieldNames.filter(isNot(includedIn(['type', 'geometry', 'id'])));
+        return fieldNames.filter(isNot(includedIn(
+            ['id', 'type', 'geometry', 'georeference', 'originalFilename', 'filename']
+        )));
     }
 
 

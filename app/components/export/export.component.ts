@@ -69,7 +69,7 @@ export class ExportComponent implements OnInit {
 
     public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
 
-    public find = (query: Query) => this.fieldDatastore.find(query);
+    public find = (query: Query) => this.documentDatastore.find(query);
 
     public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
 

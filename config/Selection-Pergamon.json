@@ -188,5 +188,25 @@
       "plasterComponents",
       "hasDecoration"
     ]
+  },
+  "Profile:Pergamon": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "Sample:Pergamon": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "ProcessUnit:Pergamon": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "SurveyBurial:Pergamon": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "BuildingFloor:Pergamon": {
+    "valuelists": {},
+    "hidden": []
   }
 }

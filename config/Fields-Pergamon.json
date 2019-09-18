@@ -27,11 +27,7 @@
     }
   },
   "Pottery:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Pottery:default",
-    "parent": "Find",
     "fields": {
       "isImport": {
         "inputType": "radio",
@@ -173,11 +169,7 @@
     }
   },
   "Glass:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Glass:default",
-    "parent": "Find",
     "fields": {
       "colorOutside": {
         "inputType": "input"
@@ -219,10 +211,6 @@
   },
   "Coin:Pergamon": {
     "extends": "Coin:default",
-    "parent": "Find",
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "fields": {
       "denomination": {
         "inputType": "dropdown",
@@ -239,10 +227,6 @@
   },
   "Terracotta:Pergamon": {
     "extends": "Terracotta:default",
-    "parent": "Find",
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "fields": {
       "manufacturing": {
         "inputType": "input"
@@ -350,10 +334,6 @@
     }
   },
   "Wood:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
-    "parent": "Find",
     "extends": "Wood:default",
     "fields": {
       "objectType": {
@@ -389,11 +369,7 @@
     }
   },
   "Brick:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Brick:default",
-    "parent": "Find",
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -462,11 +438,7 @@
     }
   },
   "Metal:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Metal:default",
-    "parent": "Find",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -532,11 +504,7 @@
     }
   },
   "Mollusk:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Mollusk:default",
-    "parent": "Find",
     "fields": {
       "classification": {
         "inputType": "radio",
@@ -560,11 +528,7 @@
     }
   },
   "Stone:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Stone:default",
-    "parent": "Find",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -642,11 +606,7 @@
     }
   },
   "Bone:Pergamon": {
-    "description": {},
-    "creationDate": "",
-    "createdBy": "",
     "extends": "Bone:default",
-    "parent": "Find",
     "fields": {
       "treatment": {
         "inputType": "radio",
@@ -669,7 +629,8 @@
       }
     }
   },
-  "PlasterFragment": {
+  "PlasterFragment:Pergamon": {
+    "extends": "PlasterFragment:default",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -726,7 +687,8 @@
       }
     }
   },
-  "ProcessUnit": {
+  "ProcessUnit:Pergamon": {
+    "extends": "ProcessUnit",
     "color": "#08306b",
     "fields": {
       "date": {
@@ -744,7 +706,7 @@
       }
     }
   },
-  "Sample": {
+  "Sample:Pergamon": {
     "color": "#9ecae1",
     "parent": "ProcessUnit",
     "fields": {
@@ -764,7 +726,7 @@
       }
     }
   },
-  "Profile": {
+  "Profile:Pergamon": {
     "color": "#c6dbef",
     "parent": "ProcessUnit",
     "fields": {
@@ -788,14 +750,16 @@
       }
     }
   },
-  "SurveyUnit": {
+  "SurveyUnit:Pergamon": {
+    "extends": "SurveyUnit:default",
     "fields": {
       "hasFinds": {
         "inputType": "boolean"
       }
     }
   },
-  "BuildingPart": {
+  "BuildingPart:Pergamon": {
+    "extends": "BuildingPart:default",
     "fields": {
       "area": {
         "inputType": "unsignedFloat"
@@ -961,7 +925,8 @@
       }
     }
   },
-  "Excavation": {
+  "Excavation:Pergamon": {
+    "extends": "Excavation:default",
     "fields": {
       "beginningDate": {
         "inputType": "date"
@@ -991,7 +956,8 @@
       "inputType": "boolean"
     }
   },
-  "BuildingFloor": {
+  "BuildingFloor:Pergamon": {
+    "extends": "BuildingFloor",
     "fields": {
       "area": {
         "inputType": "unsignedFloat"
@@ -1089,7 +1055,8 @@
       }
     }
   },
-  "SurveyBurial": {
+  "SurveyBurial:Pergamon": {
+    "extends": "SurveyBurial",
     "fields": {
       "area": {
         "inputType": "unsignedFloat"

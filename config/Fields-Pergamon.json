@@ -1,5 +1,9 @@
 {
-  "Find": {
+  "Find:Pergamon": {
+    "extends": "Find",
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
     "fields": {
       "specialStatus": {
         "inputType": "checkboxes",
@@ -22,7 +26,12 @@
       }
     }
   },
-  "Pottery": {
+  "Pottery:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Pottery:default",
+    "parent": "Find",
     "fields": {
       "isImport": {
         "inputType": "radio",
@@ -163,7 +172,12 @@
       }
     }
   },
-  "Glass": {
+  "Glass:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Glass:default",
+    "parent": "Find",
     "fields": {
       "colorOutside": {
         "inputType": "input"
@@ -203,7 +217,12 @@
       }
     }
   },
-  "Coin": {
+  "Coin:Pergamon": {
+    "extends": "Coin:default",
+    "parent": "Find",
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
     "fields": {
       "denomination": {
         "inputType": "dropdown",
@@ -218,7 +237,12 @@
       }
     }
   },
-  "Terracotta": {
+  "Terracotta:Pergamon": {
+    "extends": "Terracotta:default",
+    "parent": "Find",
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
     "fields": {
       "manufacturing": {
         "inputType": "input"
@@ -325,7 +349,12 @@
       }
     }
   },
-  "Wood": {
+  "Wood:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "parent": "Find",
+    "extends": "Wood:default",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -359,7 +388,12 @@
       }
     }
   },
-  "Brick": {
+  "Brick:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Brick:default",
+    "parent": "Find",
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -427,7 +461,12 @@
       }
     }
   },
-  "Metal": {
+  "Metal:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Metal:default",
+    "parent": "Find",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -492,7 +531,12 @@
       }
     }
   },
-  "Mollusk": {
+  "Mollusk:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Mollusk:default",
+    "parent": "Find",
     "fields": {
       "classification": {
         "inputType": "radio",
@@ -515,7 +559,12 @@
       }
     }
   },
-  "Stone": {
+  "Stone:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Stone:default",
+    "parent": "Find",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -592,7 +641,12 @@
       }
     }
   },
-  "Bone": {
+  "Bone:Pergamon": {
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "extends": "Bone:default",
+    "parent": "Find",
     "fields": {
       "treatment": {
         "inputType": "radio",

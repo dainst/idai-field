@@ -31,7 +31,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Find:default": {
+  "Find:Pergamon": {
     "valuelists": {},
     "hidden": [
       "condition",
@@ -55,7 +55,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Glass:default": {
+  "Glass:Pergamon": {
     "valuelists": {},
     "hidden": [
       "vesselForm",
@@ -64,11 +64,15 @@
       "color"
     ]
   },
-  "Mollusk:default": {
+  "Metal:Pergamon": {
     "valuelists": {},
     "hidden": []
   },
-  "Brick:default": {
+  "Mollusk:Pergamon": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "Brick:Pergamon": {
     "valuelists": {},
     "hidden": [
       "brickForm",
@@ -81,7 +85,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Wood:default": {
+  "Wood:Pergamon": {
     "valuelists": {},
     "hidden": [
       "color",
@@ -100,7 +104,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Pottery:default": {
+  "Pottery:Pergamon": {
     "valuelists": {},
     "hidden": [
       "amountSherdsLip",
@@ -133,14 +137,14 @@
     "valuelists": {},
     "hidden": []
   },
-  "Bone:default": {
+  "Bone:Pergamon": {
     "valuelists": {},
     "hidden": [
       "boneClassification",
       "burningGrade"
     ]
   },
-  "Terracotta:default": {
+  "Terracotta:Pergamon": {
     "valuelists": {},
     "hidden": [
       "vesselForm",
@@ -158,7 +162,7 @@
     "valuelists": {},
     "hidden": []
   },
-  "Stone:default": {
+  "Stone:Pergamon": {
     "valuelists": {},
     "hidden": [
       "purpose",
@@ -169,7 +173,7 @@
       "temperAmount"
     ]
   },
-  "Coin:default": {
+  "Coin:Pergamon": {
     "valuelists": {},
     "hidden": []
   },

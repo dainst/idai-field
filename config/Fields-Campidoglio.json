@@ -2,6 +2,7 @@
   "Feature:Campidoglio": {
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "extends": "Feature",
     "fields": {
       "period": {
@@ -47,6 +48,8 @@
   "Architecture:Campidoglio": {
     "description": {},
     "createdBy": "",
+    "creationDate": "",
+    "parent": "Feature",
     "extends": "Architecture:default",
     "fields": {
       "blockTreatment": {
@@ -86,8 +89,10 @@
   },
   "Floor:Campidoglio": {
     "extends": "Floor:default",
+    "parent": "Feature",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "condition": {
         "inputType": "dropdown",
@@ -115,9 +120,11 @@
     }
   },
   "Layer:Campidoglio": {
+    "parent": "Feature",
     "extends": "Layer:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "color": "#663300",
     "fields": {
       "consistency": {
@@ -154,6 +161,7 @@
   "Interface:Campidoglio": {
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "parent": "Feature",
     "fields": {
       "interfaceClassification": {
@@ -185,6 +193,7 @@
     "extends": "Find:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -215,6 +224,9 @@
   "SampleCampidoglio:Campidoglio": {
     "parent": "Find",
     "color": "#9ecae1",
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
     "fields": {
       "descriptionSample": {
         "inputType": "text"
@@ -245,9 +257,11 @@
     }
   },
   "Pottery:Campidoglio": {
+    "parent": "Find",
     "extends": "Pottery:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -351,9 +365,11 @@
     }
   },
   "Brick:Campidoglio": {
+    "parent": "Find",
     "extends": "Brick:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -432,9 +448,11 @@
     }
   },
   "Stone:Campidoglio": {
+    "parent": "Find",
     "extends": "Stone:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -481,9 +499,11 @@
     }
   },
   "Metal:Campidoglio": {
+    "parent": "Find",
     "extends": "Metal:default",
     "description": {},
     "createdBy": "",
+    "creationDate": "",
     "color": "#995f25",
     "fields": {
       "materialDescription": {

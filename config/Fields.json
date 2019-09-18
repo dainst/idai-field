@@ -482,6 +482,7 @@
     "extends": "Place",
     "description": { "de": "" },
     "createdBy": "",
+    "creationDate": "",
     "color": "#5572A1",
     "commons": [
       "dating",
@@ -631,7 +632,7 @@
   },
   "Inscription:default": {
     "extends": "Inscription",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "commons": [
@@ -671,7 +672,7 @@
   },
   "Image:default": {
     "extends": "Image",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "commons": [
@@ -686,7 +687,7 @@
   },
   "Pottery:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "commons": [
@@ -854,7 +855,7 @@
   },
   "Grave:default": {
     "parent": "Feature",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#339900",
@@ -915,7 +916,7 @@
   },
   "Bone:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#CCFFFF",
@@ -952,7 +953,7 @@
   },
   "Room:default": {
     "extends": "Room",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "commons": [
@@ -986,7 +987,7 @@
   },
   "Terracotta:default": {
     "parent": "Find",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#FF6600",
@@ -1058,7 +1059,7 @@
   },
   "Drawing:default": {
     "parent": "Image",
-    "description": "",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "fields": {
@@ -1083,8 +1084,9 @@
   "Survey:default": {
     "extends": "Survey",
     "parent": "Operation",
-    "description": "",
+    "description": {},
     "createdBy": "",
+    "creationDate": "",
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
@@ -1094,8 +1096,9 @@
   },
   "Stone:default": {
     "parent": "Find",
-    "description": "",
-    "createdBy": "IT-Referat, 2019",
+    "description": {},
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
     "color": "#5c5c8a",
     "commons": [
       "provenance"
@@ -1142,8 +1145,9 @@
   },
   "Coin:default": {
     "parent": "Find",
-    "description": "",
-    "createdBy": "IT, Referat,  2019",
+    "description": {},
+    "createdBy": "IT, Referat",
+    "creationDate": "2019",
     "color": "#cc9900",
     "commons": [
       "provenance"
@@ -1275,14 +1279,14 @@
     }
   },
   "Photo:default": {
-    "description": { "de": {}},
+    "description": { "de": {} },
     "createdBy": "",
     "creationDate": "",
     "parent": "Image",
     "fields": {}
   },
   "Metal:default": {
-    "description": { "de": {}},
+    "description": { "de": {} },
     "createdBy": "",
     "creationDate": "",
     "color": "#995f25",

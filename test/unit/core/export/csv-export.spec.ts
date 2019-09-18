@@ -1,10 +1,9 @@
+import {FieldDefinition} from 'idai-components-2';
 import {CSVExport} from '../../../../app/core/export/csv-export';
 import {Static} from '../../static';
-import {FieldDefinition} from 'idai-components-2';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {
-
 
     return fieldNames.map(fieldName => {
 
@@ -33,7 +32,7 @@ describe('CSVExport', () => {
 
         const t = makeFieldDefinitions(['identifier', 'shortDescription']);
         const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
-        return {t: t, resource: resource};
+        return { t: t, resource: resource };
     }
 
 
@@ -76,7 +75,7 @@ describe('CSVExport', () => {
 
     it('handle double quotes in field values', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         resource.shortDescription = 'ABC " "DEF"';
         const result = CSVExport.createExportable([resource], t, []);
         expect(result[0]).toEqual('"identifier","shortDescription"');
@@ -190,10 +189,10 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'type')
         ];
         resources[0].dating = [
-            {begin: {inputYear: 10}, end: {inputYear: 20}, source: 'some1'},
-            {begin: {inputYear: 20}, end: {inputYear: 30}, source: 'some2'}];
+            { begin: { inputYear: 10 }, end: { inputYear: 20 }, source: 'some1' },
+            { begin: { inputYear: 20 }, end: { inputYear: 30 }, source: 'some2' }];
         resources[1].dating = [
-            {begin: {inputYear: 40}, end: {inputYear: 50}, source: 'some3'}];
+            { begin: { inputYear: 40 }, end: { inputYear: 50 }, source: 'some3' }];
         resources[1].custom = 'custom';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
@@ -289,7 +288,7 @@ describe('CSVExport', () => {
     it('do not modify resource when expanding', () => {
 
         const {t, resource} = makeSimpleTypeAndResource();
-        resource.dating = [{begin: {year: 10}, end: {year: 20}, source: 'some1', label: 'blablabla1'}];
+        resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: 'some1', label: 'blablabla1' }];
 
         CSVExport.createExportable([resource], t, []).map(row => row.split(','));
 
@@ -320,10 +319,10 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'type'),
         ];
         resources[0]['dimensionX'] = [
-            {inputValue: 100, measurementComment: 'abc'},
-            {inputValue: 200, measurementPosition: 'def'}];
+            { inputValue: 100, measurementComment: 'abc' },
+            { inputValue: 200, measurementPosition: 'def' }];
         resources[1]['dimensionX'] = [
-            {inputValue: 300, inputRangeEndValue: 'ghc'}];
+            { inputValue: 300, inputRangeEndValue: 'ghc' }];
         resources[1]['custom'] = 'custom';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
@@ -402,8 +401,8 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
             ifResource('i2', 'identifier2', 'shortDescription2', 'type'),
         ];
-        resources[0]['dimensionX'] = [{inputValue: 100, measurementComment: 'abc'}];
-        resources[1]['dimensionY'] = [{inputValue: 300, inputRangeEndValue: 'ghc'}];
+        resources[0]['dimensionX'] = [{ inputValue: 100, measurementComment: 'abc' }];
+        resources[1]['dimensionY'] = [{ inputValue: 300, inputRangeEndValue: 'ghc' }];
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 

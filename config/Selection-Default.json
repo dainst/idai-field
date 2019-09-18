@@ -22,7 +22,7 @@
   "Trench:default": {
     "valuelists": {},
     "hidden": [
-      "researchQuestion"
+      "trenchComment"
     ]
   },
   "Building:default": {

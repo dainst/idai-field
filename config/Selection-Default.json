@@ -113,6 +113,10 @@
     "valuelists": {},
     "hidden": []
   },
+  "Metal:default": {
+    "valuelists": {},
+    "hidden": []
+  },
   "Grave:default": {
     "valuelists": {},
     "hidden": [
@@ -128,6 +132,10 @@
     "hidden": []
   },
   "Terracotta:default": {
+    "valuelists": {},
+    "hidden": []
+  },
+  "Photo:default": {
     "valuelists": {},
     "hidden": []
   },

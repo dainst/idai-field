@@ -53,7 +53,9 @@ export module MoveUtility {
 
         const ids: string[] = [document.resource.id];
 
-        if (Document.hasRelations(document, 'isRecordedIn')) {
+        if (Document.hasRelations(document, 'liesWithin')) {
+            ids.push(document.resource.relations['liesWithin'][0]);
+        } else if (Document.hasRelations(document, 'isRecordedIn')) {
             ids.push(document.resource.relations.isRecordedIn[0]);
         }
 

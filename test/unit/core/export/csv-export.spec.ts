@@ -42,25 +42,25 @@ describe('CSVExport', () => {
         const t = makeFieldDefinitions(['identifier', 'shortDescription', 'custom', 'id']);
 
         const result = CSVExport.createExportable([], t, []);
-        expect(result[0]).toBe('"identifier","shortDescription","custom","relations.isChildOf"');
+        expect(result[0]).toBe('"identifier","shortDescription","custom"');
     });
 
 
     it('create document line', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         const result = CSVExport.createExportable([resource], t, []);
-        expect(result[0]).toEqual('"identifier","shortDescription","relations.isChildOf"');
-        expect(result[1]).toEqual('"identifier1","shortDescription1",""');
+        expect(result[0]).toEqual('"identifier","shortDescription"');
+        expect(result[1]).toEqual('"identifier1","shortDescription1"');
     });
 
 
     it('export relations', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         resource.relations = { someRelation: ["identifier2"] } as any;
 
-        const result = CSVExport.createExportable([resource], t, ['someRelation']);
+        const result = CSVExport.createExportable([resource], t, ['someRelation', 'liesWithin']);
         expect(result[0]).toBe('"identifier","shortDescription","relations.someRelation","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1","identifier2",""');
     });
@@ -79,8 +79,8 @@ describe('CSVExport', () => {
         const {t, resource} = makeSimpleTypeAndResource();
         resource.shortDescription = 'ABC " "DEF"';
         const result = CSVExport.createExportable([resource], t, []);
-        expect(result[0]).toEqual('"identifier","shortDescription","relations.isChildOf"');
-        expect(result[1]).toEqual('"identifier1","ABC "" ""DEF""",""');
+        expect(result[0]).toEqual('"identifier","shortDescription"');
+        expect(result[1]).toEqual('"identifier1","ABC "" ""DEF"""');
     });
 
 
@@ -90,14 +90,14 @@ describe('CSVExport', () => {
         const resource = ifResource('i1', 'identifier1', 'shortDescription1', 'type');
         resource.color = ['blue', 'red', 'yellow'];
         const result = CSVExport.createExportable([resource], t, []);
-        expect(result[0]).toEqual('"identifier","shortDescription","color","relations.isChildOf"');
-        expect(result[1]).toEqual('"identifier1","shortDescription1","blue;red;yellow",""');
+        expect(result[0]).toEqual('"identifier","shortDescription","color"');
+        expect(result[1]).toEqual('"identifier1","shortDescription1","blue;red;yellow"');
     });
 
 
     it('is nested in another resource', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         resource.relations = {
             liesWithin: ['identifier2'],
             isRecordedIn: ['operation1']
@@ -108,7 +108,7 @@ describe('CSVExport', () => {
 
     it('is nested in an operation', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         resource.relations = {
             isRecordedIn: ['operation1']
         } as any;
@@ -301,7 +301,7 @@ describe('CSVExport', () => {
 
     it('do not modify resource when expanding relations', () => {
 
-        const {t, resource} = makeSimpleTypeAndResource();
+        const { t, resource } = makeSimpleTypeAndResource();
         resource['relations']['isAbove'] = ['abc'];
 
         CSVExport.createExportable([resource], t, ['isAbove']).map(row => row.split(','));

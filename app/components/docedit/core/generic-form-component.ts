@@ -16,4 +16,13 @@ export class GenericFormComponent {
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() document: Document;
+
+
+    public shouldShow(field: any) {
+
+        if (!field) return false;
+        if (field.name === 'identifier' || field.name === 'shortDescription') return true;
+
+        return field.editable && field.visible;
+    }
 }

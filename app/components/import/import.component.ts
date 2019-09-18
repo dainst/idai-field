@@ -101,13 +101,7 @@ export class ImportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
-
-        this.resourceTypes =
-            getTypesWithoutExcludedTypes(
-                this.projectConfiguration.getTypesList(),
-                BASE_EXCLUSION);
-
-        this.selectFirstResourceType();
+        this.updateResourceTypes();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -201,6 +195,26 @@ export class ImportComponent implements OnInit {
             case 'csv':
                 return '.csv';
         }
+    }
+
+
+    private updateResourceTypes() {
+
+        this.resourceTypes = getTypesWithoutExcludedTypes(
+            this.projectConfiguration.getTypesList(), this.getTypesToExclude()
+        );
+
+        if (!this.selectedType || !this.resourceTypes.includes(this.selectedType)) {
+            this.selectFirstResourceType();
+        }
+    }
+
+
+    private getTypesToExclude() {
+
+        return this.allowMergingExistingResources
+            ? BASE_EXCLUSION
+            : BASE_EXCLUSION.concat(this.typeUtility.getImageTypeNames());
     }
 
 

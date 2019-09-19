@@ -1,6 +1,6 @@
 {
-  "BuildingPart": {
-    "parent": "Feature",
+  "BuildingPart:MonTur": {
+    "extends": "BuildingPart:default",
     "commons": [
       "orientation",
       "spatialLocation"
@@ -107,38 +107,5 @@
         "valuelistId": "BuildingPart-wallSide-MonTur"
       }
     }
-  },
-  "Other": {
-    "parent": "Feature",
-    "fields": {
-      "isNatural": {
-        "inputType": "boolean"
-      },
-      "consistency": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-default"
-      },
-      "distinguishingCriteria": {
-        "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
-      },
-      "otherClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Other-otherClassification-Meninx"
-      },
-      "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-default"
-      }
-    }
-  },
-  "Profile": {
-    "color": "#c6dbef",
-    "parent": "Feature",
-    "commons": [
-      "dimensionHeight",
-      "orientation"
-    ],
-    "fields": {}
   }
 }

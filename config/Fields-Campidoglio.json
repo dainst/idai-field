@@ -1,6 +1,5 @@
 {
-  "Feature:Campidoglio": {
-    "extends": "Feature",
+  "Feature:default": {
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -42,8 +41,7 @@
       }
     }
   },
-  "Architecture:Campidoglio": {
-    "extends": "Architecture:default",
+  "Architecture:default": {
     "fields": {
       "blockTreatment": {
         "inputType": "checkboxes",
@@ -80,8 +78,7 @@
       }
     }
   },
-  "Floor:Campidoglio": {
-    "extends": "Floor:default",
+  "Floor:default": {
     "fields": {
       "condition": {
         "inputType": "dropdown",
@@ -108,8 +105,7 @@
       }
     }
   },
-  "Layer:Campidoglio": {
-    "extends": "Layer:default",
+  "Layer:default": {
     "color": "#663300",
     "fields": {
       "consistency": {
@@ -143,7 +139,7 @@
       }
     }
   },
-  "Interface:Campidoglio": {
+  "Interface": {
     "parent": "Feature",
     "fields": {
       "interfaceClassification": {
@@ -171,8 +167,8 @@
       }
     }
   },
-  "Find:Campidoglio": {
-    "extends": "Find:default",
+  "Find:default": {
+    "typeFamily": "Find",
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -200,7 +196,7 @@
       }
     }
   },
-  "SampleCampidoglio:Campidoglio": {
+  "SampleCampidoglio": {
     "parent": "Find",
     "color": "#9ecae1",
     "fields": {
@@ -232,8 +228,7 @@
       }
     }
   },
-  "Pottery:Campidoglio": {
-    "extends": "Pottery:default",
+  "Pottery:default": {
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -336,8 +331,7 @@
       }
     }
   },
-  "Brick:Campidoglio": {
-    "extends": "Brick:default",
+  "Brick:default": {
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -415,8 +409,7 @@
       }
     }
   },
-  "Stone:Campidoglio": {
-    "extends": "Stone:default",
+  "Stone:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -462,8 +455,7 @@
       }
     }
   },
-  "Metal:Campidoglio": {
-    "extends": "Metal:default",
+  "Metal:default": {
     "color": "#995f25",
     "fields": {
       "materialDescription": {

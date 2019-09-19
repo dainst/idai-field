@@ -125,6 +125,12 @@
   "Coin-default": {
     "hidden": []
   },
+  "Interface": {
+    "hidden": []
+  },
+  "SampleCastiglione": {
+    "hidden": []
+  },
   "PlasterFragment:default": {
     "hidden": []
   }

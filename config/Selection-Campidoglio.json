@@ -23,10 +23,10 @@
   "BuildingPart:default": {
     "hidden": []
   },
-  "Find:Campidoglio": {
+  "Find:default": {
     "hidden": []
   },
-  "Feature:Campidoglio": {
+  "Feature:default": {
     "hidden": [
       "color",
       "hasDisturbance"
@@ -50,7 +50,7 @@
   "Mollusk:default": {
     "hidden": []
   },
-  "Brick:Campidoglio": {
+  "Brick:default": {
     "hidden": [
       "specificType"
     ]
@@ -61,7 +61,7 @@
   "Wood:default": {
     "hidden": []
   },
-  "Architecture:Campidoglio": {
+  "Architecture:default": {
     "hidden": [
       "mortarBinder",
       "mortarColor",
@@ -73,16 +73,16 @@
       "wallType"
     ]
   },
-  "Layer:Campidoglio": {
+  "Layer:default": {
     "hidden": []
   },
-  "Floor:Campidoglio": {
+  "Floor:default": {
     "hidden": [
       "mortarBinder",
       "layerClassification"
     ]
   },
-  "Pottery:Campidoglio": {
+  "Pottery:default": {
     "hidden": [
       "temper",
       "temperAmount",
@@ -115,7 +115,7 @@
   "Drawing:default": {
     "hidden": []
   },
-  "Stone:Campidoglio": {
+  "Stone:default": {
     "hidden": [
       "temperAmount",
       "purpose",
@@ -128,10 +128,10 @@
   "PlasterFragment:default": {
     "hidden": []
   },
-  "Interface:Campidoglio": {
+  "Interface": {
     "hidden": []
   },
-  "SampleCampidoglio:Campidoglio": {
+  "SampleCampidoglio": {
     "hidden": []
   }
 }

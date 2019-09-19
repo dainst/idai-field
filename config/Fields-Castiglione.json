@@ -1,5 +1,5 @@
 {
-  "Feature": {
+  "Feature:default": {
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -41,7 +41,7 @@
       }
     }
   },
-  "Architecture": {
+  "Architecture:default": {
     "fields": {
       "blockTreatment": {
         "inputType": "checkboxes",
@@ -78,7 +78,7 @@
       }
     }
   },
-  "Floor": {
+  "Floor:default": {
     "fields": {
       "condition": {
         "inputType": "dropdown",
@@ -105,7 +105,7 @@
       }
     }
   },
-  "Layer": {
+  "Layer:default": {
     "color": "#663300",
     "fields": {
       "consistency": {
@@ -167,7 +167,7 @@
       }
     }
   },
-  "Find": {
+  "Find:default": {
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -195,7 +195,7 @@
       }
     }
   },
-  "Sample": {
+  "SampleCastiglione": {
     "parent": "Find",
     "color": "#9ecae1",
     "fields": {
@@ -227,7 +227,7 @@
       }
     }
   },
-  "Pottery": {
+  "Pottery:default": {
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -330,7 +330,7 @@
       }
     }
   },
-  "Brick": {
+  "Brick:default": {
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -408,7 +408,7 @@
       }
     }
   },
-  "Stone": {
+  "Stone:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -454,7 +454,7 @@
       }
     }
   },
-  "Metal": {
+  "Metal:default": {
     "color": "#995f25",
     "fields": {
       "materialDescription": {

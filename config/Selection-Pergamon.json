@@ -23,7 +23,7 @@
   "BuildingPart:default": {
     "hidden": []
   },
-  "Find:Pergamon": {
+  "Find:default": {
     "hidden": [
       "condition",
       "storageInventoryNumber",
@@ -42,7 +42,7 @@
   "Image:default": {
     "hidden": []
   },
-  "Glass:Pergamon": {
+  "Glass:default": {
     "hidden": [
       "vesselForm",
       "vesselFormSpecific",
@@ -50,13 +50,13 @@
       "color"
     ]
   },
-  "Metal:Pergamon": {
+  "Metal:default": {
     "hidden": []
   },
-  "Mollusk:Pergamon": {
+  "Mollusk:default": {
     "hidden": []
   },
-  "Brick:Pergamon": {
+  "Brick:default": {
     "hidden": [
       "brickForm",
       "clayColorInside",
@@ -67,7 +67,7 @@
   "Burial:default": {
     "hidden": []
   },
-  "Wood:Pergamon": {
+  "Wood:default": {
     "hidden": [
       "color",
       "catalogueNumber"
@@ -82,7 +82,7 @@
   "Floor:default": {
     "hidden": []
   },
-  "Pottery:Pergamon": {
+  "Pottery:default": {
     "hidden": [
       "amountSherdsLip",
       "amountSherdsPedestal",
@@ -113,13 +113,13 @@
   "Grave:default": {
     "hidden": []
   },
-  "Bone:Pergamon": {
+  "Bone:default": {
     "hidden": [
       "boneClassification",
       "burningGrade"
     ]
   },
-  "Terracotta:Pergamon": {
+  "Terracotta:default": {
     "hidden": [
       "vesselForm",
       "formDescription",
@@ -138,7 +138,7 @@
   "Drawing:default": {
     "hidden": []
   },
-  "Stone:Pergamon": {
+  "Stone:default": {
     "hidden": [
       "purpose",
       "workmanship",
@@ -148,7 +148,7 @@
       "temperAmount"
     ]
   },
-  "Coin:Pergamon": {
+  "Coin:default": {
     "hidden": []
   },
   "PlasterFragment:default": {
@@ -158,19 +158,19 @@
       "hasDecoration"
     ]
   },
-  "Profile:Pergamon": {
+  "Profile": {
     "hidden": []
   },
-  "Sample:Pergamon": {
+  "Sample": {
     "hidden": []
   },
-  "ProcessUnit:Pergamon": {
+  "ProcessUnit": {
     "hidden": []
   },
-  "SurveyBurial:Pergamon": {
+  "SurveyBurial": {
     "hidden": []
   },
-  "BuildingFloor:Pergamon": {
+  "BuildingFloor": {
     "hidden": []
   }
 }

@@ -1,6 +1,5 @@
 {
-  "Find:Pergamon": {
-    "extends": "Find",
+  "Find:default": {
     "description": {},
     "creationDate": "",
     "createdBy": "",
@@ -26,8 +25,7 @@
       }
     }
   },
-  "Pottery:Pergamon": {
-    "extends": "Pottery:default",
+  "Pottery:default": {
     "fields": {
       "isImport": {
         "inputType": "radio",
@@ -168,8 +166,7 @@
       }
     }
   },
-  "Glass:Pergamon": {
-    "extends": "Glass:default",
+  "Glass:default": {
     "fields": {
       "colorOutside": {
         "inputType": "input"
@@ -209,8 +206,7 @@
       }
     }
   },
-  "Coin:Pergamon": {
-    "extends": "Coin:default",
+  "Coin:default": {
     "fields": {
       "denomination": {
         "inputType": "dropdown",
@@ -225,8 +221,7 @@
       }
     }
   },
-  "Terracotta:Pergamon": {
-    "extends": "Terracotta:default",
+  "Terracotta:default": {
     "fields": {
       "manufacturing": {
         "inputType": "input"
@@ -333,8 +328,7 @@
       }
     }
   },
-  "Wood:Pergamon": {
-    "extends": "Wood:default",
+  "Wood:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -368,8 +362,7 @@
       }
     }
   },
-  "Brick:Pergamon": {
-    "extends": "Brick:default",
+  "Brick:default": {
     "fields": {
       "formDescription": {
         "inputType": "dropdown",
@@ -437,8 +430,7 @@
       }
     }
   },
-  "Metal:Pergamon": {
-    "extends": "Metal:default",
+  "Metal:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -503,8 +495,7 @@
       }
     }
   },
-  "Mollusk:Pergamon": {
-    "extends": "Mollusk:default",
+  "Mollusk:default": {
     "fields": {
       "classification": {
         "inputType": "radio",
@@ -527,8 +518,7 @@
       }
     }
   },
-  "Stone:Pergamon": {
-    "extends": "Stone:default",
+  "Stone:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -605,8 +595,7 @@
       }
     }
   },
-  "Bone:Pergamon": {
-    "extends": "Bone:default",
+  "Bone:default": {
     "fields": {
       "treatment": {
         "inputType": "radio",
@@ -629,8 +618,7 @@
       }
     }
   },
-  "PlasterFragment:Pergamon": {
-    "extends": "PlasterFragment:default",
+  "PlasterFragment:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -687,8 +675,7 @@
       }
     }
   },
-  "ProcessUnit:Pergamon": {
-    "extends": "ProcessUnit",
+  "ProcessUnit": {
     "color": "#08306b",
     "fields": {
       "date": {
@@ -706,7 +693,7 @@
       }
     }
   },
-  "Sample:Pergamon": {
+  "Sample": {
     "color": "#9ecae1",
     "parent": "ProcessUnit",
     "fields": {
@@ -726,7 +713,7 @@
       }
     }
   },
-  "Profile:Pergamon": {
+  "Profile": {
     "color": "#c6dbef",
     "parent": "ProcessUnit",
     "fields": {
@@ -750,16 +737,14 @@
       }
     }
   },
-  "SurveyUnit:Pergamon": {
-    "extends": "SurveyUnit:default",
+  "SurveyUnit:default": {
     "fields": {
       "hasFinds": {
         "inputType": "boolean"
       }
     }
   },
-  "BuildingPart:Pergamon": {
-    "extends": "BuildingPart:default",
+  "BuildingPart:default": {
     "fields": {
       "area": {
         "inputType": "unsignedFloat"
@@ -925,8 +910,7 @@
       }
     }
   },
-  "Excavation:Pergamon": {
-    "extends": "Excavation:default",
+  "Excavation:default": {
     "fields": {
       "beginningDate": {
         "inputType": "date"
@@ -956,8 +940,7 @@
       "inputType": "boolean"
     }
   },
-  "BuildingFloor:Pergamon": {
-    "extends": "BuildingFloor",
+  "BuildingFloor": {
     "fields": {
       "area": {
         "inputType": "unsignedFloat"
@@ -1055,8 +1038,7 @@
       }
     }
   },
-  "SurveyBurial:Pergamon": {
-    "extends": "SurveyBurial",
+  "SurveyBurial": {
     "fields": {
       "area": {
         "inputType": "unsignedFloat"

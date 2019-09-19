@@ -1,6 +1,5 @@
 {
-  "Feature:Boha": {
-    "extends": "Feature:default",
+  "Feature:default": {
     "fields": {
       "period": {
         "inputType": "dropdownRange",
@@ -16,8 +15,7 @@
       }
     }
   },
-  "Layer:Boha": {
-    "extends": "Layer:default",
+  "Layer:default": {
     "fields": {
       "layerClassification": {
         "inputType": "dropdown",
@@ -37,8 +35,7 @@
       }
     }
   },
-  "Floor:Boha": {
-    "extends": "Floor:default",
+  "Floor:default": {
     "fields": {
       "distinguishingCriteria": {
         "inputType": "checkboxes",
@@ -50,8 +47,7 @@
       }
     }
   },
-  "Architecture:Boha": {
-    "extends": "Architecture:default",
+  "Architecture:default": {
     "fields": {
       "architectureClassification": {
         "inputType": "radio",
@@ -71,8 +67,7 @@
       }
     }
   },
-  "Find:Boha": {
-    "extends": "Find:default",
+  "Find:default": {
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -99,8 +94,7 @@
       }
     }
   },
-  "Bone:Boha": {
-    "extends": "Bone:default",
+  "Bone:default": {
     "fields": {
       "boneClassification": {
         "inputType": "dropdown",
@@ -111,8 +105,7 @@
       }
     }
   },
-  "Brick:Boha": {
-    "extends": "Brick:default",
+  "Brick:default": {
     "fields": {
       "brickForm": {
         "inputType": "checkboxes",
@@ -132,8 +125,7 @@
       }
     }
   },
-  "Stone:Boha": {
-    "extends": "Stone:default",
+  "Stone:default": {
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -153,8 +145,7 @@
       }
     }
   },
-  "PlasterFragment:Boha": {
-    "extends": "PlasterFragment:default",
+  "PlasterFragment:default": {
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -168,8 +159,7 @@
       }
     }
   },
-  "Glass:Boha": {
-    "extends": "Glass:default",
+  "Glass:default": {
     "fields": {
       "color": {
         "inputType": "checkboxes",
@@ -177,8 +167,7 @@
       }
     }
   },
-  "Pottery:Boha": {
-    "extends": "Pottery:default",
+  "Pottery:default": {
     "fields": {
       "clayColorBreak": {
         "inputType": "checkboxes",
@@ -206,7 +195,7 @@
       }
     }
   },
-  "SampleBoha:Boha": {
+  "SampleBoha": {
     "parent": "Find",
     "commons": [
       "processor",
@@ -239,7 +228,7 @@
       }
     }
   },
-  "Mollusk:Boha": {
+  "Mollusk:default": {
     "extends": "Mollusk:default",
     "fields": {
       "treatment": {
@@ -250,8 +239,7 @@
       }
     }
   },
-  "Wood:Boha": {
-    "extends": "Wood:default",
+  "Wood:default": {
     "fields": {
       "objectType": {
         "inputType": "dropdown",
@@ -259,8 +247,7 @@
       }
     }
   },
-  "Coin:Boha": {
-    "extends": "Coin:default",
+  "Coin:default": {
     "fields": {
       "mintingRuler": {
         "inputType": "dropdown",
@@ -272,8 +259,7 @@
       }
     }
   },
-  "Inscription:Boha": {
-    "extends": "Inscription:default",
+  "Inscription:default": {
     "fields": {
       "objectType": {
         "inputType": "checkboxes",

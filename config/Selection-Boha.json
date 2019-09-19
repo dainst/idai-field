@@ -23,27 +23,27 @@
   "BuildingPart:default": {
     "hidden": []
   },
-  "Find:Boha": {
+  "Find:default": {
     "hidden": [
       "catalogueNumber"
     ]
   },
-  "Feature:Boha": {
+  "Feature:default": {
     "hidden": []
   },
   "Room:default": {
     "hidden": []
   },
-  "Inscription:Boha": {
+  "Inscription:default": {
     "hidden": ["conditionAmount"]
   },
   "Image:default": {
     "hidden": []
   },
-  "Glass:Boha": {
+  "Glass:default": {
     "hidden": []
   },
-  "Mollusk:Boha": {
+  "Mollusk:default": {
     "hidden": []
   },
   "Brick:Boha": {
@@ -52,24 +52,24 @@
   "Burial:default": {
     "hidden": []
   },
-  "Wood:Boha": {
+  "Wood:default": {
     "hidden": []
   },
-  "Architecture:Boha": {
+  "Architecture:default": {
     "hidden": [
       "brickwork",
       "conditionAmount"
     ]
   },
-  "Layer:Boha": {
+  "Layer:default": {
     "hidden": []
   },
-  "Floor:Boha": {
+  "Floor:default": {
     "hidden": [
       "conditionAmount"
     ]
   },
-  "Pottery:Boha": {
+  "Pottery:default": {
     "hidden": []
   },
   "Grave:default": {
@@ -92,18 +92,18 @@
   "Drawing:default": {
     "hidden": []
   },
-  "Stone:Boha": {
+  "Stone:default": {
     "hidden": [
       "workmanship"
     ]
   },
-  "Coin:Boha": {
+  "Coin:default": {
     "hidden": []
   },
-  "PlasterFragment:Boha": {
+  "PlasterFragment:default": {
     "hidden": []
   },
-  "SampleBoha:Boha": {
+  "SampleBoha": {
     "hidden": []
   }
 }

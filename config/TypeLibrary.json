@@ -1,6 +1,6 @@
 {
   "Trench:default": {
-    "extends": "Trench",
+    "typeFamily": "Trench",
     "createdBy": "IT-Referat",
     "creationDate": "2019",
     "description": { "de": "Schnitt; IT-Referat, 2019" },
@@ -24,6 +24,7 @@
     }
   },
   "Glass:default": {
+    "typeFamily": "Glass",
     "parent": "Find",
     "createdBy": "IT-Referat",
     "creationDate": "2019",
@@ -71,6 +72,7 @@
     }
   },
   "Mollusk:default": {
+    "typeFamily": "Mollusk",
     "parent": "Find",
     "description": {},
     "createdBy": "",
@@ -84,6 +86,7 @@
     }
   },
   "Brick:default": {
+    "typeFamily": "Brick",
     "parent": "Find",
     "description": {},
     "createdBy": "",
@@ -143,7 +146,7 @@
     }
   },
   "Project:default": {
-    "extends": "Project",
+    "typeFamily": "Project",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -184,6 +187,7 @@
     }
   },
   "Burial:default": {
+    "typeFamily": "Burial",
     "parent": "Feature",
     "description": {},
     "createdBy": "",
@@ -247,7 +251,7 @@
     }
   },
   "Building:default": {
-    "extends": "Building",
+    "typeFamily": "Building",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -302,6 +306,7 @@
     }
   },
   "Wood:default": {
+    "typeFamily": "Wood",
     "parent": "Find",
     "description": {},
     "creationDate": "",
@@ -366,8 +371,9 @@
     }
   },
   "Architecture:default": {
+    "typeFamily": "Architecture",
     "parent": "Feature",
-    "description": { "de": "" },
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#707070",
@@ -453,8 +459,8 @@
     }
   },
   "Operation:default": {
-    "extends": "Operation",
-    "description": { "de": "" },
+    "typeFamily": "Operation",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "commons": [
@@ -477,8 +483,8 @@
     }
   },
   "Place:default": {
-    "extends": "Place",
-    "description": { "de": "" },
+    "typeFamily": "Place",
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#5572A1",
@@ -516,8 +522,9 @@
     }
   },
   "Layer:default": {
+    "typeFamily": "Layer",
     "parent": "Feature",
-    "description": { "de": "" },
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#663300",
@@ -547,7 +554,7 @@
     }
   },
   "Feature:default": {
-    "extends": "Feature",
+    "typeFamily": "Feature",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -590,10 +597,11 @@
   },
   "Floor:default": {
     "parent": "Feature",
+    "typeFamily": "Floor",
     "color": "#6600cc",
     "creationDate": "",
     "createdBy": "",
-    "description": { "de":  "" },
+    "description": {},
     "fields": {
       "conditionComment": {
         "inputType": "input"
@@ -629,7 +637,7 @@
     }
   },
   "Inscription:default": {
-    "extends": "Inscription",
+    "typeFamily": "Inscription",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -669,7 +677,7 @@
     }
   },
   "Image:default": {
-    "extends": "Image",
+    "typeFamily": "Image",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -685,6 +693,7 @@
   },
   "Pottery:default": {
     "parent": "Find",
+    "typeFamily": "Pottery",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -852,6 +861,7 @@
     }
   },
   "Grave:default": {
+    "typeFamily": "Grave",
     "parent": "Feature",
     "description": {},
     "createdBy": "",
@@ -914,6 +924,7 @@
   },
   "Bone:default": {
     "parent": "Find",
+    "typeFamily": "Bone",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -950,7 +961,7 @@
     }
   },
   "Room:default": {
-    "extends": "Room",
+    "typeFamily": "Room",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -984,6 +995,7 @@
     }
   },
   "Terracotta:default": {
+    "typeFamily": "Terracotta",
     "parent": "Find",
     "description": {},
     "createdBy": "",
@@ -1056,6 +1068,7 @@
     }
   },
   "Drawing:default": {
+    "typeFamily": "Drawing",
     "parent": "Image",
     "description": {},
     "createdBy": "",
@@ -1080,7 +1093,7 @@
     }
   },
   "Survey:default": {
-    "extends": "Survey",
+    "typeFamily": "Survey",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -1092,6 +1105,7 @@
     }
   },
   "Stone:default": {
+    "typeFamily": "Stone",
     "parent": "Find",
     "description": {},
     "createdBy": "IT-Referat",
@@ -1141,10 +1155,11 @@
     }
   },
   "Coin:default": {
+    "typeFamily": "Coin",
     "parent": "Find",
     "description": {},
-    "createdBy": "IT, Referat",
-    "creationDate": "2019",
+    "createdBy": "",
+    "creationDate": "",
     "color": "#cc9900",
     "commons": [
       "provenance"
@@ -1186,10 +1201,10 @@
     }
   },
   "Find:default": {
-    "description": { "de": {}},
+    "description": {},
     "createdBy": "",
     "creationDate": "",
-    "extends": "Find",
+    "typeFamily": "Find",
     "color": "black",
     "commons": [
       "spatialLocation",
@@ -1250,6 +1265,7 @@
     }
   },
   "PlasterFragment:default": {
+    "typeFamily": "PlasterFragment",
     "description": {},
     "createdBy": "",
     "creationDate": "",
@@ -1276,18 +1292,20 @@
     }
   },
   "Photo:default": {
-    "description": { "de": {} },
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "parent": "Image",
+    "typeFamily": "Photo",
     "fields": {}
   },
   "Metal:default": {
-    "description": { "de": {} },
+    "description": {},
     "createdBy": "",
     "creationDate": "",
     "color": "#995f25",
     "parent": "Find",
+    "typeFamily": "Metal",
     "commons": [
       "provenance"
     ],
@@ -1323,18 +1341,18 @@
     }
   },
   "BuildingPart:default": {
-    "description": { "de": {}},
+    "description": {},
     "createdBy": "",
     "creationDate": "",
-    "extends": "BuildingPart",
+    "typeFamily": "BuildingPart",
     "color": "#707070",
     "fields": {}
   },
   "Area:default": {
-    "description": { "de": {} },
+    "description": {},
     "createdBy": "",
     "creationDate": "",
-    "extends": "Area",
+    "typeFamily": "Area",
     "commons": [
       "description",
       "area",
@@ -1356,6 +1374,7 @@
     "createdBy": "",
     "creationDate": "",
     "parent": "Area",
+    "typeFamily": "SurveyUnit",
     "color": "#6baed6",
     "fields": {}
   },
@@ -1364,6 +1383,7 @@
     "createdBy": "",
     "creationDate": "",
     "parent": "Area",
+    "typeFamily": "Excavation",
     "fields": {
       "isIllegal": {
         "inputType": "boolean"

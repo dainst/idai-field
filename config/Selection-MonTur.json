@@ -91,5 +91,8 @@
   },
   "PlasterFragment:default": {
     "hidden": []
+  },
+  "Excavation:default": {
+    "hidden": []
   }
 }

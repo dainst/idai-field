@@ -94,5 +94,26 @@
   },
   "PlasterFragment:default": {
     "hidden": []
+  },
+  "Burial_Survey": {
+    "hidden": []
+  },
+  "Architecture_Survey": {
+    "hidden": []
+  },
+  "Layer_Survey": {
+    "hidden": []
+  },
+  "Floor_Survey": {
+    "hidden": []
+  },
+  "Grave_Survey": {
+    "hidden": []
+  },
+  "Excavation:default": {
+    "hidden": []
+  },
+  "TerrainFeature": {
+    "hidden": []
   }
 }

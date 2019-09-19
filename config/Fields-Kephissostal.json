@@ -381,7 +381,7 @@
       }
     }
   },
-  "Area": {
+  "Area:default": {
     "commons": [
       "beginningDate",
       "endDate",
@@ -403,9 +403,8 @@
       }
     }
   },
-  "SurveyUnit": {
+  "SurveyUnit:default": {
     "color": "#6baed6",
-    "parent": "Area",
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
@@ -471,15 +470,14 @@
       }
     }
   },
-  "Excavation": {
-    "parent": "Area",
+  "Excavation:default": {
     "fields": {
       "isIllegal": {
         "inputType": "boolean"
       }
     }
   },
-  "BuildingPart": {
+  "BuildingPart:default": {
     "commons": [
       "period",
       "beginningDate",
@@ -554,7 +552,7 @@
       }
     }
   },
-  "Survey": {
+  "Survey:default": {
     "commons": [
       "beginningDate",
       "orientation",

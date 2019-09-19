@@ -1,6 +1,5 @@
 {
-  "BuildingPart:MonTur": {
-    "extends": "BuildingPart:default",
+  "BuildingPart:default": {
     "commons": [
       "orientation",
       "spatialLocation"

@@ -1,5 +1,5 @@
 {
-  "Feature": {
+  "Feature:default": {
     "fields": {
       "colorSoil": {
         "inputType": "input"
@@ -13,35 +13,35 @@
       }
     }
   },
-  "Room": {
+  "Room:default": {
     "fields": {
       "dating": {
         "inputType": "dating"
       }
     }
   },
-  "Operation": {
+  "Operation:default": {
     "fields": {
       "dating": {
         "inputType": "dating"
       }
     }
   },
-  "Inscription": {
+  "Inscription:default": {
     "fields": {
       "dating": {
         "inputType": "dating"
       }
     }
   },
-  "Find": {
+  "Find:default": {
     "fields": {
       "dating": {
         "inputType": "dating"
       }
     }
   },
-  "Pottery": {
+  "Pottery:default": {
     "fields": {
       "temperTypeClay": {
         "inputType": "checkboxes",
@@ -56,14 +56,14 @@
       }
     }
   },
-  "PlasterFragment": {
+  "PlasterFragment:default": {
     "fields": {
       "hasDecorationPattern": {
         "inputType": "boolean"
       }
     }
   },
-  "Bone": {
+  "Bone:default": {
     "fields": {
       "sex": {
         "inputType": "radio",

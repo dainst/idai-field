@@ -91,5 +91,14 @@
   },
   "PlasterFragment:default": {
     "hidden": []
+  },
+  "Wall_surface": {
+    "hidden": []
+  },
+  "Other": {
+    "hidden": []
+  },
+  "Drilling": {
+    "hidden": []
   }
 }

@@ -1,7 +1,11 @@
 'use strict';
 
 import {arrayEquivalent, keysAndValues} from 'tsfun';
-import {pureName} from 'idai-components-2';
+
+export function pureName(s: string) { // TODO remove
+
+    return  s.includes(':') ? s.substr(0, s.indexOf(':')) : s;
+}
 
 
 const fs = require('fs');

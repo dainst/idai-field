@@ -1,126 +1,95 @@
 {
   "Project:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Operation:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Survey:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Place:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Area:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Trench:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Building:default": {
-    "valuelists": {},
     "hidden": []
   },
   "BuildingPart:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Find:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Feature:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Room:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Inscription:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Image:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Glass:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Mollusk:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Metal:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Brick:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Burial:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Wood:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Architecture:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Layer:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Floor:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Pottery:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Grave:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Bone:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Terracotta:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Photo:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Drawing:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Stone:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Coin:default": {
-    "valuelists": {},
     "hidden": []
   },
   "PlasterFragment:default": {
-    "valuelists": {},
     "hidden": []
   }
 }

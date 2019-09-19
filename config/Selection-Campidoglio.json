@@ -1,87 +1,67 @@
 {
   "Project:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Operation:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Survey:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Place:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Area:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Trench:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Building:default": {
-    "valuelists": {},
     "hidden": []
   },
   "BuildingPart:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Find:Campidoglio": {
-    "valuelists": {},
     "hidden": []
   },
   "Feature:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "color",
       "hasDisturbance"
     ]
   },
   "Room:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Inscription:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Image:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Glass:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Metal:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Mollusk:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Brick:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "specificType"
     ]
   },
   "Burial:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Wood:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Architecture:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "mortarBinder",
       "mortarColor",
@@ -94,18 +74,15 @@
     ]
   },
   "Layer:Campidoglio": {
-    "valuelists": {},
     "hidden": []
   },
   "Floor:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "mortarBinder",
       "layerClassification"
     ]
   },
   "Pottery:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "temper",
       "temperAmount",
@@ -124,27 +101,21 @@
     ]
   },
   "Grave:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Bone:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Terracotta:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Photo:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Drawing:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Stone:Campidoglio": {
-    "valuelists": {},
     "hidden": [
       "temperAmount",
       "purpose",
@@ -152,19 +123,15 @@
     ]
   },
   "Coin:default": {
-    "valuelists": {},
     "hidden": []
   },
   "PlasterFragment:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Interface:Campidoglio": {
-    "valuelists": {},
     "hidden": []
   },
   "SampleCampidoglio:Campidoglio": {
-    "valuelists": {},
     "hidden": []
   }
 }

@@ -1,103 +1,78 @@
 {
   "Project:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Operation:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Survey:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Area:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Place:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Trench:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Building:default": {
-    "valuelists": {},
     "hidden": []
   },
   "BuildingPart:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Find:Boha": {
-    "valuelists": {},
     "hidden": [
       "catalogueNumber"
     ]
   },
   "Feature:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Room:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Inscription:Boha": {
-    "valuelists": {},
-    "hidden": [
-      "conditionAmount"
-    ]
+    "hidden": ["conditionAmount"]
   },
   "Image:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Glass:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Mollusk:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Brick:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Burial:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Wood:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Architecture:Boha": {
-    "valuelists": {},
     "hidden": [
       "brickwork",
       "conditionAmount"
     ]
   },
   "Layer:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Floor:Boha": {
-    "valuelists": {},
     "hidden": [
       "conditionAmount"
     ]
   },
   "Pottery:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "Grave:default": {
-    "valuelists": {},
     "hidden": [
       "distinguishingCriteria",
       "specificType",
@@ -106,37 +81,29 @@
     ]
   },
   "Bone:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Terracotta:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Photo:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Drawing:default": {
-    "valuelists": {},
     "hidden": []
   },
   "Stone:Boha": {
-    "valuelists": {},
     "hidden": [
       "workmanship"
     ]
   },
   "Coin:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "PlasterFragment:Boha": {
-    "valuelists": {},
     "hidden": []
   },
   "SampleBoha:Boha": {
-    "valuelists": {},
     "hidden": []
   }
 }

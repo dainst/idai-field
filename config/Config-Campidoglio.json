@@ -1,0 +1,602 @@
+{
+  "Project:default": {
+    "hidden": []
+  },
+  "Operation:default": {
+    "hidden": []
+  },
+  "Survey:default": {
+    "hidden": []
+  },
+  "Place:default": {
+    "hidden": []
+  },
+  "Area:default": {
+    "hidden": []
+  },
+  "Trench:default": {
+    "hidden": []
+  },
+  "Building:default": {
+    "hidden": []
+  },
+  "BuildingPart:default": {
+    "hidden": []
+  },
+  "Find:default": {
+    "hidden": [],
+    "fields": {
+      "drawn": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "photographed": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "hasRestoration": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "storagePlace": {
+        "inputType": "dropdown",
+        "valuelistId": "Find-storagePlace-Campidoglio"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-condition-Campidoglio"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-conditionAmount-Campidoglio"
+      }
+    }
+  },
+  "Feature:default": {
+    "hidden": [
+      "color",
+      "hasDisturbance"
+    ],
+    "fields": {
+      "period": {
+        "inputType": "dropdownRange",
+        "valuelistId": "periods-campidoglio-and-castiglione-1"
+      },
+      "colorSoil": {
+        "inputType": "input"
+      },
+      "stratigraphicReliability": {
+        "inputType": "radio",
+        "valuelistId": "Feature-stratigraphicReliability-Campidoglio"
+      },
+      "featureCondition": {
+        "inputType": "radio",
+        "valuelistId": "Feature-featureCondition-Campidoglio"
+      },
+      "interpretation": {
+        "inputType": "input"
+      },
+      "drawn": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "photographed": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "heights": {
+        "inputType": "radio",
+        "valuelistId": "Feature-drawn-Campidoglio"
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelistId": "Feature-featureBorders-Campidoglio"
+      },
+      "featureForm": {
+        "inputType": "checkboxes",
+        "valuelistId": "Feature-featureForm-Campidoglio"
+      }
+    }
+  },
+  "Room:default": {
+    "hidden": []
+  },
+  "Inscription:default": {
+    "hidden": []
+  },
+  "Image:default": {
+    "hidden": []
+  },
+  "Glass:default": {
+    "hidden": []
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {
+      "materialDescription": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelistId": "Metal-decorationTechnique-Campidoglio"
+      },
+      "formDescription": {
+        "inputType": "text"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "Metal-manufacturingMethod-Campidoglio"
+      },
+      "metalMaterial": {
+        "inputType": "checkboxes",
+        "valuelistId": "Metal-metalMaterial-Campidoglio"
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-objectType-Campidoglio"
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-vesselForm-Campidoglio"
+      },
+      "vesselFormSpecific": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Mollusk:default": {
+    "hidden": []
+  },
+  "Brick:default": {
+    "hidden": [
+      "specificType"
+    ],
+    "fields": {
+      "formDescription": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-formDescription-Campidoglio"
+      },
+      "brickForm": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-brickForm-Campidoglio"
+      },
+      "brickUsage": {
+        "inputType": "radio",
+        "valuelistId": "Brick-brickUsage-Campidoglio"
+      },
+      "typologyType": {
+        "inputType": "input"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "Brick-manufacturingMethod-Campidoglio"
+      },
+      "clayColorInside": {
+        "inputType": "input"
+      },
+      "clayColorOutside": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "clayColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "clayColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "clayColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "checkboxes",
+        "valuelistId": "Brick-surfaceCondition-Campidoglio"
+      },
+      "manufacturing": {
+        "inputType": "input"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-decorationTechnique-Campidoglio"
+      },
+      "coatQuality": {
+        "inputType": "checkboxes",
+        "valuelistId": "Brick-coatQuality-Campidoglio"
+      },
+      "coatCondition": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-coatCondition-Campidoglio"
+      },
+      "coatColorInside": {
+        "inputType": "input"
+      },
+      "coatColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "coatColorOutside": {
+        "inputType": "input"
+      },
+      "coatColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "temper": {
+        "inputType": "text"
+      },
+      "descriptionFabric": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Burial:default": {
+    "hidden": []
+  },
+  "Wood:default": {
+    "hidden": []
+  },
+  "Architecture:default": {
+    "hidden": [
+      "mortarBinder",
+      "mortarColor",
+      "mortarConsistency",
+      "construction",
+      "brickwork",
+      "blockProcessing",
+      "wallClassification",
+      "wallType"
+    ],
+    "fields": {
+      "blockTreatment": {
+        "inputType": "checkboxes",
+        "valuelistId": "Architecture-blockTreatment-Campidoglio"
+      },
+      "buildingTechnique": {
+        "inputType": "checkboxes",
+        "valuelistId": "Architecture-buildingTechnique-Campidoglio"
+      },
+      "walling": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-walling-Campidoglio"
+      },
+      "bindingAgent": {
+        "inputType": "checkboxes",
+        "valuelistId": "Architecture-bindingAgent-Campidoglio"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-condition-Campidoglio"
+      },
+      "mortar": {
+        "inputType": "text"
+      },
+      "wallDescription": {
+        "inputType": "text"
+      },
+      "stones": {
+        "inputType": "text"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-conditionAmount-Campidoglio"
+      }
+    }
+  },
+  "Layer:default": {
+    "hidden": [],
+    "fields": {
+      "consistency": {
+        "inputType": "checkboxes",
+        "valuelistId": "Floor-consistency-Campidoglio"
+      },
+      "distinguishingCriteria": {
+        "inputType": "checkboxes",
+        "valuelistId": "Floor-distinguishingCriteria-Campidoglio"
+      },
+      "layerClassification": {
+        "inputType": "dropdown",
+        "valuelistId": "Layer-layerClassification-Campidoglio"
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelistId": "Layer-soilType-Campidoglio"
+      },
+      "distinguishingCriteriaDescription": {
+        "inputType": "text"
+      },
+      "layerInclusions": {
+        "inputType": "text"
+      },
+      "layerFinds": {
+        "inputType": "checkboxes",
+        "valuelistId": "Layer-layerFinds-Campidoglio"
+      },
+      "layerFindsDescription": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Floor:default": {
+    "hidden": [
+      "mortarBinder",
+      "layerClassification"
+    ],
+    "fields": {
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-condition-Campidoglio"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelistId": "Architecture-conditionAmount-Campidoglio"
+      },
+      "consistency": {
+        "inputType": "checkboxes",
+        "valuelistId": "Floor-consistency-Campidoglio"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio",
+        "valuelistId": "Floor-distinguishingCriteria-Campidoglio"
+      },
+      "floorClassification": {
+        "inputType": "dropdown",
+        "valuelistId": "Floor-floorClassification-Campidoglio"
+      },
+      "mortar": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Pottery:default": {
+    "hidden": [
+      "temper",
+      "temperAmount",
+      "temperParticles",
+      "coatInsideType",
+      "coatOutsideType",
+      "formDescription",
+      "purpose",
+      "residueAnalysis",
+      "amountSherdsLip",
+      "amountSherdsRimBase",
+      "amountSherdsRimShoulder",
+      "amountSherdsShoulder",
+      "coatInside",
+      "coatOutside"
+    ],
+    "fields": {
+      "clayColorBreak": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorBreak-Campidoglio"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorBreak-Campidoglio"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorBreak-Campidoglio"
+      },
+      "clayHardness": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-clayHardness-Campidoglio"
+      },
+      "coatColorInside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorBreak-Campidoglio"
+      },
+      "coatColorOutside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorBreak-Campidoglio"
+      },
+      "coatInside": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-coatInside-default"
+      },
+      "coatInsideType": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-coatInsideType-default"
+      },
+      "coatOutside": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-coatInside-default"
+      },
+      "coatOutsideType": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-coatInsideType-default"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-decorationTechnique-Campidoglio"
+      },
+      "descriptionFabric": {
+        "inputType": "text"
+      },
+      "formDescription": {
+        "inputType": "checkboxes",
+        "valuelistId": "glass-formDescription-default"
+      },
+      "manufacturing": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-manufacturing-Campidoglio"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-manufacturingMethod-Campidoglio"
+      },
+      "materialType": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-materialType-Campidoglio"
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-objectType-Campidoglio"
+      },
+      "specificType": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-specificType-Campidoglio"
+      },
+      "temper": {
+        "inputType": "checkboxes",
+        "valuelistId": "Brick-temper-default"
+      },
+      "temperAmount": {
+        "inputType": "radio",
+        "valuelistId": "Pottery-temperAmount-default"
+      },
+      "temperParticles": {
+        "inputType": "radio",
+        "valuelistId": "Pottery-temperParticles-default"
+      },
+      "temperTypeClay": {
+        "inputType": "input"
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-vesselForm-Campidoglio"
+      },
+      "vesselFormSpecific": {
+        "inputType": "text"
+      },
+      "typologyType": {
+        "inputType": "input"
+      },
+      "descriptionFormPottery": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Grave:default": {
+    "hidden": []
+  },
+  "Bone:default": {
+    "hidden": []
+  },
+  "Terracotta:default": {
+    "hidden": []
+  },
+  "Photo:default": {
+    "hidden": []
+  },
+  "Drawing:default": {
+    "hidden": []
+  },
+  "Stone:default": {
+    "hidden": [
+      "temperAmount",
+      "purpose",
+      "provenance"
+    ],
+    "fields": {
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelistId": "Stone-objectType-Campidoglio"
+      },
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "Stone-material-Campidoglio"
+      },
+      "formDescription": {
+        "inputType": "text"
+      },
+      "color": {
+        "inputType": "input"
+      },
+      "architectureElement": {
+        "inputType": "checkboxes",
+        "valuelistId": "Stone-architectureElement-Campidoglio"
+      },
+      "constructionDetails": {
+        "inputType": "text"
+      },
+      "decorationTechnique": {
+        "inputType": "checkboxes",
+        "valuelistId": "Stone-decorationTechnique-Campidoglio"
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-coatCondition-Campidoglio"
+      },
+      "usedAsSpolia": {
+        "inputType": "radio",
+        "valuelistId": "Stone-usedAsSpolia-Campidoglio"
+      },
+      "origin": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Coin:default": {
+    "hidden": []
+  },
+  "PlasterFragment:default": {
+    "hidden": []
+  },
+  "Interface": {
+    "hidden": [],
+    "fields": {
+      "interfaceClassification": {
+        "inputType": "radio",
+        "valuelistId": "Interface-interfaceClassification-Campidoglio"
+      },
+      "breakSlopeTop": {
+        "inputType": "radio",
+        "valuelistId": "Interface-breakSlopeTop-Campidoglio"
+      },
+      "sides": {
+        "inputType": "radio",
+        "valuelistId": "Interface-sides-Campidoglio"
+      },
+      "breakSlopeBase": {
+        "inputType": "radio",
+        "valuelistId": "Interface-breakSlopeTop-Campidoglio"
+      },
+      "base": {
+        "inputType": "radio",
+        "valuelistId": "Interface-base-Campidoglio"
+      },
+      "interfaceComment": {
+        "inputType": "text"
+      }
+    }
+  },
+  "SampleCampidoglio": {
+    "hidden": [],
+    "fields": {
+      "descriptionSample": {
+        "inputType": "text"
+      },
+      "researchQuestion": {
+        "inputType": "text"
+      },
+      "analyzedBy": {
+        "inputType": "input"
+      },
+      "labNumber": {
+        "inputType": "input"
+      },
+      "sampleType": {
+        "inputType": "radio",
+        "valuelistId": "Sample-sampleType-Campidoglio"
+      },
+      "sampleRelatedTo": {
+        "inputType": "input"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "sampleState": {
+        "inputType": "radio",
+        "valuelistId": "Sample-sampleState-Campidoglio"
+      }
+    }
+  },
+  "Excavation:default": {
+    "hidden": []
+  }
+}

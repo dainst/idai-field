@@ -1,6 +1,6 @@
 'use strict';
 
-import {arrayEquivalent, keysAndValues, isNot, undefinedOrEmpty} from 'tsfun';
+import {keysAndValues} from 'tsfun';
 
 
 const fs = require('fs');

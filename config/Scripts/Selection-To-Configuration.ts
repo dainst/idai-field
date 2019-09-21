@@ -22,6 +22,8 @@ keysAndValues(selection).forEach(([selTypeName, selType]: any) => {
             selType['commons'] = cusType['commons'];
             selType['parent'] = cusType['parent'];
             selType['color'] = cusType['color'];
+
+            delete custom[selTypeName];
         }
     })
 });

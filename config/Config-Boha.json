@@ -329,9 +329,7 @@
       "comment": {
         "inputType": "input"
       }
-    },
-    "parent": "Find",
-    "color": "#9ecae1"
+    }
   },
   "Excavation:default": {
     "hidden": []

@@ -142,7 +142,8 @@
       "vesselFormSpecific": {
         "inputType": "input"
       }
-    }
+    },
+    "color": "#995f25"
   },
   "Mollusk:default": {
     "hidden": []
@@ -313,7 +314,8 @@
       "layerFindsDescription": {
         "inputType": "text"
       }
-    }
+    },
+    "color": "#663300"
   },
   "Floor:default": {
     "hidden": [
@@ -563,7 +565,8 @@
       "interfaceComment": {
         "inputType": "text"
       }
-    }
+    },
+    "parent": "Feature"
   },
   "SampleCampidoglio": {
     "hidden": [],
@@ -594,7 +597,9 @@
         "inputType": "radio",
         "valuelistId": "Sample-sampleState-Campidoglio"
       }
-    }
+    },
+    "parent": "Find",
+    "color": "#9ecae1"
   },
   "Excavation:default": {
     "hidden": []

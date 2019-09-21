@@ -572,7 +572,6 @@
     ],
     "fields": {
       "period": {
-        "inputType": "dropdownRange",
         "valuelistId": "periods-default-1"
       },
       "comparison": {

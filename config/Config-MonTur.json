@@ -1,26 +1,34 @@
 {
   "Project:default": {
+    "fields": {},
     "hidden": []
   },
   "Operation:default": {
+    "fields": {},
     "hidden": []
   },
   "Survey:default": {
+    "fields": {},
     "hidden": []
   },
   "SurveyUnit:default": {
+    "fields": {},
     "hidden": []
   },
   "Place:default": {
+    "fields": {},
     "hidden": []
   },
   "Area:default": {
+    "fields": {},
     "hidden": []
   },
   "Trench:default": {
+    "fields": {},
     "hidden": []
   },
   "Building:default": {
+    "fields": {},
     "hidden": []
   },
   "BuildingPart:default": {
@@ -133,75 +141,99 @@
     ]
   },
   "Find:default": {
+    "fields": {},
     "hidden": []
   },
   "Feature:default": {
+    "fields": {},
     "hidden": []
   },
   "Room:default": {
+    "fields": {},
     "hidden": []
   },
   "Inscription:default": {
+    "fields": {},
     "hidden": []
   },
   "Image:default": {
+    "fields": {},
     "hidden": []
   },
   "Glass:default": {
+    "fields": {},
     "hidden": []
   },
   "Mollusk:default": {
+    "fields": {},
     "hidden": []
   },
   "Metal:default": {
+    "fields": {},
     "hidden": []
   },
   "Brick:default": {
+    "fields": {},
     "hidden": []
   },
   "Burial:default": {
+    "fields": {},
     "hidden": []
   },
   "Wood:default": {
+    "fields": {},
     "hidden": []
   },
   "Architecture:default": {
+    "fields": {},
     "hidden": []
   },
   "Layer:default": {
+    "fields": {},
     "hidden": []
   },
   "Floor:default": {
+    "fields": {},
     "hidden": []
   },
   "Pottery:default": {
+    "fields": {},
     "hidden": []
   },
   "Grave:default": {
+    "fields": {},
     "hidden": []
   },
   "Bone:default": {
+    "fields": {},
     "hidden": []
   },
   "Terracotta:default": {
+    "fields": {},
     "hidden": []
   },
   "Photo:default": {
+    "fields": {},
     "hidden": []
   },
   "Drawing:default": {
+    "fields": {},
     "hidden": []
   },
   "Stone:default": {
+    "fields": {},
     "hidden": []
   },
   "Coin:default": {
+    "fields": {},
     "hidden": []
   },
   "PlasterFragment:default": {
+    "fields": {},
     "hidden": []
   },
   "Excavation:default": {
+    "fields": {},
     "hidden": []
   }
 }

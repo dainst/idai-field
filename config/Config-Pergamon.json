@@ -1,11 +1,14 @@
 {
   "Project:default": {
+    "fields": {},
     "hidden": []
   },
   "Operation:default": {
+    "fields": {},
     "hidden": []
   },
   "Survey:default": {
+    "fields": {},
     "hidden": []
   },
   "SurveyUnit:default": {
@@ -17,15 +20,19 @@
     }
   },
   "Place:default": {
+    "fields": {},
     "hidden": []
   },
   "Area:default": {
+    "fields": {},
     "hidden": []
   },
   "Trench:default": {
+    "fields": {},
     "hidden": []
   },
   "Building:default": {
+    "fields": {},
     "hidden": []
   },
   "BuildingPart:default": {
@@ -224,15 +231,19 @@
     }
   },
   "Feature:default": {
+    "fields": {},
     "hidden": []
   },
   "Room:default": {
+    "fields": {},
     "hidden": []
   },
   "Inscription:default": {
+    "fields": {},
     "hidden": []
   },
   "Image:default": {
+    "fields": {},
     "hidden": []
   },
   "Glass:default": {
@@ -446,6 +457,7 @@
     }
   },
   "Burial:default": {
+    "fields": {},
     "hidden": []
   },
   "Wood:default": {
@@ -487,12 +499,15 @@
     }
   },
   "Architecture:default": {
+    "fields": {},
     "hidden": []
   },
   "Layer:default": {
+    "fields": {},
     "hidden": []
   },
   "Floor:default": {
+    "fields": {},
     "hidden": []
   },
   "Pottery:default": {
@@ -663,6 +678,7 @@
     }
   },
   "Grave:default": {
+    "fields": {},
     "hidden": []
   },
   "Bone:default": {
@@ -811,10 +827,12 @@
     }
   },
   "Photo:default": {
+    "fields": {},
     "hidden": []
   },
   "Drawing:default": {
-    "hidden": []
+    "fields": {}
+    "hidden": [],
   },
   "Stone:default": {
     "hidden": [

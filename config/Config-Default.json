@@ -1,101 +1,134 @@
 {
   "Project:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Operation:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Survey:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "SurveyUnit:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Place:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Area:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Trench:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Building:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "BuildingPart:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Find:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Feature:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Room:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Inscription:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Image:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Glass:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Mollusk:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Brick:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Burial:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Wood:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Architecture:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Layer:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Floor:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Pottery:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Metal:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Grave:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Bone:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Terracotta:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Photo:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Drawing:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Stone:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Coin:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "PlasterFragment:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   },
   "Excavation:default": {
-    "hidden": []
+    "hidden": [],
+    "fields": {}
   }
 }

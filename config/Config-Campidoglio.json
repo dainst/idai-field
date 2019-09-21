@@ -1,29 +1,38 @@
 {
   "Project:default": {
+    "fields": {},
     "hidden": []
   },
   "Operation:default": {
+    "fields": {},
     "hidden": []
   },
   "Survey:default": {
+    "fields": {},
     "hidden": []
   },
   "SurveyUnit:default": {
+    "fields": {},
     "hidden": []
   },
   "Place:default": {
+    "fields": {},
     "hidden": []
   },
   "Area:default": {
+    "fields": {},
     "hidden": []
   },
   "Trench:default": {
+    "fields": {},
     "hidden": []
   },
   "Building:default": {
+    "fields": {},
     "hidden": []
   },
   "BuildingPart:default": {
+    "fields": {},
     "hidden": []
   },
   "Find:default": {
@@ -102,15 +111,19 @@
     }
   },
   "Room:default": {
+    "fields": {},
     "hidden": []
   },
   "Inscription:default": {
+    "fields": {},
     "hidden": []
   },
   "Image:default": {
+    "fields": {},
     "hidden": []
   },
   "Glass:default": {
+    "fields": {},
     "hidden": []
   },
   "Metal:default": {
@@ -149,6 +162,7 @@
     "color": "#995f25"
   },
   "Mollusk:default": {
+    "fields": {},
     "hidden": []
   },
   "Brick:default": {
@@ -233,9 +247,11 @@
     }
   },
   "Burial:default": {
+    "fields": {},
     "hidden": []
   },
   "Wood:default": {
+    "fields": {},
     "hidden": []
   },
   "Architecture:default": {
@@ -471,18 +487,23 @@
     }
   },
   "Grave:default": {
+    "fields": {},
     "hidden": []
   },
   "Bone:default": {
+    "fields": {},
     "hidden": []
   },
   "Terracotta:default": {
+    "fields": {},
     "hidden": []
   },
   "Photo:default": {
+    "fields": {},
     "hidden": []
   },
   "Drawing:default": {
+    "fields": {},
     "hidden": []
   },
   "Stone:default": {
@@ -537,9 +558,11 @@
     }
   },
   "Coin:default": {
+    "fields": {},
     "hidden": []
   },
   "PlasterFragment:default": {
+    "fields": {},
     "hidden": []
   },
   "Interface": {
@@ -605,6 +628,7 @@
     "color": "#9ecae1"
   },
   "Excavation:default": {
+    "fields": {},
     "hidden": []
   }
 }

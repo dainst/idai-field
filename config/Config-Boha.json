@@ -1,29 +1,38 @@
 {
   "Project:default": {
+    "fields": {},
     "hidden": []
   },
   "Operation:default": {
+    "fields": {},
     "hidden": []
   },
   "Survey:default": {
+    "fields": {},
     "hidden": []
   },
   "SurveyUnit:default": {
+    "fields": {},
     "hidden": []
   },
   "Area:default": {
+    "fields": {},
     "hidden": []
   },
   "Place:default": {
+    "fields": {},
     "hidden": []
   },
   "Trench:default": {
+    "fields": {},
     "hidden": []
   },
   "Building:default": {
+    "fields": {},
     "hidden": []
   },
   "BuildingPart:default": {
+    "fields": {},
     "hidden": []
   },
   "Find:default": {
@@ -74,6 +83,7 @@
     }
   },
   "Room:default": {
+    "fields": {},
     "hidden": []
   },
   "Inscription:default": {
@@ -88,6 +98,7 @@
     }
   },
   "Image:default": {
+    "fields": {},
     "hidden": []
   },
   "Glass:default": {
@@ -132,6 +143,7 @@
     }
   },
   "Burial:default": {
+    "fields": {},
     "hidden": []
   },
   "Wood:default": {
@@ -233,6 +245,7 @@
     }
   },
   "Grave:default": {
+    "fields": {},
     "hidden": [
       "distinguishingCriteria",
       "specificType",
@@ -253,12 +266,15 @@
     }
   },
   "Terracotta:default": {
+    "fields": {},
     "hidden": []
   },
   "Photo:default": {
+    "fields": {},
     "hidden": []
   },
   "Drawing:default": {
+    "fields": {},
     "hidden": []
   },
   "Stone:default": {
@@ -347,6 +363,7 @@
     "color": "#9ecae1"
   },
   "Excavation:default": {
+    "fields": {},
     "hidden": []
   }
 }

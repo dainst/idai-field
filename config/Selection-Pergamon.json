@@ -8,6 +8,9 @@
   "Survey:default": {
     "hidden": []
   },
+  "SurveyUnit:default": {
+    "hidden": []
+  },
   "Place:default": {
     "hidden": []
   },

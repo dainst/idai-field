@@ -107,8 +107,26 @@
       }
     }
   },
-  "Brick:Boha": {
-    "hidden": []
+  "Brick:default": {
+    "hidden": [],
+    "fields": {
+      "brickForm": {
+        "inputType": "checkboxes",
+        "valuelistId": "Brick-brickForm-Boha"
+      },
+      "specificType": {
+        "inputType": "dropdown",
+        "valuelistId": "Brick-specificType-Boha"
+      },
+      "brickUsage": {
+        "inputType": "radio",
+        "valuelistId": "Brick-brickUsage-Boha"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio",
+        "valuelistId": "Brick-manufacturingMethod-Boha"
+      }
+    }
   },
   "Burial:default": {
     "hidden": []

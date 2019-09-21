@@ -6,7 +6,7 @@ import {arrayEquivalent, keysAndValues, isNot, undefinedOrEmpty} from 'tsfun';
 const fs = require('fs');
 
 
-const projectName: string = 'MonTur';
+const projectName: string = 'Boha';
 
 const custom = JSON.parse(fs.readFileSync('Fields-' + projectName + '.json'));
 const selection = JSON.parse(fs.readFileSync('Selection-' + projectName + '.json'));

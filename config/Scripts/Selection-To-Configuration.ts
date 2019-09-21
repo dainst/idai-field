@@ -6,7 +6,7 @@ import {keysAndValues} from 'tsfun';
 const fs = require('fs');
 
 
-const projectName: string = 'Boha';
+const projectName: string = 'Pergamon';
 
 const custom = JSON.parse(fs.readFileSync('Fields-' + projectName + '.json'));
 const selection = JSON.parse(fs.readFileSync('Selection-' + projectName + '.json'));

@@ -71,7 +71,6 @@
     ],
     "fields": {
       "period": {
-        "inputType": "dropdownRange",
         "valuelistId": "periods-campidoglio-and-castiglione-1"
       },
       "colorSoil": {

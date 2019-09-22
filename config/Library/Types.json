@@ -1360,7 +1360,6 @@
     ],
     "fields": {
       "dimensionVerticalExtent": {
-        "inputType": "dimension",
         "positionValues": [
           "Oberkante",
           "Unterkante"

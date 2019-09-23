@@ -69,7 +69,6 @@
     "hidden": [],
     "fields": {
       "period": {
-        "inputType": "dropdownRange",
         "valuelistId": "periods-boha-1"
       },
       "stratigraphicReliability": {

@@ -78,6 +78,7 @@
     "createdBy": "",
     "creationDate": "",
     "color": "#ff99ff",
+    "commons": [],
     "fields": {
       "classification": {
         "inputType": "radio",
@@ -192,6 +193,7 @@
     "description": {},
     "createdBy": "",
     "creationDate": "",
+    "commons": [],
     "fields": {
       "ageDetermination": {
         "inputType": "input"
@@ -601,6 +603,7 @@
     "creationDate": "",
     "createdBy": "",
     "description": {},
+    "commons": [],
     "fields": {
       "conditionComment": {
         "inputType": "input"
@@ -928,6 +931,7 @@
     "createdBy": "",
     "creationDate": "",
     "color": "#CCFFFF",
+    "commons": [],
     "fields": {
       "biologicalAge": {
         "inputType": "dropdown",
@@ -1072,6 +1076,7 @@
     "description": {},
     "createdBy": "",
     "creationDate": "",
+    "commons": [],
     "fields": {
       "drawingMaterial": {
         "inputType": "radio",
@@ -1096,6 +1101,7 @@
     "description": {},
     "createdBy": "",
     "creationDate": "",
+    "commons": [],
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
@@ -1296,6 +1302,7 @@
     "creationDate": "",
     "parent": "Image",
     "typeFamily": "Photo",
+    "commons": [],
     "fields": {}
   },
   "Metal:default": {
@@ -1345,7 +1352,8 @@
     "creationDate": "",
     "typeFamily": "BuildingPart",
     "color": "#707070",
-    "fields": {}
+    "fields": {},
+    "commons": []
   },
   "Area:default": {
     "description": {},
@@ -1374,7 +1382,8 @@
     "parent": "Area",
     "typeFamily": "SurveyUnit",
     "color": "#6baed6",
-    "fields": {}
+    "fields": {},
+    "commons": []
   },
   "Excavation:default": {
     "description": {},
@@ -1382,6 +1391,7 @@
     "creationDate": "",
     "parent": "Area",
     "typeFamily": "Excavation",
+    "commons": [],
     "fields": {
       "isIllegal": {
         "inputType": "boolean"

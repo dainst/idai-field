@@ -5,7 +5,7 @@ import {Settings} from '../../core/settings/settings';
 import {M} from '../m';
 import {TabManager} from '../tab-manager';
 
-const ip = require('ip');
+const address = require('address');
 const remote = require('electron').remote;
 
 
@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
 
     public settings: Settings;
     public saving: boolean = false;
-    public ipAddress: string = ip.address();
+    public ipAddress: string = address.ip();
 
 
     constructor(private settingsService: SettingsService,

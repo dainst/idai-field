@@ -166,6 +166,12 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
+    public isMissingImage(image: ImageContainer): boolean {
+
+        return image.thumbSrc === BlobMaker.blackImg;
+    }
+
+
     private isThumbnailSliderScrollbarVisible(): boolean {
 
         return this.thumbnailSliderContainer

@@ -72,7 +72,8 @@
                      id="thumbnail-{{image.document.resource.id}}"
                      class="thumbnail-container"
                      [class.selected]="image === selectedImage">
-                    <img [src]="image.thumbSrc" (click)="select(image)">
+                    <img [class.missing-image]="isMissingImage(image)"
+                         [src]="image.thumbSrc" (click)="select(image)">
                 </div>
             </div>
         </div>

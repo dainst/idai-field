@@ -76,7 +76,6 @@
         'electron': 'app/desktop/electron',
         'deep-equal': 'node_modules/deep-equal/index.js',
         'moment': 'node_modules/moment/min/moment-with-locales.js',
-        'ip': 'node_modules/ip/lib/ip.js',
         'os': '@node/os',
         'buffer': '@node/buffer',
         'viz.js': 'node_modules/viz.js/viz.js',
@@ -93,7 +92,8 @@
         'child_process': '@node/child_process',
         'geojson-rewind': 'node_modules/geojson-rewind/index.js',
         '@mapbox/geojson-area': 'node_modules/@mapbox/geojson-area/index.js',
-        'wgs84': 'node_modules/wgs84/index.js'
+        'wgs84': 'node_modules/wgs84/index.js',
+        'address': 'node_modules/address/lib/address.js'
     };
 
     config.meta = {

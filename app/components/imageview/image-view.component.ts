@@ -99,6 +99,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
             }
         }
 
+        this.showErrorMessagesForMissingImages();
         ImageViewComponent.scrollToThumbnail(this.selectedImage);
     }
 
@@ -189,7 +190,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
             image.thumbSrc = await this.imagestore.read(document.resource.id, false, true);
         } catch (e) {
             image.thumbSrc = BlobMaker.blackImg;
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
 
         return image;
@@ -206,7 +206,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
             );
         } catch (e) {
             image.imgSrc = BlobMaker.blackImg;
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
     }
 
@@ -234,6 +233,19 @@ export class ImageViewComponent implements OnInit, DoCheck {
             : index + 1;
 
         await this.select(this.images[index]);
+    }
+
+
+    private showErrorMessagesForMissingImages() {
+
+        const missingImagesCount: number
+            = this.images.filter(image => image.thumbSrc === BlobMaker.blackImg).length;
+
+        if (missingImagesCount === 1) {
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+        } else if (missingImagesCount > 1) {
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
+        }
     }
 
 

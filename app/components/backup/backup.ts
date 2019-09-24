@@ -1,10 +1,10 @@
 import * as fs from 'fs';
-import {Name} from '../../c';
 import {assoc} from 'tsfun';
+import {Name} from '../../c';
 
 const PouchDB = require('pouchdb');
 const replicationStream = require('pouchdb-replication-stream');
-const MemoryStream = require('memorystream');
+const stream = require('stream');
 
 
 /**
@@ -20,21 +20,21 @@ export module Backup {
         PouchDB.adapter('writableStream', replicationStream.adapters.writableStream);
 
         let dumpedString = '';
-        const stream = new MemoryStream();
-        stream.on('data', (chunk: any) => {
-
-            dumpedString +=
-                chunk.toString()
-                    .replace(/"data"[\s\S]+?,/g,'\"data\":\"\",')
+        const memoryStream = new stream.Writable();
+        memoryStream._write = (chunk: any, encoding: any, done: any) => {
+            dumpedString += chunk.toString()
+                .replace(/"data"[\s\S]+?,/g,'\"data\":\"\",');
 
             // note that this regex is a too general
-            // we want to get rid of this asap anyway, as soon as the thumbnail thing is fixed in pouchdb-replication stream
-            // see #8404 in redmine
-        });
+            // we want to get rid of this asap anyway, as soon as the thumbnail thing is fixed in
+            // pouchdb-replication stream (see #8404 in redmine)
+
+            done();
+        };
 
         const db = new PouchDB(project);
 
-        await db.dump(stream, {attachments:false});
+        await db.dump(memoryStream, { attachments: false });
         fs.writeFileSync(filePath, dumpedString);
     }
 

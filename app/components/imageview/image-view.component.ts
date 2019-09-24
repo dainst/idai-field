@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
@@ -24,7 +24,7 @@ import {ImagesState} from '../imageoverview/view/images-state';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ImageViewComponent implements OnInit {
+export class ImageViewComponent implements OnInit, DoCheck {
 
     @ViewChild('thumbnailSliderContainer', {static: false}) thumbnailSliderContainer: ElementRef;
     @ViewChild('imageInfo', {static: false}) imageInfo: ElementRef;
@@ -33,6 +33,9 @@ export class ImageViewComponent implements OnInit {
     public selectedImage: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
     public openSection: string|undefined = 'stem';
+
+    public thumbnailSliderScrollbarVisible: boolean = false;
+    public imageInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
 
@@ -60,6 +63,13 @@ export class ImageViewComponent implements OnInit {
     ngOnInit() {
 
         (window.getSelection() as any).removeAllRanges();
+    }
+
+
+    ngDoCheck() {
+
+        this.thumbnailSliderScrollbarVisible = this.isThumbnailSliderScrollbarVisible();
+        this.imageInfoScrollbarVisible = this.isImageInfoScrollbarVisible();
     }
 
 
@@ -149,7 +159,13 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isThumbnailSliderScrollbarVisible(): boolean {
+    public containsOriginal(image: ImageContainer): boolean {
+
+        return image.imgSrc !== undefined && image.imgSrc !== '';
+    }
+
+
+    private isThumbnailSliderScrollbarVisible(): boolean {
 
         return this.thumbnailSliderContainer
             && this.thumbnailSliderContainer.nativeElement.scrollWidth
@@ -157,17 +173,11 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isImageInfoScrollbarVisible(): boolean {
+    private isImageInfoScrollbarVisible(): boolean {
 
         return this.imageInfo
             && this.imageInfo.nativeElement.scrollHeight
             > this.imageInfo.nativeElement.clientHeight;
-    }
-
-
-    public containsOriginal(image: ImageContainer): boolean {
-
-        return image.imgSrc !== undefined && image.imgSrc !== '';
     }
 
 

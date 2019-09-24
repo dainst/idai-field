@@ -14,7 +14,7 @@
 <div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view"
          class="flex-nowrap bg-light px-0"
-         [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+         [class.thumbnail-slider-scrollbar-visible]="thumbnailSliderScrollbarVisible">
         <div id="popover">
             <div id="popover-header">
                 <button id="expand-all-groups-button" class="btn btn-light"
@@ -35,7 +35,7 @@
             </div>
 
             <div #imageInfo id="image-info"
-                 [class.scrollbar-visible]="isImageInfoScrollbarVisible()">
+                 [class.scrollbar-visible]="imageInfoScrollbarVisible">
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
@@ -66,7 +66,7 @@
         </div>
 
         <div #thumbnailSliderContainer id="thumbnail-slider-container"
-             [class.scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+             [class.scrollbar-visible]="thumbnailSliderScrollbarVisible">
             <div id="thumbnail-slider">
                 <div *ngFor="let image of images"
                      id="thumbnail-{{image.document.resource.id}}"

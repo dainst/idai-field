@@ -1,7 +1,6 @@
 'use strict';
 
 import {arrayEquivalent, keysAndValues, isNot, undefinedOrEmpty} from 'tsfun';
-import {pureName} from 'idai-components-2';
 
 
 const fs = require('fs');
@@ -19,15 +18,15 @@ keysAndValues(hidden).forEach(([hiddenTypeName, hiddenValues]) => {
     // find in selection
     keysAndValues(selection).forEach(([selectionTypeName, selectionType]) => {
 
-        const selectionTypePureName = pureName(selectionTypeName);
-        if (selectionTypePureName === hiddenTypeName) {
-
-            if (isNot(undefinedOrEmpty)(selectionType['hidden'])) {
-                console.error('hidden already exists, ', hiddenTypeName)
-            } else {
-                selectionType['hidden'] = hiddenValues;
-            }
-        }
+        // const selectionTypePureName = pureName(selectionTypeName);
+        // if (selectionTypePureName === hiddenTypeName) {
+        //
+        //     if (isNot(undefinedOrEmpty)(selectionType['hidden'])) {
+        //         console.error('hidden already exists, ', hiddenTypeName)
+        //     } else {
+        //         selectionType['hidden'] = hiddenValues;
+        //     }
+        // }
     });
 });
 

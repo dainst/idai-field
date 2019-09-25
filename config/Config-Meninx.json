@@ -36,7 +36,11 @@
   },
   "Building:default": {
     "commons": [],
-    "fields": {},
+    "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      }
+    },
     "hidden": []
   },
   "BuildingPart:default": {
@@ -47,12 +51,19 @@
   "Find:default": {
     "hidden": [],
     "commons": ["dating"],
-    "fields": {}
+    "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      }
+    }
   },
   "Feature:default": {
     "commons": ["dimensionHeight"],
     "hidden": [],
     "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      },
       "colorSoil": {
         "inputType": "input"
       }
@@ -61,12 +72,20 @@
   "Room:default": {
     "commons": ["dating"],
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      }
+    }
   },
   "Inscription:default": {
     "commons": ["dating"],
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      }
+    }
   },
   "Image:default": {
     "commons": [],
@@ -189,9 +208,14 @@
     }
   },
   "Wall_surface": {
-    "commons": ["area", "description", "processor", "period", "dating", "dimensionHeight", "dimensionWidth"],
+    "commons": [
+      "area", "description", "processor", "dating",
+      "dimensionHeight", "dimensionWidth"],
     "hidden": [],
     "fields": {
+      "period": {
+        "valuelistId": "periods-meninx-1"
+      },
       "conditionComment": {
         "inputType": "input"
       },

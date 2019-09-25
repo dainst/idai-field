@@ -273,7 +273,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         const element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {
-            element.scrollIntoView({ block: 'nearest' });
+            element.scrollIntoView({ behavior: 'smooth' });
             return true;
         }
         return false;

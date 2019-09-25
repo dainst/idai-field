@@ -88,12 +88,6 @@
             object-fit: scale-down;
             user-select: none;
             -webkit-user-drag: none;
-
-            &.missing-image {
-              width: 100px;
-              height: 100%;
-              object-fit: initial;
-            }
           }
         }
       }

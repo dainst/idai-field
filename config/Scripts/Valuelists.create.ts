@@ -11,8 +11,9 @@ const projectName: string = '';
 
 
 
-const valuelists = JSON.parse(fs.readFileSync('Valuelists.json'));
-const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
+const valuelists = JSON.parse(fs.readFileSync('Library/Valuelists.json'));
+const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields-WES.json' : 'Fields-' + projectName + '.json'));
+
 
 
 /**
@@ -21,11 +22,11 @@ const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : '
  * @param newValuelistName
  * @param newValuelistValues
  */
-function insert(valuelists, field, newValuelistName, newValuelistValues) {
+function insert(valuelists:any, field:any, newValuelistName:string, newValuelistValues:Array<string>) {
 
     const conflictedLists =
             keysAndValues(valuelists)
-            .map(([_, vl]) => [_, vl['values']])
+            .map(([_, vl]:[string,any]) => [_, Object.keys(vl['values'])])
             .filter(([_, values]) => arrayEquivalent(values)(newValuelistValues))
             .map(([name, _]) => name);
 
@@ -33,9 +34,9 @@ function insert(valuelists, field, newValuelistName, newValuelistValues) {
         field['valuelistId'] = conflictedLists[0];
     } else {
         valuelists[newValuelistName] = {
-            createdBy: "",
+            createdBy: "Max Haibt",
             description: { de: "", en: "" },
-            values: newValuelistValues
+            values: newValuelistValues.reduce((o, key) => ({ ...o, [key]: {}}), {}),
         };
         field['valuelistId'] = newValuelistName;
     }
@@ -51,9 +52,9 @@ function generateName(typeName: string, fieldName: string, projectName: string) 
 }
 
 
-keysAndValues(fields).forEach(([typeName, type]) => {
+keysAndValues(fields).forEach(([typeName, type] : [string,any]) => {
 
-    keysAndValues(type['fields']).forEach(([fieldName, field]) => {
+    keysAndValues(type['fields']).forEach(([fieldName, field] :[string, any]) => {
 
         if (field['valuelist'] && !field['valuelistId']) {
 
@@ -66,5 +67,5 @@ keysAndValues(fields).forEach(([typeName, type]) => {
 });
 
 
-fs.writeFileSync('Valuelists.json', JSON.stringify(valuelists, null, 2));
-fs.writeFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json', JSON.stringify(fields, null, 2));
+fs.writeFileSync('Valuelists.test.json', JSON.stringify(valuelists, null, 2));
+fs.writeFileSync(projectName === '' ? 'Fields.test.json' : 'Fields-' + projectName + '.test.json', JSON.stringify(fields, null, 2));

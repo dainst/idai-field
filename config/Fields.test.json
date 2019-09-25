@@ -1,0 +1,730 @@
+{
+  "Pottery": {
+    "parent": "Find",
+    "fields": {
+      "hasCoat": {
+        "inputType": "boolean"
+      },
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "vesselpart": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-vesselpart-default"
+      },
+      "Firing": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-Firing-default"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-condition-WES"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "painting",
+          "decorative band (applied)",
+          "relief decor",
+          "carving",
+          "stamp",
+          "stamp decor",
+          "swab decor",
+          "wartdecor",
+          "comb incised",
+          "incised wide lines",
+          "herringbone pattern incised",
+          "rope-like application impressed",
+          "burnishing",
+          "imprint",
+          "application",
+          "preserved",
+          "grooved/soft incised",
+          "combed"
+        ]
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "wheel thrown",
+          "handformed",
+          "moulded",
+          "tournette",
+          "coiling",
+          "built up",
+          "composite techniques",
+          "other",
+          "unspecified"
+        ]
+      },
+      "temper": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-temper-default"
+      },
+      "temperAmount": {
+        "inputType": "radio",
+        "valuelist": [
+          "no inclusions",
+          "medium",
+          "not visible",
+          "very frequent",
+          "occasional",
+          "frequent",
+          "sparse"
+        ]
+      },
+      "temperParticles": {
+        "inputType": "radio",
+        "valuelist": [
+          "fine",
+          "coarse",
+          "medium",
+          "medium-fine",
+          "very-fine",
+          "very-coarse"
+        ]
+      },
+      "temperTypeClay": {
+        "inputType": "input"
+      },
+      "coatOutsideType": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-coatOutsideType-default"
+      },
+      "FormComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "FormComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "DecorationComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "DecorationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "ApplicationComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "ApplicationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "Drawing": {
+        "inputType": "boolean"
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "platters/trays",
+          "plaque",
+          "dishes/plate",
+          "bowls",
+          "large bowls",
+          "cups",
+          "goblets",
+          "open pot",
+          "open vat",
+          "high beakers",
+          "jar",
+          "pot",
+          "large vessel",
+          "miniature",
+          "miscellaneous forms",
+          "drain",
+          "strainer/sieve",
+          "lid",
+          "firedog",
+          "coffin",
+          "lamp",
+          "stand",
+          "fruit stand"
+        ]
+      },
+      "processor": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-processor-default"
+      }
+    }
+  },
+  "Terracotta": {
+    "color": "#FF6600",
+    "parent": "Find",
+    "fields": {
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionThickness": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "clayColorBreak": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelistId": "Terracotta-decorationTechnique-default"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-condition-WES"
+      },
+      "Firing": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-Firing-default"
+      },
+      "temper": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-temper-default"
+      },
+      "temperAmount": {
+        "inputType": "radio",
+        "valuelistId": "Pottery-temperAmount-WES"
+      },
+      "temperParticles": {
+        "inputType": "radio",
+        "valuelistId": "Pottery-temperParticles-WES"
+      },
+      "TerracottaType": {
+        "inputType": "dropdown",
+        "valuelistId": "Terracotta-TerracottaType-default"
+      },
+      "TerracottaTypeSpecific": {
+        "inputType": "dropdown",
+        "valuelistId": "Terracotta-TerracottaTypeSpecific-default"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "Terracotta-manufacturingMethod-default"
+      }
+    }
+  },
+  "KnappingWasteProduct": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-material-default"
+      },
+      "OrientationPossible": {
+        "inputType": "boolean"
+      },
+      "CorticalSurface": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-CorticalSurface-default"
+      },
+      "PlaceOperationalSequence": {
+        "inputType": "dropdown",
+        "valuelistId": "KnappingWasteProduct-PlaceOperationalSequence-default"
+      },
+      "TechnicalMarks": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-TechnicalMarks-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "KnappedCore": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-material-default"
+      },
+      "CorticalSurface": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-CorticalSurface-default"
+      },
+      "ForceOnKnappingPlatform": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-ForceOnKnappingPlatform-default"
+      },
+      "KnappingPlatformFeatures": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-KnappingPlatformFeatures-default"
+      },
+      "SecondaryKnappingPlatforms": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-SecondaryKnappingPlatforms-default"
+      },
+      "dimensionLengthOfDebitageSurfaces": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionWidthOfDebitageSurfaces": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "AmountOfDebitageSurfaces": {
+        "inputType": "unsignedInt"
+      },
+      "TechnicalMarks": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-TechnicalMarks-default"
+      },
+      "TypicalCoreForms": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappedCore-TypicalCoreForms-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentOfDrill": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfDrill-material-default"
+      },
+      "TypeOfDrill": {
+        "inputType": "dropdown",
+        "valuelistId": "FragmentOfDrill-TypeOfDrill-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfDrill-ProductionMethod-default"
+      },
+      "dimensionPreservedLengthOfDrillingaxis": {
+        "inputType": "dimension",
+        "positionValues": [
+          "from the bit to the back"
+        ]
+      },
+      "dimensionWidthOfDrillfragment": {
+        "inputType": "dimension",
+        "positionValues": [
+          "At the drilling-bit",
+          "At the back/shaft"
+        ]
+      },
+      "AmountOfDrillinbitsOntheTool": {
+        "inputType": "unsignedInt"
+      },
+      "TracesOfUse": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfDrill-TracesOfUse-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentOfCuttingtool": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-material-default"
+      },
+      "TypeOfCutter": {
+        "inputType": "dropdown",
+        "valuelistId": "FragmentOfCuttingtool-TypeOfCutter-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-ProductionMethod-default"
+      },
+      "TracesOfUse": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-TracesOfUse-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentOfHammertool": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-material-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-ProductionMethod-default"
+      },
+      "TracesOfUse": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfHammertool-TracesOfUse-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentOfChopper": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-material-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfChopper-ProductionMethod-default"
+      },
+      "TracesOfUse": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfHammertool-TracesOfUse-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentofCoating": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentofCoating-material-default"
+      },
+      "ContactMaterial": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentofCoating-ContactMaterial-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentofCoating-ProductionMethod-default"
+      },
+      "TracesOfUse": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "RawMaterial": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "RawMaterial-material-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentofStonevessel": {
+    "parent": "Find",
+    "fields": {
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentofStonevessel-material-default"
+      },
+      "vesselpart": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-vesselpart-default"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-condition-WES"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelistId": "Terracotta-decorationTechnique-default"
+      },
+      "ProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentofStonevessel-ProductionMethod-default"
+      },
+      "coatOutsideType": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-coatOutsideType-default"
+      },
+      "FormComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "FormComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "DecorationComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "DecorationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "ApplicationComparisonCompendia": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-FormComparisonCompendia-default"
+      },
+      "ApplicationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "Drawing": {
+        "inputType": "boolean"
+      },
+      "vesselForm": {
+        "inputType": "dropdown",
+        "valuelistId": "FragmentofStonevessel-vesselForm-default"
+      },
+      "processor": {
+        "inputType": "dropdown",
+        "valuelistId": "Pottery-processor-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "FragmentOfBead": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfCuttingtool-material-default"
+      },
+      "ShapeofBead": {
+        "inputType": "dropdown",
+        "valuelistId": "FragmentOfBead-ShapeofBead-default"
+      },
+      "KnappingProductionMethod": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfBead-KnappingProductionMethod-default"
+      },
+      "TracesofPerforationProductionMethodSideA": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodSideA-default"
+      },
+      "TracesofPerforationProductionMethodSideB": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodSideB-default"
+      },
+      "TracesofPerforationProductionMethodBreakingedge": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-default"
+      },
+      "TracesOfUse": {
+        "inputType": "checkboxes",
+        "valuelistId": "FragmentOfBead-TracesOfUse-default"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "KnappingWasteProduct-color-default"
+      }
+    }
+  },
+  "Drawing": {
+    "parent": "Image",
+    "fields": {
+      "drawingMaterial": {
+        "inputType": "radio",
+        "valuelist": [
+          "Digitale Datei",
+          "Folie",
+          "Karton",
+          "Lichtpause",
+          "Mikrofilm",
+          "Millimeterpapier",
+          "Papier",
+          "Photoabzüge",
+          "Transparentfilm",
+          "Transparentpapier"
+        ]
+      },
+      "drawingTool": {
+        "inputType": "radio",
+        "valuelist": [
+          "Bleistift",
+          "Buntstift",
+          "Tusche",
+          "digital erstellt"
+        ]
+      },
+      "drawingType": {
+        "inputType": "radio",
+        "valuelist": [
+          "AutoCAD Zeichnung (auch TachyCAD)",
+          "Handzeichnung",
+          "Pantograf"
+        ]
+      },
+      "scale": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "1:1",
+          "1:10",
+          "1:100",
+          "1:1000",
+          "1:10000",
+          "1:20",
+          "1:50",
+          "1:500",
+          "1:5000"
+        ]
+      }
+    }
+  },
+  "Survey": {
+    "parent": "Operation",
+    "fields": {
+      "researchMethod": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Befliegung",
+          "Begehung",
+          "Geoelektrik",
+          "Geomagnetik",
+          "Georadar",
+          "LIDAR",
+          "Luft- oder Satellitenbilder",
+          "Quadratisch",
+          "Regelmäßig",
+          "Seismik"
+        ]
+      }
+    }
+  },
+  "Stone": {
+    "color": "#5c5c8a",
+    "parent": "Find",
+    "fields": {
+      "purpose": {
+        "inputType": "input"
+      },
+      "treatment": {
+        "inputType": "input"
+      },
+      "workmanship": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelistId": "Pottery-clayColorInside-default"
+      },
+      "material": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "andesite",
+          "basalt",
+          "feldspat",
+          "flint",
+          "mica",
+          "granite",
+          "lime",
+          "lime mortar",
+          "lime stone",
+          "calcite",
+          "chalk",
+          "marble",
+          "pophyr",
+          "quartz",
+          "sand stone",
+          "sinter",
+          "trachyt",
+          "tuff",
+          "carnelian",
+          "agate",
+          "lapris"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "architectural element",
+          "vessel",
+          "figurine",
+          "relief/stele",
+          "statue",
+          "macehead",
+          "slingstone",
+          "tool",
+          "glyptics",
+          "ornament",
+          "other",
+          "undetermined"
+        ]
+      },
+      "objectTypeSpecific": {
+        "inputType": "dropdown",
+        "valuelistId": "Stone-objectTypeSpecific-default"
+      }
+    }
+  },
+  "Mollusk": {
+    "color": "#ff99ff",
+    "parent": "Find",
+    "fields": {
+      "classification": {
+        "inputType": "radio",
+        "valuelist": [
+          "container cosmetic paste",
+          "bead",
+          "pendant",
+          "shell",
+          "unworked",
+          "inlay"
+        ]
+      }
+    }
+  }
+}

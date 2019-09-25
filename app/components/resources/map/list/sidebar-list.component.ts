@@ -15,7 +15,7 @@ import {ContextMenuAction} from '../context-menu.component';
     selector: 'sidebar-list',
     moduleId: module.id,
     templateUrl: './sidebar-list.html',
-    host: {'(window:contextmenu)': 'handleClick($event, true)'}
+    host: { '(window:contextmenu)': 'handleClick($event, true)' }
 })
 /**
  * @author Daniel de Oliveira
@@ -60,6 +60,16 @@ export class SidebarListComponent extends BaseList {
     public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
 
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+            await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
+            event.preventDefault();
+            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
+        }
+    }
 
 
     public async editDocument(document: FieldDocument) {
@@ -203,7 +213,7 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    private handleClick(event: any, rightClick: boolean = false) {
+    public handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenuPosition) return;
 

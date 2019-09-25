@@ -8,6 +8,20 @@
       "EPSG3857 (WGS 84 Web Mercator)": {}
     }
   },
+  "orientation-default-1": {
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "N-S": {},
+      "NNO - SSW": {},
+      "NNW-SSO": {},
+      "NO-SW": {},
+      "NW-SO": {},
+      "W-O": {},
+      "WNW-OSO": {},
+      "WSW-ONO": {}
+    }
+  },
   "periods-default-1": {
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
@@ -6685,23 +6699,6 @@
       "Hammerschlagsprobe": {},
       "Phosphatanalyse": {},
       "Pollenanalyse": {}
-    }
-  },
-  "Profile-orientation-Pergamon": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "N-S": {},
-      "NNO - SSW": {},
-      "NNW-SSO": {},
-      "NO-SW": {},
-      "NW-SO": {},
-      "W-O": {},
-      "WNW-OSO": {},
-      "WSW-ONO": {}
     }
   },
   "Pottery-vesselpart-WES": {

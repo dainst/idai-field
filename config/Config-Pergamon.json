@@ -37,26 +37,15 @@
   },
   "BuildingPart:default": {
     "hidden": [],
+    "commons": [
+      "area", "beginningDate", "endDate", "dating", "description", "processor",
+      "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "spatialLocation"
+    ],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
+      "orientation": {
+        "valuelistId": "orientation-default-1"
       },
       "comparison": {
-        "inputType": "text"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "description": {
         "inputType": "text"
       },
       "hasDisturbance": {
@@ -65,33 +54,9 @@
       "featureAmount": {
         "inputType": "input"
       },
-      "processor": {
-        "inputType": "input"
-      },
       "color": {
         "inputType": "checkboxes",
         "valuelistId": "colors-default-1"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"
-        ]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -149,9 +114,6 @@
       "publicationRemark": {
         "inputType": "input"
       },
-      "spatialLocation": {
-        "inputType": "input"
-      },
       "blockProcessing": {
         "inputType": "checkboxes",
         "valuelistId": "Architecture-blockProcessing-default"
@@ -191,10 +153,6 @@
       "mortarConsistency": {
         "inputType": "radio",
         "valuelistId": "Architecture-mortarConsistency-default"
-      },
-      "orientation": {
-        "inputType": "dropdown",
-        "valuelistId": "Profile-orientation-Pergamon"
       },
       "wallClassification": {
         "inputType": "dropdown",
@@ -999,24 +957,10 @@
   },
   "Profile": {
     "hidden": [],
+    "commons": ["dimensionHeight", "dimensionVerticalExtent"],
     "fields": {
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"
-        ]
-      },
       "orientation": {
-        "inputType": "dropdown",
-        "valuelistId": "Profile-orientation-Pergamon"
+        "valuelistId": "orientation-default-1"
       }
     },
     "parent": "ProcessUnit",
@@ -1045,16 +989,8 @@
   },
   "ProcessUnit": {
     "hidden": [],
+    "commons": ["date", "description", "processor"],
     "fields": {
-      "date": {
-        "inputType": "date"
-      },
-      "description": {
-        "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
-      },
       "operationClassification": {
         "inputType": "dropdown",
         "valuelistId": "ProcessUnit-operationClassification-Pergamon"
@@ -1064,26 +1000,12 @@
   },
   "SurveyBurial": {
     "hidden": [],
+    "commons": [
+      "area", "beginningDate", "endDate", "dating", "description", "diary", "dating",
+      "processor", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth"
+    ],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "comparison": {
-        "inputType": "text"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "description": {
         "inputType": "text"
       },
       "hasDisturbance": {
@@ -1092,33 +1014,9 @@
       "featureAmount": {
         "inputType": "input"
       },
-      "processor": {
-        "inputType": "input"
-      },
       "color": {
         "inputType": "checkboxes",
         "valuelistId": "colors-default-1"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"
-        ]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1196,26 +1094,12 @@
   },
   "BuildingFloor": {
     "hidden": [],
+    "commons": [
+      "area", "beginningDate", "endDate", "diary", "description", "processor", "dimensionLength",
+      "dimensionVerticalExtent", "dimensionWidth"
+    ],
     "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
       "comparison": {
-        "inputType": "text"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "description": {
         "inputType": "text"
       },
       "hasDisturbance": {
@@ -1224,33 +1108,9 @@
       "featureAmount": {
         "inputType": "input"
       },
-      "processor": {
-        "inputType": "input"
-      },
       "color": {
         "inputType": "checkboxes",
         "valuelistId": "colors-default-1"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionVerticalExtent": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Oberkante",
-          "Unterkante"
-        ]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
       },
       "featureBorders": {
         "inputType": "checkboxes",
@@ -1295,22 +1155,10 @@
   },
   "Excavation:default": {
     "hidden": [],
+    "commons": [
+      "beginningDate", "endDate", "dating", "diary", "processor"
+    ],
     "fields": {
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "diary": {
-        "inputType": "input"
-      },
-      "processor": {
-        "inputType": "input"
-      },
       "color": {
         "inputType": "checkboxes",
         "valuelistId": "colors-default-1"

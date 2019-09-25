@@ -66,8 +66,12 @@ export class SidebarListComponent extends BaseList {
 
         if (event.key === 'ArrowUp') {
             await this.viewFacade.navigateDocumentList('previous');
+            event.preventDefault();
+            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
         } else if (event.key === 'ArrowDown') {
             await this.viewFacade.navigateDocumentList('next');
+            event.preventDefault();
+            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
         }
     }
 

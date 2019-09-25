@@ -150,7 +150,8 @@ export class DocumentsManager {
 
         try {
             const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
-            this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+            this.newDocumentsFromRemote
+                = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
             if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
@@ -160,6 +161,24 @@ export class DocumentsManager {
             this.selectAndNotify(documentToSelect);
         } catch (e) {
             console.error('documentToSelect undefined in DocumentsManager.setSelected()');
+        }
+    }
+
+
+    public async navigateDocumentList(direction: 'previous'|'next'): Promise<any> {
+
+        if (!this.documents || this.documents.length === 0) return;
+
+        const selectedDocument: FieldDocument|undefined
+            = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
+
+        if (!selectedDocument) {
+            await this.setSelected(this.documents[0].resource.id);
+        } else {
+            let index: number = this.documents.indexOf(selectedDocument) + (direction === 'next' ? 1 : -1);
+            if (index < 0) index = this.documents.length - 1;
+            if (index === this.documents.length) index = 0;
+            await this.setSelected(this.documents[index].resource.id);
         }
     }
 

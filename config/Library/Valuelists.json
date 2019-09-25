@@ -1,4 +1,13 @@
 {
+  "coordinate-reference-system-default-1": {
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Eigenes Koordinatenbezugssystem": {},
+      "EPSG4326 (WGS 84)": {},
+      "EPSG3857 (WGS 84 Web Mercator)": {}
+    }
+  },
   "periods-default-1": {
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {

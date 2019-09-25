@@ -831,8 +831,8 @@
     "hidden": []
   },
   "Drawing:default": {
-    "fields": {}
     "hidden": [],
+    "fields": {}
   },
   "Stone:default": {
     "hidden": [

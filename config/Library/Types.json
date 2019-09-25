@@ -155,6 +155,9 @@
       "description"
     ],
     "fields": {
+      "coordinateReferenceSystem": {
+        "valuelistId": "coordinate-reference-system-default-1"
+      },
       "contactMail": {
         "inputType": "input"
       },

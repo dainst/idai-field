@@ -12,7 +12,7 @@ of using multiple systems. Developed in-house by the DAI’s information
 technology department, it targets primarily the needs of the institute’s 
 excavations, older ones as well as those to come. Yet, due to the nature 
 of its adjustable data model and the fact it is open source software, any 
-interested third party is free to reuse and adjust it to their needs.
+interested third party is free to reuse and adjust it to their needs..
    
 
 ## Installation

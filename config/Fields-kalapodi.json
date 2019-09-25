@@ -1,0 +1,314 @@
+{
+  "Operation": {
+    "fields": {
+      "fixMe": {
+        "inputType": "input"
+      },
+      "campaign": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "2004",
+          "2009",
+          "2011",
+          "2015",
+          "2016",
+          "2017",
+          "2018"
+        ]
+      },
+      "supervisor": {
+        "inputType": "radio",
+        "valuelist": []
+      },
+      "processor": {
+        "inputType": "checkboxes",
+        "valuelist": []
+      }
+    }
+  },
+  "Find": {
+    "fields": {
+      "storagePlace": {
+        "inputType": "radio",
+        "valuelist": []
+      },
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "checkboxes",
+        "valuelist": []
+      },
+      "workflow": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Keine Angabe",
+          "Inventarisiert",
+          "Fotografiert",
+          "Gezeichnet",
+          "Restauriert",
+          "Detailbearbeitung fertig",
+          "Fehlerhaft"
+        ]
+      },
+      "fixMe": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Sample": {
+    "parent": "Find",
+    "color": "#9ecae1",
+    "fields": {
+      "descriptionSample": {
+        "inputType": "text"
+      },
+      "researchQuestion": {
+        "inputType": "text"
+      },
+      "analyzedBy": {
+        "inputType": "input"
+      },
+      "labNumber": {
+        "inputType": "input"
+      },
+      "sampleType": {
+        "inputType": "radio",
+        "valuelist": [
+          "Soil",
+          "C14",
+          "Charcoal",
+          "Wood",
+          "Pollen",
+          "Botanic",
+          "Mollusc",
+          "Anthropology",
+          "Bone",
+          "Isotopes",
+          "Mortar",
+          "Stone",
+          "Metallurgy",
+          "Micromorphology"
+        ]
+      },
+      "sampleRelatedTo": {
+        "inputType": "input"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "sampleState": {
+        "inputType": "radio",
+        "valuelist": ["Stored", "Submitted", "Analyzed", "Discarded"]
+      }
+    }
+  },
+  "Feature": {
+    "fields": {
+      "if1AutoKlassifizierungOhneBefundart": {
+        "inputType": "input"
+      },
+      "if1SchichtKlassifizSonst": {
+        "inputType": "input"
+      },
+      "fixMe": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Image": {
+    "fields": {
+      "importTag": {
+        "inputType": "input"
+      },
+      "draughtsmen": {
+        "inputType": "checkboxes",
+        "valuelist": []
+      },
+      "fixMe": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Photo": {
+    "fields": {
+      "date": {
+        "inputType": "date"
+      },
+      "imageSubject": {
+        "inputType": "radio",
+        "valuelist": [
+          "Arbeitsfoto",
+          "Einzelfund",
+          "Multifund",
+          "Personen",
+          "Proben",
+          "Profil",
+          "Sammelfund Keramik",
+          "Sammelfund Ziegel",
+          "Schnitt",
+          "Schnitt mit Fund",
+          "Übersicht",
+          "Unklar",
+          "WrongPhoto"
+        ]
+      }
+    }
+  },
+  "Metal": {
+    "fields": {
+      "metalMaterial": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bronze",
+          "Eisen",
+          "Blei",
+          "Silber",
+          "Unklar",
+          "Gold",
+          "Aluminium",
+          "Kupfer",
+          "Messing",
+          "Stahl",
+          "Zink",
+          "Zinn"
+        ]
+      }
+    }
+  },
+  "Coin": {
+    "fields": {
+      "metalMaterial": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bronze",
+          "Eisen",
+          "Blei",
+          "Silber",
+          "Unsicher bzw. unbestimmbar",
+          "Gold",
+          "Aluminium",
+          "Kupfer",
+          "Messing",
+          "Stahl",
+          "Zink",
+          "Zinn"
+        ]
+      }
+    }
+  },
+  "Brick": {
+    "fields": {
+      "brickUsage": {
+        "inputType": "radio",
+        "valuelist": [
+          "Dach",
+          "Decke",
+          "Fenster",
+          "Fussboden",
+          "Gewölbedecke",
+          "Klosterformat",
+          "Türrahmen",
+          "Türsturz",
+          "Wandverkleidung",
+          "Sonstiges",
+          "Unklar"
+        ]
+      }
+    }
+  },
+  "Planum": {
+    "color": "#00ced1",
+    "parent": "Feature",
+    "fields": {
+      "objectOrigin": {
+        "inputType": "radio",
+        "valuelist": [
+          "idaifield1",
+          "Fotoliste"
+        ]
+      },
+      "if1TiefeRelativ": {
+        "inputType": "input"
+      }
+    }
+  },
+  "BrickCluster": {
+    "color": "#CC0000",
+    "parent": "Find"
+  },
+  "Pottery": {
+    "fields": {
+      "materialType": {
+        "inputType": "radio",
+        "valuelist": [
+          "Feine Ware",
+          "Grob-Feine Ware",
+          "Grobe Ware"
+        ]
+      }
+    }
+  },
+  "PotteryCluster": {
+    "color": "#CC0000",
+    "parent": "Find"
+  },
+  "Layer": {
+    "fields": {
+      "if1Farbe2": {
+        "inputType": "input"
+      },
+      "if1SchichtUnterscheidungsKrit": {
+        "inputType": "input"
+      },
+      "layerClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "TODO Classify",
+          "Brandschicht",
+          "Deponierung",
+          "Erdschicht",
+          "Kulturschicht",
+          "Laufhorizont",
+          "Planierschicht",
+          "Profilreinigung",
+          "Reinigung",
+          "Schuttschicht",
+          "Schwemmschicht",
+          "Sonstiges",
+          "Stegabnahme",
+          "Verfüllung",
+          "Versturz",
+          "Zerstörungsschicht"
+        ]
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Humus",
+          "Feinsand",
+          "Feinstsand",
+          "Grobsand",
+          "Lehm",
+          "Lehmiger Sand",
+          "Lehmiger Schluff",
+          "Lehmiger Ton",
+          "Mergel",
+          "Mittlerer Sand",
+          "Sand",
+          "Sandiger Lehm",
+          "Sandiger Schluff",
+          "Sandiger Ton",
+          "Schluff",
+          "Schluffiger Lehm",
+          "Schluffiger Sand",
+          "Schluffiger Ton",
+          "Ton",
+          "Toniger Lehm",
+          "Toniger Sand",
+          "Toniger Schluff"
+        ]
+      }
+    }
+  }
+}

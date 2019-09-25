@@ -75,13 +75,15 @@ export class ViewFacade {
 
     public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
 
+    public navigateDocumentList = (direction: 'previous'|'next') => this.documentsManager.navigateDocumentList(direction);
+
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
     public deselect = () => this.documentsManager.deselect();
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: 'map' | 'list') => this.resourcesStateManager.setMode(mode);
+    public setMode = (mode: 'map'|'list') => this.resourcesStateManager.setMode(mode);
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 

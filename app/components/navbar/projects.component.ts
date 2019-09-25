@@ -39,6 +39,8 @@ export class ProjectsComponent implements OnInit {
 
         try {
             await ref.result;
+        } catch(err) {
+            // Projects modal has been canceled
         } finally {
             MenuService.setContext('default');
         }

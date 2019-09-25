@@ -64,12 +64,8 @@ export class SidebarListComponent extends BaseList {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'ArrowUp') {
-            await this.viewFacade.navigateDocumentList('previous');
-            event.preventDefault();
-            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
-        } else if (event.key === 'ArrowDown') {
-            await this.viewFacade.navigateDocumentList('next');
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+            await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
             event.preventDefault();
             this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
         }

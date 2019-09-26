@@ -33,6 +33,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {GenericFormComponent} from './core/generic-form-component';
 import {GeometryComponent} from './core/forms/geometry.component';
+import {MultiInputComponent} from './core/forms/multi-input.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import {GeometryComponent} from './core/forms/geometry.component';
         BooleanComponent,
         DropdownComponent,
         InputComponent,
+        MultiInputComponent,
         RadioComponent,
         TextComponent,
         DatingComponent,

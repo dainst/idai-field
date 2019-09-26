@@ -11,7 +11,7 @@ import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
 export interface LibraryTypeDefinition extends BaseTypeDefinition {
 
     color?: string,
-    valuelists?: {[fieldName: string]: string /* valuelistId TODO make type */}; // TODO make mandatory
+    valuelists: {[fieldName: string]: string /* valuelistId TODO make type */};
     commons: string[];
     parent?: string,
     typeFamily: string;
@@ -26,7 +26,6 @@ export type LibraryTypeDefinitions = {[typeName: string]: LibraryTypeDefinition 
 
 export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
-    valuelistId?: string;
     inputType?: string;
     positionValues?: string;
 }
@@ -43,11 +42,12 @@ export module LibraryTypeDefinition {
 
         return function assertIsValid([typeName, type]: [string, LibraryTypeDefinition]) {
 
-            if (!type.description) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', typeName];
+            if (type.description === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', typeName];
             if (type.creationDate === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'creationDate', typeName];
             if (type.createdBy === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'createdBy', typeName];
             if (type.typeFamily === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'typeFamily', typeName];
             if (type.commons === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'commons', typeName];
+            if (type.valuelists === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'valuelists', typeName];
 
             if (!builtinTypes.includes(type.typeFamily) && !type.parent) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', typeName];
 

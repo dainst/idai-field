@@ -27,6 +27,7 @@ describe('Preprocessing', () => {
             createdBy: '',
             creationDate: '',
             color: 'white',
+            valuelists: {},
             fields: {
                 'aField': {}
             }

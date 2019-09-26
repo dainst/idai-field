@@ -94,6 +94,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: {} },
                 createdBy: '',
                 creationDate: '',
@@ -126,6 +127,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {},
                 createdBy: '',
                 creationDate: '',
@@ -134,6 +136,7 @@ describe('mergeTypes', () => {
             'A:1': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {},
                 createdBy: '',
                 creationDate: '',
@@ -169,6 +172,7 @@ describe('mergeTypes', () => {
                 typeFamily: 'A',
                 commons: [],
                 fields: {},
+                valuelists: {},
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -198,6 +202,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: { inputType: 'text' }},
                 createdBy: '',
                 creationDate: '',
@@ -206,6 +211,7 @@ describe('mergeTypes', () => {
             'A:1': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: { inputType: 'input' }},
                 createdBy: '',
                 creationDate: '',
@@ -235,6 +241,7 @@ describe('mergeTypes', () => {
                 fields: {},
                 commons: [],
                 createdBy: '',
+                valuelists: {},
                 creationDate: '',
                 description: {}
             }};
@@ -264,6 +271,7 @@ describe('mergeTypes', () => {
                 commons: [],
                 fields: { aCommon: { inputType: 'input' } },
                 createdBy: '',
+                valuelists: {},
                 creationDate: '',
                 description: {}
             }};
@@ -338,6 +346,7 @@ describe('mergeTypes', () => {
                 typeFamily: 'A',
                 commons: ['aCommon'],
                 fields: { },
+                valuelists: {},
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -391,6 +400,7 @@ describe('mergeTypes', () => {
                 typeFamily: 'A',
                 commons: ['aCommon'],
                 fields: { },
+                valuelists: {},
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -423,6 +433,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: { inputType: 'invalid' }},
                 createdBy: '',
                 creationDate: '',
@@ -475,6 +486,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: {} } as any,
                 creationDate: '', createdBy: '', description: {}
             },
@@ -501,6 +513,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: {} } as any,
                 creationDate: '', createdBy: '', description: {}
             },
@@ -526,6 +539,7 @@ describe('mergeTypes', () => {
                 typeFamily: 'B',
                 parent: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { bField: {}} as any,
                 creationDate: '', createdBy: '', description: {}
             },
@@ -552,6 +566,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: { inputType: 'input' }} as any,
                 creationDate: '', createdBy: '', description: {}
             },
@@ -578,6 +593,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: { aField: { group: 'a' }} as any,
                 creationDate: '', createdBy: '', description: {}
             },
@@ -632,11 +648,12 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {
                     a1: {
                         inputType: 'dropdown',
                         valuelistId: '123'
-                    },
+                    } as any,
                     a2: { inputType: 'input' },
                     a3: { inputType: 'input' }},
                 creationDate: '',
@@ -685,6 +702,7 @@ describe('mergeTypes', () => {
                 commons: [],
                 fields: {},
                 createdBy: "",
+                valuelists: {},
                 creationDate: "",
                 description: {}
             }
@@ -734,6 +752,7 @@ describe('mergeTypes', () => {
             A: {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {
                     field2: { inputType: 'input' }
                 },
@@ -773,6 +792,7 @@ describe('mergeTypes', () => {
             'A:1': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {
                     field1: {},
                     field2: { inputType: 'text' }
@@ -833,6 +853,7 @@ describe('mergeTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
+                valuelists: {},
                 fields: {
                     field2: { inputType: 'text' }
                 },
@@ -866,6 +887,7 @@ describe('mergeTypes', () => {
             typeFamily: 'x1',
             commons: [],
             parent: 'x',
+            valuelists: {},
             description: { 'de': '' },
             createdBy: '',
             creationDate: '',

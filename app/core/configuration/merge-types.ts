@@ -6,7 +6,6 @@ import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, k
     on, reduce, to, union} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
-import {type} from "os";
 
 
 type CommonFields = {[fieldName: string]: any};
@@ -21,6 +20,7 @@ interface TransientFieldDefinition
     extends BuiltinFieldDefinition, LibraryFieldDefinition {
 
     valuelist?: any;
+    valuelistId?: string,
     visible?: boolean;
     editable?: boolean;
 }
@@ -119,6 +119,7 @@ function assertValuelistIdsProvided(mergedTypes: TransientTypeDefinitions) {
 
     iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
         if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
+
             if (!field.valuelistId) {
                 throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', typeName, fieldName];
             }

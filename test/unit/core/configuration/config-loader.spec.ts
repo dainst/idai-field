@@ -587,8 +587,7 @@ describe('ConfigLoader', () => {
                 fields: {
                     fieldA1: { inputType: 'input' },
                     fieldA2: { inputType: 'input' },
-                    fieldA3: { inputType: 'input' }
-                    },
+                    fieldA3: { inputType: 'input' }},
                 creationDate: '', createdBy: '', description: {}  }
         });
 

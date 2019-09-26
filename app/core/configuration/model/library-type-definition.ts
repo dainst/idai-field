@@ -11,6 +11,7 @@ import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
 export interface LibraryTypeDefinition extends BaseTypeDefinition {
 
     color?: string,
+    valuelists?: {[fieldName: string]: string /* valuelistId TODO make type */}; // TODO make mandatory
     commons: string[];
     parent?: string,
     typeFamily: string;

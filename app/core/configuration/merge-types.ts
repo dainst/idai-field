@@ -6,6 +6,7 @@ import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, k
     on, reduce, to, union} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
+import {type} from "os";
 
 
 type CommonFields = {[fieldName: string]: any};
@@ -91,14 +92,26 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
     eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
-    assertValuelistIdsProvided(mergedTypes);
     hideFields(mergedTypes, customTypes);
+    replaceCommonFields(mergedTypes, commonFields);
+    insertValuelistIds(mergedTypes);
+    assertValuelistIdsProvided(mergedTypes);
 
     const typesByFamilyNames: TransientTypeDefinitions = toTypesByFamilyNames(mergedTypes);
-    replaceCommonFields(typesByFamilyNames, commonFields);
     applyValuelistsConfiguration(typesByFamilyNames, valuelistsConfiguration);
     addExtraFields(typesByFamilyNames, extraFields);
     return typesByFamilyNames;
+}
+
+
+function insertValuelistIds(mergedTypes: TransientTypeDefinitions) {
+
+    iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
+
+        if (type.valuelists && type.valuelists[fieldName]) {
+            field.valuelistId = type.valuelists[fieldName];
+        }
+    });
 }
 
 

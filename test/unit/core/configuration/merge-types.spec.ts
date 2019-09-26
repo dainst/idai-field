@@ -13,6 +13,35 @@ import {RelationDefinition} from '../../../../app/core/configuration/model/relat
 describe('mergeTypes', () => {
 
 
+    it('valuelistId - provided via valuelists property in library', () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const libraryTypes: LibraryTypeDefinitions = {
+            'A:default': {
+                valuelists: { aField: 'aField-valuelist-id-1' },
+                typeFamily: 'A',
+                commons: [],
+                fields: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        const customTypes: CustomTypeDefinitions = {
+            'A:default': { fields: {}}
+        };
+
+        const result = mergeTypes(
+                builtInTypes,
+                libraryTypes,
+                customTypes,
+                {},
+                { 'aField-valuelist-id-1': { values: { a: {}} }});
+
+        expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
+    });
+
+
     it('valuelistId - nowhere provided - built in type selected', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};

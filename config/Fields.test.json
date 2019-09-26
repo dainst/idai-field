@@ -18,7 +18,7 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "valuelistId": "Pottery-condition-default"
       },
       "clayColorInside": {
         "inputType": "checkboxes",
@@ -30,26 +30,7 @@
       },
       "decorationTechnique": {
         "inputType": "dropdown",
-        "valuelist": [
-          "painting",
-          "decorative band (applied)",
-          "relief decor",
-          "carving",
-          "stamp",
-          "stamp decor",
-          "swab decor",
-          "wartdecor",
-          "comb incised",
-          "incised wide lines",
-          "herringbone pattern incised",
-          "rope-like application impressed",
-          "burnishing",
-          "imprint",
-          "application",
-          "preserved",
-          "grooved/soft incised",
-          "combed"
-        ]
+        "valuelistId": "Terracotta-decorationTechnique-default"
       },
       "manufacturingMethod": {
         "inputType": "checkboxes",
@@ -200,7 +181,7 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "valuelistId": "Pottery-condition-default"
       },
       "Firing": {
         "inputType": "checkboxes",
@@ -212,11 +193,11 @@
       },
       "temperAmount": {
         "inputType": "radio",
-        "valuelistId": "Pottery-temperAmount-WES"
+        "valuelistId": "Terracotta-temperAmount-default"
       },
       "temperParticles": {
         "inputType": "radio",
-        "valuelistId": "Pottery-temperParticles-WES"
+        "valuelistId": "Terracotta-temperParticles-default"
       },
       "TerracottaType": {
         "inputType": "dropdown",
@@ -483,7 +464,7 @@
       },
       "condition": {
         "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "valuelistId": "Pottery-condition-default"
       },
       "decorationTechnique": {
         "inputType": "dropdown",

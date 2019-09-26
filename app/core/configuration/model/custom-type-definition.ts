@@ -9,6 +9,7 @@ import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
  */
 export interface CustomTypeDefinition extends BaseTypeDefinition {
 
+    valuelists?: { [valuelistName: string]: string },
     commons?: string[];
     color?: string,
     hidden?: string[];

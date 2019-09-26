@@ -206,7 +206,7 @@
   "Wall_surface": {
     "commons": [
       "area", "description", "processor", "dating",
-      "dimensionHeight", "dimensionWidth"],
+      "dimensionHeight", "dimensionWidth", "period"],
     "hidden": [],
     "valuelists": {
       "period": "periods-meninx-1"

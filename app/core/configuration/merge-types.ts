@@ -95,8 +95,8 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
     hideFields(mergedTypes, customTypes);
 
     const typesByFamilyNames: TransientTypeDefinitions = toTypesByFamilyNames(mergedTypes);
-    applyValuelistsConfiguration(typesByFamilyNames, valuelistsConfiguration);
     replaceCommonFields(typesByFamilyNames, commonFields);
+    applyValuelistsConfiguration(typesByFamilyNames, valuelistsConfiguration);
     addExtraFields(typesByFamilyNames, extraFields);
     return typesByFamilyNames;
 }
@@ -344,7 +344,10 @@ function replaceCommonFields(mergedTypes: TransientTypeDefinitions,
 
         for (let commonFieldName of mergedType.commons) {
             if (!commonFields[commonFieldName]) throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
-            mergedType.fields[commonFieldName] = clone(commonFields[commonFieldName]);
+
+            if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
+            mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
+            mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
         }
         delete mergedType.commons;
     }

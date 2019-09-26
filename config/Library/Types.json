@@ -33,6 +33,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "decorationDescription": {
         "inputType": "input"
       },
@@ -96,6 +99,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "featureText": {
         "inputType": "input"
       },
@@ -320,6 +326,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "color": {
         "inputType": "dropdown",
         "valuelistId": "Wood-color-default"
@@ -704,6 +713,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "amountSherdsWall": {
         "inputType": "unsignedInt"
       },
@@ -1009,6 +1021,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "clayColorBreak": {
         "inputType": "checkboxes",
         "valuelistId": "colors-default-1"
@@ -1121,6 +1136,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "purpose": {
         "inputType": "input"
       },
@@ -1171,6 +1189,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "frontSideDescription": {
         "inputType": "input"
       },
@@ -1317,6 +1338,9 @@
       "provenance"
     ],
     "fields": {
+      "provenance": {
+        "valuelistId": "provenance-default-1"
+      },
       "decorationTechnique": {
         "inputType": "dropdown",
         "valuelistId": "Metal-decorationTechnique-default"

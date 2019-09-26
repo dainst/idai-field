@@ -10,9 +10,13 @@
       "dimensionLength",
       "dimensionWidth",
       "dimensionVerticalExtent",
-      "spatialLocation"
+      "spatialLocation",
+      "orientation"
     ],
     "fields": {
+      "orientation": {
+        "valuelistId": "orientation-default-1"
+      },
       "trenchComment": {
         "inputType": "text"
       },
@@ -391,9 +395,13 @@
     "creationDate": "",
     "color": "#707070",
     "commons": [
-      "spatialLocation"
+      "spatialLocation",
+      "orientation"
     ],
     "fields": {
+      "orientation": {
+        "valuelistId": "orientation-default-1"
+      },
       "bibliography": {
         "inputType": "text"
       },

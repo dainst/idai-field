@@ -9,6 +9,9 @@
   },
   "Survey:default": {
     "hidden": [],
+    "valuelists": {
+      "orientation": "orientation-default-1"
+    },
     "fields": {
       "researchMethod": {
         "inputType": "checkboxes",
@@ -228,6 +231,9 @@
       "interpretation": {
         "inputType": "text"
       }
+    },
+    "valuelists": {
+      "period": "periods-default-1"
     },
     "commons": [
       "period",

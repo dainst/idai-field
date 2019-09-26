@@ -41,10 +41,10 @@
       "area", "beginningDate", "endDate", "dating", "description", "processor",
       "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "spatialLocation"
     ],
+    "valuelists": {
+      "orientation": "orientation-default-1"
+    },
     "fields": {
-      "orientation": {
-        "valuelistId": "orientation-default-1"
-      },
       "comparison": {
         "inputType": "text"
       },

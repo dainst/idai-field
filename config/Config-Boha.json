@@ -28,6 +28,9 @@
     "hidden": []
   },
   "Building:default": {
+    "valuelists": {
+      "period": "periods-boha-1"
+    },
     "fields": {},
     "hidden": []
   },
@@ -39,6 +42,9 @@
     "hidden": [
       "catalogueNumber"
     ],
+    "valuelists": {
+      "period": "periods-boha-1"
+    },
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -67,10 +73,10 @@
   },
   "Feature:default": {
     "hidden": [],
+    "valuelists": {
+      "period": "periods-boha-1"
+    },
     "fields": {
-      "period": {
-        "valuelistId": "periods-boha-1"
-      },
       "stratigraphicReliability": {
         "inputType": "radio",
         "valuelistId": "Feature-stratigraphicReliability-Boha"
@@ -83,12 +89,18 @@
   },
   "Room:default": {
     "fields": {},
+    "valuelists": {
+      "period": "periods-boha-1"
+    },
     "hidden": []
   },
   "Inscription:default": {
     "hidden": [
       "conditionAmount"
     ],
+    "valuelists": {
+      "period": "periods-boha-1"
+    },
     "fields": {
       "objectType": {
         "inputType": "checkboxes",

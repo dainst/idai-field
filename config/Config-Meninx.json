@@ -36,11 +36,10 @@
   },
   "Building:default": {
     "commons": [],
-    "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      }
+    "valuelists": {
+      "period": "periods-meninx-1"
     },
+    "fields": {},
     "hidden": []
   },
   "BuildingPart:default": {
@@ -51,19 +50,18 @@
   "Find:default": {
     "hidden": [],
     "commons": ["dating"],
-    "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      }
-    }
+    "valuelists": {
+      "period": "periods-meninx-1"
+    },
+    "fields": {}
   },
   "Feature:default": {
     "commons": ["dimensionHeight"],
     "hidden": [],
+    "valuelists": {
+      "period": "periods-meninx-1"
+    },
     "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      },
       "colorSoil": {
         "inputType": "input"
       }
@@ -72,20 +70,18 @@
   "Room:default": {
     "commons": ["dating"],
     "hidden": [],
-    "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      }
-    }
+    "valuelists": {
+      "period": "periods-meninx-1"
+    },
+    "fields": {}
   },
   "Inscription:default": {
     "commons": ["dating"],
     "hidden": [],
-    "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      }
-    }
+    "valuelists": {
+      "period": "periods-meninx-1"
+    },
+    "fields": {}
   },
   "Image:default": {
     "commons": [],
@@ -212,10 +208,10 @@
       "area", "description", "processor", "dating",
       "dimensionHeight", "dimensionWidth"],
     "hidden": [],
+    "valuelists": {
+      "period": "periods-meninx-1"
+    },
     "fields": {
-      "period": {
-        "valuelistId": "periods-meninx-1"
-      },
       "conditionComment": {
         "inputType": "input"
       },

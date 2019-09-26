@@ -9,7 +9,8 @@
 
 <div class="input-group mb-2">
     <input [(ngModel)]="newEntry" type="text" class="form-control">
-    <button class="btn btn-success" type="button" (click)="addNewEntry()">
+    <button class="btn btn-success" [disabled]="!isValidEntry(newEntry)" type="button"
+            (click)="addNewEntry()">
         <span class="mdi mdi-plus"></span>
     </button>
 </div>

@@ -27,7 +27,7 @@ export class MultiInputComponent {
 
     public addNewEntry() {
 
-        if (this.newEntry.length === 0) return;
+        if (!this.isValidEntry(this.newEntry)) return;
 
         if (!this.resource[this.fieldName]) this.resource[this.fieldName] = [];
         this.resource[this.fieldName].push(this.newEntry);
@@ -42,5 +42,12 @@ export class MultiInputComponent {
         if (index > -1) this.resource[this.fieldName].splice(index, 1);
 
         if (this.resource[this.fieldName].length === 0) delete this.resource[this.fieldName];
+    }
+
+
+    public isValidEntry(entry: string): boolean {
+
+        return entry.length > 0
+            && (!this.resource[this.fieldName] || !this.resource[this.fieldName].includes(entry));
     }
 }

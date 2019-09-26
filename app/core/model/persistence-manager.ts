@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {arrayEquivalent, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {IndexFacade} from '../datastore/index/index-facade';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
 @Injectable()

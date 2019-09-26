@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {IdaiWidgetsModule} from 'idai-components-2';
 import {ImageUploader} from './image-uploader';
 import {UploadStatus} from './upload-status';
 import {UploadModalComponent} from './upload-modal.component';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
+import {WidgetsModule} from '../../widgets/widgets.module';
 
 @NgModule({
     imports: [
         BrowserModule,
-        IdaiWidgetsModule
+        WidgetsModule
     ],
     declarations: [
         UploadModalComponent,

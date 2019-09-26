@@ -1,9 +1,10 @@
 import {includedIn, isNot, on, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {Query, IdaiType, FieldDocument} from 'idai-components-2';
+import {Query, FieldDocument} from 'idai-components-2';
 import {ISRECORDEDIN_CONTAIN} from '../../c';
 import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './export-helper';
+import {IdaiType} from '../configuration/model/idai-type';
 
 
 /**

@@ -1,8 +1,9 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
+import {FieldDefinition} from '../core/configuration/model/field-definition';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
 
 
 type ConstraintListItem = {

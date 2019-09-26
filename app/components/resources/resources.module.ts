@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -44,6 +43,7 @@ import {TabManager} from '../tab-manager';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 const remote = require('electron').remote;
 
@@ -54,7 +54,6 @@ const remote = require('electron').remote;
         NgbModule,
         WidgetsModule,
         ImageGridModule,
-        IdaiWidgetsModule,
         DoceditModule
     ],
     declarations: [

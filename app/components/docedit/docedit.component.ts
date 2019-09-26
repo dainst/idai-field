@@ -2,8 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
-import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages,
-    ProjectConfiguration, FieldDefinition, RelationDefinition} from 'idai-components-2';
+import {DatastoreErrors, Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
@@ -14,6 +13,9 @@ import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../../widgets/loading';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
+import {FieldDefinition} from '../../core/configuration/model/field-definition';
+import {RelationDefinition} from '../../core/configuration/model/relation-definition';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({

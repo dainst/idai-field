@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
-import {FieldDocument, IdaiType, Messages, ProjectConfiguration, Query} from 'idai-components-2';
+import {FieldDocument, Messages, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -18,6 +18,8 @@ import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 const remote = require('electron').remote;
 

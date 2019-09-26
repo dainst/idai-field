@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose} from 'tsfun';
-import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
+import {Document, FieldDocument,   ReadDatastore,
     Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
@@ -12,6 +12,9 @@ import {DatingUtil} from '../core/util/dating-util';
 import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../core/model/relation-constants';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {IdaiType} from '../core/configuration/model/idai-type';
+import {RelationDefinition} from '../core/configuration/model/relation-definition';
 
 
 type FieldViewGroupDefinition = {

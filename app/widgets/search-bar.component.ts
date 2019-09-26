@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
 import {arrayEquivalent} from 'tsfun';
-import {IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../core/model/type-utility';
+import {IdaiType} from '../core/configuration/model/idai-type';
 
 
 @Component({

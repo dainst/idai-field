@@ -1,8 +1,9 @@
 import {isnt, on} from 'tsfun';
-import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
+import {Document, FindResult, NewDocument, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
 import {Validations} from './validations';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
 const RECORDED_IN = 'isRecordedIn';

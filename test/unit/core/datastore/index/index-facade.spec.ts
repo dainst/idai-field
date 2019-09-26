@@ -1,4 +1,4 @@
-import {ProjectConfiguration, Query, FieldDocument} from 'idai-components-2';
+import {Query, FieldDocument} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
@@ -8,6 +8,7 @@ import {DocumentCache} from '../../../../../app/core/datastore/core/document-cac
 import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb-manager';
 import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
 import {to} from 'tsfun';
+import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
 class IdGenerator {

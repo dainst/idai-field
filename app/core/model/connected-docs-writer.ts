@@ -1,7 +1,8 @@
 import {flatMap, subtract, to} from 'tsfun';
-import {Document, ProjectConfiguration, Relations, toResourceId} from 'idai-components-2';
+import {Document, Relations, toResourceId} from 'idai-components-2';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
 /**

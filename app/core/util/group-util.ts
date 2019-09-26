@@ -1,10 +1,10 @@
-import {FieldDefinition} from 'idai-components-2';
-
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
+import {FieldDefinition} from '../configuration/model/field-definition';
+
+
 export module GroupUtil {
 
     export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {

@@ -14,6 +14,7 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 
 # PouchDB data directories
+synctest*
 _users/
 pouch__all_dbs__/
 proddb

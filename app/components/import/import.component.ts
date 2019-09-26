@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, forEach, isNot, map, take, includedIn} from 'tsfun';
-import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
+import {Document, Messages} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -26,6 +26,8 @@ import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({

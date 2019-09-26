@@ -1,12 +1,15 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
-import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
-    IdaiType} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
 import {GROUP_NAME} from '../../../c';
 import {POSITION_RELATIONS, TIME_RELATIONS} from '../../../core/model/relation-constants';
+import {FieldDefinition} from '../../../core/configuration/model/field-definition';
+import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {IdaiType} from '../../../core/configuration/model/idai-type';
 
 
 interface GroupDefinition {

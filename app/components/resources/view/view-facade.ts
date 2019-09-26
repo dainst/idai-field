@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
@@ -7,6 +7,7 @@ import {ResourcesStateManager} from './resources-state-manager';
 import {NavigationPath} from './state/navigation-path';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 /**
  * Manages an overview of operation type resources

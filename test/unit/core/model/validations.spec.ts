@@ -1,6 +1,7 @@
-import {ProjectConfiguration} from 'idai-components-2';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {Validations} from '../../../../app/core/model/validations';
+import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
+
 
 /**
  * @author Daniel de Oliveira

@@ -1,6 +1,8 @@
 import {getOnOr} from 'tsfun';
-import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
+import {IdaiType} from '../../configuration/model/idai-type';
+import {FieldDefinition} from '../../configuration/model/field-definition';
 
 
 export interface IndexDefinition {

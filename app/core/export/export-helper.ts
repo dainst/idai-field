@@ -1,6 +1,7 @@
 import {arrayList} from 'tsfun';
-import {FieldResource, Query, IdaiType, Document} from 'idai-components-2';
+import {FieldResource, Query, Document} from 'idai-components-2';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
+import {IdaiType} from '../configuration/model/idai-type';
 
 
 export type Count = number; // -1 signals that there is not usable count

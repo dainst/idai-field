@@ -1,6 +1,6 @@
-import {FieldDefinition} from 'idai-components-2';
 import {CSVExport} from '../../../../app/core/export/csv-export';
 import {Static} from '../../static';
+import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {

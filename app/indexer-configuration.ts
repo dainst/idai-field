@@ -1,7 +1,7 @@
-import {ProjectConfiguration} from 'idai-components-2';
 import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {IndexFacade} from './core/datastore/index/index-facade';
+import {ProjectConfiguration} from './core/configuration/project-configuration';
 
 /**
  * @author Thomas Kleinke

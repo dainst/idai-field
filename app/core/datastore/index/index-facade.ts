@@ -1,10 +1,11 @@
 import {Observable, Observer} from 'rxjs';
-import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
+import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
 import {SimpleIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
+import {IdaiType} from '../../configuration/model/idai-type';
 
 
 /**

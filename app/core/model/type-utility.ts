@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {to} from 'tsfun';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {IdaiType} from '../configuration/model/idai-type';
 
 
 @Injectable()

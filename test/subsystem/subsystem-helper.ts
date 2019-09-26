@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb';
-import {AppConfigurator, ConfigLoader, ConfigReader, Document, ImageDocument, Query} from 'idai-components-2';
+import {Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -24,6 +24,9 @@ import {TabManager} from '../../app/components/tab-manager';
 import {ImageOverviewFacade} from '../../app/components/imageoverview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../app/components/imageoverview/view/image-documents-manager';
 import {ImagesState} from '../../app/components/imageoverview/view/images-state';
+import {AppConfigurator} from '../../app/core/model/app-configurator';
+import {ConfigLoader} from '../../app/core/configuration/config-loader';
+import {ConfigReader} from '../../app/core/configuration/config-reader';
 
 
 class IdGenerator {

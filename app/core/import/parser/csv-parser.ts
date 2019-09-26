@@ -1,10 +1,11 @@
 import {assoc, update, flow, map} from 'tsfun';
-import {Document, IdaiType, Resource, Relations} from 'idai-components-2';
+import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
 import {CsvRowsConversion} from './csv-rows-conversion';
 import parse = CsvRowsConversion.parse;
 import convertFieldTypes = CsvFieldTypesConversion.convertFieldTypes;
+import {IdaiType} from '../../configuration/model/idai-type';
 
 
 /**

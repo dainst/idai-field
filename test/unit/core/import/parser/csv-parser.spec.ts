@@ -1,7 +1,7 @@
-import {IdaiType} from 'idai-components-2';
 import {CsvParser} from '../../../../../app/core/import/parser/csv-parser';
 import {makeFieldDefinitions} from '../../export/csv-export.spec';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
+import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
 
 /**
  * @author Daniel de Oliveira

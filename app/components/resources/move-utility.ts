@@ -1,7 +1,8 @@
-import {FieldDocument, Document, IdaiType, Constraint} from 'idai-components-2';
+import {FieldDocument, Document, Constraint} from 'idai-components-2';
 import {clone} from '../../core/util/object-util';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 /**

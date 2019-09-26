@@ -1,9 +1,10 @@
 import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
     isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
-import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
+import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
 import {HIERARCHICAL_RELATIONS} from '../model/relation-constants';
+import {FieldDefinition} from '../configuration/model/field-definition';
 
 
 /**

@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, Resource, Document, Messages, ProjectConfiguration} from 'idai-components-2';
+import {Relations, Resource, Document, Messages} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../m';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 const moment = require('moment');
 

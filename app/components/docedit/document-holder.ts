@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {Document, NewDocument, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -11,6 +11,9 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {clone} from '../../core/util/object-util';
 import {M} from '../m';
 import {DuplicationUtil} from './duplication-util';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {FieldDefinition} from '../../core/configuration/model/field-definition';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 @Injectable()

@@ -1,11 +1,14 @@
 import {includedIn, is, isNot, on} from 'tsfun';
-import {Dating, Dimension, Document, FieldDefinition, FieldGeometry, NewDocument, NewResource,
-    ProjectConfiguration, RelationDefinition, Resource} from 'idai-components-2';
+import {Dating, Dimension, Document, FieldGeometry, NewDocument, NewResource,
+    Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 import {DatingUtil} from '../util/dating-util';
 import {INPUT_TYPE, INPUT_TYPES} from '../../c';
 import {subtract} from 'tsfun/src/arrayset';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {FieldDefinition} from '../configuration/model/field-definition';
+import {RelationDefinition} from '../configuration/model/relation-definition';
 
 
 export module Validations {

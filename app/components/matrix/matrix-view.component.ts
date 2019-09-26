@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is} from 'tsfun';
-import {FeatureDocument, FieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {FeatureDocument, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -21,6 +21,7 @@ import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_CUT_BY = POSITION_RELATIONS.IS_CUT_BY;
 import CUTS = POSITION_RELATIONS.CUTS;
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({

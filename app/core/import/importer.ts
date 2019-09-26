@@ -1,5 +1,5 @@
 import {includedIn, is, isNot, isnt, on, jsonClone} from 'tsfun';
-import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
@@ -16,6 +16,8 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {IdaiType} from '../configuration/model/idai-type';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';

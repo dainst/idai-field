@@ -1,9 +1,11 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, IdaiType, ProjectConfiguration, FieldDocument, Messages} from 'idai-components-2';
+import {Relations, FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';

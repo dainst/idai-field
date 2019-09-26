@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {IdaiWidgetsModule, IdaiMessagesModule} from 'idai-components-2';
+import {IdaiMessagesModule} from 'idai-components-2';
 import {DoceditComponent} from './docedit.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';
@@ -44,7 +44,6 @@ import {GeometryComponent} from './core/forms/geometry.component';
         BrowserModule,
         NgbModule,
         FormsModule,
-        IdaiWidgetsModule,
         RouterModule,
         IdaiMessagesModule,
         WidgetsModule,

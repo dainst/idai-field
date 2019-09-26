@@ -9,7 +9,6 @@
       "diary",
       "dimensionLength",
       "dimensionWidth",
-      "orientation",
       "dimensionVerticalExtent",
       "spatialLocation"
     ],
@@ -383,7 +382,6 @@
     "creationDate": "",
     "color": "#707070",
     "commons": [
-      "orientation",
       "spatialLocation"
     ],
     "fields": {

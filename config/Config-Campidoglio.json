@@ -28,6 +28,9 @@
     "hidden": []
   },
   "Building:default": {
+    "valuelists": {
+      "period": "periods-campidoglio-and-castiglione-1"
+    },
     "fields": {},
     "hidden": []
   },
@@ -37,6 +40,9 @@
   },
   "Find:default": {
     "hidden": [],
+    "valuelists": {
+      "period": "periods-campidoglio-and-castiglione-1"
+    },
     "fields": {
       "drawn": {
         "inputType": "radio",
@@ -69,10 +75,10 @@
       "color",
       "hasDisturbance"
     ],
+    "valuelists": {
+      "period": "periods-campidoglio-and-castiglione-1"
+    },
     "fields": {
-      "period": {
-        "valuelistId": "periods-campidoglio-and-castiglione-1"
-      },
       "colorSoil": {
         "inputType": "input"
       },
@@ -110,10 +116,16 @@
     }
   },
   "Room:default": {
+    "valuelists": {
+      "period": "periods-campidoglio-and-castiglione-1"
+    },
     "fields": {},
     "hidden": []
   },
   "Inscription:default": {
+    "valuelists": {
+      "period": "periods-campidoglio-and-castiglione-1"
+    },
     "fields": {},
     "hidden": []
   },

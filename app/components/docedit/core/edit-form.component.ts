@@ -136,7 +136,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
                 label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
                 group: 'position',
                 inputType: 'geometry',
-                editable: true
+                editable: true,
+                visible: true
             });
         }
 

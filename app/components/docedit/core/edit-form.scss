@@ -47,6 +47,11 @@
               height: 33px;
             }
 
+            .btn:focus,
+            .btn:active {
+              box-shadow: none;
+            }
+
             .btn-success,
             .btn-danger,
             .btn-info,

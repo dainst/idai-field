@@ -8,6 +8,7 @@ import {
 } from '../../../../app/core/configuration/model/library-type-definition';
 import {Preprocessing} from '../../../../app/core/configuration/preprocessing';
 import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
+import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
 
 
 describe('mergeTypes', () => {
@@ -79,7 +80,7 @@ describe('mergeTypes', () => {
             libraryTypes,
             customTypes,
             {},
-            { 'aField-valuelist-id-1': { values: { a: {}} }});
+            { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, createdBy: '', creationDate: '' }});
 
         expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
     });
@@ -109,7 +110,7 @@ describe('mergeTypes', () => {
                 libraryTypes,
                 customTypes,
                 {},
-                { 'aField-valuelist-id-1': { values: { a: {}} }});
+                { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, creationDate: '', createdBy: ''}});
 
         expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
     });
@@ -712,8 +713,8 @@ describe('mergeTypes', () => {
             }
         };
 
-        const valuelistsConfiguration = {
-            '123': { values: { 'one': {}, 'two': {}, 'three': {} }}
+        const valuelistsConfiguration: ValuelistDefinitions = {
+            '123': { values: { 'one': {}, 'two': {}, 'three': {} }, description: {}, createdBy: '', creationDate: '' }
         };
 
         const result = mergeTypes(builtInTypes,

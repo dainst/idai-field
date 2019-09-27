@@ -1,3 +1,6 @@
+import {keysAndValues} from 'tsfun';
+import {ConfigurationErrors} from '../configuration-errors';
+
 // @author Daniel de Oliveira
 
 
@@ -21,15 +24,10 @@ export interface ValuelistDefinition {
 
 export module ValuelistDefinition {
 
-    export function isValid(valuelistDefinition: ValuelistDefinition): boolean {
+    export function assertIsValid([valuelistId, valuelistDefinition]: [string, ValuelistDefinition]) {
 
-        return true; // TODO implement properly, see if we can unify handling with cases like Document.isValid
-    }
-
-
-    export function assertIsValid(valuelistDefinition: ValuelistDefinition) {
-
-        // TODO throw if not is Valid
+        if (valuelistDefinition.description === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', valuelistId];
+        if (valuelistDefinition.createdBy === undefined) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'createdBy', valuelistId];
     }
 }
 
@@ -41,4 +39,4 @@ export interface ValueDefinition {
 }
 
 
-export interface ValuelistDefinitions { [key: string]: ValuelistDefinition }
+export interface ValuelistDefinitions { [valuelistId: string]: ValuelistDefinition }

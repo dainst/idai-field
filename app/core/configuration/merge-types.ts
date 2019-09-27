@@ -7,6 +7,7 @@ import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, k
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {dissocReducer} from '../import/util';
+import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
 
 
 type CommonFields = {[fieldName: string]: any};
@@ -57,6 +58,7 @@ type TransientFieldDefinitions = { [fieldName: string]: TransientFieldDefinition
  * @throws [DUPLICATION_IN_SELECTION, typeFamilyName]
  * @throws [MUST_HAVE_PARENT, typeName]
  * @throws [MISSING_TYPE_PROPERTY, propertyName, typeName]
+ * @throws [MISSING_VALUELIST_PROPERTY, propertyName, valuelistId]
  * @throws [MISSING_FIELD_PROPERTY, propertyName, typeName, fieldName]
  * @throws [MUST_NOT_SET_INPUT_TYPE, typeName, fieldName]
  * @throws [ILLEGAL_FIELD_TYPE, fieldType, fieldName]
@@ -70,12 +72,12 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
                            libraryTypes: LibraryTypeDefinitions,
                            customTypes: CustomTypeDefinitions = {},
                            commonFields: CommonFields = {},
-                           valuelistsConfiguration: {[valueListName: string]: any} = {},
+                           valuelistsConfiguration: ValuelistDefinitions = {},
                            extraFields: {[extraFieldName: string]: any} = {}) {
 
     const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
 
-    assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes);
+    assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes, valuelistsConfiguration);
     assertSubtypingIsLegal(builtInTypes, libraryTypes);
     assertSubtypingIsLegal(builtInTypes, customTypes);
     assertNoCommonFieldInputTypeChanges(commonFields, libraryTypes);
@@ -100,7 +102,7 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
     return flow(
         mergedTypes,
         toTypesByFamilyNames,
-        applyValuelistsConfiguration(valuelistsConfiguration),
+        applyValuelistsConfiguration(valuelistsConfiguration as any),
         addExtraFields(extraFields));
 }
 
@@ -306,13 +308,15 @@ function toTypesByFamilyNames(transientTypes: TransientTypeDefinitions): Transie
 function assertTypesAndValuelistsStructurallyValid(
     builtInTypes: string[],
     libraryTypes: LibraryTypeDefinitions,
-    customTypes: CustomTypeDefinitions) {
+    customTypes: CustomTypeDefinitions,
+    valuelistDefinitions: ValuelistDefinitions) {
 
     const assertLibraryTypeValid = LibraryTypeDefinition.makeAssertIsValid(builtInTypes);
     const assertCustomTypeValid = CustomTypeDefinition.makeAssertIsValid(builtInTypes, Object.keys(libraryTypes));
 
     keysAndValues(libraryTypes).forEach(assertLibraryTypeValid);
     keysAndValues(customTypes).forEach(assertCustomTypeValid);
+    keysAndValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
 }
 
 

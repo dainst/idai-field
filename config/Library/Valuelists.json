@@ -1,6 +1,7 @@
 {
   "coordinate-reference-system-default-1": {
     "createdBy": "",
+    "creationDate": "",
     "description": {},
     "values": {
       "Eigenes Koordinatenbezugssystem": {},
@@ -11,6 +12,7 @@
   "orientation-default-1": {
     "createdBy": "",
     "description": {},
+    "creationDate": "",
     "values": {
       "N-S": {},
       "NNO - SSW": {},
@@ -25,6 +27,7 @@
   "provenance-default-1": {
     "createdBy": "",
     "description": {},
+    "creationDate": "",
     "values": {
       "Anatolien": {},
       "Antiochia (Antakya)": {},
@@ -71,6 +74,7 @@
   },
   "periods-default-1": {
     "createdBy": "IT-Referat, DAI, 2019",
+    "creationDate": "",
     "description": {
       "de": "",
       "en": ""
@@ -105,6 +109,7 @@
   },
   "periods-boha-1": {
     "createdBy": "IT-Referat, DAI, 2019",
+    "creationDate": "",
     "description": {
       "de": "",
       "en": ""
@@ -147,6 +152,7 @@
     }
   },
   "periods-campidoglio-and-castiglione-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -167,6 +173,7 @@
     }
   },
   "periods-meninx-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -189,6 +196,7 @@
     }
   },
   "periods-pergamon-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -233,6 +241,7 @@
     }
   },
   "periods-wes-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -266,6 +275,7 @@
     }
   },
   "colors-default-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "Farbset 1, verschiedene Anwendungen; IT-Referat, 2019",
@@ -294,6 +304,7 @@
     }
   },
   "colors-default-2": {
+    "creationDate": "",
     "createdBy": "IT-Refarat, 2019",
     "description": "Farbset 2, verschiedene Anwendungen",
     "values": {
@@ -315,6 +326,7 @@
     }
   },
   "colors-boha-1": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -344,6 +356,7 @@
     }
   },
   "trench-excavationType-default": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -357,6 +370,7 @@
     }
   },
   "glass-decorationTechnique-default": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -384,6 +398,7 @@
     }
   },
   "glass-formDescription-default": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -409,6 +424,7 @@
     }
   },
   "glass-manufacturingMethod-default": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -426,6 +442,7 @@
     }
   },
   "glass-objectType-default": {
+    "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
       "de": "",
@@ -456,6 +473,7 @@
     }
   },
   "glass-transparency-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -469,6 +487,7 @@
     }
   },
   "glass-vesselForm-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -492,6 +511,7 @@
     }
   },
   "glass-vesselFormSpecific-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -530,6 +550,7 @@
     }
   },
   "Mollusk-classification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -543,6 +564,7 @@
     }
   },
   "Brick-brickForm-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -566,6 +588,7 @@
     }
   },
   "Brick-brickUsage-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -583,6 +606,7 @@
     }
   },
   "Brick-decorationTechnique-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -604,6 +628,7 @@
     }
   },
   "Brick-manufacturing-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -622,6 +647,7 @@
     }
   },
   "Brick-manufacturingMethod-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -635,6 +661,7 @@
     }
   },
   "Brick-specificType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -659,6 +686,7 @@
     }
   },
   "Brick-temper-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -680,6 +708,7 @@
     }
   },
   "Burial-amountIndividuals-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -698,6 +727,7 @@
     }
   },
   "Burial-burialCharacteristic-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -710,6 +740,7 @@
     }
   },
   "Burial-burialDocumentation-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -725,6 +756,7 @@
     }
   },
   "Burial-graveFeature-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -739,6 +771,7 @@
     }
   },
   "Burial-positionArms-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -755,6 +788,7 @@
     }
   },
   "Burial-positionLegs-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -770,6 +804,7 @@
     }
   },
   "Burial-positioningIndividuals-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -784,6 +819,7 @@
     }
   },
   "Building-architecturalOrders-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -827,6 +863,7 @@
     }
   },
   "Building-buildingCategorySpecific-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -865,6 +902,7 @@
     }
   },
   "Building-buildingTechnique-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -894,6 +932,7 @@
     }
   },
   "Building-buildingType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -907,6 +946,7 @@
     }
   },
   "Building-condition-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -921,6 +961,7 @@
     }
   },
   "Building-conditionAmount-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -933,6 +974,7 @@
     }
   },
   "Building-context-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -948,6 +990,7 @@
     }
   },
   "Building-material-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -968,6 +1011,7 @@
     }
   },
   "Wood-color-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -980,6 +1024,7 @@
     }
   },
   "Wood-objectType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1008,6 +1053,7 @@
     }
   },
   "Wood-typeOfWood-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1038,6 +1084,7 @@
     }
   },
   "Wood-manufacturingMethod-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1057,6 +1104,7 @@
     }
   },
   "Wood-surfaceCondition-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1069,6 +1117,7 @@
     }
   },
   "Wood-decorationTechnique-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1087,6 +1136,7 @@
     }
   },
   "Wood-paintCondition-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1102,6 +1152,7 @@
     }
   },
   "Architecture-blockProcessing-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1115,6 +1166,7 @@
     }
   },
   "Architecture-blockTreatment-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1133,6 +1185,7 @@
     }
   },
   "Architecture-brickwork-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1149,6 +1202,7 @@
     }
   },
   "Architecture-construction-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1166,6 +1220,7 @@
     }
   },
   "Architecture-mark-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1177,6 +1232,7 @@
     }
   },
   "Architecture-mortarBinder-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1190,6 +1246,7 @@
     }
   },
   "Architecture-mortarConsistency-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1207,6 +1264,7 @@
     }
   },
   "Architecture-wallClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1228,6 +1286,7 @@
     }
   },
   "Architecture-wallType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1245,6 +1304,7 @@
     }
   },
   "Place-findspotClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1267,6 +1327,7 @@
     }
   },
   "Place-siteClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1278,6 +1339,7 @@
     }
   },
   "Layer-consistency-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1311,6 +1373,7 @@
     }
   },
   "Layer-distinguishingCriteria-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1325,6 +1388,7 @@
     }
   },
   "Layer-layerClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1338,6 +1402,7 @@
     }
   },
   "Layer-soilType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1368,6 +1433,7 @@
     }
   },
   "Feature-featureBorders-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1395,6 +1461,7 @@
     }
   },
   "Feature-featureForm-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1421,6 +1488,7 @@
     }
   },
   "Floor-floorClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1440,6 +1508,7 @@
     }
   },
   "Inscription-objectType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1460,6 +1529,7 @@
     }
   },
   "Pottery-clayHardness-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1476,6 +1546,7 @@
     }
   },
   "Pottery-coatInside-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1489,6 +1560,7 @@
     }
   },
   "Pottery-coatInsideType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1505,6 +1577,7 @@
     }
   },
   "Pottery-decorationTechnique-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1523,6 +1596,7 @@
     }
   },
   "Pottery-manufacturingMethod-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1538,6 +1612,7 @@
     }
   },
   "Pottery-materialType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1549,6 +1624,7 @@
     }
   },
   "Pottery-objectType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1582,6 +1658,7 @@
     }
   },
   "Pottery-specificType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1619,6 +1696,7 @@
     }
   },
   "Pottery-temperAmount-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1635,6 +1713,7 @@
     }
   },
   "Pottery-temperParticles-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1650,6 +1729,7 @@
     }
   },
   "Pottery-vesselForm-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1682,6 +1762,7 @@
     }
   },
   "Pottery-vesselFormSpecific-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1726,6 +1807,7 @@
     }
   },
   "Grave-graveType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1758,6 +1840,7 @@
     }
   },
   "Grave-specificType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1775,6 +1858,7 @@
   },
   "Grave-tombBuilding-default": {
     "createdBy": "",
+    "creationDate": "",
     "description": {
       "de": "",
       "en": ""
@@ -1786,6 +1870,7 @@
     }
   },
   "Bone-biologicalAge-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1802,6 +1887,7 @@
     }
   },
   "Bone-boneClassification-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1833,6 +1919,7 @@
     }
   },
   "Bone-boneType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1846,6 +1933,7 @@
     }
   },
   "Bone-burningGrade-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1860,6 +1948,7 @@
     }
   },
   "Bone-sex-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1871,6 +1960,7 @@
     }
   },
   "Bone-objectType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1897,6 +1987,7 @@
     }
   },
   "Bone-species-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1916,6 +2007,7 @@
     }
   },
   "Room-campaign-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1926,6 +2018,7 @@
     }
   },
   "Terracotta-clayStructure-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1939,6 +2032,7 @@
     }
   },
   "Terracotta-surfaceCondition-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1957,6 +2051,7 @@
     }
   },
   "Terracotta-vesselForm-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -1981,6 +2076,7 @@
     }
   },
   "Terracotta-vesselFormSpecific-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2014,6 +2110,7 @@
     }
   },
   "Drawing-drawingMaterial-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2033,6 +2130,7 @@
     }
   },
   "Drawing-drawingTool-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2046,6 +2144,7 @@
     }
   },
   "Drawing-drawingType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2058,6 +2157,7 @@
     }
   },
   "Drawing-scale-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2076,6 +2176,7 @@
     }
   },
   "Survey-researchMethod-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2095,6 +2196,7 @@
     }
   },
   "Stone-architectureElement-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2121,6 +2223,7 @@
     }
   },
   "Stone-material-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2148,6 +2251,7 @@
     }
   },
   "Stone-objectType-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2200,6 +2304,7 @@
     }
   },
   "Stone-origin-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2215,6 +2320,7 @@
     }
   },
   "Coin-denomination-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",
@@ -2295,6 +2401,7 @@
   },
   "Coin-manufacturingMethod-default": {
     "createdBy": "",
+    "creationDate": "",
     "description": {
       "de": "",
       "en": ""
@@ -2307,6 +2414,7 @@
     }
   },
   "Coin-metalMaterial-default": {
+    "creationDate": "",
     "createdBy": "",
     "description": {
       "de": "",

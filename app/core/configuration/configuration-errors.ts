@@ -21,6 +21,7 @@ export module ConfigurationErrors {
     export const MUST_HAVE_PARENT = 'configuration/mergeTypes/musthaveparent';
     export const MUST_HAVE_TYPE_FAMILY = 'configuration/mergeTypes/musthavetypefamily';
     export const MISSING_TYPE_PROPERTY = 'configuration/mergeTypes/missingTypeProperty';
+    export const MISSING_VALUELIST_PROPERTY = 'configuration/mergeTypes/missingValuelistProperty';
     export const MISSING_FIELD_PROPERTY = 'configuration/mergeTypes/missingFieldProperty';
     export const MUST_NOT_SET_INPUT_TYPE = 'configuration/mergeTypes/mustNotSetInputType';
     export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/mergeTypes/illegalFieldType';

@@ -76,7 +76,6 @@ describe('Preprocessing', () => {
 
     xit('should add extra fields', () => {
 
-        // TODO review test quickfix
         delete configuration.types['T1'].parent;
 
         //Preprocessing.addExtraFields(configuration, { identifier: {} as FieldDefinition });

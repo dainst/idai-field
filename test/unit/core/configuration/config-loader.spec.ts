@@ -181,7 +181,7 @@ describe('ConfigLoader', () => {
                         range: ['D']
                     }, {
                         name: 'connection',
-                        domain: ['A:inherit'], // TODO reject config if not an array
+                        domain: ['A:inherit'],
                         range: ['B:inherit']
                     }],
                 {},

@@ -1,22 +1,28 @@
 import {ConfigurationErrors} from '../configuration-errors';
 
-// @author Daniel de Oliveira
-
 
 export type ValuelistId = string;
-
 
 export type Valuelists = { [fieldName: string]: ValuelistId }
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 export interface ValuelistDefinition {
 
+    values: { [key: string]: ValueDefinition }
+
     description: { [language: string]: string }
-    extends?: string; // to be implemented
     createdBy: string;
     creationDate: string;
-    constraints?: any; // to be defined
-    values: { [key: string]: ValueDefinition }
+
+    extends?: string; // to be implemented
+    constraints?: any; // to be implemented
+
+    // In the default case it is assumed that the order
+    // in which the valuelist's entries are displayed does not matter.
+    // For cases in which it does matter, one can specify the display order.
     order?: string[]; // to be implemented
 }
 

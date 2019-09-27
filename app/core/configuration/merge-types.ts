@@ -3,9 +3,10 @@ import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, map,
-    on, reduce, to, union, isNot, includedIn} from 'tsfun';
+    on, reduce, to, union, isNot, includedIn, dissoc} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
+import {dissocReducer} from '../import/util';
 
 
 type CommonFields = {[fieldName: string]: any};
@@ -85,12 +86,12 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
     assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
     assertNoDuplicationInSelection(selectableTypes, customTypes);
 
-    const mergedTypes: TransientTypeDefinitions =
+    let mergedTypes: TransientTypeDefinitions =
         mergeTheTypes(
             selectableTypes,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
-    eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
+    mergedTypes = eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
     replaceCommonFields(mergedTypes, commonFields);
     insertValuelistIds(mergedTypes);
     assertValuelistIdsProvided(mergedTypes);
@@ -337,12 +338,9 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 function eraseUnusedTypes(builtInTypes: any,
                           selectedTypes: string[]) {
 
-    Object.keys(builtInTypes)
+    return Object.keys(builtInTypes)
         .filter(isNot(includedIn(selectedTypes)))
-        .forEach(typeName => {
-
-       delete builtInTypes[typeName]; // TODO implement via dissoc
-    });
+        .reduce(dissocReducer, builtInTypes);
 }
 
 

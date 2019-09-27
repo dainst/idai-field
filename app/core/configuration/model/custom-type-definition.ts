@@ -14,7 +14,7 @@ export interface CustomTypeDefinition extends BaseTypeDefinition {
     color?: string,
     hidden?: string[];
     parent?: string,
-    fields: CustomFieldDefinitions; // TODO make optional
+    fields: CustomFieldDefinitions;
 }
 
 

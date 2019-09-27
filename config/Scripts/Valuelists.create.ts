@@ -7,13 +7,13 @@ import {pureName} from 'idai-components-2';
 const fs = require('fs');
 
 
-const projectName: string = '';
+const projectName: string = 'WES';
 
 
 
 const valuelists = JSON.parse(fs.readFileSync('Library/Valuelists.json'));
-const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields-WES.json' : 'Fields-' + projectName + '.json'));
-
+const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
+console.log('This is the projectname', projectName )
 
 
 /**
@@ -22,7 +22,7 @@ const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields-WES.json'
  * @param newValuelistName
  * @param newValuelistValues
  */
-function insert(valuelists:any, field:any, newValuelistName:string, newValuelistValues:Array<string>) {
+function insert(valuelists:any, field:any, newValuelistName:string, newValuelistValues:any) {
 
     const conflictedLists =
             keysAndValues(valuelists)
@@ -31,7 +31,8 @@ function insert(valuelists:any, field:any, newValuelistName:string, newValuelist
             .map(([name, _]) => name);
 
     if (conflictedLists.length > 0) {
-        field['valuelistId'] = conflictedLists[0];
+      console.log("list exists", conflictedLists[0]);
+
     } else {
         valuelists[newValuelistName] = {
             createdBy: "Max Haibt",
@@ -47,8 +48,8 @@ function insert(valuelists:any, field:any, newValuelistName:string, newValuelist
 
 function generateName(typeName: string, fieldName: string, projectName: string) {
 
-    const pureTypeName = pureName(typeName);
-    return pureTypeName + '-' + fieldName + '-' + (projectName === '' ? 'default' : projectName);
+    const puretypeName = pureName(typeName);
+    return puretypeName + '-' + fieldName + '-' + (projectName === '' ? 'default' : projectName);
 }
 
 

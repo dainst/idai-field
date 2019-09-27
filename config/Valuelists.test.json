@@ -1,4 +1,27 @@
 {
+  "coordinate-reference-system-default-1": {
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Eigenes Koordinatenbezugssystem": {},
+      "EPSG4326 (WGS 84)": {},
+      "EPSG3857 (WGS 84 Web Mercator)": {}
+    }
+  },
+  "orientation-default-1": {
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "N-S": {},
+      "NNO - SSW": {},
+      "NNW-SSO": {},
+      "NO-SW": {},
+      "NW-SO": {},
+      "W-O": {},
+      "WNW-OSO": {},
+      "WSW-ONO": {}
+    }
+  },
   "periods-default-1": {
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {
@@ -6678,252 +6701,7 @@
       "Pollenanalyse": {}
     }
   },
-  "Profile-orientation-Pergamon": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "N-S": {},
-      "NNO - SSW": {},
-      "NNW-SSO": {},
-      "NO-SW": {},
-      "NW-SO": {},
-      "W-O": {},
-      "WNW-OSO": {},
-      "WSW-ONO": {}
-    }
-  },
   "Pottery-vesselpart-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "wall sherd": {},
-      "rim sherd": {},
-      "base sherd": {},
-      "handle": {},
-      "spout": {},
-      "lid": {},
-      "shoulder": {},
-      "other": {}
-    }
-  },
-  "Pottery-firing-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "normal": {},
-      "over fired": {},
-      "semi melted": {},
-      "waste": {}
-    }
-  },
-  "Pottery-condition-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "well preserved": {},
-      "eroded": {}
-    }
-  },
-  "Pottery-clayColorInside-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "beige": {},
-      "pale-": {},
-      "blue": {},
-      "brown": {},
-      "creme": {},
-      "dark-": {},
-      "yellow": {},
-      "grey": {},
-      "green": {},
-      "bright-": {},
-      "luminous-": {},
-      "ocher": {},
-      "orange": {},
-      "pink": {},
-      "red": {},
-      "black": {},
-      "turquoise": {},
-      "violet": {},
-      "white": {}
-    }
-  },
-  "Pottery-decorationTechnique-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "painting": {},
-      "decorative band (applied)": {},
-      "relief decor": {},
-      "carving": {},
-      "stamp": {},
-      "stamp decor": {},
-      "swab decor": {},
-      "wartdecor": {},
-      "comb incised": {}
-    }
-  },
-  "Pottery-manufacturingMethod-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "turned (on a wheel)": {},
-      "handformed": {},
-      "turned (wheel) into form": {},
-      "tournette": {},
-      "bulit up": {}
-    }
-  },
-  "Pottery-temper-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "mica": {},
-      "lime": {},
-      "mineral particles": {},
-      "muschelgrus": {},
-      "organic particles": {},
-      "quartz": {},
-      "fire clay": {},
-      "miscellaneous": {},
-      "small stones": {},
-      "straw/chaff": {},
-      "vacua": {},
-      "volcanic particles": {},
-      "mineral-straw/chaff": {},
-      "sand": {}
-    }
-  },
-  "Pottery-temperAmount-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "no inclusions": {},
-      "medium": {},
-      "not visible": {},
-      "very frequent": {},
-      "occasional": {},
-      "frequent": {},
-      "sparse": {}
-    }
-  },
-  "Pottery-temperParticles-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "fine": {},
-      "coarse": {},
-      "medium": {},
-      "medium-fine": {},
-      "very-fine": {},
-      "very-coarse": {}
-    }
-  },
-  "Pottery-vesselForm-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "cup": {},
-      "lid": {},
-      "lid vessel": {},
-      "bottle": {},
-      "closed vessel": {},
-      "pot": {},
-      "casserole": {},
-      "cooking pot": {},
-      "jug": {},
-      "bowl": {},
-      "open vessel": {},
-      "pan": {},
-      "incense burner": {},
-      "plate": {},
-      "saucer": {},
-      "unknown": {},
-      "vascular, stock": {},
-      "basin": {}
-    }
-  },
-  "Pottery-coatInsideType-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "other": {},
-      "painted": {},
-      "smoothed": {},
-      "glazed": {},
-      "polished": {},
-      "wet smoothed": {},
-      "slip": {}
-    }
-  },
-  "Stone-material-WES": {
-    "createdBy": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "Andesite": {},
-      "Basalt": {},
-      "Feldspar": {},
-      "Flint": {},
-      "Mica": {},
-      "Granite": {},
-      "Lime": {},
-      "Lime mortar": {},
-      "Limestone": {},
-      "Calcite": {},
-      "Chalk": {},
-      "Marble": {},
-      "Porphyry": {},
-      "Quartz": {},
-      "Sandstone": {},
-      "Sinter": {},
-      "Trachyt": {},
-      "Tuff": {},
-      "Calzedon": {},
-      "Dolomite": {},
-      "Carnelian": {}
-    }
-  },
-  "Pottery-vesselpart-default": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -6946,7 +6724,7 @@
       "feet": {}
     }
   },
-  "Pottery-Firing-default": {
+  "Pottery-Firing-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -6967,7 +6745,18 @@
       "unbaked": {}
     }
   },
-  "Pottery-clayColorInside-default": {
+  "Pottery-condition-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "well preserved": {},
+      "eroded": {}
+    }
+  },
+  "Pottery-clayColorInside-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -6997,94 +6786,7 @@
       "white": {}
     }
   },
-  "Pottery-temper-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "mica": {},
-      "lime": {},
-      "non clay minerals": {},
-      "muschelgrus": {},
-      "organic particles": {},
-      "quartz": {},
-      "fire clay": {},
-      "miscellaneous": {},
-      "small stones": {},
-      "straw/chaff": {},
-      "vacua": {},
-      "volcanic particles": {},
-      "quartz sand": {},
-      "iron compounds": {},
-      "microfossils/shell/molluscs": {},
-      "feldspar": {},
-      "calcite": {},
-      "grog (chamotte)/crushed pottery": {}
-    }
-  },
-  "Pottery-coatOutsideType-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "other": {},
-      "painted": {},
-      "smoothed": {},
-      "glazed": {},
-      "polished": {},
-      "wet smoothed": {},
-      "slip": {},
-      "scraping": {},
-      "cutting": {},
-      "beating": {},
-      "smoothed with tool": {},
-      "self slip": {},
-      "color coating": {},
-      "none/rough": {},
-      "decorative smoothing": {},
-      "decorative burnishing": {},
-      "decorative polishing": {}
-    }
-  },
-  "Pottery-FormComparisonCompendia-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "WES typelist": {},
-      "WES drawing": {},
-      "Type catalogue van Ess": {},
-      "Type catalogue Salje": {},
-      "Type catalogue Reising": {},
-      "BaM 19": {},
-      "Armstrong": {},
-      "OIP 129, Nippur V": {},
-      "Ayoub": {},
-      "AUWE 4": {},
-      "AUWE 1": {}
-    }
-  },
-  "Pottery-processor-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "Margarete van Ess": {},
-      "Greta Fetting": {},
-      "Barbara Huber": {},
-      "Max Haibt": {},
-      "Jan Hubert": {}
-    }
-  },
-  "Terracotta-decorationTechnique-default": {
+  "Pottery-decorationTechnique-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7111,7 +6813,175 @@
       "combed": {}
     }
   },
-  "Terracotta-TerracottaType-default": {
+  "Pottery-manufacturingMethod-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "wheel thrown": {},
+      "handformed": {},
+      "moulded": {},
+      "tournette": {},
+      "coiling": {},
+      "built up": {},
+      "composite techniques": {},
+      "other": {},
+      "unspecified": {}
+    }
+  },
+  "Pottery-temper-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "mica": {},
+      "lime": {},
+      "non clay minerals": {},
+      "muschelgrus": {},
+      "organic particles": {},
+      "quartz": {},
+      "fire clay": {},
+      "miscellaneous": {},
+      "small stones": {},
+      "straw/chaff": {},
+      "vacua": {},
+      "volcanic particles": {},
+      "quartz sand": {},
+      "iron compounds": {},
+      "microfossils/shell/molluscs": {},
+      "feldspar": {},
+      "calcite": {},
+      "grog (chamotte)/crushed pottery": {}
+    }
+  },
+  "Pottery-temperAmount-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "no inclusions": {},
+      "medium": {},
+      "not visible": {},
+      "very frequent": {},
+      "occasional": {},
+      "frequent": {},
+      "sparse": {}
+    }
+  },
+  "Pottery-temperParticles-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "fine": {},
+      "coarse": {},
+      "medium": {},
+      "medium-fine": {},
+      "very-fine": {},
+      "very-coarse": {}
+    }
+  },
+  "Pottery-coatOutsideType-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "other": {},
+      "painted": {},
+      "smoothed": {},
+      "glazed": {},
+      "polished": {},
+      "wet smoothed": {},
+      "slip": {},
+      "scraping": {},
+      "cutting": {},
+      "beating": {},
+      "smoothed with tool": {},
+      "self slip": {},
+      "color coating": {},
+      "none/rough": {},
+      "decorative smoothing": {},
+      "decorative burnishing": {},
+      "decorative polishing": {}
+    }
+  },
+  "Pottery-FormComparisonCompendia-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "WES typelist": {},
+      "WES drawing": {},
+      "Type catalogue van Ess": {},
+      "Type catalogue Salje": {},
+      "Type catalogue Reising": {},
+      "BaM 19": {},
+      "Armstrong": {},
+      "OIP 129, Nippur V": {},
+      "Ayoub": {},
+      "AUWE 4": {},
+      "AUWE 1": {}
+    }
+  },
+  "Pottery-vesselForm-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "platters/trays": {},
+      "plaque": {},
+      "dishes/plate": {},
+      "bowls": {},
+      "large bowls": {},
+      "cups": {},
+      "goblets": {},
+      "open pot": {},
+      "open vat": {},
+      "high beakers": {},
+      "jar": {},
+      "pot": {},
+      "large vessel": {},
+      "miniature": {},
+      "miscellaneous forms": {},
+      "drain": {},
+      "strainer/sieve": {},
+      "lid": {},
+      "firedog": {},
+      "coffin": {},
+      "lamp": {},
+      "stand": {},
+      "fruit stand": {}
+    }
+  },
+  "Pottery-processor-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Margarete van Ess": {},
+      "Greta Fetting": {},
+      "Barbara Huber": {},
+      "Max Haibt": {},
+      "Jan Hubert": {}
+    }
+  },
+  "Terracotta-TerracottaType-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7132,7 +7002,7 @@
       "other": {}
     }
   },
-  "Terracotta-TerracottaTypeSpecific-default": {
+  "Terracotta-TerracottaTypeSpecific-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7161,25 +7031,7 @@
       "amulet": {}
     }
   },
-  "Terracotta-manufacturingMethod-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "wheel thrown": {},
-      "handformed": {},
-      "moulded": {},
-      "tournette": {},
-      "coiling": {},
-      "built up": {},
-      "composite techniques": {},
-      "other": {},
-      "unspecified": {}
-    }
-  },
-  "KnappingWasteProduct-material-default": {
+  "KnappingWasteProduct-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7214,7 +7066,7 @@
       "Tuff": {}
     }
   },
-  "KnappingWasteProduct-CorticalSurface-default": {
+  "KnappingWasteProduct-CorticalSurface-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7229,7 +7081,7 @@
       "on the butt": {}
     }
   },
-  "KnappingWasteProduct-PlaceOperationalSequence-default": {
+  "KnappingWasteProduct-PlaceOperationalSequence-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7250,7 +7102,7 @@
       "hinged flake": {}
     }
   },
-  "KnappingWasteProduct-TechnicalMarks-default": {
+  "KnappingWasteProduct-TechnicalMarks-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7270,7 +7122,7 @@
       "percussion marks": {}
     }
   },
-  "KnappingWasteProduct-color-default": {
+  "KnappingWasteProduct-color-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7301,7 +7153,7 @@
       "white": {}
     }
   },
-  "KnappedCore-CorticalSurface-default": {
+  "KnappedCore-CorticalSurface-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7313,7 +7165,7 @@
       "on the butt": {}
     }
   },
-  "KnappedCore-ForceOnKnappingPlatform-default": {
+  "KnappedCore-ForceOnKnappingPlatform-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7324,7 +7176,7 @@
       "pressure": {}
     }
   },
-  "KnappedCore-KnappingPlatformFeatures-default": {
+  "KnappedCore-KnappingPlatformFeatures-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7336,7 +7188,7 @@
       "cortical butt": {}
     }
   },
-  "KnappedCore-SecondaryKnappingPlatforms-default": {
+  "KnappedCore-SecondaryKnappingPlatforms-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7349,7 +7201,7 @@
       "successive platform": {}
     }
   },
-  "KnappedCore-TechnicalMarks-default": {
+  "KnappedCore-TechnicalMarks-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7372,7 +7224,7 @@
       "rubbed down platform": {}
     }
   },
-  "KnappedCore-TypicalCoreForms-default": {
+  "KnappedCore-TypicalCoreForms-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7384,7 +7236,7 @@
       "flat core": {}
     }
   },
-  "FragmentOfDrill-material-default": {
+  "FragmentOfDrill-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7425,7 +7277,7 @@
       "Tuff": {}
     }
   },
-  "FragmentOfDrill-TypeOfDrill-default": {
+  "FragmentOfDrill-TypeOfDrill-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7437,7 +7289,7 @@
       "pipe drill": {}
     }
   },
-  "FragmentOfDrill-ProductionMethod-default": {
+  "FragmentOfDrill-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7456,7 +7308,7 @@
       "hammered": {}
     }
   },
-  "FragmentOfDrill-TracesOfUse-default": {
+  "FragmentOfDrill-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7468,7 +7320,7 @@
       "bent": {}
     }
   },
-  "FragmentOfCuttingtool-material-default": {
+  "FragmentOfCuttingtool-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7508,7 +7360,7 @@
       "Tuff": {}
     }
   },
-  "FragmentOfCuttingtool-TypeOfCutter-default": {
+  "FragmentOfCuttingtool-TypeOfCutter-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7523,7 +7375,7 @@
       "other": {}
     }
   },
-  "FragmentOfCuttingtool-ProductionMethod-default": {
+  "FragmentOfCuttingtool-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7542,7 +7394,7 @@
       "glued on the shaft": {}
     }
   },
-  "FragmentOfCuttingtool-TracesOfUse-default": {
+  "FragmentOfCuttingtool-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7556,7 +7408,7 @@
       "bent": {}
     }
   },
-  "FragmentOfHammertool-TracesOfUse-default": {
+  "FragmentOfHammertool-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7569,7 +7421,7 @@
       "bent": {}
     }
   },
-  "FragmentOfChopper-ProductionMethod-default": {
+  "FragmentOfChopper-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7590,7 +7442,7 @@
       "glued on the shaft": {}
     }
   },
-  "FragmentofCoating-material-default": {
+  "FragmentofCoating-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7634,7 +7486,7 @@
       "clay": {}
     }
   },
-  "FragmentofCoating-ContactMaterial-default": {
+  "FragmentofCoating-ContactMaterial-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7645,7 +7497,7 @@
       "vegetabile": {}
     }
   },
-  "FragmentofCoating-ProductionMethod-default": {
+  "FragmentofCoating-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7655,7 +7507,7 @@
       "unknown": {}
     }
   },
-  "RawMaterial-material-default": {
+  "RawMaterial-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7696,7 +7548,7 @@
       "Tuff": {}
     }
   },
-  "FragmentofStonevessel-material-default": {
+  "FragmentofStonevessel-material-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7738,7 +7590,7 @@
       "Tuff": {}
     }
   },
-  "FragmentofStonevessel-ProductionMethod-default": {
+  "FragmentofStonevessel-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7751,39 +7603,7 @@
       "unspecified": {}
     }
   },
-  "FragmentofStonevessel-vesselForm-default": {
-    "createdBy": "Max Haibt",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "platters/trays": {},
-      "plaque": {},
-      "dishes/plate": {},
-      "bowls": {},
-      "large bowls": {},
-      "cups": {},
-      "goblets": {},
-      "open pot": {},
-      "open vat": {},
-      "high beakers": {},
-      "jar": {},
-      "pot": {},
-      "large vessel": {},
-      "miniature": {},
-      "miscellaneous forms": {},
-      "drain": {},
-      "strainer/sieve": {},
-      "lid": {},
-      "firedog": {},
-      "coffin": {},
-      "lamp": {},
-      "stand": {},
-      "fruit stand": {}
-    }
-  },
-  "FragmentOfBead-ShapeofBead-default": {
+  "FragmentOfBead-ShapeofBead-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7797,7 +7617,7 @@
       "barrelshaped": {}
     }
   },
-  "FragmentOfBead-KnappingProductionMethod-default": {
+  "FragmentOfBead-KnappingProductionMethod-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7811,7 +7631,7 @@
       "retouched": {}
     }
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodSideA-default": {
+  "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7824,7 +7644,7 @@
       "abrasion in perforation": {}
     }
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodSideB-default": {
+  "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7838,7 +7658,7 @@
       "breaking edge": {}
     }
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-default": {
+  "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7849,7 +7669,7 @@
       "break": {}
     }
   },
-  "FragmentOfBead-TracesOfUse-default": {
+  "FragmentOfBead-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7860,7 +7680,58 @@
       "fragmented": {}
     }
   },
-  "Stone-objectTypeSpecific-default": {
+  "Stone-material-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "andesite": {},
+      "basalt": {},
+      "feldspat": {},
+      "flint": {},
+      "mica": {},
+      "granite": {},
+      "lime": {},
+      "lime mortar": {},
+      "lime stone": {},
+      "calcite": {},
+      "chalk": {},
+      "marble": {},
+      "pophyr": {},
+      "quartz": {},
+      "sand stone": {},
+      "sinter": {},
+      "trachyt": {},
+      "tuff": {},
+      "carnelian": {},
+      "agate": {},
+      "lapris": {}
+    }
+  },
+  "Stone-objectType-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "architectural element": {},
+      "vessel": {},
+      "figurine": {},
+      "relief/stele": {},
+      "statue": {},
+      "macehead": {},
+      "slingstone": {},
+      "tool": {},
+      "glyptics": {},
+      "ornament": {},
+      "other": {},
+      "undetermined": {}
+    }
+  },
+  "Stone-objectTypeSpecific-WES": {
     "createdBy": "Max Haibt",
     "description": {
       "de": "",
@@ -7883,6 +7754,21 @@
       "amulet": {},
       "inlay": {},
       "undetermined": {}
+    }
+  },
+  "Mollusk-classification-WES": {
+    "createdBy": "Max Haibt",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "container cosmetic paste": {},
+      "bead": {},
+      "pendant": {},
+      "shell": {},
+      "unworked": {},
+      "inlay": {}
     }
   }
 }

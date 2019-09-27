@@ -33,9 +33,6 @@ type TransientFieldDefinitions = { [fieldName: string]: TransientFieldDefinition
 
 
 /**
- * TODO if subtype is selected, supertype gets implicitely selected
- * TODO merge parent fields into type fields at the end of the method (to make things easier, maybe process language conf before)
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  *

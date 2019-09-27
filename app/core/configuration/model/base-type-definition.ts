@@ -1,5 +1,3 @@
-// TODO
-
 export interface BaseTypeDefinition {
 
     fields: BaseFieldDefinitions;

@@ -125,7 +125,7 @@ describe('CsvFieldTypesConversion', () => {
         expect(dimension.inputRangeEndValue).toBe(5);
         expect(dimension.measurementPosition).toBe('a');
         expect(dimension.measurementComment).toBe('b');
-        expect(dimension.inputUnit).toBe('mm'); // TODO add validation for range of values
+        expect(dimension.inputUnit).toBe('mm');
         expect(dimension.isImprecise).toBe(true);
         expect(dimension.isRange).toBe(false);
     });

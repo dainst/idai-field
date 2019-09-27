@@ -5,7 +5,7 @@ import {arrayEqual, filter, flatMap, flow, getOnOr, intersect, is, isDefined, is
 import {asyncMap} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
-import {gt, keys, len, makeLookup} from '../util';
+import {gt, len, makeLookup} from '../util';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
@@ -149,7 +149,7 @@ export module RelationsCompleter {
 
         return flow(
             document.resource.relations,
-            keys,
+            Object.keys,
             filter(isnt(LIES_WITHIN)),
             filter(isnt(RECORDED_IN))) as string[]; // TODO review, possibly all hierarchical relations
     }

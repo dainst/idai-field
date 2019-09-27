@@ -28,9 +28,6 @@ export function len<A>(as: Array<A>) {
 export function gt(o: number) { return (a: number) => a > o; }
 
 
-export function keys(o: ObjectCollection<any>) { return Object.keys(o) as string[]; } // TODO remove
-
-
 export function dissocReducer(struct: any, path: string) {
 
    return dissoc(path)(struct);

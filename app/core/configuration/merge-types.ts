@@ -3,7 +3,7 @@ import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, map,
-    on, reduce, to, union, isNot, includedIn, dissoc} from 'tsfun';
+    on, reduce, to, union, isNot, includedIn} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {dissocReducer} from '../import/util';

@@ -72,8 +72,6 @@ export class ViewFacade {
 
     public getChildrenCount = (document: FieldDocument) => this.documentsManager.getChildrenCount(document);
 
-    public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab; // TODO review, seems unused
-
     public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
 
     public navigateDocumentList = (direction: 'previous'|'next') => this.documentsManager.navigateDocumentList(direction);

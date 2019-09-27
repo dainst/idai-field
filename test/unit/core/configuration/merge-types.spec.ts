@@ -13,6 +13,56 @@ import {RelationDefinition} from '../../../../app/core/configuration/model/relat
 describe('mergeTypes', () => {
 
 
+    it('hide fields', () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: {
+                fields: {
+                    field1: { inputType: 'input' },
+                    field2: { inputType: 'input' }
+                }
+            }
+        };
+        const libraryTypes: LibraryTypeDefinitions = {
+            A: {
+                typeFamily: 'A',
+                commons: ['aCommonField', 'bCommonField'],
+                valuelists: {},
+                fields: {
+                    field3: { inputType: 'input' },
+                    field4: { inputType: 'input' }
+                },
+                creationDate: '', createdBy: '', description: {}
+            }
+        };
+        const customTypes = {
+            'A': {
+                fields: {},
+                hidden: ['field1', 'aCommonField', 'field3']
+            }
+        };
+        const commonFields = {
+            aCommonField: { inputType: 'input' },
+            bCommonField: { inputType: 'input' }
+        };
+
+        const result = mergeTypes(
+            builtInTypes,
+            libraryTypes,
+            customTypes,
+            commonFields,
+            {},
+            {});
+
+        expect(result['A']['fields']['field1'].visible).toBe(false);
+        expect(result['A']['fields']['field2'].visible).toBe(true);
+        expect(result['A']['fields']['field3'].visible).toBe(false);
+        expect(result['A']['fields']['field4'].visible).toBe(true);
+        expect(result['A']['fields']['aCommonField'].visible).toBe(false);
+        expect(result['A']['fields']['bCommonField'].visible).toBe(true);
+    });
+
+
     it('valuelistId - provided via valuelists property in custom type', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
@@ -735,46 +785,6 @@ describe('mergeTypes', () => {
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0'])
         }
-    });
-
-
-    it('hide fields', () => {
-
-        const builtInTypes: BuiltinTypeDefinitions = {
-            A: {
-                fields: {
-                    field1: { inputType: 'input' }
-                }
-            }
-        };
-
-        const libraryTypes: LibraryTypeDefinitions = {
-            A: {
-                typeFamily: 'A',
-                commons: [],
-                valuelists: {},
-                fields: {
-                    field2: { inputType: 'input' }
-                },
-                creationDate: '', createdBy: '', description: {}
-            }
-        };
-
-        const result = mergeTypes(
-            builtInTypes,
-            libraryTypes,
-            {
-                'A': {
-                    fields: {},
-                    hidden: ['field1']
-                }
-            },
-            {},
-            {},
-            {});
-
-        expect(result['A']['fields']['field1'].visible).toBe(false);
-        expect(result['A']['fields']['field2'].visible).toBe(true);
     });
 
 

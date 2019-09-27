@@ -3,7 +3,7 @@ import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, map,
-    on, reduce, to, union} from 'tsfun';
+    on, reduce, to, union, isNot, includedIn} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 
@@ -33,7 +33,6 @@ type TransientFieldDefinitions = { [fieldName: string]: TransientFieldDefinition
 /**
  * TODO if subtype is selected, supertype gets implicitely selected
  * TODO merge parent fields into type fields at the end of the method (to make things easier, maybe process language conf before)
- * TODO allow hide common via custom
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -92,10 +91,10 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
     eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
-    hideFields(mergedTypes, customTypes);
     replaceCommonFields(mergedTypes, commonFields);
     insertValuelistIds(mergedTypes);
     assertValuelistIdsProvided(mergedTypes);
+    hideFields(mergedTypes, customTypes);
 
     const typesByFamilyNames: TransientTypeDefinitions = toTypesByFamilyNames(mergedTypes);
     applyValuelistsConfiguration(typesByFamilyNames, valuelistsConfiguration);
@@ -325,8 +324,11 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 function eraseUnusedTypes(builtInTypes: any,
                           selectedTypes: string[]) {
 
-    Object.keys(builtInTypes).forEach(typeName => {
-        if (!selectedTypes.includes(typeName)) delete builtInTypes[typeName];
+    Object.keys(builtInTypes)
+        .filter(isNot(includedIn(selectedTypes)))
+        .forEach(typeName => {
+
+       delete builtInTypes[typeName]; // TODO implement via dissoc
     });
 }
 

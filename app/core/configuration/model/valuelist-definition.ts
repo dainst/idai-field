@@ -1,17 +1,21 @@
-/**
- * @author Daniel de Oliveira
- *
- *
- */
+// @author Daniel de Oliveira
+
+
+export type ValuelistId = string;
+
+
+export type Valuelists = { [fieldName: string]: ValuelistId }
+
+
 export interface ValuelistDefinition {
 
     description: { [language: string]: string }
-    extends?: string; // TODO review
+    extends?: string; // to be implemented
     createdBy: string;
     creationDate: string;
-    constraints?: any; // TODO to be defined
+    constraints?: any; // to be defined
     values: { [key: string]: ValueDefinition }
-    order?: string[]; // optional, default is alphabetical TODO to be implemented, see #11413
+    order?: string[]; // to be implemented
 }
 
 

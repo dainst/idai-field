@@ -1,6 +1,7 @@
 import {assertFieldsAreValid} from "../assert-fields-are-valid";
 import {ConfigurationErrors} from "../configuration-errors";
-import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
+import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
+import {Valuelists} from './valuelist-definition';
 
 
 /**
@@ -11,7 +12,7 @@ import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
 export interface LibraryTypeDefinition extends BaseTypeDefinition {
 
     color?: string,
-    valuelists: {[fieldName: string]: string /* valuelistId TODO make type */};
+    valuelists: Valuelists;
     commons: string[];
     parent?: string,
     typeFamily: string;

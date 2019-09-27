@@ -1,6 +1,7 @@
 import {assertFieldsAreValid} from '../assert-fields-are-valid';
 import {ConfigurationErrors} from '../configuration-errors';
-import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
+import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
+import {Valuelists} from './valuelist-definition';
 
 /**
  * TypeDefinition, as provided by users.
@@ -9,7 +10,7 @@ import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
  */
 export interface CustomTypeDefinition extends BaseTypeDefinition {
 
-    valuelists?: { [valuelistName: string]: string },
+    valuelists?: Valuelists,
     commons?: string[];
     color?: string,
     hidden?: string[];

@@ -442,8 +442,6 @@ function mergeFields(target: TransientFieldDefinitions,
 
 
 /**
- * TODO can be taken out as soon as custom fields get stored separately in resources db
- *
  * @param customTypeName
  * @param customType
  * @param extendedType

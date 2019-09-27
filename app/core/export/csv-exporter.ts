@@ -33,7 +33,7 @@ export module CsvExporter {
                        lines: string[]): Promise<void> {
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(outputFilePath, lines.join('\n'), // TODO review use of separators
+            fs.writeFile(outputFilePath, lines.join('\n'),
                 (err: any) => {
                 if (err) {
                     console.error(err);

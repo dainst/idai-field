@@ -151,7 +151,7 @@ export module RelationsCompleter {
             document.resource.relations,
             Object.keys,
             filter(isnt(LIES_WITHIN)),
-            filter(isnt(RECORDED_IN))) as string[]; // TODO review, possibly all hierarchical relations
+            filter(isnt(RECORDED_IN))) as string[];
     }
 
 
@@ -253,9 +253,9 @@ export module RelationsCompleter {
         const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
 
 
-        if (isNot(undefinedOrEmpty)(documentRecordedIn) && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)
-                && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) { // TODO review conditionals
-
+        if (isNot(undefinedOrEmpty)(documentRecordedIn)
+            && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)
+            && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
 
             throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }

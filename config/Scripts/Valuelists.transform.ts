@@ -2,7 +2,7 @@
 
 import {arrayEquivalent, keysAndValues} from 'tsfun';
 
-export function pureName(s: string) { // TODO remove
+export function pureName(s: string) {
 
     return  s.includes(':') ? s.substr(0, s.indexOf(':')) : s;
 }

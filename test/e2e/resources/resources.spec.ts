@@ -290,7 +290,7 @@ describe('resources --', () => {
 
         // relations
         ResourcesPage.clickSelectResource('1', 'info');
-        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
+        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open
         FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
     });
 

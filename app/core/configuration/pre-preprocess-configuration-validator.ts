@@ -2,8 +2,6 @@ import {intersection, subtract} from 'tsfun';
 import {RelationDefinition} from './model/relation-definition';
 
 /**
- * TODO can we get rid of this?
- *
  * Used to validate to configuration in the form it comes from the user, i.e.
  * as Configuration.json. This means before the preprocess step has been executed,
  * where additional hardcoded definitions from app configurators may come in.

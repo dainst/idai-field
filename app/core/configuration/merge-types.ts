@@ -96,10 +96,11 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
     assertValuelistIdsProvided(mergedTypes);
     hideFields(mergedTypes, customTypes);
 
-    const typesByFamilyNames: TransientTypeDefinitions = toTypesByFamilyNames(mergedTypes);
-    applyValuelistsConfiguration(typesByFamilyNames, valuelistsConfiguration);
-    addExtraFields(typesByFamilyNames, extraFields);
-    return typesByFamilyNames;
+    return flow(
+        mergedTypes,
+        toTypesByFamilyNames,
+        applyValuelistsConfiguration(valuelistsConfiguration),
+        addExtraFields(extraFields));
 }
 
 
@@ -218,25 +219,31 @@ function iterateOverFieldsOfTypes(types: TransientTypeDefinitions,
 }
 
 
-function addExtraFields(configuration: TransientTypeDefinitions,
-                        extraFields: {[fieldName: string]: FieldDefinition }) {
+function addExtraFields(extraFields: {[fieldName: string]: FieldDefinition }) {
 
-    for (let typeName of Object.keys(configuration)) {
-        const typeDefinition = configuration[typeName];
+    return (configuration: TransientTypeDefinitions) => {
 
-        if (!typeDefinition.fields) typeDefinition.fields = {};
+        const configuration_ = clone(configuration);
 
-        if (typeDefinition.parent == undefined) {
-            _addExtraFields(typeDefinition, extraFields)
+        for (let typeName of Object.keys(configuration_)) {
+            const typeDefinition = configuration_[typeName];
+
+            if (!typeDefinition.fields) typeDefinition.fields = {};
+
+            if (typeDefinition.parent == undefined) {
+                _addExtraFields(typeDefinition, extraFields)
+            }
+
+            for (let fieldName of Object.keys(typeDefinition.fields)) {
+                const fieldDefinition = typeDefinition.fields[fieldName];
+
+                if (fieldDefinition.editable == undefined) fieldDefinition.editable = true;
+                if (fieldDefinition.visible == undefined) fieldDefinition.visible = true;
+            }
         }
 
-        for (let fieldName of Object.keys(typeDefinition.fields)) {
-            const fieldDefinition = typeDefinition.fields[fieldName];
-
-            if (fieldDefinition.editable == undefined) fieldDefinition.editable = true;
-            if (fieldDefinition.visible == undefined) fieldDefinition.visible = true;
-        }
-    }
+        return configuration_;
+    };
 }
 
 
@@ -257,20 +264,26 @@ function _addExtraFields(typeDefinition: TransientTypeDefinition,
 }
 
 
-function applyValuelistsConfiguration(types: TransientTypeDefinitions,
-                                      valuelistsConfiguration: {[id: string]: {values: string[]}}) {
+function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {values: string[]}}) {
 
-    const processFields = compose(
-        Object.values,
-        filter(on('valuelistId', isDefined)),
-        forEach((fd: TransientFieldDefinition) => fd.valuelist
-            = Object.keys(valuelistsConfiguration[fd.valuelistId as string].values)));
+    return (types: TransientTypeDefinitions) => {
 
-    flow(types,
-        Object.values,
-        filter(isDefined),
-        map(to('fields')),
-        forEach(processFields));
+        const types_ = clone(types);
+
+        const processFields = compose(
+            Object.values,
+            filter(on('valuelistId', isDefined)),
+            forEach((fd: TransientFieldDefinition) => fd.valuelist
+                = Object.keys(valuelistsConfiguration[fd.valuelistId as string].values)));
+
+        flow(types_,
+            Object.values,
+            filter(isDefined),
+            map(to('fields')),
+            forEach(processFields));
+
+        return types_;
+    }
 }
 
 

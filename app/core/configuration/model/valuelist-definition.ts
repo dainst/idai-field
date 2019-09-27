@@ -1,4 +1,3 @@
-import {keysAndValues} from 'tsfun';
 import {ConfigurationErrors} from '../configuration-errors';
 
 // @author Daniel de Oliveira

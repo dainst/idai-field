@@ -1,4 +1,5 @@
-import {cond, empty, flow, forEach, includedIn, isNot, map, remove, to, keysAndValues, isDefined, filter} from 'tsfun';
+import {cond, empty, flow, forEach, includedIn, isNot, map, remove,
+    on, keysAndValues, isDefined, filter} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {CustomFieldDefinitions} from "./model/custom-type-definition";
 import {LibraryFieldDefinitions} from "./model/library-type-definition";
@@ -23,8 +24,8 @@ function assertInputTypesAreValid(fields: LibraryFieldDefinitions|CustomFieldDef
 
     flow(
         keysAndValues(fields),
-        filter(([_, field]) => isDefined((field as any).inputType)), // TODO it would be super nice if i could write on('[1].inputType', isDefined)
-        remove(([_, field]) => VALID_INPUT_TYPES.includes((field as any).inputType as string)),
+        filter(on('[1].inputType', isDefined)),
+        remove(on('[1].inputType', includedIn(VALID_INPUT_TYPES))),
         forEach(([fieldName, field]: any) => {
             throw [ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, field.inputType, fieldName];
         }));

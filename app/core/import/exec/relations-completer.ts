@@ -1,7 +1,8 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {arrayEqual, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt, to,
-    isUndefinedOrEmpty, lookup, on, subtractBy, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
+    isUndefinedOrEmpty, lookup, on, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
+import {subtractBy} from 'tsfun-core';
 import {asyncMap} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';

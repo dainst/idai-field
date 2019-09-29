@@ -25,7 +25,6 @@ function assertInputTypesAreValid(fields: LibraryFieldDefinitions|CustomFieldDef
     const isIllegal = and(
                 isDefined,
                 isNot(includedIn(VALID_INPUT_TYPES)));
-
     flow(
         keysAndValues(fields),
         filter(on('[1].inputType', isIllegal)),

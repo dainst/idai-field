@@ -22,8 +22,7 @@ export function assertFieldsAreValid(fields: LibraryFieldDefinitions|CustomField
 
 function assertInputTypesAreValid(fields: LibraryFieldDefinitions|CustomFieldDefinitions) {
 
-    const isIllegal =
-            and(
+    const isIllegal = and(
                 isDefined,
                 isNot(includedIn(VALID_INPUT_TYPES)));
 

@@ -14,13 +14,13 @@
                 [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
-            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+            <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
         </select>
         <select *ngIf="!showEndElements()"
                 [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
-            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+            <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
         </select>
         <!-- end -->
 
@@ -32,7 +32,7 @@
                 [(ngModel)]="resource[field.name + 'End']" (change)="setEndValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
-            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+            <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
         </select>
         <button *ngIf="!showEndElements()"
                 ngbTooltip="Start- und Endzeitraum angeben"

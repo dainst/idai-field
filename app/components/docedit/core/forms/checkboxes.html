@@ -1,21 +1,19 @@
-<div *ngFor="let item of field.valuelist"
-     class="checkbox form-check form-check-inline">
+<div *ngFor="let item of valuelist" class="checkbox form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="{{item}}" type="checkbox"
                (click)="toggleBox(item)"
                [checked]="resource[field.name] && resource[field.name].indexOf(item) > -1">
         {{item}}
     </label>
-
 </div>
-
 
 <br *ngIf="getValuesNotIncludedInValuelist()">
 <span *ngIf="getValuesNotIncludedInValuelist()">
     <small><span i18n="@@docedit.forms.outliersInfo">
         Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
     </span>
-        <button (click)="removeOutlier(item)" class="btn btn-sm mr-1" *ngFor="let item of getValuesNotIncludedInValuelist()">
+        <button (click)="removeOutlier(item)" class="btn btn-sm mr-1"
+                *ngFor="let item of getValuesNotIncludedInValuelist()">
             {{item}} <span class="mdi mdi-close-circle-outline"></span>
         </button>
     </small>

@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
 import {Helper} from './helper';
+import {SettingsService} from '../../../../core/settings/settings-service';
 
 
 @Component({
@@ -12,16 +13,28 @@ import {Helper} from './helper';
 /**
  * @author Fabian Z.
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class RadioComponent {
+export class RadioComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() field: any;
 
+    public valuelist: string[];
+
+
+    constructor(private settingsService: SettingsService) {}
+
+
+    ngOnChanges() {
+
+        this.valuelist = Helper.getValuelist(this.field, this.settingsService.getProjectDocument());
+    }
+
 
     public getValuesNotIncludedInValuelist() {
 
-        return Helper.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.field.valuelist);
+        return Helper.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
     }
     
 

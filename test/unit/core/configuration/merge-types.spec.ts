@@ -14,6 +14,26 @@ import {ValuelistDefinitions} from '../../../../app/core/configuration/model/val
 describe('mergeTypes', () => {
 
 
+    it('auto-select parent if child defined',  () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: { superType: true, userDefinedSubtypesAllowed: true, fields: {} }
+        };
+        const customTypes: CustomTypeDefinitions = {
+            B: {
+                parent: 'A',
+                fields: {},
+                hidden: []
+            }
+        };
+        const result = mergeTypes(
+            builtInTypes,
+            {},
+            customTypes);
+        expect(result['A']).toBeDefined();
+    });
+
+
     it('hide fields', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = {
@@ -37,7 +57,7 @@ describe('mergeTypes', () => {
             }
         };
         const customTypes = {
-            'A': {
+            A: {
                 fields: {},
                 hidden: ['field1', 'aCommonField', 'field3']
             }
@@ -51,9 +71,7 @@ describe('mergeTypes', () => {
             builtInTypes,
             libraryTypes,
             customTypes,
-            commonFields,
-            {},
-            {});
+            commonFields);
 
         expect(result['A']['fields']['field1'].visible).toBe(false);
         expect(result['A']['fields']['field2'].visible).toBe(true);

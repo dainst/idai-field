@@ -2,8 +2,8 @@ import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-ty
 import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
-import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, map,
-    on, reduce, to, union, isNot, includedIn} from 'tsfun';
+import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, values, map,
+    on, reduce, to, union, isNot, includedIn, assoc} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {dissocReducer} from '../import/util';
@@ -90,6 +90,7 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
             selectableTypes,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
+
     mergedTypes = eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
     replaceCommonFields(mergedTypes, commonFields);
     insertValuelistIds(mergedTypes);
@@ -336,12 +337,25 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 }
 
 
-function eraseUnusedTypes(builtInTypes: any,
+function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions,
                           selectedTypes: string[]) {
 
-    return Object.keys(builtInTypes)
+    const allSelectedTypes = Object.keys(allTheTypes)
         .filter(isNot(includedIn(selectedTypes)))
-        .reduce(dissocReducer, builtInTypes);
+        .reduce(dissocReducer, allTheTypes);
+
+    const parentsNotExplicitelySelected = values(allSelectedTypes)
+        .reduce((parentsNotExplicitelySelected: string[], selectedType: TransientFieldDefinition) => {
+
+            const parent = (selectedType as any).parent; // TODO get rid of any cast
+            return parent && !Object.keys(allSelectedTypes).includes(parent)
+                ? parentsNotExplicitelySelected.concat(parent)
+                : parentsNotExplicitelySelected;
+
+        }, []) as string[];
+
+    return parentsNotExplicitelySelected
+        .reduce((acc, val) => assoc(val, allTheTypes[val])(acc), allSelectedTypes);
 }
 
 

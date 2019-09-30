@@ -345,9 +345,9 @@ function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions,
         .reduce(dissocReducer, allTheTypes);
 
     const parentsNotExplicitelySelected = values(allSelectedTypes)
-        .reduce((parentsNotExplicitelySelected: string[], selectedType: TransientFieldDefinition) => {
+        .reduce((parentsNotExplicitelySelected: string[], selectedType: TransientTypeDefinition) => {
 
-            const parent = (selectedType as any).parent; // TODO get rid of any cast
+            const parent = selectedType.parent;
             return parent && !Object.keys(allSelectedTypes).includes(parent)
                 ? parentsNotExplicitelySelected.concat(parent)
                 : parentsNotExplicitelySelected;

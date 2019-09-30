@@ -1,7 +1,7 @@
 'use strict';
 
-import {arrayEquivalent, keysAndValues} from 'tsfun';
-import {pureName} from 'idai-components-2';
+import {objectEqual, keysAndValues} from 'tsfun';
+
 
 
 const fs = require('fs');
@@ -32,8 +32,21 @@ console.log('This is the projectname', projectName )
 function insert(Typelib, newtypecontent, newTypeName, newfields) {
             keysAndValues(Typelib).forEach(([oldtypeName, oldtypecontent] : [string,any]) => {
           const oldfields =  oldtypecontent['fields']
-          console.log('this is an old fields', oldfields)
-          console.log('this is a new fields', newfields)
+          if (objectEqual(oldfields)(newfields)) {
+            console.error("fields of type exist already (old/new)", oldtypeName, newTypeName);
+          } else {
+            Typelib[newTypeName] = {
+              "parent": newtypecontent['parent'],
+              "typeFamily": "",
+              "description": {},
+              "createdBy": "WES-project",
+              "creationDate": "27-03-2019",
+              "color": "#CCFFFF",
+              "commons": [              ],
+              "fields": newfields
+            };
+          }
+
   })
 
 }
@@ -41,23 +54,17 @@ function insert(Typelib, newtypecontent, newTypeName, newfields) {
 
 function generateName(typeName: string, projectName: string) {
 
-    const pureTypeName = pureName(typeName);
-    return pureTypeName + '-' + typeName + ':' + (projectName === '' ? 'default' : projectName);
+    return typeName +  ':' + (projectName === '' ? 'default' : projectName);
 }
 
 
 
 
 keysAndValues(addtoTypelib).forEach(([typeName, typecontent] : [string,any]) => {
-    console.log('this is the typename', typeName)
     keysAndValues(typecontent['fields']).forEach(([fieldName, fieldcontent] :[string, any]) => {
-        console.log('this is the entire fields', typecontent['fields'])
-        console.log('these are the fieldnames', fieldName)
-        console.log('this is the inputType and valuelists', fieldcontent)
         if (typecontent['fields'] && !typecontent['typeFamily']) {
 
             const newTypeName = generateName(typeName, projectName);
-            console.log('this is the new Typename', newTypeName)
             if (Typelib[newTypeName]) console.error("name of type already exists", newTypeName);
             else insert(Typelib, typecontent, newTypeName, typecontent['fields']);
         }

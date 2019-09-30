@@ -333,12 +333,12 @@ describe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.typeInInputField('diary', 'testvalue');
         DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseTypeFilter('operation');
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.clickSelectConstraintField('diary');
         SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
         SearchConstraintsPage.clickAddConstraintButton();
 
@@ -407,15 +407,15 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchBarPage.clickChooseTypeFilter('operation');
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.clickSelectConstraintField('diary');
 
         SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
         SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(
-            SearchConstraintsPage.getConstraintFieldOption('processor')
+            SearchConstraintsPage.getConstraintFieldOption('diary')
         ));
     });
 

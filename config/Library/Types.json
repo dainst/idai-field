@@ -287,7 +287,8 @@
       "condition": "Building-condition-default",
       "conditionAmount": "Building-conditionAmount-default",
       "context": "Building-context-default",
-      "material": "Building-material-default"
+      "material": "Building-material-default",
+      "period": "periods-default-1"
     },
     "fields": {
       "buildingResearchHistory": {
@@ -602,10 +603,10 @@
       "area"
     ],
     "valuelists": {
-      "period": "periods-default-1",
       "color": "colors-default-1",
       "featureBorders": "Feature-featureBorders-default",
-      "featureForm": "Feature-featureForm-default"
+      "featureForm": "Feature-featureForm-default",
+      "period": "periods-default-1"
 
     },
     "fields": {
@@ -686,7 +687,8 @@
     "valuelists": {
       "condition": "Building-condition-default",
       "conditionAmount": "Building-conditionAmount-default",
-      "objectType": "Inscription-objectType-default"
+      "objectType": "Inscription-objectType-default",
+      "period": "periods-default-1"
     },
     "fields": {
       "comparison": {
@@ -763,6 +765,18 @@
       "vesselFormSpecific": "Pottery-vesselFormSpecific-default"
     },
     "fields": {
+      "test1": {
+        "inputType": "checkboxes",
+        "valuelistFromProjectField": "staff"
+      },
+      "test2": {
+        "inputType": "radio",
+        "valuelistFromProjectField": "staff"
+      },
+      "test3": {
+        "inputType": "dropdownRange",
+        "valuelistFromProjectField": "staff"
+      },
       "amountSherdsWall": {
         "inputType": "unsignedInt"
       },
@@ -1024,7 +1038,8 @@
     "valuelists": {
       "campaign": "Room-campaign-default",
       "condition": "Building-condition-default",
-      "conditionAmount": "Building-conditionAmount-default"
+      "conditionAmount": "Building-conditionAmount-default",
+      "period": "periods-default-1"
     },
     "fields": {
       "conditionComment": {
@@ -1287,6 +1302,7 @@
     "valuelists": {
       "condition": "Building-condition-default",
       "conditionAmount": "Building-conditionAmount-default",
+      "period": "periods-default-1",
       "storagePlace": "Find-storagePlace-default"
     },
     "fields": {

@@ -98,7 +98,7 @@ describe('mergeTypes', () => {
             libraryTypes,
             customTypes,
             {},
-            { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, createdBy: '', creationDate: '' }});
+            { 'aField-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' }});
 
         expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
     });
@@ -333,7 +333,7 @@ describe('mergeTypes', () => {
     it('commons - cannot set type of common in libary types', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input'}};
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
         const libraryTypes: LibraryTypeDefinitions = {
             'A:0': {
                 typeFamily: 'A',
@@ -363,7 +363,7 @@ describe('mergeTypes', () => {
     it('commons - cannot set type of common in custom types', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input'}};
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
         const customTypes: CustomTypeDefinitions = {
             'A': { fields: { aCommon: { inputType: 'text' }}}
         };
@@ -409,7 +409,7 @@ describe('mergeTypes', () => {
     it('commons - mix in commons in library type', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input'}};
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
         const libraryTypes: LibraryTypeDefinitions = {
             'A:0': {
                 typeFamily: 'A',
@@ -437,7 +437,7 @@ describe('mergeTypes', () => {
     it('commons - mix in commons in custom type', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input'}};
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
         const customTypes: CustomTypeDefinitions = {
             A: {
                 commons: ['aCommon'],
@@ -492,6 +492,37 @@ describe('mergeTypes', () => {
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
         expect(result['A'].fields['bCommon']['group']).toBe('stem');
         expect(result['A'].fields['bCommon']['inputType']).toBe('input');
+    });
+
+
+    it('commons - use valuelistFromProjectField if defined in commons', () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const commonFields = { aCommon:
+                { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
+        };
+        const libraryTypes: LibraryTypeDefinitions = {
+            'A:0': {
+                typeFamily: 'A',
+                commons: ['aCommon'],
+                fields: { },
+                valuelists: {},
+                createdBy: '',
+                creationDate: '',
+                description: {}
+            }};
+
+        const result = mergeTypes(
+            builtInTypes,
+            libraryTypes,
+            { 'A:0': { fields: {} } },
+            commonFields,
+            {},
+            {});
+
+        expect(result['A'].fields['aCommon']['group']).toBe('stem');
+        expect(result['A'].fields['aCommon']['inputType']).toBe('dropdown');
+        expect(result['A'].fields['aCommon']['valuelistFromProjectField']).toBe('x');
     });
 
 

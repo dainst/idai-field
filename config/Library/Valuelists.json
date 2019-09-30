@@ -595,6 +595,7 @@
       "en": ""
     },
     "values": {
+      "Dach": {},
       "Decke": {},
       "Fenster": {},
       "Fussboden": {},
@@ -7027,6 +7028,1128 @@
       "Hammerschlagsprobe": {},
       "Phosphatanalyse": {},
       "Pollenanalyse": {}
+    }
+  },
+  "Pottery-vesselpart-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "wall sherd": {},
+      "rim sherd": {},
+      "base sherd": {},
+      "handle": {},
+      "spout": {},
+      "lid": {},
+      "shoulder": {},
+      "other": {},
+      "lug handle": {},
+      "tab": {},
+      "knob": {},
+      "strap handle": {},
+      "pierced lug": {},
+      "feet": {}
+    }
+  },
+  "Pottery-Firing-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "normal": {},
+      "over fired": {},
+      "semi melted": {},
+      "waste": {},
+      "oxidating atmosphere": {},
+      "reducing atmosphere": {},
+      "bonfire (non-uniform colors)": {},
+      "low": {},
+      "medium": {},
+      "high": {},
+      "very high": {},
+      "unbaked": {}
+    }
+  },
+  "Pottery-condition-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "well preserved": {},
+      "eroded": {}
+    }
+  },
+  "Pottery-clayColorInside-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "beige": {},
+      "pale-": {},
+      "blue": {},
+      "brown": {},
+      "creme": {},
+      "dark-": {},
+      "yellow": {},
+      "grey": {},
+      "green": {},
+      "bright-": {},
+      "luminous-": {},
+      "ocher": {},
+      "orange": {},
+      "pink": {},
+      "red": {},
+      "black": {},
+      "turquoise": {},
+      "violet": {},
+      "olive": {},
+      "buff": {},
+      "white": {}
+    }
+  },
+  "Pottery-decorationTechnique-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "painting": {},
+      "decorative band (applied)": {},
+      "relief decor": {},
+      "carving": {},
+      "stamp": {},
+      "stamp decor": {},
+      "swab decor": {},
+      "wartdecor": {},
+      "comb incised": {},
+      "incised wide lines": {},
+      "herringbone pattern incised": {},
+      "rope-like application impressed": {},
+      "burnishing": {},
+      "imprint": {},
+      "application": {},
+      "preserved": {},
+      "grooved/soft incised": {},
+      "combed": {}
+    }
+  },
+  "Pottery-manufacturingMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "wheel thrown": {},
+      "handformed": {},
+      "moulded": {},
+      "tournette": {},
+      "coiling": {},
+      "built up": {},
+      "composite techniques": {},
+      "other": {},
+      "unspecified": {}
+    }
+  },
+  "Pottery-temper-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "mica": {},
+      "lime": {},
+      "non clay minerals": {},
+      "muschelgrus": {},
+      "organic particles": {},
+      "quartz": {},
+      "fire clay": {},
+      "miscellaneous": {},
+      "small stones": {},
+      "straw/chaff": {},
+      "vacua": {},
+      "volcanic particles": {},
+      "quartz sand": {},
+      "iron compounds": {},
+      "microfossils/shell/molluscs": {},
+      "feldspar": {},
+      "calcite": {},
+      "grog (chamotte)/crushed pottery": {}
+    }
+  },
+  "Pottery-temperAmount-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "no inclusions": {},
+      "medium": {},
+      "not visible": {},
+      "very frequent": {},
+      "occasional": {},
+      "frequent": {},
+      "sparse": {}
+    }
+  },
+  "Pottery-temperParticles-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "fine": {},
+      "coarse": {},
+      "medium": {},
+      "medium-fine": {},
+      "very-fine": {},
+      "very-coarse": {}
+    }
+  },
+  "Pottery-coatOutsideType-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "other": {},
+      "painted": {},
+      "smoothed": {},
+      "glazed": {},
+      "polished": {},
+      "wet smoothed": {},
+      "slip": {},
+      "scraping": {},
+      "cutting": {},
+      "beating": {},
+      "smoothed with tool": {},
+      "self slip": {},
+      "color coating": {},
+      "none/rough": {},
+      "decorative smoothing": {},
+      "decorative burnishing": {},
+      "decorative polishing": {}
+    }
+  },
+  "Pottery-FormComparisonCompendia-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "WES typelist": {},
+      "WES drawing": {},
+      "Type catalogue van Ess": {},
+      "Type catalogue Salje": {},
+      "Type catalogue Reising": {},
+      "BaM 19": {},
+      "Armstrong": {},
+      "OIP 129, Nippur V": {},
+      "Ayoub": {},
+      "AUWE 4": {},
+      "AUWE 1": {}
+    }
+  },
+  "Pottery-vesselForm-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "platters/trays": {},
+      "plaque": {},
+      "dishes/plate": {},
+      "bowls": {},
+      "large bowls": {},
+      "cups": {},
+      "goblets": {},
+      "open pot": {},
+      "open vat": {},
+      "high beakers": {},
+      "jar": {},
+      "pot": {},
+      "large vessel": {},
+      "miniature": {},
+      "miscellaneous forms": {},
+      "drain": {},
+      "strainer/sieve": {},
+      "lid": {},
+      "firedog": {},
+      "coffin": {},
+      "lamp": {},
+      "stand": {},
+      "fruit stand": {}
+    }
+  },
+  "Pottery-processor-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Margarete van Ess": {},
+      "Greta Fetting": {},
+      "Barbara Huber": {},
+      "Max Haibt": {},
+      "Jan Hubert": {}
+    }
+  },
+  "Terracotta-TerracottaType-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "architectural element": {},
+      "architectural model": {},
+      "figurine": {},
+      "relief, plaque": {},
+      "statue": {},
+      "tool": {},
+      "glyptics": {},
+      "script": {},
+      "ornament": {},
+      "game piece": {},
+      "undetermined": {},
+      "other": {}
+    }
+  },
+  "Terracotta-TerracottaTypeSpecific-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "claycone": {},
+      "inlay": {},
+      "theriomorph": {},
+      "anthropomorph": {},
+      "furniture model": {},
+      "sickle": {},
+      "mould": {},
+      "wheel": {},
+      "spindle whore": {},
+      "stopper": {},
+      "loom weight": {},
+      "seal": {},
+      "cone": {},
+      "sealing": {},
+      "bulla": {},
+      "tablet": {},
+      "token": {},
+      "bead": {},
+      "pendant": {},
+      "amulet": {}
+    }
+  },
+  "KnappingWasteProduct-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {}
+    }
+  },
+  "KnappingWasteProduct-CorticalSurface-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "none": {},
+      "somewhere": {},
+      "on dorsal face": {},
+      "on distal part": {},
+      "on proximal part": {},
+      "on the butt": {}
+    }
+  },
+  "KnappingWasteProduct-PlaceOperationalSequence-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "debris": {},
+      "initial flake": {},
+      "shaping flake": {},
+      "bifacial-shaping flake": {},
+      "preparation flake": {},
+      "crested blade": {},
+      "core-rejuvenation flake": {},
+      "broken debitage flake": {},
+      "failed blank": {},
+      "retouch flake": {},
+      "plunging flake": {},
+      "hinged flake": {}
+    }
+  },
+  "KnappingWasteProduct-TechnicalMarks-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "point of impact": {},
+      "pronounced bulb": {},
+      "overhang": {},
+      "flaking angle of more than 90 degree": {},
+      "diffuse bulb": {},
+      "flaking angle of 90 degree": {},
+      "heat treatment": {},
+      "blade": {},
+      "retouched": {},
+      "plunged parts": {},
+      "percussion marks": {}
+    }
+  },
+  "KnappingWasteProduct-color-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "beige": {},
+      "pale-": {},
+      "blue": {},
+      "brown": {},
+      "creme": {},
+      "dark-": {},
+      "yellow": {},
+      "grey": {},
+      "green": {},
+      "bright-": {},
+      "luminous-": {},
+      "translucent-": {},
+      "ocher": {},
+      "orange": {},
+      "pink": {},
+      "red": {},
+      "black": {},
+      "turquoise": {},
+      "violet": {},
+      "olive": {},
+      "buff": {},
+      "white": {}
+    }
+  },
+  "KnappedCore-CorticalSurface-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "none": {},
+      "exists": {},
+      "on the butt": {}
+    }
+  },
+  "KnappedCore-ForceOnKnappingPlatform-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "percussion": {},
+      "pressure": {}
+    }
+  },
+  "KnappedCore-KnappingPlatformFeatures-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "facetted butt": {},
+      "plain butt": {},
+      "cortical butt": {}
+    }
+  },
+  "KnappedCore-SecondaryKnappingPlatforms-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "none": {},
+      "subsidiary platform": {},
+      "alternate platform": {},
+      "successive platform": {}
+    }
+  },
+  "KnappedCore-TechnicalMarks-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "large butt": {},
+      "point of impact": {},
+      "pronounced bulb scars": {},
+      "small butt": {},
+      "flaking angle of more than 90 degree": {},
+      "diffuse bulb": {},
+      "abrasion of the overhang": {},
+      "flaking angle of 90 degree": {},
+      "heat treatment": {},
+      "parallel arrises": {},
+      "regular arrises": {},
+      "plunged surfaces": {},
+      "fluted in places": {},
+      "rubbed down platform": {}
+    }
+  },
+  "KnappedCore-TypicalCoreForms-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "cylindrical bullet core": {},
+      "pyramid core": {},
+      "flat core": {}
+    }
+  },
+  "FragmentOfDrill-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "obsidian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "metal": {},
+      "copper": {},
+      "alloy": {},
+      "bronze": {},
+      "iron": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {}
+    }
+  },
+  "FragmentOfDrill-TypeOfDrill-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "lense drill": {},
+      "full drill": {},
+      "pipe drill": {}
+    }
+  },
+  "FragmentOfDrill-ProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "knapped": {},
+      "on blade": {},
+      "on flake": {},
+      "retouched on the shaft": {},
+      "shaped by knapping": {},
+      "microburin blow technique": {},
+      "retouched": {},
+      "grinded": {},
+      "metal casted": {},
+      "hammered": {}
+    }
+  },
+  "FragmentOfDrill-TracesOfUse-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "abraded": {},
+      "broken off": {},
+      "bent": {}
+    }
+  },
+  "FragmentOfCuttingtool-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "metal": {},
+      "copper": {},
+      "alloy": {},
+      "bronze": {},
+      "iron": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {}
+    }
+  },
+  "FragmentOfCuttingtool-TypeOfCutter-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "knive": {},
+      "sickle": {},
+      "cutting implement": {},
+      "saw": {},
+      "unknown": {},
+      "other": {}
+    }
+  },
+  "FragmentOfCuttingtool-ProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "knapped": {},
+      "on flake": {},
+      "on blade": {},
+      "shaped by knapping": {},
+      "retouched cutting edge": {},
+      "grinded cutting edge": {},
+      "metal casted": {},
+      "smith hammered": {},
+      "retouched on the shaft": {},
+      "glued on the shaft": {}
+    }
+  },
+  "FragmentOfCuttingtool-TracesOfUse-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "gloss on cutting edge": {},
+      "use retouch": {},
+      "scratches": {},
+      "bitumen traces": {},
+      "bent": {}
+    }
+  },
+  "FragmentOfHammertool-TracesOfUse-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "impact marks": {},
+      "use retouch": {},
+      "bitumen traces": {},
+      "bent": {}
+    }
+  },
+  "FragmentOfChopper-ProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "knapped": {},
+      "on flake": {},
+      "on blade": {},
+      "shaped by knapping": {},
+      "retouched chopping edge": {},
+      "retouched": {},
+      "retouched on sides": {},
+      "grinded cutting edge": {},
+      "metal casted": {},
+      "smith hammered": {},
+      "retouched on the shaft": {},
+      "glued on the shaft": {}
+    }
+  },
+  "FragmentofCoating-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "metal": {},
+      "copper": {},
+      "alloy": {},
+      "bronze": {},
+      "iron": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {},
+      "organic": {},
+      "bitumen": {},
+      "glaze": {},
+      "clay": {}
+    }
+  },
+  "FragmentofCoating-ContactMaterial-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "clay": {},
+      "vegetabile": {}
+    }
+  },
+  "FragmentofCoating-ProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "unknown": {}
+    }
+  },
+  "RawMaterial-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "metal": {},
+      "copper": {},
+      "alloy": {},
+      "bronze": {},
+      "iron": {},
+      "clay": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {}
+    }
+  },
+  "FragmentofStonevessel-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "silicat rock": {},
+      "chalcedony": {},
+      "carnelian": {},
+      "agate": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "carbonat rock": {},
+      "dolomite": {},
+      "limestone": {},
+      "sinter calcit": {},
+      "metal": {},
+      "copper": {},
+      "alloy": {},
+      "bronze": {},
+      "iron": {},
+      "clay": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "gypsum": {},
+      "Tuff": {}
+    }
+  },
+  "FragmentofStonevessel-ProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "grinded": {},
+      "knapped": {},
+      "drilled": {},
+      "unspecified": {}
+    }
+  },
+  "FragmentOfBead-ShapeofBead-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "discoid": {},
+      "spherical": {},
+      "conical": {},
+      "trapezoid": {},
+      "barrelshaped": {}
+    }
+  },
+  "FragmentOfBead-KnappingProductionMethod-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "knapped": {},
+      "on flake": {},
+      "on blade": {},
+      "on preform": {},
+      "retouched": {}
+    }
+  },
+  "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "conical perforation": {},
+      "cylindrical perforation": {},
+      "rounded perforation": {},
+      "abrasion in perforation": {}
+    }
+  },
+  "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "conical perforation": {},
+      "cylindrical perforation": {},
+      "rounded perforation": {},
+      "abrasion in perforation": {},
+      "breaking edge": {}
+    }
+  },
+  "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "none": {},
+      "break": {}
+    }
+  },
+  "FragmentOfBead-TracesOfUse-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "worn": {},
+      "fragmented": {}
+    }
+  },
+  "Stone-material-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "andesite": {},
+      "basalt": {},
+      "feldspat": {},
+      "flint": {},
+      "mica": {},
+      "granite": {},
+      "lime": {},
+      "lime mortar": {},
+      "lime stone": {},
+      "calcite": {},
+      "chalk": {},
+      "marble": {},
+      "pophyr": {},
+      "quartz": {},
+      "sand stone": {},
+      "sinter": {},
+      "trachyt": {},
+      "tuff": {},
+      "carnelian": {},
+      "agate": {},
+      "lapris": {}
+    }
+  },
+  "Stone-objectType-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "architectural element": {},
+      "vessel": {},
+      "figurine": {},
+      "relief/stele": {},
+      "statue": {},
+      "macehead": {},
+      "slingstone": {},
+      "tool": {},
+      "glyptics": {},
+      "ornament": {},
+      "other": {},
+      "undetermined": {}
+    }
+  },
+  "Stone-objectTypeSpecific-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "bowl": {},
+      "flask": {},
+      "door socket": {},
+      "mould tool": {},
+      "loomweight": {},
+      "hammer": {},
+      "grinding stone": {},
+      "adze": {},
+      "weight": {},
+      "seal, cylinder": {},
+      "seal, stamp": {},
+      "bead": {},
+      "pendant": {},
+      "amulet": {},
+      "inlay": {},
+      "undetermined": {}
+    }
+  },
+  "Mollusk-classification-WES": {
+    "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "container cosmetic paste": {},
+      "bead": {},
+      "pendant": {},
+      "shell": {},
+      "unworked": {},
+      "inlay": {}
     }
   }
 }

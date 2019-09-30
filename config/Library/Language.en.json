@@ -62,6 +62,9 @@
     "spatialLocation": {
       "label": "Spatial location"
     },
+    "staff": {
+      "label": "Staff"
+    },
     "provenance": {
       "label": "Provenance"
     }

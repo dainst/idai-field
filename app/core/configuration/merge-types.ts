@@ -13,17 +13,16 @@ import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-defin
 
 type CommonFields = {[fieldName: string]: any};
 
-interface TransientTypeDefinition
-    extends BuiltinFieldDefinition, LibraryTypeDefinition {
+interface TransientTypeDefinition extends BuiltinFieldDefinition, LibraryTypeDefinition {
 
     fields: TransientFieldDefinitions;
 }
 
-interface TransientFieldDefinition
-    extends BuiltinFieldDefinition, LibraryFieldDefinition {
+interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldDefinition {
 
     valuelist?: any;
     valuelistId?: string,
+    valuelistFromProjectField?: string;
     visible?: boolean;
     editable?: boolean;
 }
@@ -71,7 +70,7 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
                            customTypes: CustomTypeDefinitions = {},
                            commonFields: CommonFields = {},
                            valuelistsConfiguration: ValuelistDefinitions = {},
-                           extraFields: {[extraFieldName: string]: any} = {}) {
+                           extraFields: { [extraFieldName: string]: any } = {}) {
 
     const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
 
@@ -122,7 +121,7 @@ function assertValuelistIdsProvided(mergedTypes: TransientTypeDefinitions) {
     iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
         if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
 
-            if (!field.valuelistId) {
+            if (!field.valuelistId && !field.valuelistFromProjectField) {
                 throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', typeName, fieldName];
             }
         }
@@ -130,7 +129,8 @@ function assertValuelistIdsProvided(mergedTypes: TransientTypeDefinitions) {
 }
 
 
-function assertNoDuplicationInSelection(mergedTypes: TransientTypeDefinitions, customTypes: CustomTypeDefinitions) {
+function assertNoDuplicationInSelection(mergedTypes: TransientTypeDefinitions,
+                                        customTypes: CustomTypeDefinitions) {
 
     Object.keys(customTypes).reduce((selectedTypeFamilies, customTypeName) => {
 
@@ -201,7 +201,8 @@ function assertNoCommonFieldInputTypeChanges(commonFields: CommonFields,
 }
 
 
-function assertInputTypesAreSet(types: TransientTypeDefinitions, assertInputTypePresentIfNotCommonType: Function) {
+function assertInputTypesAreSet(types: TransientTypeDefinitions,
+                                assertInputTypePresentIfNotCommonType: Function) {
 
     iterateOverFieldsOfTypes(types, (typeName, type, fieldName, field) => {
         assertInputTypePresentIfNotCommonType(typeName, fieldName, field);
@@ -304,11 +305,10 @@ function toTypesByFamilyNames(transientTypes: TransientTypeDefinitions): Transie
 }
 
 
-function assertTypesAndValuelistsStructurallyValid(
-    builtInTypes: string[],
-    libraryTypes: LibraryTypeDefinitions,
-    customTypes: CustomTypeDefinitions,
-    valuelistDefinitions: ValuelistDefinitions) {
+function assertTypesAndValuelistsStructurallyValid(builtInTypes: string[],
+                                                   libraryTypes: LibraryTypeDefinitions,
+                                                   customTypes: CustomTypeDefinitions,
+                                                   valuelistDefinitions: ValuelistDefinitions) {
 
     const assertLibraryTypeValid = LibraryTypeDefinition.makeAssertIsValid(builtInTypes);
     const assertCustomTypeValid = CustomTypeDefinition.makeAssertIsValid(builtInTypes, Object.keys(libraryTypes));
@@ -338,8 +338,7 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 }
 
 
-function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions,
-                          selectedTypes: string[]) {
+function eraseUnusedTypes(builtInTypes: any, selectedTypes: string[]) {
 
     const allSelectedTypes = keys(allTheTypes)
         .filter(isNot(includedIn(selectedTypes)))
@@ -363,8 +362,7 @@ function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions,
 }
 
 
-function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions,
-                                types: any) {
+function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions, types: any) {
 
     flow(types,
         Object.values,
@@ -381,19 +379,22 @@ function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions,
 }
 
 
-function replaceCommonFields(mergedTypes: TransientTypeDefinitions,
-                             commonFields: CommonFields) {
+function replaceCommonFields(mergedTypes: TransientTypeDefinitions, commonFields: CommonFields) {
 
     for (let mergedType of Object.values(mergedTypes)) {
 
         if (!mergedType.commons) continue;
 
         for (let commonFieldName of mergedType.commons) {
-            if (!commonFields[commonFieldName]) throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+            if (!commonFields[commonFieldName]) {
+                throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+            }
 
             if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
             mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
             mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
+            mergedType.fields[commonFieldName].valuelistFromProjectField
+                = commonFields[commonFieldName].valuelistFromProjectField;
         }
         delete mergedType.commons;
     }
@@ -435,8 +436,7 @@ function merge(target: any, source: any) {
 }
 
 
-function mergeFields(target: TransientFieldDefinitions,
-                     source: TransientFieldDefinitions) {
+function mergeFields(target: TransientFieldDefinitions, source: TransientFieldDefinitions) {
 
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;
@@ -452,6 +452,10 @@ function mergeFields(target: TransientFieldDefinitions,
             }
             if (source[sourceFieldName].valuelistId) {
                 target[sourceFieldName].valuelistId = source[sourceFieldName].valuelistId;
+            }
+            if (source[sourceFieldName].valuelistFromProjectField) {
+                target[sourceFieldName].valuelistFromProjectField
+                    = source[sourceFieldName].valuelistFromProjectField;
             }
         }
     }
@@ -511,8 +515,7 @@ function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function mergeTheTypes(selectableTypes: TransientTypeDefinitions,
-                       customTypes: CustomTypeDefinitions,
+function mergeTheTypes(selectableTypes: TransientTypeDefinitions, customTypes: CustomTypeDefinitions,
                        assertInputTypePresentIfNotCommonType: Function) {
 
     const mergedTypes: TransientTypeDefinitions = clone(selectableTypes);

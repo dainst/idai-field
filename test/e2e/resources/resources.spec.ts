@@ -84,7 +84,6 @@ describe('resources --', () => {
     }
 
 
-
     it('messages - everything fine / missing identifier', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
@@ -94,7 +93,7 @@ describe('resources --', () => {
 
         // warn if identifier is missing
         ResourcesPage.performCreateResource('', 'feature',
-            'processor', 'p', undefined,
+            'diary', 'p', undefined,
             false, false);
 
         NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
@@ -202,10 +201,10 @@ describe('resources --', () => {
     it('fields', () => { // formerly sidebar/info
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
-            'processor', '100');
+            'diary', '100');
         ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.getFieldName(0, 1).then(value => {
-            expect(value).toBe('Bearbeiterin/Bearbeiter'); // with the correct field label
+            expect(value).toBe('Tagebuch'); // with the correct field label
         });
         FieldsViewPage.getFieldValue(0, 1).then(value => {
             expect(value).toBe('100');

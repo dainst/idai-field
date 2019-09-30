@@ -226,14 +226,14 @@ describe('images --', function() {
 
         ImageOverviewPage.doubleClickCell(0);
         ImageViewPage.editDocument();
-        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.clickSelectOption('processor', 1);
         DoceditPage.clickSaveDocument();
         ImageViewPage.clickCloseButton();
         ImageOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('processor');
-        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickSelectDropdownValue(3);
         SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),

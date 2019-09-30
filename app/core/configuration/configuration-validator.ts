@@ -130,7 +130,8 @@ export class ConfigurationValidator {
                 msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)] as never);
             if (!fieldDef.hasOwnProperty('inputType'))
                 fieldDef.inputType = 'input';
-            if (ConfigurationValidator.VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) != -1
+            if (ConfigurationValidator.VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
+                    && !fieldDef.hasOwnProperty('valuelistFromProjectField')
                     && (!fieldDef.hasOwnProperty('valuelist')
                         || !Array.isArray(fieldDef.valuelist)
                         || fieldDef.valuelist.length == 0

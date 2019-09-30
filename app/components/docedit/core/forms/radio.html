@@ -1,5 +1,4 @@
-<div *ngFor="let item of field.valuelist"
-     class="radio form-check form-check-inline">
+<div *ngFor="let item of valuelist" class="radio form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="{{item}}" type="radio"
                name="{{field.name}}"
@@ -18,10 +17,9 @@
     </label>
 </div>
 
-
-<br *ngIf="notIncludedInValueList()">
-<span *ngIf="notIncludedInValueList()">
+<br *ngIf="getValuesNotIncludedInValuelist()">
+<span *ngIf="getValuesNotIncludedInValuelist()">
     <small i18n="@@docedit.forms.outliersInfo">Die Ressource enthält nicht in Werteliste enthaltene Einträge:
-        <button (click)="resetValue()" class="btn btn-sm mr-1" *ngFor="let item of notIncludedInValueList()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
+        <button (click)="resetValue()" class="btn btn-sm mr-1" *ngFor="let item of getValuesNotIncludedInValuelist()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
     </small>
 </span>

@@ -1,6 +1,141 @@
 {
-  "Pottery": {
-    "parent": "Find",
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "BuildingPart:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find": {
+    "hidden": [],
+    "commons": ["dating"],
+    "valuelists": {
+      "period": "periods-wes-1"
+    },
+    "fields": {}
+  },
+  "Feature:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Architecture:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Layer:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Floor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Grave:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Coin:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "PlasterFragment:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
     "fields": {
       "hasCoat": {
         "inputType": "boolean"
@@ -84,36 +219,13 @@
         "valuelistId": "Pottery-vesselForm-WES"
       },
       "processor": {
-        "inputType": "dropdown",
         "valuelistId": "Pottery-processor-WES"
       }
     }
   },
-  "Terracotta": {
+  "Terracotta:default": {
     "color": "#FF6600",
-    "parent": "Find",
     "fields": {
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "dimensionThickness": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
       "clayColorBreak": {
         "inputType": "checkboxes",
         "valuelistId": "Pottery-clayColorInside-WES"
@@ -164,7 +276,7 @@
       }
     }
   },
-  "KnappingWasteProduct": {
+  "KnappingWasteProduct:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -193,7 +305,7 @@
       }
     }
   },
-  "KnappedCore": {
+  "KnappedCore:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -248,7 +360,7 @@
       }
     }
   },
-  "FragmentOfDrill": {
+  "FragmentOfDrill:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -290,7 +402,7 @@
       }
     }
   },
-  "FragmentOfCuttingtool": {
+  "FragmentOfCuttingtool:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -316,7 +428,7 @@
       }
     }
   },
-  "FragmentOfHammertool": {
+  "FragmentOfHammertool:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -338,7 +450,7 @@
       }
     }
   },
-  "FragmentOfChopper": {
+  "FragmentOfChopper:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -360,7 +472,7 @@
       }
     }
   },
-  "FragmentofCoating": {
+  "FragmentofCoating:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -385,7 +497,7 @@
       }
     }
   },
-  "RawMaterial": {
+  "RawMaterial:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -399,7 +511,7 @@
       }
     }
   },
-  "FragmentofStonevessel": {
+  "FragmentofStonevessel:WES": {
     "parent": "Find",
     "fields": {
       "decorationDescription": {
@@ -457,17 +569,13 @@
         "inputType": "dropdown",
         "valuelistId": "Pottery-vesselForm-WES"
       },
-      "processor": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-processor-WES"
-      },
       "color": {
         "inputType": "checkboxes",
         "valuelistId": "KnappingWasteProduct-color-WES"
       }
     }
   },
-  "FragmentOfBead": {
+  "FragmentOfBead:WES": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -505,68 +613,7 @@
       }
     }
   },
-  "Drawing": {
-    "parent": "Image",
-    "fields": {
-      "drawingMaterial": {
-        "inputType": "radio",
-        "valuelistId": "Drawing-drawingMaterial-default"
-      },
-      "drawingTool": {
-        "inputType": "radio",
-        "valuelistId": "Drawing-drawingTool-default"
-      },
-      "drawingType": {
-        "inputType": "radio",
-        "valuelistId": "Drawing-drawingType-default"
-      },
-      "scale": {
-        "inputType": "dropdown",
-        "valuelistId": "Drawing-scale-default"
-      }
-    }
-  },
-  "Survey": {
-    "parent": "Operation",
-    "fields": {
-      "researchMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "Survey-researchMethod-default"
-      }
-    }
-  },
-  "Stone": {
-    "color": "#5c5c8a",
-    "parent": "Find",
-    "fields": {
-      "purpose": {
-        "inputType": "input"
-      },
-      "treatment": {
-        "inputType": "input"
-      },
-      "workmanship": {
-        "inputType": "input"
-      },
-      "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
-      },
-      "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "Stone-material-WES"
-      },
-      "objectType": {
-        "inputType": "dropdown",
-        "valuelistId": "Stone-objectType-WES"
-      },
-      "objectTypeSpecific": {
-        "inputType": "dropdown",
-        "valuelistId": "Stone-objectTypeSpecific-WES"
-      }
-    }
-  },
-  "Mollusk": {
+  "Mollusk:WES": {
     "color": "#ff99ff",
     "parent": "Find",
     "fields": {

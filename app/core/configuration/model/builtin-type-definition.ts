@@ -27,4 +27,5 @@ export type BuiltinFieldDefinitions = { [fieldName: string]: BuiltinFieldDefinit
 export interface BuiltinFieldDefinition extends BaseFieldDefinition {
 
     group?: string;
+    valuelistFromProjectField?: string;
 }

@@ -8,6 +8,7 @@ export interface FieldDefinition {
     description?: string;
     inputType?: string;
     valuelist?: string[];
+    valuelistFromProjectField?: string;
     editable?: boolean;             // defaults to true
     visible?: boolean;              // defaults to true
     mandatory?: boolean;            // defaults to false

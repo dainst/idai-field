@@ -338,7 +338,7 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 }
 
 
-function eraseUnusedTypes(builtInTypes: any, selectedTypes: string[]) {
+function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions, selectedTypes: string[]) {
 
     const allSelectedTypes = keys(allTheTypes)
         .filter(isNot(includedIn(selectedTypes)))

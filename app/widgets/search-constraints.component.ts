@@ -4,6 +4,8 @@ import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {SettingsService} from '../core/settings/settings-service';
+import {ValuelistUtil} from '../core/util/valuelistUtil';
 
 
 type ConstraintListItem = {
@@ -41,6 +43,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
+                          private settingsService: SettingsService,
                           private renderer: Renderer2,
                           protected i18n: I18n) {}
 
@@ -177,6 +180,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         this.showConstraintsMenu = !this.showConstraintsMenu;
         this.updateEventListener();
+    }
+
+
+    public getValuelist(field: FieldDefinition): string[] {
+
+        return ValuelistUtil.getValuelist(field, this.settingsService.getProjectDocument());
     }
 
 

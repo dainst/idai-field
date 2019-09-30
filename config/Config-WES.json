@@ -35,12 +35,8 @@
     "hidden": [],
     "fields": {}
   },
-  "Find": {
+  "Find:default": {
     "hidden": [],
-    "commons": ["dating"],
-    "valuelists": {
-      "period": "periods-wes-1"
-    },
     "fields": {}
   },
   "Feature:default": {
@@ -276,7 +272,7 @@
       }
     }
   },
-  "KnappingWasteProduct:WES": {
+  "KnappingWasteProduct": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -305,7 +301,7 @@
       }
     }
   },
-  "KnappedCore:WES": {
+  "KnappedCore": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -360,7 +356,7 @@
       }
     }
   },
-  "FragmentOfDrill:WES": {
+  "FragmentOfDrill": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -402,7 +398,7 @@
       }
     }
   },
-  "FragmentOfCuttingtool:WES": {
+  "FragmentOfCuttingtool": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -428,7 +424,7 @@
       }
     }
   },
-  "FragmentOfHammertool:WES": {
+  "FragmentOfHammertool": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -450,7 +446,7 @@
       }
     }
   },
-  "FragmentOfChopper:WES": {
+  "FragmentOfChopper": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -472,7 +468,7 @@
       }
     }
   },
-  "FragmentofCoating:WES": {
+  "FragmentofCoating": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -497,7 +493,7 @@
       }
     }
   },
-  "RawMaterial:WES": {
+  "RawMaterial": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -511,7 +507,7 @@
       }
     }
   },
-  "FragmentofStonevessel:WES": {
+  "FragmentofStonevessel": {
     "parent": "Find",
     "fields": {
       "decorationDescription": {
@@ -575,7 +571,7 @@
       }
     }
   },
-  "FragmentOfBead:WES": {
+  "FragmentOfBead": {
     "color": "#5c5c8a",
     "parent": "Find",
     "fields": {
@@ -613,7 +609,7 @@
       }
     }
   },
-  "Mollusk:WES": {
+  "Mollusk": {
     "color": "#ff99ff",
     "parent": "Find",
     "fields": {

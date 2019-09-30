@@ -38,6 +38,7 @@ function insert(valuelists:any, field:any, newValuelistName:string, newValuelist
     } else {
         valuelists[newValuelistName] = {
             createdBy: "Max Haibt",
+            "creationDate": "27-3-2019",
             description: { de: "", en: "" },
             values: newValuelistValues.reduce((o, key) => ({ ...o, [key]: {}}), {}),
         };

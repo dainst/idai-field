@@ -7031,6 +7031,7 @@
   },
   "Pottery-vesselpart-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7054,6 +7055,7 @@
   },
   "Pottery-Firing-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7075,6 +7077,7 @@
   },
   "Pottery-condition-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7086,6 +7089,7 @@
   },
   "Pottery-clayColorInside-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7116,6 +7120,7 @@
   },
   "Pottery-decorationTechnique-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7143,6 +7148,7 @@
   },
   "Pottery-manufacturingMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7161,6 +7167,7 @@
   },
   "Pottery-temper-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7188,6 +7195,7 @@
   },
   "Pottery-temperAmount-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7204,6 +7212,7 @@
   },
   "Pottery-temperParticles-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7219,6 +7228,7 @@
   },
   "Pottery-coatOutsideType-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7245,6 +7255,7 @@
   },
   "Pottery-FormComparisonCompendia-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7265,6 +7276,7 @@
   },
   "Pottery-vesselForm-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7297,6 +7309,7 @@
   },
   "Pottery-processor-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7311,6 +7324,7 @@
   },
   "Terracotta-TerracottaType-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7332,6 +7346,7 @@
   },
   "Terracotta-TerracottaTypeSpecific-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7361,6 +7376,7 @@
   },
   "KnappingWasteProduct-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7396,6 +7412,7 @@
   },
   "KnappingWasteProduct-CorticalSurface-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7411,6 +7428,7 @@
   },
   "KnappingWasteProduct-PlaceOperationalSequence-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7432,6 +7450,7 @@
   },
   "KnappingWasteProduct-TechnicalMarks-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7452,6 +7471,7 @@
   },
   "KnappingWasteProduct-color-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7483,6 +7503,7 @@
   },
   "KnappedCore-CorticalSurface-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7495,6 +7516,7 @@
   },
   "KnappedCore-ForceOnKnappingPlatform-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7506,6 +7528,7 @@
   },
   "KnappedCore-KnappingPlatformFeatures-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7518,6 +7541,7 @@
   },
   "KnappedCore-SecondaryKnappingPlatforms-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7531,6 +7555,7 @@
   },
   "KnappedCore-TechnicalMarks-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7554,6 +7579,7 @@
   },
   "KnappedCore-TypicalCoreForms-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7566,6 +7592,7 @@
   },
   "FragmentOfDrill-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7607,6 +7634,7 @@
   },
   "FragmentOfDrill-TypeOfDrill-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7619,6 +7647,7 @@
   },
   "FragmentOfDrill-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7638,6 +7667,7 @@
   },
   "FragmentOfDrill-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7650,6 +7680,7 @@
   },
   "FragmentOfCuttingtool-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7690,6 +7721,7 @@
   },
   "FragmentOfCuttingtool-TypeOfCutter-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7705,6 +7737,7 @@
   },
   "FragmentOfCuttingtool-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7724,6 +7757,7 @@
   },
   "FragmentOfCuttingtool-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7738,6 +7772,7 @@
   },
   "FragmentOfHammertool-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7751,6 +7786,7 @@
   },
   "FragmentOfChopper-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7772,6 +7808,7 @@
   },
   "FragmentofCoating-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7816,6 +7853,7 @@
   },
   "FragmentofCoating-ContactMaterial-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7827,6 +7865,7 @@
   },
   "FragmentofCoating-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7837,6 +7876,7 @@
   },
   "RawMaterial-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7878,6 +7918,7 @@
   },
   "FragmentofStonevessel-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7920,6 +7961,7 @@
   },
   "FragmentofStonevessel-ProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7933,6 +7975,7 @@
   },
   "FragmentOfBead-ShapeofBead-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7947,6 +7990,7 @@
   },
   "FragmentOfBead-KnappingProductionMethod-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7961,6 +8005,7 @@
   },
   "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7974,6 +8019,7 @@
   },
   "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7988,6 +8034,7 @@
   },
   "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -7999,6 +8046,7 @@
   },
   "FragmentOfBead-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -8010,6 +8058,7 @@
   },
   "Stone-material-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -8040,6 +8089,7 @@
   },
   "Stone-objectType-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -8061,6 +8111,7 @@
   },
   "Stone-objectTypeSpecific-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""
@@ -8086,6 +8137,7 @@
   },
   "Mollusk-classification-WES": {
     "createdBy": "Max Haibt",
+    "creationDate": "27-3-2019",
     "description": {
       "de": "",
       "en": ""

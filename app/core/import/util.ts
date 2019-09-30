@@ -1,4 +1,4 @@
-import {ObjectCollection, reduce, dissoc} from 'tsfun';
+import {ObjectCollection, reduce, dissoc, assoc} from 'tsfun';
 import {getOn} from 'tsfun/src/objectstruct';
 
 
@@ -31,4 +31,13 @@ export function gt(o: number) { return (a: number) => a > o; }
 export function dissocReducer(struct: any, path: string) {
 
    return dissoc(path)(struct);
+}
+
+
+export function assocReducer(f: (_: string) => any) {
+
+    return (struct: any, path: string) => {
+
+        return assoc(path, f(path))(struct);
+    }
 }

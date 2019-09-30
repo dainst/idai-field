@@ -2,11 +2,12 @@ import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-ty
 import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
-import {clone, compose, filter, flow, forEach, is, isDefined, isnt, jsonClone, keysAndValues, values, map,
-    on, reduce, to, union, isNot, includedIn, assoc} from 'tsfun';
+import {clone, compose, filter, flow, forEach, is, isDefined,
+    isnt, jsonClone, keysAndValues, keys, values, map,
+    on, reduce, to, union, isNot, includedIn, lookup} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
-import {dissocReducer} from '../import/util';
+import {assocReducer, dissocReducer} from '../import/util';
 import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
 
 
@@ -340,22 +341,25 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions,
                           selectedTypes: string[]) {
 
-    const allSelectedTypes = Object.keys(allTheTypes)
+    const allSelectedTypes = keys(allTheTypes)
         .filter(isNot(includedIn(selectedTypes)))
         .reduce(dissocReducer, allTheTypes);
 
     const parentsNotExplicitelySelected = values(allSelectedTypes)
-        .reduce((parentsNotExplicitelySelected: string[], selectedType: TransientTypeDefinition) => {
+        .reduce((parentsNotExplicitelySelected: string[],
+                 selectedType: TransientTypeDefinition) => {
 
             const parent = selectedType.parent;
-            return parent && !Object.keys(allSelectedTypes).includes(parent)
+            return parent && !keys(allSelectedTypes).includes(parent)
                 ? parentsNotExplicitelySelected.concat(parent)
                 : parentsNotExplicitelySelected;
 
         }, []) as string[];
 
     return parentsNotExplicitelySelected
-        .reduce((acc, val) => assoc(val, allTheTypes[val])(acc), allSelectedTypes);
+        .reduce(
+            assocReducer(lookup(allTheTypes)),
+            allSelectedTypes);
 }
 
 

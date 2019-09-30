@@ -28,7 +28,7 @@ export class DropdownComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.valuelist = this.getValuelist(this.field);
+        this.valuelist = Helper.getValuelist(this.field, this.settingsService.getProjectDocument());
     }
 
 
@@ -47,20 +47,5 @@ export class DropdownComponent implements OnChanges {
     public deleteItem() {
 
         delete this.resource[this.field.name];
-    }
-
-
-    private getValuelist(field: FieldDefinition): string[] {
-
-        return field.valuelist
-            ? field.valuelist
-            : this.getValuelistFromProjectField(field.valuelistFromProjectField as string);
-    }
-
-
-    private getValuelistFromProjectField(fieldName: string): string[] {
-
-        const field: string[]|undefined = this.settingsService.getProjectDocument().resource[fieldName];
-        return field && Array.isArray(field) ? field : [];
     }
 }

@@ -202,7 +202,7 @@ export module ResourcesState {
 
         ViewState.complete(state.overviewState);
 
-        flow<any>(state.operationViewStates,
+        flow(state.operationViewStates,
             Object.keys,
             map(lookup(state.operationViewStates)),
             forEach(ViewState.complete));

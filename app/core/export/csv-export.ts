@@ -45,7 +45,7 @@ export module CSVExport {
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        return flow<any>([headings, matrix],
+        return flow([headings, matrix],
             expandDating,
             expandDimension(fieldDefinitions),
             combine);
@@ -279,7 +279,7 @@ export module CSVExport {
             return replaceItems(
                 where,
                 nrOfNewItems,
-                flatMap(compose<any>(
+                flatMap(compose(
                     cond(isDefined, computeReplacement, val([])),
                     fillUpToSize(widthOfEachNewItem, EMPTY))));
         }

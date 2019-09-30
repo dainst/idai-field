@@ -64,9 +64,9 @@ export module FulltextIndex {
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
-            flatMap(content => content.split(tokenizationPattern)))
-            .map(token => token.toLowerCase())
-            .map(token => Array.from(token))
+            flatMap((content: string) => content.split(tokenizationPattern)))
+            .map((token: string) => token.toLowerCase())
+            .map((token: string) => Array.from(token))
             .forEach(indexToken);
     }
 

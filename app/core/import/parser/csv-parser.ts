@@ -45,7 +45,7 @@ export module CsvParser {
 
     function doParse(type: IdaiType, content: string, separator: string) {
 
-        return flow<any>(content,
+        return flow(content,
             parse(separator),
             map(assoc('type', type.name)),
             map(insertRelations),

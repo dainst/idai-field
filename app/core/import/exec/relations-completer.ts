@@ -175,7 +175,7 @@ export module RelationsCompleter {
         const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
         const setInverses_ = setInverses(importDocument, lookupDocument);
 
-        flow<any>(relations,
+        flow(relations,
             map(addInverse_),
             filter(inverseIsDefined),
             forEach(assertNotBadyInterrelated_),

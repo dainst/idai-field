@@ -31,7 +31,7 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
     positionValues?: string;
 }
 
-const VALID_FIELD_PROPERTIES = ['valuelistId', 'inputType', 'positionValues'];
+const VALID_FIELD_PROPERTIES = ['valuelistId', 'valuelistFromProjectField', 'inputType', 'positionValues'];
 
 
 export type LibraryFieldDefinitions = { [fieldName: string]: LibraryFieldDefinition };

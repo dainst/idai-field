@@ -5,7 +5,7 @@ import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util
 import {ValidationErrors} from './validation-errors';
 import {DatingUtil} from '../util/dating-util';
 import {INPUT_TYPE, INPUT_TYPES} from '../../c';
-import {subtract} from 'tsfun/src/arrayset';
+import {subtract} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';

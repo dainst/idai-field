@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
-import {arrayEquivalent} from 'tsfun';
+import {sameset} from 'tsfun';
 import {TypeUtility} from '../core/model/type-utility';
 import {IdaiType} from '../core/configuration/model/idai-type';
 
@@ -64,7 +64,7 @@ export class SearchBarComponent {
             ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
-        if (newTypes && newTypes.length > 1 && this.types && arrayEquivalent(this.types)(newTypes)) {
+        if (newTypes && newTypes.length > 1 && this.types && sameset(this.types)(newTypes)) {
             newTypes = [type.name];
         }
 

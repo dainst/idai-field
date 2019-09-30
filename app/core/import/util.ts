@@ -1,5 +1,5 @@
 import {ObjectCollection, reduce, dissoc, assoc} from 'tsfun';
-import {getOn} from 'tsfun/src/objectstruct';
+import {getOn} from 'tsfun';
 
 
 // @author: Daniel de Oliveira

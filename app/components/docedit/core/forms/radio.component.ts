@@ -19,9 +19,9 @@ export class RadioComponent {
     @Input() field: any;
 
 
-    public notIncludedInValueList() {
+    public getValuesNotIncludedInValuelist() {
 
-        return Helper.notIncludedInValueList(this.resource, this.field.name, this.field.valuelist);
+        return Helper.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.field.valuelist);
     }
     
 

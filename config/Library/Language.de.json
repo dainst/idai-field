@@ -242,6 +242,9 @@
           "label": "Projekt-URL",
           "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen"
         },
+        "staff": {
+          "label": "Mitarbeiter"
+        },
         "supervisor": {
           "label": "Leiter/Leiterin",
           "description": "Leitende Person der Kampagne"

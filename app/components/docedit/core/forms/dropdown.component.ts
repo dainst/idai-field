@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {Helper} from './helper';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
 import {SettingsService} from '../../../../core/settings/settings-service';
+import {ValuelistUtil} from '../../../../core/util/valuelistUtil';
 
 
 @Component({
@@ -28,13 +28,13 @@ export class DropdownComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.valuelist = Helper.getValuelist(this.field, this.settingsService.getProjectDocument());
+        this.valuelist = ValuelistUtil.getValuelist(this.field, this.settingsService.getProjectDocument());
     }
 
 
     public getValuesNotIncludedInValuelist() {
 
-        return Helper.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
+        return ValuelistUtil.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
     }
 
 

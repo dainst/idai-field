@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
 import {SettingsService} from '../../../../core/settings/settings-service';
-import {Helper} from './helper';
+import {ValuelistUtil} from '../../../../core/util/valuelistUtil';
 
 
 @Component({
@@ -26,13 +26,13 @@ export class DropdownRangeComponent {
 
     constructor(private settingsService: SettingsService) {}
 
-    
+
     public activateEnd = () => this.endActivated = true;
 
 
     ngOnChanges() {
 
-        this.valuelist = Helper.getValuelist(this.field, this.settingsService.getProjectDocument());
+        this.valuelist = ValuelistUtil.getValuelist(this.field, this.settingsService.getProjectDocument());
     }
 
 

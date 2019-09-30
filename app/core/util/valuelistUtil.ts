@@ -1,12 +1,12 @@
 import {includedIn, isNot, isArray} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
-import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {FieldDefinition} from '../configuration/model/field-definition';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module Helper {
+export module ValuelistUtil {
 
     export function getValuesNotIncludedInValuelist(resource: Resource|undefined, fieldName: string|undefined,
                                                     valuelist: string[]|undefined): string[]|undefined {

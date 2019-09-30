@@ -32,9 +32,9 @@ export class DropdownComponent implements OnChanges {
     }
 
 
-    public notIncludedInValueList() {
+    public getValuesNotIncludedInValuelist() {
 
-        return Helper.notIncludedInValueList(this.resource, this.field.name, this.valuelist);
+        return Helper.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
     }
 
 

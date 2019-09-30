@@ -8,7 +8,8 @@ import {FieldDefinition} from '../../../../core/configuration/model/field-defini
  */
 export module Helper {
 
-    export function notIncludedInValueList(resource: Resource|undefined, fieldName: string|undefined, valuelist: string[]|undefined) {
+    export function getValuesNotIncludedInValuelist(resource: Resource|undefined, fieldName: string|undefined,
+                                                    valuelist: string[]|undefined): string[]|undefined {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 

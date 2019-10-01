@@ -160,7 +160,7 @@ export module RelationsCompleter {
                                             lookupDocument: LookupDocument) {
 
         return flow(relationNamesExceptRecordedIn(document),
-            flatMap(lookup(document.resource.relations)),
+            flatMap(lookup(document.resource.relations) as (_: string) => string[]),
             remove(compose(lookupDocument, isDefined)));
     }
 

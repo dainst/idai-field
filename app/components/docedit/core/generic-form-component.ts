@@ -20,11 +20,8 @@ export class GenericFormComponent {
     @Input() document: Document;
 
 
-    public shouldShow(field: any) {
+    public shouldShow(field: FieldDefinition): boolean {
 
-        if (!field) return false;
-        if (field.name === 'identifier' || field.name === 'shortDescription') return true;
-
-        return field.editable && field.visible;
+        return field !== undefined && field.editable === true;
     }
 }

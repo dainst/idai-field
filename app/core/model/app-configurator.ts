@@ -236,6 +236,7 @@ export class AppConfigurator {
         shortDescription: {
             label: this.i18n({ id: 'configuration.defaultFields.shortDescription', value: 'Kurzbeschreibung' }),
             visible: false,
+            editable: true,
             group: 'stem'
         } as FieldDefinition,
         identifier: {
@@ -245,6 +246,7 @@ export class AppConfigurator {
             }),
             label: this.i18n({ id: 'configuration.defaultFields.identifier', value: 'Bezeichner' }),
             visible: false,
+            editable: true,
             mandatory: true,
             group: 'stem'
         } as FieldDefinition,

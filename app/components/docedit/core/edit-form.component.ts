@@ -74,8 +74,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         return (groupName === 'images'
                 && !this.typeUtility.getImageTypeNames().includes(this.document.resource.type))
             || (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFieldDefinitions(groupName)
-                .filter(field => field.editable && field.visible).length > 0
+            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
     }
 
@@ -137,8 +136,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
                 label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
                 group: 'position',
                 inputType: 'geometry',
-                editable: true,
-                visible: true
+                editable: true
             });
         }
 

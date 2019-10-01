@@ -44,6 +44,7 @@ import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-gr
 import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {MapComponent} from './map/map/map.component';
 
 const remote = require('electron').remote;
 
@@ -59,6 +60,7 @@ const remote = require('electron').remote;
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
+        MapComponent,
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,

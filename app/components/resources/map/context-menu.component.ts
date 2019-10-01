@@ -29,8 +29,8 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(
         public sidebarListComponent: SidebarListComponent,
-        public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade,
+        private resourcesComponent: ResourcesComponent,
+        private viewFacade: ViewFacade,
         private typeUtility: TypeUtility) {}
 
 

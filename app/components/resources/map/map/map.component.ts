@@ -4,6 +4,7 @@ import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
 import {CoordinatesUtility} from './coordinates-utility';
+import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 
 // no typings for VectorMarkers available
 declare global {
@@ -43,7 +44,7 @@ export class MapComponent implements OnChanges {
     protected typeColors: { [typeName: string]: string } = {};
 
 
-    constructor(projectConfiguration: any) {
+    constructor(projectConfiguration: ProjectConfiguration) {
 
         this.typeColors = projectConfiguration.getTypeColors();
     }

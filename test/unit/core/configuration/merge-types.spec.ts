@@ -2,10 +2,8 @@ import {BuiltinTypeDefinitions} from '../../../../app/core/configuration/model/b
 import {CustomTypeDefinitions} from '../../../../app/core/configuration/model/custom-type-definition';
 import {mergeTypes} from '../../../../app/core/configuration/merge-types';
 import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
-import {
-    LibraryTypeDefinition,
-    LibraryTypeDefinitions
-} from '../../../../app/core/configuration/model/library-type-definition';
+import {LibraryTypeDefinition,
+    LibraryTypeDefinitions} from '../../../../app/core/configuration/model/library-type-definition';
 import {Preprocessing} from '../../../../app/core/configuration/preprocessing';
 import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
@@ -13,8 +11,7 @@ import {ValuelistDefinitions} from '../../../../app/core/configuration/model/val
 
 describe('mergeTypes', () => {
 
-
-    it('auto-select parent if child defined',  () => {
+    xit('auto-select parent if child defined',  () => {
 
         const builtInTypes: BuiltinTypeDefinitions = {
             A: { superType: true, userDefinedSubtypesAllowed: true, fields: {} }

@@ -137,6 +137,14 @@ export class TypeUtility {
     }
 
 
+    public isGeometryType(typeName: string): boolean {
+
+        return !this.getImageTypeNames().includes(typeName)
+            && !this.isSubtype(typeName, 'Inscription')
+            && !TypeUtility.isProjectType(typeName);
+    }
+
+
     private static isProjectType(typeName: string): boolean {
 
         return typeName === 'Project';

@@ -1,7 +1,10 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {FieldDocument, FieldGeometry, FieldPolyline, FieldMarker, FieldPolygon} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
+import {FieldPolygon} from './field-polygon';
+import {FieldPolyline} from './field-polyline';
+import {FieldMarker} from './field-marker';
 
 const remote = require('electron').remote;
 

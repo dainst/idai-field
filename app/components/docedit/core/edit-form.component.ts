@@ -130,7 +130,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
 
-        if (this.isGeometryFieldAvailable()) {
+        if (this.typeUtility.isGeometryType(this.document.resource.type)) {
             this.groups[GROUP_NAME.POSITION].fields.push({
                 name: 'geometry',
                 label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
@@ -160,12 +160,5 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement.getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
-    }
-
-
-    private isGeometryFieldAvailable(): boolean {
-
-        return this.document.resource.type !== 'Project'
-            && !this.typeUtility.isSubtype(this.document.resource.type, 'Image');
     }
 }

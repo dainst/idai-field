@@ -1,0 +1,152 @@
+{
+  "Operation": {
+    "fields": {
+      "fixMe": {
+        "inputType": "input"
+      },
+      "campaign": {
+        "inputType": "checkboxes",
+        "valuelistId": "Operation-campaign-kalapodi"
+      }
+    }
+  },
+  "Find": {
+    "fields": {
+      "storagePlace": {
+        "inputType": "radio",
+        "valuelistId": "Find-storagePlace-kalapodi"
+      },
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "workflow": {
+        "inputType": "checkboxes",
+        "valuelistId": "Find-workflow-kalapodi"
+      },
+      "fixMe": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Sample": {
+    "parent": "Find",
+    "color": "#9ecae1",
+    "fields": {
+      "descriptionSample": {
+        "inputType": "text"
+      },
+      "researchQuestion": {
+        "inputType": "text"
+      },
+      "analyzedBy": {
+        "inputType": "input"
+      },
+      "labNumber": {
+        "inputType": "input"
+      },
+      "sampleType": {
+        "inputType": "radio",
+        "valuelistId": "Sample-sampleType-Campidoglio"
+      },
+      "sampleRelatedTo": {
+        "inputType": "input"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "sampleState": {
+        "inputType": "radio",
+        "valuelistId": "Sample-sampleState-Campidoglio"
+      }
+    }
+  },
+  "Photo": {
+    "fields": {
+      "date": {
+        "inputType": "date"
+      },
+      "imageSubject": {
+        "inputType": "radio",
+        "valuelistId": "Photo-imageSubject-kalapodi"
+      }
+    }
+  },
+  "Metal": {
+    "parent": "Find",
+    "fields": {
+      "metalMaterial": {
+        "inputType": "checkboxes",
+        "valuelistId": "Metal-metalMaterial-kalapodi"
+      }
+    }
+  },
+  "Coin": {
+    "parent": "Find",
+    "fields": {
+      "metalMaterial": {
+        "inputType": "checkboxes",
+        "valuelistId": "Coin-metalMaterial-kalapodi"
+      }
+    }
+  },
+  "Brick": {
+    "parent": "Find",
+    "fields": {
+      "brickUsage": {
+        "inputType": "radio",
+        "valuelistId": "Brick-brickUsage-kalapodi"
+      }
+    }
+  },
+  "Planum": {
+    "color": "#00ced1",
+    "parent": "Feature",
+    "fields": {
+      "objectOrigin": {
+        "inputType": "radio",
+        "valuelistId": "Planum-objectOrigin-kalapodi"
+      },
+      "if1TiefeRelativ": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Pottery": {
+    "parent": "Find",
+    "fields": {
+      "materialType": {
+        "inputType": "radio",
+        "valuelistId": "Pottery-materialType-kalapodi"
+      }
+    }
+  },
+  "PotteryCluster": {
+    "color": "#CC0000",
+    "parent": "Find",
+    "fields": {}
+  },
+  "BrickCluster": {
+    "color": "#CC0000",
+    "parent": "Find",
+    "fields": {}
+  },
+  "Layer": {
+    "parent": "Feature",
+    "fields": {
+      "if1Farbe2": {
+        "inputType": "input"
+      },
+      "if1SchichtUnterscheidungsKrit": {
+        "inputType": "input"
+      },
+      "layerClassification": {
+        "inputType": "dropdown",
+        "valuelistId": "Layer-layerClassification-kalapodi"
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelistId": "Layer-soilType-kalapodi"
+      }
+    }
+  }
+}

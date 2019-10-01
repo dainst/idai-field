@@ -7,7 +7,7 @@ import {arrayEquivalent, keysAndValues} from 'tsfun';
 const fs = require('fs');
 
 
-const projectName: string = 'WES';
+const projectName: string = 'kalapodi';
 
 
 
@@ -37,8 +37,8 @@ function insert(valuelists:any, field:any, newValuelistName:string, newValuelist
 
     } else {
         valuelists[newValuelistName] = {
-            createdBy: "Max Haibt",
-            "creationDate": "27-3-2019",
+            createdBy: "A.K.",
+            creationDate: "",
             description: { de: "", en: "" },
             values: newValuelistValues.reduce((o, key) => ({ ...o, [key]: {}}), {}),
         };
@@ -66,7 +66,7 @@ keysAndValues(fields).forEach(([typeName, type] : [string,any]) => {
 
             if(valuelists[newValuelistName]) console.error("name already exists", newValuelistName);
             else insert(valuelists, field, newValuelistName, field['valuelist']);
-        }
+        }  else {console.error('I am not being changed ', fieldName)}
     })
 });
 

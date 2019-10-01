@@ -15,14 +15,6 @@
           "2017",
           "2018"
         ]
-      },
-      "supervisor": {
-        "inputType": "radio",
-        "valuelist": []
-      },
-      "processor": {
-        "inputType": "checkboxes",
-        "valuelist": []
       }
     }
   },
@@ -30,15 +22,19 @@
     "fields": {
       "storagePlace": {
         "inputType": "radio",
-        "valuelist": []
+        "valuelist": [
+          "Magazin Kalapodi",
+          "Museum Atalanti",
+          "Museum Lamia",
+          "Magazin Sammelfunde",
+          "Restaurierungswerkstatt",
+          "verlustig"
+        ]
       },
       "measuringPointID": {
         "inputType": "input"
       },
-      "processor": {
-        "inputType": "checkboxes",
-        "valuelist": []
-      },
+
       "workflow": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -99,34 +95,12 @@
       },
       "sampleState": {
         "inputType": "radio",
-        "valuelist": ["Stored", "Submitted", "Analyzed", "Discarded"]
-      }
-    }
-  },
-  "Feature": {
-    "fields": {
-      "if1AutoKlassifizierungOhneBefundart": {
-        "inputType": "input"
-      },
-      "if1SchichtKlassifizSonst": {
-        "inputType": "input"
-      },
-      "fixMe": {
-        "inputType": "input"
-      }
-    }
-  },
-  "Image": {
-    "fields": {
-      "importTag": {
-        "inputType": "input"
-      },
-      "draughtsmen": {
-        "inputType": "checkboxes",
-        "valuelist": []
-      },
-      "fixMe": {
-        "inputType": "input"
+        "valuelist": [
+          "Stored",
+           "Submitted",
+            "Analyzed",
+             "Discarded"
+           ]
       }
     }
   },
@@ -140,9 +114,12 @@
         "valuelist": [
           "Arbeitsfoto",
           "Einzelfund",
+          "Fauna",
+          "Flora",
           "Multifund",
           "Personen",
-          "Proben",
+          "Planum",
+          "Probe",
           "Profil",
           "Sammelfund Keramik",
           "Sammelfund Ziegel",
@@ -156,6 +133,7 @@
     }
   },
   "Metal": {
+    "parent": "Find",
     "fields": {
       "metalMaterial": {
         "inputType": "checkboxes",
@@ -177,6 +155,7 @@
     }
   },
   "Coin": {
+    "parent": "Find",
     "fields": {
       "metalMaterial": {
         "inputType": "checkboxes",
@@ -198,6 +177,7 @@
     }
   },
   "Brick": {
+    "parent": "Find",
     "fields": {
       "brickUsage": {
         "inputType": "radio",
@@ -233,11 +213,8 @@
       }
     }
   },
-  "BrickCluster": {
-    "color": "#CC0000",
-    "parent": "Find"
-  },
   "Pottery": {
+    "parent": "Find",
     "fields": {
       "materialType": {
         "inputType": "radio",
@@ -251,9 +228,17 @@
   },
   "PotteryCluster": {
     "color": "#CC0000",
-    "parent": "Find"
+    "parent": "Find",
+    "fields": {}
+},
+  "BrickCluster": {
+    "color": "#CC0000",
+    "parent": "Find",
+    "fields": {}
   },
+
   "Layer": {
+    "parent": "Feature",
     "fields": {
       "if1Farbe2": {
         "inputType": "input"

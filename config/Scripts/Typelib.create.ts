@@ -43,6 +43,7 @@ function insert(Typelib, newtypecontent, newTypeName, newfields) {
               "creationDate": "27-03-2019",
               "color": "#CCFFFF",
               "commons": [              ],
+              "valuelists": newfields,
               "fields": newfields
             };
           }

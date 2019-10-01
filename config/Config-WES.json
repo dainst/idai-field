@@ -213,9 +213,7 @@
       "vesselForm": {
         "inputType": "dropdown",
         "valuelistId": "Pottery-vesselForm-WES"
-      },
-      "processor": {
-        "valuelistId": "Pottery-processor-WES"
+      }
       }
     }
   },

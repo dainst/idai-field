@@ -201,10 +201,10 @@ export class AppConfigurator {
         Room: {
             fields: {}
         } as TypeDefinition,
-        BuildingWall: {
+        RoomWall: {
             fields: {}
         } as TypeDefinition,
-        BuildingFloor: {
+        RoomFloor: {
             fields: {}
         } as TypeDefinition,
         BuildingPart: {
@@ -411,14 +411,14 @@ export class AppConfigurator {
         {
             name: 'isRecordedIn',
             label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
-            domain: ['BuildingFloor'],
+            domain: ['RoomFloor'],
             range: ['Building'],
             editable: false
         },
         {
             name: 'isRecordedIn',
             label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
-            domain: ['BuildingWall'],
+            domain: ['RoomWall'],
             range: ['Building'],
             editable: false
         },

@@ -65,8 +65,6 @@ describe('CachedDatastore', () => {
             return Promise.resolve(doc);
         });
         mockdb.create.and.callFake(function(dd) {
-            // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
-            dd.resource.id = '1';
             return Promise.resolve(dd);
         });
 
@@ -267,6 +265,29 @@ describe('CachedDatastore', () => {
     });
 
 
+    it('call find with sort option exactMatchFirst', async done => {
+
+        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+            { id: '1', identifier: 'A-B-100' },
+            { id: '2', identifier: 'B-100' },
+            { id: '3', identifier: 'C-100' }
+        ]);
+
+        const { documents, totalCount } = await ds.find({ q: 'B-100', sort: 'exactMatchFirst' });
+        expect(documents.length).toBe(3);
+        expect(totalCount).toBe(3);
+
+        expect(documents[0].resource.id).toBe('2');
+        expect(documents[1].resource.id).toBe('1');
+        expect(documents[2].resource.id).toBe('3');
+        done();
+    });
+
+
     it('cant find one and only document', async done => {
 
         mockIndexFacade.perform.and.returnValues([{id: '1'}]);
@@ -350,6 +371,12 @@ describe('CachedDatastore', () => {
     it('should return the cached instance on create', async done => {
 
         let doc1 = Static.doc('sd1', 'identifier1');
+
+        mockdb.create.and.callFake(function(dd) {
+            // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
+            dd.resource.id = '1';
+            return Promise.resolve(dd);
+        });
 
         await ds.create(doc1, 'u');
         try {

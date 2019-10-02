@@ -355,20 +355,15 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected select(document: FieldDocument): boolean {
 
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(document);
-            return true;
-        } else {
-            return false;
-        }
+        return this.isEditing
+            ? false
+            : super.select(document);
     }
 
 
     protected deselect() {
 
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(undefined);
-        }
+        if (!this.isEditing) super.deselect();
     }
 
 

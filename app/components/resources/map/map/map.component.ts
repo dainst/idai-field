@@ -243,14 +243,16 @@ export class MapComponent implements OnChanges {
             'active' : '';
         const icon = MapComponent.generateMarkerIcon(color, extraClasses);
         const marker: FieldMarker = L.marker(latLng, {
-            icon: icon
+            icon: icon,
+            zIndexOffset: this.selectedDocument === document ? 1000 : 0
         });
         marker.document = document;
 
         marker.bindTooltip(MapComponent.getShortDescription(document.resource), {
             offset: L.point(0, -40),
             direction: 'top',
-            opacity: 1.0});
+            opacity: 1.0
+        });
 
         const mapComponent = this;
         marker.on('click', function() {
@@ -344,7 +346,7 @@ export class MapComponent implements OnChanges {
     private focusMarkers(markers: Array<L.Marker>) {
 
         if (markers.length === 1) {
-            this.map.panTo(markers[0].getLatLng(), {animate: true, easeLinearity: 0.3});
+            this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
         } else {
             const bounds = [] as any;
             for (let marker of markers) {

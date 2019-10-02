@@ -27,7 +27,8 @@ export module RelationPickerSuggestions {
             q: idSearchString ? idSearchString : '',
             types: relationDefinition.range,
             constraints: makeConstraints(document, relationDefinition),
-            limit: MAX_SUGGESTIONS
+            limit: MAX_SUGGESTIONS,
+            sort: 'exactMatchFirst'
         };
     }
 

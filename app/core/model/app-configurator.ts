@@ -557,6 +557,32 @@ export class AppConfigurator {
             domain: ['Inscription'],
             range: ['Find:inherit'],
             sameMainTypeResource: true
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomFloor'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomWall'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'includes',
+            inverse: 'liesWithin',
+            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
+            domain: ['Room'],
+            range: ['RoomWall', 'RoomFloor'],
+            sameMainTypeResource: true
         }
     ];
 

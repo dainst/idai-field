@@ -184,6 +184,9 @@ export class PlusButtonComponent implements OnChanges {
 
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
+        // hack for 2.13.2
+        if (!this.liesWithin && (type.name === 'RoomFloor' || type.name === 'RoomWall')) return false;
+
         if (type.name === 'Image') return false;
         if (!this.isRecordedIn) return this.getOverviewTypes().includes(type.name);
 

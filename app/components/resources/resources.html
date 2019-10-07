@@ -1,6 +1,14 @@
 <div class="resources-nav row bg-light">
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex">
         <navigation></navigation>
+        <div id="search-results-info" *ngIf="isSearchResultsInfoVisible()">
+            <span *ngIf="viewFacade.getDocuments().length === 1">
+                Eine Ressource gefunden
+            </span>
+            <span *ngIf="viewFacade.getDocuments().length !== 1">
+                {{viewFacade.getDocuments().length}} Ressourcen gefunden
+            </span>
+        </div>
     </div>
 
     <div class="col-md-6 mr-md-auto">

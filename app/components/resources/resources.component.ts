@@ -226,6 +226,14 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
+    public isSearchResultsInfoVisible(): boolean {
+
+        return this.viewFacade.getDocuments() !== undefined
+            && this.viewFacade.getBypassHierarchy()
+            && this.viewFacade.isReady();
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);

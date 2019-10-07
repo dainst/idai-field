@@ -1,4 +1,25 @@
 {
+  "RoomCeiling": {
+    "commons": [
+      "area", "spatialLocation",
+      "processor", "description","period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
+  "RoomFloor": {
+    "commons": [
+      "area", "spatialLocation",
+      "processor", "description", "period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
+  "RoomWall": {
+    "commons": [
+      "spatialLocation",
+      "processor", "description" ,"period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
   "Trench": {
     "color": "blue",
     "parent": "Operation",
@@ -2205,7 +2226,8 @@
     }
   },
   "Room": {
-    "commons": ["processor", "description", "period", "dating", "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
+    "commons": ["processor", "description", "period", "dating",
+      "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent", "area"],
     "fields": {
       "conditionComment": {
         "inputType": "input"

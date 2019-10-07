@@ -70,6 +70,15 @@
     }
   },
   "types": {
+    "RoomFloor": {
+      "label": "Floor"
+    },
+    "RoomWall": {
+      "label": "Wall"
+    },
+    "RoomCeiling": {
+      "label": "Ceiling"
+    },
     "Trench": {
       "label": "Trench",
       "fields": {

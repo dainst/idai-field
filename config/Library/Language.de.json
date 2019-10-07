@@ -80,6 +80,15 @@
     }
   },
   "types": {
+    "RoomFloor": {
+      "label": "Boden"
+    },
+    "RoomWall": {
+      "label": "Wand"
+    },
+    "RoomCeiling": {
+      "label": "Decke"
+    },
     "Trench": {
       "label": "Schnitt",
       "fields": {

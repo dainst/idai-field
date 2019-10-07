@@ -166,12 +166,25 @@ export class AppConfigurator {
             fields: {}
         },
 
-
+        // Room is an idealized entity
         Room: {
             superType: true,
             userDefinedSubtypesAllowed: true,
             fields: {}
         },
+        // An idealized entity, must be created within a Room
+        RoomWall: {
+            fields: {}
+        },
+        // An idealized entity, must be created within a Room
+        RoomFloor: {
+            fields: {}
+        },
+        // An idealized entity, must be created within a Room
+        RoomCeiling: {
+            fields: {}
+        },
+        // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {
             superType: true,
             userDefinedSubtypesAllowed: true,
@@ -370,6 +383,27 @@ export class AppConfigurator {
         {
             name: 'isRecordedIn',
             label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
+            domain: ['RoomFloor'],
+            range: ['Building'],
+            editable: false
+        },
+        {
+            name: 'isRecordedIn',
+            label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
+            domain: ['RoomWall'],
+            range: ['Building'],
+            editable: false
+        },
+        {
+            name: 'isRecordedIn',
+            label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
+            domain: ['RoomCeiling'],
+            range: ['Building'],
+            editable: false
+        },
+        {
+            name: 'isRecordedIn',
+            label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
             domain: ['Area:inherit'],
             range: ['Survey'],
             editable: false
@@ -501,6 +535,41 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isFoundOn', value: 'Ist aufgebracht auf' }),
             domain: ['Inscription'],
             range: ['Find:inherit'],
+            sameMainTypeResource: true
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomFloor'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomWall'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomCeiling'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'includes',
+            inverse: 'liesWithin',
+            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
+            domain: ['Room'],
+            range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
             sameMainTypeResource: true
         }
     ];

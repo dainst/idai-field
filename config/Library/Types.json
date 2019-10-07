@@ -1,4 +1,40 @@
 {
+  "RoomCeiling:default": {
+    "typeFamily": "RoomCeiling",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "area", "spatialLocation",
+      "processor", "description","period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "typeFamily": "RoomFloor",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "area", "spatialLocation",
+      "processor", "description", "period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "typeFamily": "RoomWall",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "spatialLocation",
+      "processor", "description" ,"period", "dating", "diary",
+      "dimensionLength", "dimensionWidth"],
+    "fields": {}
+  },
   "Trench:default": {
     "typeFamily": "Trench",
     "createdBy": "IT-Referat",

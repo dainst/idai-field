@@ -139,6 +139,9 @@ export module DefaultImportCalc {
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
         await inferRecordedIns(documents, operationTypeNames, get, mainTypeDocumentId);
 
+        // 2.13.2
+        await validator.assertNotIllegalTopLevel(documents);
+
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter
                 .completeInverseRelations(get, getInverseRelation)(documents, mergeMode)
@@ -352,6 +355,7 @@ export module DefaultImportCalc {
             validator.assertIsKnownType(document);
             validator.assertIsAllowedType(document, mergeMode);
         }
+
         validator.assertIsWellformed(document);
         return document;
     }

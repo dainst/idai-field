@@ -13,4 +13,8 @@ export module ValidationErrors {
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
     export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
+
+
+    // 2.13.2
+    export const MUST_HAVE_LIES_WITHIN = 'importerrors/exec/musthavelieswithin';
 }

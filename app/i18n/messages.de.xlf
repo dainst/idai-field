@@ -1008,6 +1008,10 @@
         <source>Typ</source>
         <target state="final">Typ</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/config-loader.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/configuration/config-loader.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1015,6 +1019,10 @@
       <trans-unit id="configuration.image.height" datatype="html">
         <source>Höhe</source>
         <target state="final">Höhe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1024,6 +1032,10 @@
         <source>Breite</source>
         <target state="final">Breite</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1031,6 +1043,10 @@
       <trans-unit id="configuration.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1040,6 +1056,10 @@
         <source>Koordinatenbezugssystem</source>
         <target state="final">Koordinatenbezugssystem</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1047,6 +1067,10 @@
       <trans-unit id="configuration.defaultFields.shortDescription" datatype="html">
         <source>Kurzbeschreibung</source>
         <target state="final">Kurzbeschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1056,6 +1080,10 @@
         <source>Eindeutiger Bezeichner dieser Ressource</source>
         <target state="final">Eindeutiger Bezeichner dieser Ressource</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1063,6 +1091,10 @@
       <trans-unit id="configuration.defaultFields.identifier" datatype="html">
         <source>Bezeichner</source>
         <target state="final">Bezeichner</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1072,6 +1104,10 @@
         <source>Zeigt</source>
         <target state="final">Zeigt</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1079,6 +1115,10 @@
       <trans-unit id="configuration.relations.isDepictedIn" datatype="html">
         <source>Wird gezeigt in</source>
         <target state="final">Wird gezeigt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1088,6 +1128,10 @@
         <source>Zeitlich nach</source>
         <target state="final">Zeitlich nach</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1095,6 +1139,10 @@
       <trans-unit id="configuration.relations.isBefore" datatype="html">
         <source>Zeitlich vor</source>
         <target state="final">Zeitlich vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1104,6 +1152,10 @@
         <source>Gleich wie</source>
         <target state="final">Gleich wie</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1111,6 +1163,10 @@
       <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
         <source>Zeitgleich mit</source>
         <target state="final">Zeitgleich mit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1120,6 +1176,10 @@
         <source>Liegt über</source>
         <target state="final">Liegt über</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1127,6 +1187,10 @@
       <trans-unit id="configuration.relations.isBelow" datatype="html">
         <source>Liegt unter</source>
         <target state="final">Liegt unter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1136,6 +1200,10 @@
         <source>Schneidet</source>
         <target state="final">Schneidet</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1144,6 +1212,10 @@
         <source>Wird geschnitten von</source>
         <target state="final">Wird geschnitten von</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1151,6 +1223,22 @@
       <trans-unit id="configuration.relations.borders" datatype="html">
         <source>Grenzt an</source>
         <target state="final">Grenzt an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1171,6 +1259,66 @@
       <trans-unit id="configuration.relations.isRecordedIn" datatype="html">
         <source>Aufgenommen in Maßnahme</source>
         <target state="final">Aufgenommen in Maßnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1224,6 +1372,34 @@
         <source>Beinhaltet</source>
         <target state="final">Beinhaltet</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1251,6 +1427,46 @@
       <trans-unit id="configuration.relations.liesWithin" datatype="html">
         <source>Liegt in</source>
         <target state="final">Liegt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1284,6 +1500,10 @@
         <source>Trägt</source>
         <target state="final">Trägt</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
@@ -1291,6 +1511,10 @@
       <trans-unit id="configuration.relations.isFoundOn" datatype="html">
         <source>Ist aufgebracht auf</source>
         <target state="final">Ist aufgebracht auf</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -3659,6 +3883,14 @@
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
         <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</source>
         <target state="final">Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
+        <source>Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
+        <target state="final">Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

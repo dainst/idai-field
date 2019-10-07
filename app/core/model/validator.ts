@@ -1,8 +1,9 @@
-import {isnt, on} from 'tsfun';
+import {isnt, on, subtract} from 'tsfun';
 import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
 import {Validations} from './validations';
+import {ImportErrors} from '../import/exec/import-errors';
 
 
 const RECORDED_IN = 'isRecordedIn';
@@ -75,6 +76,38 @@ export class Validator {
             && !Document.hasRelations(document as Document, RECORDED_IN)) {
 
             throw [ValidationErrors.NO_ISRECORDEDIN];
+        }
+    }
+
+
+    // 2.13.2
+    public async assertNotIllegalTopLevel(documents: Array<Document>) {
+
+        for (let document of documents) {
+
+            if (['Inscription', 'RoomCeiling', 'RoomFloor', 'RoomWall'].includes(document.resource.type)) {
+
+                const recordedIn = document.resource.relations['isRecordedIn'];
+                const liesWithin = document.resource.relations['liesWithin'];
+
+                if (recordedIn && recordedIn.length > 0 && (!liesWithin || liesWithin.length === 0)) {
+
+                    throw [ValidationErrors.MUST_HAVE_LIES_WITHIN, document.resource.type, document.resource.identifier];
+                }
+
+                const found = (await this.find({constraints: {'id:match': liesWithin[0]}})).documents;
+                if (found && found.length > 0) {
+                    const foundDoc = found[0] as Document;
+                    if (foundDoc.resource && foundDoc.resource.type) {
+                        if (document.resource.type === 'Inscription') {
+                            if (foundDoc.resource.type !== 'Find') throw [ImportErrors.BAD_INTERRELATION, document.resource.identifier];
+                        }
+                        if (document.resource.type.indexOf('Room') !== -1) {
+                            if (foundDoc.resource.type !== 'Room') throw [ImportErrors.BAD_INTERRELATION, document.resource.identifier];
+                        }
+                    }
+                }
+            }
         }
     }
 

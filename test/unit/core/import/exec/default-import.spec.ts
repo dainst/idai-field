@@ -16,7 +16,7 @@ describe('DefaultImport', () => {
         mockDatastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed',
+            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertNotIllegalTopLevel',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertDropdownRangeComplete',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
 

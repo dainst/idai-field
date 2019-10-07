@@ -1,7 +1,7 @@
 <div class="resources-nav row bg-light">
     <div class="col-md-6 d-flex">
         <navigation></navigation>
-        <div id="search-results-info" *ngIf="isSearchResultsInfoVisible()">
+        <div id="search-results-info" class="alert alert-secondary" *ngIf="isSearchResultsInfoVisible()">
             <span *ngIf="viewFacade.getDocuments().length === 1">
                 Eine Ressource gefunden
             </span>

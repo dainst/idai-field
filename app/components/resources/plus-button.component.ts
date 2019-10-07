@@ -188,7 +188,8 @@ export class PlusButtonComponent implements OnChanges {
         if (!this.liesWithin &&
             (type.name === 'RoomFloor'
             || type.name === 'RoomWall'
-            || type.name === 'RoomCeiling')) return false;
+            || type.name === 'RoomCeiling'
+            || type.name === 'Inscription')) return false;
 
         if (type.name === 'Image') return false;
         if (!this.isRecordedIn) return this.getOverviewTypes().includes(type.name);

@@ -236,6 +236,16 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
+    public isDocumentLimitExceeded(): boolean {
+
+        const documents: Array<Document> = this.viewFacade.getDocuments();
+
+        return documents
+            && documents.length > 0
+            && this.viewFacade.getTotalDocumentCount() > documents.length;
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);

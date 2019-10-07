@@ -94,6 +94,7 @@ $deactivated-button-color: lightgray;
   top: -2px;
   left: 15px;
   width: 235px;
+  max-height: 39px;
   padding: 8px;
   margin-top: 5px;
   font-size: 14px;
@@ -101,4 +102,12 @@ $deactivated-button-color: lightgray;
   cursor: default;
   user-select: none;
   border-radius: 0;
+
+  &.document-limit-exceeded {
+    padding-top: 0;
+  }
+}
+
+#document-limit-info {
+  font-size: 11px;
 }

@@ -1,13 +1,17 @@
 <div class="resources-nav row bg-light">
     <div class="col-md-6 d-flex">
         <navigation></navigation>
-        <div id="search-results-info" class="alert alert-secondary" *ngIf="isSearchResultsInfoVisible()">
-            <span *ngIf="viewFacade.getDocuments().length === 1">
+        <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
+             class="alert alert-secondary" [class.document-limit-exceeded]="isDocumentLimitExceeded()">
+            <span *ngIf="viewFacade.getTotalDocumentCount() === 1">
                 Eine Ressource gefunden
             </span>
-            <span *ngIf="viewFacade.getDocuments().length !== 1">
-                {{viewFacade.getDocuments().length}} Ressourcen gefunden
+            <span *ngIf="viewFacade.getTotalDocumentCount() !== 1">
+                {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
             </span>
+            <div id="document-limit-info" *ngIf="isDocumentLimitExceeded()">
+                (Anzeige auf {{viewFacade.getDocuments().length}} Ressourcen beschränkt)
+            </div>
         </div>
     </div>
 

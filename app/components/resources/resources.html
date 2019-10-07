@@ -3,14 +3,17 @@
         <navigation></navigation>
         <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
              class="alert alert-secondary" [class.document-limit-exceeded]="isDocumentLimitExceeded()">
-            <span *ngIf="viewFacade.getTotalDocumentCount() === 1">
+            <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
+                  i18n="@@resources.searchResultsInfo.resourcesFound.single">
                 Eine Ressource gefunden
             </span>
-            <span *ngIf="viewFacade.getTotalDocumentCount() !== 1">
+            <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
+                  i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
                 {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
             </span>
-            <div id="document-limit-info" *ngIf="isDocumentLimitExceeded()">
-                (Anzeige auf {{viewFacade.getDocuments().length}} Ressourcen beschränkt)
+            <div id="document-limit-info" *ngIf="isDocumentLimitExceeded()"
+                 i18n="@@resources.searchResultsInfo.documentLimitExceeded">
+                ({{viewFacade.getDocuments().length}} angezeigt)
             </div>
         </div>
     </div>

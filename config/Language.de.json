@@ -86,6 +86,9 @@
     "RoomWall": {
       "label": "Wand"
     },
+    "RoomCeiling": {
+      "label": "Decke"
+    },
     "Trench": {
       "label": "Schnitt",
       "fields": {

@@ -207,6 +207,9 @@ export class AppConfigurator {
         RoomFloor: {
             fields: {}
         } as TypeDefinition,
+        RoomCeiling: {
+            fields: {}
+        } as TypeDefinition,
         BuildingPart: {
             fields: {}
         } as TypeDefinition,
@@ -425,6 +428,13 @@ export class AppConfigurator {
         {
             name: 'isRecordedIn',
             label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
+            domain: ['RoomCeiling'],
+            range: ['Building'],
+            editable: false
+        },
+        {
+            name: 'isRecordedIn',
+            label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
             domain: ['Area:inherit'],
             range: ['Survey'],
             editable: false
@@ -577,11 +587,20 @@ export class AppConfigurator {
             editable: false
         },
         {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['RoomCeiling'],
+            range: ['Room'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
             name: 'includes',
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
             domain: ['Room'],
-            range: ['RoomWall', 'RoomFloor'],
+            range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
             sameMainTypeResource: true
         }
     ];

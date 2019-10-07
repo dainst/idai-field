@@ -66,6 +66,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
             this.isEditingGeometry = false;
         });
+
+        this.viewFacade.rebuildNavigationPath();
     }
 
 

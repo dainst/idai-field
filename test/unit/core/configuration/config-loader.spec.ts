@@ -1,4 +1,4 @@
-import {ConfigurationValidator} from '../../../../app/core/configuration/configuration-validator';
+import {ConfigurationValidation} from '../../../../app/core/configuration/configuration-validation';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/configuration-definition';
 import {ConfigLoader} from '../../../../app/core/configuration/config-loader';
 import {CustomTypeDefinitions} from '../../../../app/core/configuration/model/custom-type-definition';
@@ -77,7 +77,6 @@ describe('ConfigLoader', () => {
                 { 'A': { fields: {}, userDefinedSubtypesAllowed: true, superType: true } },
                 [],
                 {},
-                new ConfigurationValidator(),
                 undefined,
                 'de'
             );
@@ -124,7 +123,6 @@ describe('ConfigLoader', () => {
                 { 'A': { fields: {}, superType: true, userDefinedSubtypesAllowed: true }},
                 [],
                 {},
-                new ConfigurationValidator(),
                 undefined,
                 'de'
             );
@@ -186,7 +184,6 @@ describe('ConfigLoader', () => {
                         range: ['B:inherit']
                     }],
                 {},
-                new ConfigurationValidator(),
                 undefined,
                 'de'
             );
@@ -222,7 +219,7 @@ describe('ConfigLoader', () => {
                     B: { fields: {}},
                     T: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }},
                 [{ name: 'abc', domain: ['A'], range: ['B'], sameMainTypeResource: false }], {},
-                new ConfigurationValidator(), undefined, 'de');
+                undefined, 'de');
         } catch(err) {
             fail(err);
             done();
@@ -275,7 +272,7 @@ describe('ConfigLoader', () => {
                 [{ name: 'r1', domain: ['A'], range: ['B']},
                          { name: 'r2', domain: ['A'], range: ['B']}],
                 {},
-                new ConfigurationValidator(), undefined, 'de');
+                 undefined, 'de');
         } catch(err) {
             fail(err);
             done();
@@ -335,7 +332,6 @@ describe('ConfigLoader', () => {
                 {
                     'F': { fields: {}, userDefinedSubtypesAllowed: true, superType: true },
                     'G': { fields: {}, userDefinedSubtypesAllowed: true, superType: true }},[], {},
-                new ConfigurationValidator(),
                 undefined, 'de'
             );
 
@@ -386,7 +382,6 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go('', {},
                 { 'Find': { fields: {}, userDefinedSubtypesAllowed: true, superType: true }},[], {},
-                new ConfigurationValidator(),
                 undefined, 'de'
             );
 
@@ -426,7 +421,6 @@ describe('ConfigLoader', () => {
 
         try {
             await configLoader.go('', {}, {},[], {},
-                new ConfigurationValidator(),
                 undefined, 'de'
             );
 
@@ -458,7 +452,6 @@ describe('ConfigLoader', () => {
 
         try {
             await configLoader.go('', {}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
-                new ConfigurationValidator(),
                 undefined, 'de'
             );
             fail();
@@ -530,7 +523,7 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go('', {},
                 { Parent: { fields: {}, userDefinedSubtypesAllowed: true, superType: true }},
                 [], {},
-                new ConfigurationValidator(), undefined, 'de'
+                 undefined, 'de'
             );
 
             expect(pconf.getTypesList()[0].name).toEqual('A');
@@ -581,7 +574,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go('', {},
                 { Parent: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }}, [], {},
-                new ConfigurationValidator(), undefined, 'de'
+                undefined, 'de'
             );
 
             expect(pconf.getTypesList().length).toBe(2);
@@ -623,7 +616,7 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
-                new ConfigurationValidator(), undefined, 'de'
+                undefined, 'de'
             );
 
             expect(pconf.getTypesList()[0].fields[0].name).toEqual('fieldA1');
@@ -664,7 +657,7 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go('', {},{ A: { fields: {}}}, [], {},
-                new ConfigurationValidator(), undefined, 'de'
+                undefined, 'de'
             );
 
             expect(pconf.getTypesList()[0].fields[0].name).toEqual('fieldA1');

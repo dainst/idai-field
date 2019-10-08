@@ -19,7 +19,7 @@ describe('PrePreprocessConfigurationValidator',() => {
         };
 
 
-        const result = new IdaiFieldPrePreprocessConfigurationValidator().go(configuration);
+        const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
         expect(result[0][0]).toContain('image type/ isRecordedIn must not be defined manually');
     });
 
@@ -38,7 +38,7 @@ describe('PrePreprocessConfigurationValidator',() => {
         };
 
 
-        const result = new IdaiFieldPrePreprocessConfigurationValidator().go(configuration);
+        const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
         expect(result[0][0]).toContain('image type/ isRecordedIn must not be defined manually');
     });
 
@@ -57,7 +57,7 @@ describe('PrePreprocessConfigurationValidator',() => {
         };
 
 
-        const result = new IdaiFieldPrePreprocessConfigurationValidator().go(configuration);
+        const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
         expect(result[0][0]).toContain('operation subtype as domain type/ isRecordedIn must not be defined manually');
     });
 
@@ -77,7 +77,7 @@ describe('PrePreprocessConfigurationValidator',() => {
             }]
         };
 
-        const result = new IdaiFieldPrePreprocessConfigurationValidator().go(configuration);
+        const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
         expect(result[0][0]).toContain('isRecordedIn - only operation subtypes allowed in range');
     });
 
@@ -95,7 +95,7 @@ describe('PrePreprocessConfigurationValidator',() => {
             }]
         };
 
-        const result = new IdaiFieldPrePreprocessConfigurationValidator().go(configuration);
+        const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
         expect(result[0][0]).toContain('relation field not allowed');
     });*/
 

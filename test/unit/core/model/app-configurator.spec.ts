@@ -25,7 +25,7 @@ describe('AppConfigurator', () => {
 
             const configLoader = new ConfigLoader(http);
 
-            new AppConfigurator(configLoader).go(
+            new AppConfigurator(configLoader).validateFieldDefinitions_(
                 'democonf',
                 undefined
             );

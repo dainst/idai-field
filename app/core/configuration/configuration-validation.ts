@@ -8,12 +8,12 @@ import {ConfigurationErrors} from './configuration-errors';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ConfigurationValidator {
+export module ConfigurationValidation {
 
-    private static VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
+    const VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
 
 
-    public static findMissingRelationType(relations: Array<RelationDefinition>,
+    export function findMissingRelationType(relations: Array<RelationDefinition>,
                                           types: string[]): Array<Array<string>> {
 
         let msgs = [] as any;
@@ -43,18 +43,18 @@ export class ConfigurationValidator {
      * @param configuration
      * @returns {Array<string>} msgWithParams. undefined if no error.
      */
-    public go(configuration: ConfigurationDefinition): Array<Array<string>> {
+    export function validateFieldDefinitions(configuration: ConfigurationDefinition): Array<Array<string>> {
 
         let msgs: any[] = [];
 
-        const fieldError = ConfigurationValidator.validateFieldDefinitions(configuration.types);
+        const fieldError = validateFieldDefinitions__(configuration.types);
         if (fieldError.length) msgs = msgs.concat(fieldError);
 
         return msgs;
     }
 
 
-    private static validateFieldDefinitions(types: Array<TypeDefinition>): Array<Array<string>> {
+    function validateFieldDefinitions__(types: Array<TypeDefinition>): Array<Array<string>> {
 
         let msgs = [] as any;
 
@@ -65,7 +65,7 @@ export class ConfigurationValidator {
                 msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)] as never);
             if (!fieldDef.hasOwnProperty('inputType'))
                 fieldDef.inputType = 'input';
-            if (ConfigurationValidator.VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
+            if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
                     && !fieldDef.hasOwnProperty('valuelistFromProjectField')
                     && (!fieldDef.hasOwnProperty('valuelist')
                         || !Array.isArray(fieldDef.valuelist)

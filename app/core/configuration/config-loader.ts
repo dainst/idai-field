@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration} from './project-configuration';
 import {Preprocessing} from './preprocessing';
-import {ConfigurationValidator} from './configuration-validator';
+import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
 import {RelationDefinition} from './model/relation-definition';
 import {FieldDefinition} from './model/field-definition';
@@ -16,7 +16,7 @@ import {buildProjectTypes} from "./build-project-types";
 /**
  * Lets clients subscribe for the app
  * configuration. In order for this to work, they
- * have to call <code>go</code> and <code>getProjectConfiguration</code>
+ * have to call <code>validateFieldDefinitions_</code> and <code>getProjectConfiguration</code>
  *  (the call order does not matter).
  *
  * It is recommended to handle a promise rejection of
@@ -50,7 +50,6 @@ export class ConfigLoader {
                     builtinTypes: BuiltinTypeDefinitions,
                     relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
-                    postPreprocessConfigurationValidator: ConfigurationValidator,
                     customConfigurationName: string|undefined,
                     locale: string): Promise<ProjectConfiguration> {
 
@@ -58,15 +57,15 @@ export class ConfigLoader {
 
         const registeredTypes: LibraryTypeDefinitions = await this.readConfiguration(configDirPath);
 
-        const missingRelationTypeErrors = ConfigurationValidator.findMissingRelationType(relations, Object.keys(builtinTypes as any));
+        const missingRelationTypeErrors = ConfigurationValidation.findMissingRelationType(relations, Object.keys(builtinTypes as any));
         if (missingRelationTypeErrors.length > 0) throw missingRelationTypeErrors;
 
         const appConfiguration = await this.preprocess(
             configDirPath, registeredTypes, commonFields, builtinTypes, relations,
             extraFields, customConfigurationName, locale);
 
-        const postPreprocessValidationErrors = postPreprocessConfigurationValidator.go(appConfiguration);
-        if (postPreprocessValidationErrors.length > 0) throw postPreprocessValidationErrors;
+        const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(appConfiguration);
+        if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
 
         return new ProjectConfiguration(appConfiguration);
     }

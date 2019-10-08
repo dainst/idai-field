@@ -2,7 +2,6 @@ import {ConfigurationDefinition} from './configuration-definition';
 import {TypeDefinition} from './model/type-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationErrors} from './configuration-errors';
-import {BuiltinFieldDefinitions} from './model/builtin-type-definition';
 
 /**
  * @author F.Z.
@@ -48,78 +47,11 @@ export class ConfigurationValidator {
 
         let msgs: any[] = [];
 
-        const invalidTypeErrors = ConfigurationValidator.findInvalidType(configuration.types);
-        if (invalidTypeErrors) msgs = msgs.concat(invalidTypeErrors);
-        
-        const duplicateTypeErrors = ConfigurationValidator.findDuplicateType(configuration.types);
-        if (duplicateTypeErrors) msgs = msgs.concat(duplicateTypeErrors);
-
-        const missingParentTypeErrors = ConfigurationValidator.findMissingParentType(configuration.types);
-        if (missingParentTypeErrors) msgs = msgs.concat(missingParentTypeErrors);
-
         const fieldError = ConfigurationValidator.validateFieldDefinitions(configuration.types);
         if (fieldError.length) msgs = msgs.concat(fieldError);
 
         return msgs;
     }
-
-
-    /**
-     * Check if all necessary fields are given and have the right type
-     * (Might be refactored to use some kind of runtime type checking)
-     *
-     * @param types
-     * @returns {string} invalidType. undefined if no error.
-     */
-    private static findInvalidType(types: Array<TypeDefinition>): Array<Array<string>> {
-
-        return types
-            .filter(type => !type.type || !(typeof type.type == 'string'))
-            .reduce(this.addErrMsg(this.invalidType), [])
-    }
-
-
-    private static findDuplicateType(types: Array<TypeDefinition>): Array<Array<string>> {
-
-        let o: any = {};
-
-        return types
-            .filter(type => {
-                if (o[type.type]) return true;
-                o[type.type] = true; return false;
-            })
-            .reduce(this.addErrMsg(this.duplicateType), []);
-    }
-
-
-    private static findMissingParentType(types: Array<TypeDefinition>): Array<Array<string>> {
-
-        return types
-            .filter(type =>
-                type.parent &&
-                types.map(type => type.type).indexOf(type.parent) == -1)
-            .reduce(this.addErrMsg(this.missingParentType), []);
-    }
-
-
-    private static addErrMsg = (errFun: Function) =>
-        (msgs: Array<Array<string>>, type: TypeDefinition) => {
-            msgs.push(errFun(type));
-            return msgs;
-        };
-
-
-    private static missingParentType = (type: TypeDefinition) =>
-        [ConfigurationErrors.INVALID_CONFIG_MISSINGPARENTTYPE, type.parent];
-
-    private static duplicateType = (type: TypeDefinition) =>
-        [ConfigurationErrors.INVALID_CONFIG_DUPLICATETYPE, type.type];
-
-    private static multipleUseOfDating = (type: TypeDefinition) =>
-        [ConfigurationErrors.INVALID_CONFIG_MULTIPLEUSEOFDATING, type.type];
-
-    private static invalidType = (type: TypeDefinition) =>
-        [ConfigurationErrors.INVALID_CONFIG_INVALIDTYPE, JSON.stringify(type)];
 
 
     private static validateFieldDefinitions(types: Array<TypeDefinition>): Array<Array<string>> {

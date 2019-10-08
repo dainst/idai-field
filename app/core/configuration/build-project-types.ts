@@ -5,7 +5,7 @@ import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot,
     jsonClone, keysAndValues, map, on, reduce, subtract, to, union} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
-import {dissocReducer} from '../import/util';
+import {withDissoc} from '../import/util';
 import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
 
 
@@ -338,14 +338,14 @@ function eraseUnusedTypes(types: { [typeName: string]: TransientTypeDefinition }
                           selectedTypeNames: string[]) {
 
     const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
-    const selectedTypes = keysOfNotSelectedTypes.reduce(dissocReducer, types);
+    const selectedTypes = keysOfNotSelectedTypes.reduce(withDissoc, types);
 
     const parentNamesOfSelectedTypes = Object.values(selectedTypes)
         .map(to('parent'))
         .filter(isDefined);
 
     const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
-    return typesToErase.reduce(dissocReducer, types);
+    return typesToErase.reduce(withDissoc, types);
 }
 
 

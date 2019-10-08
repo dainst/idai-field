@@ -1,6 +1,6 @@
 import {BuiltinTypeDefinitions} from '../../../../app/core/configuration/model/builtin-type-definition';
 import {CustomTypeDefinitions} from '../../../../app/core/configuration/model/custom-type-definition';
-import {mergeTypes} from '../../../../app/core/configuration/merge-types';
+import {buildProjectTypes} from '../../../../app/core/configuration/build-project-types';
 import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
 import {LibraryTypeDefinition,
     LibraryTypeDefinitions} from '../../../../app/core/configuration/model/library-type-definition';
@@ -9,21 +9,25 @@ import {RelationDefinition} from '../../../../app/core/configuration/model/relat
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
 
 
-describe('mergeTypes', () => {
+describe('buildProjectTypes', () => {
 
     xit('auto-select parent if child defined',  () => {
 
         const builtInTypes: BuiltinTypeDefinitions = {
-            A: { superType: true, userDefinedSubtypesAllowed: true, fields: {} }
+            A: {
+                superType: true,
+                userDefinedSubtypesAllowed: true,
+                fields: {}
+            }
         };
         const customTypes: CustomTypeDefinitions = {
-            B: {
+            A: {
                 parent: 'A',
                 fields: {},
                 hidden: []
             }
         };
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             {},
             customTypes);
@@ -64,7 +68,7 @@ describe('mergeTypes', () => {
             bCommonField: { inputType: 'input' }
         };
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             customTypes,
@@ -90,7 +94,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             customTypes,
@@ -120,7 +124,7 @@ describe('mergeTypes', () => {
             'A:default': { fields: {}}
         };
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 customTypes,
@@ -139,7 +143,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 {},
                 customTypes,
@@ -172,7 +176,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 customTypes,
@@ -219,7 +223,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
                 customTypes);
@@ -250,7 +254,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
                 customTypes);
@@ -286,7 +290,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtinTypes,
                 libraryTypes);
             fail();
@@ -313,7 +317,7 @@ describe('mergeTypes', () => {
             }};
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 {'B:0': {fields: {}}},
@@ -343,7 +347,7 @@ describe('mergeTypes', () => {
             }};
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 { 'A:0': { fields: {} } },
@@ -366,7 +370,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 {},
                 customTypes,
@@ -389,7 +393,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 {},
                 customTypes,
@@ -418,7 +422,7 @@ describe('mergeTypes', () => {
                 description: {}
             }};
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             { 'A:0': { fields: {} } },
@@ -441,7 +445,7 @@ describe('mergeTypes', () => {
                 fields: { }
             }};
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             {},
             customTypes,
@@ -477,7 +481,7 @@ describe('mergeTypes', () => {
                 fields: { }
             }};
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             customTypes,
@@ -509,7 +513,7 @@ describe('mergeTypes', () => {
                 description: {}
             }};
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             { 'A:0': { fields: {} } },
@@ -538,7 +542,7 @@ describe('mergeTypes', () => {
             }};
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 {},
@@ -559,7 +563,7 @@ describe('mergeTypes', () => {
         const customTypes: CustomTypeDefinitions = { 'C': { parent: 'A', fields: { cField: {} }}};
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
                 customTypes,
@@ -590,7 +594,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(builtInTypes,
+            buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {},  {}, {}, {});
             fail();
@@ -616,7 +620,7 @@ describe('mergeTypes', () => {
             },
         };
 
-        const result = mergeTypes(
+        const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
                 {'A:0': { hidden: [], fields: {} }}, {}, {}, {});
@@ -643,7 +647,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(builtInTypes,
+            buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {});
             fail();
@@ -670,7 +674,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(builtInTypes,
+            buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {});
             fail();
@@ -697,7 +701,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(builtInTypes,
+            buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {});
             fail();
@@ -720,7 +724,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 builtInTypes,
                 {},
                 customTypes, {}, {}, {});
@@ -763,7 +767,7 @@ describe('mergeTypes', () => {
             '123': { values: { 'one': {}, 'two': {}, 'three': {} }, description: {}, createdBy: '', creationDate: '' }
         };
 
-        const result = mergeTypes(builtInTypes,
+        const result = buildProjectTypes(builtInTypes,
             libraryTypes,
             {'A:0':{ fields: {}}}, {}, valuelistsConfiguration, {});
         expect(result['A'].fields['a1'].valuelist).toEqual(['one', 'two', 'three']);
@@ -781,7 +785,7 @@ describe('mergeTypes', () => {
         } as any;
 
         try {
-            mergeTypes(builtinTypes,
+            buildProjectTypes(builtinTypes,
                 libraryTypes,
                 {}, {}, {}, {});
         } catch (expected) {
@@ -806,7 +810,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(builtInTypes,
+            buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {});
         } catch (expected) {
@@ -822,7 +826,7 @@ describe('mergeTypes', () => {
         };
 
         try {
-            mergeTypes(
+            buildProjectTypes(
                 {},
                 {},
                 customTypes,
@@ -859,7 +863,7 @@ describe('mergeTypes', () => {
                 description: {} }
         };
 
-        const result = mergeTypes(builtInTypes, libraryTypes, {'A:1': { hidden: [], fields: {} }},
+        const result = buildProjectTypes(builtInTypes, libraryTypes, {'A:1': { hidden: [], fields: {} }},
             {}, {}, {});
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
@@ -887,7 +891,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const result = mergeTypes(builtInTypes, {}, customTypes,
+        const result = buildProjectTypes(builtInTypes, {}, customTypes,
             {}, {}, {});
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
@@ -928,7 +932,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const result = mergeTypes(builtInTypes, libraryTypes, customTypes,
+        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes,
             {}, {}, {});
 
         expect(result['A'].fields['field1'].inputType).toBe('text');

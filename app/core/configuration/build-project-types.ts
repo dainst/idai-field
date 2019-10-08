@@ -65,12 +65,12 @@ type TransientFieldDefinitions = { [fieldName: string]: TransientFieldDefinition
  * @throws [INCONSISTENT_TYPE_FAMILY, typeFamilyName, reason (, fieldName)]
  * @throws [COMMON_FIELD_NOT_PROVIDED, commonFieldName]
  */
-export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
-                           libraryTypes: LibraryTypeDefinitions,
-                           customTypes: CustomTypeDefinitions = {},
-                           commonFields: CommonFields = {},
-                           valuelistsConfiguration: ValuelistDefinitions = {},
-                           extraFields: { [extraFieldName: string]: any } = {}) {
+export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
+                                  libraryTypes: LibraryTypeDefinitions,
+                                  customTypes: CustomTypeDefinitions = {},
+                                  commonFields: CommonFields = {},
+                                  valuelistsConfiguration: ValuelistDefinitions = {},
+                                  extraFields: { [extraFieldName: string]: any } = {}) {
 
     const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
 
@@ -85,20 +85,20 @@ export function mergeTypes(builtInTypes: BuiltinTypeDefinitions,
     assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
     assertNoDuplicationInSelection(selectableTypes, customTypes);
 
-    let mergedTypes: TransientTypeDefinitions =
-        mergeTheTypes(
+    const mergedTypes: TransientTypeDefinitions =
+        mergeTypes(
             selectableTypes,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
 
-    mergedTypes = eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
-    replaceCommonFields(mergedTypes, commonFields);
-    insertValuelistIds(mergedTypes);
-    assertValuelistIdsProvided(mergedTypes);
-    hideFields(mergedTypes, customTypes);
+    const selectedTypes: TransientTypeDefinitions =  eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
+    replaceCommonFields(selectedTypes, commonFields);
+    insertValuelistIds(selectedTypes);
+    assertValuelistIdsProvided(selectedTypes);
+    hideFields(selectedTypes, customTypes);
 
     return flow(
-        mergedTypes,
+        selectedTypes,
         toTypesByFamilyNames,
         applyValuelistsConfiguration(valuelistsConfiguration as any),
         addExtraFields(extraFields));
@@ -499,7 +499,7 @@ function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function mergeTheTypes(selectableTypes: TransientTypeDefinitions, customTypes: CustomTypeDefinitions,
+function mergeTypes(selectableTypes: TransientTypeDefinitions, customTypes: CustomTypeDefinitions,
                        assertInputTypePresentIfNotCommonType: Function) {
 
     const mergedTypes: TransientTypeDefinitions = clone(selectableTypes);

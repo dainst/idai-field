@@ -16,16 +16,16 @@ export module ConfigurationErrors {
     export const INVALID_CONFIG_PARENT_NOT_DEFINED = 'config/fields/custom/parentnotdefined';
     export const INVALID_CONFIG_PARENT_NOT_TOP_LEVEL = 'config/fields/custom/parentnotatopleveltype';
 
-    // mergeTypes
-    export const DUPLICATION_IN_SELECTION = 'configuration/mergeTypes/duplicationinselection';
-    export const MUST_HAVE_PARENT = 'configuration/mergeTypes/musthaveparent';
-    export const MUST_HAVE_TYPE_FAMILY = 'configuration/mergeTypes/musthavetypefamily';
-    export const MISSING_TYPE_PROPERTY = 'configuration/mergeTypes/missingTypeProperty';
-    export const MISSING_VALUELIST_PROPERTY = 'configuration/mergeTypes/missingValuelistProperty';
-    export const MISSING_FIELD_PROPERTY = 'configuration/mergeTypes/missingFieldProperty';
-    export const MUST_NOT_SET_INPUT_TYPE = 'configuration/mergeTypes/mustNotSetInputType';
-    export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/mergeTypes/illegalFieldType';
-    export const ILLEGAL_FIELD_PROPERTY = 'configuration/mergeTypes/illegalFieldProperty';
+    // buildProjectTypes
+    export const DUPLICATION_IN_SELECTION = 'configuration/buildProjectTypes/duplicationinselection';
+    export const MUST_HAVE_PARENT = 'configuration/buildProjectTypes/musthaveparent';
+    export const MUST_HAVE_TYPE_FAMILY = 'configuration/buildProjectTypes/musthavetypefamily';
+    export const MISSING_TYPE_PROPERTY = 'configuration/buildProjectTypes/missingTypeProperty';
+    export const MISSING_VALUELIST_PROPERTY = 'configuration/buildProjectTypes/missingValuelistProperty';
+    export const MISSING_FIELD_PROPERTY = 'configuration/buildProjectTypes/missingFieldProperty';
+    export const MUST_NOT_SET_INPUT_TYPE = 'configuration/buildProjectTypes/mustNotSetInputType';
+    export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/buildProjectTypes/illegalFieldType';
+    export const ILLEGAL_FIELD_PROPERTY = 'configuration/buildProjectTypes/illegalFieldProperty';
     export const TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE = 'config/fields/custom/tryingToSubtypeANonExtendableType';
     export const INCONSISTENT_TYPE_FAMILY = 'config/fields/custom/inconsistentTypeFamily';
     export const COMMON_FIELD_NOT_PROVIDED = 'config/fields/custom/commonFieldNotProvided';

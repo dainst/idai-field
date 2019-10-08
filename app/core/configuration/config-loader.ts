@@ -9,7 +9,7 @@ import {FieldDefinition} from './model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
 import {BuiltinTypeDefinitions} from "./model/builtin-type-definition";
 import {LibraryTypeDefinitions} from "./model/library-type-definition";
-import {mergeTypes} from "./merge-types";
+import {buildProjectTypes} from "./build-project-types";
 
 
 @Injectable()
@@ -125,7 +125,7 @@ export class ConfigLoader {
 
         let typeDefs: any;
         try {
-            typeDefs = mergeTypes(
+            typeDefs = buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
                 customTypes,

@@ -204,6 +204,7 @@ export class PlusButtonComponent implements OnChanges {
         }
 
         if (!this.liesWithin) {
+            console.log(':', type);
             // if should have and doesnt then false else true
         }
 

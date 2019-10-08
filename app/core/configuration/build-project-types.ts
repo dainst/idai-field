@@ -335,17 +335,19 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 
 
 function eraseUnusedTypes(types: { [typeName: string]: TransientTypeDefinition },
-                          selectedTypeNames: string[]) {
+                          selectedTypeNames: string[]): { [typeName: string]: TransientTypeDefinition } {
 
     const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
-    const selectedTypes = keysOfNotSelectedTypes.reduce(withDissoc, types);
-
-    const parentNamesOfSelectedTypes = Object.values(selectedTypes)
-        .map(to('parent'))
-        .filter(isDefined);
+    const parentNamesOfSelectedTypes =
+        flow(
+            keysOfNotSelectedTypes,
+            reduce(withDissoc, types),
+            Object.values,
+            map(to('parent')),
+            filter(isDefined));
 
     const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
-    return typesToErase.reduce(withDissoc, types);
+    return typesToErase.reduce(withDissoc, types) as { [typeName: string]: TransientTypeDefinition };
 }
 
 

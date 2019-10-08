@@ -174,15 +174,18 @@ export class AppConfigurator {
         },
         // An idealized entity, must be created within a Room
         RoomWall: {
-            fields: {}
+            fields: {},
+            mustLieWithin: true
         },
         // An idealized entity, must be created within a Room
         RoomFloor: {
-            fields: {}
+            fields: {},
+            mustLieWithin: true
         },
         // An idealized entity, must be created within a Room
         RoomCeiling: {
-            fields: {}
+            fields: {},
+            mustLieWithin: true
         },
         // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {

@@ -14,6 +14,13 @@ export interface BuiltinTypeDefinition extends BaseTypeDefinition {
     commons?: string[];
     superType?: boolean,
     userDefinedSubtypesAllowed?: boolean,
+
+    /**
+     * If set to true, a resource of this type can only be created inside another
+     * resource which is of a type related to this resource's type via includes/liesWithin.
+     */
+    mustLieWithin?: true,
+
     fields: BuiltinFieldDefinitions;
 }
 

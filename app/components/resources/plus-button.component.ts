@@ -24,8 +24,17 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
-    @Input() isRecordedIn: FieldDocument | undefined; // undefined when in resources overview
-    @Input() liesWithin: FieldDocument;
+
+    /**
+     * undefined when in resources overview
+     */
+    @Input() isRecordedIn: FieldDocument | undefined;
+    /**
+     * undefined when current level is operation
+     */
+    @Input() liesWithin: FieldDocument | undefined;
+
+
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
@@ -192,6 +201,10 @@ export class PlusButtonComponent implements OnChanges {
         if (!projectConfiguration.isAllowedRelationDomainType(type.name,
                 this.isRecordedIn.resource.type, 'isRecordedIn')) {
             return false;
+        }
+
+        if (!this.liesWithin) {
+            // if should have and doesnt then false else true
         }
 
         return this.liesWithin

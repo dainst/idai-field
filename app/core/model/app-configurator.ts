@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ConfigLoader} from '../configuration/config-loader';
-import {ConfigurationValidation} from '../configuration/configuration-validation';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from '../configuration/model/builtin-type-definition';

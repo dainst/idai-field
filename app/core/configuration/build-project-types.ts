@@ -2,9 +2,11 @@ import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-ty
 import {LibraryFieldDefinition, LibraryTypeDefinition,
     LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
-import {clone, compose, filter, flow, forEach, is, isDefined,
-    isnt, jsonClone, keysAndValues, keys, values, map,
-    on, reduce, to, union, isNot, includedIn, lookup} from 'tsfun';
+import {
+    clone, compose, filter, flow, forEach, is, isDefined,
+    isnt, jsonClone, keysAndValues, keys, values, map, subtract,
+    on, reduce, to, union, isNot, includedIn, lookup, dissoc
+} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {assocReducer, dissocReducer} from '../import/util';
@@ -338,11 +340,18 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 }
 
 
-function eraseUnusedTypes(allTheTypes: TransientTypeDefinitions, selectedTypes: string[]) {
+function eraseUnusedTypes(types: TransientTypeDefinitions,
+                          selectedTypeNames: string[]) {
 
-    return Object.keys(allTheTypes)
-        .filter(isNot(includedIn(selectedTypes)))
-        .reduce(dissocReducer, allTheTypes);
+    const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
+    const selectedTypes = keysOfNotSelectedTypes.reduce(dissocReducer, types);
+
+    const parentNamesOfSelectedTypes = Object.values(selectedTypes)
+        .map(to('parent'))
+        .filter(isDefined);
+
+    const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
+    return typesToErase.reduce(dissocReducer, types);
 }
 
 

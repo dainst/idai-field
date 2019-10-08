@@ -11,7 +11,7 @@ import {ValuelistDefinitions} from '../../../../app/core/configuration/model/val
 
 describe('buildProjectTypes', () => {
 
-    xit('auto-select parent if child defined',  () => {
+    it('auto-select parent if child defined',  () => {
 
         const builtInTypes: BuiltinTypeDefinitions = {
             A: {
@@ -21,7 +21,7 @@ describe('buildProjectTypes', () => {
             }
         };
         const customTypes: CustomTypeDefinitions = {
-            A: {
+            B: {
                 parent: 'A',
                 fields: {},
                 hidden: []
@@ -31,7 +31,39 @@ describe('buildProjectTypes', () => {
             builtInTypes,
             {},
             customTypes);
+
         expect(result['A']).toBeDefined();
+        expect(result['B']).toBeDefined();
+    });
+
+
+    it('throw away type which is neither selected explicitly or as a parent',  () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: {
+                superType: true,
+                userDefinedSubtypesAllowed: true,
+                fields: {}
+            },
+            C: {
+                fields: {}
+            }
+        };
+        const customTypes: CustomTypeDefinitions = {
+            B: {
+                parent: 'A',
+                fields: {},
+                hidden: []
+            }
+        };
+        const result = buildProjectTypes(
+            builtInTypes,
+            {},
+            customTypes);
+
+        expect(result['A']).toBeDefined();
+        expect(result['B']).toBeDefined();
+        expect(result['C']).toBeUndefined();
     });
 
 

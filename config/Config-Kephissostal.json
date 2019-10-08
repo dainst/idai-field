@@ -9,10 +9,10 @@
   },
   "Survey:default": {
     "hidden": [],
-    "valuelists": {
-      "orientation": "orientation-default-1"
-    },
     "fields": {
+      "orientation": {
+        "valuelistId": "orientation-default-1"
+      },
       "researchMethod": {
         "inputType": "checkboxes",
         "valuelistId": "SurveyUnit-researchMethod-Kephissostal"
@@ -260,6 +260,18 @@
   "Room:default": {
     "fields": {},
     "hidden": []
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
   },
   "Inscription:default": {
     "fields": {},

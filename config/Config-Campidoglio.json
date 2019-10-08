@@ -122,6 +122,18 @@
     "fields": {},
     "hidden": []
   },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
   "Inscription:default": {
     "valuelists": {
       "period": "periods-campidoglio-and-castiglione-1"

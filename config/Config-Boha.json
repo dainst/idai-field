@@ -94,6 +94,18 @@
     },
     "hidden": []
   },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
   "Inscription:default": {
     "hidden": [
       "conditionAmount"

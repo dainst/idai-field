@@ -133,6 +133,9 @@
       "wallSide": {
         "inputType": "radio",
         "valuelistId": "BuildingPart-wallSide-MonTur"
+      },
+      "orientation": {
+        "valuelistId": "orientation-default-1"
       }
     },
     "commons": [
@@ -151,6 +154,18 @@
   "Room:default": {
     "fields": {},
     "hidden": []
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
   },
   "Inscription:default": {
     "fields": {},

@@ -75,6 +75,18 @@
     },
     "fields": {}
   },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
   "Inscription:default": {
     "commons": ["dating"],
     "hidden": [],

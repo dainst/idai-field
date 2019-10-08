@@ -166,23 +166,23 @@ export class AppConfigurator {
             mustLieWithin: true
         },
 
-        // Room is an idealized entity
+        // Room is an idealized (non material) entity
         Room: {
             superType: true,
             userDefinedSubtypesAllowed: true,
             fields: {}
         },
-        // An idealized entity, must be created within a Room
+        // An idealized (non material) entity, must be created within a Room
         RoomWall: {
             fields: {},
             mustLieWithin: true
         },
-        // An idealized entity, must be created within a Room
+        // An idealized (non material) entity, must be created within a Room
         RoomFloor: {
             fields: {},
             mustLieWithin: true
         },
-        // An idealized entity, must be created within a Room
+        // An idealized (non material) entity, must be created within a Room
         RoomCeiling: {
             fields: {},
             mustLieWithin: true

@@ -334,6 +334,13 @@ function hideFields(mergedTypes: any, selectedTypes: any) {
 }
 
 
+const getDefinedParents =
+    compose(
+        Object.values,
+        map(to('parent')),
+        filter(isDefined));
+
+
 function eraseUnusedTypes(types: { [typeName: string]: TransientTypeDefinition },
                           selectedTypeNames: string[]): { [typeName: string]: TransientTypeDefinition } {
 
@@ -342,9 +349,7 @@ function eraseUnusedTypes(types: { [typeName: string]: TransientTypeDefinition }
         flow(
             keysOfNotSelectedTypes,
             reduce(withDissoc, types),
-            Object.values,
-            map(to('parent')),
-            filter(isDefined));
+            getDefinedParents);
 
     const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
     return typesToErase.reduce(withDissoc, types) as { [typeName: string]: TransientTypeDefinition };
@@ -354,9 +359,7 @@ function eraseUnusedTypes(types: { [typeName: string]: TransientTypeDefinition }
 function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions, types: any) {
 
     flow(types,
-        Object.values,
-        map(to('parent')),
-        filter(isDefined),
+        getDefinedParents,
         forEach((parent: any) => {
             const found = Object.keys(builtinTypes).find(is(parent));
             if (!found) throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];

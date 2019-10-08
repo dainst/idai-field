@@ -1,13 +1,14 @@
-/**
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
 import {ConfigurationValidator} from '../../../../app/core/configuration/configuration-validator';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/configuration-definition';
 import {ConfigLoader} from '../../../../app/core/configuration/config-loader';
 import {CustomTypeDefinitions} from '../../../../app/core/configuration/model/custom-type-definition';
 import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
 
+
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
 describe('ConfigLoader', () => {
 
     let libraryTypes = {} as ConfigurationDefinition;
@@ -216,7 +217,10 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go(
                 'yo',
                 {},
-                { T: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }},
+                {
+                    A: { fields: {}},
+                    B: { fields: {}},
+                    T: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }},
                 [{ name: 'abc', domain: ['A'], range: ['B'], sameMainTypeResource: false }], {},
                 new ConfigurationValidator(), undefined, 'de');
         } catch(err) {
@@ -263,10 +267,14 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 'yo', {},
-                { 'Parent': { fields: {}, userDefinedSubtypesAllowed: true, superType: true }},[
-                         { name: 'r1', domain: ['A'], range: ['B']},
-                         { name: 'r2', domain: ['A'], range: ['B']}
-                    ], {},
+                {
+                        Parent: { fields: {}, userDefinedSubtypesAllowed: true, superType: true },
+                        A: { fields: {} },
+                        B: { fields: {} }
+                    },
+                [{ name: 'r1', domain: ['A'], range: ['B']},
+                         { name: 'r2', domain: ['A'], range: ['B']}],
+                {},
                 new ConfigurationValidator(), undefined, 'de');
         } catch(err) {
             fail(err);

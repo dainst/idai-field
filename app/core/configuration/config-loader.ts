@@ -58,6 +58,9 @@ export class ConfigLoader {
 
         const registeredTypes: LibraryTypeDefinitions = await this.readConfiguration(configDirPath);
 
+        const missingRelationTypeErrors = ConfigurationValidator.findMissingRelationType(relations, Object.keys(builtinTypes as any));
+        if (missingRelationTypeErrors.length > 0) throw missingRelationTypeErrors;
+
         const appConfiguration = await this.preprocess(
             configDirPath, registeredTypes, commonFields, builtinTypes, relations,
             extraFields, customConfigurationName, locale);

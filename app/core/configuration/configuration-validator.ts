@@ -2,6 +2,7 @@ import {ConfigurationDefinition} from './configuration-definition';
 import {TypeDefinition} from './model/type-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationErrors} from './configuration-errors';
+import {BuiltinFieldDefinitions} from './model/builtin-type-definition';
 
 /**
  * @author F.Z.
@@ -11,6 +12,30 @@ import {ConfigurationErrors} from './configuration-errors';
 export class ConfigurationValidator {
 
     private static VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
+
+
+    public static findMissingRelationType(relations: Array<RelationDefinition>,
+                                          types: string[]): Array<Array<string>> {
+
+        let msgs = [] as any;
+
+        function addMissingRelTypes(rangeOrDomain: string[]|undefined) {
+            if (!rangeOrDomain) return;
+            for (let type of rangeOrDomain) {
+                const typeWithoutInheritanceSuffix = type.substring(0, type.indexOf(':') !== -1 ? type.indexOf(':') : undefined);
+                if (types.indexOf(typeWithoutInheritanceSuffix) === -1 && type !== 'Project') {
+                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONTYPE as never, type] as never);
+                }
+            }
+        }
+
+        if (relations) for (let relation of relations) {
+            addMissingRelTypes(relation.domain);
+            addMissingRelTypes(relation.range);
+        }
+        return msgs;
+    }
+
 
     /**
      * Searches for missing mandatory types or duplicate types.
@@ -31,9 +56,6 @@ export class ConfigurationValidator {
 
         const missingParentTypeErrors = ConfigurationValidator.findMissingParentType(configuration.types);
         if (missingParentTypeErrors) msgs = msgs.concat(missingParentTypeErrors);
-
-        const missingRelationTypeErrors = ConfigurationValidator.findMissingRelationType(configuration.relations as any, configuration.types);
-        if (missingRelationTypeErrors) msgs = msgs.concat(missingRelationTypeErrors);
 
         const fieldError = ConfigurationValidator.validateFieldDefinitions(configuration.types);
         if (fieldError.length) msgs = msgs.concat(fieldError);
@@ -98,25 +120,6 @@ export class ConfigurationValidator {
 
     private static invalidType = (type: TypeDefinition) =>
         [ConfigurationErrors.INVALID_CONFIG_INVALIDTYPE, JSON.stringify(type)];
-
-
-    private static findMissingRelationType(relations: Array<RelationDefinition>,
-                                           types: Array<TypeDefinition>): Array<Array<string>> {
-
-        let msgs = [] as any;
-        const typeNames: Array<string> = types.map(type => type.type);
-
-        if (relations) for (let relation of relations) {
-            for (let type of relation.domain)
-                if (typeNames.indexOf(type) == -1)
-                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONTYPE as never, type] as never);
-            for (let type of relation.range)
-                if (typeNames.indexOf(type) == -1 && type != 'Project')
-                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONTYPE, type] as never);
-        }
-
-        return msgs;
-    }
 
 
     private static validateFieldDefinitions(types: Array<TypeDefinition>): Array<Array<string>> {

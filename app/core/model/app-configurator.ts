@@ -162,7 +162,8 @@ export class AppConfigurator {
             }
         },
         Inscription: {
-            fields: {}
+            fields: {},
+            mustLieWithin: true
         },
 
         // Room is an idealized entity

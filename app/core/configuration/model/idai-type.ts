@@ -15,9 +15,15 @@ export class IdaiType {
     public color: string|undefined;
     public fields: Array<FieldDefinition>;
 
+    /**
+     * @see BuiltinTypeDefinition
+     */
+    public mustLieWithin: boolean|undefined = undefined;
+
 
     constructor(definition: TypeDefinition) {
 
+        this.mustLieWithin = definition.mustLieWithin;
         this.name = definition.type;
         this.label = definition.label || this.name;
         this.fields = definition.fields || [];

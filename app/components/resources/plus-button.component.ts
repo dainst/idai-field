@@ -203,14 +203,9 @@ export class PlusButtonComponent implements OnChanges {
             return false;
         }
 
-        if (!this.liesWithin) {
-            console.log(':', type);
-            // if should have and doesnt then false else true
-        }
+        if (!this.liesWithin) return !type.mustLieWithin;
 
-        return this.liesWithin
-                ? projectConfiguration.isAllowedRelationDomainType(
+        return projectConfiguration.isAllowedRelationDomainType(
                     type.name, this.liesWithin.resource.type, 'liesWithin')
-                : true;
     }
 }

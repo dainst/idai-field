@@ -8,6 +8,12 @@ export interface TypeDefinition {
     label?: string;
     type: string;
     abstract?: boolean;
+
+    /**
+     * @see BuiltinTypeDefinition
+     */
+    mustLieWithin?: true,
+
     fields?: any;
     parent?: string;
     color?: string;

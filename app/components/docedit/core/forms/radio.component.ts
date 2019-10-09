@@ -37,12 +37,6 @@ export class RadioComponent implements OnChanges {
             await HierarchyUtil.getParent(this.resource, this.datastore)
         );
     }
-
-
-    public getValuesNotIncludedInValuelist() {
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
-    }
     
 
     public setValue(value: any) {

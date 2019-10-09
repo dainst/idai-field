@@ -53,7 +53,7 @@
             }
 
             .btn-success,
-            .btn-danger,
+            .btn-danger:not(.btn-sm),
             .btn-info,
             .btn-outline-primary {
               height: 33px;

@@ -7,6 +7,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': 'test',
             'shortDescription': locale === 'de' ? 'Testprojekt' : 'Test project',
             'staff': ['Person 1', 'Person 2'],
+            'campaigns': locale === 'de'
+                ? ['Testkampagne 1', 'Testkampagne 2']
+                : ['Test campaign 1', 'Test campaign 2'],
             'relations': {},
             'type': 'Project'
         }

@@ -1,8 +1,6 @@
 import {browser, protractor, by} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {MenuPage} from '../menu.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {FieldsViewPage} from '../widgets/fields-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
@@ -226,7 +224,7 @@ describe('images --', function() {
 
         ImageOverviewPage.doubleClickCell(0);
         ImageViewPage.editDocument();
-        DoceditPage.clickSelectOption('processor', 1);
+        DoceditPage.clickCheckbox('processor', 0);
         DoceditPage.clickSaveDocument();
         ImageViewPage.clickCloseButton();
         ImageOverviewPage.clickDeselectButton();

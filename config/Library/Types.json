@@ -530,6 +530,7 @@
       "beginningDate",
       "endDate",
       "processor",
+      "campaign",
       "description",
       "area"
     ],
@@ -539,9 +540,6 @@
         "inputType": "text"
       },
       "supervisor": {
-        "inputType": "input"
-      },
-      "campaign": {
         "inputType": "input"
       }
     }
@@ -1062,6 +1060,7 @@
     "creationDate": "",
     "commons": [
       "processor",
+      "campaign",
       "description",
       "period",
       "dating",
@@ -1072,16 +1071,12 @@
       "area"
     ],
     "valuelists": {
-      "campaign": "Room-campaign-default",
       "condition": "Building-condition-default",
       "conditionAmount": "Building-conditionAmount-default",
       "period": "periods-default-1"
     },
     "fields": {
       "conditionComment": {
-        "inputType": "input"
-      },
-      "campaign": {
         "inputType": "input"
       },
       "condition": {

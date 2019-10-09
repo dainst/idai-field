@@ -4,10 +4,6 @@
       "fixMe": {
         "inputType": "input"
       },
-      "campaign": {
-        "inputType": "checkboxes",
-        "valuelistId": "Operation-campaign-kalapodi"
-      }
     }
   },
   "Find": {

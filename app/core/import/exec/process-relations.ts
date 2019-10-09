@@ -65,8 +65,8 @@ async function validateIsRecordedInRelation(documentsForUpdate: Array<NewDocumen
 function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
                                      mainTypeDocumentId: Id) {
 
-    for (let document of documentsForUpdate) {
-        if (mainTypeDocumentId) initRecordedIn(document, mainTypeDocumentId);
+    if (mainTypeDocumentId) {
+        for (let document of documentsForUpdate) initRecordedIn(document, mainTypeDocumentId);
     }
 }
 

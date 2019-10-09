@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ImportUpdater} from './import-updater';
+import {Updater} from './updater';
 import {ImportFunction} from './import-function';
 import {DefaultImportCalc} from './default-import-calc';
 import {identity} from 'tsfun';
@@ -60,7 +60,7 @@ export module DefaultImport {
 
                 const updateErrors = [];
                 try {
-                    await ImportUpdater.go(
+                    await Updater.go(
                         result[0],
                         result[1], datastore, username, mergeMode);
                 } catch (errWithParams) {

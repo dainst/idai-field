@@ -305,6 +305,8 @@ describe('resources --', () => {
                 expect(checkboxes.length).toBe(1);
                 expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
             });
+
+        DoceditPage.clickCloseEdit();
     });
 
 

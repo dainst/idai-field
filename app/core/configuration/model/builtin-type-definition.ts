@@ -1,4 +1,4 @@
-import {BaseFieldDefinition, BaseTypeDefinition} from "./base-type-definition";
+import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
 
 
 /**
@@ -35,4 +35,5 @@ export interface BuiltinFieldDefinition extends BaseFieldDefinition {
 
     group?: string;
     valuelistFromProjectField?: string;
+    allowOnlyValuesOfParent?: boolean;
 }

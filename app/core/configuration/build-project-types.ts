@@ -387,6 +387,8 @@ function replaceCommonFields(mergedTypes: { [typeName: string]: TransientTypeDef
             mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
             mergedType.fields[commonFieldName].valuelistFromProjectField
                 = commonFields[commonFieldName].valuelistFromProjectField;
+            mergedType.fields[commonFieldName].allowOnlyValuesOfParent
+                = commonFields[commonFieldName].allowOnlyValuesOfParent;
         }
         delete mergedType.commons;
     }

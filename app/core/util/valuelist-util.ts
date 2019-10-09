@@ -23,11 +23,16 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: FieldDefinition, projectDocument: Document): string[] {
+    export function getValuelist(field: FieldDefinition, projectDocument: Document,
+                                 parentResource?: Resource): string[] {
 
-        return field.valuelist
+        const valuelist: string[] = field.valuelist
             ? field.valuelist
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
+
+        return field.allowOnlyValuesOfParent && parentResource
+            ? getValuesOfParentField(valuelist, field.name, parentResource)
+            : valuelist;
     }
 
 
@@ -35,6 +40,14 @@ export module ValuelistUtil {
 
         const field: string[]|undefined = projectDocument.resource[fieldName];
         return field && Array.isArray(field) ? field : [];
+    }
+
+
+    function getValuesOfParentField(valuelist: string[], fieldName: string,
+                                    parentResource: Resource): string[] {
+
+        const parentValues: string[] = parentResource[fieldName] || [];
+        return valuelist.filter(value => parentValues.includes(value));
     }
 }
 

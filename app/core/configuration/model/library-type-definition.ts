@@ -1,5 +1,5 @@
-import {assertFieldsAreValid} from "../assert-fields-are-valid";
-import {ConfigurationErrors} from "../configuration-errors";
+import {assertFieldsAreValid} from '../assert-fields-are-valid';
+import {ConfigurationErrors} from '../configuration-errors';
 import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
 import {Valuelists} from './valuelist-definition';
 
@@ -31,7 +31,12 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
     positionValues?: string;
 }
 
-const VALID_FIELD_PROPERTIES = ['valuelistId', 'valuelistFromProjectField', 'inputType', 'positionValues'];
+const VALID_FIELD_PROPERTIES = [
+    'valuelistId',
+    'valuelistFromProjectField',
+    'inputType',
+    'positionValues'
+];
 
 
 export type LibraryFieldDefinitions = { [fieldName: string]: LibraryFieldDefinition };

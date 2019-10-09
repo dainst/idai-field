@@ -5,7 +5,7 @@ import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {SettingsService} from '../core/settings/settings-service';
-import {ValuelistUtil} from '../core/util/valuelistUtil';
+import {ValuelistUtil} from '../core/util/valuelist-util';
 
 
 type ConstraintListItem = {

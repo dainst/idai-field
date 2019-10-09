@@ -7,7 +7,7 @@ import {separate} from 'tsfun';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module ImportUpdater {
+export module Updater {
 
 
     export async function go(documents: Array<Document>, targetDocuments: Array<Document>|undefined,

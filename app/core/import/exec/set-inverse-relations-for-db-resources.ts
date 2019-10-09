@@ -61,7 +61,11 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
 function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Array<Document>) {
 
     return targetDocuments.filter(targetDocument => {
-        for (let k of Object.keys(document.resource.relations).filter(isnt(LIES_WITHIN)).filter(isnt(RECORDED_IN))) { // TODO make interface UNIDIRECTIONAL_RELATIONS
+        for (let k of Object
+            .keys(document.resource.relations)
+            .filter(isnt(LIES_WITHIN))
+            .filter(isnt(RECORDED_IN))) { // TODO make interface UNIDIRECTIONAL_RELATIONS
+
             if (document.resource.relations[k].includes(targetDocument.resource.id)) return true;
         }
         for (let k of Object.keys(targetDocument.resource.relations)) {

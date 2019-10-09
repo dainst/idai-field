@@ -231,10 +231,28 @@ describe('completeInverseRelations', () => {
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('bad range - between import and db resource', async done => {
+    it('bad range - between import and db resource - structural relation (LIES_WITHIN)', async done => {
 
-        function assertIsAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
-            throw ['abc'];
+        function assertIsAllowedRelationDomainType(_: string, __: string, relationName: string): void {
+            if (relationName === LIES_WITHIN) throw ['abc'];
+        }
+
+        doc1.resource.relations[LIES_WITHIN] = ['2'];
+
+        try {
+            await completeInverseRelations([doc1], get, getInverseRelation, assertIsAllowedRelationDomainType);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(['abc']);
+        }
+        done();
+    });
+
+
+    it('bad range - between import and db resource - non-structural relation', async done => {
+
+        function assertIsAllowedRelationDomainType(_: string, __: string, relationName: string): void {
+            if (relationName !== LIES_WITHIN) throw ['abc'];
         }
 
         doc1.resource.relations[IS_AFTER] = ['2'];
@@ -249,10 +267,29 @@ describe('completeInverseRelations', () => {
     });
 
 
-    it('bad range - between import resources', async done => {
+    it('bad range - between import resources - structural relation (LIES_WITHIN)', async done => {
 
-        function assertIsAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
-            throw ['abc'];
+        function assertIsAllowedRelationDomainType(_: string, __: string, relationName: string): void {
+            if (relationName === LIES_WITHIN) throw ['abc'];
+        }
+
+        doc1.resource.relations[LIES_WITHIN] = ['2'];
+        doc2.resource.relations['bc'] = ['2'];
+
+        try {
+            await completeInverseRelations([doc1, doc2], get, getInverseRelation, assertIsAllowedRelationDomainType);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(['abc']);
+        }
+        done();
+    });
+
+
+    it('bad range - between import resources - non-structural relation', async done => {
+
+        function assertIsAllowedRelationDomainType(_: string, __: string, relationName: string): void {
+            if (relationName !== LIES_WITHIN) throw ['abc'];
         }
 
         doc1.resource.relations['ab'] = ['2'];

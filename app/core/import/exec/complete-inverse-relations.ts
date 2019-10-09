@@ -56,14 +56,11 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
 
     const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
-    for (let importDocument of importDocuments) {
-
-        setInverseRelationsForImportResource(
-            importDocument,
-            lookupDocument,
-            pairRelationWithItsInverse(getInverseRelation),
-            assertIsAllowedRelationDomainType);
-    }
+    setInverseRelationsForImportResource(
+        importDocuments,
+        lookupDocument,
+        pairRelationWithItsInverse(getInverseRelation),
+        assertIsAllowedRelationDomainType);
 
     return await setInverseRelationsForDbResources(
         importDocuments,
@@ -102,21 +99,24 @@ function targetIdsReferingToDbResources(document: Document,
 }
 
 
-function setInverseRelationsForImportResource(importDocument: Document,
+function setInverseRelationsForImportResource(importDocuments: Array<Document>,
                                               lookupDocument: LookupDocument,
                                               pairRelationWithItsInverse: PairRelationWithItsInverse,
                                               assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
-    const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
-    const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
-    const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
+    for (let importDocument of importDocuments) {
 
-    flow(importDocument.resource.relations,
-        keys,
-        map(pairRelationWithItsInverse_),
-        filter(on('[1]', isDefined)),
-        forEach(assertNotBadyInterrelated_),
-        forEach(setInverses_));
+        const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
+        const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
+        const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
+
+        flow(importDocument.resource.relations,
+            keys,
+            map(pairRelationWithItsInverse_),
+            filter(on('[1]', isDefined)),
+            forEach(assertNotBadyInterrelated_),
+            forEach(setInverses_));
+    }
 }
 
 

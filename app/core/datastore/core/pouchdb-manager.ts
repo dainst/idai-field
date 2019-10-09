@@ -6,7 +6,7 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
-import {FieldnameMigrator} from '../field/fieldname-migrator';
+import {Migrator} from '../field/migrator';
 import {Name} from '../../../c';
 
 const expressPouchDB = require('express-pouchdb');
@@ -169,7 +169,7 @@ export class PouchdbManager {
         await this.fetchAll(
         (doc: any) => {
             (indexFacade as IndexFacade)
-                .put(FieldnameMigrator.migrate(doc), true, false);
+                .put(Migrator.migrate(doc), true, false);
         });
     }
 

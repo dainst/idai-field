@@ -15,13 +15,12 @@ import {Get, GetInverseRelation, Id, IdMap} from './utils';
 
 
 export async function processRelations(documents: Array<Document>,
-                                validator: ImportValidator,
-                                operationTypeNames: string[],
-                                mergeMode: boolean,
-                                allowOverwriteRelationsInMergeMode: boolean,
-                                getInverseRelation: GetInverseRelation,
-                                get: Get,
-                                mainTypeDocumentId: Id) {
+                                       validator: ImportValidator,
+                                       operationTypeNames: string[],
+                                       mergeMode: boolean,
+                                       allowOverwriteRelationsInMergeMode: boolean,
+                                       getInverseRelation: GetInverseRelation, get: Get,
+                                       mainTypeDocumentId: Id) {
 
     const allowOverwriteRelationsInMergeMode_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);

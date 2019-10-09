@@ -3610,6 +3610,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
+        <source>Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
+        <target state="final">Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
         <target state="final">Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</target>

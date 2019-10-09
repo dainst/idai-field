@@ -3721,6 +3721,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
+        <source>Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
+        <target state="new">Resource of type '[2]' must not be related by '[1]' with '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
         <target state="final">Missing field definition for the field '[1]' of the resource of type '[0]'.</target>

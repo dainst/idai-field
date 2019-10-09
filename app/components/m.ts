@@ -90,6 +90,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.operationsNotAllowed';
     public static IMPORT_VALIDATION_INVALID_TYPE = 'M.Import.ImportErrors.invalidType';
     public static IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE = 'M.Import.ImportErrors.mustLieWithinOtherNonOperationResource';
+    public static IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH = 'M.Import.ImportErrors.targetTypeRangeMismatch';
     public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.Import.ImportErrors.duplicateIdentifier';
     public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
     public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
@@ -697,7 +698,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-
         this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
             content: i18n({
                 id: 'messages.import.validation.error.mustHaveLiesWithin',
@@ -707,7 +707,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-
+        this.msgs[M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH] = {
+            content: i18n({
+                id: 'messages.import.validation.error.targetTypeRangeMismatch',
+                value: 'Ressource vom Typ \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELD] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidField',

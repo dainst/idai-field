@@ -53,7 +53,7 @@ export module DefaultImportCalc {
          *   - if mutually exluding relations are pointing to the same resource.
          *     For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
          *
-         * [TARGET_TYPE_RANGE_MISMATCH]
+         * [TARGET_TYPE_RANGE_MISMATCH, resourceIdentifier, relationName, relationTargetResourceType]
          *   - if a resource points to another resource, however, the specified relation is not allowed between the
          *     types of the resources.
          *

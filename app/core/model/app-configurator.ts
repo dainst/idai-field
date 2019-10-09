@@ -95,7 +95,7 @@ export class AppConfigurator {
             group: 'stem'
         },
         processor: {
-            inputType: 'dropdown',
+            inputType: 'checkboxes',
             valuelistFromProjectField: 'staff',
             group: 'stem'
         },

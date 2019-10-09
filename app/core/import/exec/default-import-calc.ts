@@ -1,5 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, equal, hasNot, includedIn, isArray,
+import {duplicates, equal, hasNot, includedIn, isArray, sameset,
     isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
 import {asyncForEach, asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
@@ -138,7 +138,7 @@ export module DefaultImportCalc {
 
         if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
-        await inferRecordedIns(documents, operationTypeNames, get, mainTypeDocumentId);
+        await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter
@@ -236,10 +236,24 @@ export module DefaultImportCalc {
     }
 
 
+    /**
+     * Sets RECORDED_IN relations in documents, as inferred from LIES_WITHIN.
+     * Where a document is situated at the top level, i.e. directly below an operation,
+     * the LIES_WITHIN entry gets deleted.
+     *
+     * @param documents get modified in place
+     * @param operationTypeNames
+     * @param get
+     * @param assertNoRecordedInMismatch
+     *
+     * @throws [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier] if the inferredRecordedIn
+     *   differs from a possibly specified recordedIn.
+     */
     async function inferRecordedIns(documents: Array<Document>,
                                     operationTypeNames: string[],
                                     get: Get,
-                                    mainTypeDocumentId: Id) {
+                                    assertNoRecordedInMismatch: (document: Document,
+                                                                 inferredRecordedIn: string|undefined) => void) {
 
         const idMap = documents.reduce((tmpMap, document: Document) => {
                 tmpMap[document.resource.id] = document;
@@ -280,27 +294,32 @@ export module DefaultImportCalc {
 
 
         for (let document of documents) {
+
+            const inferredRecordedIn = await determineRecordedInValueFor(document);
+            assertNoRecordedInMismatch(document, inferredRecordedIn);
+
             const relations = document.resource.relations;
+            if (inferredRecordedIn) relations[RECORDED_IN] = [inferredRecordedIn];
+            if (relations
+                && sameset(relations[RECORDED_IN])(relations[LIES_WITHIN] ? relations[LIES_WITHIN] : [])) {
 
-            const _ = await determineRecordedInValueFor(document);
-            assertNoRecordedInMismatch(document, _, mainTypeDocumentId);
-
-            if (_) relations[RECORDED_IN] = [_];
-            if (relations && equal(relations[RECORDED_IN])(relations[LIES_WITHIN])) {
                 delete relations[LIES_WITHIN];
             }
         }
     }
 
 
-    function assertNoRecordedInMismatch(document: Document, compare: string|undefined, mainTypeDocumentId: Id) {
+    function makeAssertNoRecordedInMismatch(mainTypeDocumentId: Id) {
 
-        const relations = document.resource.relations;
-        if (mainTypeDocumentId
-            && isNot(undefinedOrEmpty)(relations[RECORDED_IN])
-            && relations[RECORDED_IN][0] !== compare
-            && isDefined(compare)) {
-            throw [E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+        return function assertNoRecordedInMismatch(document: Document, compare: string|undefined) {
+
+            const relations = document.resource.relations;
+            if (mainTypeDocumentId
+                && isNot(undefinedOrEmpty)(relations[RECORDED_IN])
+                && relations[RECORDED_IN][0] !== compare
+                && isDefined(compare)) {
+                throw [E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
+            }
         }
     }
 

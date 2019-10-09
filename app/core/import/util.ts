@@ -19,15 +19,6 @@ export const makeLookup = (path: string) => {
 };
 
 
-export function len<A>(as: Array<A>) {
-
-    return as.length;
-}
-
-
-export function gt(o: number) { return (a: number) => a > o; }
-
-
 export function withDissoc(struct: any, path: string) {
 
    return dissoc(path)(struct);

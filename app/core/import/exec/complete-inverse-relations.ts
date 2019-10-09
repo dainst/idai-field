@@ -1,9 +1,9 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
-    isEmpty, isNot, isnt, isUndefinedOrEmpty, lookup, keys, empty,
+    isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, empty,
     map, remove, subtract, to, undefinedOrEmpty, on, keysAndValues} from 'tsfun';
-import {gt, len, makeLookup} from '../util';
+import {makeLookup} from '../util';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
 import {assertInSameOperationWith} from './utils';
@@ -42,8 +42,7 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
  *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
  *
- * @throws ImportErrors.*
- * @see Processor#build() . process()
+ * @throws ImportErrors.* (see ./process.ts)
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira

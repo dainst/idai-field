@@ -42,19 +42,34 @@ export module DefaultImportCalc {
         /**
          * ImportErrors (accessible via ProcessResult)
          *
-         * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier] if a resource of
-         *   a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
-         *   directly below an operation.
+         * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]
+         *   - if a resource of
+         *     a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
+         *     directly below an operation.
          *
-         * [BAD_INTERRELATION]
+         * [BAD_INTERRELATION, sourceId]
+         *   - if opposing relations are pointing to the same resource.
+         *     For example IS_BEFORE and IS_AFTER pointing both from document '1' to '2'.
+         *   - if mutually exluding relations are pointing to the same resource.
+         *     For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
          *
-         * [TARGET_TYPE_RANGE_MISMATCH] TODO describe, also throw this when this happens within import docs
+         * [TARGET_TYPE_RANGE_MISMATCH]
+         *   - if a resource points to another resource, however, the specified relation is not allowed between the
+         *     types of the resources.
          *
-         * [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] if mainTypeDocumentId is not '' and
-         *   a resource references an operation as parent.
+         * [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED]
+         *   - if mainTypeDocumentId is not '' and
+         *     a resource references an operation as parent.
          *
-         * [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier] if the inferredRecordedIn
-         *   differs from a possibly specified recordedIn.
+         * [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier]
+         *   - if the inferredRecordedIn
+         *     differs from a possibly specified recordedIn.
+         *
+         * [EXEC_MISSING_RELATION_TARGET, targetId]
+         *
+         * @throws [EMPTY_RELATION, resourceId]
+         *   - if relations empty for some relation is empty.
+         *     For example relations: {isAbove: []}
          */
         return async function process(documents: Array<Document>): Promise<ProcessResult> {
 

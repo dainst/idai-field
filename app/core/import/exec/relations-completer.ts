@@ -9,7 +9,6 @@ import {assertInSameOperationWith} from './utils';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {keys, keysAndValues} from 'tsfun/src/objectmap';
 import {AssertIsAllowedRelationDomainType} from './import-validator';
@@ -34,7 +33,7 @@ export module RelationsCompleter {
      */
     export function completeInverseRelations(get: (_: string) => Promise<Document>,
                                              getInverseRelation: (_: string) => string|undefined,
-                                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => true) {
+                                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {}) {
 
         /**
          * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
@@ -49,18 +48,7 @@ export module RelationsCompleter {
          *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
          *
          * @throws ImportErrors.*
-         *
-         * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
-         *
-         * @throws [EMPTY_RELATION, resourceId]
-         *   If relations empty for some relation is empty.
-         *   For example relations: {isAbove: []}
-         *
-         * @throws [BAD_INTERRELATION, sourceId]
-         *   - If opposing relations are pointing to the same resource.
-         *     For example IS_BEFORE and IS_AFTER pointing both from document '1' to '2'.
-         *   - If mutually exluding relations are pointing to the same resource.
-         *     For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
+         * @see DefaultImportCalc#build() . process()
          */
         return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
 
@@ -82,7 +70,7 @@ export module RelationsCompleter {
                 setInverseRelationsForImportResource(
                     importDocument,
                     lookupDocument,
-                    addInverse(getInverseRelation),
+                    pairRelationWithItsInverse(getInverseRelation),
                     relationNamesExceptRecordedIn(importDocument),
                     assertIsAllowedRelationDomainType);
             }
@@ -97,12 +85,11 @@ export module RelationsCompleter {
     }
 
 
-    function relationNamesExceptRecordedIn(document: Document) {
+    function relationNamesExceptRecordedIn(document: Document) { // TODO get rid of this
 
         return flow(
             document.resource.relations,
             Object.keys,
-            filter(isnt(LIES_WITHIN)),
             filter(isnt(RECORDED_IN))) as string[];
     }
 
@@ -122,18 +109,17 @@ export module RelationsCompleter {
 
     function setInverseRelationsForImportResource(importDocument: Document,
                                                   lookupDocument: LookupDocument,
-                                                  addInverse: (_: Document) => (_: string) => [string, string],
+                                                  pairRelationWithItsInverse: (_: Document) => (_: string) => [string, string|undefined],
                                                   relations: string[],
                                                   assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
-        const addInverse_ = addInverse(importDocument);
-        const inverseIsDefined = compose(nth(1), isDefined);
+        const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
         const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
         const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
 
         flow(relations,
-            map(addInverse_),
-            filter(inverseIsDefined),
+            map(pairRelationWithItsInverse_),
+            filter(on('[1]', isDefined)),
             forEach(assertNotBadyInterrelated_),
             forEach(setInverses_));
     }
@@ -143,10 +129,10 @@ export module RelationsCompleter {
                          lookupDocument: LookupDocument,
                          assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
 
-        return ([relationName, inverseRelationName]: [string, string]) => {
+        return ([relationName, inverseRelationName]: [string, string|undefined]) => {
 
-            // TODO write tests etc.
             const assertIsAllowedRelationDomainType_ = (targetDocument: Document) => {
+
                 assertIsAllowedRelationDomainType(
                     importDocument.resource.type,
                     targetDocument.resource.type,
@@ -154,26 +140,30 @@ export module RelationsCompleter {
                     importDocument.resource.identifier);
             };
 
-            flow(
+            const tmp = flow(
                 importDocument.resource.relations[relationName],
                 map(lookupDocument),
                 filter(isDefined),
-                forEach(assertIsAllowedRelationDomainType_),
+                forEach(assertIsAllowedRelationDomainType_));
+
+            if (!inverseRelationName) return;
+            if (inverseRelationName === HIERARCHICAL_RELATIONS.INCLUDES) return;
+
+            flow(tmp,
                 forEach(assertInSameOperationWith(importDocument)),
                 map(to('resource.relations')),
-                forEach(setInverse(importDocument.resource.id, inverseRelationName)));
+                forEach(setInverse(importDocument.resource.id, inverseRelationName as string)));
         }
     }
 
 
-    function addInverse(getInverseRelation: (_: string) => string|undefined) {
+    function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|undefined) {
 
         return (document: Document) =>  (relationName: string) => {
 
             if (isEmpty(document.resource.relations[relationName])) throw [E.EMPTY_RELATION, document.resource.identifier];
-
             const inverseRelationName = getInverseRelation(relationName);
-            return [relationName, inverseRelationName] as [string, string];
+            return [relationName, inverseRelationName] as [string, string|undefined];
         }
     }
 

@@ -9,6 +9,7 @@ import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import INCLUDES = HIERARCHICAL_RELATIONS.INCLUDES;
 
 
 describe('RelationsCompleter', () => {
@@ -75,7 +76,7 @@ describe('RelationsCompleter', () => {
         getInverseRelation = (_: string) => {
             // make sure it gets ignored even if inverses are set
             if (_ === RECORDED_IN) throw 'E';
-            if (_ === LIES_WITHIN) throw 'E';
+            if (_ === LIES_WITHIN) return INCLUDES;
             //
             if (_ === IS_CONTEMPORARY_WITH) return IS_CONTEMPORARY_WITH;
             if (_ === IS_AFTER) return IS_BEFORE;
@@ -86,7 +87,7 @@ describe('RelationsCompleter', () => {
     });
     
 
-    it('set inverse relation within import itself', async done => {
+    it('set inverse relation between import resources', async done => {
 
         doc2.resource.relations[IS_ABOVE] =  ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];
@@ -97,7 +98,7 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('set inverse relation within import itself - complement inverse', async done => {
+    it('set inverse relation between import resources - complement inverse', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['2'];
         const documents = await completeInverseRelations([doc1, doc2]);
@@ -109,7 +110,7 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('set inverse relation within import itself - complement inverse, add to array', async done => {
+    it('set inverse relation between import resources - complement inverse, add to array', async done => {
 
         doc2.resource.relations[IS_ABOVE] = ['3'];
         doc1.resource.relations[IS_BELOW] = ['2'];
@@ -390,7 +391,7 @@ describe('RelationsCompleter', () => {
     });
 
 
-    it('set inverse relation within import itself - also ignore if conflict is coming from a relation which is its own inverser', async done => {
+    it('set inverse relation within between import resources - also ignore if conflict is coming from a relation which is its own inverser', async done => {
 
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];

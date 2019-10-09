@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {is, on, union, jsonClone, isnt} from 'tsfun';
+import {is, on, union, isnt} from 'tsfun';
 import {subtractBy} from 'tsfun-core';
 import {asyncMap} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
@@ -22,7 +22,7 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
                                                         getTargetIds: Function, // TODO improve
                                                         get: (_: string) => Promise<Document>,
                                                         getInverseRelation: (_: string) => string|undefined,
-                                                        isAllowedRelationDomainType: Function, // TODO improve typing
+                                                        assertIsAllowedRelationDomainType: Function, // TODO improve typing
 ): Promise<Array<Document>> {
 
 
@@ -33,7 +33,7 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
         const [currentTargetIds, _] = allTargetIds;
 
         const targetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
-        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), isAllowedRelationDomainType);
+        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
 
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);
 
@@ -92,16 +92,14 @@ function addOrOverwrite(to: Array<Document>, from: Array<Document>) {
 
 function assertTypeIsInRange(document: Document,
                              idTypeMap: any,
-                             isAllowedRelationDomainType: Function /* TODO */) {
+                             assertIsAllowedRelationDomainType: Function /* TODO */) {
 
     keysAndValues(document.resource.relations)
         .forEach(([relationName, relationTargets]: [string, string[]]) => {
             for (let relationTarget of relationTargets) {
                 const targetType = idTypeMap[relationTarget];
                 if (!targetType) continue;
-                if (!isAllowedRelationDomainType(document.resource.type, targetType, relationName)) {
-                    throw [E.TARGET_TYPE_RANGE_MISMATCH, document.resource.identifier, relationName, targetType];
-                }
+                assertIsAllowedRelationDomainType(document.resource.type, targetType, relationName, document.resource.identifier);
             }
         })
 }

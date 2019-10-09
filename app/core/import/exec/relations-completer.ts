@@ -32,7 +32,7 @@ export module RelationsCompleter {
      */
     export function completeInverseRelations(get: (_: string) => Promise<Document>,
                                              getInverseRelation: (_: string) => string|undefined,
-                                             isAllowedRelationDomainType: Function = () => true) { // TODO improve
+                                             assertIsAllowedRelationDomainType: Function = () => true) { // TODO improve
 
         /**
          * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
@@ -89,7 +89,7 @@ export module RelationsCompleter {
                 getTargetIds,
                 get,
                 getInverseRelation,
-                isAllowedRelationDomainType);
+                assertIsAllowedRelationDomainType);
         }
     }
 

@@ -39,9 +39,15 @@ export class ImportValidator extends Validator {
     }
 
 
-    public isAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string, relationName: string): boolean {
+    public assertIsAllowedRelationDomainType(domainTypeName: string,
+                                             rangeTypeName: string,
+                                             relationName: string,
+                                             identifier: string) {
 
-        return this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName);
+        if (!this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName)) {
+
+            throw [E.TARGET_TYPE_RANGE_MISMATCH, identifier, relationName, rangeTypeName];
+        }
     }
 
 

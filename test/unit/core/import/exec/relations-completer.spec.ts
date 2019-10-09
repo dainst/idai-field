@@ -229,11 +229,11 @@ describe('RelationsCompleter', () => {
 
     it('bad range', async done => {
 
-        function isAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
-            return false;
+        function assertIsAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
+            throw ['abc'];
         }
 
-        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, isAllowedRelationDomainType);
+        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, assertIsAllowedRelationDomainType);
 
         doc1.resource.relations[IS_AFTER] = ['2'];
 
@@ -241,7 +241,7 @@ describe('RelationsCompleter', () => {
             await completeInverseRelations([doc1]);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams).toEqual([E.TARGET_TYPE_RANGE_MISMATCH, 'one', 'isAfter', 'Object']);
+            expect(errWithParams).toEqual(['abc']);
         }
         done();
     });

@@ -71,11 +71,9 @@ describe('DefaultImportCalc', () => {
 
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'isAllowedRelationDomainType',
+            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertIsAllowedRelationDomainType',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
-
-        validator.isAllowedRelationDomainType.and.returnValue(true);
 
         process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,

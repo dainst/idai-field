@@ -3,7 +3,7 @@ import {asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
 import {Document, NewDocument} from 'idai-components-2';
 import {DocumentMerge} from './document-merge';
-import {Find} from './utils';
+import {Find} from './types';
 
 
 /**

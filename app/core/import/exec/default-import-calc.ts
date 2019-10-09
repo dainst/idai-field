@@ -6,7 +6,7 @@ import {Document, Relations} from 'idai-components-2';
 import {RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import {processRelations} from './process-relations';
-import {Find, GenerateId, Get, GetInverseRelation, Id, Identifier, IdentifierMap, ProcessResult} from './utils';
+import {Find, GenerateId, Get, GetInverseRelation, Id, Identifier, IdentifierMap, ProcessResult} from './types';
 import {processDocuments} from './process-documents';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 

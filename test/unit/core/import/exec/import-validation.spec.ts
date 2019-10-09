@@ -200,7 +200,7 @@ describe('ImportValidation', () => {
             await new ImportValidator(
                 projectConfiguration,
                 {find: (q: any) => Promise.resolve({documents: []})} as any,
-                undefined).assertLiesWithinCorrectness([doc as any]);
+                undefined).assertLiesWithinCorrectness([doc.resource as any]);
             fail();
         } catch (errWithParams) {
 

@@ -163,7 +163,7 @@ export module DefaultImportCalc {
 
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 
-            await validator.assertLiesWithinCorrectness(documents);
+            await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
             return await RelationsCompleter
                 .completeInverseRelations(get, getInverseRelation,
                     (_: any, __: any, ___: any) =>

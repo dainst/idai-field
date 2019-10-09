@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, NewResource, Query} from 'idai-components-2';
+import {Document, NewDocument, NewResource, Query, Resource} from 'idai-components-2';
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
@@ -45,39 +45,23 @@ export class ImportValidator extends Validator {
     }
 
 
-    public async assertLiesWithinCorrectness(documents: Array<Document>) {
+    public async assertLiesWithinCorrectness(resources: Array<Resource>) {
 
-        for (let document of documents) {
+        for (let resource of resources) {
 
-            const type = this.projectConfiguration.getTypesList().find(type => type.name === document.resource.type);
-            if (!type || !type.mustLieWithin) continue;
+            const type = this.projectConfiguration.getTypesList().find(on('name', is(resource.type)));
+            if (!type) {
+                console.error("resource type not found", resource.type);
+                continue;
+            }
+            if (!type.mustLieWithin) continue;
 
-            const recordedIn = document.resource.relations[RECORDED_IN];
-            const liesWithin = document.resource.relations[LIES_WITHIN];
+            const recordedIn = resource.relations[RECORDED_IN];
+            const liesWithin = resource.relations[LIES_WITHIN];
 
             if (recordedIn && recordedIn.length > 0 && (!liesWithin || liesWithin.length === 0)) {
 
-                throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, document.resource.type, document.resource.identifier];
-            }
-
-            const found = (await this.datastore.find({constraints: {'id:match': liesWithin[0]}})).documents;
-            if (found && found.length > 0) {
-                const foundDoc = found[0] as Document;
-
-                if (!this.projectConfiguration.isAllowedRelationDomainType(type.name, foundDoc.resource.type, LIES_WITHIN)) {
-
-                    // console.warn(':', "uh oh", document.resource.identifier);
-                }
-
-
-                // if (foundDoc.resource && foundDoc.resource.type) {
-                //     if (document.resource.type === 'Inscription') {
-                //         if (foundDoc.resource.type !== 'Find') throw [E.BAD_INTERRELATION, document.resource.identifier];
-                //     }
-                //     if (document.resource.type.indexOf('Room') !== -1) {
-                //         if (foundDoc.resource.type !== 'Room') throw [E.BAD_INTERRELATION, document.resource.identifier];
-                //     }
-                // }
+                throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resource.type, resource.identifier];
             }
         }
     }

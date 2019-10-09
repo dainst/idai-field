@@ -2,7 +2,7 @@
     <div class="col-md-6 d-flex">
         <navigation></navigation>
         <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
-             class="alert alert-secondary" [class.document-limit-exceeded]="isDocumentLimitExceeded()">
+             [class.document-limit-exceeded]="isDocumentLimitExceeded()">
             <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
                   i18n="@@resources.searchResultsInfo.resourcesFound.single">
                 Eine Ressource gefunden

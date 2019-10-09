@@ -90,6 +90,9 @@ $deactivated-button-color: lightgray;
 }
 
 #search-results-info {
+  @extend .alert;
+  @extend .alert-secondary;
+
   position: relative;
   top: -2px;
   left: 15px;
@@ -102,6 +105,7 @@ $deactivated-button-color: lightgray;
   cursor: default;
   user-select: none;
   border-radius: 0;
+  background-color: #fefefe;
 
   &.document-limit-exceeded {
     padding-top: 0;

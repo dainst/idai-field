@@ -1,6 +1,5 @@
 import {Document} from 'idai-components-2/src/model/core/document';
 import {ImportValidator} from './import-validator';
-import {RelationsCompleter} from './relations-completer';
 import {NewDocument} from 'idai-components-2/src/model/core/new-document';
 import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
@@ -9,6 +8,7 @@ import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {Relations} from 'idai-components-2/src/model/core/relations';
 import {Get, GetInverseRelation, Id, IdMap} from './utils';
+import {completeInverseRelations} from './complete-inverse-relations';
 
 
 
@@ -36,7 +36,7 @@ export async function processRelations(documents: Array<Document>,
     if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 
         await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-        return await RelationsCompleter.completeInverseRelations(
+        return await completeInverseRelations(
                 documents,
                 get,
                 getInverseRelation,

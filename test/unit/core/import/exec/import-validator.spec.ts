@@ -9,7 +9,7 @@ import {ProjectConfiguration} from '../../../../../app/core/configuration/projec
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('ImportValidation', () => {
+describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {

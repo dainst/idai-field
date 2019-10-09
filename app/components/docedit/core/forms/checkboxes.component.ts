@@ -44,7 +44,7 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
-    public toggleBox(item: any) {
+    public toggleCheckbox(item: string) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
         if (!this.removeItem(item)) this.resource[this.field.name].push(item);

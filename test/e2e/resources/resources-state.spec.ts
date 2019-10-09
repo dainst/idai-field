@@ -248,7 +248,7 @@ describe('resources/state --', function() {
         browser.sleep(delays.shortRest * 3);
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'inscription',
+        ResourcesPage.performCreateResource('2', 'find-glass',
             undefined, undefined, true);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);

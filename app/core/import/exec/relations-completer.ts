@@ -1,16 +1,17 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {arrayEqual, filter, flatMap, flow, getOnOr, intersect, is, isDefined, isEmpty, isNot, isnt, to,
-    isUndefinedOrEmpty, lookup, on, undefinedOrEmpty, union, map, forEach, remove, nth, compose} from 'tsfun';
-import {subtractBy} from 'tsfun-core';
-import {asyncMap} from 'tsfun-extra';
-import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
-import {clone} from '../../util/object-util';
+import {compose, filter, flatten, flow, forEach, intersect, isDefined, isEmpty, isNot, isnt, isUndefinedOrEmpty, lookup,
+    map, nth, remove, subtract, to, undefinedOrEmpty, on} from 'tsfun';
 import {gt, len, makeLookup} from '../util';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
+import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
+import {assertInSameOperationWith} from './utils';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {keys, keysAndValues} from 'tsfun/src/objectmap';
 
 
 /**
@@ -19,13 +20,10 @@ import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
  */
 export module RelationsCompleter {
 
-    import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-    import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
     type LookupDocument = (_: string) => Document|undefined;
 
-
     /**
-     * Iterates over all relations (ex) of the given resources.
+     * Iterates over all relations (including obsolete relations) of the given resources.
      * Between import resources, it validates the relations.
      * Between import resources and db resources, it adds the inverses.
      *
@@ -33,7 +31,8 @@ export module RelationsCompleter {
      * @param getInverseRelation
      */
     export function completeInverseRelations(get: (_: string) => Promise<Document>,
-                                             getInverseRelation: (_: string) => string|undefined) {
+                                             getInverseRelation: (_: string) => string|undefined,
+                                             isAllowedRelationDomainType: Function = () => true) { // TODO improve
 
         /**
          * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
@@ -65,6 +64,17 @@ export module RelationsCompleter {
 
             const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
+            async function getTargetIds(document: Document) {
+
+                let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
+                if (mergeMode) {
+                    let oldVersion; try { oldVersion = await get(document.resource.id);
+                    } catch { throw "FATAL existing version of document not found" }
+                    return [targetIds, subtract(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))]
+                }
+                return [targetIds, []];
+            }
+
             for (let importDocument of importDocuments) {
 
                 setInverseRelationsForImportResource(
@@ -76,72 +86,10 @@ export module RelationsCompleter {
 
             return await setInverseRelationsForDbResources(
                 importDocuments,
-                lookupDocument,
+                getTargetIds,
                 get,
                 getInverseRelation,
-                mergeMode);
-        }
-    }
-
-
-    async function setInverseRelationsForDbResources(importDocuments: Array<Document>,
-                                                     lookupDocument: LookupDocument,
-                                                     get: (_: string) => Promise<Document>,
-                                                     getInverseRelation: (_: string) => string|undefined,
-                                                     mergeMode: boolean): Promise<Array<Document>> {
-
-        async function getTargetIds(document: Document) {
-
-            let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
-            if (mergeMode) {
-                let oldVersion; try { oldVersion = await get(document.resource.id);
-                } catch { throw "FATAL existing version of document not found" }
-                targetIds = union([targetIds, targetIdsReferingToDbResources(oldVersion as any, lookupDocument)]);
-            }
-            return targetIds;
-        }
-
-
-        async function getDocumentTargetDocsToUpdate(document: Document) {
-
-            const targetIds = await getTargetIds(document);
-            const documentTargetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(targetIds);
-
-            ConnectedDocsResolution
-                .determineDocsToUpdate(document, documentTargetDocuments, getInverseRelation)
-                .forEach(assertInSameOperationWith(document));
-
-            return documentTargetDocuments;
-        }
-
-
-        let totalDocsToUpdate: Array<Document> = [];
-        for (let document of importDocuments) {
-            totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
-        }
-        return totalDocsToUpdate;
-    }
-
-
-    function addOrOverwrite(to: Array<Document>, from: Array<Document>) {
-
-        const difference = subtractBy(on('resource.id'))(from)(to);
-        return difference.concat(from);
-    }
-
-
-    function getTargetDocument(documents: Array<Document>, get: Function) {
-
-        return async (targetId: string): Promise<Document> => {
-
-            let targetDocument = documents
-                .find(on('resource.id', is(targetId)));
-            if (!targetDocument) try {
-                targetDocument = clone(await get(targetId));
-            } catch {
-                throw [E.EXEC_MISSING_RELATION_TARGET, targetId]
-            }
-            return targetDocument as Document;
+                isAllowedRelationDomainType);
         }
     }
 
@@ -159,8 +107,12 @@ export module RelationsCompleter {
     function targetIdsReferingToDbResources(document: Document,
                                             lookupDocument: LookupDocument) {
 
-        return flow(relationNamesExceptRecordedIn(document),
-            flatMap(lookup(document.resource.relations) as (_: string) => string[]),
+        return flow(
+            document.resource.relations,
+            keysAndValues,
+            filter(on('[0]', isnt(RECORDED_IN))),
+            map(to('[1]')),
+            flatten,
             remove(compose(lookupDocument, isDefined)));
     }
 
@@ -244,21 +196,6 @@ export module RelationsCompleter {
         }
         if (!targetDocumentRelations[inverseRelationName].includes(resourceId)) {
             targetDocumentRelations[inverseRelationName].push(resourceId);
-        }
-    }}
-
-
-    function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
-
-        const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);
-        const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
-
-
-        if (isNot(undefinedOrEmpty)(documentRecordedIn)
-            && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)
-            && isNot(arrayEqual(targetDocumentRecordedIn))(documentRecordedIn)) {
-
-            throw [E.MUST_BE_IN_SAME_OPERATION, document.resource.identifier, targetDocument.resource.identifier];
         }
     }}
 

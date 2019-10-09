@@ -71,9 +71,11 @@ describe('DefaultImportCalc', () => {
 
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
+            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'isAllowedRelationDomainType',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
+
+        validator.isAllowedRelationDomainType.and.returnValue(true);
 
         process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
@@ -110,8 +112,8 @@ describe('DefaultImportCalc', () => {
     it('set inverse relation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { isChildOf: 'existingTrench',
-                isAfter: ['existingFeature']})
+            d('Feature', 'newFeature',
+                { isChildOf: 'existingTrench', isAfter: ['existingFeature']})
         ]);
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');

@@ -16,6 +16,8 @@ describe('RelationsCompleter', () => {
 
     let isRelationProperty;
     let completeInverseRelations;
+    let get;
+    let getInverseRelation;
 
     let doc1: any;
     let doc2: any;
@@ -61,7 +63,7 @@ describe('RelationsCompleter', () => {
             }
         };
 
-        const get = async (resourceId: string) => {
+        get = async (resourceId: string) => {
 
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
@@ -70,7 +72,7 @@ describe('RelationsCompleter', () => {
             throw "not found";
         };
         isRelationProperty = () => true;
-        const getInverseRelation = (_: string) => {
+        getInverseRelation = (_: string) => {
             // make sure it gets ignored even if inverses are set
             if (_ === RECORDED_IN) throw 'E';
             if (_ === LIES_WITHIN) throw 'E';
@@ -224,6 +226,26 @@ describe('RelationsCompleter', () => {
 
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('bad range', async done => {
+
+        function isAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
+            return false;
+        }
+
+        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, isAllowedRelationDomainType);
+
+        doc1.resource.relations[IS_AFTER] = ['2'];
+
+        try {
+            await completeInverseRelations([doc1]);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([E.TARGET_TYPE_RANGE_MISMATCH, 'one', 'isAfter', 'Object']);
+        }
+        done();
+    });
+
 
     it('illegal relation between import resources', async done => {
 

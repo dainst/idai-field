@@ -64,6 +64,8 @@ export module DefaultImportCalc {
          *
          * [BAD_INTERRELATION]
          *
+         * [TARGET_TYPE_RANGE_MISMATCH] TODO describe, also throw this when this happens within import docs
+         *
          * [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] if mainTypeDocumentId is not '' and
          *   a resource references an operation as parent.
          *
@@ -95,7 +97,8 @@ export module DefaultImportCalc {
                     documentsForUpdate,
                     validator, operationTypeNames,
                     mergeMode, allowOverwriteRelationsInMergeMode,
-                    getInverseRelation, get,
+                    getInverseRelation,
+                    get,
                     mainTypeDocumentId);
 
                 return [documentsForUpdate, relatedDocuments, undefined];
@@ -157,12 +160,17 @@ export module DefaultImportCalc {
         }
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
         await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
-        await validator.assertLiesWithinCorrectness(documents);
 
-        return !mergeMode || allowOverwriteRelationsInMergeMode
-            ? await RelationsCompleter
-                .completeInverseRelations(get, getInverseRelation)(documents, mergeMode)
-            : [];
+        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+
+            await validator.assertLiesWithinCorrectness(documents);
+            return await RelationsCompleter
+                .completeInverseRelations(get, getInverseRelation,
+                    (_: any, __: any, ___: any) =>
+                        validator.isAllowedRelationDomainType(_, __, ___))(documents, mergeMode)
+        }
+
+        return [];
     }
 
 

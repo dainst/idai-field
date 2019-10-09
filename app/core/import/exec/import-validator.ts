@@ -39,6 +39,12 @@ export class ImportValidator extends Validator {
     }
 
 
+    public isAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string, relationName: string): boolean {
+
+        return this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName);
+    }
+
+
     public async assertLiesWithinCorrectness(documents: Array<Document>) {
 
         for (let document of documents) {

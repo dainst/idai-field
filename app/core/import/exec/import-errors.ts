@@ -29,4 +29,5 @@ export module ImportErrors {
     export const PARENT_MUST_NOT_BE_ARRAY = 'ImportErrors.parentMustNotBeArray';
     export const MUST_BE_ARRAY = 'ImportErrors.relationMustBeArray';
     export const MUST_BE_IN_SAME_OPERATION = 'ImportErrors.mustBeInSameOperation';
+    export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch'
 }

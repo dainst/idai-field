@@ -49,10 +49,10 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  * @author Daniel de Oliveira
  */
 export async function completeInverseRelations(importDocuments: Array<Document>,
-                                         get: (_: string) => Promise<Document>,
-                                         getInverseRelation: (_: string) => string|undefined,
-                                         assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
-                                         mergeMode: boolean = false): Promise<Array<Document>> {
+                                               get: (_: string) => Promise<Document>,
+                                               getInverseRelation: (_: string) => string|undefined,
+                                               assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
+                                               mergeMode: boolean = false): Promise<Array<Document>> {
 
     const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
@@ -92,7 +92,6 @@ function targetIdsReferingToDbResources(document: Document,
     return flow(
         document.resource.relations,
         keysAndValues,
-        filter(on('[0]', isnt(RECORDED_IN))),
         map(to('[1]')),
         flatten,
         remove(compose(lookupDocument, isDefined)));

@@ -16,9 +16,16 @@ describe('DefaultImport', () => {
         mockDatastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertDropdownRangeComplete',
-            'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
+            'assertIsRecordedInTargetsExist',
+            'assertIsAllowedRelationDomainType',
+            'assertIsWellformed',
+            'assertLiesWithinCorrectness',
+            'assertIsKnownType',
+            'assertHasLiesWithin',
+            'assertIsAllowedType',
+            'assertDropdownRangeComplete',
+            'assertSettingIsRecordedInIsPermissibleForType',
+            'assertNoForbiddenRelations']);
 
         mockValidator.assertHasLiesWithin.and.returnValue();
 
@@ -29,7 +36,14 @@ describe('DefaultImport', () => {
 
         mockDatastore.get.and.callFake(async resourceId => {
 
-            if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }};
+            if (resourceId === '0') return {
+                resource: {
+                    id: '0',
+                    identifier: '0',
+                    type: 'Trench',
+                    relations: {}
+                }
+            };
             else throw 'missing';
         });
 

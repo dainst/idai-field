@@ -33,7 +33,9 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 
-        const targetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
+        const targetDocuments = await asyncMap<any>(
+            getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
+
         assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType); // TODO bind assertTypeIsInRangeWith assertIsAllowed
 
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);

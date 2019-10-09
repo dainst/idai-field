@@ -64,12 +64,32 @@ describe('completeInverseRelations', () => {
             }
         };
 
+        const concreteOp1 = {
+            resource: {
+                id: 't1',
+                identifier: 't1',
+                type: 'Concreate',
+                relations: { isRecordedIn: [] }
+            }
+        };
+
+        const concreteOp2 = {
+            resource: {
+                id: 't2',
+                identifier: 't2',
+                type: 'ConcreteOperation',
+                relations: { isRecordedIn: [] }
+            }
+        };
+
         get = async (resourceId: string) => {
 
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
             if (resourceId === '3') return doc3;
             if (resourceId === '4') return doc3;
+            if (resourceId === 't1') return concreteOp1;
+            if (resourceId === 't2') return concreteOp2;
             throw "not found";
         };
         isRelationProperty = () => true;
@@ -238,6 +258,25 @@ describe('completeInverseRelations', () => {
         }
 
         doc1.resource.relations[LIES_WITHIN] = ['2'];
+
+        try {
+            await completeInverseRelations([doc1], get, getInverseRelation, assertIsAllowedRelationDomainType);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(['abc']);
+        }
+        done();
+    });
+
+
+    // TODO add corresponding test for between import resources
+    it('bad range - between import and db resource - structural relation (RECORDED_IN)', async done => {
+
+        function assertIsAllowedRelationDomainType(_: string, __: string, relationName: string): void {
+            if (relationName === RECORDED_IN) throw ['abc'];
+        }
+
+        doc1.resource.relations[RECORDED_IN] = ['2'];
 
         try {
             await completeInverseRelations([doc1], get, getInverseRelation, assertIsAllowedRelationDomainType);

@@ -1,5 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, equal, hasNot, includedIn, isArray, sameset,
+import {duplicates, hasNot, includedIn, isArray, sameset, or, on, empty, and,
     isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
 import {asyncForEach, asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
@@ -217,16 +217,31 @@ export module DefaultImportCalc {
     }
 
 
+    /**
+     * Replaces LIES_WITHIN entries with RECORDED_IN entries where operation type documents
+     * are referenced.
+     *
+     * @param documents get modified in place
+     * @param operationTypeNames
+     * @param get
+     * @param mainTypeDocumentId
+     *
+     * @throws [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] if mainTypeDocumentId is not '' and
+     *   a resource references an operation as parent.
+     */
     async function replaceTopLevelLiesWithins(documents: Array<Document>,
                                               operationTypeNames: string[],
                                               get: Get,
                                               mainTypeDocumentId: Id) {
 
-        for (let document of documents) {
-            const relations = document.resource.relations;
-            if (!relations || !relations[LIES_WITHIN]) continue;
+        const relationsForDocumentsWhereLiesWithinIsDefined: Array<Relations> = documents
+            .map(to('resource.relations'))
+            .filter(isDefined)
+            .filter(on(LIES_WITHIN, and(isDefined, isNot(empty))));
 
-            let liesWithinTarget = undefined;
+        for (let relations of relationsForDocumentsWhereLiesWithinIsDefined) {
+
+            let liesWithinTarget: Document|undefined = undefined;
             try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
             if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
 

@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
-import {DefaultImportCalc} from '../../../../../app/core/import/exec/default-import-calc';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
+import {build} from '../../../../../app/core/import/exec/process';
 
 /**
  * @author Daniel de Oliveira
@@ -75,31 +75,31 @@ describe('DefaultImportCalc', () => {
             'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
 
-        process = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+        process = build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             '',
             true);
 
-        processWithMainType = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+        processWithMainType = build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             'et1',
             true);
 
-        processWithPlainIds = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+        processWithPlainIds = build(validator, opTypeNames, generateId, find, get, getInverse,
             false,
             false,
             '',
             false);
 
-        processMerge = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+        processMerge = build(validator, opTypeNames, generateId, find, get, getInverse,
             true,
             false,
             '',
             false);
 
-        processMergeOverwriteRelations = DefaultImportCalc.build(validator, opTypeNames, generateId, find, get, getInverse,
+        processMergeOverwriteRelations = build(validator, opTypeNames, generateId, find, get, getInverse,
             true,
             true,
             '',

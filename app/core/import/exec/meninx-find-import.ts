@@ -4,7 +4,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ImportErrors} from './import-errors';
 import {clone} from '../../util/object-util';
-import {ImportFunction} from './import-function';
+import {ImportFunction} from './types';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {

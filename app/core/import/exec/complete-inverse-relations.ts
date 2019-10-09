@@ -43,7 +43,7 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
  *
  * @throws ImportErrors.*
- * @see DefaultImportCalc#build() . process()
+ * @see Processor#build() . process()
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira

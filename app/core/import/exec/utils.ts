@@ -5,6 +5,14 @@ import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
+export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
+
+    if (mainTypeDocumentId && mergeMode) {
+        throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
+    }
+}
+
+
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
     const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);

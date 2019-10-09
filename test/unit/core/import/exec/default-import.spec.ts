@@ -1,5 +1,5 @@
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {DefaultImport} from '../../../../../app/core/import/exec/default-import';
+import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
 
 /**
  * @author Daniel de Oliveira
@@ -33,7 +33,7 @@ describe('DefaultImport', () => {
             else throw 'missing';
         });
 
-        importFunction = DefaultImport.build(
+        importFunction = buildImportFunction(
             mockValidator,
             operationTypeNames,
             () => undefined,
@@ -62,7 +62,7 @@ describe('DefaultImport', () => {
             documents: [{ resource: { identifier: '123', id: '1' } }]
         }));
 
-        await (DefaultImport.build(
+        await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
              () => '101')(true, false))(
@@ -76,7 +76,7 @@ describe('DefaultImport', () => {
 
     it('does not overwrite if exists', async done => {
 
-        await (DefaultImport.build(
+        await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
             () => '101')(false, false))([

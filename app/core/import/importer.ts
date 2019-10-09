@@ -8,16 +8,16 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './exec/import-validator';
-import {DefaultImport} from './exec/default-import';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {ImportFunction} from './exec/import-function';
+import {ImportFunction} from './exec/types';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
+import {buildImportFunction} from './exec/default-import';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
@@ -89,7 +89,7 @@ export module Importer {
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
-        const importFunction = buildImportFunction(
+        const importFunction = buildImportFunction_(
             format,
             importValidator,
             operationTypeNames,
@@ -157,17 +157,17 @@ export module Importer {
     }
 
 
-    function buildImportFunction(format: ImportFormat,
-                                 validator: ImportValidator,
-                                 operationTypeNames: string[],
-                                 mainTypeDocumentId: string,
-                                 mergeMode: boolean,
-                                 updateRelationsOnMergeMode: boolean,
-                                 getInverseRelation: (_: string) => string|undefined,
-                                 generateId: () => string,
-                                 postProcessDocument: (document: Document) => Document): ImportFunction {
+    function buildImportFunction_(format: ImportFormat,
+                                  validator: ImportValidator,
+                                  operationTypeNames: string[],
+                                  mainTypeDocumentId: string,
+                                  mergeMode: boolean,
+                                  updateRelationsOnMergeMode: boolean,
+                                  getInverseRelation: (_: string) => string|undefined,
+                                  generateId: () => string,
+                                  postProcessDocument: (document: Document) => Document): ImportFunction {
 
-        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
+        const defaultImport = () => buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
 
         switch (format) {
             case 'meninxfind':

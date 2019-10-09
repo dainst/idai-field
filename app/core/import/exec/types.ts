@@ -1,4 +1,11 @@
-import {Document} from 'idai-components-2/src/model/core/document';
+import {Document} from 'idai-components-2';
+import {DocumentDatastore} from '../../datastore/document-datastore';
+
+export type ImportFunction =
+    (documents: Array<Document>,
+     datastore: DocumentDatastore,
+     username: string) =>
+        Promise<{ errors: string[][], successfulImports: number }>;
 
 export type Find = (identifier: string) => Promise<Document|undefined>;
 export type GenerateId = () => string;

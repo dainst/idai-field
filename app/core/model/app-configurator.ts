@@ -102,6 +102,7 @@ export class AppConfigurator {
         campaign: {
             inputType: 'checkboxes',
             valuelistFromProjectField: 'campaigns',
+            allowOnlyValuesOfParent: true,
             group: 'stem'
         },
         description: {

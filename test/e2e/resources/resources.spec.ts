@@ -276,6 +276,40 @@ describe('resources --', () => {
     });
 
 
+    it('show only values of parent resource for campaign field in editor', () => {
+
+        NavbarPage.clickTab('project');
+        ResourcesPage.performCreateResource('trench', 'trench');
+        ResourcesPage.clickHierarchyButton('trench');
+        ResourcesPage.performCreateResource('feature', 'feature');
+        ResourcesPage.openEditByDoubleClickResource('feature');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => expect(checkboxes.length).toBe(0));
+
+        DoceditPage.clickCloseEdit();
+        NavbarPage.clickTab('project');
+        ResourcesPage.openEditByDoubleClickResource('trench');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => {
+                expect(checkboxes.length).toBe(2);
+                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
+                expect(checkboxes[1].getText()).toEqual('Testkampagne 2');
+            });
+
+        DoceditPage.clickCheckbox('campaign', 0);
+        DoceditPage.clickSaveDocument();
+        ResourcesPage.clickHierarchyButton('trench');
+        ResourcesPage.openEditByDoubleClickResource('feature');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => {
+                expect(checkboxes.length).toBe(1);
+                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
+            });
+
+        DoceditPage.clickCloseEdit();
+    });
+
+
     it('deletion', () => {
 
         ResourcesPage.performCreateLink();

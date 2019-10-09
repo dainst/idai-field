@@ -15,7 +15,10 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 
 type ResourceId = string;
-
+export type AssertIsAllowedRelationDomainType = (domainTypeName: string,
+                                                 rangeTypeName: string,
+                                                 relationName: string,
+                                                 identifier: string) => void;
 
 @Injectable()
 /**

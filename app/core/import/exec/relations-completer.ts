@@ -12,6 +12,7 @@ import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {keys, keysAndValues} from 'tsfun/src/objectmap';
+import {AssertIsAllowedRelationDomainType} from './import-validator';
 
 
 /**
@@ -32,7 +33,7 @@ export module RelationsCompleter {
      */
     export function completeInverseRelations(get: (_: string) => Promise<Document>,
                                              getInverseRelation: (_: string) => string|undefined,
-                                             assertIsAllowedRelationDomainType: Function = () => true) { // TODO improve
+                                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => true) {
 
         /**
          * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked

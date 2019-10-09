@@ -165,7 +165,9 @@ export module DefaultImportCalc {
 
             await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
             return await RelationsCompleter
-                .completeInverseRelations(get, getInverseRelation,
+                .completeInverseRelations(
+                    get,
+                    getInverseRelation,
                     (_: any, __: any, ___: any, ____: any) =>
                         validator.assertIsAllowedRelationDomainType(_, __, ___, ____))(documents, mergeMode)
         }

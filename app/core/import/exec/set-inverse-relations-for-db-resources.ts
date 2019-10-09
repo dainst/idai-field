@@ -11,6 +11,7 @@ import {assertInSameOperationWith} from './utils';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {AssertIsAllowedRelationDomainType} from './import-validator';
 
 
 
@@ -22,7 +23,7 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
                                                         getTargetIds: Function, // TODO improve
                                                         get: (_: string) => Promise<Document>,
                                                         getInverseRelation: (_: string) => string|undefined,
-                                                        assertIsAllowedRelationDomainType: Function, // TODO improve typing
+                                                        assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
 ): Promise<Array<Document>> {
 
 
@@ -33,7 +34,7 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
         const [currentTargetIds, _] = allTargetIds;
 
         const targetDocuments = await asyncMap<any>(getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
-        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
+        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType); // TODO bind assertTypeIsInRangeWith assertIsAllowed
 
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);
 
@@ -92,7 +93,7 @@ function addOrOverwrite(to: Array<Document>, from: Array<Document>) {
 
 function assertTypeIsInRange(document: Document,
                              idTypeMap: any,
-                             assertIsAllowedRelationDomainType: Function /* TODO */) {
+                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
 
     keysAndValues(document.resource.relations)
         .forEach(([relationName, relationTargets]: [string, string[]]) => {

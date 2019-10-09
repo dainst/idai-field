@@ -217,7 +217,7 @@ export module RelationsCompleter {
 
             const forbiddenRelations = [];
             if (relationName !== inverseRelationName)        forbiddenRelations.push(inverseRelationName);
-            if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
+            if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH); // TODO review spatial relations
             else if (IS_CONTEMPORARY_WITH === relationName)  forbiddenRelations.push(IS_ABOVE, IS_BELOW);
 
             assertNoForbiddenRelations(forbiddenRelations, document.resource.relations[relationName], document);

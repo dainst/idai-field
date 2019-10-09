@@ -190,6 +190,12 @@ export class DoceditPage {
     }
 
 
+    public static getCheckboxes(fieldName: string) {
+
+        return element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox'));
+    }
+
+
     // type in
 
     public static typeInInputField(fieldName: string, text: string) {

@@ -30,6 +30,7 @@ export module RelationsCompleter {
      *
      * @param get
      * @param getInverseRelation
+     * @param assertIsAllowedRelationDomainType
      */
     export function completeInverseRelations(get: (_: string) => Promise<Document>,
                                              getInverseRelation: (_: string) => string|undefined,
@@ -82,7 +83,8 @@ export module RelationsCompleter {
                     importDocument,
                     lookupDocument,
                     addInverse(getInverseRelation),
-                    relationNamesExceptRecordedIn(importDocument));
+                    relationNamesExceptRecordedIn(importDocument),
+                    assertIsAllowedRelationDomainType);
             }
 
             return await setInverseRelationsForDbResources(
@@ -121,12 +123,13 @@ export module RelationsCompleter {
     function setInverseRelationsForImportResource(importDocument: Document,
                                                   lookupDocument: LookupDocument,
                                                   addInverse: (_: Document) => (_: string) => [string, string],
-                                                  relations: string[]): void {
+                                                  relations: string[],
+                                                  assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
         const addInverse_ = addInverse(importDocument);
         const inverseIsDefined = compose(nth(1), isDefined);
         const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
-        const setInverses_ = setInverses(importDocument, lookupDocument);
+        const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
 
         flow(relations,
             map(addInverse_),
@@ -136,14 +139,26 @@ export module RelationsCompleter {
     }
 
 
-    function setInverses(importDocument: Document, lookupDocument: LookupDocument) {
+    function setInverses(importDocument: Document,
+                         lookupDocument: LookupDocument,
+                         assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
 
         return ([relationName, inverseRelationName]: [string, string]) => {
+
+            // TODO write tests etc.
+            const assertIsAllowedRelationDomainType_ = (targetDocument: Document) => {
+                assertIsAllowedRelationDomainType(
+                    importDocument.resource.type,
+                    targetDocument.resource.type,
+                    relationName,
+                    importDocument.resource.identifier);
+            };
 
             flow(
                 importDocument.resource.relations[relationName],
                 map(lookupDocument),
                 filter(isDefined),
+                forEach(assertIsAllowedRelationDomainType_),
                 forEach(assertInSameOperationWith(importDocument)),
                 map(to('resource.relations')),
                 forEach(setInverse(importDocument.resource.id, inverseRelationName)));

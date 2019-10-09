@@ -227,7 +227,7 @@ describe('RelationsCompleter', () => {
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('bad range', async done => {
+    it('bad range - between import and db resource', async done => {
 
         function assertIsAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
             throw ['abc'];
@@ -239,6 +239,27 @@ describe('RelationsCompleter', () => {
 
         try {
             await completeInverseRelations([doc1]);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(['abc']);
+        }
+        done();
+    });
+
+
+    it('bad range - between import resources', async done => {
+
+        function assertIsAllowedRelationDomainType(_: string, __: string, ___: string): boolean {
+            throw ['abc'];
+        }
+
+        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, assertIsAllowedRelationDomainType);
+
+        doc1.resource.relations['ab'] = ['2'];
+        doc2.resource.relations['bc'] = ['2'];
+
+        try {
+            await completeInverseRelations([doc1, doc2]);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);

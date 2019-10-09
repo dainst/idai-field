@@ -1,14 +1,20 @@
-import {Document} from 'idai-components-2';
-import {migrationMap, subFieldsMigrationMap} from './migration-map';
 import {isObject} from 'tsfun';
+import {Document} from 'idai-components-2';
+import {migrationMap, subFieldsMigrationMap, singleToMultipleValuesFieldNames} from './migration-map';
 
 
 /**
  * @author Thomas Kleinke
  */
-export module FieldnameMigrator {
+export module Migrator {
 
     export function migrate(document: Document): Document {
+
+        return migrateSingleToMultipleValues(migrateFieldNames(document));
+    }
+
+
+    function migrateFieldNames(document: Document): Document {
 
         const resource: any = {};
 
@@ -53,5 +59,17 @@ export module FieldnameMigrator {
         });
 
         return result;
+    }
+
+
+    function migrateSingleToMultipleValues(document: Document): Document {
+
+        singleToMultipleValuesFieldNames.forEach((fieldName: string) => {
+           if (document.resource[fieldName] && !Array.isArray(document.resource[fieldName])) {
+               document.resource[fieldName] = [document.resource[fieldName]];
+           }
+        });
+
+        return document;
     }
 }

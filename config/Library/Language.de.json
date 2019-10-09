@@ -52,6 +52,9 @@
       "label": "Bearbeiterin/Bearbeiter",
       "description": "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind. Wichtig: Die Namen der Personen, die den Eintrag in der Datenbank eintragen bzw. bearbeiten, werden automatisch gespeichert und müssen daher hier nicht angegeben werden."
     },
+    "campaign": {
+      "label": "Kampagne"
+    },
     "period": {
       "label": "Grobdatierung"
     },
@@ -253,6 +256,9 @@
         },
         "staff": {
           "label": "Team"
+        },
+        "campaigns": {
+          "label": "Kampagnen"
         },
         "supervisor": {
           "label": "Leiter/Leiterin",
@@ -562,9 +568,6 @@
         "supervisor": {
           "label": "Leiter/Leiterin",
           "description": "Leitende Person der Maßnahme"
-        },
-        "campaign": {
-          "label": "Kampagne"
         }
       }
     },
@@ -980,9 +983,6 @@
       "fields": {
         "conditionComment": {
           "label": "Kommentar zum Erhaltungszustand"
-        },
-        "campaign": {
-          "label": "Kampagne"
         },
         "condition": {
           "label": "Erhaltungszustand",

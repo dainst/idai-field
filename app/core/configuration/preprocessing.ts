@@ -1,8 +1,8 @@
+import {empty, isNot, on, subtract} from 'tsfun';
 import {FieldDefinition} from './model/field-definition';
 import {TypeDefinition} from './model/type-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {UnorderedConfigurationDefinition} from './model/unordered-configuration-definition';
-import {empty, isNot, on, subtract} from 'tsfun';
 import {ConfigurationDefinition} from './configuration-definition';
 
 
@@ -12,13 +12,9 @@ import {ConfigurationDefinition} from './configuration-definition';
  */
 export module Preprocessing {
 
-
-    export function preprocess2(appConfiguration: any,
-                                languageConfiguration: any,
-                                customLanguageConfiguration: any,
-                                searchConfiguration: any,
-                                orderConfiguration: any,
-                                relations: any) {
+    export function preprocess2(appConfiguration: any, languageConfiguration: any,
+                                customLanguageConfiguration: any, searchConfiguration: any,
+                                orderConfiguration: any, relations: any) {
 
         appConfiguration.relations = [];
         addExtraRelations(appConfiguration, relations);
@@ -178,8 +174,7 @@ export module Preprocessing {
 
 
     function expandInherits(configuration: Readonly<UnorderedConfigurationDefinition>,
-                            extraRelation: RelationDefinition,
-                            itemSet: string) {
+                            extraRelation: RelationDefinition, itemSet: string) {
 
         if (!extraRelation) return;
         if (!(extraRelation as any)[itemSet]) return;
@@ -226,7 +221,7 @@ export module Preprocessing {
 
 
     function addExtraFieldsOrder(appConfiguration: UnorderedConfigurationDefinition,
-            orderConfiguration: any) {
+                                 orderConfiguration: any) {
 
         if (!orderConfiguration.fields) orderConfiguration.fields = {};
 
@@ -239,9 +234,9 @@ export module Preprocessing {
 
 
     function getOrderedTypes(appConfiguration: UnorderedConfigurationDefinition,
-            orderConfiguration: any): Array<TypeDefinition> {
+                             orderConfiguration: any): Array<TypeDefinition> {
 
-            const types: Array<TypeDefinition> = [];
+        const types: Array<TypeDefinition> = [];
 
         if (orderConfiguration.types) {
             orderConfiguration.types.forEach((typeName: string) => {
@@ -261,7 +256,7 @@ export module Preprocessing {
 
 
     function addToOrderedTypes(type: TypeDefinition, typeName: string, types: Array<TypeDefinition>,
-        orderConfiguration: any) {
+                               orderConfiguration: any) {
 
         if (types.includes(type)) return;
 
@@ -273,7 +268,7 @@ export module Preprocessing {
 
     function getOrderedFields(type: TypeDefinition, orderConfiguration: any): Array<FieldDefinition> {
 
-            const fields: Array<FieldDefinition> = [];
+        const fields: Array<FieldDefinition> = [];
 
         if (!type.fields) return fields;
 
@@ -294,8 +289,7 @@ export module Preprocessing {
     }
 
 
-    function addToOrderedFields(field: FieldDefinition, fieldName: string,
-        fields: Array<FieldDefinition>) {
+    function addToOrderedFields(field: FieldDefinition, fieldName: string, fields: Array<FieldDefinition>) {
 
         if (fields.includes(field)) return;
 

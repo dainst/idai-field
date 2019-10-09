@@ -95,8 +95,13 @@ export class AppConfigurator {
             group: 'stem'
         },
         processor: {
-            inputType: 'dropdown',
+            inputType: 'checkboxes',
             valuelistFromProjectField: 'staff',
+            group: 'stem'
+        },
+        campaign: {
+            inputType: 'checkboxes',
+            valuelistFromProjectField: 'campaigns',
             group: 'stem'
         },
         description: {
@@ -130,11 +135,12 @@ export class AppConfigurator {
                 coordinateReferenceSystem: {
                     label: this.i18n({ id: 'configuration.project.crs', value: 'Koordinatenbezugssystem' }),
                     inputType: 'dropdown'
+                },
+                campaigns: {
+                    inputType: 'multiInput'
                 }
             }
         } as BuiltinTypeDefinition,
-
-
         Operation: {
             superType: true,
             abstract: true,
@@ -152,8 +158,6 @@ export class AppConfigurator {
             fields: {},
             parent: 'Operation'
         },
-
-
         Place: {
             fields: {
                 gazId: {
@@ -165,7 +169,6 @@ export class AppConfigurator {
             fields: {},
             mustLieWithin: true
         },
-
         // Room is an idealized (non material) entity
         Room: {
             superType: true,

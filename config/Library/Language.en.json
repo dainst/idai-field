@@ -32,6 +32,9 @@
       "label": "Processor",
       "description": "The name of the person(s) who is/are responsible for the resource or the object during the campaign. Please note: The names of the persons editing the database entry are saved automatically and are therefore not required here."
     },
+    "campaign": {
+      "label": "Campaign"
+    },
     "description": {
       "label": "Description"
     },
@@ -219,6 +222,12 @@
         },
         "projectURI": {
           "label": "Project URL"
+        },
+        "staff": {
+          "label": "Staff"
+        },
+        "campaigns": {
+          "label": "Campaigns"
         },
         "supervisor": {
           "label": "Supervisor",
@@ -494,9 +503,6 @@
         "supervisor": {
           "label": "Supervisor",
           "description": "Person in charge of the operation"
-        },
-        "campaign": {
-          "label": "Campaign"
         }
       }
     },
@@ -879,9 +885,6 @@
         },
         "conditionComment": {
           "label": "Condition comment"
-        },
-        "campaign": {
-          "label": "Campaign"
         },
         "condition": {
           "label": "Condition"

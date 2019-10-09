@@ -12,7 +12,7 @@ export module GroupUtil {
         switch(groupName) {
             case 'stem':
                 sortGroup(fields, ['identifier', 'shortDescription',
-                    'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
+                    'processor', 'campaign', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
                 break;
             case 'dimension':
                 sortGroup(fields, ['dimensionHeight',

@@ -428,7 +428,8 @@ function merge(target: any, source: any) {
 }
 
 
-function mergeFields(target: { [fieldName: string]: TransientFieldDefinition }, source: { [fieldName: string]: TransientFieldDefinition }) {
+function mergeFields(target: { [fieldName: string]: TransientFieldDefinition },
+                     source: { [fieldName: string]: TransientFieldDefinition }) {
 
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;
@@ -507,8 +508,8 @@ function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function mergeTypes(selectableTypes: { [typeName: string]: TransientTypeDefinition }, customTypes: CustomTypeDefinitions,
-                       assertInputTypePresentIfNotCommonType: Function) {
+function mergeTypes(selectableTypes: { [typeName: string]: TransientTypeDefinition },
+                    customTypes: CustomTypeDefinitions, assertInputTypePresentIfNotCommonType: Function) {
 
     const mergedTypes: { [typeName: string]: TransientTypeDefinition } = clone(selectableTypes);
 

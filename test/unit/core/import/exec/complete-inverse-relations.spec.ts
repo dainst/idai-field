@@ -10,6 +10,7 @@ import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import INCLUDES = HIERARCHICAL_RELATIONS.INCLUDES;
 import {completeInverseRelations} from '../../../../../app/core/import/exec/complete-inverse-relations';
+import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
 
 
 describe('completeInverseRelations', () => {
@@ -75,9 +76,11 @@ describe('completeInverseRelations', () => {
         getInverseRelation = (_: string) => {
             // make sure it gets ignored even if inverses are set
             if (_ === RECORDED_IN) throw 'E';
+
             if (_ === LIES_WITHIN) return INCLUDES;
             //
             if (_ === IS_CONTEMPORARY_WITH) return IS_CONTEMPORARY_WITH;
+            if (_ === IS_EQUIVALENT_TO) return IS_EQUIVALENT_TO;
             if (_ === IS_AFTER) return IS_BEFORE;
             return _ === IS_ABOVE ? IS_BELOW : IS_ABOVE;
         };
@@ -318,8 +321,8 @@ describe('completeInverseRelations', () => {
         ' - import resource to import resource' +
         ' - set one direction in each resource', async done => {
 
-        doc1.resource.relations[IS_ABOVE] = ['2'];
-        doc2.resource.relations[IS_ABOVE] = ['1'];
+        doc1.resource.relations[IS_BEFORE] = ['2'];
+        doc2.resource.relations[IS_BEFORE] = ['1'];
 
         await expectBadInterrelation([doc1, doc2], 'two');
         done();
@@ -331,7 +334,7 @@ describe('completeInverseRelations', () => {
         ' - set both directions in one resource', async done => {
 
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
-        doc1.resource.relations[IS_ABOVE] = ['2'];
+        doc1.resource.relations[IS_BEFORE] = ['2'];
 
         await expectBadInterrelation([doc1, doc2], 'one');
         done();
@@ -343,7 +346,7 @@ describe('completeInverseRelations', () => {
         ' - set one direction in each resource', async done => {
 
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
-        doc2.resource.relations[IS_ABOVE] = ['1'];
+        doc2.resource.relations[IS_BEFORE] = ['1'];
 
         await expectBadInterrelation([doc1, doc2], 'two');
         done();
@@ -365,7 +368,7 @@ describe('completeInverseRelations', () => {
         ' - import resource to db resource', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['7']; // choose '7' as a document not in import
-        doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['7'];
+        doc1.resource.relations[IS_EQUIVALENT_TO] = ['7'];
 
         await expectBadInterrelation([doc1], 'one');
         done();

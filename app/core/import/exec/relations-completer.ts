@@ -1,7 +1,7 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {compose, filter, flatten, flow, forEach, intersect, isDefined, isEmpty, isNot, isnt, isUndefinedOrEmpty, lookup,
-    map, nth, remove, subtract, to, undefinedOrEmpty, on} from 'tsfun';
+    map, remove, subtract, to, undefinedOrEmpty, on} from 'tsfun';
 import {gt, len, makeLookup} from '../util';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
@@ -30,57 +30,61 @@ export module RelationsCompleter {
      * @param get
      * @param getInverseRelation
      * @param assertIsAllowedRelationDomainType
+     * @param mergeMode
+     *
+     * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
+     *   for contradictory relations and missing inverses are added.
+     *
+     * @param mergeMode
+     *
+     * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
+     *   The document from importDocuments then gets modified in place.
+     *
+     * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
+     *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
+     *
+     * @throws ImportErrors.*
+     * @see DefaultImportCalc#build() . process()
      */
-    export function completeInverseRelations(get: (_: string) => Promise<Document>,
+    export async function completeInverseRelations(importDocuments: Array<Document>,
+                                             get: (_: string) => Promise<Document>,
                                              getInverseRelation: (_: string) => string|undefined,
-                                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {}) {
+                                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
+                                             mergeMode: boolean = false): Promise<Array<Document>> {
 
-        /**
-         * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
-         *   for contradictory relations and missing inverses are added.
-         *
-         * @param mergeMode
-         *
-         * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
-         *   The document from importDocuments then gets modified in place.
-         *
-         * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
-         *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
-         *
-         * @throws ImportErrors.*
-         * @see DefaultImportCalc#build() . process()
-         */
-        return async (importDocuments: Array<Document>, mergeMode: boolean = false): Promise<Array<Document>> => {
+        const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
-            const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
+        for (let importDocument of importDocuments) {
 
-            async function getTargetIds(document: Document) {
-
-                let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
-                if (mergeMode) {
-                    let oldVersion; try { oldVersion = await get(document.resource.id);
-                    } catch { throw "FATAL existing version of document not found" }
-                    return [targetIds, subtract(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))]
-                }
-                return [targetIds, []];
-            }
-
-            for (let importDocument of importDocuments) {
-
-                setInverseRelationsForImportResource(
-                    importDocument,
-                    lookupDocument,
-                    pairRelationWithItsInverse(getInverseRelation),
-                    relationNamesExceptRecordedIn(importDocument),
-                    assertIsAllowedRelationDomainType);
-            }
-
-            return await setInverseRelationsForDbResources(
-                importDocuments,
-                getTargetIds,
-                get,
-                getInverseRelation,
+            setInverseRelationsForImportResource(
+                importDocument,
+                lookupDocument,
+                pairRelationWithItsInverse(getInverseRelation),
+                relationNamesExceptRecordedIn(importDocument),
                 assertIsAllowedRelationDomainType);
+        }
+
+        return await setInverseRelationsForDbResources(
+            importDocuments,
+            getTargetIds(mergeMode, get, lookupDocument),
+            get,
+            getInverseRelation,
+            assertIsAllowedRelationDomainType);
+
+    }
+
+
+    function getTargetIds(mergeMode: boolean, get: (_: string) => Promise<Document>, lookupDocument: LookupDocument) {
+
+        return async (document: Document) => {
+
+            let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
+            if (mergeMode) {
+                let oldVersion; try { oldVersion = await get(document.resource.id);
+                } catch { throw "FATAL existing version of document not found" }
+                return [targetIds, subtract(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))]
+            }
+            return [targetIds, []];
         }
     }
 

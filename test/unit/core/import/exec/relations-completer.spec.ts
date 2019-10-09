@@ -16,7 +16,6 @@ describe('RelationsCompleter', () => {
 
 
     let isRelationProperty;
-    let completeInverseRelations;
     let get;
     let getInverseRelation;
 
@@ -82,8 +81,6 @@ describe('RelationsCompleter', () => {
             if (_ === IS_AFTER) return IS_BEFORE;
             return _ === IS_ABOVE ? IS_BELOW : IS_ABOVE;
         };
-
-        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation);
     });
     
 
@@ -92,7 +89,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations[IS_ABOVE] =  ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];
 
-        const documents = await completeInverseRelations([doc1, doc2]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(0);
         done();
     });
@@ -101,7 +98,7 @@ describe('RelationsCompleter', () => {
     it('set inverse relation between import resources - complement inverse', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = await completeInverseRelations([doc1, doc2]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(0);
         expect(doc2.resource.relations[IS_ABOVE]).not.toBeUndefined();
         expect(doc2.resource.relations[IS_ABOVE].length).toBe(1);
@@ -115,7 +112,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations[IS_ABOVE] = ['3'];
         doc1.resource.relations[IS_BELOW] = ['2'];
 
-        const documents = await completeInverseRelations([doc1, doc2]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         expect(documents.length).toBe(1); // three
         expect(doc2.resource.relations[IS_ABOVE]).not.toBeUndefined();
         expect(doc2.resource.relations[IS_ABOVE].length).toBe(2);
@@ -127,7 +124,7 @@ describe('RelationsCompleter', () => {
     it('set inverse relation with database resource', async done => {
 
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = await completeInverseRelations([doc1 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -141,7 +138,7 @@ describe('RelationsCompleter', () => {
 
         doc2.resource.relations[IS_ABOVE] = ['3'];
         doc1.resource.relations[IS_BELOW] = ['2'];
-        const documents = await completeInverseRelations([doc1 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
@@ -155,7 +152,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations[IS_BELOW] = ['3'];
         doc2.resource.relations[IS_BELOW] = ['3'];
-        const documents = await completeInverseRelations([doc1 as any, doc2 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations[IS_ABOVE][0]).toBe('1');
@@ -171,7 +168,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations[IS_BELOW] = ['3'];
         doc2.resource.relations[IS_BELOW] = ['3'];
-        const documents = await completeInverseRelations([doc1 as any, doc2 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any, doc2 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('3');
         expect(documents[0].resource.relations[IS_ABOVE][0]).toBe('4');
@@ -188,7 +185,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations[IS_BEFORE] = ['1'];
         doc2.resource.relations[IS_ABOVE] = ['1'];
 
-        const documents = await completeInverseRelations([doc1 as any]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations[IS_BEFORE][0]).toBe('1');
@@ -205,7 +202,10 @@ describe('RelationsCompleter', () => {
         const doc1New = clone(doc1);
         doc1New.resource.relations = { isRecordedIn: [] };
 
-        const documents = await completeInverseRelations([doc1New as any], true);
+        const documents = await RelationsCompleter.completeInverseRelations(
+            [doc1New as any],
+            get, getInverseRelation,
+            () => {}, true);
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations[IS_ABOVE]).toBeUndefined();
@@ -217,7 +217,7 @@ describe('RelationsCompleter', () => {
 
         doc2.resource.relations[LIES_WITHIN] = ['1'];
         doc2.resource.relations[RECORDED_IN] = ['1'];
-        const documents = await completeInverseRelations([doc2]);
+        const documents = await RelationsCompleter.completeInverseRelations([doc2], get, getInverseRelation);
 
         expect(documents.length).toBe(0);
         expect(doc2.resource.relations[LIES_WITHIN][0]).toBe('1');
@@ -234,12 +234,10 @@ describe('RelationsCompleter', () => {
             throw ['abc'];
         }
 
-        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, assertIsAllowedRelationDomainType);
-
         doc1.resource.relations[IS_AFTER] = ['2'];
 
         try {
-            await completeInverseRelations([doc1]);
+            await RelationsCompleter.completeInverseRelations([doc1], get, getInverseRelation, assertIsAllowedRelationDomainType);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -254,13 +252,11 @@ describe('RelationsCompleter', () => {
             throw ['abc'];
         }
 
-        completeInverseRelations = RelationsCompleter.completeInverseRelations(get, getInverseRelation, assertIsAllowedRelationDomainType);
-
         doc1.resource.relations['ab'] = ['2'];
         doc2.resource.relations['bc'] = ['2'];
 
         try {
-            await completeInverseRelations([doc1, doc2]);
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation, assertIsAllowedRelationDomainType);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(['abc']);
@@ -277,7 +273,7 @@ describe('RelationsCompleter', () => {
         doc2.resource.relations[IS_BEFORE] = ['1'];
 
         try {
-            await completeInverseRelations([doc1, doc2]);
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
@@ -295,7 +291,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[RECORDED_IN] = ['t2'];
 
         try {
-            await completeInverseRelations([doc1]);
+            await RelationsCompleter.completeInverseRelations([doc1], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.MUST_BE_IN_SAME_OPERATION);
@@ -383,7 +379,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['2'];
         doc1.resource.relations[IS_ABOVE] = ['3'];
         try {
-            await completeInverseRelations([doc1, doc2]);
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -396,7 +392,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         doc1.resource.relations[IS_CONTEMPORARY_WITH] = ['2'];
         try {
-            await completeInverseRelations([doc1, doc2]);
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, getInverseRelation);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -409,7 +405,7 @@ describe('RelationsCompleter', () => {
         doc1.resource.relations[IS_BELOW] = ['17'];
         try {
 
-            await completeInverseRelations([doc1 as any]);
+            await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.EXEC_MISSING_RELATION_TARGET)
@@ -422,7 +418,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations[IS_BELOW] = [];
         try {
-            await completeInverseRelations([doc1 as any]);
+            await RelationsCompleter.completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.EMPTY_RELATION);
@@ -435,7 +431,7 @@ describe('RelationsCompleter', () => {
     async function expectBadInterrelation(docs, err2) {
 
         try {
-            await completeInverseRelations(docs);
+            await RelationsCompleter.completeInverseRelations(docs, get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);

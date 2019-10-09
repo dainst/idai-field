@@ -36,12 +36,12 @@ export async function processRelations(documents: Array<Document>,
     if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 
         await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-        return await RelationsCompleter
-            .completeInverseRelations(
+        return await RelationsCompleter.completeInverseRelations(
+                documents,
                 get,
                 getInverseRelation,
                 allowOverwriteRelationsInMergeMode_,
-                )(documents, mergeMode)
+                mergeMode);
     }
     return [];
 }

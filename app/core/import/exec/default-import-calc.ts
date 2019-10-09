@@ -10,6 +10,7 @@ import {RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {getOnOr} from 'tsfun/src/struct';
 
 
 /**
@@ -301,7 +302,8 @@ export module DefaultImportCalc {
             const relations = document.resource.relations;
             if (inferredRecordedIn) relations[RECORDED_IN] = [inferredRecordedIn];
             if (relations
-                && sameset(relations[RECORDED_IN])(relations[LIES_WITHIN] ? relations[LIES_WITHIN] : [])) {
+                && relations[LIES_WITHIN]
+                && sameset(relations[LIES_WITHIN])(relations[RECORDED_IN])) {
 
                 delete relations[LIES_WITHIN];
             }

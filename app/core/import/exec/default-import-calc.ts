@@ -1,15 +1,14 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, hasNot, includedIn, isArray, sameset, on, empty, and,
-    isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
-import {asyncForEach, asyncMap} from 'tsfun-extra';
+import {duplicates, hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty, not, to} from 'tsfun';
+import {asyncForEach} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
-import {Relations, NewDocument, Document} from 'idai-components-2';
-import {RelationsCompleter} from './relations-completer';
-import {DocumentMerge} from './document-merge';
+import {Document, Relations} from 'idai-components-2';
 import {RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
+import {processRelations} from './process-relations';
+import {Find, GenerateId, Get, GetInverseRelation, Id, Identifier, IdentifierMap, ProcessResult} from './utils';
+import {processDocuments} from './process-documents';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 /**
@@ -17,21 +16,6 @@ import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
  * @author Thomas Kleinke
  */
 export module DefaultImportCalc {
-
-    type Get = (resourceId: string) => Promise<Document>;
-    type Find = (identifier: string) => Promise<Document|undefined>;
-    type GenerateId = () => string;
-    type GetInverseRelation = (propertyName: string) => string|undefined;
-
-    type Id = string;
-    type IdMap = { [id: string]: Document };
-    type Identifier = string;
-    type IdentifierMap = { [identifier: string]: string };
-
-    type ImportDocuments = Array<Document>;
-    type TargetDocuments = Array<Document>;
-    type MsgWithParams = string[];
-    type ProcessResult = [ImportDocuments, TargetDocuments, MsgWithParams|undefined];
 
 
     export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
@@ -111,68 +95,11 @@ export module DefaultImportCalc {
     }
 
 
-    /**
-     * @returns clones of the documents with their properties adjusted
-     */
-    function processDocuments(validator: ImportValidator,
-                              mergeMode: boolean,
-                              allowOverwriteRelationsInMergeMode: boolean,
-                              preprocessAndValidateRelations: (_: Document) => Promise<Document>,
-                              find: Find): (_: Array<Document>) => Promise<Array<Document>> {
-
-        return asyncMap(async (document: Document) => {
-
-            const preprocessedDocument = await preprocessAndValidateRelations(document);
-
-            // we want dropdown fields to be complete before merge
-            validator.assertDropdownRangeComplete(preprocessedDocument.resource);
-
-            const possiblyMergedDocument = await mergeOrUseAsIs(
-                preprocessedDocument,
-                find,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode);
-
-            return validate(possiblyMergedDocument, validator, mergeMode);
-        });
-    }
-
 
     function assertNoDuplicates(documents: Array<Document>) {
 
         const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
         if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
-    }
-
-
-    async function processRelations(documents: Array<Document>,
-                                    validator: ImportValidator,
-                                    operationTypeNames: string[],
-                                    mergeMode: boolean,
-                                    allowOverwriteRelationsInMergeMode: boolean,
-                                    getInverseRelation: GetInverseRelation,
-                                    get: Get,
-                                    mainTypeDocumentId: Id) {
-
-        if (!mergeMode) {
-            await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId);
-            prepareIsRecordedInRelation(documents, mainTypeDocumentId);
-        }
-        await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
-        await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
-
-        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-
-            await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-            return await RelationsCompleter
-                .completeInverseRelations(
-                    get,
-                    getInverseRelation,
-                    (_: any, __: any, ___: any, ____: any) =>
-                        validator.assertIsAllowedRelationDomainType(_, __, ___, ____))(documents, mergeMode)
-        }
-
-        return [];
     }
 
 
@@ -245,118 +172,6 @@ export module DefaultImportCalc {
     }
 
 
-    /**
-     * Replaces LIES_WITHIN entries with RECORDED_IN entries where operation type documents
-     * are referenced.
-     *
-     * documents get modified in place
-     */
-    async function replaceTopLevelLiesWithins(documents: Array<Document>,
-                                              operationTypeNames: string[],
-                                              get: Get,
-                                              mainTypeDocumentId: Id) {
-
-        const relationsForDocumentsWhereLiesWithinIsDefined: Array<Relations> = documents
-            .map(to('resource.relations'))
-            .filter(isDefined)
-            .filter(on(LIES_WITHIN, and(isDefined, isNot(empty))));
-
-        for (let relations of relationsForDocumentsWhereLiesWithinIsDefined) {
-
-            let liesWithinTarget: Document|undefined = undefined;
-            try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
-            if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
-
-            if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
-            relations[RECORDED_IN] = relations[LIES_WITHIN];
-            delete relations[LIES_WITHIN];
-        }
-    }
-
-
-    /**
-     * Sets RECORDED_IN relations in documents, as inferred from LIES_WITHIN.
-     * Where a document is situated at the top level, i.e. directly below an operation,
-     * the LIES_WITHIN entry gets deleted.
-     *
-     * documents get modified in place
-     */
-    async function inferRecordedIns(documents: Array<Document>,
-                                    operationTypeNames: string[],
-                                    get: Get,
-                                    assertNoRecordedInMismatch: (document: Document,
-                                                                 inferredRecordedIn: string|undefined) => void) {
-
-        const idMap = documents.reduce((tmpMap, document: Document) => {
-                tmpMap[document.resource.id] = document;
-                return tmpMap;
-            },
-            {} as IdMap);
-
-
-        async function getRecordedInFromImportDocument(liesWithinTargetInImport: any) {
-            if (liesWithinTargetInImport[0]) return liesWithinTargetInImport[0];
-
-            const target = liesWithinTargetInImport[1] as Document;
-            if (isNot(undefinedOrEmpty)((target.resource.relations[LIES_WITHIN]))) return determineRecordedInValueFor(target);
-        }
-
-
-        async function getRecordedInFromExistingDocument(targetId: Id) {
-
-            try {
-                const got = await get(targetId);
-                return  operationTypeNames.includes(got.resource.type)
-                    ? got.resource.id
-                    : got.resource.relations[RECORDED_IN][0];
-            } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
-        }
-
-
-        async function determineRecordedInValueFor(document: Document): Promise<string|undefined> {
-
-            const relations = document.resource.relations;
-            if (!relations || isUndefinedOrEmpty(relations[LIES_WITHIN])) return;
-
-            const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
-            return liesWithinTargetInImport
-                ? getRecordedInFromImportDocument(liesWithinTargetInImport)
-                : getRecordedInFromExistingDocument(relations[LIES_WITHIN][0]);
-        }
-
-
-        for (let document of documents) {
-
-            const inferredRecordedIn = await determineRecordedInValueFor(document);
-            assertNoRecordedInMismatch(document, inferredRecordedIn);
-
-            const relations = document.resource.relations;
-            if (inferredRecordedIn) relations[RECORDED_IN] = [inferredRecordedIn];
-            if (relations
-                && relations[LIES_WITHIN]
-                && sameset(relations[LIES_WITHIN])(relations[RECORDED_IN])) {
-
-                delete relations[LIES_WITHIN];
-            }
-        }
-    }
-
-
-    function makeAssertNoRecordedInMismatch(mainTypeDocumentId: Id) {
-
-        return function assertNoRecordedInMismatch(document: Document, compare: string|undefined) {
-
-            const relations = document.resource.relations;
-            if (mainTypeDocumentId
-                && isNot(undefinedOrEmpty)(relations[RECORDED_IN])
-                && relations[RECORDED_IN][0] !== compare
-                && isDefined(compare)) {
-                throw [E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, document.resource.identifier];
-            }
-        }
-    }
-
-
     function rewriteIdentifiersInRelations(find: Find,
                                            identifierMap: IdentifierMap) {
 
@@ -397,17 +212,6 @@ export module DefaultImportCalc {
             await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
         }
     }
-    
-
-    function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
-
-        if (!mergeMode) {
-            validator.assertIsKnownType(document);
-            validator.assertIsAllowedType(document, mergeMode);
-        }
-        validator.assertIsWellformed(document);
-        return document;
-    }
 
 
     function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
@@ -427,77 +231,5 @@ export module DefaultImportCalc {
                 identifierMap[document.resource.identifier] = document.resource.id = generateId();
                 return identifierMap;
             }, {} as IdentifierMap);
-    }
-
-
-    async function mergeOrUseAsIs(document: NewDocument|Document,
-                                  find: Find,
-                                  mergeIfExists: boolean,
-                                  allowOverwriteRelationsOnMerge: boolean): Promise<Document> {
-
-        let documentForUpdate: Document = document as Document;
-        const existingDocument = await find(document.resource.identifier);
-
-        if (mergeIfExists) {
-            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate, allowOverwriteRelationsOnMerge);
-            else throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
-        } else {
-            if (existingDocument) throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
-        }
-        return documentForUpdate;
-    }
-
-
-    async function validateIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
-                                                validator: ImportValidator,
-                                                mainTypeDocumentId: Id) {
-
-        for (let document of documentsForUpdate) {
-            if (!mainTypeDocumentId) {
-                validator.assertHasLiesWithin(document);
-            } else {
-                await validator.assertIsNotOverviewType(document);
-                await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
-            }
-        }
-    }
-
-
-    function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
-                                               mainTypeDocumentId: Id) {
-
-        for (let document of documentsForUpdate) {
-            if (mainTypeDocumentId) initRecordedIn(document, mainTypeDocumentId);
-        }
-    }
-
-
-    function searchInImport(targetDocumentResourceId: Id,
-                            idMap: IdMap,
-                            operationTypeNames: string[]
-    ): Either<string, Document> // recordedInResourceId|targetDocument
-       |undefined {             // targetDocument not found
-
-        const targetInImport = idMap[targetDocumentResourceId];
-        if (!targetInImport) return undefined;
-
-        if (operationTypeNames.includes(targetInImport.resource.type)) {
-            return [targetInImport.resource.id, undefined];
-        }
-        if (targetInImport.resource.relations.isRecordedIn
-            && targetInImport.resource.relations.isRecordedIn.length > 0) {
-            return [targetInImport.resource.relations.isRecordedIn[0], undefined];
-        }
-        return [undefined, targetInImport];
-    }
-
-
-    function initRecordedIn(document: NewDocument, mainTypeDocumentId: Id) {
-
-        const relations = document.resource.relations;
-        if (!relations[RECORDED_IN]) relations[RECORDED_IN] = [];
-        if (!relations[RECORDED_IN].includes(mainTypeDocumentId)) {
-            relations[RECORDED_IN].push(mainTypeDocumentId);
-        }
     }
 }

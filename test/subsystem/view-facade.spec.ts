@@ -255,11 +255,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         await viewFacade.selectView('project');
         expect(viewFacade.getCustomConstraints()).toEqual({});
         await viewFacade.selectView('t1');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
         done();
     });
 
@@ -269,11 +269,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         viewFacade.setMode('list');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
         viewFacade.setMode('map');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
         done();
     });
 
@@ -510,11 +510,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setFilterTypes(['Find']);
         expect(viewFacade.getDocuments().length).toBe(2);
 
-        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find1');
 
-        await viewFacade.setCustomConstraints({ 'processor:match': 'wrongPerson' });
+        await viewFacade.setCustomConstraints({ 'processor:contain': 'wrongPerson' });
         expect(viewFacade.getDocuments().length).toBe(0);
 
         done();
@@ -527,7 +527,7 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setBypassHierarchy(true);
 
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         expect(viewFacade.getDocuments().length).toBe(1);
 
         await viewFacade.setFilterTypes(['Feature']);

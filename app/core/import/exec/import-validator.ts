@@ -3,7 +3,7 @@ import {Document, NewDocument, NewResource, Query} from 'idai-components-2';
 import {TypeUtility} from '../../model/type-utility';
 import {Validator} from '../../model/validator';
 import {Validations} from '../../model/validations';
-import {ImportErrors} from './import-errors';
+import {ImportErrors as E} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
@@ -39,13 +39,51 @@ export class ImportValidator extends Validator {
     }
 
 
+    public async assertLiesWithinCorrectness(documents: Array<Document>) {
+
+        for (let document of documents) {
+
+            const type = this.projectConfiguration.getTypesList().find(type => type.name === document.resource.type);
+            if (!type || !type.mustLieWithin) continue;
+
+            const recordedIn = document.resource.relations[RECORDED_IN];
+            const liesWithin = document.resource.relations[LIES_WITHIN];
+
+            if (recordedIn && recordedIn.length > 0 && (!liesWithin || liesWithin.length === 0)) {
+
+                throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, document.resource.type, document.resource.identifier];
+            }
+
+            const found = (await this.datastore.find({constraints: {'id:match': liesWithin[0]}})).documents;
+            if (found && found.length > 0) {
+                const foundDoc = found[0] as Document;
+
+                if (!this.projectConfiguration.isAllowedRelationDomainType(type.name, foundDoc.resource.type, LIES_WITHIN)) {
+
+                    // console.warn(':', "uh oh", document.resource.identifier);
+                }
+
+
+                // if (foundDoc.resource && foundDoc.resource.type) {
+                //     if (document.resource.type === 'Inscription') {
+                //         if (foundDoc.resource.type !== 'Find') throw [E.BAD_INTERRELATION, document.resource.identifier];
+                //     }
+                //     if (document.resource.type.indexOf('Room') !== -1) {
+                //         if (foundDoc.resource.type !== 'Room') throw [E.BAD_INTERRELATION, document.resource.identifier];
+                //     }
+                // }
+            }
+        }
+    }
+
+
     /**
      * @throws [INVALID_TYPE]
      */
     public assertIsKnownType(document: Document|NewDocument) {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [ImportErrors.INVALID_TYPE, document.resource.type];
+            throw [E.INVALID_TYPE, document.resource.type];
         }
     }
 
@@ -55,13 +93,13 @@ export class ImportValidator extends Validator {
         if (document.resource.type === 'Operation'
             || document.resource.type === 'Project') {
 
-            throw [ImportErrors.TYPE_NOT_ALLOWED, document.resource.type];
+            throw [E.TYPE_NOT_ALLOWED, document.resource.type];
         }
 
         if (!mergeMode && (document.resource.type === 'Image'
             || this.typeUtility.isSubtype(document.resource.type, 'Image'))) {
 
-            throw [ImportErrors.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
+            throw [E.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
         }
     }
 
@@ -70,7 +108,7 @@ export class ImportValidator extends Validator {
 
         if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
 
-            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
+            throw [E.OPERATIONS_NOT_ALLOWED];
         }
     }
 
@@ -91,8 +129,8 @@ export class ImportValidator extends Validator {
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
-     * @throws [ImportErrors.INVALID_RELATIONS]
-     * @throws [ImportErrors.INVALID_FIELDS]
+     * @throws [E.INVALID_RELATIONS]
+     * @throws [E.INVALID_FIELDS]
      * @throws [ValidationErrors.MISSING_PROPERTY]
      * @throws [ValidationErrors.MISSING_GEOMETRYTYPE]
      * @throws [ValidationErrors.MISSING_COORDINATES]
@@ -106,7 +144,7 @@ export class ImportValidator extends Validator {
 
         if (invalidFields.length > 0) {
             throw [
-                ImportErrors.INVALID_FIELDS,
+                E.INVALID_FIELDS,
                 document.resource.type,
                 invalidFields.join(', ')
             ];
@@ -119,7 +157,7 @@ export class ImportValidator extends Validator {
 
         if (invalidRelationFields.length > 0) {
             throw [
-                ImportErrors.INVALID_RELATIONS,
+                E.INVALID_RELATIONS,
                 document.resource.type,
                 invalidRelationFields.join(', ')
             ];
@@ -140,7 +178,7 @@ export class ImportValidator extends Validator {
         if (this.isExpectedToHaveIsRecordedInRelation(document)
             && !Document.hasRelations(document as Document, LIES_WITHIN)) { // isRecordedIn gets constructed from liesWithin
 
-            throw [ImportErrors.NO_PARENT_ASSIGNED];
+            throw [E.NO_PARENT_ASSIGNED];
         }
     }
 
@@ -151,14 +189,14 @@ export class ImportValidator extends Validator {
         if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
             mainTypeDocument.resource.type, RECORDED_IN)) {
 
-            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
+            throw [E.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                 mainTypeDocument.resource.type];
         }
     }
 
 
     /**
-     * @throws [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
+     * @throws [E.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
      */
     public assertDropdownRangeComplete(resource: NewResource): void {
 
@@ -178,7 +216,7 @@ export class ImportValidator extends Validator {
             if (fieldDefinition.inputType !== INPUT_TYPES.DROPDOWN_RANGE) continue;
 
             if (resource[dropdownRangeFieldName + 'End'] && !(resource[dropdownRangeFieldName])) {
-                throw [ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, dropdownRangeFieldName];
+                throw [E.INVALID_DROPDOWN_RANGE_VALUES, dropdownRangeFieldName];
             }
         }
     }

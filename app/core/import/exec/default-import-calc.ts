@@ -1,5 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, hasNot, includedIn, isArray, sameset, or, on, empty, and,
+import {duplicates, hasNot, includedIn, isArray, sameset, on, empty, and,
     isDefined, isNot, isUndefinedOrEmpty, not, to, undefinedOrEmpty, isnt, Either} from 'tsfun';
 import {asyncForEach, asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from './import-errors';
@@ -10,7 +10,6 @@ import {RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {getOnOr} from 'tsfun/src/struct';
 
 
 /**
@@ -56,6 +55,21 @@ export module DefaultImportCalc {
 
         assertLegalCombination(mainTypeDocumentId, mergeMode);
 
+        /**
+         * ImportErrors (accessible via ProcessResult)
+         *
+         * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier] if a resource of
+         *   a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
+         *   directly below an operation.
+         *
+         * [BAD_INTERRELATION]
+         *
+         * [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] if mainTypeDocumentId is not '' and
+         *   a resource references an operation as parent.
+         *
+         * [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier] if the inferredRecordedIn
+         *   differs from a possibly specified recordedIn.
+         */
         return async function process(documents: Array<Document>): Promise<ProcessResult> {
 
             try {
@@ -137,9 +151,13 @@ export module DefaultImportCalc {
                                     get: Get,
                                     mainTypeDocumentId: Id) {
 
-        if (!mergeMode) await prepareIsRecordedInRelation(documents, validator, mainTypeDocumentId);
+        if (!mergeMode) {
+            await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId);
+            prepareIsRecordedInRelation(documents, mainTypeDocumentId);
+        }
         await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
         await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
+        await validator.assertLiesWithinCorrectness(documents);
 
         return !mergeMode || allowOverwriteRelationsInMergeMode
             ? await RelationsCompleter
@@ -221,13 +239,7 @@ export module DefaultImportCalc {
      * Replaces LIES_WITHIN entries with RECORDED_IN entries where operation type documents
      * are referenced.
      *
-     * @param documents get modified in place
-     * @param operationTypeNames
-     * @param get
-     * @param mainTypeDocumentId
-     *
-     * @throws [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] if mainTypeDocumentId is not '' and
-     *   a resource references an operation as parent.
+     * documents get modified in place
      */
     async function replaceTopLevelLiesWithins(documents: Array<Document>,
                                               operationTypeNames: string[],
@@ -257,13 +269,7 @@ export module DefaultImportCalc {
      * Where a document is situated at the top level, i.e. directly below an operation,
      * the LIES_WITHIN entry gets deleted.
      *
-     * @param documents get modified in place
-     * @param operationTypeNames
-     * @param get
-     * @param assertNoRecordedInMismatch
-     *
-     * @throws [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier] if the inferredRecordedIn
-     *   differs from a possibly specified recordedIn.
+     * documents get modified in place
      */
     async function inferRecordedIns(documents: Array<Document>,
                                     operationTypeNames: string[],
@@ -432,9 +438,9 @@ export module DefaultImportCalc {
     }
 
 
-    async function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
-                                               validator: ImportValidator,
-                                               mainTypeDocumentId: Id) {
+    async function validateIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
+                                                validator: ImportValidator,
+                                                mainTypeDocumentId: Id) {
 
         for (let document of documentsForUpdate) {
             if (!mainTypeDocumentId) {
@@ -442,8 +448,16 @@ export module DefaultImportCalc {
             } else {
                 await validator.assertIsNotOverviewType(document);
                 await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
-                initRecordedIn(document, mainTypeDocumentId);
             }
+        }
+    }
+
+
+    function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
+                                               mainTypeDocumentId: Id) {
+
+        for (let document of documentsForUpdate) {
+            if (mainTypeDocumentId) initRecordedIn(document, mainTypeDocumentId);
         }
     }
 

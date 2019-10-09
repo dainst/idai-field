@@ -3713,6 +3713,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
+        <source>Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
+        <target state="final">Resources of type '[0]' must be placed within other resources. Identifier of resource: '[1]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
         <target state="final">Missing field definition for the field '[1]' of the resource of type '[0]'.</target>

@@ -70,7 +70,7 @@ describe('DefaultImportCalc', () => {
         resourceIdCounter = 0;
 
         validator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed',
+            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
@@ -409,7 +409,20 @@ describe('DefaultImportCalc', () => {
 
     // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    it('assignment to existing feature, via mismatch with operation assignment parameter , ', async done => {
+    it('assert lies within correctness', async done => {
+
+        validator.assertLiesWithinCorrectness.and.callFake(() => { throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE]});
+
+        const result = await process([
+            d('Find', 'one', { isChildOf: 'existingTrench'})
+        ]);
+
+        expect(result[2][0]).toEqual(E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE);
+        done();
+    });
+
+
+    it('assignment to existing feature, via mismatch with operation assignment parameter', async done => {
 
         const result = await processWithMainType([
             d('Feature', 'one', { isChildOf: 'existingFeature2'})

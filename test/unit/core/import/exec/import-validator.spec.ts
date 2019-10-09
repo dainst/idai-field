@@ -35,12 +35,17 @@ describe('ImportValidation', () => {
                         {name: 'type',}
                     ]
                 },
+                {
+                    type: 'T3',
+                    mustLieWithin: true,
+                }
             ],
             relations: [
                 {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
                 {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
                 {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'} // defined but not allowed
+                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}, // defined but not allowed
+                {name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE'}
             ]
         }
     );
@@ -174,6 +179,34 @@ describe('ImportValidation', () => {
             expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
                 'isRelatedTo, isDepictedIn']);
         }
+    });
+
+
+    it('assertLiesWithinCorrectness - must lie within', async done => {
+
+        const doc = {
+            resource: {
+                id: '3',
+                identifier: '3',
+                type: 'T3',
+                relations: {
+                    isRecordedIn: ['T1'],
+                    liesWithin: []
+                }
+            }
+        };
+
+        try {
+            await new ImportValidator(
+                projectConfiguration,
+                {find: (q: any) => Promise.resolve({documents: []})} as any,
+                undefined).assertLiesWithinCorrectness([doc as any]);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, 'T3', '3']);
+        }
+        done();
     });
 
 

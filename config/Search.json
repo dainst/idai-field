@@ -33,13 +33,13 @@
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]
   },
   "Feature": {
-    "constraint": ["diary", "hasDisturbance", "featureAmount", "processor", "color", "featureBorders", "featureForm"]
+    "constraint": ["diary", "hasDisturbance", "featureAmount", "processor", "campaign", "color", "featureBorders", "featureForm"]
   },
   "Floor": {
     "constraint": ["condition", "conditionAmount", "consistency", "distinguishingCriteria", "floorClassification", "layerClassification", "mortarBinder"]
   },
   "Inscription": {
-    "constraint": ["language", "processor", "condition", "conditionAmount", "objectType"]
+    "constraint": ["language", "processor", "campaign", "condition", "conditionAmount", "objectType"]
   },
   "Pottery": {
     "constraint": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "materialType", "objectType", "specificType", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific"]
@@ -81,7 +81,7 @@
     "constraint": ["denomination", "manufacturingMethod", "metalMaterial", "mint", "mintingRuler", "provenance", "stampPositioning"]
   },
   "Find": {
-    "constraint": ["sketched", "hasRestoration", "drawn", "photographed", "hasRestoration", "amount", "catalogueNumber", "processor", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
+    "constraint": ["sketched", "hasRestoration", "drawn", "photographed", "hasRestoration", "amount", "catalogueNumber", "processor", "campaign", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
   },
   "PlasterFragment": {
     "constraint": ["hasDecoration", "color", "plasterComponents"]
@@ -99,7 +99,7 @@
     "constraint": ["isIllegal"]
   },
   "Image": {
-    "constraint": ["draughtsmen", "processor"]
+    "constraint": ["draughtsmen", "processor", "campaign"]
   },
   "Drawing": {
     "constraint": ["drawingMaterial", "drawingTool", "drawingType", "scale"]

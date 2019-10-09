@@ -6,9 +6,17 @@
     "description": {},
     "valuelists": {},
     "commons": [
-      "area", "spatialLocation",
-      "processor", "description","period", "dating", "diary",
-      "dimensionLength", "dimensionWidth"],
+      "area",
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
     "fields": {}
   },
   "RoomFloor:default": {
@@ -18,9 +26,17 @@
     "description": {},
     "valuelists": {},
     "commons": [
-      "area", "spatialLocation",
-      "processor", "description", "period", "dating", "diary",
-      "dimensionLength", "dimensionWidth"],
+      "area",
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
     "fields": {}
   },
   "RoomWall:default": {
@@ -31,8 +47,15 @@
     "valuelists": {},
     "commons": [
       "spatialLocation",
-      "processor", "description" ,"period", "dating", "diary",
-      "dimensionLength", "dimensionWidth"],
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
     "fields": {}
   },
   "Trench:default": {
@@ -631,6 +654,7 @@
       "diary",
       "description",
       "processor",
+      "campaign",
       "dimensionLength",
       "dimensionWidth",
       "dimensionVerticalExtent",
@@ -713,6 +737,7 @@
     "commons": [
       "description",
       "processor",
+      "campaign",
       "period",
       "dating",
       "dimensionWidth",
@@ -755,6 +780,7 @@
     "creationDate": "",
     "commons": [
       "processor",
+      "campaign",
       "description"
     ],
     "valuelists": {},
@@ -1317,6 +1343,7 @@
     "commons": [
       "spatialLocation",
       "processor",
+      "campaign",
       "description",
       "period",
       "dating",
@@ -1466,7 +1493,10 @@
     "color": "#707070",
     "valuelists": {},
     "fields": {},
-    "commons": []
+    "commons": [
+      "processor",
+      "campaign"
+    ]
   },
   "Area:default": {
     "description": {},
@@ -1475,6 +1505,7 @@
     "typeFamily": "Area",
     "commons": [
       "description",
+      "campaign",
       "area",
       "dimensionLength",
       "dimensionWidth"

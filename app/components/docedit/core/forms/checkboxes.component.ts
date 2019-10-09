@@ -38,19 +38,6 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
-    public getValuesNotIncludedInValuelist() {
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
-    }
-
-
-    public removeOutlier(name: string) {
-
-        if (!this.resource || !this.field || !this.field.name || !this.resource[this.field.name]) return;
-        this.removeItem(name);
-    }
-
-
     public toggleCheckbox(item: string) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];

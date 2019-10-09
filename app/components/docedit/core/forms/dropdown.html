@@ -1,13 +1,7 @@
-<select [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+<select [(ngModel)]="resource[field.name]" (change)="deleteIfEmpty($event.target.value)"
         class="form-control">
     <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
     <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
 </select>
 
-<br *ngIf="getValuesNotIncludedInValuelist()">
-<span *ngIf="getValuesNotIncludedInValuelist()">
-    <small>
-        <span i18n="@@docedit.forms.outliersInfo">Die Ressource enthält nicht in der Werteliste enthaltene Einträge:</span>
-        <button (click)="deleteItem()" class="btn btn-sm mr-1" *ngFor="let item of getValuesNotIncludedInValuelist()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
-    </small>
-</span>
+<outliers [resource]="resource" [fieldName]="field.name" [valuelist]="valuelist"></outliers>

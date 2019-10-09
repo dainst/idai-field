@@ -1,0 +1,8 @@
+<div *ngIf="getOutliers()">
+    <small i18n="@@docedit.forms.outliersInfo">
+        Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
+    </small>
+    <button *ngFor="let outlier of getOutliers()" (click)="remove(outlier)" class="btn btn-sm mr-1">
+        {{outlier}} <span class="mdi mdi-close-circle-outline"></span>
+    </button>
+</div>

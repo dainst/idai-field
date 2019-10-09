@@ -34,6 +34,7 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {GenericFormComponent} from './core/generic-form-component';
 import {GeometryComponent} from './core/forms/geometry.component';
 import {MultiInputComponent} from './core/forms/multi-input.component';
+import {OutliersComponent} from './core/forms/outliers.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import {MultiInputComponent} from './core/forms/multi-input.component';
         DateComponent,
         DimensionComponent,
         DropdownRangeComponent,
-        GeometryComponent
+        GeometryComponent,
+        OutliersComponent
     ],
     exports: [
         EditSaveDialogComponent,

@@ -2372,16 +2372,8 @@
         The resource contains entries not included in the corresponding value list:
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/checkboxes.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dropdown.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/radio.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="sourcefile">components/docedit/core/forms/outliers.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
@@ -3723,7 +3715,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
         <source>Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
-        <target state="new">Resource of type '[2]' must not be related by '[1]' with '[0]'.</target>
+        <target state="final">Resource of type '[2]' must not be related by '[1]' with '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

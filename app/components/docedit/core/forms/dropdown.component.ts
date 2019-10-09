@@ -39,20 +39,8 @@ export class DropdownComponent implements OnChanges {
     }
 
 
-    public getValuesNotIncludedInValuelist() {
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(this.resource, this.field.name, this.valuelist);
-    }
-
-
-    public setValue(value: any) {
+    public deleteIfEmpty(value: string) {
         
-        if (value === '') this.deleteItem();
-    }
-
-
-    public deleteItem() {
-
-        delete this.resource[this.field.name];
+        if (value === '') delete this.resource[this.field.name];
     }
 }

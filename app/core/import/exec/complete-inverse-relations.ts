@@ -1,8 +1,8 @@
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
-    isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, empty,
-    map, remove, subtract, to, undefinedOrEmpty, on, keysAndValues} from 'tsfun';
+    isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
+    map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {makeLookup} from '../util';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
@@ -70,7 +70,9 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
 }
 
 
-function getTargetIds(mergeMode: boolean, get: (_: string) => Promise<Document>, lookupDocument: LookupDocument) {
+function getTargetIds(mergeMode: boolean,
+                      get: (_: string) => Promise<Document>,
+                      lookupDocument: LookupDocument) {
 
     return async (document: Document) => {
 
@@ -90,8 +92,7 @@ function targetIdsReferingToDbResources(document: Document,
 
     return flow(
         document.resource.relations,
-        keysAndValues,
-        map(to('[1]')),
+        values,
         flatten,
         remove(compose(lookupDocument, isDefined)));
 }
@@ -111,7 +112,6 @@ function setInverseRelationsForImportResource(importDocuments: Array<Document>,
         flow(importDocument.resource.relations,
             keys,
             map(pairRelationWithItsInverse_),
-            filter(on('[1]', isDefined)),
             forEach(assertNotBadyInterrelated_),
             forEach(setInverses_));
     }
@@ -152,16 +152,13 @@ function setInverses(importDocument: Document,
 
 function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|undefined) {
 
-    return (document: Document) =>  (relationName: string): [string, string|undefined]  => {
+    return (document: Document) =>  (relationName: string): [string, string|undefined] => {
 
         if (relationName === RECORDED_IN) return [RECORDED_IN, undefined];
-
         if (isEmpty(document.resource.relations[relationName])) {
-
             throw [E.EMPTY_RELATION, document.resource.identifier];
         }
-        const inverseRelationName = getInverseRelation(relationName);
-        return [relationName, inverseRelationName];
+        return [relationName, getInverseRelation(relationName)];
     }
 }
 
@@ -169,7 +166,9 @@ function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|un
 
 function assertNotBadlyInterrelated(document: Document) {
 
-    return ([relationName, inverseRelationName]: [string, string]) => {
+    return ([relationName, inverseRelationName]: [string, string|undefined]) => {
+
+        if (!inverseRelationName) return;
 
         const forbiddenRelations = [];
 
@@ -197,15 +196,18 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
 }
 
 
-function setInverse(resourceId: string, inverseRelationName: string) { return (targetDocumentRelations: Relations) => {
+function setInverse(resourceId: string, inverseRelationName: string) {
 
-    if (isUndefinedOrEmpty(targetDocumentRelations[inverseRelationName])) {
-        targetDocumentRelations[inverseRelationName] = [];
+    return (targetDocumentRelations: Relations) => {
+
+        if (isUndefinedOrEmpty(targetDocumentRelations[inverseRelationName])) {
+            targetDocumentRelations[inverseRelationName] = [];
+        }
+        if (!targetDocumentRelations[inverseRelationName].includes(resourceId)) {
+            targetDocumentRelations[inverseRelationName].push(resourceId);
+        }
     }
-    if (!targetDocumentRelations[inverseRelationName].includes(resourceId)) {
-        targetDocumentRelations[inverseRelationName].push(resourceId);
-    }
-}}
+}
 
 
 const makeDocumentsLookup = makeLookup('resource.id');

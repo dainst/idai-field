@@ -825,18 +825,6 @@
       "vesselFormSpecific": "Pottery-vesselFormSpecific-default"
     },
     "fields": {
-      "test1": {
-        "inputType": "checkboxes",
-        "valuelistFromProjectField": "staff"
-      },
-      "test2": {
-        "inputType": "radio",
-        "valuelistFromProjectField": "staff"
-      },
-      "test3": {
-        "inputType": "dropdownRange",
-        "valuelistFromProjectField": "staff"
-      },
       "amountSherdsWall": {
         "inputType": "unsignedInt"
       },

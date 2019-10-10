@@ -1,6 +1,12 @@
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 
+
+export type AssertIsAllowedRelationDomainType = (domainTypeName: string,
+                                                 rangeTypeName: string,
+                                                 relationName: string,
+                                                 identifier: string) => void;
+
 export type ImportFunction =
     (documents: Array<Document>,
      datastore: DocumentDatastore,

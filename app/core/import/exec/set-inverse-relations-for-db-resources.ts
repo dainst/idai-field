@@ -1,26 +1,15 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {unionBy} from 'tsfun-core';
-import {is, on, union, isnt} from 'tsfun';
+import {is, on, union, isNot, includedIn, keysAndValues} from 'tsfun';
 import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {ResourceId} from '../../../c';
-import {keysAndValues} from 'tsfun/src/objectmap';
-import {assertInSameOperationWith} from './utils';
-import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {AssertIsAllowedRelationDomainType} from './import-validator';
-
-
-const unionOfDocuments = unionBy(on('resource.id'));
+import {assertInSameOperationWith, unionOfDocuments} from './utils';
+import {AssertIsAllowedRelationDomainType} from './types';
 
 
 /**
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- *
  * @param importDocuments
  * @param getTargetIds a pair of id lists, where the first list's ids
  *   are of resources already in the db and referenced by the current version of the importDocument,
@@ -29,13 +18,18 @@ const unionOfDocuments = unionBy(on('resource.id'));
  * @param get
  * @param getInverseRelation
  * @param assertIsAllowedRelationDomainType
+ * @param unidirectionalRelations names of relations for which not inverses get set in the db.
+ *
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export async function setInverseRelationsForDbResources(
     importDocuments: Array<Document>,
     getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
     get: (_: string) => Promise<Document>,
     getInverseRelation: (_: string) => string|undefined,
-    assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): Promise<Array<Document>> {
+    assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
+    unidirectionalRelations: string[]): Promise<Array<Document>> {
 
     let allFetchedDocuments: Array<Document> = []; // store already fetched documents
 
@@ -49,7 +43,7 @@ export async function setInverseRelationsForDbResources(
         allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
 
         assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
-        const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);
+        const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
         ConnectedDocsResolution
             .determineDocsToUpdate(document, copyOfTargetDocuments, getInverseRelation)
@@ -80,13 +74,15 @@ function reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate: (document
  * and the document here does not reference a targetDocument with a bi-directional relation,
  * there will be no update for that targetDocument
  */
-function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Array<Document>) {
+function getRidOfUnnecessaryTargetDocs(
+    document: Document,
+    targetDocuments: Array<Document>,
+    unidirectionalRelations: string[]) {
 
     return targetDocuments.filter(targetDocument => {
         for (let k of Object
             .keys(document.resource.relations)
-            .filter(isnt(LIES_WITHIN))
-            .filter(isnt(RECORDED_IN))) { // TODO make interface UNIDIRECTIONAL_RELATIONS
+            .filter(isNot(includedIn(unidirectionalRelations)))) {
 
             if (document.resource.relations[k].includes(targetDocument.resource.id)) return true;
         }

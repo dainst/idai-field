@@ -7,18 +7,12 @@ import {ImportErrors as E} from './import-errors';
 import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
-import {INPUT_TYPES} from '../../../c';
+import {INPUT_TYPES, ResourceId} from '../../../c';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 
-
-type ResourceId = string;
-export type AssertIsAllowedRelationDomainType = (domainTypeName: string,
-                                                 rangeTypeName: string,
-                                                 relationName: string,
-                                                 identifier: string) => void;
 
 @Injectable()
 /**

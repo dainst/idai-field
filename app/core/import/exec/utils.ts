@@ -1,8 +1,16 @@
 import {Document} from 'idai-components-2/src/model/core/document';
-import {arrayEqual, getOnOr, isNot, undefinedOrEmpty} from 'tsfun';
+import {unionBy} from 'tsfun-core';
+import {arrayEqual, getOnOr, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {makeLookup} from '../util';
+
+
+export const unionOfDocuments = unionBy(on('resource.id'));
+
+
+export const makeDocumentsLookup = makeLookup('resource.id');
 
 
 export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {

@@ -1,7 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {is, on, union, isnt} from 'tsfun';
-import {subtractBy} from 'tsfun-core';
 import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';

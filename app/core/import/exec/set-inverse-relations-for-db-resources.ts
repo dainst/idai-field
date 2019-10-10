@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {is, on, union, isnt} from 'tsfun';
 import {subtractBy} from 'tsfun-core';
-import {asyncMap} from 'tsfun-extra';
+import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
 import {clone} from '../../util/object-util';
 import {ResourceId} from '../../../c';
@@ -12,7 +12,10 @@ import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {AssertIsAllowedRelationDomainType} from './import-validator';
+import {unionBy} from 'tsfun-core/src/arrayset';
 
+
+const unionOfDocuments = unionBy(on('resource.id'));
 
 
 /**
@@ -35,17 +38,18 @@ export async function setInverseRelationsForDbResources(
     getInverseRelation: (_: string) => string|undefined,
     assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): Promise<Array<Document>> {
 
+    let allFetchedDocuments: Array<Document> = []; // store already fetched documents
+
     async function getDocumentTargetDocsToUpdate(document: Document) {
 
         const allTargetIds = await getTargetIds(document);
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 
-        const targetDocuments = await asyncMap<any>(
-            getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
+        const targetDocuments = await asyncMap<any>(getTargetDocument(allFetchedDocuments, get))(currentAndOldTargetIds);
+        allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
 
         assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
-
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);
 
         ConnectedDocsResolution
@@ -55,15 +59,20 @@ export async function setInverseRelationsForDbResources(
         return copyOfTargetDocuments;
     }
 
-    let totalDocsToUpdate: Array<Document> = [];
-    for (let document of importDocuments) {
-        const currentDocumentTargetDocumentsToUpdate = await getDocumentTargetDocsToUpdate(document);
-        totalDocsToUpdate =
-            addOrOverwrite(
+    return await reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate)(importDocuments);
+}
+
+
+function reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate: (document: Document) => Promise<Array<Document>>) {
+
+    return asyncReduce(
+        async (totalDocsToUpdate: Array<Document>, document: Document) => {
+
+            return unionOfDocuments([
                 totalDocsToUpdate,
-                currentDocumentTargetDocumentsToUpdate);
-    }
-    return totalDocsToUpdate;
+                await getDocumentTargetDocsToUpdate(document)]);
+
+        }, []);
 }
 
 
@@ -99,13 +108,6 @@ function makeIdTypeMap(targetIds: ResourceId[], documentTargetDocuments: Array<D
         acc[targetId] = lookedUp.resource.type;
         return acc;
     }, {} as {[resourceId: string]: string /* typeName */});
-}
-
-
-function addOrOverwrite(to: Array<Document>, from: Array<Document>) {
-
-    const difference = subtractBy(on('resource.id'))(from)(to);
-    return difference.concat(from);
 }
 
 

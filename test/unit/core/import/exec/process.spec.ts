@@ -5,7 +5,7 @@ import {build} from '../../../../../app/core/import/exec/process';
 /**
  * @author Daniel de Oliveira
  */
-describe('DefaultImportCalc', () => {
+describe('process()', () => {
 
     let validator;
 
@@ -49,9 +49,9 @@ describe('DefaultImportCalc', () => {
     };
 
 
-    function d(type: string, identifier: string, rels?: any) {
+    function d(id: string, type: string, identifier: string, rels?: any) {
 
-        const document = { resource: { identifier: identifier, type: type, relations: {} }};
+        const document = { resource: { id: id, identifier: identifier, type: type, relations: {} }};
         if (rels) document.resource['relations'] = rels;
         return document as unknown as Document;
     }
@@ -70,59 +70,62 @@ describe('DefaultImportCalc', () => {
         resourceIdCounter = 0;
 
         validator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness', 'assertRelationsWellformedness',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertIsAllowedRelationDomainType',
-            'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
-            'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);
+            'assertIsRecordedInTargetsExist',
+            'assertIsWellformed',
+            'assertLiesWithinCorrectness',
+            'assertRelationsWellformedness',
+            'assertIsKnownType',
+            'assertHasLiesWithin',
+            'assertIsAllowedType',
+            'assertIsAllowedRelationDomainType',
+            'assertSettingIsRecordedInIsPermissibleForType',
+            'assertDropdownRangeComplete',
+            'assertIsNotOverviewType',
+            'isRecordedInTargetAllowedRelationDomainType',
+            'assertNoForbiddenRelations']);
 
-        process = build(validator, opTypeNames, generateId, find, get, getInverse,
+        process = build(validator, opTypeNames, find, get, getInverse,
             false,
             false,
-            '',
-            true);
+            '');
 
-        processWithMainType = build(validator, opTypeNames, generateId, find, get, getInverse,
+        processWithMainType = build(validator, opTypeNames, find, get, getInverse,
             false,
             false,
-            'et1',
-            true);
+            'et1');
 
-        processWithPlainIds = build(validator, opTypeNames, generateId, find, get, getInverse,
+        processWithPlainIds = build(validator, opTypeNames, find, get, getInverse,
             false,
             false,
-            '',
-            false);
+            '');
 
-        processMerge = build(validator, opTypeNames, generateId, find, get, getInverse,
+        processMerge = build(validator, opTypeNames, find, get, getInverse,
             true,
             false,
-            '',
-            false);
+            '');
 
-        processMergeOverwriteRelations = build(validator, opTypeNames, generateId, find, get, getInverse,
+        processMergeOverwriteRelations = build(validator, opTypeNames, find, get, getInverse,
             true,
             true,
-            '',
-            true);
+            '');
     });
 
 
     it('set inverse relation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature',
-                { isChildOf: 'existingTrench', isAfter: ['existingFeature']})
+            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['ef1']})
         ]);
 
-        expect(result[1][0].resource.relations['isBefore'][0]).toEqual('101');
+        expect(result[1][0].resource.relations['isBefore'][0]).toEqual('nf1');
         done();
     });
 
 
-    it('remove self referencing relation target', async done => {
+    xit('remove self referencing relation target', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { isChildOf: 'existingTrench', isAfter: ['newFeature', 'existingTrench']})
+            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['nf1', 'et1']})
         ]);
 
         expect(result[0][0].resource.relations['isAfter'].length).toEqual(1);
@@ -134,11 +137,11 @@ describe('DefaultImportCalc', () => {
     it('child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { isChildOf: 'existingTrench' })
+            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
             ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
+        expect(resource.id).toBe('nf1');
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
@@ -148,11 +151,11 @@ describe('DefaultImportCalc', () => {
     it('child of existing operation, assign via resource id', async done => {
 
         const result = await processWithPlainIds([
-            d('Feature', 'newFeature', { isChildOf: 'et1' })
+            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
+        expect(resource.id).toBe('nf1');
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
@@ -162,11 +165,11 @@ describe('DefaultImportCalc', () => {
     it('child of existing feature', async done => {
 
         const result = await process([
-            d('Feature', 'newFeature', { isChildOf: 'existingFeature'})
+            d('nf1', 'Feature', 'newFeature', { liesWithin: ['ef1']})
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
+        expect(resource.id).toBe('nf1');
         expect(resource.relations[RECORDED_IN][0]).toEqual('et1');
         expect(resource.relations[LIES_WITHIN][0]).toEqual('ef1');
         done();
@@ -176,7 +179,7 @@ describe('DefaultImportCalc', () => {
     it('import operation', async done => {
 
         const result = await process([
-            d('Trench', 'zero')
+            d('t', 'Trench', 'zero')
         ]);
 
         const resource = result[0][0].resource;
@@ -190,13 +193,13 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature', async done => {
 
         const result = await process([
-            d('Trench', 'one'),
-            d('Feature', 'two', { isChildOf: 'one' })
+            d('tOne', 'Trench', 'one'),
+            d('fTwo', 'Feature', 'two', { liesWithin: ['tOne'] })
         ]);
 
         const resource = result[0][1].resource;
         expect(resource.identifier).toBe('two');
-        expect(resource.relations[RECORDED_IN][0]).toBe('101');
+        expect(resource.relations[RECORDED_IN][0]).toBe('tOne');
         expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
@@ -205,13 +208,13 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature, order reversed', async done => {
 
         const result = await process([
-            d('Feature', 'two', { isChildOf: 'one' }),
-            d('Trench', 'one')
+            d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
+            d('nt1', 'Trench', 'one')
         ]);
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('two');
-        expect(resource.relations[RECORDED_IN][0]).toBe('102');
+        expect(resource.relations[RECORDED_IN][0]).toBe('nt1');
         expect(resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
     });
@@ -220,15 +223,15 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature, nest deeper', async done => {
 
         const result = await process([
-            d('Trench', 'one'),
-            d('Feature', 'two', { isChildOf: 'one' }),
-            d('Find', 'three', { isChildOf: 'two' })
+            d('nt1', 'Trench', 'one'),
+            d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
+            d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] })
         ]);
 
         const resource = result[0][2].resource;
         expect(resource.identifier).toBe('three');
-        expect(resource.relations[RECORDED_IN][0]).toBe('101');
-        expect(resource.relations[LIES_WITHIN][0]).toEqual('102');
+        expect(resource.relations[RECORDED_IN][0]).toBe('nt1');
+        expect(resource.relations[LIES_WITHIN][0]).toEqual('nf1');
         done();
     });
 
@@ -236,15 +239,15 @@ describe('DefaultImportCalc', () => {
     it('import operation including feature, nest deeper, order reversed', async done => {
 
         const result = await process([
-            d('Find', 'three', { isChildOf: 'two' }),
-            d('Feature', 'two', { isChildOf: 'one' }),
-            d('Trench', 'one')
+            d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] }),
+            d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
+            d('nt1', 'Trench', 'one')
         ]);
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('three');
-        expect(resource.relations[RECORDED_IN][0]).toBe('103');
-        expect(resource.relations[LIES_WITHIN][0]).toEqual('102');
+        expect(resource.relations[RECORDED_IN][0]).toBe('nt1');
+        expect(resource.relations[LIES_WITHIN][0]).toEqual('nf1');
         done();
     });
 
@@ -252,7 +255,7 @@ describe('DefaultImportCalc', () => {
     it('import feature as child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'one', { isChildOf: 'existingTrench' })
+            d('nf1', 'Feature', 'one', { liesWithin: ['et1'] })
         ]);
 
         const resource = result[0][0].resource;
@@ -265,7 +268,7 @@ describe('DefaultImportCalc', () => {
     it('import feature as child of existing operation, via operation assignment parameter', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one')
+            d('nf1', 'Feature', 'one')
         ]);
 
         const resource = result[0][0].resource;
@@ -278,14 +281,14 @@ describe('DefaultImportCalc', () => {
     it('nested resources, topmost child of existing operation', async done => {
 
         const result = await process([
-            d('Feature', 'one', { isChildOf: 'existingTrench' }),
-            d('Find', 'two', { isChildOf: 'one' })
+            d('nf1', 'Feature', 'one', { liesWithin: ['et1'] }),
+            d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
         expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
-        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('101');
+        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('nf1');
         done();
     });
 
@@ -293,12 +296,12 @@ describe('DefaultImportCalc', () => {
     it('nested resources, topmost child of existing operation, order reversed', async done => {
 
         const result = await process([
-            d('Find', 'two', { isChildOf: 'one' }),
-            d('Feature', 'one', { isChildOf: 'existingTrench'})
+            d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
+            d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
-        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('102');
+        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
         expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][1].resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
@@ -308,14 +311,14 @@ describe('DefaultImportCalc', () => {
     it('nested resources, assignment to operation via operation assignment parameter', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one'),
-            d('Find', 'two', { isChildOf: 'one' })
+            d('nf1', 'Feature', 'one'),
+            d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
         expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
-        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('101');
+        expect(result[0][1].resource.relations[LIES_WITHIN][0]).toBe('nf1');
         done();
     });
 
@@ -323,12 +326,12 @@ describe('DefaultImportCalc', () => {
     it('nested resources, assignment to operation via operation assignment parameter, order reversed', async done => {
 
         const result = await processWithMainType([
-            d('Find', 'two', { isChildOf: 'one' }),
-            d('Feature', 'one')
+            d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
+            d('nf1', 'Feature', 'one')
         ]);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
-        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('102');
+        expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
         expect(result[0][1].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][1].resource.relations[LIES_WITHIN]).toBeUndefined();
         done();
@@ -338,11 +341,11 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { isChildOf: 'existingFeature'})
+            d('nf1', 'Feature', 'one', { liesWithin: ['ef1']})
         ]);
 
         const resource = result[0][0].resource;
-        expect(resource.id).toBe('101');
+        expect(resource.id).toBe('nf1');
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(resource.relations[LIES_WITHIN][0]).toBe('ef1');
         done();
@@ -372,7 +375,7 @@ describe('DefaultImportCalc', () => {
     it('merge, overwrite relations', async done => {
 
         const result = await processMergeOverwriteRelations([
-            d('Feature', 'existingFeature', { isChildOf: 'existingTrench2', isAfter: ['existingFeature2']})
+            d('nf1', 'Feature', 'existingFeature', { liesWithin: ['et2'], isAfter: ['ef2']})
         ]);
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
@@ -385,7 +388,7 @@ describe('DefaultImportCalc', () => {
     it('merge, overwrite relations, reassign parent', async done => {
 
         const result = await processMergeOverwriteRelations([
-            d('Feature', 'existingFeature2', { isChildOf: 'existingFeature' })
+            d('nf1', 'Feature', 'existingFeature2', { liesWithin: ['ef1'] })
         ]);
 
         const resource = result[0][0].resource;
@@ -398,7 +401,7 @@ describe('DefaultImportCalc', () => {
     it('merge, ignore wrong relations when not setting overwrite relations', async done => {
 
         const result = await processMerge([
-            d('Feature', 'existingFeature', { isAfter: 'unknown' })
+            d('nf1', 'Feature', 'existingFeature', { isAfter: 'unknown' })
         ]);
 
         expect(result[0].length).toBe(1);
@@ -414,7 +417,7 @@ describe('DefaultImportCalc', () => {
         validator.assertLiesWithinCorrectness.and.callFake(() => { throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE]});
 
         const result = await process([
-            d('Find', 'one', { isChildOf: 'existingTrench'})
+            d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
         ]);
 
         expect(result[2][0]).toEqual(E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE);
@@ -425,7 +428,7 @@ describe('DefaultImportCalc', () => {
     it('assignment to existing feature, via mismatch with operation assignment parameter', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { isChildOf: 'existingFeature2'})
+            d('nf1', 'Feature', 'one', { liesWithin: ['ef2']})
         ]);
 
         expect(result[2][0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
@@ -437,8 +440,8 @@ describe('DefaultImportCalc', () => {
     it('duplicate identifiers in import file', async done => {
 
         const result = await process(<any>[
-            d('Feature', 'dup', { isChildOf: 'etc1' }),
-            d('Feature', 'dup', { isChildOf: 'etc1' }),
+            d('nf1', 'Feature', 'dup', { liesWithin: ['etc1']}),
+            d('nf2', 'Feature', 'dup', { liesWithin: ['etc1']}),
         ]);
 
         const error = result[2];
@@ -451,7 +454,7 @@ describe('DefaultImportCalc', () => {
     it('duplicate identifiers, resource with such identifier already exists', async done => {
 
         const result = await process([
-            d('Feature', 'existingFeature', { isChildOf: 'existingTrench' })
+            d('nf1', 'Feature', 'existingFeature', { liesWithin: ['et1'] })
         ]);
 
         const error = result[2];
@@ -461,58 +464,12 @@ describe('DefaultImportCalc', () => {
     });
 
 
-    it('parent not found', async done => {
-
-        const result = await process(<any>[
-            d('Feature', 'zero', { isChildOf: 'notfound' })
-        ]);
-
-        expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
-        expect(result[2][1]).toEqual('notfound');
-        done();
-    });
-
-
-    it('parent not found, when using plain ids', async done => {
-
-        const result = await processWithPlainIds(<any>[
-            d('Feature', 'zero', { isChildOf: 'notfound' })
-        ]);
-
-        expect(result[2][0]).toEqual(E.MISSING_RELATION_TARGET);
-        expect(result[2][1]).toEqual('notfound');
-        done();
-    });
-
-
     it('clash of assigned main type id with use of parent', async done => {
 
         const result = await processWithMainType([
-            d('Feature', 'one', { isChildOf: 'existingTrench'})
+            d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
         ]);
         expect(result[2][0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
-        done();
-    });
-
-
-    it('isChildOf is an array', async done => {
-
-        const result = await process([
-            d('Feature', 'one', { isChildOf: [] })
-        ]);
-        expect(result[2][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
-        expect(result[2][1]).toEqual('one');
-        done();
-    });
-
-
-    it('other relation is not an array', async done => {
-
-        const result = await process([
-            d('Feature', 'one', { isAbove: 'b' })
-        ]);
-        expect(result[2][0]).toEqual(E.MUST_BE_ARRAY);
-        expect(result[2][1]).toEqual('one');
         done();
     });
 
@@ -522,20 +479,9 @@ describe('DefaultImportCalc', () => {
         validator.assertHasLiesWithin.and.callFake(() => { throw [E.NO_PARENT_ASSIGNED]});
 
         const result = await process([
-            d('Feature', 'one')
+            d('nf1', 'Feature', 'one')
         ]);
         expect(result[2][0]).toEqual(E.NO_PARENT_ASSIGNED);
-        done();
-    });
-
-
-    it('forbidden relation', async done => {
-
-        const result = await process([
-            d('Feature', 'one', { includes: [] })
-        ]);
-        expect(result[2][0]).toEqual(E.INVALID_RELATIONS);
-        expect(result[2][2]).toEqual('includes');
         done();
     });
 
@@ -545,7 +491,7 @@ describe('DefaultImportCalc', () => {
         validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
 
         const result = await processWithMainType([
-            d('Feature', 'one')
+            d('nf1', 'Feature', 'one')
         ]);
 
         expect(result[2][0]).toEqual(E.INVALID_FIELDS);
@@ -559,7 +505,7 @@ describe('DefaultImportCalc', () => {
         validator.assertDropdownRangeComplete.and.callFake(() => { throw [E.INVALID_DROPDOWN_RANGE_VALUES, 'abc'] });
 
         const result = await processWithMainType([
-            d('Feature', 'one')
+            d('nf1', 'Feature', 'one')
         ]);
 
         expect(result[2][0]).toEqual(E.INVALID_DROPDOWN_RANGE_VALUES);

@@ -1,4 +1,4 @@
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {ImportErrors as E, ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
 
 /**
@@ -110,7 +110,7 @@ describe('DefaultImport', () => {
 
         const {errors} = await importFunction(
             [{ resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-            mockDatastore,'user1');
+            mockDatastore, 'user1');
 
         expect(errors[0][0]).toBe('abc');
         done();
@@ -127,6 +127,90 @@ describe('DefaultImport', () => {
 
         expect(errors.length).toBe(1);
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
+        done();
+    });
+
+
+    it('parent not found', async done => {
+
+        importFunction = buildImportFunction(
+            mockValidator,
+            operationTypeNames,
+            () => undefined,
+            () => '101')(
+            false,
+            false,
+            '',
+            true); // !
+
+        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][1]).toEqual('notfound');
+        done();
+    });
+
+
+    it('parent not found, when using plain ids', async done => {
+
+        importFunction = buildImportFunction(
+            mockValidator,
+            operationTypeNames,
+            () => undefined,
+            () => '101')(
+            false,
+            false,
+            '',
+            false); // !
+
+        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][1]).toEqual('notfound');
+        done();
+    });
+
+
+    it('isChildOf is an array', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: [] } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
+        expect(errors[0][1]).toEqual('1a');
+        done();
+    });
+
+
+    it('other relation is not an array', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MUST_BE_ARRAY);
+        expect(errors[0][1]).toEqual('1a');
+        done();
+    });
+
+
+    it('forbidden relation', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { includes: [] } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);
+        expect(errors[0][2]).toEqual('includes');
         done();
     });
 });

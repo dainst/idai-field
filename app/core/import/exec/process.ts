@@ -1,14 +1,11 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty, not, to} from 'tsfun';
-import {asyncForEach} from 'tsfun-extra';
+import {duplicates, to} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
-import {Document, Relations} from 'idai-components-2';
-import {RESOURCE_ID, RESOURCE_IDENTIFIER} from '../../../c';
-import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
+import {Document} from 'idai-components-2';
+import {RESOURCE_IDENTIFIER} from '../../../c';
 import {processRelations} from './process-relations';
-import {Find, GenerateId, Get, GetInverseRelation, Id, Identifier, IdentifierMap, ProcessResult} from './types';
+import {Find, Get, GetInverseRelation, Id, ProcessResult} from './types';
 import {processDocuments} from './process-documents';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {assertLegalCombination} from './utils';
 
 
@@ -18,14 +15,12 @@ import {assertLegalCombination} from './utils';
  */
 export function build(validator: ImportValidator,
                       operationTypeNames: string[],
-                      generateId: GenerateId,
                       find: Find,
                       get: Get,
                       getInverseRelation: GetInverseRelation,
                       mergeMode: boolean,
                       allowOverwriteRelationsInMergeMode: boolean,
-                      mainTypeDocumentId: Id,
-                      useIdentifiersInRelations: boolean) {
+                      mainTypeDocumentId: Id) {
 
     assertLegalCombination(mainTypeDocumentId, mergeMode);
 
@@ -66,25 +61,15 @@ export function build(validator: ImportValidator,
         try {
             assertNoDuplicates(documents);
 
-            const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
-            const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
-            const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
-
-            await preprocessRelations(
-                documents,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode,
-                useIdentifiersInRelations,
-                assertNoMissingRelTargets,
-                rewriteIdentifiersInRels);
-
             const processedDocuments = await processDocuments(
                 validator, mergeMode, allowOverwriteRelationsInMergeMode, find)(documents);
 
             const relatedDocuments = await processRelations(
                 processedDocuments,
-                validator, operationTypeNames,
-                mergeMode, allowOverwriteRelationsInMergeMode,
+                validator,
+                operationTypeNames,
+                mergeMode,
+                allowOverwriteRelationsInMergeMode,
                 getInverseRelation,
                 get,
                 mainTypeDocumentId);
@@ -107,135 +92,4 @@ function assertNoDuplicates(documents: Array<Document>) {
 }
 
 
-function adjustRelations(document: Document, relations: Relations) {
 
-    assertHasNoHierarchicalRelations(document);
-    const assertIsntArrayRelation = assertIsNotArrayRelation(document);
-
-    Object.keys(document.resource.relations)
-        .filter(isnt(PARENT))
-        .forEach(assertIsntArrayRelation);
-
-    assertParentNotArray(relations[PARENT], document.resource.identifier);
-    if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
-}
-
-
-function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
-
-    if (isArray(parentRelation)) throw [E.PARENT_MUST_NOT_BE_ARRAY, resourceIdentifier];
-}
-
-
-/**
- * Hierarchical relations are not used directly but instead one uses PARENT.
- */
-function assertHasNoHierarchicalRelations(document: Document) {
-
-    const foundForbiddenRelations = Object.keys(document.resource.relations)
-        .filter(includedIn(HIERARCHICAL_RELATIONS.ALL))
-        .join(', ');
-    if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
-}
-
-
-function assertIsNotArrayRelation(document: Document) {
-
-    return (name: string) => {
-
-        if (not(isArray)(document.resource.relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
-    }
-}
-
-
-async function preprocessRelations(
-    documents: Array<Document>,
-    mergeMode: boolean,
-    allowOverwriteRelationsInMergeMode: boolean,
-    useIdentifiersInRelations: boolean,
-    assertNoMissingRelTargets: Function,
-    rewriteIdentifiersInRelations: Function): Promise<void> {
-
-    for (let document of documents) {
-
-        const relations = document.resource.relations;
-        if (!relations) continue;
-
-        if (!mergeMode || allowOverwriteRelationsInMergeMode) {
-
-            adjustRelations(document, relations);
-        }
-
-        if ((!mergeMode || allowOverwriteRelationsInMergeMode) && useIdentifiersInRelations) {
-
-            removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-            await rewriteIdentifiersInRelations(relations);
-
-        } else if (!mergeMode) {
-
-            await assertNoMissingRelTargets(relations);
-        }
-    }
-}
-
-
-function rewriteIdentifiersInRelations(find: Find,
-                                       identifierMap: IdentifierMap) {
-
-    return async (relations: Relations): Promise<void> => {
-
-        return iterateRelationsInImport(relations, (relation: string) => async (identifier: Identifier, i: number) => {
-            if (identifierMap[identifier]) {
-                relations[relation][i] = identifierMap[identifier];
-            } else {
-                const _ = await find(identifier);
-                if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
-                relations[relation][i] = _.resource.id;
-            }
-        });
-    }
-}
-
-
-function assertNoMissingRelationTargets(get: Get) {
-
-    return async (relations: Relations): Promise<void> => {
-
-        return iterateRelationsInImport(relations,
-            (_: never) => async (id: Id, _: never) => {
-
-            try { await get(id) }
-            catch { throw [E.MISSING_RELATION_TARGET, id] }
-        });
-    }
-}
-
-
-async function iterateRelationsInImport(
-    relations: Relations,
-    asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
-
-    for (let relation of Object.keys(relations)) {
-        await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
-    }
-}
-
-
-function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
-
-    for (let relName of Object.keys(relations)) {
-        relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
-        if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
-    }
-}
-
-
-function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
-
-    return documents
-        .filter(hasNot(RESOURCE_ID))
-        .reduce((identifierMap, document)  => {
-            identifierMap[document.resource.identifier] = document.resource.id = generateId();
-            return identifierMap;
-        }, {} as IdentifierMap);
-}

@@ -1,11 +1,12 @@
+import {identity} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
-import {identity} from 'tsfun';
-import {assertLegalCombination} from './utils';
+import {assertLegalCombination, findByIdentifier} from './utils';
 import {build as buildProcessFunction} from './process';
+import {preprocessRelations} from './preprocess-relations';
 
 
 /**
@@ -39,20 +40,26 @@ export function buildImportFunction(validator: ImportValidator,
                                              datastore: DocumentDatastore,
                                              username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
+            const find = findByIdentifier(datastore);
+            const get  = (resourceId: string) => datastore.get(resourceId);
+
+            try {
+                await preprocessRelations(documents, generateId, find, get,
+                    mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations);
+            } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
+
             const process = buildProcessFunction(
                 validator,
                 operationTypeNames,
-                generateId,
-                findByIdentifier(datastore),
-                (resourceId: string) => datastore.get(resourceId),
+                find,
+                get,
                 getInverseRelation,
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
-                mainTypeDocumentId,
-                useIdentifiersInRelations);
+                mainTypeDocumentId);
 
             const result = await process(documents);
-            if (result[2]) return {errors: [result[2]], successfulImports: 0};
+            if (result[2]) return { errors: [result[2]], successfulImports: 0 };
 
             result[0] = result[0].map(postProcessDocument);
 
@@ -64,20 +71,8 @@ export function buildImportFunction(validator: ImportValidator,
             } catch (errWithParams) {
                 updateErrors.push(errWithParams)
             }
-            return {errors: updateErrors, successfulImports: documents.length};
+            return { errors: updateErrors, successfulImports: documents.length };
         }
     }
 }
 
-
-function findByIdentifier(datastore: DocumentDatastore) {
-
-    return async (identifier: string): Promise<Document|undefined> => {
-
-        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
-
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
-    }
-}

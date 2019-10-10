@@ -1,4 +1,4 @@
-import {ImportValidator} from '../import-validator';
+import {ImportValidator} from './import-validator';
 import {duplicates, to} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
 import {Document} from 'idai-components-2';

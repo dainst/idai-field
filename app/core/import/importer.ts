@@ -7,7 +7,7 @@ import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
-import {ImportValidator} from './exec/import-validator';
+import {ImportValidator} from './exec/process/import-validator';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
 import {ImportFunction} from './exec/types';

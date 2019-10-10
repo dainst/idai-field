@@ -1,4 +1,4 @@
-import {ImportValidator} from '../import-validator';
+import {ImportValidator} from './import-validator';
 import {asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';

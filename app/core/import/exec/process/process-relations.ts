@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/src/model/core/document';
-import {ImportValidator} from '../import-validator';
+import {ImportValidator} from './import-validator';
 import {NewDocument} from 'idai-components-2/src/model/core/new-document';
 import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';

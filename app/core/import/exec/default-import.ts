@@ -1,6 +1,6 @@
 import {identity} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {ImportValidator} from './import-validator';
+import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';

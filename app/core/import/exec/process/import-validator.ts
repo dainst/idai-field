@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, NewResource, Query, Resource} from 'idai-components-2';
-import {TypeUtility} from '../../model/type-utility';
-import {Validator} from '../../model/validator';
-import {Validations} from '../../model/validations';
-import {ImportErrors as E} from './import-errors';
-import {ValidationErrors} from '../../model/validation-errors';
-import {DocumentDatastore} from '../../datastore/document-datastore';
+import {TypeUtility} from '../../../model/type-utility';
+import {Validator} from '../../../model/validator';
+import {Validations} from '../../../model/validations';
+import {ImportErrors as E} from '../import-errors';
+import {ValidationErrors} from '../../../model/validation-errors';
+import {DocumentDatastore} from '../../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
-import {INPUT_TYPES, ResourceId} from '../../../c';
-import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
+import {INPUT_TYPES, ResourceId} from '../../../../c';
+import {HIERARCHICAL_RELATIONS, PARENT} from '../../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {ProjectConfiguration} from '../../../configuration/project-configuration';
 
 
 @Injectable()

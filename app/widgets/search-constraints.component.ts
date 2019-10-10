@@ -1,13 +1,11 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {to} from 'tsfun';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {SettingsService} from '../core/settings/settings-service';
 import {ValuelistUtil} from '../core/util/valuelist-util';
-import {IdaiType} from '../core/configuration/model/idai-type';
 import {clone} from '../core/util/object-util';
 
 
@@ -210,29 +208,35 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private async removeInvalidConstraints() {
 
         const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
-        const type: IdaiType = this.projectConfiguration.getTypesMap()[this.type];
 
         Object.keys(customConstraints)
-            .filter(constraintName => {
-                const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
-                if (this.defaultFields.map(to('name')).includes(fieldName)) return false;
-
-                const field: FieldDefinition|undefined = type.fields.find(field => {
-                    return field.name === SearchConstraintsComponent.getFieldName(constraintName);
-                });
-                if (!field) return true;
-                if (!field.inputType
-                        || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
-                        || ['KNOWN', 'UNKNOWN'].includes(customConstraints[constraintName])) {
-                    return false;
-                }
-                const valuelist: string[] = this.getValuelist(field);
-                return (!valuelist.includes(customConstraints[constraintName]));
-            }).forEach(constraintName => {
-                delete customConstraints[constraintName];
-            });
+            .filter(constraintName => this.isInvalidConstraint(constraintName))
+            .forEach(constraintName => delete customConstraints[constraintName]);
 
         await this.setCustomConstraints(customConstraints);
+    }
+
+
+    private isInvalidConstraint(constraintName: string): boolean {
+
+        const field: FieldDefinition|undefined
+            = this.getField(SearchConstraintsComponent.getFieldName(constraintName));
+        if (!field) return true;
+
+        return this.isInvalidConstraintValue(constraintName, field);
+    }
+
+
+    private isInvalidConstraintValue(constraintName: string, field: FieldDefinition): boolean {
+
+        if (!field.inputType
+            || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
+            || ['KNOWN', 'UNKNOWN'].includes(this.getCustomConstraints()[constraintName])) {
+            return false;
+        }
+
+        const valuelist: string[] = this.getValuelist(field);
+        return !valuelist.includes(this.getCustomConstraints()[constraintName]);
     }
 
 

@@ -178,7 +178,6 @@ export class ImportValidator extends Validator {
     }
 
 
-    // TODO do in process-relations
     public assertHasLiesWithin(document: Document|NewDocument) {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)

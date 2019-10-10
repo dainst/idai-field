@@ -1,5 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
+import {unionBy} from 'tsfun-core';
 import {is, on, union, isnt} from 'tsfun';
 import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {ConnectedDocsResolution} from '../../model/connected-docs-resolution';
@@ -11,7 +12,6 @@ import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {AssertIsAllowedRelationDomainType} from './import-validator';
-import {unionBy} from 'tsfun-core/src/arrayset';
 
 
 const unionOfDocuments = unionBy(on('resource.id'));
@@ -45,7 +45,7 @@ export async function setInverseRelationsForDbResources(
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 
-        const targetDocuments = await asyncMap<any>(getTargetDocument(allFetchedDocuments, get))(currentAndOldTargetIds);
+        const targetDocuments = await asyncMap(getTargetDocument(allFetchedDocuments, get))(currentAndOldTargetIds);
         allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
 
         assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);

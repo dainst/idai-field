@@ -231,6 +231,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         if (!field.inputType
             || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
+            || field.inputType === 'boolean'
             || ['KNOWN', 'UNKNOWN'].includes(this.getCustomConstraints()[constraintName])) {
             return false;
         }

@@ -46,7 +46,7 @@ export class ImportValidator extends Validator {
             throw [
                 E.TARGET_TYPE_RANGE_MISMATCH,
                 identifier,
-                [LIES_WITHIN, RECORDED_IN].includes(relationName) ? PARENT : relationName,
+                [LIES_WITHIN, RECORDED_IN].includes(relationName) ? PARENT : relationName, // TODO do this mapping at the proper level, namely in default-import, where isChildOf gets replaced with liesWithin
                 rangeTypeName
             ];
         }

@@ -2366,10 +2366,10 @@
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
         <source>
-        Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
+        Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:
     </source>
         <target state="final">
-        The resource contains entries not included in the corresponding value list:
+        The field contains entries not included in the corresponding value list:
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/outliers.html</context>

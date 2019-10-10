@@ -2,7 +2,7 @@ import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-ty
 import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitions} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitions} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt,
-    jsonClone, keysAndValues, map, on, reduce, subtract, to, union} from 'tsfun';
+    jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {withDissoc} from '../import/util';
@@ -409,10 +409,9 @@ function mergePropertiesOfType(target: any, source: any) {
 
     Object.keys(source)
         .filter(isnt('fields'))
+        .filter(isNot(includedIn(keys(target))))
         .forEach(sourceTypeProp => {
-            if (!Object.keys(target).includes(sourceTypeProp)) {
-                target[sourceTypeProp] = source[sourceTypeProp];
-            }
+            target[sourceTypeProp] = source[sourceTypeProp];
         });
 }
 

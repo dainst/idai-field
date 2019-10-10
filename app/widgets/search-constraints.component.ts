@@ -6,6 +6,7 @@ import {FieldDefinition} from '../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {SettingsService} from '../core/settings/settings-service';
 import {ValuelistUtil} from '../core/util/valuelist-util';
+import {clone} from '../core/util/object-util';
 
 
 type ConstraintListItem = {
@@ -48,8 +49,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           protected i18n: I18n) {}
 
 
-    ngOnChanges(changes: SimpleChanges): void {
+    async ngOnChanges(changes: SimpleChanges) {
 
+        await this.removeInvalidConstraints();
         this.reset();
     }
 
@@ -200,6 +202,41 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         this.updateConstraintListItems();
         this.updateFields();
         this.removeUserEntries();
+    }
+
+
+    private async removeInvalidConstraints() {
+
+        const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
+
+        Object.keys(customConstraints)
+            .filter(constraintName => this.isInvalidConstraint(constraintName))
+            .forEach(constraintName => delete customConstraints[constraintName]);
+
+        await this.setCustomConstraints(customConstraints);
+    }
+
+
+    private isInvalidConstraint(constraintName: string): boolean {
+
+        const field: FieldDefinition|undefined
+            = this.getField(SearchConstraintsComponent.getFieldName(constraintName));
+        if (!field) return true;
+
+        return this.isInvalidConstraintValue(constraintName, field);
+    }
+
+
+    private isInvalidConstraintValue(constraintName: string, field: FieldDefinition): boolean {
+
+        if (!field.inputType
+            || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
+            || ['KNOWN', 'UNKNOWN'].includes(this.getCustomConstraints()[constraintName])) {
+            return false;
+        }
+
+        const valuelist: string[] = this.getValuelist(field);
+        return !valuelist.includes(this.getCustomConstraints()[constraintName]);
     }
 
 

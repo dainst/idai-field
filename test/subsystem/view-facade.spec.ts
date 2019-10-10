@@ -519,24 +519,5 @@ describe('ViewFacade/Subsystem', () => {
 
         done();
     });
-
-
-    it('operation view: remove custom constraint filters when type filter is changed', async done => {
-
-        await viewFacade.selectView('t1');
-        await viewFacade.setBypassHierarchy(true);
-
-        await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
-        expect(viewFacade.getDocuments().length).toBe(1);
-
-        await viewFacade.setFilterTypes(['Feature']);
-        expect(viewFacade.getCustomConstraints()).toEqual({});
-
-        await viewFacade.setFilterTypes(['Find']);
-        expect(viewFacade.getDocuments().length).toBe(2);
-
-        done();
-    });
 });
 

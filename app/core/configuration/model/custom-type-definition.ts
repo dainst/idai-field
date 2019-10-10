@@ -30,7 +30,7 @@ export interface CustomFieldDefinition extends BaseFieldDefinition {
 }
 
 
-const VALID_FIELD_PROPERTIES = ['valuelistId', 'valuelistFromProjectField', 'inputType', 'positionValues'];
+const VALID_FIELD_PROPERTIES = ['valuelistId', 'inputType', 'positionValues'];
 
 
 export type CustomTypeDefinitions = {[typeName: string]: CustomTypeDefinition };

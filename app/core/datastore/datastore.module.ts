@@ -11,7 +11,7 @@ import {ImageReadDatastore} from './field/image-read-datastore';
 import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
-import {FieldTypeConverter} from './field/field-type-converter.service';
+import {FieldTypeConverter} from './field/field-type-converter';
 import {RemoteChangesStream} from './core/remote-changes-stream';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';

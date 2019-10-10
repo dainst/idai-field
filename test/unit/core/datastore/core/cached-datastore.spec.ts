@@ -2,7 +2,7 @@ import {FieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
-import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter';
 import {Static} from '../../../static';
 
 

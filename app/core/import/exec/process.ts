@@ -109,7 +109,7 @@ function assertNoDuplicates(documents: Array<Document>) {
 
 function adjustRelations(document: Document, relations: Relations) {
 
-    assertHasNoForbiddenRelations(document);
+    assertHasNoHierarchicalRelations(document);
     const assertIsntArrayRelation = assertIsNotArrayRelation(document);
 
     Object.keys(document.resource.relations)
@@ -127,7 +127,10 @@ function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
 }
 
 
-function assertHasNoForbiddenRelations(document: Document) {
+/**
+ * Hierarchical relations are not used directly but instead one uses PARENT.
+ */
+function assertHasNoHierarchicalRelations(document: Document) {
 
     const foundForbiddenRelations = Object.keys(document.resource.relations)
         .filter(includedIn(HIERARCHICAL_RELATIONS.ALL))

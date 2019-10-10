@@ -8,7 +8,7 @@ import {ValidationErrors} from '../../model/validation-errors';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {INPUT_TYPES, ResourceId} from '../../../c';
-import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
+import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {ProjectConfiguration} from '../../configuration/project-configuration';
@@ -43,7 +43,12 @@ export class ImportValidator extends Validator {
 
         if (!this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName)) {
 
-            throw [E.TARGET_TYPE_RANGE_MISMATCH, identifier, relationName, rangeTypeName];
+            throw [
+                E.TARGET_TYPE_RANGE_MISMATCH,
+                identifier,
+                [LIES_WITHIN, RECORDED_IN].includes(relationName) ? PARENT : relationName,
+                rangeTypeName
+            ];
         }
     }
 

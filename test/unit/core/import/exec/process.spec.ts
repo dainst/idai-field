@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
-import {build} from '../../../../../app/core/import/exec/process';
+import {build} from '../../../../../app/core/import/exec/process/process';
 
 /**
  * @author Daniel de Oliveira

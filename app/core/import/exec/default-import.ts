@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {build as buildProcessFunction} from './process';
+import {build as buildProcessFunction} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 
 

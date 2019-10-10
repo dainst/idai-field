@@ -1,12 +1,12 @@
-import {ImportValidator} from './import-validator';
+import {ImportValidator} from '../import-validator';
 import {duplicates, to} from 'tsfun';
-import {ImportErrors as E} from './import-errors';
+import {ImportErrors as E} from '../import-errors';
 import {Document} from 'idai-components-2';
-import {RESOURCE_IDENTIFIER} from '../../../c';
+import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
-import {Find, Get, GetInverseRelation, Id, ProcessResult} from './types';
+import {Find, Get, GetInverseRelation, Id, ProcessResult} from '../types';
 import {processDocuments} from './process-documents';
-import {assertLegalCombination} from './utils';
+import {assertLegalCombination} from '../utils';
 
 
 /**

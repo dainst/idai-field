@@ -1,20 +1,20 @@
 import {Document, Relations} from 'idai-components-2';
-import {ImportErrors as E} from './import-errors';
+import {ImportErrors as E} from '../import-errors';
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
     isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
     map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';;
-import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../model/relation-constants';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
-import {assertInSameOperationWith, makeDocumentsLookup} from './utils';
+import {assertInSameOperationWith, makeDocumentsLookup} from '../utils';
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {AssertIsAllowedRelationDomainType} from './types';
+import {AssertIsAllowedRelationDomainType} from '../types';
 import IS_AFTER = TIME_RELATIONS.IS_AFTER;
 import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
-import {ResourceId} from '../../../c';
+import {ResourceId} from '../../../../c';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 

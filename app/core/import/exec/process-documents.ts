@@ -10,20 +10,17 @@ import {Find} from './types';
  * @returns clones of the documents with their properties adjusted
  */
 export function processDocuments(validator: ImportValidator,
-                          mergeMode: boolean,
-                          allowOverwriteRelationsInMergeMode: boolean,
-                          preprocessAndValidateRelations: (_: Document) => Promise<Document>,
-                          find: Find): (_: Array<Document>) => Promise<Array<Document>> {
+                                 mergeMode: boolean,
+                                 allowOverwriteRelationsInMergeMode: boolean,
+                                 find: Find): (_: Array<Document>) => Promise<Array<Document>> {
 
     return asyncMap(async (document: Document) => {
 
-        const preprocessedDocument = await preprocessAndValidateRelations(document);
-
         // we want dropdown fields to be complete before merge
-        validator.assertDropdownRangeComplete(preprocessedDocument.resource);
+        validator.assertDropdownRangeComplete(document.resource);
 
         const possiblyMergedDocument = await mergeOrUseAsIs(
-            preprocessedDocument,
+            document,
             find,
             mergeMode,
             allowOverwriteRelationsInMergeMode);

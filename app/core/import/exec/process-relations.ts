@@ -108,7 +108,7 @@ async function inferRecordedIns(documents: Array<Document>,
             return  operationTypeNames.includes(got.resource.type)
                 ? got.resource.id
                 : got.resource.relations[RECORDED_IN][0];
-        } catch { console.log("FATAL - not found") } // should have been caught earlier, in processDocuments
+        } catch { console.log("FATAL - not found") } // should have been caught earlier, in process()
     }
 
 

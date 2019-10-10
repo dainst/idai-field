@@ -70,27 +70,26 @@ export function build(validator: ImportValidator,
             const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
             const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
 
-            const preprocessAndValidateRelations_ = preprocessAndValidateRelations(
+            await preprocessAndValidateRelations(
+                documents,
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
                 useIdentifiersInRelations,
                 assertNoMissingRelTargets,
                 rewriteIdentifiersInRels);
 
-            const documentsForUpdate = await processDocuments(
-                validator,
-                mergeMode, allowOverwriteRelationsInMergeMode, preprocessAndValidateRelations_,
-                find)(documents);
+            const processedDocuments = await processDocuments(
+                validator, mergeMode, allowOverwriteRelationsInMergeMode, find)(documents);
 
             const relatedDocuments = await processRelations(
-                documentsForUpdate,
+                processedDocuments,
                 validator, operationTypeNames,
                 mergeMode, allowOverwriteRelationsInMergeMode,
                 getInverseRelation,
                 get,
                 mainTypeDocumentId);
 
-            return [documentsForUpdate, relatedDocuments, undefined];
+            return [processedDocuments, relatedDocuments, undefined];
 
         } catch (errWithParams) {
 
@@ -146,16 +145,18 @@ function assertIsNotArrayRelation(document: Document) {
 }
 
 
-function preprocessAndValidateRelations(mergeMode: boolean,
-                                              allowOverwriteRelationsInMergeMode: boolean,
-                                              useIdentifiersInRelations: boolean,
-                                              assertNoMissingRelTargets: Function,
-                                              rewriteIdentifiersInRelations: Function) {
+async function preprocessAndValidateRelations(
+    documents: Array<Document>,
+    mergeMode: boolean,
+    allowOverwriteRelationsInMergeMode: boolean,
+    useIdentifiersInRelations: boolean,
+    assertNoMissingRelTargets: Function,
+    rewriteIdentifiersInRelations: Function): Promise<void> {
 
-    return async (document: Document): Promise<Document> => {
+    for (let document of documents) {
 
         const relations = document.resource.relations;
-        if (!relations) return document;
+        if (!relations) continue;
 
         if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 
@@ -171,8 +172,6 @@ function preprocessAndValidateRelations(mergeMode: boolean,
 
             await assertNoMissingRelTargets(relations);
         }
-
-        return document;
     }
 }
 

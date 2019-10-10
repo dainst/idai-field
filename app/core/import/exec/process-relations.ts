@@ -11,9 +11,10 @@ import {Get, GetInverseRelation, Id, IdMap} from './types';
 import {completeInverseRelations} from './complete-inverse-relations';
 
 
-
-
-
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
@@ -35,6 +36,7 @@ export async function processRelations(documents: Array<Document>,
 
     if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 
+        await validator.assertRelationsWellformedness(documents);
         await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
         return await completeInverseRelations(
                 documents,

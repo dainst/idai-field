@@ -17,6 +17,7 @@ describe('DefaultImport', () => {
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist',
+            'assertRelationsWellformedness',
             'assertIsAllowedRelationDomainType',
             'assertIsWellformed',
             'assertLiesWithinCorrectness',

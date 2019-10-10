@@ -106,6 +106,26 @@ export class ImportValidator extends Validator {
     }
 
 
+    public assertRelationsWellformedness(documents: Array<Document|NewDocument>) {
+
+        for (let document of documents) {
+
+            const invalidRelationFields = Validations
+                .validateDefinedRelations(document.resource, this.projectConfiguration)
+                // operations have empty RECORDED_IN which however is not defined. image types must not be imported. regular types all have RECORDED_IN
+                .filter(isnt(RECORDED_IN));
+
+            if (invalidRelationFields.length > 0) {
+                throw [
+                    E.INVALID_RELATIONS,
+                    document.resource.type,
+                    invalidRelationFields.join(', ')
+                ];
+            }
+        }
+    }
+
+
     /**
      * Wellformedness test specifically written for use in import package.
      *
@@ -143,19 +163,6 @@ export class ImportValidator extends Validator {
             ];
         }
 
-        const invalidRelationFields = Validations
-            .validateDefinedRelations(document.resource, this.projectConfiguration)
-            // operations have empty RECORDED_IN which however is not defined. image types must not be imported. regular types all have RECORDED_IN
-            .filter(isnt(RECORDED_IN));
-
-        if (invalidRelationFields.length > 0) {
-            throw [
-                E.INVALID_RELATIONS,
-                document.resource.type,
-                invalidRelationFields.join(', ')
-            ];
-        }
-
         Validations.assertNoFieldsMissing(document, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
@@ -166,6 +173,7 @@ export class ImportValidator extends Validator {
     }
 
 
+    // TODO do in process-relations
     public assertHasLiesWithin(document: Document|NewDocument) {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)

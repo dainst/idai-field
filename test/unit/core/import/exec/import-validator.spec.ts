@@ -148,7 +148,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc]);
             fail();
         } catch (errWithParams) {
 
@@ -172,7 +172,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc]);
             fail();
         } catch (errWithParams) {
 

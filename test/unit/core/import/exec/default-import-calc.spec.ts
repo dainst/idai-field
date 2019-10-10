@@ -70,7 +70,7 @@ describe('DefaultImportCalc', () => {
         resourceIdCounter = 0;
 
         validator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness',
+            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertLiesWithinCorrectness', 'assertRelationsWellformedness',
             'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertIsAllowedRelationDomainType',
             'assertSettingIsRecordedInIsPermissibleForType', 'assertDropdownRangeComplete',
             'assertIsNotOverviewType', 'isRecordedInTargetAllowedRelationDomainType', 'assertNoForbiddenRelations']);

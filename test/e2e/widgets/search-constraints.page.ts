@@ -31,6 +31,14 @@ export class SearchConstraintsPage {
     }
 
 
+    public static clickSelectExistsDropdownValue(optionIndex: number) {
+
+        browser.wait(EC.visibilityOf(element(by.id('constraint-search-term-exists-select'))),
+            delays.ECWaitTime);
+        element.all(by.css('#constraint-search-term-exists-select option')).get(optionIndex + 1).click();
+    }
+
+
     public static clickSelectBooleanValue(value: boolean) {
 
         common.click(element(by.id('constraint-search-term-boolean-select-option-' + value)));
@@ -54,6 +62,12 @@ export class SearchConstraintsPage {
     public static getConstraintFieldOption(fieldName: string) {
 
         return element(by.id('constraint-field-select-option-' + fieldName));
+    }
+
+
+    public static getRemoveConstraintButton(fieldName: string) {
+
+        return element(by.id('remove-constraint-button-' + fieldName));
     }
 
 

@@ -419,6 +419,44 @@ describe('resources/state --', function() {
     });
 
 
+    it('search -- remove constraints if invalid after filter type change', () => {
+
+        ResourcesPage.clickSwitchHierarchyMode();
+
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('geometry');
+        SearchConstraintsPage.clickSelectExistsDropdownValue(1);
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        SearchBarPage.clickChooseTypeFilter('feature');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+
+        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        SearchConstraintsPage.clickSelectBooleanValue(true);
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+        browser.wait(
+            EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
+            delays.ECWaitTime
+        );
+
+        SearchBarPage.clickChooseTypeFilter('find');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+        browser.wait(
+            EC.stalenessOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
+            delays.ECWaitTime
+        );
+    });
+
+
     it('switch from image to map view after click on depicts relation link', () => {
 
         createDepictsRelation();

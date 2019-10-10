@@ -70,7 +70,7 @@ export function build(validator: ImportValidator,
             const rewriteIdentifiersInRels = rewriteIdentifiersInRelations(find, identifierMap);
             const assertNoMissingRelTargets = assertNoMissingRelationTargets(get);
 
-            await preprocessAndValidateRelations(
+            await preprocessRelations(
                 documents,
                 mergeMode,
                 allowOverwriteRelationsInMergeMode,
@@ -148,7 +148,7 @@ function assertIsNotArrayRelation(document: Document) {
 }
 
 
-async function preprocessAndValidateRelations(
+async function preprocessRelations(
     documents: Array<Document>,
     mergeMode: boolean,
     allowOverwriteRelationsInMergeMode: boolean,

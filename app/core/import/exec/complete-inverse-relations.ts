@@ -15,6 +15,7 @@ import {AssertIsAllowedRelationDomainType} from './import-validator';
 import IS_AFTER = TIME_RELATIONS.IS_AFTER;
 import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
+import {ResourceId} from '../../../c';
 
 
 type LookupDocument = (_: string) => Document|undefined;
@@ -74,15 +75,17 @@ function getTargetIds(mergeMode: boolean,
                       get: (_: string) => Promise<Document>,
                       lookupDocument: LookupDocument) {
 
-    return async (document: Document) => {
+    return async (document: Document): Promise<[ResourceId[], ResourceId[]]>  => {
 
         let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
         if (mergeMode) {
             let oldVersion; try { oldVersion = await get(document.resource.id);
             } catch { throw "FATAL existing version of document not found" }
-            return [targetIds, subtract(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))]
+            return [
+                targetIds,
+                subtract<ResourceId>(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))];
         }
-        return [targetIds, []];
+        return [ targetIds, [] ];
     }
 }
 

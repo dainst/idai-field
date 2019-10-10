@@ -18,14 +18,22 @@ import {AssertIsAllowedRelationDomainType} from './import-validator';
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ *
+ * @param importDocuments
+ * @param getTargetIds a pair of id lists, where the first list's ids
+ *   are of resources already in the db and referenced by the current version of the importDocument,
+ *   and the second lists'ids are resources already in the db and referenced
+ *   by the version to be updated of importDocument, where only ids which are not in the first list, are listed.
+ * @param get
+ * @param getInverseRelation
+ * @param assertIsAllowedRelationDomainType
  */
-export async function setInverseRelationsForDbResources(importDocuments: Array<Document>,
-                                                        getTargetIds: Function, // TODO improve
-                                                        get: (_: string) => Promise<Document>,
-                                                        getInverseRelation: (_: string) => string|undefined,
-                                                        assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
-): Promise<Array<Document>> {
-
+export async function setInverseRelationsForDbResources(
+    importDocuments: Array<Document>,
+    getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
+    get: (_: string) => Promise<Document>,
+    getInverseRelation: (_: string) => string|undefined,
+    assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): Promise<Array<Document>> {
 
     async function getDocumentTargetDocsToUpdate(document: Document) {
 
@@ -36,7 +44,7 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
         const targetDocuments = await asyncMap<any>(
             getTargetDocument(totalDocsToUpdate, get))(currentAndOldTargetIds);
 
-        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType); // TODO bind assertTypeIsInRangeWith assertIsAllowed
+        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
 
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments);
 
@@ -49,7 +57,11 @@ export async function setInverseRelationsForDbResources(importDocuments: Array<D
 
     let totalDocsToUpdate: Array<Document> = [];
     for (let document of importDocuments) {
-        totalDocsToUpdate = addOrOverwrite(totalDocsToUpdate, await getDocumentTargetDocsToUpdate(document));
+        const currentDocumentTargetDocumentsToUpdate = await getDocumentTargetDocsToUpdate(document);
+        totalDocsToUpdate =
+            addOrOverwrite(
+                totalDocsToUpdate,
+                currentDocumentTargetDocumentsToUpdate);
     }
     return totalDocsToUpdate;
 }

@@ -1,4 +1,4 @@
-import {on, tripleEqual, jsonClone, isnt} from 'tsfun';
+import {on, tripleEqual, jsonClone, isnt, flow, keys, remove, forEach} from 'tsfun';
 import {Document, relationsEquivalent} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -52,9 +52,10 @@ export module ConnectedDocsResolution {
                                    targetDocument: Document,
                                    keepAllNoInverseRelations: boolean) {
 
-        Object.keys(targetDocument.resource.relations)
-            .filter(relation => (!(keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN)))) // TODO simplify
-            .forEach(removeRelation(resourceId, targetDocument.resource.relations));
+        flow(targetDocument.resource.relations,
+            keys,
+            remove(relation => keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN)),
+            forEach(removeRelation(resourceId, targetDocument.resource.relations)));
     }
 
 

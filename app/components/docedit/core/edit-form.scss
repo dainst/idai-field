@@ -47,6 +47,11 @@
               height: 33px;
             }
 
+            .card-title {
+              cursor: default;
+              user-select: none;
+            }
+
             .btn:focus,
             .btn:active {
               box-shadow: none;

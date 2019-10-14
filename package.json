@@ -31,7 +31,10 @@
       "category": "public.app-category.productivity",
       "icon": "img/logo.icns",
       "artifactName": "iDAI.field-${version}-MacOS.${ext}",
-      "publish": "github"
+      "publish": "github",
+      "hardenedRuntime": true,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
     },
     "win": {
       "target": "zip",

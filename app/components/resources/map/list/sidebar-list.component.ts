@@ -69,6 +69,11 @@ export class SidebarListComponent extends BaseList {
             event.preventDefault();
             this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
         }
+
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            await this.navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
+            event.preventDefault();
+        }
     }
 
 
@@ -81,16 +86,6 @@ export class SidebarListComponent extends BaseList {
     public isScrollbarVisible(element: HTMLElement): boolean {
 
         return element.scrollHeight > element.clientHeight;
-    }
-
-
-    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
-            this.closePopover();
-        } else {
-            await this.openPopoverMenu(popoverMenu, document);
-        }
     }
 
 
@@ -114,6 +109,16 @@ export class SidebarListComponent extends BaseList {
     }
 
 
+    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
+
+        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
+            this.closePopover();
+        } else {
+            await this.openPopoverMenu(popoverMenu, document);
+        }
+    }
+
+
     public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
 
         return this.viewFacade.getSelectedDocument() !== undefined
@@ -129,6 +134,22 @@ export class SidebarListComponent extends BaseList {
         this.highlightedDocument = undefined;
         this.selectedDocumentThumbnailUrl = undefined;
     };
+
+
+    public async navigatePopoverMenus(direction: 'previous'|'next') {
+
+        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+
+        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
+
+        let index: number = availablePopoverMenus.indexOf(this.resourcesMapComponent.activePopoverMenu)
+            + (direction === 'next' ? 1 : -1);
+        if (index < 0) index = availablePopoverMenus.length - 1;
+        if (index >= availablePopoverMenus.length) index = 0;
+
+        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
+    }
 
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {
@@ -238,5 +259,16 @@ export class SidebarListComponent extends BaseList {
         this.resourcesMapComponent.activePopoverMenu = popoverMenu;
 
         if (!this.isSelected(document)) await this.select(document);
+    }
+
+
+    private getAvailablePopoverMenus(document: FieldDocument): string[] {
+
+        const availablePopoverMenus: string[] = ['none', 'info'];
+        if (this.navigationService.shouldShowArrowBottomRight(document)) {
+            availablePopoverMenus.push('children');
+        }
+
+        return availablePopoverMenus;
     }
 }

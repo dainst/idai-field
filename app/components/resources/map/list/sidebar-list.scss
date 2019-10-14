@@ -10,6 +10,10 @@ $teaser-width: $resources-listing-item-slim-width;
   margin: 0;
   background-color: $sidebar-bg-color;
 
+  &:focus {
+    outline: none;
+  }
+
   .new {
     color: #111;
     font-style: italic;

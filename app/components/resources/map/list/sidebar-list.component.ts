@@ -74,6 +74,11 @@ export class SidebarListComponent extends BaseList {
             await this.navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
             event.preventDefault();
         }
+
+        if (event.key === 'Enter') {
+            await this.openChildCollection();
+            event.preventDefault();
+        }
     }
 
 
@@ -268,5 +273,13 @@ export class SidebarListComponent extends BaseList {
         }
 
         return availablePopoverMenus;
+    }
+
+
+    private async openChildCollection() {
+
+        if (this.viewFacade.getSelectedDocument()) {
+            await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
+        }
     }
 }

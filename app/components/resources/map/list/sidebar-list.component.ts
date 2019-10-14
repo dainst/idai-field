@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
@@ -23,12 +23,14 @@ import {ContextMenuAction} from '../context-menu.component';
  * @author Sebastian Cuy
  */
 
-export class SidebarListComponent extends BaseList {
+export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public contextMenuPosition: { x: number, y: number }|undefined;
     public contextMenuDocument: FieldDocument|undefined;
 
     public highlightedDocument: FieldDocument|undefined = undefined;
+
+    @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
 
     constructor(resourcesComponent: ResourcesComponent,
@@ -47,8 +49,9 @@ export class SidebarListComponent extends BaseList {
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
 
-        this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.closeContextMenu();
+            this.sidebarElement.nativeElement.focus();
         });
     }
 
@@ -60,6 +63,12 @@ export class SidebarListComponent extends BaseList {
     public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
 
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
+
+
+    ngAfterViewInit() {
+
+        this.sidebarElement.nativeElement.focus();
+    }
 
 
     public async onKeyDown(event: KeyboardEvent) {

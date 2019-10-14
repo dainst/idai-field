@@ -9,7 +9,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
 
 
-export type PopoverMenu = 'none'|'info'|'relations'|'children';
+export type PopoverMenu = 'none'|'info'|'children';
 
 
 @Component({

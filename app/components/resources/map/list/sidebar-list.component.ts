@@ -29,7 +29,7 @@ export class SidebarListComponent extends BaseList {
     public contextMenuDocument: FieldDocument|undefined;
 
     public highlightedDocument: FieldDocument|undefined = undefined;
-    public selectedDocumentThumbnailUrl: string|undefined;
+
 
     constructor(resourcesComponent: ResourcesComponent,
                 loading: Loading,
@@ -132,7 +132,6 @@ export class SidebarListComponent extends BaseList {
 
         this.resourcesMapComponent.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
-        this.selectedDocumentThumbnailUrl = undefined;
     };
 
 
@@ -155,7 +154,6 @@ export class SidebarListComponent extends BaseList {
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
-        this.selectedDocumentThumbnailUrl = undefined;
 
         if (!document) {
             this.viewFacade.deselect();

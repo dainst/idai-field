@@ -33,6 +33,7 @@
       "artifactName": "iDAI.field-${version}-MacOS.${ext}",
       "publish": "github",
       "hardenedRuntime": true,
+      "gatekeeperAssess": false,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist"
     },
@@ -43,6 +44,7 @@
       "publish": "github"
     },
     "npmRebuild": false,
+    "afterSign": "notarize.js",
     "extraResources": [
       "config",
       "tools",
@@ -111,6 +113,7 @@
     "@types/showdown": "1.7.5",
     "electron": "6.0.7",
     "electron-builder": "21.2.0",
+    "electron-notarize": "0.1.1",
     "electron-packager": "14.0.5",
     "file-api": "0.10.4",
     "file-url": "2.0.2",

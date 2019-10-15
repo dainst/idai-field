@@ -22,6 +22,8 @@ export class RemoteChangesStream {
 
     private observers: Array<Observer<Document>> = [];
 
+    private documentScheduleMap: { [resourceId: string]: [any, Document] } = {};
+
 
     constructor(
         private datastore: PouchdbDatastore,
@@ -45,11 +47,23 @@ export class RemoteChangesStream {
                     this.usernameProvider.getUsername())
                 || isConflicted(document)) {
 
-                if (isProjectDocument(document) && isConflicted(document)) {
-                    await this.resolveProjectDocumentConflict(document);
+
+                if (this.documentScheduleMap[document.resource.id]) {
+                    clearTimeout(this.documentScheduleMap[document.resource.id][0])
                 }
 
-                await this.welcomeRemoteDocument(document);
+                if (isProjectDocument(document) && isConflicted(document)) {
+
+                    const timeoutRef = setTimeout(async () => {
+                        await this.resolveProjectDocumentConflict(document);
+                        await this.welcomeRemoteDocument(document);
+                    }, Math.random() * 3000);
+
+                    this.documentScheduleMap[document.resource.id] = [timeoutRef, document];
+
+                } else {
+                    await this.welcomeRemoteDocument(document);
+                }
             }
         });
     }

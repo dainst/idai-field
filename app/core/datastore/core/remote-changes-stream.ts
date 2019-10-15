@@ -8,6 +8,9 @@ import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {UsernameProvider} from '../../settings/username-provider';
 import {DatastoreUtil} from './datastore-util';
+import isConflicted = DatastoreUtil.isConflicted;
+import isProjectDocument = DatastoreUtil.isProjectDocument;
+import getConflicts = DatastoreUtil.getConflicts;
 
 
 @Injectable()
@@ -51,7 +54,7 @@ export class RemoteChangesStream {
 
     private async welcomeRemoteDocument(document: Document) {
 
-        if (DatastoreUtil.isProjectDocument(document) && DatastoreUtil.isConflicted(document)) {
+        if (isProjectDocument(document) && isConflicted(document)) {
             await this.resolveProjectDocumentConflict(document);
         }
 
@@ -75,15 +78,15 @@ export class RemoteChangesStream {
         await this.datastore.update(
             document,
             this.usernameProvider.getUsername(),
-            DatastoreUtil.getConflicts(document))
+            getConflicts(document))
     }
 
 
     private static async isRemoteChange(document: Document, username: string): Promise<boolean> {
 
-        let latestAction: Action = Document.getLastModified(document);
+        const latestAction: Action = Document.getLastModified(document);
 
-        if (DatastoreUtil.isConflicted(document)) {
+        if (isConflicted(document)) {
             // Always treat conflicted documents as coming from remote // TODO improve comment, describe what's going on
             return true;
         } else {

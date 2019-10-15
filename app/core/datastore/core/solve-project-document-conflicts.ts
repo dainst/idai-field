@@ -15,7 +15,13 @@ export function solveProjectDocumentConflicts(document: Document) {
 }
 
 
-export function solveConflictBetween2ProjectDocuments(left: Document, right: Document) {
+export function solveConflictBetweenMultipleProjectDocuments(...documents: Array<Document>) {
+
+    return documents.reduce(solveConflictBetween2ProjectDocuments);
+}
+
+
+function solveConflictBetween2ProjectDocuments(left: Document, right: Document) {
 
     if (equal(left.resource)(right.resource)) return left;
 

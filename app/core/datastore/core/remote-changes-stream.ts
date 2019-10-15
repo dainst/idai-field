@@ -11,6 +11,7 @@ import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import getConflicts = DatastoreUtil.getConflicts;
+import {solveProjectDocumentConflicts} from './solve-project-document-conflicts';
 
 
 @Injectable()
@@ -58,7 +59,7 @@ export class RemoteChangesStream {
                             const latestRevision = await this.datastore.fetch(document.resource.id);
 
                             // console.warn('found conflicted project document', latestRevision);
-                            RemoteChangesStream.solve(document);
+                            solveProjectDocumentConflicts(document);
                             await this.updateResolvedDocument(latestRevision);
 
                             await this.welcomeRemoteDocument(latestRevision);
@@ -102,12 +103,6 @@ export class RemoteChangesStream {
         } catch (errWithParams) {
             if (errWithParams[0] !== DatastoreErrors.REMOVE_REVISIONS_ERROR) throw errWithParams;
         }
-    }
-
-
-    private static solve(document: Document) { // TODO put to module
-
-        (document.resource as any)['conflictedField'] = 0; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
     }
 
 

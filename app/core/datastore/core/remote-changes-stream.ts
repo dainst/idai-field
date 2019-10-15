@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {Action, Document} from 'idai-components-2';
+import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
@@ -93,12 +93,24 @@ export class RemoteChangesStream {
     private async resolveProjectDocumentConflict(document: Document) {
 
         console.warn('found conflicted project document', document);
-        (document.resource as any)['conflictedField'] = 0; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
+        RemoteChangesStream.solve(document);
 
-        await this.datastore.update(
-            document,
-            this.usernameProvider.getUsername(),
-            getConflicts(document))
+        try {
+
+            await this.datastore.update(
+                document,
+                this.usernameProvider.getUsername(),
+                getConflicts(document));
+
+        } catch (errWithParams) {
+            if (errWithParams[0] !== DatastoreErrors.REMOVE_REVISIONS_ERROR) throw errWithParams;
+        }
+    }
+
+
+    private static solve(document: Document) { // TODO put to module
+
+        (document.resource as any)['conflictedField'] = 0; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
     }
 
 

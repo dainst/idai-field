@@ -24,8 +24,6 @@ export class RemoteChangesStream {
 
     private documentScheduleMap: { [resourceId: string]: any } = {};
 
-    private firstRound = true; // TODO take this out later
-
     constructor(
         private datastore: PouchdbDatastore,
         private indexFacade: IndexFacade,
@@ -58,13 +56,15 @@ export class RemoteChangesStream {
                     this.documentScheduleMap[document.resource.id] = setTimeout(
                         async () => {
                             const latestRevision = await this.datastore.fetch(document.resource.id);
-                            await this.resolveProjectDocumentConflict(latestRevision);
+
+                            // console.warn('found conflicted project document', latestRevision);
+                            RemoteChangesStream.solve(document);
+                            await this.updateResolvedDocument(latestRevision);
+
                             await this.welcomeRemoteDocument(latestRevision);
                             delete this.documentScheduleMap[document.resource.id];
                         },
-                        this.firstRound ? 1000 : Math.random() * 10000);
-
-                    if (this.firstRound) this.firstRound = false;
+                        Math.random() * 10000);
 
                 } else {
                     await this.welcomeRemoteDocument(document);
@@ -90,10 +90,7 @@ export class RemoteChangesStream {
     }
 
 
-    private async resolveProjectDocumentConflict(document: Document) {
-
-        console.warn('found conflicted project document', document);
-        RemoteChangesStream.solve(document);
+    private async updateResolvedDocument(document: Document) {
 
         try {
 

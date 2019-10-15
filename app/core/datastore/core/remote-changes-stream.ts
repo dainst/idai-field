@@ -84,7 +84,7 @@ export class RemoteChangesStream {
         let latestAction: Action = Document.getLastModified(document);
 
         if (DatastoreUtil.isConflicted(document)) {
-            // Always treat conflicted documents as coming from remote
+            // Always treat conflicted documents as coming from remote // TODO improve comment, describe what's going on
             return true;
         } else {
             return latestAction && latestAction.user !== username;

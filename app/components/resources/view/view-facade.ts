@@ -124,13 +124,7 @@ export class ViewFacade {
 
     public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
-
-    public getNavigationPath() {
-
-        return this.isInOverview()
-            ? NavigationPath.empty()
-            : ResourcesState.getNavigationPath(this.resourcesStateManager.get());
-    }
+    public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
     public async selectView(viewName: 'project'|string): Promise<void> {

@@ -22,8 +22,9 @@ export class RemoteChangesStream {
 
     private observers: Array<Observer<Document>> = [];
 
-    private documentScheduleMap: { [resourceId: string]: [any, Document] } = {};
+    private documentScheduleMap: { [resourceId: string]: any } = {};
 
+    private firstRound = true; // TODO take this out later
 
     constructor(
         private datastore: PouchdbDatastore,
@@ -47,21 +48,23 @@ export class RemoteChangesStream {
                     this.usernameProvider.getUsername())
                 || isConflicted(document)) {
 
-
                 if (this.documentScheduleMap[document.resource.id]) {
-                    clearTimeout(this.documentScheduleMap[document.resource.id][0]);
+                    clearTimeout(this.documentScheduleMap[document.resource.id]);
                     delete this.documentScheduleMap[document.resource.id];
                 }
 
                 if (isProjectDocument(document) && isConflicted(document)) {
 
-                    const timeoutRef = setTimeout(async () => {
-                        await this.resolveProjectDocumentConflict(document);
-                        await this.welcomeRemoteDocument(document);
-                        delete this.documentScheduleMap[document.resource.id];
-                    }, Math.random() * 10000);
+                    this.documentScheduleMap[document.resource.id] = setTimeout(
+                        async () => {
+                            const latestRevision = await this.datastore.fetch(document.resource.id);
+                            await this.resolveProjectDocumentConflict(latestRevision);
+                            await this.welcomeRemoteDocument(latestRevision);
+                            delete this.documentScheduleMap[document.resource.id];
+                        },
+                        this.firstRound ? 1000 : Math.random() * 10000);
 
-                    this.documentScheduleMap[document.resource.id] = [timeoutRef, document];
+                    if (this.firstRound) this.firstRound = false;
 
                 } else {
                     await this.welcomeRemoteDocument(document);

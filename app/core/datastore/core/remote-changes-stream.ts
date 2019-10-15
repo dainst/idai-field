@@ -42,7 +42,8 @@ export class RemoteChangesStream {
 
             if (await RemoteChangesStream.isRemoteChange(
                     document,
-                    this.usernameProvider.getUsername())) {
+                    this.usernameProvider.getUsername())
+                || isConflicted(document)) {
 
                 await this.welcomeRemoteDocument(document);
             }
@@ -85,12 +86,6 @@ export class RemoteChangesStream {
     private static async isRemoteChange(document: Document, username: string): Promise<boolean> {
 
         const latestAction: Action = Document.getLastModified(document);
-
-        if (isConflicted(document)) {
-            // Always treat conflicted documents as coming from remote // TODO improve comment, describe what's going on
-            return true;
-        } else {
-            return latestAction && latestAction.user !== username;
-        }
+        return latestAction && latestAction.user !== username;
     }
 }

@@ -7,6 +7,7 @@ import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {UsernameProvider} from '../../settings/username-provider';
+import {DatastoreUtil} from './datastore-util';
 
 
 @Injectable()
@@ -36,11 +37,11 @@ export class RemoteChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            if (await this.isRemoteChange(
+            if (await RemoteChangesStream.isRemoteChange(
                     document,
                     this.usernameProvider.getUsername())) {
 
-                this.welcomeRemoteDocument(document);
+                await this.welcomeRemoteDocument(document);
             }
         });
     }
@@ -48,7 +49,9 @@ export class RemoteChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    private welcomeRemoteDocument(document: Document) {
+    private async welcomeRemoteDocument(document: Document) {
+
+        if (document.resource.id === 'project') await this.resolveProjectDocumentConflict(document);
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);
@@ -62,11 +65,25 @@ export class RemoteChangesStream {
     }
 
 
-    private async isRemoteChange(document: Document, username: string): Promise<boolean> {
+    private async resolveProjectDocumentConflict(document: Document) {
+
+        if (DatastoreUtil.isConflicted(document)) {
+            console.warn('found conflicted project document', document);
+            (document.resource as any)['conflictedField'] = -1; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
+
+            this.datastore.update(
+                document,
+                this.usernameProvider.getUsername(),
+                DatastoreUtil.getConflicts(document))
+        }
+    }
+
+
+    private static async isRemoteChange(document: Document, username: string): Promise<boolean> {
 
         let latestAction: Action = Document.getLastModified(document);
 
-        if ((document as any)['_conflicts']) {
+        if (DatastoreUtil.isConflicted(document)) {
             // Always treat conflicted documents as coming from remote
             return true;
         } else {

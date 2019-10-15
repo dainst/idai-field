@@ -59,6 +59,7 @@ export class FieldTypeConverter extends TypeConverter<Document> {
             }
         }
 
+
         return Migrator.migrate(document) as T;
     }
 }

@@ -51,7 +51,9 @@ export class RemoteChangesStream {
 
     private async welcomeRemoteDocument(document: Document) {
 
-        if (document.resource.id === 'project') await this.resolveProjectDocumentConflict(document);
+        if (DatastoreUtil.isProjectDocument(document) && DatastoreUtil.isConflicted(document)) {
+            await this.resolveProjectDocumentConflict(document);
+        }
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);
@@ -67,15 +69,13 @@ export class RemoteChangesStream {
 
     private async resolveProjectDocumentConflict(document: Document) {
 
-        if (DatastoreUtil.isConflicted(document)) {
-            console.warn('found conflicted project document', document);
-            (document.resource as any)['conflictedField'] = -1; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
+        console.warn('found conflicted project document', document);
+        (document.resource as any)['conflictedField'] = 0; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
 
-            this.datastore.update(
-                document,
-                this.usernameProvider.getUsername(),
-                DatastoreUtil.getConflicts(document))
-        }
+        await this.datastore.update(
+            document,
+            this.usernameProvider.getUsername(),
+            DatastoreUtil.getConflicts(document))
     }
 
 

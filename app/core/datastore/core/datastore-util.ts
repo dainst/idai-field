@@ -11,6 +11,12 @@ export module DatastoreUtil {
     }
 
 
+    export function isProjectDocument(document: Document): boolean {
+
+        return document.resource.id === 'project';
+    }
+
+
     /**
      * Design note: This is to abstract away how exactly a document is marked as conflicted.
      * PouchDb does it by setting _conflicts.

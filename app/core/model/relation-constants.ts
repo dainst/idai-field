@@ -20,7 +20,7 @@ export module POSITION_RELATIONS {
 
     export const IS_BELOW = 'isBelow';                // is read off by a user by sight
     export const IS_ABOVE = 'isAbove';                // is read off by a user by sight
-    export const IS_EQUIVALENT_TO = 'isEquivalentTo'; // a users interpretation that two stratigraphical units (Feature) are the same
+    export const IS_EQUIVALENT_TO = 'isEquivalentTo'; // a user's interpretation that two stratigraphical units (Feature) are the same
 
     export const BORDERS = 'borders';                 // TODO review 05.09
     export const CUTS = 'cuts';                       // .

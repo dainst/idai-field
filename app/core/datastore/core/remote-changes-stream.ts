@@ -45,6 +45,10 @@ export class RemoteChangesStream {
                     this.usernameProvider.getUsername())
                 || isConflicted(document)) {
 
+                if (isProjectDocument(document) && isConflicted(document)) {
+                    await this.resolveProjectDocumentConflict(document);
+                }
+
                 await this.welcomeRemoteDocument(document);
             }
         });
@@ -53,11 +57,7 @@ export class RemoteChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    private async welcomeRemoteDocument(document: Document) {
-
-        if (isProjectDocument(document) && isConflicted(document)) {
-            await this.resolveProjectDocumentConflict(document);
-        }
+    private welcomeRemoteDocument(document: Document) {
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);

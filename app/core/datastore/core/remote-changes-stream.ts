@@ -57,7 +57,7 @@ export class RemoteChangesStream {
                     const timeoutRef = setTimeout(async () => {
                         await this.resolveProjectDocumentConflict(document);
                         await this.welcomeRemoteDocument(document);
-                    }, Math.random() * 3000);
+                    }, Math.random() * 10000);
 
                     this.documentScheduleMap[document.resource.id] = [timeoutRef, document];
 

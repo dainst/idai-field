@@ -49,7 +49,8 @@ export class RemoteChangesStream {
 
 
                 if (this.documentScheduleMap[document.resource.id]) {
-                    clearTimeout(this.documentScheduleMap[document.resource.id][0])
+                    clearTimeout(this.documentScheduleMap[document.resource.id][0]);
+                    delete this.documentScheduleMap[document.resource.id];
                 }
 
                 if (isProjectDocument(document) && isConflicted(document)) {
@@ -57,6 +58,7 @@ export class RemoteChangesStream {
                     const timeoutRef = setTimeout(async () => {
                         await this.resolveProjectDocumentConflict(document);
                         await this.welcomeRemoteDocument(document);
+                        delete this.documentScheduleMap[document.resource.id];
                     }, Math.random() * 10000);
 
                     this.documentScheduleMap[document.resource.id] = [timeoutRef, document];

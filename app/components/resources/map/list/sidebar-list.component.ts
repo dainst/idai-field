@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
+import {NavigationPath} from '../../view/state/navigation-path';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
@@ -86,6 +88,11 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
         if (event.key === 'Enter') {
             await this.openChildCollection();
+            event.preventDefault();
+        }
+
+        if (event.key === 'Backspace') {
+            await this.goToUpperHierarchyLevel();
             event.preventDefault();
         }
     }
@@ -288,7 +295,24 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     private async openChildCollection() {
 
         if (this.viewFacade.getSelectedDocument()) {
-            await this.viewFacade.moveInto(this.viewFacade.getSelectedDocument(), true);
+            await this.navigationService.moveInto(this.viewFacade.getSelectedDocument());
         }
+    }
+
+
+    private async goToUpperHierarchyLevel() {
+
+        const navigationPath: NavigationPath = this.viewFacade.getNavigationPath();
+        if (!navigationPath.selectedSegmentId || navigationPath.segments.length === 0) return;
+
+        const newSegmentIndex: number = navigationPath.segments
+            .map(to('document.resource.id'))
+            .indexOf(navigationPath.selectedSegmentId) - 1;
+
+        await this.navigationService.moveInto(
+            newSegmentIndex < 0
+                ? undefined
+                : navigationPath.segments[newSegmentIndex].document
+        );
     }
 }

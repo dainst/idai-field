@@ -8,14 +8,14 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
 
 
 /**
- * Folds resources pairwise from the right.
+ * Collapses resources pairwise from the right.
  * If a pair can be auto-resolved, the pair gets replaced by the one resolved resource.
  * If a pair cannot be auto-resolved, the procedure stops and the intermediate resources get returned.
  *
  * @param resources ordered by time ascending
  *   expected to be of at least length 2.
  *
- * @returns resources either fully folded (list of length 1) or an intermediate result of the folding process.
+ * @returns resources either fully collapsed (list of length 1) or an intermediate result of the collapsing process.
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira

@@ -17,8 +17,8 @@ export async function solveProjectDocumentConflict(
     fetchRevision: (_: ResourceId, __: RevisionId) => Promise<Document>,
     update:        (_: Document, conflicts: string[]) => Promise<Document|undefined>): Promise<Document|undefined> {
 
-    const latestRevision = await fetch(document.resource.id);
-    const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
+    const latestRevisionDocument = await fetch(document.resource.id);
+    const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
     if (!conflicts) return document;                // again, to make sure other client did not solve it in that exact instant
 
     const conflictedDocuments =
@@ -26,17 +26,17 @@ export async function solveProjectDocumentConflict(
         (conflicts);
 
     // TODO should be ordered by time ascending
-    const currentAndOldRevisionsResources =
+    const resourcesOfCurrentAndOldRevisionDocuments =
         conflictedDocuments
-            .concat(latestRevision)
+            .concat(latestRevisionDocument)
             .map(to(RESOURCE));
 
-    const resolvedResources = solveProjectResourceConflicts(currentAndOldRevisionsResources);
+    const resolvedResources = solveProjectResourceConflicts(resourcesOfCurrentAndOldRevisionDocuments);
     if (resolvedResources.length !== 1) {
         throw "solution for that case not implemented yet" // TODO implement solution and test
     }
     const resolvedResource = resolvedResources[0];
-    const assembledDocument = assoc(RESOURCE, resolvedResource)(latestRevision); // this is to work with the latest changes history
+    const assembledDocument = assoc(RESOURCE, resolvedResource)(latestRevisionDocument); // this is to work with the latest changes history
     return await update(assembledDocument, conflicts);
 }
 

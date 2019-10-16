@@ -5,13 +5,19 @@ import {withDissoc} from '../../import/util';
 
 
 /**
+ * Folds resources pairwise from the right.
+ * If a pair can be auto-resolved, the pair gets replaced by the one resolved resource.
+ * If a pair cannot be auto-resolved, the procedure stops and the intermediate resources get returned.
+ *
  * @param resources ordered by time ascending
  *   expected to be of at least length 2.
+ *
+ * @returns resources either fully folded (list of length 1) or an intermediate result of the folding process.
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function solveProjectResourceConflicts(resources: Resources) {
+export function solveProjectResourceConflicts(resources: Resources): Resources {
 
     if (isnt(2)(len(resources))) throw "FATAL - illegal argument - resources must have length 2";
 
@@ -41,7 +47,7 @@ export function solveProjectResourceConflicts(resources: Resources) {
             dropRight(2),
             append([result]));
 
-    }, copy(resources))[0];
+    }, copy(resources));
 }
 
 

@@ -38,7 +38,8 @@ export async function solveProjectDocumentConflict(
         // and the last resource is of the current document, we know exactly which resources
         // have been successfully auto-resolved. These revisions can then be squashed during
         // the update of the still conflicted (with the remaining conflicts) document.
-        throw "solution for that case not implemented yet" // TODO implement solution and test
+        throw "solution for that case not implemented yet"
+        // TODO implement solution and test, or, what we also could do, for the first version of this which gets shipped with the next release we could simply skip the auto-resolution altogether, and then implement a better version for the next release
     }
     const resolvedResource = resolvedResources[0];
     const assembledDocument = assoc(RESOURCE, resolvedResource)(latestRevisionDocument); // this is to work with the latest changes history

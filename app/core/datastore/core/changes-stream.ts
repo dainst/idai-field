@@ -29,7 +29,7 @@ export class ChangesStream {
      * until we touch it. This is to minimize the chance that multiple clients
      * auto-resolve a conflict at the same time.
      */
-    private documentScheduleMap: { [resourceId: string]: any } = {};
+    private documentsScheduledToWelcome: { [resourceId: string]: any } = {};
 
 
     constructor(
@@ -55,14 +55,14 @@ export class ChangesStream {
                     this.usernameProvider.getUsername())
                 || isConflicted(document)) {
 
-                if (this.documentScheduleMap[document.resource.id]) {
-                    clearTimeout(this.documentScheduleMap[document.resource.id]);
-                    delete this.documentScheduleMap[document.resource.id];
+                if (this.documentsScheduledToWelcome[document.resource.id]) {
+                    clearTimeout(this.documentsScheduledToWelcome[document.resource.id]);
+                    delete this.documentsScheduledToWelcome[document.resource.id];
                 }
 
                 if (isProjectDocument(document) && isConflicted(document)) {
 
-                    this.documentScheduleMap[document.resource.id] = setTimeout(
+                    this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         async () => {
                             const latestRevision = await this.datastore.fetch(document.resource.id);
                             const conflicts = getConflicts(latestRevision);
@@ -82,7 +82,7 @@ export class ChangesStream {
                             }
 
                             await this.welcomeDocument(latestRevision);
-                            delete this.documentScheduleMap[document.resource.id];
+                            delete this.documentsScheduledToWelcome[document.resource.id];
                         },
                         Math.random() * 10000);
 

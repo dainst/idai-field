@@ -22,11 +22,11 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
  */
 export function solveProjectResourceConflicts(resources: Resources): Resources {
 
-    if (len(resources) < 2) throw "FATAL - illegal argument - resources must have length 2";
+    if (len(resources) < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
     let quitEarly = false;
 
-    return resources.reduceRight((resources: Array<Resource>, ultimate: Resource) => {
+    return collapseRight(resources, (resources: Resources, ultimate: Resource) => {
 
         if (quitEarly) return resources;
 
@@ -49,8 +49,7 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
             resources,
             dropRight(2),
             append([result]));
-
-    }, copy(resources));
+    });
 }
 
 
@@ -73,6 +72,9 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
 
 const STAFF = 'staff';
+
+
+const collapseRight = <A>(as: Array<A>, f: (as: Array<A>, a: A) => Array<A>) => as.reduceRight(f, copy(as));
 
 
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);

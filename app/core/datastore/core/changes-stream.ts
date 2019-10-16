@@ -86,27 +86,25 @@ export class ChangesStream {
 
         const latestRevision = await this.datastore.fetch(document.resource.id);
         const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
+        if (!conflicts) return document;                // again, to make sure other client did not solve it in that exact instant
 
-        if (conflicts /* again, to make sure other client did not solve it in that exact instant */) {
+        const conflictedDocuments = await asyncMap(
+            (resourceId: string) => {
+                return this.datastore.fetchRevision(
+                    document.resource.id,
+                    resourceId)})(conflicts);
 
-            const conflictedDocuments = await asyncMap(
-                (resourceId: string) => {
-                    return this.datastore.fetchRevision(
-                        document.resource.id,
-                        resourceId)})(conflicts);
+        const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
 
-            const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
+        try {
+            const resolvedResource = solveProjectResourceConflicts(...currentAndOldRevisions.map(to('resource')));
+            const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
+            await this.updateResolvedDocument(assembledDocument);
 
-            try {
-                const resolvedResource = solveProjectResourceConflicts(...currentAndOldRevisions.map(to('resource')));
-                const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
-                await this.updateResolvedDocument(assembledDocument);
+            console.log('assembledDocument', assembledDocument);
 
-                console.log('assembledDocument', assembledDocument);
-
-                return assembledDocument;
-            } catch { }
-        }
+            return assembledDocument;
+        } catch { }
     }
 
 

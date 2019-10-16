@@ -59,10 +59,10 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
     if (equal(left)(right)) return left;
 
-    const l = constantProjectFields.reduce(withDissoc, left);
-    const r = constantProjectFields.reduce(withDissoc, right);
+    const l = withoutConstantProjectFields(left);
+    const r = withoutConstantProjectFields(right);
 
-    if (isEmpty(l)) return right;
+    if      (isEmpty(l)) return right;
     else if (isEmpty(r)) return left;
 
     if (left.staff && right.staff && equal(withoutStaff(l))(withoutStaff(r))) {
@@ -70,6 +70,9 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     }
     else throw "solution for that case not implemented yet"
 }
+
+
+const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
 
 
 const withoutStaff = dissoc('staff');

@@ -33,6 +33,11 @@ export async function solveProjectDocumentConflict(
 
     const resolvedResources = solveProjectResourceConflicts(resourcesOfCurrentAndOldRevisionDocuments);
     if (resolvedResources.length !== 1) {
+        // If the length of resolved resources is not 1, then compare the length with the
+        // length of resourcesOfCurrentAndOldRevisionDocuments. Since we fold from the right
+        // and the last resource is of the current document, we know exactly which resources
+        // have been successfully auto-resolved. These revisions can then be squashed during
+        // the update of the still conflicted (with the remaining conflicts) document.
         throw "solution for that case not implemented yet" // TODO implement solution and test
     }
     const resolvedResource = resolvedResources[0];

@@ -69,13 +69,13 @@ export class ChangesStream {
                             solveProjectDocumentConflicts(document);
                             await this.updateResolvedDocument(latestRevision);
 
-                            await this.welcomeRemoteDocument(latestRevision);
+                            await this.welcomeDocument(latestRevision);
                             delete this.documentScheduleMap[document.resource.id];
                         },
                         Math.random() * 10000);
 
                 } else {
-                    await this.welcomeRemoteDocument(document);
+                    await this.welcomeDocument(document);
                 }
             }
         });
@@ -84,7 +84,7 @@ export class ChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    private welcomeRemoteDocument(document: Document) {
+    private welcomeDocument(document: Document) {
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);

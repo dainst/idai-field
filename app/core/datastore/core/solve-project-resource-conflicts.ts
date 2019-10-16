@@ -1,23 +1,70 @@
-import {assoc, union, dissoc, equal} from 'tsfun';
+import {assoc, union, dissoc, equal, takeRight, to, cond, is, isnt,
+    take, flow, compose, dropRight, append, copy} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
 
 
+
+const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
+
+
+/**
+ * Gets the penultimate of an Array of A's, if it exists.
+ * @returns A|undefined
+ */
+const getPenultimate = compose(
+    takeRight(2),
+    cond(
+        compose(len, is(2)),
+        take(1),
+        take(0)));
+
+
 /**
  * @param resources ordered by time ascending
+ *   expected to be of at least length 2.
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export function solveProjectResourceConflicts(resources: Array<Resource>) {
 
+    if (isnt(2)(len(resources))) throw "FATAL - illegal argument - resources must have length 2";
+
+    let quitEarly = false;
+
     /**
      * TODO review: make sure the latestrevision is the 'seed' of reduce
      */
-    return resources.reduceRight(solveConflictBetween2ProjectDocuments);
+    return resources.reduceRight((resources: Array<Resource>, last: Resource) => {
+
+        if (quitEarly) return resources;
+        const penultimate: Resource|undefined = to('[0]')(getPenultimate(resources));
+
+        if (!penultimate) {
+            quitEarly = true;
+            return resources;
+        }
+
+        const result = solveConflictBetween2ProjectDocuments(
+                penultimate,
+                last);
+
+        if (!result) {
+            quitEarly = true;
+            return resources;
+        }
+
+        return flow(
+            resources,
+            dropRight(2),
+            append([result]));
+
+    }, copy(resources))[0];
 }
 
 
+// TODO return undefined if could not resolve conflict
 function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) {
 
     if (equal(left)(right)) return left;

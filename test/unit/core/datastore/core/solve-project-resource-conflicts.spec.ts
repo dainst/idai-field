@@ -89,7 +89,7 @@ describe('solveProjectResourceConflicts', () => {
         const expectedResult = {
             id: '1',
             identifier: 'project-name',
-            staff: ['b', 'c', 'a'],
+            staff: ['a', 'b', 'c'],
             type: 'Object',
             relations: {}
         };

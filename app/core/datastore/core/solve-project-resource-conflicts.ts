@@ -33,10 +33,7 @@ export function solveProjectResourceConflicts(resources: Array<Resource>) {
 
     let quitEarly = false;
 
-    /**
-     * TODO review: make sure the latestrevision is the 'seed' of reduce
-     */
-    return resources.reduceRight((resources: Array<Resource>, last: Resource) => {
+    return resources.reduceRight((resources: Array<Resource>, ultimate: Resource) => {
 
         if (quitEarly) return resources;
         const penultimate: Resource|undefined = to('[0]')(getPenultimate(resources));
@@ -48,7 +45,7 @@ export function solveProjectResourceConflicts(resources: Array<Resource>) {
 
         const result = solveConflictBetween2ProjectDocuments(
                 penultimate,
-                last);
+                ultimate);
 
         if (!result) {
             quitEarly = true;

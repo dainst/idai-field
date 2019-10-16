@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {assoc, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {Observable, Observer} from 'rxjs';
 import {Action, Document, DatastoreErrors} from 'idai-components-2';
@@ -12,7 +13,7 @@ import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import getConflicts = DatastoreUtil.getConflicts;
-import {solveProjectDocumentConflicts} from './solve-project-document-conflicts';
+import {solveProjectResourceConflicts} from './solve-project-resource-conflicts';
 
 
 @Injectable()
@@ -64,27 +65,9 @@ export class ChangesStream {
 
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         async () => {
-                            const latestRevision = await this.datastore.fetch(document.resource.id);
-                            const conflicts = getConflicts(latestRevision);
-
-                            if (conflicts /* again, to make sure other client did not solve it in that exact instant */) {
-
-                                const conflictedDocuments = await asyncMap(
-                                    (resourceId: string) => {
-                                        return this.datastore.fetchRevision(
-                                            document.resource.id,
-                                            resourceId)})(conflicts);
-
-                                const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
-
-                                try {
-                                    const resolvedDocument = solveProjectDocumentConflicts(...currentAndOldRevisions);
-                                    await this.updateResolvedDocument(resolvedDocument);
-                                } catch { }
-                            }
-
-                            await this.welcomeDocument(latestRevision);
+                            const resolved = await this.resolveConflict(document);
                             delete this.documentsScheduledToWelcome[document.resource.id];
+                            await this.welcomeDocument(resolved);
                         },
                         Math.random() * 10000);
 
@@ -96,6 +79,32 @@ export class ChangesStream {
     }
 
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+
+
+
+    private async resolveConflict(document: Document) {
+
+        const latestRevision = await this.datastore.fetch(document.resource.id);
+        const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
+
+        if (conflicts /* again, to make sure other client did not solve it in that exact instant */) {
+
+            const conflictedDocuments = await asyncMap(
+                (resourceId: string) => {
+                    return this.datastore.fetchRevision(
+                        document.resource.id,
+                        resourceId)})(conflicts);
+
+            const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
+
+            try {
+                const resolvedResource = solveProjectResourceConflicts(...currentAndOldRevisions.map(to('resource')));
+                const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
+                await this.updateResolvedDocument(assembledDocument);
+                return assembledDocument;
+            } catch { }
+        }
+    }
 
 
     private welcomeDocument(document: Document) {

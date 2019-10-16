@@ -103,7 +103,7 @@ export class ChangesStream {
 
         const resolvedResource = solveProjectResourceConflicts(currentAndOldRevisionsResources);
         const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
-        const updatedDocument = await this.updateResolvedDocument(assembledDocument);
+        const updatedDocument = await this.updateResolvedDocument(assembledDocument, conflicts);
 
         console.log('updatedDocument', updatedDocument);
         return updatedDocument;
@@ -124,14 +124,14 @@ export class ChangesStream {
     }
 
 
-    private async updateResolvedDocument(document: Document): Promise<Document|undefined> {
+    private async updateResolvedDocument(document: Document, conflicts: Array<string>): Promise<Document|undefined> {
 
         try {
 
             return await this.datastore.update(
                 document,
                 this.usernameProvider.getUsername(),
-                getConflicts(document)); // TODO review
+                conflicts);
 
         } catch (errWithParams) {
             // If tho clients have auto-resolved the conflict are exactly the same time,

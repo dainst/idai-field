@@ -25,7 +25,7 @@ export async function solveProjectDocumentConflict(
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
         (conflicts);
 
-    // TODO should be ordered by time ascending
+    // TODO should be ordered by time ascending, or by revision id and then by time ascending (better because it takes differing times (not set on computer, time zones) into account)
     const resourcesOfCurrentAndOldRevisionDocuments =
         conflictedDocuments
             .concat(latestRevisionDocument)

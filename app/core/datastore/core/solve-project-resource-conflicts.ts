@@ -1,7 +1,10 @@
-import {assoc, union, dissoc, equal, takeRight, to, cond, is, isnt,
-    take, flow, compose, dropRight, append, copy} from 'tsfun';
+import {assoc, union, dissoc, equal, takeRight, to, cond, is, isnt, isEmpty,
+    take, flow, compose, dropRight, append, copy, len} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
+
+
+const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
 
 
 /**
@@ -56,26 +59,21 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
     if (equal(left)(right)) return left;
 
+    const l = constantProjectFields.reduce(withDissoc, left);
+    const r = constantProjectFields.reduce(withDissoc, right);
 
-    const constantFields = ['id', 'relations', 'type', 'identifier'];
+    if (isEmpty(l)) return right;
+    else if (isEmpty(r)) return left;
 
-    const l = constantFields.reduce(withDissoc, left);
-    const r = constantFields.reduce(withDissoc, right);
-
-    if (Object.keys(l).length === 0) return right;
-    else if (Object.keys(r).length === 0) return left;
-
-    const lWithoutStaff = dissoc('staff')(l);
-    const rWithoutStaff = dissoc('staff')(r);
-
-    if (left.staff && right.staff && equal(lWithoutStaff)(rWithoutStaff)) {
+    if (left.staff && right.staff && equal(withoutStaff(l))(withoutStaff(r))) {
         return assoc('staff', union([left.staff, right.staff]))(left);
     }
     else throw "solution for that case not implemented yet"
 }
 
 
-const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
+const withoutStaff = dissoc('staff');
+
 
 const lengthIs2 = compose(len, is(2));
 

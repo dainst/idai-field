@@ -23,7 +23,13 @@ export class RemoteChangesStream {
 
     private observers: Array<Observer<Document>> = [];
 
+    /**
+     * For each incoming document, we wait a short and random amount of time
+     * until we touch it. This is to minimize the chance that multiple clients
+     * auto-resolve a conflict at the same time.
+     */
     private documentScheduleMap: { [resourceId: string]: any } = {};
+
 
     constructor(
         private datastore: PouchdbDatastore,
@@ -32,6 +38,7 @@ export class RemoteChangesStream {
         private typeConverter: TypeConverter<Document>,
         private usernameProvider: UsernameProvider
     ) {
+
 
         datastore.deletedNotifications().subscribe(document => {
 

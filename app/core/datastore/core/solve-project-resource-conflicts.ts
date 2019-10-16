@@ -29,8 +29,8 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
     return resources.reduceRight((resources: Array<Resource>, ultimate: Resource) => {
 
         if (quitEarly) return resources;
-        const penultimate: Resource|undefined = to('[0]')(getPenultimate(resources));
 
+        const penultimate: Resource|undefined = to('[0]')(getPenultimate(resources));
         if (!penultimate) {
             quitEarly = true;
             return resources;

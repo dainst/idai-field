@@ -65,8 +65,8 @@ export class ChangesStream {
 
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         async () => {
-                            const resolved = await this.resolveConflict(document);
                             delete this.documentsScheduledToWelcome[document.resource.id];
+                            const resolved = await this.resolveConflict(document);
                             await this.welcomeDocument(resolved);
                         },
                         Math.random() * 10000);
@@ -101,6 +101,9 @@ export class ChangesStream {
                 const resolvedResource = solveProjectResourceConflicts(...currentAndOldRevisions.map(to('resource')));
                 const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
                 await this.updateResolvedDocument(assembledDocument);
+
+                console.log('assembledDocument', assembledDocument);
+
                 return assembledDocument;
             } catch { }
         }

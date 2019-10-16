@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {Action, Document, DatastoreErrors, Resource} from 'idai-components-2';
+import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
@@ -66,8 +66,8 @@ export class ChangesStream {
                             delete this.documentsScheduledToWelcome[document.resource.id];
                             try {
                                 const resolved = await this.resolveConflict(document);
-                                // TODO make sure _conflicts is deleted at this point
                                 if (resolved) await this.welcomeDocument(resolved);
+                                // TODO what if not resolved?
                             } catch { }
                         },
                         Math.random() * 10000);

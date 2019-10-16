@@ -1,5 +1,5 @@
 import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
-    take, flow, compose, dropRight, append, copy, len} from 'tsfun';
+    flow, compose, dropRight, append, copy, len, val} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
 
@@ -30,7 +30,7 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
 
         if (quitEarly) return resources;
 
-        const penultimate: Resource|undefined = to('[0]')(getPenultimate(resources));
+        const penultimate: Resource|undefined = getPenultimate(resources);
         if (!penultimate) {
             quitEarly = true;
             return resources;
@@ -40,7 +40,7 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
                 penultimate,
                 ultimate);
 
-        if (!result) {
+        if (result === UNRESOLVED) {
             quitEarly = true;
             return resources;
         }
@@ -67,7 +67,7 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
         return assoc(STAFF, union([left.staff, right.staff]))(left);
     }
 
-    return undefined;
+    return UNRESOLVED;
 }
 
 
@@ -94,9 +94,11 @@ const getPenultimate = compose(
     takeRight(2),
     cond(
         lengthIs2,
-        take(1),
-        take(0)));
+        to('[0]'),
+        val(undefined)));
 
 
 export type Resources = Array<Resource>;
 
+
+const UNRESOLVED = undefined;

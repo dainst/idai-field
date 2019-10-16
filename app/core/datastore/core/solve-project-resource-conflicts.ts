@@ -33,9 +33,7 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
         const penultimate: Resource|undefined = getPenultimate(resources);
         if (!penultimate) { quitEarly = true; return resources; }
 
-        const result = solveConflictBetween2ProjectDocuments(
-                penultimate,
-                ultimate);
+        const result = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
         if (result === UNRESOLVED) { quitEarly = true; return resources; }
 
         return flow(

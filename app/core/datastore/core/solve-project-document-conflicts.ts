@@ -34,6 +34,24 @@ export async function solveProjectDocumentConflict(
             .concat(latestRevisionDocument)
             .map(to(RESOURCE));
 
+    return await resolve(
+        resourcesOfCurrentAndOldRevisionDocuments,
+        conflicts,
+        solve,
+        solveAlternative,
+        update,
+        insertResourceIntoLatestRevisionDocument)
+}
+
+
+async function resolve(
+    resourcesOfCurrentAndOldRevisionDocuments: Resources,
+    conflicts:        string[],
+    solve:            (_: Resources) => Resources,
+    solveAlternative: (_: Resources) => Resource,
+    update:           (_: Document, conflicts: string[]) => Promise<Document>,
+    insertResourceIntoLatestRevisionDocument: (_: Resource) => Document): Promise<Document> {
+
     const resolvedResources = solve(resourcesOfCurrentAndOldRevisionDocuments);
     if (resolvedResources.length === 1) {
 

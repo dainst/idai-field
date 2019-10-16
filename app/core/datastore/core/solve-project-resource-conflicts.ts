@@ -68,7 +68,7 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
         return assoc(STAFF, union([left.staff, right.staff]))(left);
     }
 
-    return undefined; // TODO write test
+    return undefined;
 }
 
 

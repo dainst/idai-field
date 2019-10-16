@@ -1,4 +1,4 @@
-import {assoc, union, dissoc, equal, takeRight, to, cond, is, isnt, isEmpty,
+import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
     take, flow, compose, dropRight, append, copy, len} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
@@ -22,7 +22,7 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
  */
 export function solveProjectResourceConflicts(resources: Resources): Resources {
 
-    if (isnt(2)(len(resources))) throw "FATAL - illegal argument - resources must have length 2";
+    if (len(resources) < 2) throw "FATAL - illegal argument - resources must have length 2";
 
     let quitEarly = false;
 
@@ -80,6 +80,7 @@ const withoutStaff = dissoc('staff');
 
 
 const lengthIs2 = compose(len, is(2));
+
 
 /**
  * Gets the penultimate of an Array of A's, if it exists.

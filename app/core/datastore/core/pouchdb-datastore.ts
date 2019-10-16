@@ -290,7 +290,7 @@ export class PouchdbDatastore {
         try {
             await this.db.get(resourceId);
             exists = true;
-        } catch (_) {}
+        } catch { }
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
     }
 

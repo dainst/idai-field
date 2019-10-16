@@ -77,8 +77,10 @@ export class ChangesStream {
 
                                 const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
 
-                                const resolvedDocument = solveProjectDocumentConflicts(...currentAndOldRevisions);
-                                await this.updateResolvedDocument(resolvedDocument);
+                                try {
+                                    const resolvedDocument = solveProjectDocumentConflicts(...currentAndOldRevisions);
+                                    await this.updateResolvedDocument(resolvedDocument);
+                                } catch { }
                             }
 
                             await this.welcomeDocument(latestRevision);

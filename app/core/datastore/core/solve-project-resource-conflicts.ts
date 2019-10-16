@@ -71,6 +71,7 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
 const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
 
+const lengthIs2 = compose(len, is(2));
 
 /**
  * Gets the penultimate of an Array of A's, if it exists.
@@ -79,7 +80,7 @@ const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
 const getPenultimate = compose(
     takeRight(2),
     cond(
-        compose(len, is(2)),
+        lengthIs2,
         take(1),
         take(0)));
 

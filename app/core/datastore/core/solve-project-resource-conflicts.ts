@@ -30,7 +30,7 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
 
         if (quitEarly) return resources;
 
-        const penultimate: Resource|undefined = getPenultimate(resources);
+        const penultimate = getPenultimate(resources);
         if (!penultimate) { quitEarly = true; return resources; }
 
         const result = solveConflictBetween2ProjectDocuments(penultimate, ultimate);

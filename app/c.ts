@@ -36,3 +36,4 @@ export module INPUT_TYPES {
 
 export type Name = string;
 export type ResourceId = string;
+export type RevisionId = string;

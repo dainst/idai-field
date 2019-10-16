@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {assoc, to} from 'tsfun';
-import {asyncMap} from 'tsfun-extra';
 import {Observable, Observer} from 'rxjs';
-import {Action, Document, DatastoreErrors} from 'idai-components-2';
+import {Action, Document, DatastoreErrors, Resource} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
@@ -12,7 +10,7 @@ import {UsernameProvider} from '../../settings/username-provider';
 import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
-import getConflicts = DatastoreUtil.getConflicts;
+import {solveProjectDocumentConflict} from './solve-project-document-conflicts';
 import {solveProjectResourceConflicts} from './solve-project-resource-conflicts';
 
 
@@ -84,29 +82,14 @@ export class ChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
+    private async resolveConflict(document: Document): Promise<Document|undefined> {
 
-    private async resolveConflict(document: Document) {
-
-        const latestRevision = await this.datastore.fetch(document.resource.id);
-        const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
-        if (!conflicts) return document;                // again, to make sure other client did not solve it in that exact instant
-
-        const conflictedDocuments =
-            await asyncMap((resourceId: string) => this.datastore.fetchRevision(document.resource.id, resourceId))
-            (conflicts);
-
-        // TODO should be ordered by time ascending
-        const currentAndOldRevisionsResources =
-            conflictedDocuments
-                .concat(latestRevision)
-                .map(to('resource'));
-
-        const resolvedResource = solveProjectResourceConflicts(currentAndOldRevisionsResources);
-        const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
-        const updatedDocument = await this.updateResolvedDocument(assembledDocument, conflicts);
-
-        console.log('updatedDocument', updatedDocument);
-        return updatedDocument;
+        return solveProjectDocumentConflict(
+            document,
+            solveProjectResourceConflicts,
+            (resourceId: string) => this.datastore.fetch(resourceId),
+            (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId),
+            (document: Document, squashRevisionIds: string[]) => this.updateResolvedDocument(document, squashRevisionIds));
     }
 
 

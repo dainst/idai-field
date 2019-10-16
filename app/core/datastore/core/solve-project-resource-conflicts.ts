@@ -4,22 +4,6 @@ import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
 
 
-
-const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
-
-
-/**
- * Gets the penultimate of an Array of A's, if it exists.
- * @returns A|undefined
- */
-const getPenultimate = compose(
-    takeRight(2),
-    cond(
-        compose(len, is(2)),
-        take(1),
-        take(0)));
-
-
 /**
  * @param resources ordered by time ascending
  *   expected to be of at least length 2.
@@ -27,7 +11,7 @@ const getPenultimate = compose(
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function solveProjectResourceConflicts(resources: Array<Resource>) {
+export function solveProjectResourceConflicts(resources: Resources) {
 
     if (isnt(2)(len(resources))) throw "FATAL - illegal argument - resources must have length 2";
 
@@ -83,3 +67,22 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     }
     else throw "solution for that case not implemented yet"
 }
+
+
+const len = <A>(as: Array<A>) => as.length; // TODO put to tsfun
+
+
+/**
+ * Gets the penultimate of an Array of A's, if it exists.
+ * @returns A|undefined
+ */
+const getPenultimate = compose(
+    takeRight(2),
+    cond(
+        compose(len, is(2)),
+        take(1),
+        take(0)));
+
+
+export type Resources = Array<Resource>;
+

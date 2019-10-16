@@ -101,6 +101,10 @@ export class RemoteChangesStream {
                 getConflicts(document));
 
         } catch (errWithParams) {
+            // If tho clients have auto-resolved the conflict are exactly the same time,
+            // the document is already updated and its revisions already removed. Since
+            // the revisions get updated before the document gets updated, REMOVE_REVISIONS
+            // error tells us exactly that, which is why we can safely swallow it here.
             if (errWithParams[0] !== DatastoreErrors.REMOVE_REVISIONS_ERROR) throw errWithParams;
         }
     }

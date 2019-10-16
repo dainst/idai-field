@@ -6,16 +6,8 @@ import {withDissoc} from '../../import/util';
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
- *
- * @param document
  */
-export function solveProjectDocumentConflicts(document: Document) {
-
-    (document.resource as any)['conflictedField'] = 0; // THIS IS TO MOCK A SUCCESSFUL MANUAL CONFLICT RESOLUTION
-}
-
-
-export function solveConflictBetweenMultipleProjectDocuments(...documents: Array<Document>) {
+export function solveProjectDocumentConflicts(...documents: Array<Document>) {
 
     return documents.reduce(solveConflictBetween2ProjectDocuments);
 }

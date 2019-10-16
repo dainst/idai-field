@@ -1,5 +1,5 @@
 import {equal} from 'tsfun';
-import {solveConflictBetweenMultipleProjectDocuments} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
+import {solveProjectDocumentConflicts} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 
 
 describe('solveProjectDocumentConflicts', () => {
@@ -28,7 +28,7 @@ describe('solveProjectDocumentConflicts', () => {
             }
         };
 
-        const result = solveConflictBetweenMultipleProjectDocuments(left, right);
+        const result = solveProjectDocumentConflicts(left, right);
 
         const expectedResult = {
             created: { user: 'anonymous2', date: new Date() },
@@ -83,10 +83,10 @@ describe('solveProjectDocumentConflicts', () => {
             }
         };
 
-        const result1 = solveConflictBetweenMultipleProjectDocuments(left, right);
+        const result1 = solveProjectDocumentConflicts(left, right);
         expect(equal(result1.resource)(expectedResult.resource)).toBeTruthy();
 
-        const result2 = solveConflictBetweenMultipleProjectDocuments(right, left);
+        const result2 = solveProjectDocumentConflicts(right, left);
         expect(equal(result2.resource)(expectedResult.resource)).toBeTruthy();
     });
 
@@ -130,7 +130,7 @@ describe('solveProjectDocumentConflicts', () => {
             }
         };
 
-        const result = solveConflictBetweenMultipleProjectDocuments(left, right);
+        const result = solveProjectDocumentConflicts(left, right);
         expect(equal(result.resource)(expectedResult.resource)).toBeTruthy();
     });
 
@@ -164,7 +164,7 @@ describe('solveProjectDocumentConflicts', () => {
         };
 
         try {
-            solveConflictBetweenMultipleProjectDocuments(left, right);
+            solveProjectDocumentConflicts(left, right);
             fail();
         } catch {} // expected
     });

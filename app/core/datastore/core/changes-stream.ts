@@ -69,16 +69,16 @@ export class ChangesStream {
 
                             if (conflicts /* again, to make sure other client did not solve it in that exact instant */) {
 
-                                const conflictedDocuments = asyncMap(
+                                const conflictedDocuments = await asyncMap(
                                     (resourceId: string) => {
                                         return this.datastore.fetchRevision(
                                             document.resource.id,
                                             resourceId)})(conflicts);
-                                // TODO process conflicted documents
 
-                                // console.warn('found conflicted project document', latestRevision);
-                                solveProjectDocumentConflicts(document);
-                                await this.updateResolvedDocument(latestRevision);
+                                const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
+
+                                const resolvedDocument = solveProjectDocumentConflicts(...currentAndOldRevisions);
+                                await this.updateResolvedDocument(resolvedDocument);
                             }
 
                             await this.welcomeDocument(latestRevision);

@@ -54,7 +54,6 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
 }
 
 
-// TODO return undefined if could not resolve conflict
 function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) {
 
     if (equal(left)(right)) return left;
@@ -66,17 +65,20 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     else if (isEmpty(r)) return left;
 
     if (left.staff && right.staff && equal(withoutStaff(l))(withoutStaff(r))) {
-        return assoc('staff', union([left.staff, right.staff]))(left);
+        return assoc(STAFF, union([left.staff, right.staff]))(left);
     }
 
     return undefined; // TODO write test
 }
 
 
+const STAFF = 'staff';
+
+
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
 
 
-const withoutStaff = dissoc('staff');
+const withoutStaff = dissoc(STAFF);
 
 
 const lengthIs2 = compose(len, is(2));

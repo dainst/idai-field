@@ -1,8 +1,8 @@
 import {equal} from 'tsfun';
-import {solveProjectResourceConflicts} from '../../../../../app/core/datastore/core/solve-project-resource-conflicts';
+import {ProjectResourceConflictResolution} from '../../../../../app/core/datastore/core/project-resource-conflict-resolution';
 
 
-describe('solveProjectResourceConflicts', () => {
+describe('ProjectResourceConflictResolution', () => {
 
     it('two identical resources', () => {
 
@@ -20,7 +20,7 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result = solveProjectResourceConflicts([left, right])[0];
+        const result = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right])[0];
 
         const expectedResult = {
             identifier: 'project-name',
@@ -59,10 +59,10 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result1 = solveProjectResourceConflicts([left, right])[0];
+        const result1 = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right])[0];
         expect(equal(result1)(expectedResult)).toBeTruthy();
 
-        const result2 = solveProjectResourceConflicts([right, left])[0];
+        const result2 = ProjectResourceConflictResolution.solveProjectResourceConflicts([right, left])[0];
         expect(equal(result2)(expectedResult)).toBeTruthy();
     });
 
@@ -94,7 +94,7 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result = solveProjectResourceConflicts([left, right])[0];
+        const result = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right])[0];
         expect(equal(result)(expectedResult)).toBeTruthy();
     });
 
@@ -119,7 +119,7 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result = solveProjectResourceConflicts([left, right]);
+        const result = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
         expect(result.length).toBe(2);
         expect(equal(left)(result[0])).toBeTruthy();
         expect(equal(right)(result[1])).toBeTruthy();

@@ -1,7 +1,8 @@
-import {to} from 'tsfun';
+import {take} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 import {clone} from '../../../../../app/core/util/object-util';
+import {last} from '../../../../../app/core/datastore/core/project-resource-conflict-resolution';
 
 
 describe('solveProjectDocumentConflict', () => {
@@ -32,7 +33,8 @@ describe('solveProjectDocumentConflict', () => {
 
         const solved = await solveProjectDocumentConflict(
             current,
-            to('[0]'),
+            take(1),
+            last,
             (_: string) => Promise.resolve(clone(current)),
             (_: string, __: string) => Promise.resolve(clone(conflicted)),
             (document: Document) => {

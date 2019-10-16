@@ -1,7 +1,7 @@
 import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream.service';
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {NavigationPath} from './state/navigation-path';
@@ -32,7 +32,7 @@ export class ViewFacade {
     constructor(
         private projectConfiguration: ProjectConfiguration,
         private datastore: FieldReadDatastore,
-        private remoteChangesStream: RemoteChangesStream,
+        private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private indexFacade: IndexFacade

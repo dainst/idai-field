@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../core/datastore/core/changes-stream.service';
 import {SynchronizationStatus} from '../../core/settings/synchronization-status';
 
 
@@ -22,7 +22,7 @@ export class TaskbarComponent {
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private synchronizationStatus: SynchronizationStatus,
-                remoteChangesStream: RemoteChangesStream) {
+                remoteChangesStream: ChangesStream) {
 
         this.listenToRemoteChanges(remoteChangesStream);
     }
@@ -31,7 +31,7 @@ export class TaskbarComponent {
     public isConnected = (): boolean => this.synchronizationStatus.isConnected();
 
 
-    private listenToRemoteChanges(remoteChangesStream: RemoteChangesStream) {
+    private listenToRemoteChanges(remoteChangesStream: ChangesStream) {
 
         remoteChangesStream.notifications().subscribe(() => {
             this.receivingRemoteChanges = true;

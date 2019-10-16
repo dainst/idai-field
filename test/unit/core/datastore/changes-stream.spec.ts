@@ -1,4 +1,4 @@
-import {RemoteChangesStream} from '../../../../app/core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../../../app/core/datastore/core/changes-stream.service';
 
 /**
  * @author Thomas Kleinke
@@ -55,7 +55,7 @@ describe('RemoteChangesStream', () => {
         datastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
         datastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
 
-        rcs = new RemoteChangesStream(
+        rcs = new ChangesStream(
             datastore,
             indexFacade,
             documentCache,

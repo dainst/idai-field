@@ -10,7 +10,7 @@ import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../core/datastore/core/changes-stream.service';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
@@ -67,7 +67,7 @@ export class ImportComponent implements OnInit {
     constructor(
         private messages: Messages,
         private datastore: DocumentDatastore,
-        private remoteChangesStream: RemoteChangesStream,
+        private remoteChangesStream: ChangesStream,
         private importValidator: ImportValidator,
         private http: HttpClient,
         private usernameProvider: UsernameProvider,

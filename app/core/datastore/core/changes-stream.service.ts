@@ -19,7 +19,7 @@ import {solveProjectDocumentConflicts} from './solve-project-document-conflicts'
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class RemoteChangesStream {
+export class ChangesStream {
 
     private observers: Array<Observer<Document>> = [];
 
@@ -49,7 +49,7 @@ export class RemoteChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            if (await RemoteChangesStream.isRemoteChange(
+            if (await ChangesStream.isRemoteChange(
                     document,
                     this.usernameProvider.getUsername())
                 || isConflicted(document)) {

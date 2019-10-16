@@ -21,7 +21,7 @@ import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
-import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../core/datastore/core/changes-stream.service';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
@@ -121,7 +121,7 @@ const remote = require('electron').remote;
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: FieldDatastore,
-                changesStream: RemoteChangesStream,
+                changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
                 indexFacade: IndexFacade
@@ -138,7 +138,7 @@ const remote = require('electron').remote;
             deps: [
                 ProjectConfiguration,
                 FieldDatastore,
-                RemoteChangesStream,
+                ChangesStream,
                 ResourcesStateManager,
                 Loading,
                 IndexFacade

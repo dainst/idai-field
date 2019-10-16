@@ -2,7 +2,7 @@ import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream.service';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
@@ -43,7 +43,7 @@ export class DocumentsManager {
 
     constructor(
         private datastore: FieldReadDatastore,
-        private remoteChangesStream: RemoteChangesStream,
+        private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number

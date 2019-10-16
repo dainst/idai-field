@@ -11,7 +11,7 @@ import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
-import {RemoteChangesStream} from '../../app/core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../app/core/datastore/core/changes-stream.service';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';
@@ -99,7 +99,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
         documentCache as DocumentCache<ImageDocument>, typeConverter);
 
-    const remoteChangesStream = new RemoteChangesStream(
+    const remoteChangesStream = new ChangesStream(
         datastore,
         createdIndexFacade,
         documentCache,

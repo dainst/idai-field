@@ -12,7 +12,7 @@ import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {FieldTypeConverter} from './field/field-type-converter';
-import {RemoteChangesStream} from './core/remote-changes-stream';
+import {ChangesStream} from './core/changes-stream.service';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
@@ -26,7 +26,7 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
  */
 @NgModule({
     providers: [
-        RemoteChangesStream,
+        ChangesStream,
         PouchdbManager,
         { provide: TypeConverter, useClass: FieldTypeConverter },
         DocumentCache,

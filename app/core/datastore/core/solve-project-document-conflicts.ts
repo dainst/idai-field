@@ -19,6 +19,9 @@ export async function solveProjectDocumentConflict(
     update:           (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
 
     const latestRevisionDocument = await fetch(document.resource.id);
+    const insertResourceIntoLatestRevisionDocument = // this is to work with the latest changes history
+        (resource: Resource) => assoc(RESOURCE, resource)(latestRevisionDocument);
+
     const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
     if (!conflicts) return document;                        // again, to make sure other client did not solve it in that exact instant
 
@@ -35,7 +38,8 @@ export async function solveProjectDocumentConflict(
     const resolvedResources = solve(resourcesOfCurrentAndOldRevisionDocuments);
     if (resolvedResources.length === 1) {
 
-        const assembledDocument = assoc(RESOURCE, resolvedResources[0])(latestRevisionDocument); // this is to work with the latest changes history
+        const resolvedResource = resolvedResources[0];
+        const assembledDocument = insertResourceIntoLatestRevisionDocument(resolvedResource);
         return await update(assembledDocument, conflicts);
 
     } else {
@@ -52,7 +56,7 @@ export async function solveProjectDocumentConflict(
         // When we have a partially solved and squashed document, we can try the alternative way
         // of solving, which creates an entirely new revision with the desired properties for that alternative case.
         const resolvedResource = solveAlternative(resolvedResources);
-        const assembledDocument = assoc(RESOURCE, resolvedResource)(latestRevisionDocument);
+        const assembledDocument = insertResourceIntoLatestRevisionDocument(resolvedResource);
         // TODO update again
 
         return assembledDocument;

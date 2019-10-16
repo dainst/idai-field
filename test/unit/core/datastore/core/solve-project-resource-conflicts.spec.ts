@@ -119,9 +119,9 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        try {
-            solveProjectResourceConflicts([left, right]);
-            fail();
-        } catch {} // expected
+        const result = solveProjectResourceConflicts([left, right]);
+        expect(result.length).toBe(2);
+        expect(equal(left)(result[0])).toBeTruthy();
+        expect(equal(right)(result[1])).toBeTruthy();
     });
 });

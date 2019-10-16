@@ -31,7 +31,11 @@ export async function solveProjectDocumentConflict(
             .concat(latestRevision)
             .map(to('resource'));
 
-    const resolvedResource = solveProjectResourceConflicts(currentAndOldRevisionsResources)[0];
+    const resolvedResources = solveProjectResourceConflicts(currentAndOldRevisionsResources);
+    if (resolvedResources.length !== 1) {
+        throw "solution for that case not implemented yet" // TODO implement solution and test
+    }
+    const resolvedResource = resolvedResources[0];
     const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
     return await update(assembledDocument, conflicts);
 }

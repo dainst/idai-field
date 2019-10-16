@@ -68,7 +68,8 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     if (left.staff && right.staff && equal(withoutStaff(l))(withoutStaff(r))) {
         return assoc('staff', union([left.staff, right.staff]))(left);
     }
-    else throw "solution for that case not implemented yet"
+
+    return undefined; // TODO write test
 }
 
 

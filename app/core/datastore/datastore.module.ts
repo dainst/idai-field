@@ -12,7 +12,7 @@ import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {FieldTypeConverter} from './field/field-type-converter';
-import {ChangesStream} from './core/changes-stream.service';
+import {ChangesStream} from './core/changes-stream';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';

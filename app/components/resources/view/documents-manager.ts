@@ -2,7 +2,7 @@ import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {ChangesStream} from '../../../core/datastore/core/changes-stream.service';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';

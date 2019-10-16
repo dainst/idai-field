@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {ChangesStream} from '../../core/datastore/core/changes-stream.service';
+import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {SynchronizationStatus} from '../../core/settings/synchronization-status';
 
 

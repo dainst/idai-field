@@ -11,7 +11,7 @@ import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
-import {ChangesStream} from '../../app/core/datastore/core/changes-stream.service';
+import {ChangesStream} from '../../app/core/datastore/core/changes-stream';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';

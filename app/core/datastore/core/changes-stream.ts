@@ -66,8 +66,11 @@ export class ChangesStream {
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         async () => {
                             delete this.documentsScheduledToWelcome[document.resource.id];
-                            const resolved = await this.resolveConflict(document);
-                            await this.welcomeDocument(resolved);
+                            try {
+                                const resolved = await this.resolveConflict(document);
+                                // TODO make sure _conflicts is deleted at this point
+                                if (resolved) await this.welcomeDocument(resolved);
+                            } catch { }
                         },
                         Math.random() * 10000);
 
@@ -88,23 +91,22 @@ export class ChangesStream {
         const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return document;                // again, to make sure other client did not solve it in that exact instant
 
-        const conflictedDocuments = await asyncMap(
-            (resourceId: string) => {
-                return this.datastore.fetchRevision(
-                    document.resource.id,
-                    resourceId)})(conflicts);
+        const conflictedDocuments =
+            await asyncMap((resourceId: string) => this.datastore.fetchRevision(document.resource.id, resourceId))
+            (conflicts);
 
-        const currentAndOldRevisions = conflictedDocuments.concat(latestRevision);
+        // TODO should be ordered by time ascending
+        const currentAndOldRevisionsResources =
+            conflictedDocuments
+                .concat(latestRevision)
+                .map(to('resource'));
 
-        try {
-            const resolvedResource = solveProjectResourceConflicts(...currentAndOldRevisions.map(to('resource')));
-            const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
-            await this.updateResolvedDocument(assembledDocument);
+        const resolvedResource = solveProjectResourceConflicts(currentAndOldRevisionsResources);
+        const assembledDocument = assoc('resource', resolvedResource)(latestRevision); // this is to work with the latest changes history
+        const updatedDocument = await this.updateResolvedDocument(assembledDocument);
 
-            console.log('assembledDocument', assembledDocument);
-
-            return assembledDocument;
-        } catch { }
+        console.log('updatedDocument', updatedDocument);
+        return updatedDocument;
     }
 
 
@@ -122,14 +124,14 @@ export class ChangesStream {
     }
 
 
-    private async updateResolvedDocument(document: Document) {
+    private async updateResolvedDocument(document: Document): Promise<Document|undefined> {
 
         try {
 
-            await this.datastore.update(
+            return await this.datastore.update(
                 document,
                 this.usernameProvider.getUsername(),
-                getConflicts(document));
+                getConflicts(document)); // TODO review
 
         } catch (errWithParams) {
             // If tho clients have auto-resolved the conflict are exactly the same time,
@@ -137,6 +139,7 @@ export class ChangesStream {
             // the revisions get updated before the document gets updated, REMOVE_REVISIONS
             // error tells us exactly that, which is why we can safely swallow it here.
             if (errWithParams[0] !== DatastoreErrors.REMOVE_REVISIONS_ERROR) throw errWithParams;
+            return undefined;
         }
     }
 

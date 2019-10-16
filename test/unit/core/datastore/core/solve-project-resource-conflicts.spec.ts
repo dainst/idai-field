@@ -20,7 +20,7 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result = solveProjectResourceConflicts(left, right);
+        const result = solveProjectResourceConflicts([left, right]);
 
         const expectedResult = {
             identifier: 'project-name',
@@ -59,10 +59,10 @@ describe('solveProjectResourceConflicts', () => {
             relations: {}
         };
 
-        const result1 = solveProjectResourceConflicts(left, right);
+        const result1 = solveProjectResourceConflicts([left, right]);
         expect(equal(result1)(expectedResult)).toBeTruthy();
 
-        const result2 = solveProjectResourceConflicts(right, left);
+        const result2 = solveProjectResourceConflicts([right, left]);
         expect(equal(result2)(expectedResult)).toBeTruthy();
     });
 
@@ -89,12 +89,12 @@ describe('solveProjectResourceConflicts', () => {
         const expectedResult = {
             id: '1',
             identifier: 'project-name',
-            staff: ['a', 'b', 'c'],
+            staff: ['b', 'c', 'a'],
             type: 'Object',
             relations: {}
         };
 
-        const result = solveProjectResourceConflicts(left, right);
+        const result = solveProjectResourceConflicts([left, right]);
         expect(equal(result)(expectedResult)).toBeTruthy();
     });
 
@@ -120,7 +120,7 @@ describe('solveProjectResourceConflicts', () => {
         };
 
         try {
-            solveProjectResourceConflicts(left, right);
+            solveProjectResourceConflicts([left, right]);
             fail();
         } catch {} // expected
     });

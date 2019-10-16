@@ -4,12 +4,17 @@ import {withDissoc} from '../../import/util';
 
 
 /**
+ * @param resources ordered by time ascending
+ *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function solveProjectResourceConflicts(...resources: Array<Resource>) {
+export function solveProjectResourceConflicts(resources: Array<Resource>) {
 
-    return resources.reduce(solveConflictBetween2ProjectDocuments);
+    /**
+     * TODO review: make sure the latestrevision is the 'seed' of reduce
+     */
+    return resources.reduceRight(solveConflictBetween2ProjectDocuments);
 }
 
 

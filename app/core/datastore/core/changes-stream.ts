@@ -65,9 +65,7 @@ export class ChangesStream {
                         async () => {
                             delete this.documentsScheduledToWelcome[document.resource.id];
                             try {
-                                const resolved = await this.resolveConflict(document);
-                                if (resolved) await this.welcomeDocument(resolved);
-                                // TODO what if not resolved?
+                                await this.welcomeDocument(await this.resolveConflict(document));
                             } catch { }
                         },
                         Math.random() * 10000);
@@ -82,7 +80,7 @@ export class ChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    private async resolveConflict(document: Document): Promise<Document|undefined> {
+    private async resolveConflict(document: Document): Promise<Document> {
 
         return solveProjectDocumentConflict(
             document,
@@ -107,7 +105,7 @@ export class ChangesStream {
     }
 
 
-    private async updateResolvedDocument(document: Document, conflicts: Array<string>): Promise<Document|undefined> {
+    private async updateResolvedDocument(document: Document, conflicts: Array<string>): Promise<Document> {
 
         try {
 
@@ -122,7 +120,7 @@ export class ChangesStream {
             // the revisions get updated before the document gets updated, REMOVE_REVISIONS
             // error tells us exactly that, which is why we can safely swallow it here.
             if (errWithParams[0] !== DatastoreErrors.REMOVE_REVISIONS_ERROR) throw errWithParams;
-            return undefined;
+            return await this.datastore.fetch(document.resource.id);
         }
     }
 

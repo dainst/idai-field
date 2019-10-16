@@ -15,11 +15,11 @@ export async function solveProjectDocumentConflict(
     solve:         (_: Resources) => Resources,
     fetch:         (_: ResourceId) => Promise<Document>,
     fetchRevision: (_: ResourceId, __: RevisionId) => Promise<Document>,
-    update:        (_: Document, conflicts: string[]) => Promise<Document|undefined>): Promise<Document|undefined> {
+    update:        (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
 
     const latestRevisionDocument = await fetch(document.resource.id);
     const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
-    if (!conflicts) return document;                // again, to make sure other client did not solve it in that exact instant
+    if (!conflicts) return document;                        // again, to make sure other client did not solve it in that exact instant
 
     const conflictedDocuments =
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
@@ -33,16 +33,15 @@ export async function solveProjectDocumentConflict(
 
     const resolvedResources = solveProjectResourceConflicts(resourcesOfCurrentAndOldRevisionDocuments);
     if (resolvedResources.length !== 1) {
-        // If the length of resolved resources is not 1, then compare the length with the
-        // length of resourcesOfCurrentAndOldRevisionDocuments. Since we fold from the right
-        // and the last resource is of the current document, we know exactly which resources
-        // have been successfully auto-resolved. These revisions can then be squashed during
-        // the update of the still conflicted (with the remaining conflicts) document.
-        throw "solution for that case not implemented yet"
-        // TODO implement solution and test, or, what we also could do, for the first version of this which gets shipped with the next release we could simply skip the auto-resolution altogether, and then implement a better version for the next release
+        return document;
+        // If the length of resolved resources is not 1, instead of resolving no conflict at all,
+        // compare the length with the length of resourcesOfCurrentAndOldRevisionDocuments.
+        // Since we fold from the right and the last resource is of the current document,
+        // we know exactly which resources have been successfully auto-resolved.
+        // These revisions can then be squashed during the update of the still conflicted
+        // (with the remaining conflicts) document.
     }
-    const resolvedResource = resolvedResources[0];
-    const assembledDocument = assoc(RESOURCE, resolvedResource)(latestRevisionDocument); // this is to work with the latest changes history
+    const assembledDocument = assoc(RESOURCE, resolvedResources[0])(latestRevisionDocument); // this is to work with the latest changes history
     return await update(assembledDocument, conflicts);
 }
 

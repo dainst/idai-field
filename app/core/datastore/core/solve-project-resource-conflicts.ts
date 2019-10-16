@@ -33,13 +33,10 @@ export function solveProjectResourceConflicts(resources: Resources): Resources {
         const penultimate = getPenultimate(resources);
         if (!penultimate) { quitEarly = true; return resources; }
 
-        const result = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
-        if (result === UNRESOLVED) { quitEarly = true; return resources; }
+        const solved = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
+        if (solved === UNRESOLVED) { quitEarly = true; return resources; }
 
-        return flow(
-            resources,
-            dropRight(2),
-            append([result]));
+        return replacePairWithResolvedOne(resources, solved);
     });
 }
 
@@ -75,6 +72,12 @@ const withoutStaff = dissoc(STAFF);
 
 
 const lengthIs2 = compose(len, is(2));
+
+
+function replacePairWithResolvedOne(resources: Resources, solved: Resource) {
+
+    return flow(resources, dropRight(2), append([solved]));
+}
 
 
 /**

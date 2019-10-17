@@ -4,7 +4,7 @@ import {append, compose, dropRight, flow, takeRight, to, take, drop} from 'tsfun
 export function replaceLast<A>(replacement: A){ return (as: Array<A>): Array<A> => {
 
     return replaceRight(as, 1, replacement);
-}};
+}}
 
 
 export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {

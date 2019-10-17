@@ -13,8 +13,8 @@ import {dissocIndices, replaceLast} from './helpers';
  */
 export async function solveProjectDocumentConflict(
     document:         Document,
-    solve:            (_: Resources) => [Resource, number[]],
-    solveAlternative: (_: Resources) => Resource,
+    solveRevisions:   (_: Resources) => [Resource, number[]],
+    crunch:           (_: Resources) => Resource,
     fetch:            (_: ResourceId) => Promise<Document>,
     fetchRevision:    (_: ResourceId, __: RevisionId) => Promise<Document>,
     update:           (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
@@ -40,35 +40,29 @@ export async function solveProjectDocumentConflict(
     const result = await resolve(
         resourcesOfCurrentAndOldRevisionDocuments,
         conflicts,
-        solve,
-        solveAlternative);
+        solveRevisions,
+        crunch);
 
     return await update(insertResourceIntoLatestRevisionDocument(result[0]), result[1]);
 }
 
 
 async function resolve(
-    orderedDocuments: Resources,
-    conflicts:        string[],
-    solve:            (_: Resources) => [Resource, number[]],
-    solveAlternative: (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
+    resources:        Resources,
+    conflicts:        RevisionId[],
+    solveRevisions:   (_: Resources) => [Resource, number[]],
+    crunch:           (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
 
-    const [resolvedResource_, indicesOfResolvedResources] = solve(orderedDocuments);
-    let solvedConflicts: RevisionId[] = [];
-    let resolvedResource: Resource|undefined = undefined;
+    const [resolvedResource_, indicesOfResolvedResources] = solveRevisions(resources);
 
-    if (indicesOfResolvedResources.length === conflicts.length) {
-        solvedConflicts = conflicts;
-        resolvedResource = resolvedResource_;
-    } else {
-        solvedConflicts = indicesOfResolvedResources.map(lookup(conflicts)) as string[];
-        resolvedResource =
-            flow(
-                orderedDocuments,
-                dissocIndices(indicesOfResolvedResources.sort()),
-                replaceLast(resolvedResource),
-                solveAlternative) as Resource;
-    }
+    const solvedConflicts = indicesOfResolvedResources.map(lookup(conflicts)) as string[];
+
+    const resolvedResource =
+        flow(
+            resources,
+            dissocIndices(indicesOfResolvedResources.sort()),
+            replaceLast(resolvedResource_),
+            crunch) as Resource;
 
     return [resolvedResource, solvedConflicts];
 }

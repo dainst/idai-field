@@ -16,11 +16,12 @@ export module ProjectResourceConflictResolution {
 
     /**
      * @param resources
-     *   expected to be of at least length 2.
+     *   expected to be of at least length 1.
      */
     export function createResourceForNewRevisionFrom(resources: Resources): Resource {
 
-        if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
+        if (resources.length === 0) throw 'FATAL - illegal argument - resources must have length 1';
+        if (resources.length === 1) return resources[0];
 
         const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
         const campaignsUnion = flow(resources, map(to(CAMPAIGNS)), filter(isDefined),  union);

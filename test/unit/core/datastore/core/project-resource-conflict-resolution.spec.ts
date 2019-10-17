@@ -100,6 +100,42 @@ describe('ProjectResourceConflictResolution', () => {
     });
 
 
+    it('unify staff and campaigns', () => {
+
+        const left = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['a', 'b'],
+            campaigns: ['1', '2'],
+            type: 'Object',
+            relations: {}
+        };
+
+        const right = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['b', 'c'],
+            campaigns: ['2', '3'],
+            type: 'Object',
+            relations: {}
+        };
+
+
+        const expectedResult = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['a', 'b', 'c'],
+            campaigns: ['1', '2', '3'],
+            type: 'Object',
+            relations: {}
+        };
+
+        const [resolvedResource, indicesOfResolvedResources] = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
+        expect(equal(resolvedResource)(expectedResult)).toBeTruthy();
+        expect(indicesOfResolvedResources).toEqual([0]);
+    });
+
+
     it('do not unify staff', () => {
 
         const left = {

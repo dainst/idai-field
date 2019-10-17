@@ -1,4 +1,4 @@
-import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
+import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty, getOnOr,
     flow, compose, dropRight, append, len, val, map, filter, isDefined} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
@@ -6,6 +6,10 @@ import {DatastoreUtil} from './datastore-util';
 import last = DatastoreUtil.last;
 
 
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
 export module ProjectResourceConflictResolution {
 
     const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
@@ -20,7 +24,11 @@ export module ProjectResourceConflictResolution {
         if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
         const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
-        return flow(resources, last, assoc(STAFF, staffUnion));
+        const campaignsUnion = flow(resources, map(to(CAMPAIGNS)), filter(isDefined),  union);
+        return flow(resources,
+            last,
+            assoc(STAFF, staffUnion),
+            assoc(CAMPAIGNS, campaignsUnion));
     }
 
 
@@ -30,8 +38,6 @@ export module ProjectResourceConflictResolution {
      *
      * @returns a resolved resource and the positions of the resources that have been used to do this.
      *
-     * @author Thomas Kleinke
-     * @author Daniel de Oliveira
      */
     export function solveProjectResourceConflicts(resources: Resources): [Resource, number[]] {
 
@@ -66,10 +72,14 @@ export module ProjectResourceConflictResolution {
         if      (isEmpty(l)) return right;
         else if (isEmpty(r)) return left;
 
-        if (equal(withoutStaff(l))(withoutStaff(r))) {
-            if (left.staff && right.staff) return assoc(STAFF, union([left.staff, right.staff]))(left);
-            if (left.staff)                return assoc(STAFF, left.staff)(left);
-            if (right.staff)               return assoc(STAFF, right.staff)(left);
+        if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
+            const lCampaigns = getOnOr(CAMPAIGNS, [])(l);
+            const rCampaigns = getOnOr(CAMPAIGNS, [])(r);
+            const lStaff = getOnOr(STAFF, [])(l);
+            const rStaff = getOnOr(STAFF, [])(r);
+            return flow(left,
+                assoc(STAFF, union([lStaff, rStaff])),
+                assoc(CAMPAIGNS, union([lCampaigns, rCampaigns])));
         }
         return NONE;
     }
@@ -78,10 +88,13 @@ export module ProjectResourceConflictResolution {
     const STAFF = 'staff';
 
 
+    const CAMPAIGNS = 'campaigns';
+
+
     const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
 
 
-    const withoutStaff = dissoc(STAFF);
+    const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
 
 
     const lengthIs2 = compose(len, is(2));

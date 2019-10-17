@@ -87,11 +87,12 @@ export class ChangesStream {
         let conflicts = getConflicts(document); // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return document;        // again, to make sure other client did not solve it in that exact instant
 
-        return solveProjectDocumentConflict(
+        const [documentToUpdate, squashRevisionIds] = await solveProjectDocumentConflict(
             latestRevisionDocument,
             conflicts,
-            (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId),
-            (document: Document, squashRevisionIds: string[]) => this.updateResolvedDocument(document, squashRevisionIds));
+            (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId));
+
+        return this.updateResolvedDocument(documentToUpdate, squashRevisionIds)
     }
 
 

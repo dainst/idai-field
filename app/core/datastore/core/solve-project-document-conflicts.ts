@@ -1,11 +1,11 @@
-import {asyncMap} from 'tsfun-extra';
 import {assoc, to, lookup, flow, map, filter, isDefined, union, equal,
     isEmpty, getOnOr, compose, dissoc, len, is, takeRight, cond, val} from 'tsfun';
+import {asyncMap} from 'tsfun-extra';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {ResourceId, RevisionId} from '../../../c';
 import {CAMPAIGNS, dissocIndices, last, replaceLast, replaceLastPair, STAFF} from './helpers';
-import getConflicts = DatastoreUtil.getConflicts;
+
 import {withDissoc} from '../../import/util';
 
 
@@ -14,9 +14,8 @@ import {withDissoc} from '../../import/util';
  */
 export async function solveProjectDocumentConflict(document: Document,
                                                    conflicts: RevisionId[],
-                                                   fetchRevision: (_: ResourceId, __: RevisionId) => Promise<Document>,
-                                                   update: (_: Document, conflicts: string[]) => Promise<Document>):
-    Promise<Document> {
+                                                   fetchRevision: (_: ResourceId, __: RevisionId) => Promise<Document>):
+    Promise<[Document, RevisionId[] /* of succesfully resolved conflicts */]> {
 
     const conflictedDocuments = // TODO pass as param a function which returns revisions for a group of ids, or even better, fetch outside the function. then one can also do the update outside and get rid of the async altogether.
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
@@ -29,19 +28,19 @@ export async function solveProjectDocumentConflict(document: Document,
             .concat(document)
             .map(to(RESOURCE));
 
-    const result = await resolve(
+    const result = resolve(
         resourcesOfCurrentAndOldRevisionDocuments,
         conflicts);
 
     // this is to work with the latest changes history
     const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, result[0])(document);
-    return await update(latestRevisionDocumentWithInsertedResultResource, result[1]);
+    return [latestRevisionDocumentWithInsertedResultResource, result[1]];
 }
 
 
-async function resolve(resources: Array<Resource>,
+function resolve(resources: Array<Resource>,
                        conflicts: RevisionId[]):
-    Promise<[Resource, RevisionId[]]> {
+    [Resource, RevisionId[]] {
 
     const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources);
 

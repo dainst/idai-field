@@ -35,20 +35,13 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(result.resource['aField']).toEqual('aValue');
-        expect(squashRevisionIds).toEqual(['c1']);
+        expect(result[0].resource['aField']).toEqual('aValue');
+        expect(result[1]).toEqual(['c1']);
         done();
     });
 
@@ -81,20 +74,13 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(result.resource['aField']).toEqual('aValue');
-        expect(squashRevisionIds).toEqual(['c1']);
+        expect(result[0].resource['aField']).toEqual('aValue');
+        expect(result[1]).toEqual(['c1']);
         done();
     });
 
@@ -127,20 +113,13 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(result.resource['aField']).toEqual('aValue');
-        expect(squashRevisionIds).toEqual(['c1']);
+        expect(result[0].resource['aField']).toEqual('aValue');
+        expect(result[1]).toEqual(['c1']);
         done();
     });
 
@@ -197,20 +176,13 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(sameset(result.resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
-        expect(squashRevisionIds).toEqual(['c2', 'c3']);
+        expect(sameset(result[0].resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
+        expect(result[1]).toEqual(['c2', 'c3']);
         done();
     });
 
@@ -267,20 +239,13 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(sameset(result.resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
-        expect(squashRevisionIds).toEqual(['c1', 'c3']);
+        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(result[1]).toEqual(['c1', 'c3']);
         done();
     });
 
@@ -333,19 +298,12 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        let squashRevisionIds: string[] = [];
-
-        await solveProjectDocumentConflict(
+        const result = await solveProjectDocumentConflict(
             current,
             ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(squashRevisionIds).toEqual(['c1', 'c2', 'c3']);
+        expect(result[1]).toEqual(['c1', 'c2', 'c3']);
         done();
     });
 
@@ -405,21 +363,14 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        let squashRevisionIds: string[] = [];
-
         const result = await solveProjectDocumentConflict(
             current,
             ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
-            (document: Document, squashRevisionIds_: string[]) => {
-                squashRevisionIds = squashRevisionIds_;
-                return Promise.resolve(document);
-            }
-        );
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
 
-        expect(sameset(result.resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
-        expect(result.resource['aField']).toEqual('aValue');
-        expect(squashRevisionIds).toEqual([]);
+        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(result[0].resource['aField']).toEqual('aValue');
+        expect(result[1]).toEqual([]);
         done();
     });
 });

@@ -15,4 +15,10 @@ export class StateSerializer {
 
         return null;
     }
+
+
+    public async delete(stateType: StateType): Promise<any> {
+
+        return null;
+    }
 }

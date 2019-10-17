@@ -58,6 +58,24 @@ export class StandardStateSerializer extends StateSerializer {
     }
 
 
+    public delete(stateType: StateType): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            const filePath: string = this.getFilePath(stateType);
+            if (!fs.existsSync(filePath)) return resolve();
+
+            fs.unlink(filePath, (err: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+
     private getFilePath(stateType: StateType): string {
 
         return remote.getGlobal('appDataPath') + '/' +  stateType + '-'

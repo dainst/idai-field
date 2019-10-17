@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
+import {asyncMap} from 'tsfun-extra';
 import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
@@ -87,10 +88,13 @@ export class ChangesStream {
         let conflicts = getConflicts(document); // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return document;        // again, to make sure other client did not solve it in that exact instant
 
-        const [documentToUpdate, squashRevisionIds] = await solveProjectDocumentConflict(
-            latestRevisionDocument,
-            conflicts,
-            (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId));
+        const conflictedDocuments =
+            await asyncMap((revisionId: string) => { // TODO extract function
+                return this.datastore.fetchRevision(document.resource.id, revisionId);
+            })(conflicts);
+
+        const [documentToUpdate, squashRevisionIds] =
+            solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
 
         return this.updateResolvedDocument(documentToUpdate, squashRevisionIds)
     }

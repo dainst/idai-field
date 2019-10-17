@@ -1,4 +1,4 @@
-import {sameset} from 'tsfun';
+import {sameset, values} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 import {clone} from '../../../../../app/core/util/object-util';
@@ -20,7 +20,7 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1'];
 
-        const conflictedDocs = {
+        const conflictedDocs = { // TODO convert all these structures to arrays
 
             c1: {
                 created: { user: '', date: new Date() },
@@ -35,10 +35,9 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
@@ -74,10 +73,9 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
@@ -113,10 +111,9 @@ describe('solveProjectDocumentConflict', () => {
             }
         } as {[revisionId: string]: Document};
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
@@ -176,10 +173,9 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(sameset(result[0].resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
         expect(result[1]).toEqual(['c2', 'c3']);
@@ -239,10 +235,9 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
         expect(result[1]).toEqual(['c1', 'c3']);
@@ -298,10 +293,9 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(result[1]).toEqual(['c1', 'c2', 'c3']);
         done();
@@ -363,10 +357,9 @@ describe('solveProjectDocumentConflict', () => {
         conflictedDocs['c2']['_rev'] = 'c2';
         conflictedDocs['c3']['_rev'] = 'c3';
 
-        const result = await solveProjectDocumentConflict(
+        const result = solveProjectDocumentConflict(
             current,
-            ['c1', 'c2', 'c3'],
-            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])));
+            values(conflictedDocs));
 
         expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
         expect(result[0].resource['aField']).toEqual('aValue');

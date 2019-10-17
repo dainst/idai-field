@@ -13,17 +13,12 @@ import {withDissoc} from '../../import/util';
  * @author Daniel de Oliveira
  */
 export async function solveProjectDocumentConflict(document: Document,
-                                                   fetch: (_: ResourceId) => Promise<Document>,
+                                                   conflicts: RevisionId[],
                                                    fetchRevision: (_: ResourceId, __: RevisionId) => Promise<Document>,
                                                    update: (_: Document, conflicts: string[]) => Promise<Document>):
     Promise<Document> {
 
-    const latestRevisionDocument = await fetch(document.resource.id);
-
-    let conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
-    if (!conflicts) return document;                      // again, to make sure other client did not solve it in that exact instant
-
-    const conflictedDocuments = // TODO pass as param a function which returns revisions for a group of ids, or even better, fetch outside the function
+    const conflictedDocuments = // TODO pass as param a function which returns revisions for a group of ids, or even better, fetch outside the function. then one can also do the update outside and get rid of the async altogether.
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
         (conflicts);
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
@@ -31,7 +26,7 @@ export async function solveProjectDocumentConflict(document: Document,
 
     const resourcesOfCurrentAndOldRevisionDocuments =
         conflictedSortedDocuments
-            .concat(latestRevisionDocument)
+            .concat(document)
             .map(to(RESOURCE));
 
     const result = await resolve(
@@ -39,7 +34,7 @@ export async function solveProjectDocumentConflict(document: Document,
         conflicts);
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, result[0])(latestRevisionDocument);
+    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, result[0])(document);
     return await update(latestRevisionDocumentWithInsertedResultResource, result[1]);
 }
 

@@ -39,7 +39,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -85,7 +85,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -131,7 +131,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -201,7 +201,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1', 'c2', 'c3'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -271,7 +271,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1', 'c2', 'c3'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -337,7 +337,7 @@ describe('solveProjectDocumentConflict', () => {
 
         await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1', 'c2', 'c3'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;
@@ -409,7 +409,7 @@ describe('solveProjectDocumentConflict', () => {
 
         const result = await solveProjectDocumentConflict(
             current,
-            (_: string) => Promise.resolve(clone(current)),
+            ['c1', 'c2', 'c3'],
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
                 squashRevisionIds = squashRevisionIds_;

@@ -11,6 +11,7 @@ import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {solveProjectDocumentConflict} from './solve-project-document-conflicts';
+import getConflicts = DatastoreUtil.getConflicts;
 
 
 @Injectable()
@@ -81,9 +82,14 @@ export class ChangesStream {
 
     private async resolveConflict(document: Document): Promise<Document> {
 
+        const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
+
+        let conflicts = getConflicts(document); // fetch again, to make sure it is up to date after the timeout
+        if (!conflicts) return document;        // again, to make sure other client did not solve it in that exact instant
+
         return solveProjectDocumentConflict(
-            document,
-            (resourceId: string) => this.datastore.fetch(resourceId),
+            latestRevisionDocument,
+            conflicts,
             (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId),
             (document: Document, squashRevisionIds: string[]) => this.updateResolvedDocument(document, squashRevisionIds));
     }

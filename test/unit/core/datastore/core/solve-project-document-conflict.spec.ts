@@ -11,7 +11,7 @@ describe('solveProjectDocumentConflict', () => {
     it('basic', async done => {
 
         const current: Document = {
-            created: { user: '', date: new Date() },
+            created: { user: '', date: new Date('2019') },
             modified: [],
             resource: {
                 id: '1',
@@ -22,7 +22,7 @@ describe('solveProjectDocumentConflict', () => {
         (current as any)['_conflicts'] = ['_'];
 
         const conflicted: Document = {
-            created: { user: '', date: new Date() },
+            created: { user: '', date: new Date('2019') },
             modified: [],
             resource: {
                 id: '1',
@@ -63,7 +63,7 @@ describe('solveProjectDocumentConflict', () => {
         const conflictedDocs: {[revisionId: string]: Document} = {
 
             c1: {
-                created: { user: '', date: new Date() },
+                created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
                     id: '1',
@@ -72,7 +72,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             c2: {
-                created: { user: '', date: new Date() },
+                created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
                     id: '1',
@@ -81,7 +81,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             c3: {
-                created: { user: '', date: new Date() },
+                created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
                     id: '1',
@@ -90,6 +90,10 @@ describe('solveProjectDocumentConflict', () => {
                 }
             }
         };
+
+        conflictedDocs['c1']['_rev'] = 'c1';
+        conflictedDocs['c2']['_rev'] = 'c2';
+        conflictedDocs['c3']['_rev'] = 'c3';
 
         let squashRevisionIds: string[] = [];
 

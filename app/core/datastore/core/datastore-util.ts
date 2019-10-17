@@ -25,4 +25,16 @@ export module DatastoreUtil {
 
         return (document as any)['_conflicts'];
     }
+
+
+    export function sortRevisionsByLastModified(documents: Array<Document>): Array<Document> {
+
+        return documents.sort((l: Document, r: Document) => {
+            const lDate = Document.getLastModified(l).date as Date;
+            const rDate = Document.getLastModified(r).date as Date;
+            if (lDate < rDate) return -1;
+            if (lDate > rDate) return 1;
+            return 0;
+        });
+    }
 }

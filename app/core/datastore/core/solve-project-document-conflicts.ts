@@ -22,15 +22,17 @@ export async function solveProjectDocumentConflict(
     const insertResourceIntoLatestRevisionDocument = // this is to work with the latest changes history
         (resource: Resource) => assoc(RESOURCE, resource)(latestRevisionDocument);
 
-    const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
+    let conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
     if (!conflicts) return document;                        // again, to make sure other client did not solve it in that exact instant
 
     const conflictedDocuments =
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
-        (conflicts.sort()); // TODO should be ordered not only by revision id, but by first by revision id and then by time ascending (better because it takes differing times (not set on computer, time zones) into account)
+        (conflicts);
+    const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
+    conflicts = conflictedSortedDocuments.map(to('_rev'));
 
     const resourcesOfCurrentAndOldRevisionDocuments =
-        conflictedDocuments
+        conflictedSortedDocuments
             .concat(latestRevisionDocument)
             .map(to(RESOURCE));
 

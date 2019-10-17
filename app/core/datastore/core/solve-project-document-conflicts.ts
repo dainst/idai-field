@@ -1,5 +1,5 @@
 import {asyncMap} from 'tsfun-extra';
-import {assoc, to, takeRight} from 'tsfun';
+import {assoc, to, flow, dropRight, append} from 'tsfun';
 import {Resources} from './project-resource-conflict-resolution';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
@@ -12,7 +12,7 @@ import {ResourceId, RevisionId} from '../../../c';
  */
 export async function solveProjectDocumentConflict(
     document:         Document,
-    solve:            (_: Resources) => Resources,
+    solve:            (_: Resources) => [Resource, number[]],
     solveAlternative: (_: Resources) => Resource,
     fetch:            (_: ResourceId) => Promise<Document>,
     fetchRevision:    (_: ResourceId, __: RevisionId) => Promise<Document>,
@@ -47,22 +47,25 @@ export async function solveProjectDocumentConflict(
 
 
 async function resolve(
-    resourcesOfCurrentAndOldRevisionDocuments: Resources,
+    orderedDocuments: Resources,
     conflicts:        string[],
-    solve:            (_: Resources) => Resources,
+    solve:            (_: Resources) => [Resource, number[]],
     solveAlternative: (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
 
-    const resolvedResources = solve(resourcesOfCurrentAndOldRevisionDocuments);
+    const [resolvedResource_, indicesOfResolvedResources] = solve(orderedDocuments);
 
     let solvedConflicts: RevisionId[] = [];
     let resolvedResource: Resource|undefined = undefined;
-    if (resolvedResources.length === 1) {
+    if (indicesOfResolvedResources.length === conflicts.length) {
         solvedConflicts = conflicts;
-        resolvedResource = resolvedResources[0];
+        resolvedResource = resolvedResource_;
     } else {
-        const numResolvedResources = conflicts.length - (resolvedResources.length - 1);
-        solvedConflicts = takeRight(numResolvedResources)(conflicts) as string[];
-        resolvedResource = solveAlternative(resolvedResources);
+        solvedConflicts = indicesOfResolvedResources.map(index => {
+            return conflicts[index];
+        });
+        const reworkedRevisions = flow(orderedDocuments, dropRight(1), append([resolvedResource]));
+        for (let index of indicesOfResolvedResources.reverse()) reworkedRevisions.splice(index, 1);
+        resolvedResource = solveAlternative(reworkedRevisions);
     }
     return [resolvedResource, solvedConflicts];
 }

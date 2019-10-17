@@ -4,27 +4,21 @@ import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {RevisionId} from '../../../c';
 import {CAMPAIGNS, dissocIndices, last, replaceLast, replaceLastPair, STAFF} from './helpers';
-
 import {withDissoc} from '../../import/util';
 
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function solveProjectDocumentConflict(document: Document,
                                              conflictedDocuments: Array<Document>): [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
-    const conflicts = conflictedSortedDocuments.map(to(REV_MARKER));
-
-    const resourcesOfCurrentAndOldRevisionDocuments =
-        conflictedSortedDocuments
-            .concat(document)
-            .map(to(RESOURCE));
 
     const result = resolve(
-        resourcesOfCurrentAndOldRevisionDocuments,
-        conflicts);
+        conflictedSortedDocuments.concat(document).map(to(RESOURCE)),
+        conflictedSortedDocuments.map(to(REV_MARKER)));
 
     // this is to work with the latest changes history
     const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, result[0])(document);

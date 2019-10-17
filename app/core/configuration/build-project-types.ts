@@ -402,7 +402,7 @@ function replaceCommonFields(mergedTypes: { [typeName: string]: TransientTypeDef
  * @param target
  * @param source
  */
-function mergePropertiesOfType(target: any, source: any) {
+function mergePropertiesOfType(target: {[_: string]: any}, source: {[_: string]: any}) {
 
     if (source['commons']) {
         target['commons'] = union([target['commons'] ? target['commons'] : [], source['commons']]);

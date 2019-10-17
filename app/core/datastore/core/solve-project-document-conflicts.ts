@@ -1,5 +1,5 @@
 import {asyncMap} from 'tsfun-extra';
-import {assoc, to} from 'tsfun';
+import {assoc, to, lookup} from 'tsfun';
 import {Resources} from './project-resource-conflict-resolution';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
@@ -61,9 +61,7 @@ async function resolve(
         solvedConflicts = conflicts;
         resolvedResource = resolvedResource_;
     } else {
-        solvedConflicts = indicesOfResolvedResources.map(index => {
-            return conflicts[index];
-        });
+        solvedConflicts = indicesOfResolvedResources.map(lookup(conflicts)) as string[];
         const reworkedRevisions = replaceLast(orderedDocuments, resolvedResource);
         for (let index of indicesOfResolvedResources.reverse()) reworkedRevisions.splice(index, 1);
         resolvedResource = solveAlternative(reworkedRevisions);

@@ -6,6 +6,7 @@ import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
 import {MenuService} from '../../menu-service';
+import {StateSerializer} from '../../common/state-serializer';
 
 const remote = require('electron').remote;
 
@@ -40,7 +41,8 @@ export class ProjectsModalComponent implements AfterViewChecked {
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private messages: Messages) {
+                private messages: Messages,
+                private stateSerializer: StateSerializer) {
     }
 
 
@@ -119,8 +121,17 @@ export class ProjectsModalComponent implements AfterViewChecked {
 
         this.settingsService.stopSync();
 
+        try {
+            await this.stateSerializer.delete('resources-state');
+            await this.stateSerializer.delete('matrix-state');
+            await this.stateSerializer.delete('tabs-state');
+        } catch (err) {
+            // Ignore state file deletion errors
+        }
+
         await this.settingsService.deleteProject(this.selectedProject);
         this.selectedProject = this.getProjects()[0];
+
         ProjectsModalComponent.reload();
     }
 

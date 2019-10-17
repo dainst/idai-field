@@ -1,5 +1,6 @@
 import {ProjectsModalComponent} from '../../../../app/components/navbar/projects-modal.component';
 import {M} from '../../../../app/components/m';
+import {StateSerializer} from '../../../../app/common/state-serializer';
 
 
 /**
@@ -18,7 +19,7 @@ describe('ProjectsModalComponent', () => {
         );
         messages = jasmine.createSpyObj('messages', ['add']);
         projectsModalComponent = new ProjectsModalComponent(
-            undefined, settingsService, undefined, messages
+            undefined, settingsService, undefined, messages, new StateSerializer()
         );
     });
 

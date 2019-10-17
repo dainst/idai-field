@@ -137,6 +137,9 @@ export class AppConfigurator {
                     label: this.i18n({ id: 'configuration.project.crs', value: 'Koordinatenbezugssystem' }),
                     inputType: 'dropdown'
                 },
+                staff: {
+                    inputType: "multiInput"
+                },
                 campaigns: {
                     inputType: 'multiInput'
                 }

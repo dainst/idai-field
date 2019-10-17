@@ -2,8 +2,7 @@ import {Document} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 import {clone} from '../../../../../app/core/util/object-util';
 import {Resources} from '../../../../../app/core/datastore/core/project-resource-conflict-resolution';
-import {DatastoreUtil} from '../../../../../app/core/datastore/core/datastore-util';
-import last = DatastoreUtil.last;
+import {last} from '../../../../../app/core/datastore/core/helpers';
 
 
 describe('solveProjectDocumentConflict', () => {

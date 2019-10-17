@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {compose, takeRight, to} from 'tsfun';
+
 
 /**
  * @author Daniel de Oliveira
@@ -38,7 +38,4 @@ export module DatastoreUtil {
             return 0;
         });
     }
-
-
-    export const last = compose(takeRight(1), to('[0]'));
 }

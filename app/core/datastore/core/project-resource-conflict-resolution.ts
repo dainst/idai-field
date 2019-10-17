@@ -1,9 +1,8 @@
 import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty, getOnOr,
-    flow, compose, dropRight, append, len, val, map, filter, isDefined} from 'tsfun';
+    flow, compose, len, val, map, filter, isDefined} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
-import {DatastoreUtil} from './datastore-util';
-import last = DatastoreUtil.last;
+import {last, replaceLastPair} from './helpers';
 
 
 /**
@@ -64,7 +63,7 @@ export module ProjectResourceConflictResolution {
 
     function replaceLastTwoThenCollapseRest(resources: Resources, replacement: Resource, indices: number[]) {
 
-        return collapse(replacePairWithResolvedOne(resources, replacement), indices);
+        return collapse(replaceLastPair(resources, replacement), indices);
     }
 
 
@@ -104,12 +103,6 @@ export module ProjectResourceConflictResolution {
 
 
     const lengthIs2 = compose(len, is(2));
-
-
-    function replacePairWithResolvedOne(resources: Resources, solved: Resource) {
-
-        return flow(resources, dropRight(2), append([solved]));
-    }
 
 
     /**

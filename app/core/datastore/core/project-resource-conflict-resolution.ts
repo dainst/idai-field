@@ -55,10 +55,16 @@ export module ProjectResourceConflictResolution {
         const ultimate = last(resources);
         const penultimate = getPenultimate(resources);
 
-        const selected = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
-        return selected !== NONE
-            ? collapse(replacePairWithResolvedOne(resources, selected), indicesOfUsedResources.concat(resources.length - 2))
-            : collapse(replacePairWithResolvedOne(resources, ultimate), indicesOfUsedResources);
+        const resolved = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
+        return resolved !== NONE
+            ? replaceLastTwoThenCollapseRest(resources, resolved, indicesOfUsedResources.concat(resources.length - 2))
+            : replaceLastTwoThenCollapseRest(resources, ultimate, indicesOfUsedResources);
+    }
+
+
+    function replaceLastTwoThenCollapseRest(resources: Resources, replacement: Resource, indices: number[]) {
+
+        return collapse(replacePairWithResolvedOne(resources, replacement), indices);
     }
 
 

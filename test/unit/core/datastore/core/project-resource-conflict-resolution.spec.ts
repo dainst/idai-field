@@ -90,6 +90,7 @@ describe('ProjectResourceConflictResolution', () => {
             id: '1',
             identifier: 'project-name',
             staff: ['a', 'b', 'c'],
+            campaigns: [],
             type: 'Object',
             relations: {}
         };
@@ -192,6 +193,7 @@ describe('ProjectResourceConflictResolution', () => {
             id: '1',
             identifier: 'project-name',
             staff: ['a', 'b'],
+            campaigns: [],
             type: 'Object',
             relations: {}
         };

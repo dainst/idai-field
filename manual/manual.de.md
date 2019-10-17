@@ -25,9 +25,12 @@ eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Klicken Sie auf den Projektnamen "test", um die **Projektverwaltung** aufzurufen. Hier
 können Sie über den Plus-Button ein neues Projekt anlegen. Erlaubte Zeichen für den
-Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
-geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
-Metadaten des Projekts eingeben. 
+Projektnamen sind Buchstaben, Zahlen und Bindestriche.
+
+4. Sobald das neue Projekt geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung
+allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" 
+in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt")
+anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Werkzeuge" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.

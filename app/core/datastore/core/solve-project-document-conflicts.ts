@@ -19,17 +19,15 @@ export async function solveProjectDocumentConflict(document: Document,
     Promise<Document> {
 
     const latestRevisionDocument = await fetch(document.resource.id);
-    const insertResourceIntoLatestRevisionDocument = // this is to work with the latest changes history
-        (resource: Resource) => assoc(RESOURCE, resource)(latestRevisionDocument);
 
     let conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
     if (!conflicts) return document;                      // again, to make sure other client did not solve it in that exact instant
 
-    const conflictedDocuments =
+    const conflictedDocuments = // TODO pass as param a function which returns revisions for a group of ids, or even better, fetch outside the function
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))
         (conflicts);
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
-    conflicts = conflictedSortedDocuments.map(to('_rev'));
+    conflicts = conflictedSortedDocuments.map(to(REV_MARKER));
 
     const resourcesOfCurrentAndOldRevisionDocuments =
         conflictedSortedDocuments
@@ -40,7 +38,9 @@ export async function solveProjectDocumentConflict(document: Document,
         resourcesOfCurrentAndOldRevisionDocuments,
         conflicts);
 
-    return await update(insertResourceIntoLatestRevisionDocument(result[0]), result[1]);
+    // this is to work with the latest changes history
+    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, result[0])(latestRevisionDocument);
+    return await update(latestRevisionDocumentWithInsertedResultResource, result[1]);
 }
 
 
@@ -170,3 +170,6 @@ const NONE = undefined;
 
 
 const RESOURCE = 'resource';
+
+
+const REV_MARKER = '_rev';

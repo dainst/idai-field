@@ -46,24 +46,22 @@ export async function solveProjectDocumentConflict(
 }
 
 
-async function resolve(
-    resources:        Array<Resource>,
-    conflicts:        RevisionId[],
-    solveRevisions:   (_: Array<Resource>) => [Resource, number[]],
-    crunch:           (_: Array<Resource>) => Resource): Promise<[Resource, RevisionId[]]> {
+async function resolve(resources:        Array<Resource>,
+                       conflicts:        RevisionId[],
+                       solveRevisions:   (_: Array<Resource>) => [Resource, number[]],
+                       crunch:           (_: Array<Resource>) => Resource):
+    Promise<[Resource, RevisionId[]]> {
 
-    const [resolvedResource_, indicesOfResolvedResources] = solveRevisions(resources);
+    const [resolvedResource, indicesOfResolvedResources] = solveRevisions(resources);
 
-    const solvedConflicts = indicesOfResolvedResources.map(lookup(conflicts)) as string[];
-
-    const resolvedResource =
+    return [
         flow(
             resources,
             dissocIndices(indicesOfResolvedResources.sort()),
-            replaceLast(resolvedResource_),
-            crunch) as Resource;
+            replaceLast(resolvedResource),
+            crunch) as Resource
 
-    return [resolvedResource, solvedConflicts];
+        , indicesOfResolvedResources.map(lookup(conflicts)) as RevisionId[]];
 }
 
 

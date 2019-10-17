@@ -45,4 +45,67 @@ describe('solveProjectDocumentConflict', () => {
         expect(solved.resource.id).toBe('1'); // TODO improve
         done();
     });
+
+
+    it('solve 2 of 3', async done => {
+
+        const current: Document = {
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                relations: {}
+            }
+        };
+        (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
+
+        const conflictedDocs: {[revisionId: string]: Document} = {
+
+            c1: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    relations: {}
+                }
+            },
+            c2: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    relations: {}
+                }
+            },
+            c3: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    relations: {}
+                }
+            }
+        };
+
+        let squashRevisionIds: string[] = [];
+
+        await solveProjectDocumentConflict(
+            current,
+            take(2), // simulate that 2 conflicts got solved
+            last,    // just resolve to the last resource
+            (_: string) => Promise.resolve(clone(current)),
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
+            (document: Document, squashRevisionIds_: string[]) => {
+                squashRevisionIds = squashRevisionIds_;
+                return Promise.resolve(document);
+            }
+        );
+
+        expect(squashRevisionIds).toEqual(['c2', 'c3']);
+        done();
+    });
 });

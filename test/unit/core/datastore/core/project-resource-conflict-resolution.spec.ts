@@ -124,4 +124,38 @@ describe('ProjectResourceConflictResolution', () => {
         expect(equal(left)(result[0])).toBeTruthy();
         expect(equal(right)(result[1])).toBeTruthy();
     });
+
+
+    it('createResourceForNewRevisionFrom', () => {
+
+        const one = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['a', 'b'],
+            aField: 'aValue',
+            type: 'Object',
+            relations: {}
+        };
+
+        const two = {
+            id: '1',
+            identifier: 'project-name',
+            type: 'Object',
+            relations: {}
+        };
+
+        const three = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['b', 'c'],
+            bField: 'bValue',
+            type: 'Object',
+            relations: {}
+        };
+
+        const result = ProjectResourceConflictResolution.createResourceForNewRevisionFrom([one, two, three]);
+        expect(result['aField']).toBeUndefined();
+        expect(result['bField']).toBe('bValue');
+        expect(result['staff']).toEqual(['a', 'b', 'c']);
+    })
 });

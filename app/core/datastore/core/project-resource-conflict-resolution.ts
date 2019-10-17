@@ -1,5 +1,5 @@
 import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
-    flow, compose, dropRight, append, copy, len, val} from 'tsfun';
+    flow, compose, dropRight, append, copy, len, val, map, filter, isDefined} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
 
@@ -9,9 +9,16 @@ export module ProjectResourceConflictResolution {
     const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
 
 
+    /**
+     * @param resources
+     *   expected to be of at least length 2.
+     */
     export function createResourceForNewRevisionFrom(resources: Resources): Resource {
 
-        return last(resources); // TODO replace with proper impl
+        if (len(resources) < 2) throw 'FATAL - illegal argument - resources must have length 2';
+
+        const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
+        return flow(resources, last, assoc(STAFF, staffUnion));
     }
 
 

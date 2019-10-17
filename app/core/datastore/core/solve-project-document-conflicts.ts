@@ -1,5 +1,5 @@
 import {asyncMap} from 'tsfun-extra';
-import {assoc, to} from 'tsfun';
+import {assoc, to, takeRight} from 'tsfun';
 import {Resources} from './project-resource-conflict-resolution';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
@@ -34,13 +34,13 @@ export async function solveProjectDocumentConflict(
             .concat(latestRevisionDocument)
             .map(to(RESOURCE));
 
-    return await resolve(
+    const result = await resolve(
         resourcesOfCurrentAndOldRevisionDocuments,
         conflicts,
         solve,
-        solveAlternative,
-        update,
-        insertResourceIntoLatestRevisionDocument)
+        solveAlternative);
+
+    return await update(insertResourceIntoLatestRevisionDocument(result[0]), result[1]);
 }
 
 
@@ -48,36 +48,21 @@ async function resolve(
     resourcesOfCurrentAndOldRevisionDocuments: Resources,
     conflicts:        string[],
     solve:            (_: Resources) => Resources,
-    solveAlternative: (_: Resources) => Resource,
-    update:           (_: Document, conflicts: string[]) => Promise<Document>,
-    insertResourceIntoLatestRevisionDocument: (_: Resource) => Document): Promise<Document> {
+    solveAlternative: (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
 
     const resolvedResources = solve(resourcesOfCurrentAndOldRevisionDocuments);
+
+    let solvedConflicts: RevisionId[] = [];
+    let resolvedResource: Resource|undefined = undefined;
     if (resolvedResources.length === 1) {
-
-        const resolvedResource = resolvedResources[0];
-        const assembledDocument = insertResourceIntoLatestRevisionDocument(resolvedResource);
-        return await update(assembledDocument, conflicts);
-
+        solvedConflicts = conflicts;
+        resolvedResource = resolvedResources[0];
     } else {
-
-        // TODO
-        // compare the length with the length of resourcesOfCurrentAndOldRevisionDocuments.
-        // Since we fold from the right and the last resource is of the current document,
-        // we know exactly which resources have been successfully auto-resolved.
-        // These revisions can then be squashed during the update of the still conflicted
-        // (with the remaining conflicts) document.
-        //
-        // TODO update the doc a first time here
-        //
-        // When we have a partially solved and squashed document, we can try the alternative way
-        // of solving, which creates an entirely new revision with the desired properties for that alternative case.
-        const resolvedResource = solveAlternative(resolvedResources);
-        const assembledDocument = insertResourceIntoLatestRevisionDocument(resolvedResource);
-        // TODO update again
-
-        return assembledDocument;
+        const numResolvedResources = conflicts.length - (resolvedResources.length - 1);
+        solvedConflicts = takeRight(numResolvedResources)(conflicts) as string[];
+        resolvedResource = solveAlternative(resolvedResources);
     }
+    return [resolvedResource, solvedConflicts];
 }
 
 

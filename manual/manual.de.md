@@ -299,8 +299,8 @@ erhalten.
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   (Feldgruppe "Zeit") erstellt.
-* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
-  geschnitten von" (Feldgruppe "Lage") erstellt.
+* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet", "Wird
+  geschnitten von" und "Gleich wie" (Feldgruppe "Lage") erstellt.
 
 
 #### Kanten

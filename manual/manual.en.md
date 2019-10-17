@@ -279,8 +279,8 @@ project's trenches and are preserved when restarting the application.
 
 * *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with" (field group
 "Time"). 
-* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts" and "Cut by" (field group
-"Position").
+* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts", "Cut by" and "Equivalent to"
+(field group "Position").
 
 
 #### Edges

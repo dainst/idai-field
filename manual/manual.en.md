@@ -128,8 +128,11 @@ management**, all images shown in the grid are affected by the search filter.
 The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose
 a subtype (e. g. "Layer"), only the resources of the respective type are shown. In contrast, if you choose a
 supertype (e. g. "Stratigraphical unit"), the resources of the selected type as well as all of its subtypes
-(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. The current context decides which types
-are available: In the overview you can choose operation types, in the image management image types etc.
+(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. Click again to select only the supertype
+itself.
+
+The current context decides which types are available: In the overview you can choose operation types,
+in the image management image types etc.
 
 
 #### Text filter

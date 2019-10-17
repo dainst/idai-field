@@ -144,8 +144,10 @@ Raster angezeigten Bilder vom Suchfilter betroffen.
 Über den Typfilter-Button können Sie einen Ressourcentyp wählen. Unterschieden wird zwischen Obertypen und
 Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
 Typs angezeigt. Wählen Sie dagegen einen Obertyp (z. B. "Stratigraphische Einheit"), werden Ressourcen des
-ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur", "Fußboden" etc.)
-berücksichtigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
+ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur",
+"Fußboden" etc.) berücksichtigt. Klicken Sie ein weiteres Mal, um lediglich den Obertyp selbst auszuwählen.
+ 
+Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
 können Maßnahmentypen gewählt werden, in der Bilderverwaltung Bildtypen etc. 
 
 

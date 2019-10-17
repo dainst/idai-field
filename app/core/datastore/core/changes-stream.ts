@@ -88,8 +88,8 @@ export class ChangesStream {
         let conflicts = getConflicts(document); // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return document;        // again, to make sure other client did not solve it in that exact instant
 
-        const conflictedDocuments =
-            await asyncMap((revisionId: string) => { // TODO extract function
+        const conflictedDocuments = // TODO extract function
+            await asyncMap((revisionId: string) => {
                 return this.datastore.fetchRevision(document.resource.id, revisionId);
             })(conflicts);
 

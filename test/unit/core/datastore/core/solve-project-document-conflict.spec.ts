@@ -1,12 +1,11 @@
-import {sameset, values} from 'tsfun';
+import {sameset} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
-import {clone} from '../../../../../app/core/util/object-util';
 
 
 describe('solveProjectDocumentConflict', () => {
 
-    it('2 identical resources', async done => {
+    it('2 identical resources', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -20,32 +19,28 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1'];
 
-        const conflictedDocs = { // TODO convert all these structures to arrays
-
-            c1: {
-                created: { user: '', date: new Date() },
-                modified: [],
-                resource: {
-                    id: '1',
-                    type: 'Object',
-                    aField: 'aValue',
-                    relations: {}
-                },
-                '_rev': 'c1'
-            }
-        } as {[revisionId: string]: Document};
+        const conflictedDocs = [{
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                aField: 'aValue',
+                relations: {}
+            },
+            '_rev': 'c1'
+        } as Document];
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
-        done();
     });
 
 
-    it('current is empty', async done => {
+    it('current is empty', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -58,32 +53,30 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1'];
 
-        const conflictedDocs = {
+        const conflictedDocs = [{
 
-            c1: {
-                created: { user: '', date: new Date() },
-                modified: [],
-                resource: {
-                    id: '1',
-                    type: 'Object',
-                    aField: 'aValue',
-                    relations: {}
-                },
-                '_rev': 'c1'
-            }
-        } as {[revisionId: string]: Document};
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                aField: 'aValue',
+                relations: {}
+            },
+            '_rev': 'c1'
+
+        } as Document];
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
-        done();
     });
 
 
-    it('conflicted is empty', async done => {
+    it('conflicted is empty', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -97,31 +90,28 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1'];
 
-        const conflictedDocs = {
+        const conflictedDocs = [{
 
-            c1: {
-                created: { user: '', date: new Date() },
-                modified: [],
-                resource: {
-                    id: '1',
-                    type: 'Object',
-                    relations: {}
-                },
-                '_rev': 'c1'
-            }
-        } as {[revisionId: string]: Document};
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                relations: {}
+            },
+            '_rev': 'c1'
+        } as Document];
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual(['c1']);
-        done();
     });
 
 
-    it('solve rightmost 2 of 3 - thereby unify staff', async done => {
+    it('solve rightmost 2 of 3 - thereby unify staff', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -135,9 +125,9 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs: {[revisionId: string]: Document} = {
+        const conflictedDocs = [
 
-            c1: {
+            {
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -147,7 +137,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c2: {
+            {
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -157,7 +147,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c3: {
+            {
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -167,23 +157,22 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             }
-        };
+        ];
 
-        conflictedDocs['c1']['_rev'] = 'c1';
-        conflictedDocs['c2']['_rev'] = 'c2';
-        conflictedDocs['c3']['_rev'] = 'c3';
+        conflictedDocs[0]['_rev'] = 'c1';
+        conflictedDocs[1]['_rev'] = 'c2';
+        conflictedDocs[2]['_rev'] = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(sameset(result[0].resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
         expect(result[1]).toEqual(['c2', 'c3']);
-        done();
     });
 
 
-    it('solve c1 and c3 - thereby unify campaigns', async done => {
+    it('solve c1 and c3 - thereby unify campaigns', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -197,9 +186,9 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs: {[revisionId: string]: Document} = {
+        const conflictedDocs = [
 
-            c1: {
+            {
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -209,7 +198,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c2: {
+            {
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -219,7 +208,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c3: {
+            {
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -229,23 +218,22 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             }
-        };
+        ];
 
-        conflictedDocs['c1']['_rev'] = 'c1';
-        conflictedDocs['c2']['_rev'] = 'c2';
-        conflictedDocs['c3']['_rev'] = 'c3';
+        conflictedDocs[0]['_rev'] = 'c1';
+        conflictedDocs[1]['_rev'] = 'c2';
+        conflictedDocs[2]['_rev'] = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
         expect(result[1]).toEqual(['c1', 'c3']);
-        done();
     });
 
 
-    it('solve all', async done => {
+    it('solve all', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -258,9 +246,9 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs: {[revisionId: string]: Document} = {
+        const conflictedDocs = [
 
-            c1: {
+            {
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -269,7 +257,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c2: {
+            {
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -278,7 +266,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c3: {
+            {
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -287,22 +275,21 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             }
-        };
+        ];
 
-        conflictedDocs['c1']['_rev'] = 'c1';
-        conflictedDocs['c2']['_rev'] = 'c2';
-        conflictedDocs['c3']['_rev'] = 'c3';
+        conflictedDocs[0]['_rev'] = 'c1';
+        conflictedDocs[1]['_rev'] = 'c2';
+        conflictedDocs[2]['_rev'] = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(result[1]).toEqual(['c1', 'c2', 'c3']);
-        done();
     });
 
 
-    it('crush after unsuccesful resolution', async done => {
+    it('crush after unsuccesful resolution', () => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -316,9 +303,9 @@ describe('solveProjectDocumentConflict', () => {
         };
         (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs: {[revisionId: string]: Document} = {
+        const conflictedDocs = [
 
-            c1: {
+            {
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -329,7 +316,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c2: {
+            {
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -340,7 +327,7 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             },
-            c3: {
+            {
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -351,19 +338,18 @@ describe('solveProjectDocumentConflict', () => {
                     relations: {}
                 }
             }
-        };
+        ];
 
-        conflictedDocs['c1']['_rev'] = 'c1';
-        conflictedDocs['c2']['_rev'] = 'c2';
-        conflictedDocs['c3']['_rev'] = 'c3';
+        conflictedDocs[0]['_rev'] = 'c1';
+        conflictedDocs[1]['_rev'] = 'c2';
+        conflictedDocs[2]['_rev'] = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
-            values(conflictedDocs));
+            conflictedDocs);
 
         expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual([]);
-        done();
     });
 });

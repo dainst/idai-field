@@ -10,6 +10,7 @@ import {withDissoc} from '../../import/util';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export function solveProjectDocumentConflict(document: Document,
                                              conflictedDocuments: Array<Document>): [Document, RevisionId[] /* of succesfully resolved conflicts */] {

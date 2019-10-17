@@ -12,8 +12,7 @@ import {withDissoc} from '../../import/util';
  * @author Daniel de Oliveira
  */
 export function solveProjectDocumentConflict(document: Document,
-                                             conflictedDocuments: Array<Document>):
-    [Document, RevisionId[] /* of succesfully resolved conflicts */] {
+                                             conflictedDocuments: Array<Document>): [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
     const conflicts = conflictedSortedDocuments.map(to(REV_MARKER));
@@ -34,8 +33,7 @@ export function solveProjectDocumentConflict(document: Document,
 
 
 function resolve(resources: Array<Resource>,
-                       conflicts: RevisionId[]):
-    [Resource, RevisionId[]] {
+                 conflicts: RevisionId[]): [Resource, RevisionId[]] {
 
     const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources);
 

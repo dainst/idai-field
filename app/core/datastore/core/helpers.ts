@@ -23,6 +23,12 @@ export const last = compose(takeRight(1), to('[0]'));
 
 
 /**
+ * Dissociates the given indices from an array.
+ *
+ * Example
+ *   > dissocIndices([0, 2])(['a', 'b', 'c', 'd')
+ *   ['b', 'd']
+ *
  * @param indices must be sorted in ascending order
  */
 export function dissocIndices<A>(indices: number[]) { return (as: Array<A>): Array<A> => {

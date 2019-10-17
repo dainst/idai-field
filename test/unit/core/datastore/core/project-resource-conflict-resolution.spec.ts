@@ -59,11 +59,11 @@ describe('ProjectResourceConflictResolution', () => {
             relations: {}
         };
 
-        const result1 = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right])[0];
-        expect(equal(result1)(expectedResult)).toBeTruthy();
+        const [resolvedResource1, _] = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
+        expect(equal(resolvedResource1)(expectedResult)).toBeTruthy();
 
-        const result2 = ProjectResourceConflictResolution.solveProjectResourceConflicts([right, left])[0];
-        expect(equal(result2)(expectedResult)).toBeTruthy();
+        const [resolvedResource2, __] = ProjectResourceConflictResolution.solveProjectResourceConflicts([right, left]);
+        expect(equal(resolvedResource2)(expectedResult)).toBeTruthy();
     });
 
 
@@ -94,8 +94,9 @@ describe('ProjectResourceConflictResolution', () => {
             relations: {}
         };
 
-        const result = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right])[0];
-        expect(equal(result)(expectedResult)).toBeTruthy();
+        const [resolvedResource, indicesOfResolvedResources] = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
+        expect(equal(resolvedResource)(expectedResult)).toBeTruthy();
+        expect(indicesOfResolvedResources).toEqual([0]);
     });
 
 
@@ -119,10 +120,49 @@ describe('ProjectResourceConflictResolution', () => {
             relations: {}
         };
 
-        const result = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
-        expect(result.length).toBe(2);
-        expect(equal(left)(result[0])).toBeTruthy();
-        expect(equal(right)(result[1])).toBeTruthy();
+        const [resolvedResource, indicesOfResolvedResources] = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, right]);
+        expect(indicesOfResolvedResources.length).toBe(0);
+        expect(equal(right)(resolvedResource)).toBeTruthy();
+    });
+
+
+    it('skip one, solve another', () => {
+
+        const left = {
+            id: '1',
+            identifier: 'project-name',
+            type: 'Object',
+            staff: [],
+            relations: {}
+        };
+
+        const middle = {
+            id: '1',
+            identifier: 'project-name',
+            aField: 'aValue2',
+            type: 'Object',
+            relations: {}
+        };
+
+        const right = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['a', 'b'],
+            type: 'Object',
+            relations: {}
+        };
+
+        const result = {
+            id: '1',
+            identifier: 'project-name',
+            staff: ['a', 'b'],
+            type: 'Object',
+            relations: {}
+        };
+
+        const [resolvedResource, indicesOfResolvedResources] = ProjectResourceConflictResolution.solveProjectResourceConflicts([left, middle, right]);
+        expect(indicesOfResolvedResources).toEqual([0]);
+        expect(equal(result)(resolvedResource)).toBeTruthy();
     });
 
 

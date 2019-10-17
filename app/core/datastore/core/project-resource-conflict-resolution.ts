@@ -2,10 +2,12 @@ import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
     flow, compose, dropRight, append, copy, len, val, map, filter, isDefined} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
+import {DatastoreUtil} from './datastore-util';
 
 
 export module ProjectResourceConflictResolution {
 
+    import last = DatastoreUtil.last;
     const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
 
 
@@ -15,7 +17,7 @@ export module ProjectResourceConflictResolution {
      */
     export function createResourceForNewRevisionFrom(resources: Resources): Resource {
 
-        if (len(resources) < 2) throw 'FATAL - illegal argument - resources must have length 2';
+        if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
         const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
         return flow(resources, last, assoc(STAFF, staffUnion));
@@ -23,36 +25,35 @@ export module ProjectResourceConflictResolution {
 
 
     /**
-     * Collapses resources pairwise from the right.
-     * If a pair can be auto-resolved, the pair gets replaced by the one resolved resource.
-     * If a pair cannot be auto-resolved, the procedure stops and the intermediate resources get returned.
-     *
-     * @param resources ordered by time ascending
+     * @param resources_ ordered by time ascending
      *   expected to be of at least length 2.
      *
-     * @returns resources either fully collapsed (list of length 1) or an intermediate result of the collapsing process.
+     * @returns a resolved resource and the positions of the resources that have been used to do this.
      *
      * @author Thomas Kleinke
      * @author Daniel de Oliveira
      */
-    export function solveProjectResourceConflicts(resources: Resources): Resources {
+    export function solveProjectResourceConflicts(resources_: Resources): [Resource, number[]] {
 
-        if (len(resources) < 2) throw 'FATAL - illegal argument - resources must have length 2';
+        let resources = copy(resources_);
+        if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
-        let quitEarly = false;
+        let indicesOfUsedResources: number[] = [];
 
-        return collapseRight(resources, (resources: Resources, ultimate: Resource) => {
+        while (resources.length > 1) {
 
-            if (quitEarly) return resources;
-
+            const ultimate = last(resources);
             const penultimate = getPenultimate(resources);
-            if (!penultimate) { quitEarly = true; return resources; }
 
-            const solved = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
-            if (solved === UNRESOLVED) { quitEarly = true; return resources; }
-
-            return replacePairWithResolvedOne(resources, solved);
-        });
+            const selected = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
+            if (selected === NONE) {
+                resources = replacePairWithResolvedOne(resources, ultimate);
+            } else {
+                indicesOfUsedResources.push(resources.length - 2);
+                resources = replacePairWithResolvedOne(resources, selected);
+            }
+        }
+        return [resources[0], indicesOfUsedResources.reverse()];
     }
 
 
@@ -66,18 +67,16 @@ export module ProjectResourceConflictResolution {
         if      (isEmpty(l)) return right;
         else if (isEmpty(r)) return left;
 
-        if (left.staff && right.staff && equal(withoutStaff(l))(withoutStaff(r))) {
-            return assoc(STAFF, union([left.staff, right.staff]))(left);
+        if (equal(withoutStaff(l))(withoutStaff(r))) {
+            if (left.staff && right.staff) return assoc(STAFF, union([left.staff, right.staff]))(left);
+            if (left.staff)                return assoc(STAFF, left.staff)(left);
+            if (right.staff)               return assoc(STAFF, right.staff)(left);
         }
-
-        return UNRESOLVED;
+        return NONE;
     }
 
 
     const STAFF = 'staff';
-
-
-    const collapseRight = <A>(as: Array<A>, f: (as: Array<A>, a: A) => Array<A>) => as.reduceRight(f, copy(as));
 
 
     const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
@@ -107,11 +106,8 @@ export module ProjectResourceConflictResolution {
             val(undefined)));
 
 
-    const UNRESOLVED = undefined;
+    const NONE = undefined;
 }
 
 
 export type Resources = Array<Resource>;
-
-
-export const last = compose(takeRight(1), to('[0]')); // TODO put to util

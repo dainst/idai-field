@@ -18,7 +18,7 @@ export module ProjectResourceConflictResolution {
      * @param resources
      *   expected to be of at least length 1.
      */
-    export function createResourceForNewRevisionFrom(resources: Resources): Resource {
+    export function createResourceForNewRevisionFrom(resources: Array<Resource>): Resource {
 
         if (resources.length === 0) throw 'FATAL - illegal argument - resources must have length 1';
         if (resources.length === 1) return resources[0];
@@ -39,7 +39,7 @@ export module ProjectResourceConflictResolution {
      * @returns a resolved resource and the positions of the resources that have been used to do this.
      *
      */
-    export function solveProjectResourceConflicts(resources: Resources): [Resource, number[]] {
+    export function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, number[]] {
 
         if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
@@ -48,7 +48,7 @@ export module ProjectResourceConflictResolution {
     }
 
 
-    function collapse(resources: Resources, indicesOfUsedResources: number[]): [Resources, number[]] {
+    function collapse(resources: Array<Resource>, indicesOfUsedResources: number[]): [Array<Resource>, number[]] {
 
         if (resources.length < 2) return [resources, indicesOfUsedResources];
 
@@ -62,7 +62,7 @@ export module ProjectResourceConflictResolution {
     }
 
 
-    function replaceLastTwoThenCollapseRest(resources: Resources, replacement: Resource, indices: number[]) {
+    function replaceLastTwoThenCollapseRest(resources: Array<Resource>, replacement: Resource, indices: number[]) {
 
         return collapse(replaceLastPair(resources, replacement), indices);
     }
@@ -120,6 +120,3 @@ export module ProjectResourceConflictResolution {
 
     const NONE = undefined;
 }
-
-
-export type Resources = Array<Resource>;

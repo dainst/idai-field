@@ -1,23 +1,22 @@
 import {asyncMap} from 'tsfun-extra';
 import {assoc, to, lookup, flow} from 'tsfun';
-import {Resources} from './project-resource-conflict-resolution';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
-import getConflicts = DatastoreUtil.getConflicts;
 import {ResourceId, RevisionId} from '../../../c';
 import {dissocIndices, replaceLast} from './helpers';
+import getConflicts = DatastoreUtil.getConflicts;
 
 
 /**
  * @author Daniel de Oliveira
  */
 export async function solveProjectDocumentConflict(
-    document:         Document,
-    solveRevisions:   (_: Resources) => [Resource, number[]],
-    crunch:           (_: Resources) => Resource,
-    fetch:            (_: ResourceId) => Promise<Document>,
-    fetchRevision:    (_: ResourceId, __: RevisionId) => Promise<Document>,
-    update:           (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
+    document:       Document,
+    solveRevisions: (_: Array<Resource>) => [Resource, number[]],
+    crunch:         (_: Array<Resource>) => Resource,
+    fetch:          (_: ResourceId) => Promise<Document>,
+    fetchRevision:  (_: ResourceId, __: RevisionId) => Promise<Document>,
+    update:         (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
 
     const latestRevisionDocument = await fetch(document.resource.id);
     const insertResourceIntoLatestRevisionDocument = // this is to work with the latest changes history
@@ -48,10 +47,10 @@ export async function solveProjectDocumentConflict(
 
 
 async function resolve(
-    resources:        Resources,
+    resources:        Array<Resource>,
     conflicts:        RevisionId[],
-    solveRevisions:   (_: Resources) => [Resource, number[]],
-    crunch:           (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
+    solveRevisions:   (_: Array<Resource>) => [Resource, number[]],
+    crunch:           (_: Array<Resource>) => Resource): Promise<[Resource, RevisionId[]]> {
 
     const [resolvedResource_, indicesOfResolvedResources] = solveRevisions(resources);
 

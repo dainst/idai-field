@@ -1,7 +1,6 @@
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 import {clone} from '../../../../../app/core/util/object-util';
-import {Resources} from '../../../../../app/core/datastore/core/project-resource-conflict-resolution';
 import {last} from '../../../../../app/core/datastore/core/helpers';
 
 
@@ -60,7 +59,7 @@ describe('solveProjectDocumentConflict', () => {
 
         await solveProjectDocumentConflict(
             current,
-            (resources: Resources) => [last(resources), [1, 2]], // simulate that 2 conflicts got solved
+            (resources: Array<Resource>) => [last(resources), [1, 2]], // simulate that 2 conflicts got solved
             last,    // just resolve to the last resource
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
@@ -127,7 +126,7 @@ describe('solveProjectDocumentConflict', () => {
 
         await solveProjectDocumentConflict(
             current,
-            (resources: Resources) => [last(resources), [0, 2]], // simulate that 2 conflicts got solved
+            (resources: Array<Resource>) => [last(resources), [0, 2]], // simulate that 2 conflicts got solved
             last,    // just resolve to the last resource
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
@@ -194,7 +193,7 @@ describe('solveProjectDocumentConflict', () => {
 
         await solveProjectDocumentConflict(
             current,
-            (resources: Resources) => [last(resources), [0, 1, 2]], // simulate that all conflicts got solved
+            (resources: Array<Resource>) => [last(resources), [0, 1, 2]], // simulate that all conflicts got solved
             last,    // just resolve to the last resource
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),

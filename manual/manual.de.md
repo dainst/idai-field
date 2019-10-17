@@ -144,8 +144,10 @@ Raster angezeigten Bilder vom Suchfilter betroffen.
 Über den Typfilter-Button können Sie einen Ressourcentyp wählen. Unterschieden wird zwischen Obertypen und
 Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
 Typs angezeigt. Wählen Sie dagegen einen Obertyp (z. B. "Stratigraphische Einheit"), werden Ressourcen des
-ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur", "Fußboden" etc.)
-berücksichtigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
+ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur",
+"Fußboden" etc.) berücksichtigt. Klicken Sie ein weiteres Mal, um lediglich den Obertyp selbst auszuwählen.
+ 
+Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
 können Maßnahmentypen gewählt werden, in der Bilderverwaltung Bildtypen etc. 
 
 
@@ -244,12 +246,11 @@ die ausgeblendeten Ressourcen zugreifen zu können.
 
 #### Feldspezifische Suchkriterien
  
-Ist der erweiterte Suchmodus aktiviert, können Sie bei aktiviertem Typfilter eine Suche über spezifische
-Felder einer Ressource anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
-Dabei werden Felder zur Suche angeboten, die der entsprechenden Typendefinition entsprechen. Sie können
-beliebig viele Felder auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber
-hinaus können Sie die feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter
-verwenden.
+Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
+anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken. Dabei werden Felder zur
+Suche angeboten, die dem als Filter ausgewählten Ressourcentyp entsprechen. Sie können beliebig viele Felder
+auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber hinaus können Sie die
+feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter verwenden.
 
 <p align="center"><img src="images/de/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
 
@@ -298,8 +299,8 @@ erhalten.
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   (Feldgruppe "Zeit") erstellt.
-* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
-  geschnitten von" (Feldgruppe "Lage") erstellt.
+* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet", "Wird
+  geschnitten von" und "Gleich wie" (Feldgruppe "Lage") erstellt.
 
 
 #### Kanten

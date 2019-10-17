@@ -1,9 +1,9 @@
 import {asyncMap} from 'tsfun-extra';
-import {assoc, to, lookup, flow} from 'tsfun';
+import {assoc, to, lookup, flow, map, filter, isDefined, union} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {ResourceId, RevisionId} from '../../../c';
-import {dissocIndices, replaceLast} from './helpers';
+import {CAMPAIGNS, dissocIndices, last, replaceLast, STAFF} from './helpers';
 import getConflicts = DatastoreUtil.getConflicts;
 
 
@@ -13,7 +13,6 @@ import getConflicts = DatastoreUtil.getConflicts;
 export async function solveProjectDocumentConflict(
     document:       Document,
     solveRevisions: (_: Array<Resource>) => [Resource, number[]],
-    crunch:         (_: Array<Resource>) => Resource,
     fetch:          (_: ResourceId) => Promise<Document>,
     fetchRevision:  (_: ResourceId, __: RevisionId) => Promise<Document>,
     update:         (_: Document, conflicts: string[]) => Promise<Document>): Promise<Document> {
@@ -39,17 +38,15 @@ export async function solveProjectDocumentConflict(
     const result = await resolve(
         resourcesOfCurrentAndOldRevisionDocuments,
         conflicts,
-        solveRevisions,
-        crunch);
+        solveRevisions);
 
     return await update(insertResourceIntoLatestRevisionDocument(result[0]), result[1]);
 }
 
 
-async function resolve(resources:        Array<Resource>,
-                       conflicts:        RevisionId[],
-                       solveRevisions:   (_: Array<Resource>) => [Resource, number[]],
-                       crunch:           (_: Array<Resource>) => Resource):
+async function resolve(resources: Array<Resource>,
+                       conflicts: RevisionId[],
+                       solveRevisions: (_: Array<Resource>) => [Resource, number[]]):
     Promise<[Resource, RevisionId[]]> {
 
     const [resolvedResource, indicesOfResolvedResources] = solveRevisions(resources);
@@ -62,6 +59,24 @@ async function resolve(resources:        Array<Resource>,
             crunch) as Resource
 
         , indicesOfResolvedResources.map(lookup(conflicts)) as RevisionId[]];
+}
+
+
+/**
+ * @param resources
+ *   expected to be of at least length 1.
+ */
+function crunch(resources: Array<Resource>): Resource {
+
+    if (resources.length === 0) throw 'FATAL - illegal argument - resources must have length 1';
+    if (resources.length === 1) return resources[0];
+
+    const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
+    const campaignsUnion = flow(resources, map(to(CAMPAIGNS)), filter(isDefined),  union);
+    return flow(resources,
+        last,
+        assoc(STAFF, staffUnion),
+        assoc(CAMPAIGNS, campaignsUnion));
 }
 
 

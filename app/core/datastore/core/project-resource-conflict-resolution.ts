@@ -1,8 +1,8 @@
 import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty, getOnOr,
-    flow, compose, len, val, map, filter, isDefined} from 'tsfun';
+    flow, compose, len, val} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
-import {last, replaceLastPair} from './helpers';
+import {CAMPAIGNS, last, replaceLastPair, STAFF} from './helpers';
 
 
 /**
@@ -12,24 +12,6 @@ import {last, replaceLastPair} from './helpers';
 export module ProjectResourceConflictResolution {
 
     const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
-
-
-    /**
-     * @param resources
-     *   expected to be of at least length 1.
-     */
-    export function createResourceForNewRevisionFrom(resources: Array<Resource>): Resource {
-
-        if (resources.length === 0) throw 'FATAL - illegal argument - resources must have length 1';
-        if (resources.length === 1) return resources[0];
-
-        const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
-        const campaignsUnion = flow(resources, map(to(CAMPAIGNS)), filter(isDefined),  union);
-        return flow(resources,
-            last,
-            assoc(STAFF, staffUnion),
-            assoc(CAMPAIGNS, campaignsUnion));
-    }
 
 
     /**
@@ -89,12 +71,6 @@ export module ProjectResourceConflictResolution {
         }
         return NONE;
     }
-
-
-    const STAFF = 'staff';
-
-
-    const CAMPAIGNS = 'campaigns';
 
 
     const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);

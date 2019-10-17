@@ -85,7 +85,6 @@ export class ChangesStream {
         return solveProjectDocumentConflict(
             document,
             ProjectResourceConflictResolution.solveProjectResourceConflicts,
-            ProjectResourceConflictResolution.createResourceForNewRevisionFrom,
             (resourceId: string) => this.datastore.fetch(resourceId),
             (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId),
             (document: Document, squashRevisionIds: string[]) => this.updateResolvedDocument(document, squashRevisionIds));

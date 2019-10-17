@@ -1,5 +1,10 @@
 import {append, compose, dropRight, flow, takeRight, to, take, drop} from 'tsfun';
 
+export const STAFF = 'staff';
+
+
+export const CAMPAIGNS = 'campaigns';
+
 
 export function replaceLast<A>(replacement: A){ return (as: Array<A>): Array<A> => {
 

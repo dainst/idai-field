@@ -1,14 +1,12 @@
 import {sameset} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
 import {clone} from '../../../../../app/core/util/object-util';
-import {last} from '../../../../../app/core/datastore/core/helpers';
 
 
 describe('solveProjectDocumentConflict', () => {
 
-
-    it('solve rightmost 2 of 3', async done => {
+    it('2 identical resources', async done => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -16,6 +14,146 @@ describe('solveProjectDocumentConflict', () => {
             resource: {
                 id: '1',
                 type: 'Object',
+                aField: 'aValue',
+                relations: {}
+            }
+        };
+        (current as any)['_conflicts'] = ['c1'];
+
+        const conflictedDocs = {
+
+            c1: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    aField: 'aValue',
+                    relations: {}
+                },
+                '_rev': 'c1'
+            }
+        } as {[revisionId: string]: Document};
+
+        let squashRevisionIds: string[] = [];
+
+        const result = await solveProjectDocumentConflict(
+            current,
+            (_: string) => Promise.resolve(clone(current)),
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
+            (document: Document, squashRevisionIds_: string[]) => {
+                squashRevisionIds = squashRevisionIds_;
+                return Promise.resolve(document);
+            }
+        );
+
+        expect(result.resource['aField']).toEqual('aValue');
+        expect(squashRevisionIds).toEqual(['c1']);
+        done();
+    });
+
+
+    it('current is empty', async done => {
+
+        const current: Document = {
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                relations: {}
+            }
+        };
+        (current as any)['_conflicts'] = ['c1'];
+
+        const conflictedDocs = {
+
+            c1: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    aField: 'aValue',
+                    relations: {}
+                },
+                '_rev': 'c1'
+            }
+        } as {[revisionId: string]: Document};
+
+        let squashRevisionIds: string[] = [];
+
+        const result = await solveProjectDocumentConflict(
+            current,
+            (_: string) => Promise.resolve(clone(current)),
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
+            (document: Document, squashRevisionIds_: string[]) => {
+                squashRevisionIds = squashRevisionIds_;
+                return Promise.resolve(document);
+            }
+        );
+
+        expect(result.resource['aField']).toEqual('aValue');
+        expect(squashRevisionIds).toEqual(['c1']);
+        done();
+    });
+
+
+    it('conflicted is empty', async done => {
+
+        const current: Document = {
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                aField: 'aValue',
+                relations: {}
+            }
+        };
+        (current as any)['_conflicts'] = ['c1'];
+
+        const conflictedDocs = {
+
+            c1: {
+                created: { user: '', date: new Date() },
+                modified: [],
+                resource: {
+                    id: '1',
+                    type: 'Object',
+                    relations: {}
+                },
+                '_rev': 'c1'
+            }
+        } as {[revisionId: string]: Document};
+
+        let squashRevisionIds: string[] = [];
+
+        const result = await solveProjectDocumentConflict(
+            current,
+            (_: string) => Promise.resolve(clone(current)),
+            (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
+            (document: Document, squashRevisionIds_: string[]) => {
+                squashRevisionIds = squashRevisionIds_;
+                return Promise.resolve(document);
+            }
+        );
+
+        expect(result.resource['aField']).toEqual('aValue');
+        expect(squashRevisionIds).toEqual(['c1']);
+        done();
+    });
+
+
+    it('solve rightmost 2 of 3 - thereby unify staff', async done => {
+
+        const current: Document = {
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                id: '1',
+                type: 'Object',
+                staff: ['a'],
                 relations: {}
             }
         };
@@ -29,6 +167,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    'aField': 'aValue',
                     relations: {}
                 }
             },
@@ -38,6 +177,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    staff: ['b'],
                     relations: {}
                 }
             },
@@ -47,6 +187,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    staff: ['c'],
                     relations: {}
                 }
             }
@@ -58,9 +199,8 @@ describe('solveProjectDocumentConflict', () => {
 
         let squashRevisionIds: string[] = [];
 
-        await solveProjectDocumentConflict(
+        const result = await solveProjectDocumentConflict(
             current,
-            (resources: Array<Resource>) => [last(resources), [1, 2]], // simulate that 2 conflicts got solved
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
@@ -69,12 +209,13 @@ describe('solveProjectDocumentConflict', () => {
             }
         );
 
+        expect(sameset(result.resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
         expect(squashRevisionIds).toEqual(['c2', 'c3']);
         done();
     });
 
 
-    it('solve c1 and c3', async done => {
+    it('solve c1 and c3 - thereby unify campaigns', async done => {
 
         const current: Document = {
             created: { user: '', date: new Date() },
@@ -82,6 +223,7 @@ describe('solveProjectDocumentConflict', () => {
             resource: {
                 id: '1',
                 type: 'Object',
+                campaigns: ['1'],
                 relations: {}
             }
         };
@@ -95,6 +237,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    campaigns: ['2'],
                     relations: {}
                 }
             },
@@ -104,6 +247,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    aField: 'aValue',
                     relations: {}
                 }
             },
@@ -113,6 +257,7 @@ describe('solveProjectDocumentConflict', () => {
                 resource: {
                     id: '1',
                     type: 'Object',
+                    campaigns: ['3'],
                     relations: {}
                 }
             }
@@ -124,9 +269,8 @@ describe('solveProjectDocumentConflict', () => {
 
         let squashRevisionIds: string[] = [];
 
-        await solveProjectDocumentConflict(
+        const result = await solveProjectDocumentConflict(
             current,
-            (resources: Array<Resource>) => [last(resources), [0, 2]], // simulate that 2 conflicts got solved
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
@@ -135,6 +279,7 @@ describe('solveProjectDocumentConflict', () => {
             }
         );
 
+        expect(sameset(result.resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
         expect(squashRevisionIds).toEqual(['c1', 'c3']);
         done();
     });
@@ -192,7 +337,6 @@ describe('solveProjectDocumentConflict', () => {
 
         await solveProjectDocumentConflict(
             current,
-            (resources: Array<Resource>) => [last(resources), [0, 1, 2]], // simulate that all conflicts got solved
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
@@ -214,6 +358,7 @@ describe('solveProjectDocumentConflict', () => {
             resource: {
                 id: '1',
                 type: 'Object',
+                aField: 'aValue',
                 relations: {}
             }
         };
@@ -228,6 +373,7 @@ describe('solveProjectDocumentConflict', () => {
                     id: '1',
                     type: 'Object',
                     campaigns: ['1', '3'],
+                    aField: 'aValue2',
                     relations: {}
                 }
             },
@@ -238,6 +384,7 @@ describe('solveProjectDocumentConflict', () => {
                     id: '1',
                     campaigns: ['1', '2'],
                     type: 'Object',
+                    aField: 'aValue2',
                     relations: {}
                 }
             },
@@ -248,6 +395,7 @@ describe('solveProjectDocumentConflict', () => {
                     id: '1',
                     type: 'Object',
                     campaigns: ['2', '3'],
+                    aField: 'aValue3',
                     relations: {}
                 }
             }
@@ -259,9 +407,8 @@ describe('solveProjectDocumentConflict', () => {
 
         let squashRevisionIds: string[] = [];
 
-        const resultDoc = await solveProjectDocumentConflict(
+        const result = await solveProjectDocumentConflict(
             current,
-            (resources: Array<Resource>) => [last(resources), []], // simulate that all conflicts got solved
             (_: string) => Promise.resolve(clone(current)),
             (_: string, revisionId: string) => Promise.resolve(clone(conflictedDocs[revisionId])),
             (document: Document, squashRevisionIds_: string[]) => {
@@ -270,7 +417,8 @@ describe('solveProjectDocumentConflict', () => {
             }
         );
 
-        expect(sameset(resultDoc.resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(sameset(result.resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(result.resource['aField']).toEqual('aValue');
         expect(squashRevisionIds).toEqual([]);
         done();
     });

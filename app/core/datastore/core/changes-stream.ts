@@ -11,7 +11,6 @@ import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {solveProjectDocumentConflict} from './solve-project-document-conflicts';
-import {ProjectResourceConflictResolution} from './project-resource-conflict-resolution';
 
 
 @Injectable()
@@ -84,7 +83,6 @@ export class ChangesStream {
 
         return solveProjectDocumentConflict(
             document,
-            ProjectResourceConflictResolution.solveProjectResourceConflicts,
             (resourceId: string) => this.datastore.fetch(resourceId),
             (resourceId: string, revisionId: string) => this.datastore.fetchRevision(resourceId, revisionId),
             (document: Document, squashRevisionIds: string[]) => this.updateResolvedDocument(document, squashRevisionIds));

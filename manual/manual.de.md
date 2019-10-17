@@ -246,12 +246,11 @@ die ausgeblendeten Ressourcen zugreifen zu können.
 
 #### Feldspezifische Suchkriterien
  
-Ist der erweiterte Suchmodus aktiviert, können Sie bei aktiviertem Typfilter eine Suche über spezifische
-Felder einer Ressource anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
-Dabei werden Felder zur Suche angeboten, die der entsprechenden Typendefinition entsprechen. Sie können
-beliebig viele Felder auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber
-hinaus können Sie die feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter
-verwenden.
+Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
+anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken. Dabei werden Felder zur
+Suche angeboten, die dem als Filter ausgewählten Ressourcentyp entsprechen. Sie können beliebig viele Felder
+auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber hinaus können Sie die
+feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter verwenden.
 
 <p align="center"><img src="images/de/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
 

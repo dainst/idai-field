@@ -228,11 +228,11 @@ these resources.
 
 #### Field specific search criteria
  
-If the extended search mode is activated and a type filter is selected, you can start a search over specific
-fields of a resource by clicking the plus button to the left of the type filter button. Fields available for
-search are those corresponding to the respective type definition. You can choose as many fields as you want in
-order to combine multiple search criteria. Of course, you can also use the field specific search criteria in
-combination with the text filter. 
+If the extended search mode is activated, you can start a search over specific fields of a resource by
+clicking the plus button to the left of the type filter button. Fields available for search are those
+corresponding to the selected filter type. You can choose as many fields as you want in order to combine
+multiple search criteria. Of course, you can also use the field specific search criteria in combination with
+the text filter. 
 
 <p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 

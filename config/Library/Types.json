@@ -249,9 +249,6 @@
       "longitude": {
         "inputType": "float"
       },
-      "staff": {
-        "inputType": "multiInput"
-      },
       "projectURI": {
         "inputType": "input"
       },

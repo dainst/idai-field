@@ -23,7 +23,7 @@ export async function solveProjectDocumentConflict(
         (resource: Resource) => assoc(RESOURCE, resource)(latestRevisionDocument);
 
     let conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
-    if (!conflicts) return document;                        // again, to make sure other client did not solve it in that exact instant
+    if (!conflicts) return document;                      // again, to make sure other client did not solve it in that exact instant
 
     const conflictedDocuments =
         await asyncMap((resourceId: string) => fetchRevision(document.resource.id, resourceId))

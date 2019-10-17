@@ -1,11 +1,11 @@
 import {asyncMap} from 'tsfun-extra';
-import {assoc, to, lookup} from 'tsfun';
+import {assoc, to, lookup, flow} from 'tsfun';
 import {Resources} from './project-resource-conflict-resolution';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import getConflicts = DatastoreUtil.getConflicts;
 import {ResourceId, RevisionId} from '../../../c';
-import {replaceLast} from './helpers';
+import {dissocIndices, replaceLast} from './helpers';
 
 
 /**
@@ -54,18 +54,22 @@ async function resolve(
     solveAlternative: (_: Resources) => Resource): Promise<[Resource, RevisionId[]]> {
 
     const [resolvedResource_, indicesOfResolvedResources] = solve(orderedDocuments);
-
     let solvedConflicts: RevisionId[] = [];
     let resolvedResource: Resource|undefined = undefined;
+
     if (indicesOfResolvedResources.length === conflicts.length) {
         solvedConflicts = conflicts;
         resolvedResource = resolvedResource_;
     } else {
         solvedConflicts = indicesOfResolvedResources.map(lookup(conflicts)) as string[];
-        const reworkedRevisions = replaceLast(orderedDocuments, resolvedResource);
-        for (let index of indicesOfResolvedResources.reverse()) reworkedRevisions.splice(index, 1);
-        resolvedResource = solveAlternative(reworkedRevisions);
+        resolvedResource =
+            flow(
+                orderedDocuments,
+                dissocIndices(indicesOfResolvedResources.sort()),
+                replaceLast(resolvedResource),
+                solveAlternative) as Resource;
     }
+
     return [resolvedResource, solvedConflicts];
 }
 

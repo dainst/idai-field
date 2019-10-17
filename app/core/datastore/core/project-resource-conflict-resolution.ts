@@ -1,13 +1,13 @@
 import {assoc, union, dissoc, equal, takeRight, to, cond, is, isEmpty,
-    flow, compose, dropRight, append, copy, len, val, map, filter, isDefined} from 'tsfun';
+    flow, compose, dropRight, append, len, val, map, filter, isDefined} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {withDissoc} from '../../import/util';
 import {DatastoreUtil} from './datastore-util';
+import last = DatastoreUtil.last;
 
 
 export module ProjectResourceConflictResolution {
 
-    import last = DatastoreUtil.last;
     const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
 
 
@@ -25,7 +25,7 @@ export module ProjectResourceConflictResolution {
 
 
     /**
-     * @param resources_ ordered by time ascending
+     * @param resources ordered by time ascending
      *   expected to be of at least length 2.
      *
      * @returns a resolved resource and the positions of the resources that have been used to do this.
@@ -33,27 +33,26 @@ export module ProjectResourceConflictResolution {
      * @author Thomas Kleinke
      * @author Daniel de Oliveira
      */
-    export function solveProjectResourceConflicts(resources_: Resources): [Resource, number[]] {
+    export function solveProjectResourceConflicts(resources: Resources): [Resource, number[]] {
 
-        let resources = copy(resources_);
         if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
-        let indicesOfUsedResources: number[] = [];
+        const [collapsed, indicesOfUsedResources] = collapse(resources, []);
+        return [collapsed[0], indicesOfUsedResources.reverse()];
+    }
 
-        while (resources.length > 1) {
 
-            const ultimate = last(resources);
-            const penultimate = getPenultimate(resources);
+    function collapse(resources: Resources, indicesOfUsedResources: number[]): [Resources, number[]] {
 
-            const selected = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
-            if (selected === NONE) {
-                resources = replacePairWithResolvedOne(resources, ultimate);
-            } else {
-                indicesOfUsedResources.push(resources.length - 2);
-                resources = replacePairWithResolvedOne(resources, selected);
-            }
-        }
-        return [resources[0], indicesOfUsedResources.reverse()];
+        if (resources.length < 2) return [resources, indicesOfUsedResources];
+
+        const ultimate = last(resources);
+        const penultimate = getPenultimate(resources);
+
+        const selected = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
+        return selected !== NONE
+            ? collapse(replacePairWithResolvedOne(resources, selected), indicesOfUsedResources.concat(resources.length - 2))
+            : collapse(replacePairWithResolvedOne(resources, ultimate), indicesOfUsedResources);
     }
 
 

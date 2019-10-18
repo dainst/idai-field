@@ -1,9 +1,9 @@
 import {assoc, to, lookup, flow, map, filter, isDefined, union, equal,
-    isEmpty, getOnOr, compose, dissoc, len, is, takeRight, cond, val} from 'tsfun';
+    isEmpty, getOnOr, compose, dissoc} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {RevisionId} from '../../../c';
-import {CAMPAIGNS, dissocIndices, last, replaceLast, replaceLastPair, STAFF} from './helpers';
+import {dissocIndices, last, penultimate, replaceLast, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
 
 
@@ -87,13 +87,10 @@ function collapse(resources: Array<Resource>, indicesOfUsedResources: number[]):
 
     if (resources.length < 2) return [resources, indicesOfUsedResources];
 
-    const ultimate = last(resources);
-    const penultimate = getPenultimate(resources);
-
-    const resolved = solveConflictBetween2ProjectDocuments(penultimate, ultimate);
+    const resolved = solveConflictBetween2ProjectDocuments(penultimate(resources), ultimate(resources));
     return resolved !== NONE
         ? replaceLastTwoThenCollapseRest(resources, resolved, indicesOfUsedResources.concat(resources.length - 2))
-        : replaceLastTwoThenCollapseRest(resources, ultimate, indicesOfUsedResources);
+        : replaceLastTwoThenCollapseRest(resources, ultimate(resources), indicesOfUsedResources);
 }
 
 
@@ -114,7 +111,7 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     else if (isEmpty(r)) return left;
 
     if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
-        const lCampaigns = getOnOr(CAMPAIGNS, [])(l);
+        const lCampaigns = getOnOr(CAMPAIGNS, [])(l); // TODO test if, and if not, make sure union ignores undefined. then we can get rid of  these lines
         const rCampaigns = getOnOr(CAMPAIGNS, [])(r);
         const lStaff = getOnOr(STAFF, [])(l);
         const rStaff = getOnOr(STAFF, [])(r);
@@ -126,31 +123,18 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 }
 
 
+const NONE = undefined;
+
+const RESOURCE = 'resource';
+
+const REV_MARKER = '_rev';
+
+export const STAFF = 'staff';
+
+export const CAMPAIGNS = 'campaigns';
+
+
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
 
 
 const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
-
-
-const lengthIs2 = compose(len, is(2));
-
-
-/**
- * Gets the penultimate of an Array of A's, if it exists.
- * @returns A|undefined
- */
-const getPenultimate = compose(
-    takeRight(2),
-    cond(
-        lengthIs2,
-        to('[0]'),
-        val(undefined)));
-
-
-const NONE = undefined;
-
-
-const RESOURCE = 'resource';
-
-
-const REV_MARKER = '_rev';

@@ -1,9 +1,4 @@
-import {append, compose, dropRight, flow, takeRight, to, take, drop} from 'tsfun';
-
-export const STAFF = 'staff';
-
-
-export const CAMPAIGNS = 'campaigns';
+import {append, compose, dropRight, flow, takeRight, to, take, drop, cond, len, is, val} from 'tsfun';
 
 
 export function replaceLast<A>(replacement: A){ return (as: Array<A>): Array<A> => {
@@ -25,6 +20,23 @@ function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): 
 
 
 export const last = compose(takeRight(1), to('[0]'));
+
+
+const lengthIs2 = compose(len, is(2));
+
+/**
+ * Gets the penultimate of an Array of A's, if it exists.
+ * @returns A|undefined
+ */
+export const penultimate = compose(
+    takeRight(2),
+    cond(
+        lengthIs2,
+        to('[0]'),
+        val(undefined)));
+
+
+export const ultimate = last;
 
 
 /**

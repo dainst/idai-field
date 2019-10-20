@@ -31,7 +31,12 @@ export module POSITION_RELATIONS {
 
 
 /**
- *
+ * These relations exists for one to many assignments between operations and contained
+ * and between resources and resources contained within those. It does not necessarily 
+ * describe a spatial relationship (also it may, depending of the concrete resource domain and range)
+ * but says that the app handles it as that structural on-to-many relationship and displays it
+ * accordingsly (so that operations get views, in which other resoures are listed, and resources
+ * are displayed as nested within other resources).
  */
 export module HIERARCHICAL_RELATIONS {
 

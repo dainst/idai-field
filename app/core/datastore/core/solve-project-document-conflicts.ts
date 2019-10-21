@@ -77,12 +77,13 @@ function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, n
 
     if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
-    const [collapsed, indicesOfUsedResources] = collapse(resources, []);
-    return [collapsed[0], indicesOfUsedResources.reverse()];
+    const [[collapsed], indicesOfUsedResources] = collapse(resources);
+    return [collapsed, indicesOfUsedResources.reverse()];
 }
 
 
-function collapse(resources: Array<Resource>, indicesOfUsedResources: number[]): [Array<Resource>, number[]] {
+function collapse(resources: Array<Resource>, indicesOfUsedResources: number[] = [] /* used for recursion */)
+        : [Array<Resource> /* containing exactly 1 entry */, number[] /* indicesOfUsedResources */] {
 
     if (resources.length < 2) return [resources, indicesOfUsedResources];
 

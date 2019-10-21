@@ -62,16 +62,8 @@ export class ChangesStream {
                 }
 
                 if (isProjectDocument(document) && isConflicted(document)) {
-
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
-                        async () => {
-                            delete this.documentsScheduledToWelcome[document.resource.id];
-                            try {
-                                await this.welcomeDocument(await this.resolveConflict(document));
-                            } catch { }
-                        },
-                        Math.random() * 10000);
-
+                        (document: Document) => this.onTimeout(document), Math.random() * 10000);
                 } else {
                     await this.welcomeDocument(document);
                 }
@@ -80,6 +72,21 @@ export class ChangesStream {
     }
 
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+
+
+    private async onTimeout(document: Document) {
+
+        delete this.documentsScheduledToWelcome[document.resource.id];
+        let solvedDocument: Document|undefined = undefined;
+        try {
+            solvedDocument = await this.resolveConflict(document)
+        } catch (err) {
+            console.error("will not put document to index due to " +
+                "error in ChangesStream.resolveConflict", err);
+            return;
+        }
+        await this.welcomeDocument(solvedDocument);
+    }
 
 
     private async resolveConflict(document: Document): Promise<Document> {

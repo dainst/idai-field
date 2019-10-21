@@ -13,6 +13,7 @@ import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {solveProjectDocumentConflict} from './solve-project-document-conflicts';
 import getConflicts = DatastoreUtil.getConflicts;
+import {ResourceId, RevisionId} from '../../../c';
 
 
 @Injectable()
@@ -85,16 +86,19 @@ export class ChangesStream {
 
         const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
 
-        let conflicts = getConflicts(document); // fetch again, to make sure it is up to date after the timeout
-        if (!conflicts) return document;        // again, to make sure other client did not solve it in that exact instant
+        const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
+        if (!conflicts) return latestRevisionDocument;          // again, to make sure other client did not solve it in that exact instant
 
-        const conflictedDocuments = // TODO extract function
-            await asyncMap((revisionId: string) => {
-                return this.datastore.fetchRevision(document.resource.id, revisionId);
-            })(conflicts);
-
+        const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);
         return this.updateResolvedDocument(
-            solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments));
+                solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments));
+    }
+
+    private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {
+
+        return await asyncMap((revisionId: string) => {
+                return this.datastore.fetchRevision(resourceId, revisionId);
+            })(conflicts);
     }
 
 

@@ -22,7 +22,7 @@ export module DatastoreUtil {
      * Design note: This is to abstract away how exactly a document is marked as conflicted.
      * PouchDb does it by setting _conflicts.
      */
-    export function getConflicts(document: Document): Array<string>|undefined {
+    export function getConflicts(document: Document): string[]|undefined {
 
         return (document as any)['_conflicts'];
     }

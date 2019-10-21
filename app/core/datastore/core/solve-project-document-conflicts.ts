@@ -89,12 +89,12 @@ function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<Arra
 
     const resolved = solveConflictBetween2ProjectDocuments(penultimate(resources), ultimate(resources));
     return resolved !== NONE
-        ? replaceLastTwoThenCollapseRest(resources, resolved, indicesOfUsedResources.concat(resources.length - 2))
-        : replaceLastTwoThenCollapseRest(resources, ultimate(resources), indicesOfUsedResources);
+        ? replaceLastTwoThenCollapseRest(resources, indicesOfUsedResources.concat(resources.length - 2), resolved)
+        : replaceLastTwoThenCollapseRest(resources, indicesOfUsedResources, ultimate(resources));
 }
 
 
-function replaceLastTwoThenCollapseRest(resources: Array<Resource>, replacement: Resource, indices: Array<ArrayIndex>) {
+function replaceLastTwoThenCollapseRest(resources: Array<Resource>, indices: Array<ArrayIndex>, replacement: Resource) {
 
     return collapse(replaceLastPair(resources, replacement), indices);
 }

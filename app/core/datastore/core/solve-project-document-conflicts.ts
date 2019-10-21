@@ -73,7 +73,7 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
  * @returns a resolved resource and the positions of the resources that have been used to do this.
  *
  */
-function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, number[]] {
+function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, Index[]] {
 
     if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
@@ -82,8 +82,8 @@ function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, n
 }
 
 
-function collapse(resources: Array<Resource>, indicesOfUsedResources: number[] = [] /* used for recursion */)
-        : [Array<Resource> /* containing exactly 1 entry */, number[] /* indicesOfUsedResources */] {
+function collapse(resources: Array<Resource>, indicesOfUsedResources: Index[] = [] /* used for recursion */)
+        : [Array<Resource> /* containing exactly 1 entry */, Index[] /* used resources */] {
 
     if (resources.length < 2) return [resources, indicesOfUsedResources];
 
@@ -94,7 +94,7 @@ function collapse(resources: Array<Resource>, indicesOfUsedResources: number[] =
 }
 
 
-function replaceLastTwoThenCollapseRest(resources: Array<Resource>, replacement: Resource, indices: number[]) {
+function replaceLastTwoThenCollapseRest(resources: Array<Resource>, replacement: Resource, indices: Index[]) {
 
     return collapse(replaceLastPair(resources, replacement), indices);
 }
@@ -132,6 +132,8 @@ const REV_MARKER = '_rev';
 export const STAFF = 'staff';
 
 export const CAMPAIGNS = 'campaigns';
+
+type Index = number;
 
 
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);

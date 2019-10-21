@@ -26,8 +26,7 @@ export function solveProjectDocumentConflict(document: Document,
 }
 
 
-function resolve(resources: Array<Resource>,
-                 conflicts: RevisionId[]): [Resource, RevisionId[]] {
+function resolve(resources: Array<Resource>, conflicts: RevisionId[]): [Resource, RevisionId[]] {
 
     const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources);
 

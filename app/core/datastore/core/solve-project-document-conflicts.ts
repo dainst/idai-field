@@ -77,8 +77,8 @@ function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, A
 
     if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
 
-    const [[collapsed], indicesOfUsedResources] = collapse(resources);
-    return [collapsed, indicesOfUsedResources.reverse()];
+    const [[resource], indicesOfUsedResources] = collapse(resources);
+    return [resource, indicesOfUsedResources.reverse()];
 }
 
 

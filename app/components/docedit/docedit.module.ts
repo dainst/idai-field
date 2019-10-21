@@ -26,7 +26,7 @@ import {RadioComponent} from './core/forms/radio.component';
 import {TextComponent} from './core/forms/text.component';
 import {DatingComponent} from './core/forms/dating.component';
 import {DateComponent} from './core/forms/date.component';
-import {NgbDateDEParserFormatter} from './core/forms/date-formatter.component';
+import {NgbDateDEParserFormatter} from './core/forms/widgets/date-formatter.component';
 import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
@@ -34,8 +34,8 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {GenericFormComponent} from './core/generic-form-component';
 import {GeometryComponent} from './core/forms/geometry.component';
 import {MultiInputComponent} from './core/forms/multi-input.component';
-import {OutliersComponent} from './core/forms/outliers.component';
-import {EmptyValuelistInfoComponent} from './core/forms/empty-valuelist-info.component';
+import {OutliersComponent} from './core/forms/widgets/outliers.component';
+import {EmptyValuelistInfoComponent} from './core/forms/widgets/empty-valuelist-info.component';
 
 
 @NgModule({

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 
 
 @Component({

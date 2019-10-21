@@ -1,10 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {on, is} from 'tsfun';
 import {Resource} from 'idai-components-2'
-import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
-import {ValuelistUtil} from '../../../../core/util/valuelist-util';
-import {SettingsService} from '../../../../core/settings/settings-service';
-import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
+import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
+import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
+import {SettingsService} from '../../../../../core/settings/settings-service';
+import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
 
 
 @Component({

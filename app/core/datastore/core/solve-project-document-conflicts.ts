@@ -82,8 +82,8 @@ function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, A
 }
 
 
-function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<ArrayIndex> = [] /* used for recursion */)
-        : [Array<Resource> /* containing exactly 1 entry */, Array<ArrayIndex> /* used resources */] {
+function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<ArrayIndex> = [])
+        : [Array<Resource>, Array<ArrayIndex>] {
 
     if (resources.length < 2) return [resources, indicesOfUsedResources];
 

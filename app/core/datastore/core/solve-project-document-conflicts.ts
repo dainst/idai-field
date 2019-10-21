@@ -63,9 +63,6 @@ function crunch(resources: Array<Resource>): Resource {
 }
 
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
-
-
 /**
  * @param resources ordered by time ascending
  *   expected to be of at least length 2.
@@ -91,14 +88,8 @@ function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<Arra
 
     const resolved = solveConflictBetween2ProjectDocuments(penultimate(resources), ultimate(resources));
     return resolved !== NONE
-        ? replaceLastTwoThenCollapseRest(resources, indicesOfUsedResources.concat(resources.length - 2), resolved)
-        : replaceLastTwoThenCollapseRest(resources, indicesOfUsedResources, ultimate(resources));
-}
-
-
-function replaceLastTwoThenCollapseRest(resources: Array<Resource>, indices: Array<ArrayIndex>, replacement: Resource) {
-
-    return collapse(replaceLastPair(resources, replacement), indices);
+        ? collapse(replaceLastPair(resources, resolved), indicesOfUsedResources.concat(resources.length - 2))
+        : collapse(replaceLastPair(resources, ultimate(resources)), indicesOfUsedResources);
 }
 
 
@@ -125,6 +116,8 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 }
 
 
+const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
+
 const NONE = undefined;
 
 const RESOURCE = 'resource';
@@ -137,8 +130,6 @@ export const CAMPAIGNS = 'campaigns';
 
 type ArrayIndex = number;
 
-
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
-
 
 const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));

@@ -70,8 +70,10 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
  * @param resources ordered by time ascending
  *   expected to be of at least length 2.
  *
- * @returns a resolved resource and the positions of the resources that have been used to do this.
- *
+ * @returns 
+ *   - a resolved resource 
+ *   - the indices of the resources in the resources array 
+ *     that have been collapsed into the resolved resource
  */
 function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, Array<ArrayIndex>] {
 

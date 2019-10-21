@@ -32,7 +32,7 @@ export const penultimate = compose(
     takeRight(2),
     cond(
         lengthIs2,
-        to('[0]'),
+        to('[0]'), // TODO make 'first' function
         val(undefined)));
 
 

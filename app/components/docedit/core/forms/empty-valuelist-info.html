@@ -1,0 +1,13 @@
+<span *ngIf="getInfoType() === 'configuration'" i18n="docedit.forms.missingValuelistInfo.configuration">
+    Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
+</span>
+<span *ngIf="getInfoType() === 'projectDocumentField'"
+      i18n="docedit.forms.missingValuelistInfo.projectDocumentField">
+    Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten
+    (Feld <i>{{getProjectDocumentFieldLabel()}}</i>) ein.
+</span>
+<span *ngIf="getInfoType() === 'parent'"
+      i18n="docedit.forms.missingValuelistInfo.parent">
+    Für dieses Feld stehen nur Werte zur Auswahl, die im gleichen Feld der übergeordneten Ressource
+    eingetragen wurden.
+</span>

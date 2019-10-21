@@ -36,7 +36,7 @@ export module ValuelistUtil {
     }
 
 
-    function getValuelistFromProjectField(fieldName: string, projectDocument: Document): string[] {
+    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): string[] {
 
         const field: string[]|undefined = projectDocument.resource[fieldName];
         return field && Array.isArray(field) ? field : [];

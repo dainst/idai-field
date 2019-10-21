@@ -43,4 +43,10 @@ export class DropdownComponent implements OnChanges {
         
         if (value === '') delete this.resource[this.field.name];
     }
+
+
+    public hasEmptyValuelist(): boolean {
+
+        return this.valuelist && this.valuelist.length === 0
+    }
 }

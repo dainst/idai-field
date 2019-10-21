@@ -46,6 +46,12 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
+    public hasEmptyValuelist(): boolean {
+
+        return this.valuelist && this.valuelist.length === 0
+    }
+
+
     private removeItem(name: string): boolean {
 
         const index = this.resource[this.field.name].indexOf(name, 0);

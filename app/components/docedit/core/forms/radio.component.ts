@@ -49,4 +49,10 @@ export class RadioComponent implements OnChanges {
         
         delete this.resource[this.field.name];
     }
+
+
+    public hasEmptyValuelist(): boolean {
+
+        return this.valuelist && this.valuelist.length === 0
+    }
 }

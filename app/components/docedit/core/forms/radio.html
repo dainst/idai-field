@@ -7,6 +7,7 @@
         {{item}}
     </label>
 </div>
+
 <div class="form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="" type="radio"
@@ -16,5 +17,8 @@
         --
     </label>
 </div>
+
+<empty-valuelist-info *ngIf="hasEmptyValuelist()" [resource]="resource" [field]="field">
+</empty-valuelist-info>
 
 <outliers [resource]="resource" [fieldName]="field.name" [valuelist]="valuelist"></outliers>

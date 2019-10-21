@@ -35,6 +35,7 @@ import {GenericFormComponent} from './core/generic-form-component';
 import {GeometryComponent} from './core/forms/geometry.component';
 import {MultiInputComponent} from './core/forms/multi-input.component';
 import {OutliersComponent} from './core/forms/outliers.component';
+import {EmptyValuelistInfoComponent} from './core/forms/empty-valuelist-info.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import {OutliersComponent} from './core/forms/outliers.component';
         DimensionComponent,
         DropdownRangeComponent,
         GeometryComponent,
-        OutliersComponent
+        OutliersComponent,
+        EmptyValuelistInfoComponent
     ],
     exports: [
         EditSaveDialogComponent,

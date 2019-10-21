@@ -93,10 +93,8 @@ export class ChangesStream {
                 return this.datastore.fetchRevision(document.resource.id, revisionId);
             })(conflicts);
 
-        const [documentToUpdate, squashRevisionIds] =
-            solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
-
-        return this.updateResolvedDocument(documentToUpdate, squashRevisionIds)
+        return this.updateResolvedDocument(
+            solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments));
     }
 
 
@@ -114,7 +112,7 @@ export class ChangesStream {
     }
 
 
-    private async updateResolvedDocument(document: Document, conflicts: Array<string>): Promise<Document> {
+    private async updateResolvedDocument([document, conflicts]: [Document, Array<string>]): Promise<Document> {
 
         try {
 

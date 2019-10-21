@@ -12,7 +12,8 @@ import {withDissoc} from '../../import/util';
  * @author Thomas Kleinke
  */
 export function solveProjectDocumentConflict(document: Document,
-                                             conflictedDocuments: Array<Document>): [Document, RevisionId[] /* of succesfully resolved conflicts */] {
+                                             conflictedDocuments: Array<Document>)
+        : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
 

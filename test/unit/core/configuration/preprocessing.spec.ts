@@ -4,7 +4,7 @@
  */
 import {
     LibraryTypeDefinition,
-    LibraryTypeDefinitions
+    LibraryTypeDefinitionsMap
 } from '../../../../app/core/configuration/model/library-type-definition';
 import {UnorderedConfigurationDefinition} from '../../../../app/core/configuration/model/unordered-configuration-definition';
 import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
@@ -37,7 +37,7 @@ describe('Preprocessing', () => {
             identifier: 'test',
             types: {
                 'T1': t1
-            } as LibraryTypeDefinitions
+            } as LibraryTypeDefinitionsMap
         } as any;
     });
 

@@ -8,7 +8,7 @@ import {RelationDefinition} from './model/relation-definition';
 import {FieldDefinition} from './model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
 import {BuiltinTypeDefinitions} from "./model/builtin-type-definition";
-import {LibraryTypeDefinitions} from "./model/library-type-definition";
+import {LibraryTypeDefinitionsMap} from "./model/library-type-definition";
 import {buildProjectTypes} from "./build-project-types";
 
 
@@ -55,7 +55,7 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const registeredTypes: LibraryTypeDefinitions = await this.readConfiguration(configDirPath);
+        const registeredTypes: LibraryTypeDefinitionsMap = await this.readConfiguration(configDirPath);
 
         const missingRelationTypeErrors = ConfigurationValidation.findMissingRelationType(relations, Object.keys(builtinTypes as any));
         if (missingRelationTypeErrors.length > 0) throw missingRelationTypeErrors;
@@ -84,7 +84,7 @@ export class ConfigLoader {
 
 
     private async preprocess(configDirPath: string,
-                             libraryTypes: LibraryTypeDefinitions,
+                             libraryTypes: LibraryTypeDefinitionsMap,
                              commonFields: any,
                              builtinTypes: BuiltinTypeDefinitions,
                              relations: Array<RelationDefinition>,

@@ -15,11 +15,11 @@ export interface CustomTypeDefinition extends BaseTypeDefinition {
     color?: string,
     hidden?: string[];
     parent?: string,
-    fields: CustomFieldDefinitions;
+    fields: CustomFieldDefinitionsMap;
 }
 
 
-export type CustomFieldDefinitions = { [fieldName: string]: CustomFieldDefinition };
+export type CustomFieldDefinitionsMap = { [fieldName: string]: CustomFieldDefinition };
 
 
 export interface CustomFieldDefinition extends BaseFieldDefinition {
@@ -33,7 +33,7 @@ export interface CustomFieldDefinition extends BaseFieldDefinition {
 const VALID_FIELD_PROPERTIES = ['valuelistId', 'inputType', 'positionValues'];
 
 
-export type CustomTypeDefinitions = {[typeName: string]: CustomTypeDefinition };
+export type CustomTypeDefinitionsMap = {[typeName: string]: CustomTypeDefinition };
 
 
 export module CustomTypeDefinition {

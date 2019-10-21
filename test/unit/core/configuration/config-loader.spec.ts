@@ -1,7 +1,7 @@
 import {ConfigurationValidation} from '../../../../app/core/configuration/configuration-validation';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/configuration-definition';
 import {ConfigLoader} from '../../../../app/core/configuration/config-loader';
-import {CustomTypeDefinitions} from '../../../../app/core/configuration/model/custom-type-definition';
+import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
 import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
 
 
@@ -313,7 +313,7 @@ describe('ConfigLoader', () => {
             }
         });
 
-        const customTypes: CustomTypeDefinitions = {
+        const customTypes: CustomTypeDefinitionsMap = {
             'A': { fields: { fieldA1: { } } },
             'B': { fields: { fieldB2: { inputType: 'boolean' } } },
             'F': { fields: {} },
@@ -364,7 +364,7 @@ describe('ConfigLoader', () => {
             }
         });
 
-        const customTypes: CustomTypeDefinitions = {
+        const customTypes: CustomTypeDefinitionsMap = {
             'B:0': {
                 parent: 'Find',
                 fields: { fieldC1: { inputType: 'boolean'} }

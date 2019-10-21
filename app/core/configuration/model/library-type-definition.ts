@@ -19,10 +19,10 @@ export interface LibraryTypeDefinition extends BaseTypeDefinition {
     description: {[language: string]: string},
     createdBy: string,
     creationDate: string;
-    fields: LibraryFieldDefinitions;
+    fields: LibraryFieldDefinitionsMap;
 }
 
-export type LibraryTypeDefinitions = {[typeName: string]: LibraryTypeDefinition };
+export type LibraryTypeDefinitionsMap = { [typeName: string]: LibraryTypeDefinition };
 
 
 export interface LibraryFieldDefinition extends BaseFieldDefinition {
@@ -38,7 +38,7 @@ const VALID_FIELD_PROPERTIES = [
 ];
 
 
-export type LibraryFieldDefinitions = { [fieldName: string]: LibraryFieldDefinition };
+export type LibraryFieldDefinitionsMap = { [fieldName: string]: LibraryFieldDefinition };
 
 
 export module LibraryTypeDefinition {

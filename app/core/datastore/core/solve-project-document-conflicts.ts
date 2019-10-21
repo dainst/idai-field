@@ -73,7 +73,7 @@ const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
  * @returns 
  *   - a resolved resource 
  *   - the indices of the resources in the resources array 
- *     which have been collapsed into the resolved resource
+ *     which have been collapsed to give the resolved resource
  */
 function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, Array<ArrayIndex>] {
 

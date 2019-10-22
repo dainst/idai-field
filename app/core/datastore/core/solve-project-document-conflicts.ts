@@ -108,8 +108,8 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     const l = withoutConstantProjectFields(left);
     const r = withoutConstantProjectFields(right);
 
-    if      (isEmpty(l)) return right;
-    else if (isEmpty(r)) return left;
+    if      (isEmpty(l) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return right;
+    else if (isEmpty(r) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return left;
 
     if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
         const lCampaigns = getOnOr(CAMPAIGNS, [])(l); // TODO test if, and if not, make sure union ignores undefined. then we can get rid of  these lines
@@ -125,6 +125,8 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
 
 const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
+
+const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
 
 const NONE = undefined;
 

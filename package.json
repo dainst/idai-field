@@ -12,6 +12,8 @@
     "build-all": "npm run build && npm run build-java",
     "clean": "git clean -xdf app test",
     "convert-sass": "gulp convert-sass",
+    "reset": "npm install && npm run clean && npm run build",
+    "reset-all": "npm install && npm run clean && npm run build-all",
     "start": "electron . dev",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "pree2e": "rimraf test/e2e-screenshots/*.png",

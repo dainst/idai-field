@@ -63,7 +63,7 @@ function unifyCampaignAndStaffFields(latestResource: Resource) {
         if (resources.length === 0) return latestResource;
 
         const unifyFields = (fieldName: string) => {
-            return flow(resources, append([latestResource]), map(to(fieldName)), filter(isDefined), union);
+            return flow(resources, append([latestResource]), map(to(fieldName)), _union);
         };
 
         return flow(latestResource,
@@ -116,18 +116,15 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource):
     else if (isEmpty(r) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return left;
 
     if (equal(withoutStaffAndCampaigns(left))(withoutStaffAndCampaigns(right))) {
-        const lCampaigns = getOnOr(CAMPAIGNS, [])(left); // TODO test if, and if not, make sure union ignores undefined. then we can get rid of  these lines
-        const rCampaigns = getOnOr(CAMPAIGNS, [])(right);
-        const lStaff = getOnOr(STAFF, [])(left);
-        const rStaff = getOnOr(STAFF, [])(right);
         return flow(right,
-            assoc(STAFF, union([lStaff, rStaff])),
-            assoc(CAMPAIGNS, union([lCampaigns, rCampaigns])));
+            assoc(STAFF, _union([left[STAFF], right[STAFF]])),
+            assoc(CAMPAIGNS, _union([left[CAMPAIGNS], right[CAMPAIGNS]])));
     }
 
     return undefined;
 }
 
+const _union = compose(filter(isDefined), union);
 
 const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
 

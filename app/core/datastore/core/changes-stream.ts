@@ -62,6 +62,7 @@ export class ChangesStream {
                 }
 
                 if (isProjectDocument(document) && isConflicted(document)) {
+                    console.log('project document conflict detected');
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         () => this.onTimeout(document), Math.random() * 10000);
                 } else {
@@ -101,6 +102,8 @@ export class ChangesStream {
      */
     private async resolveConflict(document: Document): Promise<Document> {
 
+        console.log('resolve conflict', document);
+
         const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
         if (!latestRevisionDocument.resource[STAFF]) latestRevisionDocument.resource[STAFF] = [];
         if (!latestRevisionDocument.resource[CAMPAIGNS]) latestRevisionDocument.resource[CAMPAIGNS] = [];
@@ -109,6 +112,8 @@ export class ChangesStream {
         if (!conflicts) return latestRevisionDocument;          // again, to make sure other client did not solve it in that exact instant
 
         const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);
+
+        console.log('conflicted documents', conflictedDocuments);
 
         const solution = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
         return ChangesStream.shouldUpdate(solution, latestRevisionDocument)
@@ -169,6 +174,9 @@ export class ChangesStream {
 
 
     private static shouldUpdate([documentAfterConflictResolution, squashRevisionIds]: [Document, Array<RevisionId>], latestRevisionDocument: Document) {
+
+        console.log('document after conflict resolution', documentAfterConflictResolution);
+        console.log('squashRevisionIds', squashRevisionIds);
 
         return squashRevisionIds.length > 0
             // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite

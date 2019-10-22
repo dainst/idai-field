@@ -105,7 +105,7 @@
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
   },
   "Area": {
-    "constraint": ["area"]
+    "constraint": ["area", "campaign"]
   },
   "Excavation": {
     "constraint": ["isIllegal"]

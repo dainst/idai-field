@@ -3,6 +3,7 @@ import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
+import {clone} from '../../util/object-util';
 
 
 export interface IndexDefinition {
@@ -263,24 +264,34 @@ export module ConstraintIndex {
     function getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
 
         const fields: Array<FieldDefinition> =
-            (types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
-                return result.concat(type.fields);
-            }, []) as any).filter((field: FieldDefinition) => field.constraintIndexed);
+            getUniqueFields(
+                types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
+                    return result.concat(type.fields);
+                }, []) as any
+            ).filter((field: FieldDefinition) => field.constraintIndexed);
 
-        return getUniqueFields(fields);
+        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
+            fields.push({
+                name: field.name + 'End',
+                group: field.group
+            })
+        });
+
+        return fields;
     }
 
 
     function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-        return fields
-            .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
+        return clone(
+            fields.filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {
                         return resultsInSameIndexDefinition(f, field);
                     }) as FieldDefinition
                 ) === index;
-            });
+            })
+        );
     }
 
 
@@ -303,6 +314,7 @@ export module ConstraintIndex {
     function resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
 
         return field1.name === field2.name
+            && field1.constraintIndexed === field2.constraintIndexed
             && ConstraintIndex.getIndexType(field1) === ConstraintIndex.getIndexType(field2);
     }
 

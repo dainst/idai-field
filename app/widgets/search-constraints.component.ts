@@ -39,7 +39,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     protected defaultFields: Array<FieldDefinition>;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
-    private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
+    private static dropdownInputTypes: string[] = ['dropdown', 'dropdownRange', 'checkboxes', 'radio'];
 
 
     protected constructor(public searchBarComponent: SearchBarComponent,
@@ -291,12 +291,27 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private updateFields() {
 
-        this.fields = this.defaultFields.concat(this.projectConfiguration.getFieldDefinitions(this.type))
+        const fields: Array<FieldDefinition> = this.defaultFields
+            .concat(this.projectConfiguration.getFieldDefinitions(this.type))
+            .filter(field => field.constraintIndexed && this.getSearchInputType(field));
+
+        this.fields = this.configureDropdownRangeFields(fields)
             .filter(field => {
-                return field.constraintIndexed
-                    && this.getSearchInputType(field)
-                    && !this.constraintListItems.find(item => item.fieldName === field.name);
+                return !this.constraintListItems.find(item => item.fieldName === field.name);
             });
+    }
+
+
+    private configureDropdownRangeFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+
+        fields = clone(fields);
+
+        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
+            SearchConstraintsComponent.addDropdownRangeEndField(fields, field);
+            field.label = field.label + ' / ' + field.label + ' (von)';
+        });
+
+        return fields;
     }
 
 
@@ -347,10 +362,17 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField.label as string;
 
+        if (fieldName.endsWith('End')) {
+            const baseField: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
+                .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
+            if (baseField && baseField.inputType === 'dropdownRange') {
+                return baseField.label + ' (bis)';
+            }
+        }
+
         return this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => {
-                return field.name === fieldName
-            }).label;
+            .find((field: FieldDefinition) => field.name === fieldName)
+            .label;
     }
 
 
@@ -371,5 +393,19 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private static getFieldName(constraintName: string): string {
 
         return constraintName.substring(0, constraintName.indexOf(':'));
+    }
+
+
+    private static addDropdownRangeEndField(fields: Array<FieldDefinition>,
+                                            dropdownRangeField: FieldDefinition) {
+
+        fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
+            name: dropdownRangeField.name + 'End',
+            label: dropdownRangeField.label + ' (bis)',
+            group: dropdownRangeField.group,
+            inputType: 'dropdownRange',
+            valuelist: dropdownRangeField.valuelist,
+            constraintIndexed: true
+        });
     }
 }

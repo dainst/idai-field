@@ -96,7 +96,7 @@ export class ChangesStream {
      * If at least one conflict has been solved, updates the document in the database.
      *
      * @param document
-     *   - latestRevision if no conflicts found or none solved
+     *   - latestRevision if no conflicts were found or none resolved
      *   - the updated version of the document if at least one conflict has been solved
      */
     private async resolveConflict(document: Document): Promise<Document> {

@@ -126,17 +126,17 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 
 const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier', COORDINATE_REFERENCE_SYSTEM];
+export const STAFF = 'staff';
+
+export const CAMPAIGNS = 'campaigns';
+
+const constantProjectFields = ['id', 'relations', 'type', 'identifier', COORDINATE_REFERENCE_SYSTEM, CAMPAIGNS, STAFF];
 
 const NONE = undefined;
 
 const RESOURCE = 'resource';
 
 const REV_MARKER = '_rev';
-
-export const STAFF = 'staff';
-
-export const CAMPAIGNS = 'campaigns';
 
 type ArrayIndex = number;
 

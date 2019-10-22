@@ -308,16 +308,21 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
             this.addDropdownRangeEndField(fields, field);
-            field.label = field.label + ' / ' + field.label
-                + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
+            field.label = this.getDropdownRangeLabel(field);
         });
 
         return fields;
     }
 
 
-    private addDropdownRangeEndField(fields: Array<FieldDefinition>,
-                                     dropdownRangeField: FieldDefinition) {
+    private getDropdownRangeLabel(field: FieldDefinition): string {
+
+        return field.label + ' / ' + field.label
+            + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
+    }
+
+
+    private addDropdownRangeEndField(fields: Array<FieldDefinition>, dropdownRangeField: FieldDefinition) {
 
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
             name: dropdownRangeField.name + 'End',
@@ -387,9 +392,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             }
         }
 
-        return this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => field.name === fieldName)
-            .label;
+        const field: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
+            .find((field: FieldDefinition) => field.name === fieldName);
+
+        return field.inputType === 'dropdownRange'
+            ? this.getDropdownRangeLabel(field)
+            : field.label || '';
     }
 
 

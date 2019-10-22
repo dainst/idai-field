@@ -56,7 +56,8 @@ export module ConstraintIndex {
 
         const constraintIndex: ConstraintIndex = {
             showWarnings: true,
-            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}};
+            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}
+        };
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
             defaultIndexDefinitions,
@@ -236,6 +237,7 @@ export module ConstraintIndex {
 
         switch (field.inputType) {
             case 'checkboxes':
+            case 'multiInput':
                 return 'contain';
             default:
                 return 'match';

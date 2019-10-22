@@ -146,20 +146,11 @@ export module ConstraintIndex {
 
         switch(indexDefinition.type) {
             case 'exist':
-                if ((!elForPath && elForPath !== false)
-                        || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return addToIndex(
-                        constraintIndex.existIndex,
-                        doc,
-                        indexDefinition.path, 'UNKNOWN',
-                        constraintIndex.showWarnings);
-                }
-                // this is a hack to make sure the project document is never listed as conflicted and can be removed when auto conflict resolving gets implemented.
                 addToIndex(
                     constraintIndex.existIndex,
                     doc,
                     indexDefinition.path,
-                    doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN',
+                    isMissing(elForPath) ? 'UNKNOWN' : 'KNOWN',
                     constraintIndex.showWarnings);
                 break;
 
@@ -176,6 +167,13 @@ export module ConstraintIndex {
                 }
                 break;
         }
+    }
+
+
+    function isMissing(elementForPath: any): boolean {
+
+        return (!elementForPath && elementForPath !== false)
+            || (elementForPath instanceof Array && (!elementForPath.length || elementForPath.length === 0));
     }
 
 

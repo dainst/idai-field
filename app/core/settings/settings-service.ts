@@ -77,14 +77,16 @@ export class SettingsService {
         delete this.projectDocument; // making sure we start fresh
 
         try { // new
-            this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
+            this.projectDocument = await this.pouchdbManager.getDbProxy()
+                .get('project', { conflicts: true });
         } catch (_) {
             console.warn('Didn\'t find new style project document, try old method');
         }
 
         if (!this.projectDocument) {
             try { // old
-                this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
+                this.projectDocument = await this.pouchdbManager.getDbProxy()
+                    .get(this.getSelectedProject(), { conflicts: true });
             } catch (_) {
                 if (isBoot) {
                     console.warn('Didn\'t find old style project document either, creating new one');

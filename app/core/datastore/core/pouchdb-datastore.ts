@@ -258,7 +258,7 @@ export class PouchdbDatastore {
                 if (change.id.indexOf('_design') === 0) return; // starts with _design
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    ObserverUtil.notify(this.deletedObservers, {resource: {id: change.id}} as Document);
+                    ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
                     return;
                 }
 

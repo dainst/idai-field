@@ -138,7 +138,7 @@ export class AppConfigurator {
                     inputType: 'dropdown'
                 },
                 staff: {
-                    inputType: "multiInput"
+                    inputType: 'multiInput'
                 },
                 campaigns: {
                     inputType: 'multiInput'

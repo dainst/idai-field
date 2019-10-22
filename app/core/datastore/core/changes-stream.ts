@@ -63,7 +63,7 @@ export class ChangesStream {
 
                 if (isProjectDocument(document) && isConflicted(document)) {
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
-                        (document: Document) => this.onTimeout(document), Math.random() * 10000);
+                        () => this.onTimeout(document), Math.random() * 10000);
                 } else {
                     await this.welcomeDocument(document);
                 }

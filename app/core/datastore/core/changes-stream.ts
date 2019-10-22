@@ -7,13 +7,13 @@ import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
-import {UsernameProvider} from '../../settings/username-provider';
 import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
 import getConflicts = DatastoreUtil.getConflicts;
 import {ResourceId, RevisionId} from '../../../c';
+import {SettingsService} from '../../settings/settings-service';
 
 
 @Injectable()
@@ -33,14 +33,9 @@ export class ChangesStream {
     private documentsScheduledToWelcome: { [resourceId: string]: any } = {};
 
 
-    constructor(
-        private datastore: PouchdbDatastore,
-        private indexFacade: IndexFacade,
-        private documentCache: DocumentCache<Document>,
-        private typeConverter: TypeConverter<Document>,
-        private usernameProvider: UsernameProvider
-    ) {
-
+    constructor(private datastore: PouchdbDatastore, private indexFacade: IndexFacade,
+                private documentCache: DocumentCache<Document>,
+                private typeConverter: TypeConverter<Document>, private settingsService: SettingsService) {
 
         datastore.deletedNotifications().subscribe(document => {
 
@@ -48,12 +43,11 @@ export class ChangesStream {
             this.indexFacade.remove(document);
         });
 
-
         datastore.changesNotifications().subscribe(async document => {
 
             if (await ChangesStream.isRemoteChange(
                     document,
-                    this.usernameProvider.getUsername())
+                    this.settingsService.getUsername())
                 || isConflicted(document)) {
 
                 if (this.documentsScheduledToWelcome[document.resource.id]) {
@@ -130,7 +124,7 @@ export class ChangesStream {
     }
 
 
-    private welcomeDocument(document: Document) {
+    private async welcomeDocument(document: Document) {
 
         const convertedDocument = this.typeConverter.convert(document);
         this.indexFacade.put(convertedDocument);
@@ -138,6 +132,10 @@ export class ChangesStream {
         // explicitly assign by value in order for changes to be detected by angular
         if (this.documentCache.get(convertedDocument.resource.id)) {
             this.documentCache.reassign(convertedDocument);
+        }
+
+        if (document.resource.type === 'Project') {
+            await this.settingsService.loadProjectDocument();
         }
 
         ObserverUtil.notify(this.observers, convertedDocument);
@@ -152,7 +150,7 @@ export class ChangesStream {
 
             return await this.datastore.update(
                 document,
-                this.usernameProvider.getUsername(),
+                this.settingsService.getUsername(),
                 conflicts);
 
         } catch (errWithParams) {

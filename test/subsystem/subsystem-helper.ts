@@ -104,7 +104,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         createdIndexFacade,
         documentCache,
         typeConverter,
-        { getUsername: () => 'fakeuser' });
+        settingsService);
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
     stateSerializer.load.and.returnValue(Promise.resolve({}));

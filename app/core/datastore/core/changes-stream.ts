@@ -108,14 +108,12 @@ export class ChangesStream {
 
         const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);
 
-        const [documentAfterConflictResolution, squashRevisionIds] = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
-        return squashRevisionIds.length > 0
-                // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite
-                || documentAfterConflictResolution.resource[STAFF].length > latestRevisionDocument.resource[STAFF].length
-                || documentAfterConflictResolution.resource[CAMPAIGNS].length > latestRevisionDocument.resource[CAMPAIGNS].length
-            ? this.updateResolvedDocument([documentAfterConflictResolution, squashRevisionIds])
+        const solution = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
+        return ChangesStream.shouldUpdate(solution, latestRevisionDocument)
+            ? this.updateResolvedDocument(solution)
             : latestRevisionDocument;
     }
+
 
     private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {
 
@@ -165,5 +163,14 @@ export class ChangesStream {
 
         const latestAction: Action = Document.getLastModified(document);
         return latestAction && latestAction.user !== username;
+    }
+
+
+    private static shouldUpdate([documentAfterConflictResolution, squashRevisionIds]: [Document, Array<RevisionId>], latestRevisionDocument: Document) {
+
+        return squashRevisionIds.length > 0
+            // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite
+            || documentAfterConflictResolution.resource[STAFF].length > latestRevisionDocument.resource[STAFF].length
+            || documentAfterConflictResolution.resource[CAMPAIGNS].length > latestRevisionDocument.resource[CAMPAIGNS].length;
     }
 }

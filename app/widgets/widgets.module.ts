@@ -12,7 +12,7 @@ import {TypePickerComponent} from './type-picker.component';
 import {ZoomButtonsComponent} from './zoom-buttons.component';
 import {FieldsViewComponent} from './fields-view.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
-import {TypeIconComponent} from './type-icon';
+import {TypeIconComponent} from './type-icon.component';
 
 @NgModule({
     imports: [

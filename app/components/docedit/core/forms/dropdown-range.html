@@ -1,7 +1,7 @@
 <div class="dating-component">
     <div class="input-group">
         <label *ngIf="showEndElements()">
-            <span i18n="@@docedit.forms.dropdownRange.from">von</span>&nbsp;
+            <span i18n="@@docedit.forms.dropdownRange.from">von</span>
         </label>
 
 
@@ -25,8 +25,8 @@
         <!-- end -->
 
 
-        <label *ngIf="showEndElements()">
-            &nbsp;&nbsp;<span i18n="@@docedit.forms.dropdownRange.to">bis</span>&nbsp;
+        <label *ngIf="showEndElements()" class="dropdown-range-end-label">
+            <span i18n="@@docedit.forms.dropdownRange.to">bis</span>
         </label>
         <select *ngIf="showEndElements()" [disabled]="!resource[field.name] || resource[field.name] === ''"
                 [(ngModel)]="resource[field.name + 'End']" (change)="setEndValue($event.target.value)"

@@ -196,7 +196,7 @@ export class DoceditComponent {
                                     operation: 'save'|'duplicate') {
 
         try {
-            if (documentAfterSave.resource.type !== 'Project'
+            if (documentAfterSave.resource.type !== 'Project' // because it could have been solved automatically. if not we just accept that it gots shown in the taskbar as conflict then
                     && DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {

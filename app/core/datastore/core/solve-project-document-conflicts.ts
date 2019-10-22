@@ -19,13 +19,13 @@ export function solveProjectDocumentConflict(document: Document,
 
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
 
-    const [resource, revisionId] = resolve(
+    const [resource, revisionIds] = resolve(
         conflictedSortedDocuments.concat(document).map(to(RESOURCE)),
         conflictedSortedDocuments.map(to(REV_MARKER)));
 
     // this is to work with the latest changes history
     const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(document);
-    return [latestRevisionDocumentWithInsertedResultResource, revisionId];
+    return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
 
 

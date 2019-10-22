@@ -8,6 +8,8 @@ import {withDissoc} from '../../import/util';
 
 
 /**
+ * TODO review if document is not modified in place (important for cases in which no conflicts gets solved)
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

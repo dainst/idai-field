@@ -89,6 +89,14 @@ export class ChangesStream {
     }
 
 
+    /**
+     * Fetches the latestRevision of the document and tries to solve detected conflicts.
+     * If at least one conflict has been solved, updates the document in the database.
+     *
+     * @param document
+     *   - latestRevision if no conflicts found or none solved
+     *   - the updated version of the document if at least one conflict has been solved
+     */
     private async resolveConflict(document: Document): Promise<Document> {
 
         const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
@@ -97,8 +105,11 @@ export class ChangesStream {
         if (!conflicts) return latestRevisionDocument;          // again, to make sure other client did not solve it in that exact instant
 
         const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);
-        return this.updateResolvedDocument(
-                solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments));
+
+        const [documentAfterConflictResolution, squashRevisionIds] = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
+        return squashRevisionIds.length > 0
+            ? this.updateResolvedDocument([documentAfterConflictResolution, squashRevisionIds])
+            : latestRevisionDocument;
     }
 
     private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {

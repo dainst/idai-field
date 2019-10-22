@@ -24,8 +24,12 @@ export function solveProjectDocumentConflict(document: Document,
         document.resource,
         conflictedSortedDocuments.map(to(REV_MARKER)));
 
+    if (resource[STAFF] && resource[STAFF].length === 0) delete resource[STAFF];
+    if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
+
     // this is to work with the latest changes history
     const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(document);
+
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
 

@@ -56,6 +56,18 @@
   "Room": {
     "constraint": ["processor", "campaign", "condition", "conditionAmount"]
   },
+  "RoomCeiling": {
+    "constraint": ["area", "processor", "campaign", "diary"]
+  },
+  "RoomFloor": {
+    "constraint": ["area", "processor", "campaign", "diary"]
+  },
+  "RoomWall": {
+    "constraint": ["processor", "campaign", "diary"]
+  },
+  "BuildingPart": {
+    "constraint": ["processor", "campaign"]
+  },
   "ProcessUnit": {
     "constraint": ["processor", "operationClassification"]
   },

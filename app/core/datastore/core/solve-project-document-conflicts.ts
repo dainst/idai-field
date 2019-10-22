@@ -1,9 +1,9 @@
 import {assoc, to, lookup, flow, map, filter, isDefined, union, equal,
-    isEmpty, getOnOr, compose, dissoc} from 'tsfun';
+    isEmpty, getOnOr, compose, dissoc, append} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {RevisionId} from '../../../c';
-import {dissocIndices, last, penultimate, replaceLast, replaceLastPair, ultimate} from './helpers';
+import {dissocIndices, penultimate, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
 
 
@@ -20,7 +20,8 @@ export function solveProjectDocumentConflict(document: Document,
     const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
 
     const [resource, revisionIds] = resolve(
-        conflictedSortedDocuments.concat(document).map(to(RESOURCE)),
+        conflictedSortedDocuments.map(to(RESOURCE)),
+        document.resource,
         conflictedSortedDocuments.map(to(REV_MARKER)));
 
     // this is to work with the latest changes history
@@ -29,18 +30,18 @@ export function solveProjectDocumentConflict(document: Document,
 }
 
 
-function resolve(resources: Array<Resource>, conflicts: RevisionId[]): [Resource, RevisionId[]] {
+function resolve(resources: Array<Resource>, latestRevisionResource: Resource, conflicts: RevisionId[]): [Resource, RevisionId[]] {
 
-    const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources);
+    const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources, latestRevisionResource);
 
     return [
         flow(
             resources,
             dissocIndices(indicesOfResolvedResources.sort()),
-            replaceLast(resolvedResource),
-            crunch) as Resource
-
-        , indicesOfResolvedResources.map(lookup(conflicts)) as RevisionId[]];
+            unifyCampaignAndStaffFields(resolvedResource)
+        ) as Resource,
+        indicesOfResolvedResources.map(lookup(conflicts)) as RevisionId[]
+    ];
 }
 
 
@@ -49,37 +50,41 @@ function resolve(resources: Array<Resource>, conflicts: RevisionId[]): [Resource
  * Apart from that, the resource returned is a copy of the rightmost
  * resource of resources.
  *
- * @param resources
- *   expected to be of at least length 1.
+ * @param latestResource
  */
-function crunch(resources: Array<Resource>): Resource {
+function unifyCampaignAndStaffFields(latestResource: Resource) {
 
-    if (resources.length === 0) throw 'FATAL - illegal argument - resources must have length 1';
-    if (resources.length === 1) return resources[0];
+    return(resources: Array<Resource>): Resource => {
 
-    const staffUnion = flow(resources, map(to(STAFF)), filter(isDefined),  union);
-    const campaignsUnion = flow(resources, map(to(CAMPAIGNS)), filter(isDefined),  union);
-    return flow(resources,
-        last,
-        assoc(STAFF, staffUnion),
-        assoc(CAMPAIGNS, campaignsUnion));
+        if (resources.length === 0) return latestResource;
+
+        const unifyFields = (fieldName: string) => {
+            return flow(resources, append([latestResource]), map(to(fieldName)), filter(isDefined), union);
+        };
+
+        return flow(latestResource,
+            assoc(STAFF, unifyFields(STAFF)),
+            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)));
+    }
 }
 
 
 /**
- * @param resources ordered by time ascending
- *   expected to be of at least length 2.
+ * @param conflictedResources ordered by time ascending
+ *   expected to be of minimum length 1
  *
- * @returns 
- *   - a resolved resource 
- *   - the indices of the resources in the resources array 
+ * @param latestResource
+ * @returns
+ *   - a resolved resource
+ *   - the indices of the resources in the resources array
  *     which have been collapsed to give the resolved resource
  */
-function solveProjectResourceConflicts(resources: Array<Resource>): [Resource, Array<ArrayIndex>] {
+function solveProjectResourceConflicts(conflictedResources: Array<Resource>,
+                                       latestResource: Resource): [Resource, Array<ArrayIndex>] {
 
-    if (resources.length < 2) throw 'FATAL - illegal argument - resources must have length 2';
+    if (conflictedResources.length < 1) throw 'FATAL - illegal argument - resources must be of minimum length 1';
 
-    const [[resource], indicesOfUsedResources] = collapse(resources);
+    const [[resource], indicesOfUsedResources] = collapse(conflictedResources.concat([latestResource]));
     return [resource, indicesOfUsedResources.reverse()];
 }
 

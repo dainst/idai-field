@@ -24,7 +24,7 @@
     "constraint": ["findingPlace", "hasGrouting", "layerAmount", "layerHeight", "blockProcessing", "blockTreatment", "brickwork", "condition", "conditionAmount", "construction", "mark", "mortarBinder", "mortarColor", "mortarConsistency", "orientation", "wallClassification", "wallType"]
   },
   "Operation": {
-    "constraint": ["processor", "supervisor", "campaign"]
+    "constraint": ["area", "processor", "supervisor", "campaign"]
   },
   "Place": {
     "constraint": ["gazId", "placeName", "ancient", "findspotClassification", "siteClassification"]
@@ -33,7 +33,7 @@
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]
   },
   "Feature": {
-    "constraint": ["diary", "hasDisturbance", "featureAmount", "processor", "campaign", "color", "featureBorders", "featureForm"]
+    "constraint": ["diary", "hasDisturbance", "featureAmount", "area", "processor", "campaign", "color", "featureBorders", "featureForm"]
   },
   "Floor": {
     "constraint": ["condition", "conditionAmount", "consistency", "distinguishingCriteria", "floorClassification", "layerClassification", "mortarBinder"]
@@ -54,7 +54,7 @@
     "constraint": ["biologicalAge", "boneClassification", "boneType", "burningGrade", "sex", "objectType", "species"]
   },
   "Room": {
-    "constraint": ["processor", "campaign", "condition", "conditionAmount"]
+    "constraint": ["area", "processor", "campaign", "condition", "conditionAmount"]
   },
   "RoomCeiling": {
     "constraint": ["area", "processor", "campaign", "diary"]

@@ -96,7 +96,7 @@
     "constraint": ["sketched", "hasRestoration", "drawn", "photographed", "hasRestoration", "amount", "catalogueNumber", "processor", "campaign", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
   },
   "PlasterFragment": {
-    "constraint": ["hasDecoration", "color", "plasterComponents"]
+    "constraint": ["area", "hasDecoration", "color", "plasterComponents"]
   },
   "Profile": {
     "constraint": ["orientation"]

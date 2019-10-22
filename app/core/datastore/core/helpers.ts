@@ -1,10 +1,4 @@
-import {append, compose, dropRight, flow, takeRight, to, take, drop, cond, len, is, val} from 'tsfun';
-
-
-export function replaceLast<A>(replacement: A){ return (as: Array<A>): Array<A> => {
-
-    return replaceRight(as, 1, replacement);
-}}
+import {append, compose, dropRight, flow, takeRight, to, take, drop, cond, len, is, val, last, first} from 'tsfun';
 
 
 export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {
@@ -15,11 +9,8 @@ export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {
 
 function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): Array<A> {
 
-    return flow(as, dropRight(itemsToReplace), append([replacement]));
+    return flow(as, dropRight(itemsToReplace), append(replacement));
 }
-
-
-export const last = compose(takeRight(1), to('[0]'));
 
 
 const lengthIs2 = compose(len, is(2));
@@ -30,9 +21,8 @@ const lengthIs2 = compose(len, is(2));
  */
 export const penultimate = compose(
     takeRight(2),
-    cond(
-        lengthIs2,
-        to('[0]'), // TODO make 'first' function
+    cond(lengthIs2,
+        first,
         val(undefined)));
 
 

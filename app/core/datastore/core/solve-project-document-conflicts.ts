@@ -64,7 +64,7 @@ function unifyCampaignAndStaffFields(latestResource: Resource) {
         if (resources.length === 0) return latestResource;
 
         const unifyFields = (fieldName: string) => {
-            return flow(resources, append([latestResource]), map(to(fieldName)), union);
+            return flow(resources, append(latestResource), map(to(fieldName)), union);
         };
 
         return flow(latestResource,

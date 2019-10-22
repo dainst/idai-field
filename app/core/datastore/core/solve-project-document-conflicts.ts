@@ -124,7 +124,7 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
 }
 
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier'];
+const constantProjectFields = ['id', 'relations', 'type', 'identifier', 'coordinateReferenceSystem'];
 
 const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
 

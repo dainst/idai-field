@@ -196,7 +196,8 @@ export class DoceditComponent {
                                     operation: 'save'|'duplicate') {
 
         try {
-            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
+            if (documentAfterSave.resource.type !== 'Project'
+                    && DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
                 await this.closeModalAfterSave(documentAfterSave.resource.id, operation);
@@ -348,7 +349,7 @@ export class DoceditComponent {
     private static detectSaveConflicts(documentBeforeSave: Document, documentAfterSave: Document): boolean {
 
         const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
-        const conflictsAfterSave: string[] =  (documentAfterSave as any)['_conflicts'];
+        const conflictsAfterSave: string[] = (documentAfterSave as any)['_conflicts'];
 
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;

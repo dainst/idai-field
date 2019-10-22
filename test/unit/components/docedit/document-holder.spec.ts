@@ -59,6 +59,7 @@ describe('DocumentHolder', () => {
         });
 
         defaultDocument = {
+            _id: '1',
             resource: {
                 type: 'Trench',
                 id: '1',
@@ -156,6 +157,7 @@ describe('DocumentHolder', () => {
     xit('throw exception if isRecordedIn relation is missing', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',
@@ -182,6 +184,7 @@ describe('DocumentHolder', () => {
     it('do not throw exception if isRecordedIn relation is found', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',
@@ -209,6 +212,7 @@ describe('DocumentHolder', () => {
     it('do not throw exception if no isRecordedIn relation is expected', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Trench',
                 id: '1',
@@ -234,6 +238,7 @@ describe('DocumentHolder', () => {
     it('convert strings to numbers for int & float fields', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',

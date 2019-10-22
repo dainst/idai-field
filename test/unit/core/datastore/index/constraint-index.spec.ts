@@ -28,6 +28,7 @@ describe('ConstraintIndexer', () => {
     function doc(id: string, type: string = 'type'): Document {
 
         return {
+            _id: id,
             resource: {
                 id: id,
                 identifier: 'identifier' + id,

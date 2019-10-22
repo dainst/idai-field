@@ -36,8 +36,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisions.find((revision: any) => revision['_rev'] === revisionId)) {
+        for (let revisionId of (this.document as any)._conflicts) {
+            if (this.inspectedRevisions.find((revision: any) => revision._rev === revisionId)) {
                 continue;
             }
 

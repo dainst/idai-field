@@ -8,6 +8,7 @@ describe('DatastoreUtil', () => {
     it('sort revisions', () => {
 
         const one: Document = {
+            _id: '1',
             created: { user: '', date: new Date('2018') },
             modified: [],
             resource: {
@@ -19,6 +20,7 @@ describe('DatastoreUtil', () => {
         };
 
         const two: Document = {
+            _id: '1',
             created: { user: '', date: new Date('2019') },
             modified: [],
             resource: {
@@ -30,6 +32,7 @@ describe('DatastoreUtil', () => {
         };
 
         const three: Document = {
+            _id: '1',
             created: { user: '', date: new Date('2020') },
             modified: [],
             resource: {

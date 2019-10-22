@@ -348,8 +348,8 @@ export class DoceditComponent {
 
     private static detectSaveConflicts(documentBeforeSave: Document, documentAfterSave: Document): boolean {
 
-        const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
-        const conflictsAfterSave: string[] = (documentAfterSave as any)['_conflicts'];
+        const conflictsBeforeSave: string[] = documentBeforeSave._conflicts as string[];
+        const conflictsAfterSave: string[] = documentAfterSave._conflicts as string[];
 
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;

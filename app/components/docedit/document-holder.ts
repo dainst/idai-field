@@ -122,8 +122,8 @@ export class DocumentHolder {
 
         // make the doc appear 'new' ...
         delete this.clonedDocument.resource.id; // ... for persistenceManager
-        delete (this.clonedDocument as any)['_id'];      // ... for pouchdbdatastore
-        delete (this.clonedDocument as any)['_rev'];
+        delete this.clonedDocument._id;      // ... for pouchdbdatastore
+        delete this.clonedDocument._rev;
     }
 
 

@@ -8,7 +8,7 @@ import {DocumentMerge} from '../../../../../app/core/import/exec/process/documen
 describe('DocumentMerge', () => {
 
     const target: Document = {
-
+        _id: 'id1',
         modified: [],
         created: undefined,
         resource: {
@@ -25,7 +25,7 @@ describe('DocumentMerge', () => {
     it('overwrite fields', () => {
 
         const source = {
-
+            _id: 'id1',
             modified: [],
             created: undefined,
             resource: {
@@ -47,7 +47,7 @@ describe('DocumentMerge', () => {
     it('dont overwrite identifier, id, relations', () => {
 
         const source = {
-
+            _id: 'id2',
             modified: [],
             created: undefined,
             resource: {

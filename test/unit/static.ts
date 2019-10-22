@@ -26,9 +26,10 @@ export class Static {
 
         if (!identifier) identifier = 'identifer';
         if (!type) type = 'Find';
-        const doc = {
+        const doc: Document = {
+            _id: 'A',
             resource : {
-                id: "A",
+                id: 'A',
                 shortDescription: sd,
                 identifier: identifier,
                 title: 'title',
@@ -47,9 +48,9 @@ export class Static {
             ]
         };
         if (id) {
-            doc['_id'] = id;
-            doc.resource['id'] = id;
-        } else delete doc.resource['id'];
+            doc._id = id;
+            doc.resource.id = id;
+        } else delete doc.resource.id;
         return doc as Document;
     }
 }

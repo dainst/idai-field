@@ -8,6 +8,7 @@ describe('solveProjectDocumentConflict', () => {
     it('2 identical resources', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -17,9 +18,10 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1'];
+        current._conflicts = ['c1'];
 
-        const conflictedDocs = [{
+        const conflictedDocs: Array<Document> = [{
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -29,7 +31,7 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             },
             '_rev': 'c1'
-        } as Document];
+        }];
 
         const result = solveProjectDocumentConflict(
             current,
@@ -43,6 +45,7 @@ describe('solveProjectDocumentConflict', () => {
     it('current is empty', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -51,10 +54,10 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1'];
+        current._conflicts = ['c1'];
 
-        const conflictedDocs = [{
-
+        const conflictedDocs: Array<Document> = [{
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -63,9 +66,9 @@ describe('solveProjectDocumentConflict', () => {
                 aField: 'aValue',
                 relations: {}
             },
-            '_rev': 'c1'
+            _rev: 'c1'
 
-        } as Document];
+        }];
 
         const result = solveProjectDocumentConflict(
             current,
@@ -79,6 +82,7 @@ describe('solveProjectDocumentConflict', () => {
     it('conflicted is empty', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -88,10 +92,10 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1'];
+        current._conflicts = ['c1'];
 
-        const conflictedDocs = [{
-
+        const conflictedDocs: Array<Document> = [{
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -99,8 +103,8 @@ describe('solveProjectDocumentConflict', () => {
                 type: 'Object',
                 relations: {}
             },
-            '_rev': 'c1'
-        } as Document];
+            _rev: 'c1'
+        }];
 
         const result = solveProjectDocumentConflict(
             current,
@@ -114,6 +118,7 @@ describe('solveProjectDocumentConflict', () => {
     it('solve rightmost 2 of 3 - thereby unify staff', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -123,11 +128,12 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
+        current._conflicts = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs = [
+        const conflictedDocs: Array<Document> = [
 
             {
+                _id: '1',
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -138,6 +144,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -148,6 +155,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -159,9 +167,9 @@ describe('solveProjectDocumentConflict', () => {
             }
         ];
 
-        conflictedDocs[0]['_rev'] = 'c1';
-        conflictedDocs[1]['_rev'] = 'c2';
-        conflictedDocs[2]['_rev'] = 'c3';
+        conflictedDocs[0]._rev = 'c1';
+        conflictedDocs[1]._rev = 'c2';
+        conflictedDocs[2]._rev = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
@@ -175,6 +183,7 @@ describe('solveProjectDocumentConflict', () => {
     it('solve c1 and c3 - thereby unify campaigns', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -184,11 +193,11 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
+        current._conflicts = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs = [
-
+        const conflictedDocs: Array<Document> = [
             {
+                _id: '1',
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -199,30 +208,32 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
                     id: '1',
                     type: 'Object',
                     aField: 'aValue',
-                    relations: {}
+                    relations: { }
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
                     id: '1',
                     type: 'Object',
                     campaigns: ['3'],
-                    relations: {}
+                    relations: { }
                 }
             }
         ];
 
-        conflictedDocs[0]['_rev'] = 'c1';
-        conflictedDocs[1]['_rev'] = 'c2';
-        conflictedDocs[2]['_rev'] = 'c3';
+        conflictedDocs[0]._rev = 'c1';
+        conflictedDocs[1]._rev = 'c2';
+        conflictedDocs[2]._rev = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
@@ -236,6 +247,7 @@ describe('solveProjectDocumentConflict', () => {
     it('solve all', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -244,11 +256,11 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
+        current._conflicts = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs = [
-
+        const conflictedDocs: Array<Document> = [
             {
+                _id: '1',
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -258,6 +270,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -267,6 +280,7 @@ describe('solveProjectDocumentConflict', () => {
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -277,9 +291,9 @@ describe('solveProjectDocumentConflict', () => {
             }
         ];
 
-        conflictedDocs[0]['_rev'] = 'c1';
-        conflictedDocs[1]['_rev'] = 'c2';
-        conflictedDocs[2]['_rev'] = 'c3';
+        conflictedDocs[0]._rev = 'c1';
+        conflictedDocs[1]._rev = 'c2';
+        conflictedDocs[2]._rev = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,
@@ -292,6 +306,7 @@ describe('solveProjectDocumentConflict', () => {
     it('crush after unsuccesful resolution', () => {
 
         const current: Document = {
+            _id: '1',
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
@@ -301,11 +316,11 @@ describe('solveProjectDocumentConflict', () => {
                 relations: {}
             }
         };
-        (current as any)['_conflicts'] = ['c1', 'c2', 'c3'];
+        current._conflicts = ['c1', 'c2', 'c3'];
 
-        const conflictedDocs = [
-
+        const conflictedDocs: Array<Document> = [
             {
+                _id: '1',
                 created: { user: '', date: new Date('2017') },
                 modified: [],
                 resource: {
@@ -313,10 +328,11 @@ describe('solveProjectDocumentConflict', () => {
                     type: 'Object',
                     campaigns: ['1', '3'],
                     aField: 'aValue2',
-                    relations: {}
+                    relations: { }
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2018') },
                 modified: [],
                 resource: {
@@ -324,10 +340,11 @@ describe('solveProjectDocumentConflict', () => {
                     campaigns: ['1', '2'],
                     type: 'Object',
                     aField: 'aValue2',
-                    relations: {}
+                    relations: { }
                 }
             },
             {
+                _id: '1',
                 created: { user: '', date: new Date('2019') },
                 modified: [],
                 resource: {
@@ -335,14 +352,14 @@ describe('solveProjectDocumentConflict', () => {
                     type: 'Object',
                     campaigns: ['2', '3'],
                     aField: 'aValue3',
-                    relations: {}
+                    relations: { }
                 }
             }
         ];
 
-        conflictedDocs[0]['_rev'] = 'c1';
-        conflictedDocs[1]['_rev'] = 'c2';
-        conflictedDocs[2]['_rev'] = 'c3';
+        conflictedDocs[0]._rev = 'c1';
+        conflictedDocs[1]._rev = 'c2';
+        conflictedDocs[2]._rev = 'c3';
 
         const result = solveProjectDocumentConflict(
             current,

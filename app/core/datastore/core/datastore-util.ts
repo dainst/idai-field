@@ -24,7 +24,7 @@ export module DatastoreUtil {
      */
     export function getConflicts(document: Document): string[]|undefined {
 
-        return (document as any)['_conflicts'];
+        return document._conflicts;
     }
 
 

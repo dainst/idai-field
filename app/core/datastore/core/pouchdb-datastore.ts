@@ -136,8 +136,8 @@ export class PouchdbDatastore {
         const fetchedDocument = await this.fetch(
             document.resource.id, { conflicts: true }, true) as any;
 
-        if (fetchedDocument['_conflicts'] && fetchedDocument['_conflicts'].length > 0) {
-            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument['_conflicts']);
+        if (fetchedDocument._conflicts && fetchedDocument._conflicts.length > 0) {
+            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument._conflicts);
         }
 
         try {

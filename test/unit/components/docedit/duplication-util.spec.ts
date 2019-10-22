@@ -24,6 +24,7 @@ describe('DuplicationUtil', () => {
     it('do not include non-hierarchy relations, id and geometry in template', () => {
 
         const document: Document = {
+            _id: 't1',
             resource: {
                 id: 't1',
                 identifier: 'test1',

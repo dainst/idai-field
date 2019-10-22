@@ -16,6 +16,7 @@ describe('ChangeHistoryMerge', () => {
     beforeEach(() => {
 
         document1Revision1 = {
+            _id: 'id1',
             resource: {
                 id: 'id1',
                 type: 'Object',
@@ -40,6 +41,7 @@ describe('ChangeHistoryMerge', () => {
         };
 
         document1Revision2 = {
+            _id: 'id1',
             resource: {
                 id: 'id1',
                 type: 'Object',
@@ -67,6 +69,7 @@ describe('ChangeHistoryMerge', () => {
         };
 
         document1Revision3 = {
+            _id: 'id1',
             resource: {
                 id: 'id1',
                 type: 'Object',
@@ -88,6 +91,7 @@ describe('ChangeHistoryMerge', () => {
         };
 
         document2Revision1 = {
+            _id: 'id2',
             resource: {
                 id: 'id2',
                 type: 'Object',
@@ -106,6 +110,7 @@ describe('ChangeHistoryMerge', () => {
         };
 
         document2Revision2 = {
+            _id: 'id2',
             resource: {
                 id: 'id2',
                 type: 'Object',

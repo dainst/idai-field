@@ -11,7 +11,7 @@ import {UsernameProvider} from '../../settings/username-provider';
 import {DatastoreUtil} from './datastore-util';
 import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
-import {solveProjectDocumentConflict} from './solve-project-document-conflicts';
+import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
 import getConflicts = DatastoreUtil.getConflicts;
 import {ResourceId, RevisionId} from '../../../c';
 
@@ -100,6 +100,8 @@ export class ChangesStream {
     private async resolveConflict(document: Document): Promise<Document> {
 
         const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
+        if (!latestRevisionDocument.resource[STAFF]) latestRevisionDocument.resource[STAFF] = [];
+        if (!latestRevisionDocument.resource[CAMPAIGNS]) latestRevisionDocument.resource[CAMPAIGNS] = [];
 
         const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return latestRevisionDocument;          // again, to make sure other client did not solve it in that exact instant
@@ -108,6 +110,9 @@ export class ChangesStream {
 
         const [documentAfterConflictResolution, squashRevisionIds] = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
         return squashRevisionIds.length > 0
+                // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite
+                || documentAfterConflictResolution.resource[STAFF].length > latestRevisionDocument.resource[STAFF].length
+                || documentAfterConflictResolution.resource[CAMPAIGNS].length > latestRevisionDocument.resource[CAMPAIGNS].length
             ? this.updateResolvedDocument([documentAfterConflictResolution, squashRevisionIds])
             : latestRevisionDocument;
     }
@@ -135,6 +140,8 @@ export class ChangesStream {
 
 
     private async updateResolvedDocument([document, conflicts]: [Document, Array<string>]): Promise<Document> {
+
+        console.log("update", document);
 
         try {
 

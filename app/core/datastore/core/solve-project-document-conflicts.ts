@@ -1,5 +1,5 @@
-import {assoc, to, lookup, flow, map, filter, isDefined, union, equal,
-    isEmpty, getOnOr, compose, dissoc, append} from 'tsfun';
+import {assoc, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
+    isEmpty, compose, dissoc, append} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
 import {RevisionId} from '../../../c';
@@ -63,7 +63,7 @@ function unifyCampaignAndStaffFields(latestResource: Resource) {
         if (resources.length === 0) return latestResource;
 
         const unifyFields = (fieldName: string) => {
-            return flow(resources, append([latestResource]), map(to(fieldName)), _union);
+            return flow(resources, append([latestResource]), map(to(fieldName)), union);
         };
 
         return flow(latestResource,
@@ -117,14 +117,14 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource):
 
     if (equal(withoutStaffAndCampaigns(left))(withoutStaffAndCampaigns(right))) {
         return flow(right,
-            assoc(STAFF, _union([left[STAFF], right[STAFF]])),
-            assoc(CAMPAIGNS, _union([left[CAMPAIGNS], right[CAMPAIGNS]])));
+            assoc(STAFF, union([left[STAFF], right[STAFF]])),
+            assoc(CAMPAIGNS, union([left[CAMPAIGNS], right[CAMPAIGNS]])));
     }
 
     return undefined;
 }
 
-const _union = compose(filter(isDefined), union);
+const union = compose(filter(isDefined), tsfunUnion);
 
 const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
 

@@ -307,11 +307,27 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         fields = clone(fields);
 
         fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
-            SearchConstraintsComponent.addDropdownRangeEndField(fields, field);
-            field.label = field.label + ' / ' + field.label + ' (von)';
+            this.addDropdownRangeEndField(fields, field);
+            field.label = field.label + ' / ' + field.label
+                + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
         });
 
         return fields;
+    }
+
+
+    private addDropdownRangeEndField(fields: Array<FieldDefinition>,
+                                     dropdownRangeField: FieldDefinition) {
+
+        fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
+            name: dropdownRangeField.name + 'End',
+            label: dropdownRangeField.label
+                + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' }),
+            group: dropdownRangeField.group,
+            inputType: 'dropdownRange',
+            valuelist: dropdownRangeField.valuelist,
+            constraintIndexed: true
+        });
     }
 
 
@@ -366,7 +382,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             const baseField: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
                 .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
             if (baseField && baseField.inputType === 'dropdownRange') {
-                return baseField.label + ' (bis)';
+                return baseField.label
+                    + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
             }
         }
 
@@ -393,19 +410,5 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private static getFieldName(constraintName: string): string {
 
         return constraintName.substring(0, constraintName.indexOf(':'));
-    }
-
-
-    private static addDropdownRangeEndField(fields: Array<FieldDefinition>,
-                                            dropdownRangeField: FieldDefinition) {
-
-        fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
-            name: dropdownRangeField.name + 'End',
-            label: dropdownRangeField.label + ' (bis)',
-            group: dropdownRangeField.group,
-            inputType: 'dropdownRange',
-            valuelist: dropdownRangeField.valuelist,
-            constraintIndexed: true
-        });
     }
 }

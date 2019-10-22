@@ -1020,6 +1020,26 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="searchConstraints.dropdownRange.from" datatype="html">
+        <source> (von)</source>
+        <target state="final"> (von)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchConstraints.dropdownRange.to" datatype="html">
+        <source> (bis)</source>
+        <target state="final"> (bis)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.defaultFields.type" datatype="html">
         <source>Typ</source>
         <target state="final">Typ</target>
@@ -2330,7 +2350,7 @@
         Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/outliers.html</context>
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/outliers.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -2341,11 +2361,11 @@
         <target state="final">
     Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
 </target>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/empty-valuelist-info.html</context>
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">1</context>
         </context-group>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
       </trans-unit>
       <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
         <source>
@@ -2356,11 +2376,11 @@
     Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten
     (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
 </target>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.projectDocumentField</note>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/empty-valuelist-info.html</context>
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.projectDocumentField</note>
       </trans-unit>
       <trans-unit id="175491c173cba82a8e28fc5aa08c7fcef82b7df7" datatype="html">
         <source>
@@ -2371,11 +2391,11 @@
     Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource
     nicht ausgefüllt ist.
 </target>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.parent</note>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/empty-valuelist-info.html</context>
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
-        <note priority="1" from="description">docedit.forms.missingValuelistInfo.parent</note>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
         <source>v. Chr.</source>

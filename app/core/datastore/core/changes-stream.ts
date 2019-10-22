@@ -142,7 +142,7 @@ export class ChangesStream {
     }
 
 
-    private async updateResolvedDocument([document, conflicts]: [Document, Array<string>]): Promise<Document> {
+    private async updateResolvedDocument([document, conflicts]: [Document, Array<RevisionId>]): Promise<Document> {
 
         console.log("update", document);
 

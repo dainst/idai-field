@@ -95,13 +95,13 @@ function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<Arra
     if (resources.length < 2) return [resources, indicesOfUsedResources];
 
     const resolved = solveConflictBetween2ProjectDocuments(penultimate(resources), ultimate(resources));
-    return resolved !== NONE
+    return resolved !== undefined
         ? collapse(replaceLastPair(resources, resolved), indicesOfUsedResources.concat(resources.length - 2))
         : collapse(replaceLastPair(resources, ultimate(resources)), indicesOfUsedResources);
 }
 
 
-function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) {
+function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource): Resource|undefined {
 
     if (equal(left)(right)) return left;
 
@@ -111,16 +111,17 @@ function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource) 
     if      (isEmpty(l) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return right;
     else if (isEmpty(r) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return left;
 
-    if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
-        const lCampaigns = getOnOr(CAMPAIGNS, [])(l); // TODO test if, and if not, make sure union ignores undefined. then we can get rid of  these lines
-        const rCampaigns = getOnOr(CAMPAIGNS, [])(r);
-        const lStaff = getOnOr(STAFF, [])(l);
-        const rStaff = getOnOr(STAFF, [])(r);
-        return flow(left,
+    if (equal(withoutStaffAndCampaigns(left))(withoutStaffAndCampaigns(right))) {
+        const lCampaigns = getOnOr(CAMPAIGNS, [])(left); // TODO test if, and if not, make sure union ignores undefined. then we can get rid of  these lines
+        const rCampaigns = getOnOr(CAMPAIGNS, [])(right);
+        const lStaff = getOnOr(STAFF, [])(left);
+        const rStaff = getOnOr(STAFF, [])(right);
+        return flow(right,
             assoc(STAFF, union([lStaff, rStaff])),
             assoc(CAMPAIGNS, union([lCampaigns, rCampaigns])));
     }
-    return NONE;
+
+    return undefined;
 }
 
 
@@ -130,9 +131,7 @@ export const STAFF = 'staff';
 
 export const CAMPAIGNS = 'campaigns';
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier', COORDINATE_REFERENCE_SYSTEM, CAMPAIGNS, STAFF];
-
-const NONE = undefined;
+const constantProjectFields = ['id', 'relations', 'type', 'identifier', COORDINATE_REFERENCE_SYSTEM];
 
 const RESOURCE = 'resource';
 

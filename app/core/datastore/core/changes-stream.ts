@@ -96,23 +96,19 @@ export class ChangesStream {
      */
     private async resolveConflict(document: Document): Promise<Document> {
 
-        console.log('resolve conflict', document);
+        const latestRevision = await this.datastore.fetch(document.resource.id);
+        if (!latestRevision.resource[STAFF]) latestRevision.resource[STAFF] = [];
+        if (!latestRevision.resource[CAMPAIGNS]) latestRevision.resource[CAMPAIGNS] = [];
 
-        const latestRevisionDocument = await this.datastore.fetch(document.resource.id);
-        if (!latestRevisionDocument.resource[STAFF]) latestRevisionDocument.resource[STAFF] = [];
-        if (!latestRevisionDocument.resource[CAMPAIGNS]) latestRevisionDocument.resource[CAMPAIGNS] = [];
-
-        const conflicts = getConflicts(latestRevisionDocument); // fetch again, to make sure it is up to date after the timeout
-        if (!conflicts) return latestRevisionDocument;          // again, to make sure other client did not solve it in that exact instant
+        const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
+        if (!conflicts) return latestRevision;          // again, to make sure other client did not solve it in that exact instant
 
         const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);
 
-        console.log('conflicted documents', conflictedDocuments);
-
-        const solution = solveProjectDocumentConflict(latestRevisionDocument, conflictedDocuments);
-        return ChangesStream.shouldUpdate(solution, latestRevisionDocument)
+        const solution = solveProjectDocumentConflict(latestRevision, conflictedDocuments);
+        return ChangesStream.shouldUpdate(solution, latestRevision)
             ? this.updateResolvedDocument(solution)
-            : latestRevisionDocument;
+            : latestRevision;
     }
 
 

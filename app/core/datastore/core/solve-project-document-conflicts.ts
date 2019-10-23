@@ -13,61 +13,61 @@ import {withDissoc} from '../../import/util';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function solveProjectDocumentConflict(document: Document,
-                                             conflictedDocuments: Array<Document>)
+export function solveProjectDocumentConflict(latestRevision: Document,
+                                             conflictedRevisions: Array<Document>)
         : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
-    const conflictedSortedDocuments = DatastoreUtil.sortRevisionsByLastModified(conflictedDocuments);
+    const conflictedSortedRevisions = DatastoreUtil.sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(
-        conflictedSortedDocuments.map(to(RESOURCE)),
-        document.resource,
-        conflictedSortedDocuments.map(to(REV_MARKER)));
+        conflictedSortedRevisions.map(to(RESOURCE)),
+        latestRevision.resource,
+        conflictedSortedRevisions.map(to(REV_MARKER)));
 
     if (resource[STAFF] && resource[STAFF].length === 0) delete resource[STAFF];
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(document);
+    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(latestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
 
 
-function resolve(resources: Array<Resource>, latestRevisionResource: Resource,
+function resolve(conflictedRevisions: Array<Resource>, latestRevision: Resource,
                  conflicts: RevisionId[]): [Resource, RevisionId[]] {
 
-    const [resolvedResource, indicesOfResolvedResources] = solveProjectResourceConflicts(resources, latestRevisionResource);
+    const [resolvedResource, indicesOfResolvedRevisions]
+        = solveProjectResourceConflicts(conflictedRevisions, latestRevision);
 
     return [
         flow(
-            resources,
-            dissocIndices(indicesOfResolvedResources.sort()),
+            conflictedRevisions,
+            dissocIndices(indicesOfResolvedRevisions.sort()),
             unifyCampaignAndStaffFields(resolvedResource)
         ) as Resource,
-        indicesOfResolvedResources.map(lookup(conflicts)) as RevisionId[]
+        indicesOfResolvedRevisions.map(lookup(conflicts)) as RevisionId[]
     ];
 }
 
 
 /**
- * Unifies the STAFF and CAMPAIGN fields of all the resources.
- * Apart from that, the resource returned is a copy of the rightmost
- * resource of resources.
+ * Unifies the STAFF and CAMPAIGN fields of all the revisions.
+ * Apart from that, the latest revision is returned.
  *
- * @param latestResource
+ * @param latestRevision
  */
-function unifyCampaignAndStaffFields(latestResource: Resource) {
+function unifyCampaignAndStaffFields(latestRevision: Resource) {
 
-    return(resources: Array<Resource>): Resource => {
+    return(conflictedRevisions: Array<Resource>): Resource => {
 
-        if (resources.length === 0) return latestResource;
+        if (conflictedRevisions.length === 0) return latestRevision;
 
         const unifyFields = (fieldName: string) => {
-            return flow(resources, append(latestResource), map(to(fieldName)), union);
+            return flow(conflictedRevisions, append(latestRevision), map(to(fieldName)), union);
         };
 
-        return flow(latestResource,
+        return flow(latestRevision,
             assoc(STAFF, unifyFields(STAFF)),
             assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)));
     }
@@ -75,38 +75,40 @@ function unifyCampaignAndStaffFields(latestResource: Resource) {
 
 
 /**
- * @param conflictedResources ordered by time ascending
+ * @param conflictedRevisions ordered by time ascending
  *   expected to be of minimum length 1
  *
- * @param latestResource
+ * @param latestRevision
  * @returns
  *   - a resolved resource
  *   - the indices of the resources in the resources array
  *     which have been collapsed to give the resolved resource
  */
-function solveProjectResourceConflicts(conflictedResources: Array<Resource>,
-                                       latestResource: Resource): [Resource, Array<ArrayIndex>] {
+function solveProjectResourceConflicts(conflictedRevisions: Array<Resource>,
+                                       latestRevision: Resource): [Resource, Array<ArrayIndex>] {
 
-    if (conflictedResources.length < 1) throw 'FATAL - illegal argument - resources must be of minimum length 1';
+    if (conflictedRevisions.length < 1) {
+        throw 'FATAL - illegal argument - conflictedRevisions must be of minimum length 1';
+    }
 
-    const [[resource], indicesOfUsedResources] = collapse(conflictedResources.concat([latestResource]));
-    return [resource, indicesOfUsedResources.reverse()];
+    const [[resolvedResource], indicesOfUsedRevisions] = collapse(conflictedRevisions.concat([latestRevision]));
+    return [resolvedResource, indicesOfUsedRevisions.reverse()];
 }
 
 
-function collapse(resources: Array<Resource>, indicesOfUsedResources: Array<ArrayIndex> = [])
+function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<ArrayIndex> = [])
         : [Array<Resource>, Array<ArrayIndex>] {
 
-    if (resources.length < 2) return [resources, indicesOfUsedResources];
+    if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
 
-    const resolved = solveConflictBetween2ProjectDocuments(penultimate(resources), ultimate(resources));
+    const resolved = solveConflictBetweenTwoRevisions(penultimate(revisions), ultimate(revisions));
     return resolved !== undefined
-        ? collapse(replaceLastPair(resources, resolved), indicesOfUsedResources.concat(resources.length - 2))
-        : collapse(replaceLastPair(resources, ultimate(resources)), indicesOfUsedResources);
+        ? collapse(replaceLastPair(revisions, resolved), indicesOfUsedRevisions.concat(revisions.length - 2))
+        : collapse(replaceLastPair(revisions, ultimate(revisions)), indicesOfUsedRevisions);
 }
 
 
-function solveConflictBetween2ProjectDocuments(left: Resource, right: Resource): Resource|undefined {
+function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Resource|undefined {
 
     if (equal(left)(right)) return left;
 

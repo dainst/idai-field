@@ -115,8 +115,8 @@ function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Reso
     const l = withoutConstantProjectFields(left);
     const r = withoutConstantProjectFields(right);
 
-    if      (isEmpty(l) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return right;
-    else if (isEmpty(r) && left[COORDINATE_REFERENCE_SYSTEM] === right[COORDINATE_REFERENCE_SYSTEM]) return left;
+    if (isEmpty(l) && left[CRS] === right[CRS]) return right;
+    else if (isEmpty(r) && left[CRS] === right[CRS]) return left;
 
     if (equal(withoutStaffAndCampaigns(left))(withoutStaffAndCampaigns(right))) {
         return flow(right,
@@ -129,13 +129,13 @@ function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Reso
 
 const union = compose(filter(isDefined), tsfunUnion);
 
-const COORDINATE_REFERENCE_SYSTEM = 'coordinateReferenceSystem'; // TODO consider in unit test
+const CRS = 'coordinateReferenceSystem'; // TODO consider in unit test
 
 export const STAFF = 'staff';
 
 export const CAMPAIGNS = 'campaigns';
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier', COORDINATE_REFERENCE_SYSTEM];
+const constantProjectFields = ['id', 'relations', 'type', 'identifier', CRS];
 
 const RESOURCE = 'resource';
 

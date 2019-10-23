@@ -7,6 +7,21 @@ import {dissocIndices, penultimate, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
 
 
+type ArrayIndex = number;
+
+export const STAFF = 'staff';
+export const CAMPAIGNS = 'campaigns';
+const CRS = 'coordinateReferenceSystem'; // TODO consider in unit test
+const RESOURCE = 'resource';
+const REV_MARKER = '_rev';
+
+const constantProjectFields = ['id', 'relations', 'type', 'identifier', CRS];
+
+const union = compose(filter(isDefined), tsfunUnion);
+const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
+const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
+
+
 /**
  * TODO review if document is not modified in place (important for cases in which no conflicts gets solved)
  *
@@ -126,23 +141,3 @@ function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Reso
 
     return undefined;
 }
-
-const union = compose(filter(isDefined), tsfunUnion);
-
-const CRS = 'coordinateReferenceSystem'; // TODO consider in unit test
-
-export const STAFF = 'staff';
-
-export const CAMPAIGNS = 'campaigns';
-
-const constantProjectFields = ['id', 'relations', 'type', 'identifier', CRS];
-
-const RESOURCE = 'resource';
-
-const REV_MARKER = '_rev';
-
-type ArrayIndex = number;
-
-const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
-
-const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));

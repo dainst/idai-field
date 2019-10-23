@@ -110,7 +110,7 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
 
 function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Resource|undefined {
 
-    if (equal(left)(right)) return left;
+    if (equal(left)(right)) return right;
 
     const l = withoutConstantProjectFields(left);
     const r = withoutConstantProjectFields(right);

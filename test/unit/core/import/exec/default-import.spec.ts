@@ -52,7 +52,8 @@ describe('DefaultImport', () => {
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101')(
+            () => '101',
+            undefined,
             false,
             false);
     });
@@ -80,7 +81,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-             () => '101')(true, false))(
+             () => '101', undefined, true, false))(
             [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
@@ -94,7 +95,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101')(false, false))([
+            () => '101', undefined, false, false))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -137,7 +138,7 @@ describe('DefaultImport', () => {
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101')(
+            () => '101', undefined,
             false,
             false,
             '',
@@ -161,7 +162,8 @@ describe('DefaultImport', () => {
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101')(
+            () => '101',
+            undefined,
             false,
             false,
             '',

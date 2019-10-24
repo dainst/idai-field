@@ -92,8 +92,6 @@ describe('process()', () => {
             false,
             '');
 
-        console.log(':', result);
-
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('nf1');
         done();
     });

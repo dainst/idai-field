@@ -17,62 +17,64 @@ export function buildImportFunction(validator: ImportValidator,
                                     operationTypeNames: string[],
                                     getInverseRelation: (_: string) => string|undefined,
                                     generateId: () => string,
-                                    postProcessDocument: (_: Document) => Document = identity) {
+                                    postProcessDocument: undefined|((_: Document) => Document),
 
-    return (mergeMode: boolean,
-            allowOverwriteRelationsInMergeMode: boolean,
-            mainTypeDocumentId: string = '' /* '' => no assignment */,
-            useIdentifiersInRelations: boolean = false): ImportFunction => {
+                                    // TODO encapsulate these 4 params in an options object
+                                    mergeMode: boolean,
+                                    allowOverwriteRelationsInMergeMode: boolean,
+                                    mainTypeDocumentId: string = '' /* '' => no assignment */,
+                                    useIdentifiersInRelations: boolean = false): ImportFunction {
 
-        assertLegalCombination(mainTypeDocumentId, mergeMode);
+    if (!postProcessDocument) postProcessDocument = identity;
 
-        /**
-         * @param datastore
-         * @param username
-         * @param documents documents with the field resource.identifier set to a non empty string.
-         *   If resource.id is set, it will be taken as document.id on creation.
-         *   The relations map is assumed to be at least existent, but can be empty.
-         *   The resource.type field may be empty.
-         * @param importReport
-         *   .errors of ImportError or Validation Error
-         */
-        return async function importFunction(documents: Array<Document>,
-                                             datastore: DocumentDatastore,
-                                             username: string): Promise<{ errors: string[][], successfulImports: number }> {
+    assertLegalCombination(mainTypeDocumentId, mergeMode);
 
-            const find = findByIdentifier(datastore);
-            const get  = (resourceId: string) => datastore.get(resourceId);
+    /**
+     * @param datastore
+     * @param username
+     * @param documents documents with the field resource.identifier set to a non empty string.
+     *   If resource.id is set, it will be taken as document.id on creation.
+     *   The relations map is assumed to be at least existent, but can be empty.
+     *   The resource.type field may be empty.
+     * @param importReport
+     *   .errors of ImportError or Validation Error
+     */
+    return async function importFunction(documents: Array<Document>,
+                                         datastore: DocumentDatastore,
+                                         username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-            try {
-                await preprocessRelations(documents, generateId, find, get,
-                    mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations);
-            } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
+        const find = findByIdentifier(datastore);
+        const get  = (resourceId: string) => datastore.get(resourceId);
 
-            const result = await process(
-                documents,
-                validator,
-                operationTypeNames,
-                find,
-                get,
-                getInverseRelation,
-                mergeMode,
-                allowOverwriteRelationsInMergeMode,
-                mainTypeDocumentId);
+        try {
+            await preprocessRelations(documents, generateId, find, get,
+                mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations);
+        } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
 
-            if (result[2]) return { errors: [result[2]], successfulImports: 0 };
+        const result = await process(
+            documents,
+            validator,
+            operationTypeNames,
+            find,
+            get,
+            getInverseRelation,
+            mergeMode,
+            allowOverwriteRelationsInMergeMode,
+            mainTypeDocumentId);
 
-            result[0] = result[0].map(postProcessDocument);
+        if (result[2]) return { errors: [result[2]], successfulImports: 0 };
 
-            const updateErrors = [];
-            try {
-                await Updater.go(
-                    result[0],
-                    result[1], datastore, username, mergeMode);
-            } catch (errWithParams) {
-                updateErrors.push(errWithParams)
-            }
-            return { errors: updateErrors, successfulImports: documents.length };
+        result[0] = result[0].map(postProcessDocument as any);
+
+        const updateErrors = [];
+        try {
+            await Updater.go(
+                result[0],
+                result[1], datastore, username, mergeMode);
+        } catch (errWithParams) {
+            updateErrors.push(errWithParams)
         }
+        return { errors: updateErrors, successfulImports: documents.length };
     }
 }
 

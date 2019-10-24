@@ -89,7 +89,7 @@ export module Importer {
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
-        const importFunction = buildImportFunction_(
+        const { errors, successfulImports } = await performImport(
             format,
             importValidator,
             operationTypeNames,
@@ -98,11 +98,11 @@ export module Importer {
             allowUpdatingRelationsOnMerge,
             getInverseRelation,
             generateId,
-            postProcessDocument(projectConfiguration));
+            postProcessDocument(projectConfiguration),
+            docsToUpdate,
+            datastore,
+            usernameProvider.getUsername());
 
-        const { errors, successfulImports } = await importFunction(
-            docsToUpdate, datastore, usernameProvider.getUsername()
-        );
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
@@ -131,8 +131,7 @@ export module Importer {
     }}
 
 
-    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType,
-                          separator?: string): any {
+    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
 
         switch (format) {
             case 'meninxfind':
@@ -157,29 +156,34 @@ export module Importer {
     }
 
 
-    function buildImportFunction_(format: ImportFormat,
-                                  validator: ImportValidator,
-                                  operationTypeNames: string[],
-                                  mainTypeDocumentId: string,
-                                  mergeMode: boolean,
-                                  updateRelationsOnMergeMode: boolean,
-                                  getInverseRelation: (_: string) => string|undefined,
-                                  generateId: () => string,
-                                  postProcessDocument: (document: Document) => Document): ImportFunction {
+    function performImport(format: ImportFormat,
+                           validator: ImportValidator,
+                           operationTypeNames: string[],
+                           mainTypeDocumentId: string,
+                           mergeMode: boolean,
+                           updateRelationsOnMergeMode: boolean,
+                           getInverseRelation: (_: string) => string|undefined,
+                           generateId: () => string,
+                           postProcessDocument: (document: Document) => Document,
+                           docsToUpdate: Array<Document>,
+                           datastore: DocumentDatastore,
+                           username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const defaultImport = () => buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
+        let importFunction = undefined;
 
         switch (format) {
             case 'meninxfind':
-                return MeninxFindImport.build();
+                importFunction = MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
-                return defaultImport()(false, false);
+                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, false, false);
             case 'shapefile':
             case 'geojson':
-                return defaultImport()(true, false);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, true, false);
             default: // native | csv
-                return defaultImport()(mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
+
+        return importFunction(docsToUpdate, datastore, username);
     }
 }

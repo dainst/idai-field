@@ -229,9 +229,9 @@
         "campaigns": {
           "label": "Campaigns"
         },
-        "supervisor": {
+        "projectSupervisor": {
           "label": "Supervisor",
-          "description": "Person in charge of the campaign"
+          "description": "Person in charge of the project"
         }
       }
     },

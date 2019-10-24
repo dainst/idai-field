@@ -260,9 +260,9 @@
         "campaigns": {
           "label": "Kampagnen"
         },
-        "supervisor": {
+        "projectSupervisor": {
           "label": "Leiter/Leiterin",
-          "description": "Leitende Person der Kampagne"
+          "description": "Leitende Person des Projekts"
         }
       }
     },

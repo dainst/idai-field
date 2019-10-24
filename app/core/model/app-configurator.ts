@@ -94,6 +94,11 @@ export class AppConfigurator {
             inputType: 'date',
             group: 'stem'
         },
+        supervisor: {
+            inputType: 'dropdown',
+            valuelistFromProjectField: 'staff',
+            group: 'stem'
+        },
         processor: {
             inputType: 'checkboxes',
             valuelistFromProjectField: 'staff',

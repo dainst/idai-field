@@ -252,7 +252,7 @@
       "projectURI": {
         "inputType": "input"
       },
-      "supervisor": {
+      "projectSupervisor": {
         "inputType": "input"
       }
     }
@@ -549,6 +549,7 @@
     "commons": [
       "beginningDate",
       "endDate",
+      "supervisor",
       "processor",
       "campaign",
       "description",
@@ -558,9 +559,6 @@
     "fields": {
       "diaryAbstract": {
         "inputType": "text"
-      },
-      "supervisor": {
-        "inputType": "input"
       }
     }
   },

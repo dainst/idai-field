@@ -1,23 +1,26 @@
+import {FieldDefinition} from '../configuration/model/field-definition';
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import {FieldDefinition} from '../configuration/model/field-definition';
-
-
 export module GroupUtil {
 
     export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
 
         switch(groupName) {
             case 'stem':
-                sortGroup(fields, ['identifier', 'shortDescription',
-                    'processor', 'campaign', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
+                sortGroup(fields, [
+                    'identifier', 'shortDescription', 'supervisor', 'processor', 'campaign', 'description',
+                    'diary', 'date', 'beginningDate', 'endDate'
+                ]);
                 break;
             case 'dimension':
-                sortGroup(fields, ['dimensionHeight',
-                    'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
+                sortGroup(fields, [
+                    'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
+                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
+                ]);
                 break;
         }
     }

@@ -3,7 +3,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 
-// compile sass and concatenate to single css file in process dir
+// compile sass and concatenate to single css file in build dir
 gulp.task('convert-sass', () => {
 
     return gulp.src([

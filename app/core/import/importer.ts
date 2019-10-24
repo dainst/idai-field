@@ -77,10 +77,10 @@ export module Importer {
         const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
 
         const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
-        const docsToUpdate: Document[] = [];
+        const documents: Document[] = [];
 
         try {
-            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
+            (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
         } catch (msgWithParams) {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
@@ -90,6 +90,7 @@ export module Importer {
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
         const { errors, successfulImports } = await performImport(
+            documents,
             format,
             importValidator,
             operationTypeNames,
@@ -99,7 +100,6 @@ export module Importer {
             getInverseRelation,
             generateId,
             postProcessDocument(projectConfiguration),
-            docsToUpdate,
             datastore,
             usernameProvider.getUsername());
 
@@ -156,7 +156,8 @@ export module Importer {
     }
 
 
-    function performImport(format: ImportFormat,
+    function performImport(documents: Array<Document>,
+                           format: ImportFormat,
                            validator: ImportValidator,
                            operationTypeNames: string[],
                            mainTypeDocumentId: string,
@@ -165,7 +166,6 @@ export module Importer {
                            getInverseRelation: (_: string) => string|undefined,
                            generateId: () => string,
                            postProcessDocument: (document: Document) => Document,
-                           docsToUpdate: Array<Document>,
                            datastore: DocumentDatastore,
                            username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
@@ -184,6 +184,6 @@ export module Importer {
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
         }
 
-        return importFunction(docsToUpdate, datastore, username);
+        return importFunction(documents, datastore, username);
     }
 }

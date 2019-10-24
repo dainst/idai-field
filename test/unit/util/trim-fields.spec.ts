@@ -8,7 +8,7 @@ import {trimFields} from '../../../app/core/util/trim-fields';
  */
 describe('trim fields', () => {
 
-    it('strip whitespace from start & end of field values', () => {
+    it('strip leading & trailing whitespace from field values', () => {
 
         const resource: Resource = {
             id: '1',
@@ -30,7 +30,7 @@ describe('trim fields', () => {
     });
 
 
-    it('strip whitespace from start & end of strings in nested objects', () => {
+    it('strip whitespace of strings in nested objects', () => {
 
         const resource: Resource = {
             id: '1',
@@ -50,7 +50,7 @@ describe('trim fields', () => {
     });
 
 
-    it('strip whitespace from start & end of strings in nested objects', () => {
+    it('strip whitespace of strings in nested objects', () => {
 
         const resource: Resource = {
             id: '1',

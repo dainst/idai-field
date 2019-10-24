@@ -96,6 +96,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
     public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.typeOnlyAllowedOnUpdate';
     public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
+    public static IMPORT_WARNING_EMPTY = 'M.Import.warning.empty';
     public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'M.Import.success.multiple';
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
@@ -381,6 +382,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                     id: 'messages.import.success.multiple.defaultParameter',
                     value: 'Mehrere'
                 })],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_EMPTY] = {
+            content: i18n({
+                id: 'messages.import.warning.empty',
+                value: 'Die Import-Datei enthält keine Einträge.'
+            }),
+            level: 'warning',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_READER_GENERIC_START_ERROR] = {

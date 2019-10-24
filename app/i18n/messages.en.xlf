@@ -3467,6 +3467,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.warning.empty" datatype="html">
+        <source>Die Import-Datei enthält keine Einträge.</source>
+        <target state="final">The import file does not contain any entries.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.genericStartError" datatype="html">
         <source>Import kann nicht gestartet werden.</source>
         <target state="final">Failed to start import.</target>

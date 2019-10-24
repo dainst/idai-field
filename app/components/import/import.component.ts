@@ -241,8 +241,14 @@ export class ImportComponent implements OnInit {
     private showImportResult(importReport: ImportReport) {
 
         if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
-
+        if (importReport.successfulImports === 0) return this.showEmptyImportWarning();
         this.showSuccessMessage(importReport.successfulImports);
+    }
+
+
+    private showEmptyImportWarning() {
+
+        this.messages.add([M.IMPORT_WARNING_EMPTY]);
     }
 
 

@@ -118,9 +118,6 @@ export module CsvFieldTypesConversion {
     /**
      * Modifies container at path by converting string to number.
      * Returns early if no value at path.
-     *
-     * @param container
-     * @param path
      */
     function convertNumber(container: any, path: string, type: 'int'|'float') {
 
@@ -135,9 +132,6 @@ export module CsvFieldTypesConversion {
     /**
      * Modifies container at path by convertin string to boolan.
      * Returns early if no value at path.
-     *
-     * @param container
-     * @param path
      */
     function convertBoolean(container: any, path: string) {
 

@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {build as buildProcessFunction} from './process/process';
+import {process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 
 
@@ -48,7 +48,8 @@ export function buildImportFunction(validator: ImportValidator,
                     mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations);
             } catch (errWithParams) { return { errors: [errWithParams], successfulImports: 0 }}
 
-            const process = buildProcessFunction(
+            const result = await process(
+                documents,
                 validator,
                 operationTypeNames,
                 find,
@@ -58,7 +59,6 @@ export function buildImportFunction(validator: ImportValidator,
                 allowOverwriteRelationsInMergeMode,
                 mainTypeDocumentId);
 
-            const result = await process(documents);
             if (result[2]) return { errors: [result[2]], successfulImports: 0 };
 
             result[0] = result[0].map(postProcessDocument);

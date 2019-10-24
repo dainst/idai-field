@@ -15,7 +15,7 @@ describe('EdgesBuilder', () => {
     };
 
 
-    it('build edges for simple graph', () => {
+    it('process edges for simple graph', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -34,7 +34,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with multiple children', () => {
+    it('process edges for graph with multiple children', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -57,7 +57,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for diamond formed graph', () => {
+    it('process edges for diamond formed graph', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -85,7 +85,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with isContemporaryWith relations', () => {
+    it('process edges for graph with isContemporaryWith relations', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -110,7 +110,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with isAfter and isContemporaryWith relations', () => {
+    it('process edges for graph with isAfter and isContemporaryWith relations', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -212,7 +212,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for relation configuration with multiple above/below relation types', () => {
+    it('process edges for relation configuration with multiple above/below relation types', () => {
 
         const relations: GraphRelationsConfiguration = {
             above: ['isAbove', 'cuts'],

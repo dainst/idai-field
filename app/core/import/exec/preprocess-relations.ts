@@ -10,6 +10,8 @@ import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 
 /**
+ * Converts identifiers in relations to ids.
+ *
  * @throws ImportErrors.*
  * @throws [MISSING_RELATION_TARGET]
  * @throws [MUST_BE_ARRAY]

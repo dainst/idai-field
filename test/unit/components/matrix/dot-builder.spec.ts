@@ -22,7 +22,7 @@ describe('DotBuilder', () => {
     });
 
 
-    it('build dot string for simple graph', () => {
+    it('process dot string for simple graph', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -46,7 +46,7 @@ describe('DotBuilder', () => {
     });
 
 
-    it('build dot string for graph with multiple children', () => {
+    it('process dot string for graph with multiple children', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -74,7 +74,7 @@ describe('DotBuilder', () => {
     });
 
 
-    it('build dot string for diamond formed graph', () => {
+    it('process dot string for diamond formed graph', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -109,7 +109,7 @@ describe('DotBuilder', () => {
     });
 
 
-    it('build dot string for graph with sameRank edges', () => {
+    it('process dot string for graph with sameRank edges', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -143,7 +143,7 @@ describe('DotBuilder', () => {
     });
 
 
-    it('build dot string for graph with above and sameRank edges', () => {
+    it('process dot string for graph with above and sameRank edges', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');

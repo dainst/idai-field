@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
-import {build} from '../../../../../app/core/import/exec/process/process';
+import {process} from '../../../../../app/core/import/exec/process/process';
 
 /**
  * @author Daniel de Oliveira
@@ -39,12 +39,12 @@ describe('process()', () => {
     };
 
 
-    let find = async (_: any): Promise<any> => {
+    let find = async (identifier: any): Promise<any> => {
 
-        if (_ === 'existingTrench') return existingTrench;
-        if (_ === 'existingTrench2') return existingTrench2;
-        if (_ === 'existingFeature') return existingFeature;
-        if (_ === 'existingFeature2') return existingFeature2;
+        if (identifier === 'existingTrench') return existingTrench;
+        if (identifier === 'existingTrench2') return existingTrench2;
+        if (identifier === 'existingFeature') return existingFeature;
+        if (identifier === 'existingFeature2') return existingFeature2;
         return undefined;
     };
 
@@ -58,10 +58,6 @@ describe('process()', () => {
 
 
     let resourceIdCounter;
-    let process;
-    let processWithMainType;
-    let processWithPlainIds;
-    let processMerge;
     let processMergeOverwriteRelations;
 
 
@@ -83,39 +79,20 @@ describe('process()', () => {
             'assertIsNotOverviewType',
             'isRecordedInTargetAllowedRelationDomainType',
             'assertNoForbiddenRelations']);
-
-        process = build(validator, opTypeNames, find, get, getInverse,
-            false,
-            false,
-            '');
-
-        processWithMainType = build(validator, opTypeNames, find, get, getInverse,
-            false,
-            false,
-            'et1');
-
-        processWithPlainIds = build(validator, opTypeNames, find, get, getInverse,
-            false,
-            false,
-            '');
-
-        processMerge = build(validator, opTypeNames, find, get, getInverse,
-            true,
-            false,
-            '');
-
-        processMergeOverwriteRelations = build(validator, opTypeNames, find, get, getInverse,
-            true,
-            true,
-            '');
     });
 
 
     it('set inverse relation', async done => {
 
         const result = await process([
-            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['ef1']})
-        ]);
+                d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['ef1']})
+            ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
+
+        console.log(':', result);
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('nf1');
         done();
@@ -125,8 +102,9 @@ describe('process()', () => {
     xit('remove self referencing relation target', async done => {
 
         const result = await process([
-            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['nf1', 'et1']})
-        ]);
+                d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['nf1', 'et1']})
+            ],
+            validator, opTypeNames, find, get, getInverse, false, false, '');
 
         expect(result[0][0].resource.relations['isAfter'].length).toEqual(1);
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('et1');
@@ -138,7 +116,11 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
-            ]);
+            ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -150,9 +132,14 @@ describe('process()', () => {
 
     it('child of existing operation, assign via resource id', async done => {
 
-        const result = await processWithPlainIds([
-            d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
-        ]);
+        const result = await process(
+            [
+                d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
+            ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -165,8 +152,12 @@ describe('process()', () => {
     it('child of existing feature', async done => {
 
         const result = await process([
-            d('nf1', 'Feature', 'newFeature', { liesWithin: ['ef1']})
-        ]);
+                d('nf1', 'Feature', 'newFeature', { liesWithin: ['ef1']})
+            ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -180,7 +171,13 @@ describe('process()', () => {
 
         const result = await process([
             d('t', 'Trench', 'zero')
-        ]);
+        ],
+            validator,
+            opTypeNames,
+            find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('zero');
@@ -195,7 +192,11 @@ describe('process()', () => {
         const result = await process([
             d('tOne', 'Trench', 'one'),
             d('fTwo', 'Feature', 'two', { liesWithin: ['tOne'] })
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][1].resource;
         expect(resource.identifier).toBe('two');
@@ -210,7 +211,11 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nt1', 'Trench', 'one')
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('two');
@@ -226,7 +231,11 @@ describe('process()', () => {
             d('nt1', 'Trench', 'one'),
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] })
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][2].resource;
         expect(resource.identifier).toBe('three');
@@ -242,7 +251,11 @@ describe('process()', () => {
             d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nt1', 'Trench', 'one')
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('three');
@@ -256,7 +269,11 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1'] })
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -267,9 +284,12 @@ describe('process()', () => {
 
     it('import feature as child of existing operation, via operation assignment parameter', async done => {
 
-        const result = await processWithMainType([
-            d('nf1', 'Feature', 'one')
-        ]);
+        const result = await process([
+                d('nf1', 'Feature', 'one')
+            ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -283,7 +303,11 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1'] }),
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -298,7 +322,11 @@ describe('process()', () => {
         const result = await process([
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
@@ -310,10 +338,13 @@ describe('process()', () => {
 
     it('nested resources, assignment to operation via operation assignment parameter', async done => {
 
-        const result = await processWithMainType([
-            d('nf1', 'Feature', 'one'),
-            d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
-        ]);
+        const result = await process([
+                d('nf1', 'Feature', 'one'),
+                d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
+            ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -325,10 +356,13 @@ describe('process()', () => {
 
     it('nested resources, assignment to operation via operation assignment parameter, order reversed', async done => {
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'one')
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
@@ -340,9 +374,12 @@ describe('process()', () => {
 
     it('assignment to existing operation via parameter, also nested in existing', async done => {
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['ef1']})
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -356,12 +393,26 @@ describe('process()', () => {
 
     it('merge, add field', async done => {
 
-        const result = await processMerge([
-            { resource: { type: 'Feature', identifier: 'existingFeature',
+        const result = await process([
+            {
+                _id: '1',
+                created: {
+                    user: '',
+                    date: new Date()
+                },
+                modified: [],
+                resource: {
+                    type: 'Feature',
+                    identifier: 'existingFeature',
                     field: 'new',
+                    id: '1',
+                    relations: {},
                     geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
             }}
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            true,
+            false,
+            '');
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');
@@ -374,9 +425,9 @@ describe('process()', () => {
 
     it('merge, overwrite relations', async done => {
 
-        const result = await processMergeOverwriteRelations([
+        const result = await process([
             d('nf1', 'Feature', 'existingFeature', { liesWithin: ['et2'], isAfter: ['ef2']})
-        ]);
+        ], validator, opTypeNames, find, get, getInverse, true, true, '');
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
         expect(result[1][0].resource.id).toEqual('ef2');
@@ -387,9 +438,9 @@ describe('process()', () => {
 
     it('merge, overwrite relations, reassign parent', async done => {
 
-        const result = await processMergeOverwriteRelations([
+        const result = await process([
             d('nf1', 'Feature', 'existingFeature2', { liesWithin: ['ef1'] })
-        ]);
+        ], validator, opTypeNames, find, get, getInverse, true, true, '');
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -400,9 +451,12 @@ describe('process()', () => {
 
     it('merge, ignore wrong relations when not setting overwrite relations', async done => {
 
-        const result = await processMerge([
+        const result = await process([
             d('nf1', 'Feature', 'existingFeature', { isAfter: 'unknown' })
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            true,
+            false,
+            '');
 
         expect(result[0].length).toBe(1);
         expect(result[2]).toBeUndefined();
@@ -418,7 +472,11 @@ describe('process()', () => {
 
         const result = await process([
             d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         expect(result[2][0]).toEqual(E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE);
         done();
@@ -427,9 +485,12 @@ describe('process()', () => {
 
     it('assignment to existing feature, via mismatch with operation assignment parameter', async done => {
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['ef2']})
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         expect(result[2][0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
         expect(result[2][1]).toEqual('one');
@@ -442,7 +503,11 @@ describe('process()', () => {
         const result = await process(<any>[
             d('nf1', 'Feature', 'dup', { liesWithin: ['etc1']}),
             d('nf2', 'Feature', 'dup', { liesWithin: ['etc1']}),
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const error = result[2];
         expect(error[0]).toEqual(E.DUPLICATE_IDENTIFIER);
@@ -455,7 +520,11 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'existingFeature', { liesWithin: ['et1'] })
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
 
         const error = result[2];
         expect(error[0]).toEqual(E.RESOURCE_EXISTS);
@@ -466,9 +535,12 @@ describe('process()', () => {
 
     it('clash of assigned main type id with use of parent', async done => {
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
         expect(result[2][0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
     });
@@ -480,7 +552,11 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one')
-        ]);
+        ],
+            validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            '');
         expect(result[2][0]).toEqual(E.NO_PARENT_ASSIGNED);
         done();
     });
@@ -490,9 +566,12 @@ describe('process()', () => {
 
         validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nf1', 'Feature', 'one')
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         expect(result[2][0]).toEqual(E.INVALID_FIELDS);
         expect(result[2][1]).toEqual('invalidField');
@@ -504,9 +583,12 @@ describe('process()', () => {
 
         validator.assertDropdownRangeComplete.and.callFake(() => { throw [E.INVALID_DROPDOWN_RANGE_VALUES, 'abc'] });
 
-        const result = await processWithMainType([
+        const result = await process([
             d('nf1', 'Feature', 'one')
-        ]);
+        ],validator, opTypeNames, find, get, getInverse,
+            false,
+            false,
+            'et1');
 
         expect(result[2][0]).toEqual(E.INVALID_DROPDOWN_RANGE_VALUES);
         expect(result[2][1]).toEqual('abc');

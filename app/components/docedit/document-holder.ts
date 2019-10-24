@@ -14,6 +14,7 @@ import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {IdaiType} from '../../core/configuration/model/idai-type';
+import {trimFields} from '../../core/util/trim-fields';
 
 
 @Injectable()
@@ -161,13 +162,17 @@ export class DocumentHolder {
 
     private cleanup(document: Document): Document {
 
-        return flow(
+        document = flow(
             document,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.validateFields()),
-            Document.removeFields(this.getEmptyFields())
-        )
+            Document.removeFields(this.getEmptyFields()),
+        );
+
+        trimFields(document.resource);
+
+        return document;
     }
 
 

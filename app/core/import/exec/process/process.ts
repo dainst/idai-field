@@ -80,7 +80,6 @@ export async function process(documents: Array<Document>,
 }
 
 
-
 function assertNoDuplicates(documents: Array<Document>) {
 
     const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));

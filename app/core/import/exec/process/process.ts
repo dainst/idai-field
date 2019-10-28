@@ -106,16 +106,12 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 function mergeOrUseAsIs(document: NewDocument|Document,
                         {mergeMode, allowOverwriteRelationsInMergeMode}: ImportOptions): Document {
 
-    let documentForUpdate: Document = document as Document;
-
-    if (mergeMode === true) {
-        documentForUpdate =
-            mergeDocument(
-                (documentForUpdate as any)['mergeTarget'],
-                documentForUpdate,
+    return !mergeMode
+        ? document as Document
+        : mergeDocument(
+                (document as any)['mergeTarget'],
+                document,
                 allowOverwriteRelationsInMergeMode === true);
-    }
-    return documentForUpdate;
 }
 
 

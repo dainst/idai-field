@@ -1,4 +1,4 @@
-import {Document, Resource} from 'idai-components-2';
+import {NewDocument, Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {isNot, includedIn} from 'tsfun';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
@@ -9,7 +9,7 @@ import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 /**
  * @author Daniel de Oliveira
  */
-export function mergeDocument(into: Document, additional: Document, allowOverwriteRelationsOnMerge: boolean): Document {
+export function mergeDocument(into: Document, additional: NewDocument, allowOverwriteRelationsOnMerge: boolean): Document {
 
     const clonedTarget = clone(into);
 

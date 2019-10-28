@@ -1,13 +1,13 @@
 import {ImportValidator} from './import-validator';
 import {duplicates, to} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
-import {Document} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
-import {Find, Get, GetInverseRelation, Id, ProcessResult} from '../types';
-import {processDocuments} from './process-documents';
+import {Get, GetInverseRelation, Id, ProcessResult} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../default-import';
+import {mergeDocument} from './merge-document';
 
 
 /**
@@ -87,5 +87,49 @@ function assertNoDuplicates(documents: Array<Document>) {
     if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
 }
 
+
+/**
+ * @returns clones of the documents with their properties adjusted
+ */
+function processDocuments(documents: Array<Document>,
+                                 validator: ImportValidator,
+                                 importOptions: ImportOptions): Array<Document> {
+
+    return documents.map((document: Document) => {
+
+        // we want dropdown fields to be complete before merge
+        validator.assertDropdownRangeComplete(document.resource);
+
+        const possiblyMergedDocument = mergeOrUseAsIs(document, importOptions);
+        return validate(possiblyMergedDocument, validator, importOptions.mergeMode === true);
+    });
+}
+
+
+function mergeOrUseAsIs(document: NewDocument|Document,
+                        {mergeMode, allowOverwriteRelationsInMergeMode}: ImportOptions): Document {
+
+    let documentForUpdate: Document = document as Document;
+
+    if (mergeMode === true) {
+        documentForUpdate =
+            mergeDocument(
+                (documentForUpdate as any)['mergeTarget'],
+                documentForUpdate,
+                allowOverwriteRelationsInMergeMode === true);
+    }
+    return documentForUpdate;
+}
+
+
+function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
+
+    if (!mergeMode) {
+        validator.assertIsKnownType(document);
+        validator.assertIsAllowedType(document, mergeMode);
+    }
+    validator.assertIsWellformed(document);
+    return document;
+}
 
 

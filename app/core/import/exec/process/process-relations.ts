@@ -24,7 +24,7 @@ export async function processRelations(documents: Array<Document>,
                                        { mergeMode, allowOverwriteRelationsInMergeMode,
                                            mainTypeDocumentId} : ImportOptions) {
 
-    const allowOverwriteRelationsInMergeMode_ = (_: any, __: any, ___: any, ____: any) =>
+    const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
 
 
@@ -43,7 +43,7 @@ export async function processRelations(documents: Array<Document>,
                 documents,
                 get,
                 getInverseRelation,
-                allowOverwriteRelationsInMergeMode_,
+                assertIsAllowedRelationDomainType_,
                 mergeMode);
     }
     return [];

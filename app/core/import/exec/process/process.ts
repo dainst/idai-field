@@ -62,8 +62,7 @@ export async function process(documents: Array<Document>,
     try {
         assertNoDuplicates(documents);
 
-        const processedDocuments = await processDocuments(documents,
-            validator, !!importOptions.mergeMode, !!importOptions.allowOverwriteRelationsInMergeMode, find);
+        const processedDocuments = await processDocuments(documents, validator, find, importOptions);
 
         const relatedDocuments = await processRelations(
             processedDocuments,

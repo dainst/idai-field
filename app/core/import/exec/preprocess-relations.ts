@@ -114,7 +114,8 @@ function assertIsNotArrayRelation(document: Document) {
 
     return (name: string) => {
 
-        if (not(isArray)(document.resource.relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+        const relationValue = document.resource.relations[name];
+        if (!isArray(relationValue) && relationValue !== null) throw [E.MUST_BE_ARRAY, document.resource.identifier];
     }
 }
 
@@ -128,6 +129,8 @@ function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
 function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
 
     for (let relName of Object.keys(relations)) {
+        if (relations[relName] === null) continue;
+
         relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
         if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
     }

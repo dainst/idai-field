@@ -46,6 +46,7 @@ export async function iterateRelationsInImport(
     asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
     for (let relation of Object.keys(relations)) {
+        if (relations[relation] === null) continue;
         await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
     }
 }

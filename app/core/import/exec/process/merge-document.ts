@@ -28,7 +28,7 @@ export function mergeDocument(into: Document, additional: NewDocument, permitDel
     if (!additional.resource.relations) return target;
 
     target.resource.relations =
-        Object.keys(additional.resource.relations)
+        Object.keys(additional.resource.relations) // TODO factor out more generic function
             .filter(isnt(HIERARCHICAL_RELATIONS.RECORDED_IN))
             .reduce((target: {[relationName: string]: string[]}, relationName: string) => {
 

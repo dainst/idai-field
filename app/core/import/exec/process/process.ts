@@ -104,14 +104,14 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
 
 function mergeOrUseAsIs(document: NewDocument|Document,
-                        {mergeMode, allowOverwriteRelationsInMergeMode}: ImportOptions): Document {
+                        {mergeMode, permitDeletions}: ImportOptions): Document {
 
     return !mergeMode
         ? document as Document
         : mergeDocument(
                 (document as any)['mergeTarget'],
                 document,
-                allowOverwriteRelationsInMergeMode === true);
+                permitDeletions === true);
 }
 
 

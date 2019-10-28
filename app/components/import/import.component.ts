@@ -54,8 +54,8 @@ export class ImportComponent implements OnInit {
     public url: string|undefined;
     public operations: Array<Document> = [];
     public selectedOperationId: string = '';
-    public allowMergingExistingResources = false;
-    public allowUpdatingRelationOnMerge = false;
+    public mergeMode = false;
+    public permitDeletions = false;
     public javaInstalled: boolean = true;
 
     // CSV Import
@@ -87,13 +87,13 @@ export class ImportComponent implements OnInit {
 
     public showMergeOption = () => this.format === 'native' || this.format === 'csv';
 
-    public showMergeRelationsOption = () => includedIn(['native', 'csv'])(this.format) && this.allowMergingExistingResources;
+    public showPermitDeletionsOption = () => includedIn(['native', 'csv'])(this.format) && this.mergeMode;
 
     public isMeninxProject = () => this.settingsService.getSelectedProject().indexOf('meninx-project') !== -1;
 
     public isTestProject = () => this.settingsService.getSelectedProject().indexOf('test') !== -1;
 
-    public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.allowMergingExistingResources;
+    public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.mergeMode;
 
     public getSeparator = () => this.importState.getSeparator();
 
@@ -214,7 +214,7 @@ export class ImportComponent implements OnInit {
 
     private getTypesToExclude() {
 
-        return this.allowMergingExistingResources
+        return this.mergeMode
             ? BASE_EXCLUSION
             : BASE_EXCLUSION.concat(this.typeUtility.getImageTypeNames());
     }
@@ -229,8 +229,8 @@ export class ImportComponent implements OnInit {
             this.usernameProvider,
             this.projectConfiguration,
             this.selectedOperationId,
-            this.allowMergingExistingResources,
-            this.allowUpdatingRelationOnMerge,
+            this.mergeMode,
+            this.permitDeletions,
             await reader.go(),
             () => this.idGenerator.generateId(),
             this.format === 'csv' ? this.selectedType : undefined,

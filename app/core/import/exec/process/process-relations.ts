@@ -21,7 +21,7 @@ export async function processRelations(documents: Array<Document>,
                                        operationTypeNames: string[],
                                        getInverseRelation: GetInverseRelation,
                                        get: Get,
-                                       { mergeMode, allowOverwriteRelationsInMergeMode,
+                                       { mergeMode, permitDeletions,
                                            mainTypeDocumentId} : ImportOptions) {
 
     const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
@@ -35,7 +35,7 @@ export async function processRelations(documents: Array<Document>,
     await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId ? mainTypeDocumentId : '');
     await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId ? mainTypeDocumentId : ''));
 
-    if (!mergeMode || allowOverwriteRelationsInMergeMode) {
+    if (!mergeMode || permitDeletions) {
 
         await validator.assertRelationsWellformedness(documents);
         await validator.assertLiesWithinCorrectness(documents.map(to('resource')));

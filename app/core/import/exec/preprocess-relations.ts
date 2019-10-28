@@ -26,12 +26,12 @@ export async function preprocessRelations(documents: Array<Document>,
                                           generateId: () => string,
                                           find: Find,
                                           get: Get,
-                                          { mergeMode, allowOverwriteRelationsInMergeMode,
+                                          { mergeMode, permitDeletions,
                                               useIdentifiersInRelations}: ImportOptions) {
 
     const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
-    if ((!mergeMode || allowOverwriteRelationsInMergeMode)) {
+    if ((!mergeMode || permitDeletions)) {
         for (let document of documents) {
             const relations = document.resource.relations;
             adjustRelations(document, relations);

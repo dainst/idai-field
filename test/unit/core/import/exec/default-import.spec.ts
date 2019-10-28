@@ -54,7 +54,7 @@ describe('DefaultImport', () => {
             () => undefined,
             () => '101',
             undefined,
-            { mergeMode: false, allowOverwriteRelationsInMergeMode: false });
+            { mergeMode: false, permitDeletions: false });
     });
 
 
@@ -80,7 +80,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-             () => '101', undefined, {mergeMode: true, allowOverwriteRelationsInMergeMode: false}))(
+             () => '101', undefined, {mergeMode: true, permitDeletions: false}))(
             [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
@@ -94,7 +94,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101', undefined, { mergeMode: false, allowOverwriteRelationsInMergeMode: false }))([
+            () => '101', undefined, { mergeMode: false, permitDeletions: false }))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -138,7 +138,7 @@ describe('DefaultImport', () => {
             operationTypeNames,
             () => undefined,
             () => '101', undefined,
-            { mergeMode: false, allowOverwriteRelationsInMergeMode: false,
+            { mergeMode: false, permitDeletions: false,
              useIdentifiersInRelations: true }); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
@@ -162,7 +162,7 @@ describe('DefaultImport', () => {
             () => '101',
             undefined,
             { mergeMode: false,
-              allowOverwriteRelationsInMergeMode: false,
+              permitDeletions: false,
                 useIdentifiersInRelations: false}); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));

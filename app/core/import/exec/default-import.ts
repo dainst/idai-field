@@ -8,14 +8,13 @@ import {assertLegalCombination, findByIdentifier} from './utils';
 import {process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
-import {ImportErrors as E} from './import-errors';
 import {preprocessDocuments} from './preprocess-documents';
 
 
 export interface ImportOptions {
 
     mergeMode?: boolean;
-    allowOverwriteRelationsInMergeMode?: boolean;
+    permitDeletions?: boolean;
     mainTypeDocumentId?: string;
     useIdentifiersInRelations?: boolean;
 }

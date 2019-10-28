@@ -1,33 +1,41 @@
+import {isNot, includedIn, isnt} from 'tsfun';
 import {NewDocument, Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
-import {isNot, includedIn} from 'tsfun';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 
 /**
  * @author Daniel de Oliveira
  */
-export function mergeDocument(into: Document, additional: NewDocument, allowOverwriteRelationsOnMerge: boolean): Document {
+export function mergeDocument(into: Document, additional: NewDocument, permitDeletions: boolean): Document {
 
-    const clonedTarget = clone(into);
+    const target = clone(into);
 
-    clonedTarget.resource =
+    target.resource =
         Object.keys(additional.resource)
             .filter(isNot(includedIn(Resource.CONSTANT_FIELDS)))
-            .reduce((acc: Resource, key: string) => {
-                if (additional.resource[key] !== undefined) acc[key] = clone(additional.resource[key]);
-                return acc;
-            }, clonedTarget.resource);
+            .reduce((target: Resource, fieldName: string) => {
 
-    if (allowOverwriteRelationsOnMerge) {
-        clonedTarget.resource.relations = clone(additional.resource.relations);
-        if (clonedTarget.resource.relations
-            && into.resource.relations
-            && into.resource.relations[RECORDED_IN]) {
-            clonedTarget.resource.relations[RECORDED_IN] = clone(into.resource.relations[RECORDED_IN]);
-        }
-    }
-    return clonedTarget;
+                if (permitDeletions && additional.resource[fieldName] === null) delete target[fieldName];
+                else target[fieldName] = clone(additional.resource[fieldName]);
+
+                return target;
+            }, target.resource);
+
+    if (!additional.resource.relations) return target;
+
+    target.resource.relations =
+        Object.keys(additional.resource.relations)
+            .filter(isnt(HIERARCHICAL_RELATIONS.RECORDED_IN))
+            .reduce((target: {[relationName: string]: string[]}, relationName: string) => {
+
+                if (permitDeletions && additional.resource.relations[relationName] === null) delete target[relationName];
+                else target[relationName] = additional.resource.relations[relationName];
+
+                return target;
+            }, target.resource.relations ? target.resource.relations : {});
+
+
+    return target;
 }

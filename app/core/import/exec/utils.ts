@@ -9,7 +9,6 @@ import {Relations} from 'idai-components-2/src/model/core/relations';
 import {Id, Identifier} from './types';
 import {asyncForEach} from 'tsfun-extra';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ImportOptions} from './default-import';
 
 
 export const unionOfDocuments = unionBy(on('resource.id'));

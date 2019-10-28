@@ -36,20 +36,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        for (let revisionId of (this.document as any)._conflicts) {
-            if (this.inspectedRevisions.find((revision: any) => revision._rev === revisionId)) {
-                continue;
-            }
-
-            try {
-                this.conflictedRevisions.push(
-                    await this.datastore.getRevision(this.document.resource.id, revisionId)
-                );
-            } catch (err) {
-                console.error('Revision not found: ' + this.document.resource.id + ' ' + revisionId);
-                this.messages.add([M.DATASTORE_ERROR_NOT_FOUND])
-            }
-        }
+        this.conflictedRevisions = await this.getConflictedRevisions();
 
         if (this.conflictedRevisions.length > 0) {
             this.sortRevisions(this.conflictedRevisions);
@@ -57,6 +44,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         } else {
             this.differingFields = [];
         }
+
         this.ready = true;
     }
 
@@ -219,6 +207,29 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
         return contentString;
+    }
+
+
+    private async getConflictedRevisions(): Promise<Array<Document>> {
+
+        const conflictedRevisions: Array<Document> = [];
+
+        for (let revisionId of (this.document as any)._conflicts) {
+            if (this.inspectedRevisions.find((revision: any) => revision._rev === revisionId)) {
+                continue;
+            }
+
+            try {
+                conflictedRevisions.push(
+                    await this.datastore.getRevision(this.document.resource.id, revisionId)
+                );
+            } catch (err) {
+                console.error('Revision not found: ' + this.document.resource.id + ' ' + revisionId);
+                this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
+            }
+        }
+
+        return conflictedRevisions;
     }
 
 

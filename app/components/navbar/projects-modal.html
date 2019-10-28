@@ -5,8 +5,8 @@
 <div class="modal-body projects-modal" #projectsModalBody>
     <div class="row">
         <div class="col-md-6 project-select">
-            <select id="projectSelectBox" class="form-control" [(ngModel)]="selectedProject"
-                    (ngModelChange)="selectProject()">
+            <select id="projectSelectBox" class="form-control" [value]="selectedProject"
+                    (change)="selectProject($event.srcElement.value)">
                 <option *ngFor="let project of getProjects()" [ngValue]="project">
                     {{project}}
                 </option>

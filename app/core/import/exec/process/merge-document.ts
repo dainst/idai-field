@@ -1,9 +1,9 @@
 import {Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {isNot, includedIn} from 'tsfun';
+import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
-
-const RECORDED_IN = 'isRecordedIn';
 
 
 /**

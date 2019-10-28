@@ -111,7 +111,7 @@ function mergeOrUseAsIs(document: NewDocument|Document,
         ? document as Document
         : mergeDocument(
                 (document as any)['mergeTarget'],
-                document,
+                document, // TODO dissoc mergeTarget
                 permitDeletions === true);
 }
 

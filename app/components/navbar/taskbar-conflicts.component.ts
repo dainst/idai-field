@@ -3,6 +3,7 @@ import {Document} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {NavbarComponent} from './navbar.component';
 
 
 @Component({
@@ -21,14 +22,15 @@ export class TaskbarConflictsComponent {
 
     private cancelClickListener: Function;
 
-    @ViewChild('popover', {static: false}) private popover: any;
+    @ViewChild('popover', { static: false }) private popover: any;
 
 
     constructor(private routingService: RoutingService,
                 private elementRef: ElementRef,
                 private renderer: Renderer2,
                 private datastore: DocumentReadDatastore,
-                private indexFacade: IndexFacade) {
+                private indexFacade: IndexFacade,
+                private navbarComponent: NavbarComponent) {
 
         this.fetchConflicts();
         this.indexFacade.changesNotifications().subscribe(() => this.fetchConflicts());
@@ -38,7 +40,12 @@ export class TaskbarConflictsComponent {
     public async openConflictResolver(document: Document) {
 
         if (this.popover.isOpen()) this.popover.close();
-        await this.routingService.jumpToConflictResolver(document);
+
+        if (document.resource.type === 'Project') {
+            await this.navbarComponent.openProjectsModal(true);
+        } else {
+            await this.routingService.jumpToConflictResolver(document);
+        }
     };
 
 

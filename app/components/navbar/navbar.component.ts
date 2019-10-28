@@ -4,6 +4,10 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ViewFacade} from '../resources/view/view-facade';
 import {Tab, TabManager} from '../tab-manager';
 import {TabUtil} from '../tab-util';
+import {MenuService} from '../../menu-service';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ProjectsModalComponent} from './projects-modal.component';
+import {SettingsService} from '../../core/settings/settings-service';
 
 
 @Component({
@@ -22,7 +26,7 @@ import {TabUtil} from '../tab-util';
  */
 export class NavbarComponent implements DoCheck {
 
-    @ViewChild('tabSpace', {static: false}) tabSpaceElement: ElementRef;
+    @ViewChild('tabSpace', { static: false }) tabSpaceElement: ElementRef;
 
     public activeRoute: string;
 
@@ -30,6 +34,8 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
+                private modalService: NgbModal,
+                private settingsService: SettingsService,
                 private i18n: I18n) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
@@ -127,6 +133,24 @@ export class NavbarComponent implements DoCheck {
         return this.tabManager.getShownTabs().find(tab => {
             return this.activeRoute === '/' + tab.routeName + '/' + tab.operationId;
         });
+    }
+
+
+    public async openProjectsModal(openConflictResolver: boolean = false) {
+
+        MenuService.setContext('projects');
+
+        const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
+        ref.componentInstance.selectedProject = this.settingsService.getSelectedProject();
+        ref.componentInstance.openConflictResolver = openConflictResolver;
+
+        try {
+            await ref.result;
+        } catch(err) {
+            // Projects modal has been canceled
+        } finally {
+            MenuService.setContext('default');
+        }
     }
 
 

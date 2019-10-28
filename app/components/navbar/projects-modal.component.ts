@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -23,19 +23,20 @@ const remote = require('electron').remote;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements AfterViewChecked {
+export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
+    public openConflictResolver: boolean = false;
 
     private focusInput: boolean = false;
     private subModalOpened: boolean = false;
 
-    @ViewChild('createPopover', {static: false}) private createPopover: NgbPopover;
-    @ViewChild('deletePopover', {static: false}) private deletePopover: NgbPopover;
-    @ViewChild('newProjectInput', {static: false}) private newProjectInput: ElementRef;
-    @ViewChild('deleteProjectInput', {static: false}) private deleteProjectInput: ElementRef;
+    @ViewChild('createPopover', { static: false }) private createPopover: NgbPopover;
+    @ViewChild('deletePopover', { static: false }) private deletePopover: NgbPopover;
+    @ViewChild('newProjectInput', { static: false }) private newProjectInput: ElementRef;
+    @ViewChild('deleteProjectInput', { static: false }) private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -43,6 +44,12 @@ export class ProjectsModalComponent implements AfterViewChecked {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private stateSerializer: StateSerializer) {
+    }
+
+
+    async ngAfterViewInit() {
+
+        if (this.openConflictResolver) await this.editProject('conflicts');
     }
 
 
@@ -88,11 +95,11 @@ export class ProjectsModalComponent implements AfterViewChecked {
     }
 
 
-    public async selectProject() {
+    public async selectProject(project: string) {
 
         this.settingsService.stopSync();
 
-        await this.settingsService.selectProject(this.selectedProject);
+        await this.settingsService.selectProject(project);
         ProjectsModalComponent.reload();
     }
 
@@ -136,7 +143,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
     }
 
 
-    public async editProject() {
+    public async editProject(activeGroup: string = 'stem') {
 
         MenuService.setContext('docedit');
         this.subModalOpened = true;
@@ -147,6 +154,7 @@ export class ProjectsModalComponent implements AfterViewChecked {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         doceditRef.componentInstance.setDocument(document);
+        doceditRef.componentInstance.activeGroup = activeGroup;
 
         try {
             await doceditRef.result;

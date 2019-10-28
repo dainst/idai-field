@@ -94,10 +94,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
         : Array<Document> {
 
     return documents.map((document: Document) => {
-
-        // we want dropdown fields to be complete before merge
-        validator.assertDropdownRangeComplete(document.resource);
-
+        validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
         return validate(
             mergeOrUseAsIs(document, importOptions),
             validator,

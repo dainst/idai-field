@@ -2,9 +2,9 @@ import {ImportValidator} from './import-validator';
 import {asyncMap} from 'tsfun-extra';
 import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
-import {DocumentMerge} from './document-merge';
 import {Find} from '../types';
 import {ImportOptions} from '../default-import';
+import {mergeDocument} from './merge-document';
 
 
 /**
@@ -33,8 +33,8 @@ async function mergeOrUseAsIs(document: NewDocument|Document,
     let documentForUpdate: Document = document as Document;
     const existingDocument = await find(document.resource.identifier);
 
-    if (!!mergeMode) {
-        if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate, !!allowOverwriteRelationsInMergeMode);
+    if (mergeMode === true) {
+        if (existingDocument) documentForUpdate = mergeDocument(existingDocument, documentForUpdate, allowOverwriteRelationsInMergeMode === true);
         else throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
     } else {
         if (existingDocument) throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];

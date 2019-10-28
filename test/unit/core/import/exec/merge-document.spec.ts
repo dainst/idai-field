@@ -2,7 +2,7 @@
  * @author Daniel de Oliveira
  */
 import {Document} from 'idai-components-2';
-import {DocumentMerge} from '../../../../../app/core/import/exec/process/document-merge';
+import {mergeDocument} from '../../../../../app/core/import/exec/process/merge-document';
 
 
 describe('DocumentMerge', () => {
@@ -38,7 +38,7 @@ describe('DocumentMerge', () => {
             }
         };
 
-        const result = DocumentMerge.merge(target, source, false);
+        const result = mergeDocument(target, source, false);
         expect(result.resource.shortDescription).toEqual('shortDescription2');
         expect(result.resource.anotherField).toEqual('field2');
     });
@@ -60,7 +60,7 @@ describe('DocumentMerge', () => {
             }
         };
 
-        const result = DocumentMerge.merge(target, source, false);
+        const result = mergeDocument(target, source, false);
         expect(result.resource.identifier).toEqual('identifier1');
         expect(result.resource.id).toEqual('id1');
         expect(result.resource.relations).toEqual({});

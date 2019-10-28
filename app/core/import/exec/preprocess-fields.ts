@@ -1,6 +1,7 @@
-import {to} from 'tsfun';
+import {to, isNot, includedIn, lookup} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
+import {pairWith} from '../../../utils';
 
 
 /**
@@ -16,6 +17,21 @@ export function preprocessFields(documents: Array<Document>) {
 function preprocessFieldsForResource(resource: Resource) {
 
     trimFields(resource);
+    mapEmptyPropertiesToNull(resource, Resource.CONSTANT_FIELDS);
+    mapEmptyPropertiesToNull(resource.relations, []);
 }
 
+
+function mapEmptyPropertiesToNull(resource: any|undefined, exclusions: string[]) {
+
+    if (!resource) return;
+    Object.keys(resource)
+        .filter(isNot(includedIn(exclusions)))
+        .map(pairWith(lookup(resource)))
+        .forEach((fieldName: any, fieldValue: any) => {
+            if (typeof fieldValue === 'string' && fieldValue === '') {
+                resource[fieldName] = null;
+            }
+        });
+}
 

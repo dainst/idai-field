@@ -1,8 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {asyncMap} from 'tsfun-extra';
-import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
-import {Find} from '../types';
 import {ImportOptions} from '../default-import';
 import {mergeDocument} from './merge-document';
 
@@ -12,32 +9,30 @@ import {mergeDocument} from './merge-document';
  */
 export function processDocuments(documents: Array<Document>,
                                  validator: ImportValidator,
-                                 find: Find,
-                                 importOptions: ImportOptions): Promise<Array<Document>> {
+                                 importOptions: ImportOptions): Array<Document> {
 
-    return asyncMap(async (document: Document) => {
+    return documents.map((document: Document) => {
 
         // we want dropdown fields to be complete before merge
         validator.assertDropdownRangeComplete(document.resource);
 
-        const possiblyMergedDocument = await mergeOrUseAsIs(document, find, importOptions);
-        return validate(possiblyMergedDocument, validator, !!importOptions.mergeMode);
-    })(documents);
+        const possiblyMergedDocument = mergeOrUseAsIs(document, importOptions);
+        return validate(possiblyMergedDocument, validator, importOptions.mergeMode === true);
+    });
 }
 
 
-async function mergeOrUseAsIs(document: NewDocument|Document,
-                              find: Find,
-                              {mergeMode, allowOverwriteRelationsInMergeMode}: ImportOptions): Promise<Document> {
+function mergeOrUseAsIs(document: NewDocument|Document,
+                              {mergeMode, allowOverwriteRelationsInMergeMode}: ImportOptions): Document {
 
     let documentForUpdate: Document = document as Document;
-    const existingDocument = await find(document.resource.identifier);
 
     if (mergeMode === true) {
-        if (existingDocument) documentForUpdate = mergeDocument(existingDocument, documentForUpdate, allowOverwriteRelationsInMergeMode === true);
-        else throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
-    } else {
-        if (existingDocument) throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
+        documentForUpdate =
+            mergeDocument(
+                (documentForUpdate as any)['mergeTarget'],
+                documentForUpdate,
+                allowOverwriteRelationsInMergeMode === true);
     }
     return documentForUpdate;
 }

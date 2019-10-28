@@ -52,7 +52,6 @@ import {ImportOptions} from '../default-import';
 export async function process(documents: Array<Document>,
                               validator: ImportValidator,
                               operationTypeNames: string[],
-                              find: Find,
                               get: Get,
                               getInverseRelation: GetInverseRelation,
                               importOptions : ImportOptions = {}): Promise<ProcessResult> {
@@ -62,7 +61,7 @@ export async function process(documents: Array<Document>,
     try {
         assertNoDuplicates(documents);
 
-        const processedDocuments = await processDocuments(documents, validator, find, importOptions);
+        const processedDocuments = await processDocuments(documents, validator, importOptions);
 
         const relatedDocuments = await processRelations(
             processedDocuments,

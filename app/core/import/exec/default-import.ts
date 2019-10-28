@@ -8,6 +8,8 @@ import {assertLegalCombination, findByIdentifier} from './utils';
 import {process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
+import {ImportErrors as E} from './import-errors';
+import {preprocessDocuments} from './preprocess-documents';
 
 
 export interface ImportOptions {
@@ -48,13 +50,12 @@ export function buildImportFunction(validator: ImportValidator,
                                          datastore: DocumentDatastore,
                                          username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const find = findByIdentifier(datastore);
         const get = (resourceId: string) => datastore.get(resourceId);
 
         preprocessFields(documents);
-
         try {
-            await preprocessRelations(documents, generateId, find, get, importOptions);
+            await preprocessDocuments(documents, findByIdentifier(datastore), importOptions.mergeMode === true);
+            await preprocessRelations(documents, generateId, findByIdentifier(datastore), get, importOptions);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -63,7 +64,6 @@ export function buildImportFunction(validator: ImportValidator,
             documents,
             validator,
             operationTypeNames,
-            find,
             get,
             getInverseRelation,
             importOptions);

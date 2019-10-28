@@ -16,7 +16,7 @@ import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {buildImportFunction, ImportOptions} from './exec/default-import';
+import {buildImportFunction} from './exec/default-import';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';

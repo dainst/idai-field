@@ -1,4 +1,4 @@
-import {to, isNot, includedIn, lookup} from 'tsfun';
+import {to, isNot, includedIn, lookup, isObject, isnt} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {pairWith} from '../../../utils';
@@ -8,29 +8,35 @@ import {pairWith} from '../../../utils';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function preprocessFields(documents: Array<Document>) {
+export function preprocessFields(documents: Array<Document>, permitDeletions: boolean) {
 
-    documents.map(to('resource')).forEach(preprocessFieldsForResource);
+    documents.map(to('resource')).forEach(preprocessFieldsForResource(permitDeletions));
 }
 
 
-function preprocessFieldsForResource(resource: Resource) {
+function preprocessFieldsForResource(permitDeletions: boolean) { return (resource: Resource) => {
 
     trimFields(resource);
-    mapEmptyPropertiesToNull(resource, Resource.CONSTANT_FIELDS);
-    mapEmptyPropertiesToNull(resource.relations, []);
-}
+    mapEmptyPropertiesToNull(resource, Resource.CONSTANT_FIELDS, permitDeletions);
+    mapEmptyPropertiesToNull(resource.relations, [], permitDeletions);
+}}
 
 
-function mapEmptyPropertiesToNull(resource: any|undefined, exclusions: string[]) {
+function mapEmptyPropertiesToNull(struct: any|undefined, exclusions: string[], permitDeletions: boolean) {
 
-    if (!resource) return;
-    Object.keys(resource)
+    if (!struct) return;
+    Object.keys(struct)
         .filter(isNot(includedIn(exclusions)))
-        .map(pairWith(lookup(resource)))
-        .forEach((fieldName: any, fieldValue: any) => {
+        .map(pairWith(lookup(struct)))
+        .forEach(([fieldName, fieldValue]: any) => {
+
             if (typeof fieldValue === 'string' && fieldValue === '') {
-                resource[fieldName] = null;
+                if (permitDeletions) struct[fieldName] = null;
+                else delete struct[fieldName];
+            } else if (isObject(fieldValue)) {
+                mapEmptyPropertiesToNull(fieldValue, [], permitDeletions);
+                if (!permitDeletions && Object.keys(fieldValue).length === 0) delete struct[fieldName];
+                if (permitDeletions && Object.values(fieldValue).filter(isnt(null)).length === 0) struct[fieldName] = null;
             }
         });
 }

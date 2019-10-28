@@ -98,8 +98,10 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
         // we want dropdown fields to be complete before merge
         validator.assertDropdownRangeComplete(document.resource);
 
-        const possiblyMergedDocument = mergeOrUseAsIs(document, importOptions);
-        return validate(possiblyMergedDocument, validator, importOptions.mergeMode === true);
+        return validate(
+            mergeOrUseAsIs(document, importOptions),
+            validator,
+            importOptions.mergeMode === true);
     });
 }
 

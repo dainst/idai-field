@@ -17,16 +17,16 @@ export module CsvRowsConversion {
 
             const headings: string[] = rows.shift() as string[];
 
-            return map((row: string[]) => makeObjectStruct(headings)(row))(rows);
+            return map((row: string[]) => makeStruct(headings)(row))(rows);
         }
     }
 
 
-    function makeObjectStruct(headings: string[]) {
+    function makeStruct(headings: string[]) {
 
-        return reduce((objectStruct, fieldOfRow, i: number) => {
-            if (fieldOfRow) insertFieldIntoDocument(objectStruct, headings[i], fieldOfRow);
-            return objectStruct as ObjectStruct;
+        return reduce((struct, fieldOfRow, i: number) => {
+            insertFieldIntoDocument(struct, headings[i], fieldOfRow);
+            return struct as ObjectStruct;
         }, {});
     }
 

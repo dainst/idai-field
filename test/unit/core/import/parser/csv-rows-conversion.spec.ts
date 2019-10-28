@@ -45,7 +45,7 @@ describe('CsvRowsConversion', () => {
         expect(structs[0]['field3']).toBe('Value: "XYZ"');
         expect(structs[0]['field4']).toBe('"XYZ"');
         expect(structs[0]['field5']).toBe('W,"X,Y",Z');
-        expect(structs[0]['field6']).toBe(undefined);
+        expect(structs[0]['field6']).toBe('');
     });
 
 

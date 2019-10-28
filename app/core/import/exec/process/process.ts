@@ -4,7 +4,7 @@ import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
-import {Get, GetInverseRelation, Id, ProcessResult} from '../types';
+import {Get, GetInverseRelation, ProcessResult} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../default-import';
 import {mergeDocument} from './merge-document';

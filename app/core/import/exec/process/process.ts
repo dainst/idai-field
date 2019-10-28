@@ -91,9 +91,8 @@ function assertNoDuplicates(documents: Array<Document>) {
 /**
  * @returns clones of the documents with their properties adjusted
  */
-function processDocuments(documents: Array<Document>,
-                                 validator: ImportValidator,
-                                 importOptions: ImportOptions): Array<Document> {
+function processDocuments(documents: Array<Document>, validator: ImportValidator, importOptions: ImportOptions)
+        : Array<Document> {
 
     return documents.map((document: Document) => {
 

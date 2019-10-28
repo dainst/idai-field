@@ -61,7 +61,7 @@ export async function process(documents: Array<Document>,
     try {
         assertNoDuplicates(documents);
 
-        const processedDocuments = await processDocuments(documents, validator, importOptions);
+        const processedDocuments = processDocuments(documents, validator, importOptions);
 
         const relatedDocuments = await processRelations(
             processedDocuments,

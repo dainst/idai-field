@@ -59,7 +59,7 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [errWithParams], successfulImports: 0 };
         }
 
-        const result = await process(
+        const [ importDocuments, targetDocuments, msgWithParams ] = await process(
             documents,
             validator,
             operationTypeNames,
@@ -68,15 +68,20 @@ export function buildImportFunction(validator: ImportValidator,
             getInverseRelation,
             importOptions);
 
-        if (result[2]) return { errors: [result[2]], successfulImports: 0 };
+        if (msgWithParams) return { errors: [msgWithParams], successfulImports: 0 };
 
-        result[0] = result[0].map(postProcessDocument as any);
+        const documentsForImport = importDocuments.map(postProcessDocument as any) as Document[];
 
         const updateErrors = [];
         try {
+
             await Updater.go(
-                result[0],
-                result[1], datastore, username, !!importOptions.mergeMode);
+                documentsForImport,
+                targetDocuments,
+                datastore,
+                username,
+                importOptions.mergeMode === true);
+
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }

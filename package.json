@@ -79,7 +79,7 @@
     "express": "4.16.4",
     "express-pouchdb": "4.1.0",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.46.5",
+    "idai-components-2": "1.46.6",
     "leaflet": "1.5.1",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "leaflet.pm": "0.17.3",

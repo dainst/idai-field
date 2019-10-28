@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
 import {mergeDocument} from '../../../../../app/core/import/exec/process/merge-document';
 
 
-describe('DocumentMerge', () => {
+describe('mergeDocument', () => {
 
     const target: Document = {
         _id: 'id1',

@@ -15,7 +15,7 @@ const CRS = 'coordinateReferenceSystem'; // TODO consider in unit test
 const RESOURCE = 'resource';
 const REV_MARKER = '_rev';
 
-const constantProjectFields = ['id', 'relations', 'type', 'identifier', CRS];
+const constantProjectFields = [CRS].concat(Resource.CONSTANT_FIELDS);
 
 const union = compose(filter(isDefined), tsfunUnion);
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);

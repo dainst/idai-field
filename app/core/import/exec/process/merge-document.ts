@@ -5,8 +5,6 @@ import {isNot, includedIn} from 'tsfun';
 
 const RECORDED_IN = 'isRecordedIn';
 
-const PROTECTED_FIELDS = ['id', 'identifier', 'relations', 'type'];
-
 
 /**
  * @author Daniel de Oliveira
@@ -17,7 +15,7 @@ export function mergeDocument(into: Document, additional: Document, allowOverwri
 
     clonedTarget.resource =
         Object.keys(additional.resource)
-            .filter(isNot(includedIn(PROTECTED_FIELDS)))
+            .filter(isNot(includedIn(Resource.CONSTANT_FIELDS)))
             .reduce((acc: Resource, key: string) => {
                 if (additional.resource[key] !== undefined) acc[key] = clone(additional.resource[key]);
                 return acc;

@@ -4,7 +4,7 @@ import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
-import {Get, GetInverseRelation, ProcessResult} from '../types';
+import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../default-import';
 import {mergeDocument} from './merge-document';
@@ -54,7 +54,8 @@ export async function process(documents: Array<Document>,
                               operationTypeNames: string[],
                               get: Get,
                               getInverseRelation: GetInverseRelation,
-                              importOptions : ImportOptions = {}): Promise<ProcessResult> {
+                              importOptions : ImportOptions = {})
+        : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 
     assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 

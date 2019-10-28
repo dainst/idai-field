@@ -180,7 +180,7 @@ describe('DefaultImport', () => {
     it('isChildOf is an array', async done => {
 
         const {errors} = await importFunction([
-            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: [] } } } as any
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors[0][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
@@ -204,7 +204,7 @@ describe('DefaultImport', () => {
     it('forbidden relation', async done => {
 
         const {errors} = await importFunction([
-            { resource: { type: 'Feature', identifier: '1a', relations: { includes: [] } } } as any
+            { resource: { type: 'Feature', identifier: '1a', relations: { includes: ['a'] } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);

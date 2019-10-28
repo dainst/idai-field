@@ -42,7 +42,7 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field -deletions not allowed, remove empty string field', () => {
+    it('complex field - deletions not allowed, remove empty string field', () => {
 
         const document = {
             _id: '1',
@@ -79,5 +79,45 @@ describe('preprocess-fields', () => {
         preprocessFields([document], true);
         expect(document.resource.id).toEqual('1');
         expect(document.resource['aField']).toBeNull();
+    });
+
+
+    it('complex field - array - deletions not allowed, remove empty string field', () => {
+
+        const document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                type: 'Object',
+                id: '1',
+                relations: {},
+                aField: ['', '']
+            }
+        };
+
+        preprocessFields([document], false);
+        expect(document.resource.id).toEqual('1');
+        expect(document.resource['aField']).toBeUndefined();
+    });
+
+
+    it('complex field - array and object nested - deletions not allowed, remove empty string field', () => {
+
+        const document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                type: 'Object',
+                id: '1',
+                relations: {},
+                aField: [{}, { aSubfield: ''}]
+            }
+        };
+
+        preprocessFields([document], false);
+        expect(document.resource.id).toEqual('1');
+        expect(document.resource['aField']).toBeUndefined();
     });
 });

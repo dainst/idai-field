@@ -1,4 +1,4 @@
-import {to, isNot, includedIn, lookup, isObject, isnt} from 'tsfun';
+import {to, isNot, includedIn, lookup, isObject, isnt, keys, isArray} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {pairWith} from '../../../utils';
@@ -25,15 +25,15 @@ function preprocessFieldsForResource(permitDeletions: boolean) { return (resourc
 function mapEmptyPropertiesToNull(struct: any|undefined, exclusions: string[], permitDeletions: boolean) {
 
     if (!struct) return;
-    Object.keys(struct)
-        .filter(isNot(includedIn(exclusions)))
+    keys(struct)
+        .filter(isNot(includedIn(exclusions as any)))
         .map(pairWith(lookup(struct)))
         .forEach(([fieldName, fieldValue]: any) => {
 
             if (typeof fieldValue === 'string' && fieldValue === '') {
                 if (permitDeletions) struct[fieldName] = null;
                 else delete struct[fieldName];
-            } else if (isObject(fieldValue)) {
+            } else if (isObject(fieldValue) || isArray(fieldValue)) {
                 mapEmptyPropertiesToNull(fieldValue, [], permitDeletions);
                 if (!permitDeletions && Object.keys(fieldValue).length === 0) delete struct[fieldName];
                 if (permitDeletions && Object.values(fieldValue).filter(isnt(null)).length === 0) struct[fieldName] = null;

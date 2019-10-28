@@ -7,6 +7,7 @@ import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty, not} from 'tsfun'
 import {RESOURCE_ID} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {ImportOptions} from './default-import';
 
 
 /**
@@ -25,9 +26,8 @@ export async function preprocessRelations(documents: Array<Document>,
                                           generateId: () => string,
                                           find: Find,
                                           get: Get,
-                                          mergeMode: boolean,
-                                          allowOverwriteRelationsInMergeMode: boolean,
-                                          useIdentifiersInRelations: boolean) {
+                                          { mergeMode, allowOverwriteRelationsInMergeMode,
+                                              useIdentifiersInRelations}: ImportOptions) {
 
     const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 

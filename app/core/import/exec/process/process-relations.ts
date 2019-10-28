@@ -9,6 +9,7 @@ import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {Relations} from 'idai-components-2';
 import {Get, GetInverseRelation, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
+import {ImportOptions} from '../default-import';
 
 
 /**
@@ -18,21 +19,21 @@ import {completeInverseRelations} from './complete-inverse-relations';
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       mergeMode: boolean,
-                                       allowOverwriteRelationsInMergeMode: boolean,
-                                       getInverseRelation: GetInverseRelation, get: Get,
-                                       mainTypeDocumentId: Id) {
+                                       getInverseRelation: GetInverseRelation,
+                                       get: Get,
+                                       { mergeMode, allowOverwriteRelationsInMergeMode,
+                                           mainTypeDocumentId} : ImportOptions) {
 
     const allowOverwriteRelationsInMergeMode_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
 
 
     if (!mergeMode) {
-        await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId);
-        prepareIsRecordedInRelation(documents, mainTypeDocumentId);
+        await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId ? mainTypeDocumentId : '');
+        prepareIsRecordedInRelation(documents, mainTypeDocumentId ? mainTypeDocumentId : '');
     }
-    await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
-    await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
+    await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId ? mainTypeDocumentId : '');
+    await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId ? mainTypeDocumentId : ''));
 
     if (!mergeMode || allowOverwriteRelationsInMergeMode) {
 

@@ -7,6 +7,7 @@ import {processRelations} from './process-relations';
 import {Find, Get, GetInverseRelation, Id, ProcessResult} from '../types';
 import {processDocuments} from './process-documents';
 import {assertLegalCombination} from '../utils';
+import {ImportOptions} from '../default-import';
 
 
 /**
@@ -54,27 +55,23 @@ export async function process(documents: Array<Document>,
                               find: Find,
                               get: Get,
                               getInverseRelation: GetInverseRelation,
-                              mergeMode: boolean,
-                              allowOverwriteRelationsInMergeMode: boolean,
-                              mainTypeDocumentId: Id): Promise<ProcessResult> {
+                              importOptions : ImportOptions = {}): Promise<ProcessResult> {
 
-    assertLegalCombination(mainTypeDocumentId, mergeMode);
+    assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 
     try {
         assertNoDuplicates(documents);
 
         const processedDocuments = await processDocuments(documents,
-            validator, mergeMode, allowOverwriteRelationsInMergeMode, find);
+            validator, !!importOptions.mergeMode, !!importOptions.allowOverwriteRelationsInMergeMode, find);
 
         const relatedDocuments = await processRelations(
             processedDocuments,
             validator,
             operationTypeNames,
-            mergeMode,
-            allowOverwriteRelationsInMergeMode,
             getInverseRelation,
             get,
-            mainTypeDocumentId);
+            importOptions);
 
         return [processedDocuments, relatedDocuments, undefined];
 

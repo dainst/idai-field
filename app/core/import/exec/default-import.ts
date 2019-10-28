@@ -10,6 +10,15 @@ import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 
 
+export interface ImportOptions {
+
+    mergeMode?: boolean;
+    allowOverwriteRelationsInMergeMode?: boolean;
+    mainTypeDocumentId?: string;
+    useIdentifiersInRelations?: boolean;
+}
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -19,16 +28,11 @@ export function buildImportFunction(validator: ImportValidator,
                                     getInverseRelation: (_: string) => string|undefined,
                                     generateId: () => string,
                                     postProcessDocument: undefined|((_: Document) => Document),
-
-                                    // TODO encapsulate these 4 params in an options object
-                                    mergeMode: boolean,
-                                    allowOverwriteRelationsInMergeMode: boolean,
-                                    mainTypeDocumentId: string = '' /* '' => no assignment */,
-                                    useIdentifiersInRelations: boolean = false): ImportFunction {
+                                    importOptions: ImportOptions = {}): ImportFunction {
 
     if (!postProcessDocument) postProcessDocument = identity;
 
-    assertLegalCombination(mainTypeDocumentId, mergeMode);
+    assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 
     /**
      * @param datastore
@@ -50,8 +54,7 @@ export function buildImportFunction(validator: ImportValidator,
         preprocessFields(documents);
 
         try {
-            await preprocessRelations(documents, generateId, find, get,
-                mergeMode, allowOverwriteRelationsInMergeMode, useIdentifiersInRelations);
+            await preprocessRelations(documents, generateId, find, get, importOptions);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -63,9 +66,7 @@ export function buildImportFunction(validator: ImportValidator,
             find,
             get,
             getInverseRelation,
-            mergeMode,
-            allowOverwriteRelationsInMergeMode,
-            mainTypeDocumentId);
+            importOptions);
 
         if (result[2]) return { errors: [result[2]], successfulImports: 0 };
 
@@ -75,7 +76,7 @@ export function buildImportFunction(validator: ImportValidator,
         try {
             await Updater.go(
                 result[0],
-                result[1], datastore, username, mergeMode);
+                result[1], datastore, username, !!importOptions.mergeMode);
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }

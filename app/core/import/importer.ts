@@ -17,7 +17,7 @@ import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {buildImportFunction} from './exec/default-import';
+import {buildImportFunction, ImportOptions} from './exec/default-import';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
@@ -176,12 +176,14 @@ export module Importer {
                 importFunction = MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, false, false);
+                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, { mergeMode: false, allowOverwriteRelationsInMergeMode: false});
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, true, false);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, { mergeMode: true, allowOverwriteRelationsInMergeMode: false});
             default: // native | csv
-                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: mergeMode, allowOverwriteRelationsInMergeMode: updateRelationsOnMergeMode,
+                        mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }
 
         return importFunction(documents, datastore, username);

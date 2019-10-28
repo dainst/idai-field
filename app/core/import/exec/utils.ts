@@ -9,6 +9,7 @@ import {Relations} from 'idai-components-2/src/model/core/relations';
 import {Id, Identifier} from './types';
 import {asyncForEach} from 'tsfun-extra';
 import {DocumentDatastore} from '../../datastore/document-datastore';
+import {ImportOptions} from './default-import';
 
 
 export const unionOfDocuments = unionBy(on('resource.id'));
@@ -17,7 +18,7 @@ export const unionOfDocuments = unionBy(on('resource.id'));
 export const makeDocumentsLookup = makeLookup('resource.id');
 
 
-export function assertLegalCombination(mainTypeDocumentId: string, mergeMode: boolean) {
+export function assertLegalCombination(mergeMode: boolean|undefined, mainTypeDocumentId: string|undefined) {
 
     if (mainTypeDocumentId && mergeMode) {
         throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';

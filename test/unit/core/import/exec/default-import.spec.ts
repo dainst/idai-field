@@ -1,5 +1,5 @@
 import {ImportErrors as E, ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
+import {buildImportFunction, ImportOptions} from '../../../../../app/core/import/exec/default-import';
 
 /**
  * @author Daniel de Oliveira
@@ -54,8 +54,7 @@ describe('DefaultImport', () => {
             () => undefined,
             () => '101',
             undefined,
-            false,
-            false);
+            { mergeMode: false, allowOverwriteRelationsInMergeMode: false });
     });
 
 
@@ -81,7 +80,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-             () => '101', undefined, true, false))(
+             () => '101', undefined, {mergeMode: true, allowOverwriteRelationsInMergeMode: false}))(
             [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
@@ -95,7 +94,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101', undefined, false, false))([
+            () => '101', undefined, { mergeMode: false, allowOverwriteRelationsInMergeMode: false }))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -139,10 +138,8 @@ describe('DefaultImport', () => {
             operationTypeNames,
             () => undefined,
             () => '101', undefined,
-            false,
-            false,
-            '',
-            true); // !
+            { mergeMode: false, allowOverwriteRelationsInMergeMode: false,
+             useIdentifiersInRelations: true }); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
@@ -164,10 +161,9 @@ describe('DefaultImport', () => {
             () => undefined,
             () => '101',
             undefined,
-            false,
-            false,
-            '',
-            false); // !
+            { mergeMode: false,
+              allowOverwriteRelationsInMergeMode: false,
+                useIdentifiersInRelations: false}); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 

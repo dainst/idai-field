@@ -1,6 +1,6 @@
 import {preprocessFields} from '../../../../../app/core/import/exec/preprocess-fields';
 
-fdescribe('preprocess-fields', () => {
+describe('preprocess-fields', () => {
 
    it('deletions not allowed, remove empty string field', () => {
 

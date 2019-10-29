@@ -1,6 +1,6 @@
 import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
+import {Messages, Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
@@ -150,10 +150,12 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
         MenuService.setContext('docedit');
         this.subModalOpened = true;
 
+        const projectDocument: Document = await this.datastore.get('project');
+
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        doceditRef.componentInstance.setDocument(await this.datastore.get('project'));
+        doceditRef.componentInstance.setDocument(projectDocument);
         doceditRef.componentInstance.activeGroup = activeGroup;
 
         try {

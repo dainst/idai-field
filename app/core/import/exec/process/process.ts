@@ -1,5 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, to} from 'tsfun';
+import {duplicates, to, dissoc} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
@@ -109,10 +109,8 @@ function mergeOrUseAsIs(document: NewDocument|Document,
 
     return !mergeMode
         ? document as Document
-        : mergeDocument(
-                (document as any)['mergeTarget'],
-                document, // TODO dissoc mergeTarget
-                permitDeletions === true);
+        : mergeDocument((document as any)['mergeTarget'], dissoc('mergeTarget')(document));
+
 }
 
 

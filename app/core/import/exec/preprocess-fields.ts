@@ -17,12 +17,12 @@ export function preprocessFields(documents: Array<Document>, permitDeletions: bo
 function preprocessFieldsForResource(permitDeletions: boolean) { return (resource: Resource) => {
 
     trimFields(resource);
-    mapEmptyPropertiesToNull(resource, Resource.CONSTANT_FIELDS, permitDeletions);
-    mapEmptyPropertiesToNull(resource.relations, [], permitDeletions);
+    collapseEmptyProperties(resource, Resource.CONSTANT_FIELDS, permitDeletions);
+    collapseEmptyProperties(resource.relations, [], permitDeletions);
 }}
 
 
-function mapEmptyPropertiesToNull(struct: any|undefined, exclusions: string[], permitDeletions: boolean) {
+function collapseEmptyProperties(struct: any|undefined, exclusions: string[], permitDeletions: boolean) {
 
     if (!struct) return;
     keys(struct)
@@ -30,13 +30,25 @@ function mapEmptyPropertiesToNull(struct: any|undefined, exclusions: string[], p
         .map(pairWith(lookup(struct)))
         .forEach(([fieldName, fieldValue]: any) => {
 
-            if (typeof fieldValue === 'string' && fieldValue === '') {
-                if (permitDeletions) struct[fieldName] = null;
-                else delete struct[fieldName];
+            if (fieldValue === null) {
+
+                if (!permitDeletions) delete struct[fieldName];
+
+            } else if (typeof fieldValue === 'string' && fieldValue === '') {
+
+                // TODO improve
+                throw ["FIELD VALUE MUST NOT BE EMPTY ARRAY"]
+
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
-                mapEmptyPropertiesToNull(fieldValue, [], permitDeletions);
-                if (!permitDeletions && Object.keys(fieldValue).length === 0) delete struct[fieldName];
-                if (permitDeletions && Object.values(fieldValue).filter(isnt(null)).length === 0) struct[fieldName] = null;
+                collapseEmptyProperties(fieldValue, [], permitDeletions);
+                if (Object.keys(fieldValue).length === 0) {
+                    if (permitDeletions) struct[fieldName] = null; // TODO remove duplication
+                    else delete struct[fieldName];
+                }
+                if (Object.values(fieldValue).filter(isnt(null)).length === 0) {
+                    if (permitDeletions) struct[fieldName] = null;
+                    else delete struct[fieldName];
+                }
             }
         });
 }

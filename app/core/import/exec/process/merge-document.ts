@@ -8,7 +8,7 @@ import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 /**
  * @author Daniel de Oliveira
  */
-export function mergeDocument(into: Document, additional: NewDocument, permitDeletions: boolean): Document {
+export function mergeDocument(into: Document, additional: NewDocument): Document {
 
     console.log('mergeDocument', additional);
 
@@ -19,7 +19,7 @@ export function mergeDocument(into: Document, additional: NewDocument, permitDel
             .filter(isNot(includedIn(Resource.CONSTANT_FIELDS)))
             .reduce((target: Resource, fieldName: string) => {
 
-                if (permitDeletions && additional.resource[fieldName] === null) delete target[fieldName];
+                if (additional.resource[fieldName] === null) delete target[fieldName];
                 else target[fieldName] = clone(additional.resource[fieldName]);
 
                 return target;
@@ -32,7 +32,7 @@ export function mergeDocument(into: Document, additional: NewDocument, permitDel
             .filter(isnt(HIERARCHICAL_RELATIONS.RECORDED_IN))
             .reduce((target: {[relationName: string]: string[]}, relationName: string) => {
 
-                if (permitDeletions && additional.resource.relations[relationName] === null) delete target[relationName];
+                if (additional.resource.relations[relationName] === null) delete target[relationName];
                 else target[relationName] = additional.resource.relations[relationName];
 
                 return target;

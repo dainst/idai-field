@@ -2,7 +2,7 @@ import {preprocessFields} from '../../../../../app/core/import/exec/preprocess-f
 
 describe('preprocess-fields', () => {
 
-   it('deletions not allowed, remove empty string field', () => {
+   it('empty string not allowed', () => {
 
        const document = {
            _id: '1',
@@ -16,13 +16,16 @@ describe('preprocess-fields', () => {
            }
        };
 
-       preprocessFields([document], false);
-       expect(document.resource.id).toEqual('1');
-       expect(document.resource['aField']).toBeUndefined();
+       try {
+           preprocessFields([document], false);
+           fail();
+       } catch (expected) {
+           // TODO handle error
+       }
    });
 
 
-    it('deletions not allowed, set empty string field to null', () => {
+    it('delete if null', () => {
 
         const document = {
             _id: '1',
@@ -32,17 +35,16 @@ describe('preprocess-fields', () => {
                 type: 'Object',
                 id: '1',
                 relations: {},
-                aField: ''
+                aField: null
             }
         };
 
-        preprocessFields([document], true);
-        expect(document.resource.id).toEqual('1');
-        expect(document.resource['aField']).toBeNull();
+        preprocessFields([document], false);
+        expect(document.resource['aField']).toBeUndefined();
     });
 
 
-    it('complex field - deletions not allowed, remove empty string field', () => {
+    it('complex field - empty string not allowed', () => {
 
         const document = {
             _id: '1',
@@ -56,13 +58,16 @@ describe('preprocess-fields', () => {
             }
         };
 
-        preprocessFields([document], false);
-        expect(document.resource.id).toEqual('1');
-        expect(document.resource['aField']).toBeUndefined();
+        try {
+            preprocessFields([document], false);
+            fail();
+        } catch (expected) {
+            // TODO handle error
+        }
     });
 
 
-    it('complex field - deletions not allowed, set empty string field to null', () => {
+    it('complex field - delete if null', () => {
 
         const document = {
             _id: '1',
@@ -72,7 +77,7 @@ describe('preprocess-fields', () => {
                 type: 'Object',
                 id: '1',
                 relations: {},
-                aField: { aSubfield: '' }
+                aField: { aSubfield: null }
             }
         };
 
@@ -82,7 +87,7 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field - array - deletions not allowed, remove empty string field', () => {
+    it('complex field - array - empty string not allowed', () => {
 
         const document = {
             _id: '1',
@@ -96,13 +101,16 @@ describe('preprocess-fields', () => {
             }
         };
 
-        preprocessFields([document], false);
-        expect(document.resource.id).toEqual('1');
-        expect(document.resource['aField']).toBeUndefined();
+        try {
+            preprocessFields([document], false);
+            fail();
+        } catch (expected) {
+            // TODO handle error
+        }
     });
 
 
-    it('complex field - array and object nested - deletions not allowed, remove empty string field', () => {
+    it('complex field - array and object nested - delete if null', () => {
 
         const document = {
             _id: '1',
@@ -112,7 +120,7 @@ describe('preprocess-fields', () => {
                 type: 'Object',
                 id: '1',
                 relations: {},
-                aField: [{}, { aSubfield: ''}]
+                aField: [{}, { aSubfield: null}]
             }
         };
 

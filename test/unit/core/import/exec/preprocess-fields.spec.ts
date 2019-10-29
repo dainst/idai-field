@@ -1,4 +1,5 @@
 import {preprocessFields} from '../../../../../app/core/import/exec/preprocess-fields';
+import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 
 describe('preprocess-fields', () => {
 
@@ -11,6 +12,7 @@ describe('preprocess-fields', () => {
            resource: {
                type: 'Object',
                id: '1',
+               identifier: '1.',
                relations: {},
                aField: ''
            }
@@ -20,7 +22,7 @@ describe('preprocess-fields', () => {
            preprocessFields([document], false);
            fail();
        } catch (expected) {
-           // TODO handle error
+           expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
        }
    });
 
@@ -53,6 +55,7 @@ describe('preprocess-fields', () => {
             resource: {
                 type: 'Object',
                 id: '1',
+                identifier: '1.',
                 relations: {},
                 aField: { aSubfield: ''}
             }
@@ -62,7 +65,7 @@ describe('preprocess-fields', () => {
             preprocessFields([document], false);
             fail();
         } catch (expected) {
-            // TODO handle error
+            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
         }
     });
 
@@ -96,6 +99,7 @@ describe('preprocess-fields', () => {
             resource: {
                 type: 'Object',
                 id: '1',
+                identifier: '1.',
                 relations: {},
                 aField: ['', '']
             }
@@ -105,7 +109,7 @@ describe('preprocess-fields', () => {
             preprocessFields([document], false);
             fail();
         } catch (expected) {
-            // TODO handle error
+            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
         }
     });
 

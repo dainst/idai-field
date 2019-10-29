@@ -1,4 +1,4 @@
-import {isNot, includedIn, isnt} from 'tsfun';
+import {isNot, includedIn} from 'tsfun';
 import {NewDocument, Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';

@@ -11,10 +11,13 @@ import {mergeDocument} from './merge-document';
 
 
 /**
+ * null values get interpreted as commands to delete the corresponding fields or relations in merge mode.
+ *
  * This function takes relations in the form, that only liesWithin is defined and never isRecordedIn.
  * isRecordedIn gets inferred. This especially is true in cases where a top level item references
  * its operation with liesWithin, which gets resolved to an empty liesWithin and a isRecordedIn in its place.
  *
+ * -------------------------------------------------------
  * ImportErrors (accessible via ProcessResult)
  *
  * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]

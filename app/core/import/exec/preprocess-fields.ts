@@ -18,11 +18,7 @@ export function preprocessFields(documents: Array<Document>, permitDeletions: bo
 function preprocessFieldsForResource(permitDeletions: boolean) { return (resource: Resource) => {
 
     trimFields(resource);
-    try {
-        collapseEmptyProperties(resource, permitDeletions);
-    } catch (e) {
-        if (e === ImportErrors.MUST_NOT_BE_EMPTY_STRING) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
-    }
+    collapseEmptyProperties(resource, permitDeletions);
 }}
 
 
@@ -39,15 +35,14 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
 
             } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
 
-                throw ImportErrors.MUST_NOT_BE_EMPTY_STRING;
+                throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
 
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
                 collapseEmptyProperties(fieldValue, permitDeletions);
-                if (Object.keys(fieldValue).length === 0) {
-                    if (permitDeletions) struct[fieldName] = null; // TODO remove duplication
-                    else delete struct[fieldName];
-                }
-                if (Object.values(fieldValue).filter(isnt(null)).length === 0) {
+
+                if (Object.keys(fieldValue).length === 0
+                    || Object.values(fieldValue).filter(isnt(null)).length === 0) {
+
                     if (permitDeletions) struct[fieldName] = null;
                     else delete struct[fieldName];
                 }

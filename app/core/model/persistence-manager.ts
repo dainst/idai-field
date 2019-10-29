@@ -7,6 +7,8 @@ import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {IndexFacade} from '../datastore/index/index-facade';
 import {ProjectConfiguration} from '../configuration/project-configuration';
+import {HIERARCHICAL_RELATIONS} from './relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 @Injectable()
@@ -104,15 +106,15 @@ export class PersistenceManager {
 
     private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
 
-        if (isUndefinedOrEmpty(document.resource.relations['isRecordedIn'])) return;
+        if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
-            .filter(on('resource.relations.isRecordedIn', isArray))
-            .filter(isNot(on('resource.relations.isRecordedIn', sameset)(document)));
+            .filter(on('resource.relations.' + RECORDED_IN, isArray))
+            .filter(isNot(on('resource.relations.' + RECORDED_IN, sameset)(document)));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);
-            cloned.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+            cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
             await this.datastore.update(cloned, username, undefined);
         }
     }

@@ -110,6 +110,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 function mergeOrUseAsIs(document: NewDocument|Document,
                         mergeMode: boolean): Document {
 
+    // TODO replace mergeMode param by lookup if mergeTarget exists
     return !mergeMode
         ? document as Document
         : mergeDocument((document as any)['mergeTarget'], dissoc('mergeTarget')(document));

@@ -1,7 +1,8 @@
-import {to, isNot, includedIn, lookup, isObject, isnt, keys, isArray} from 'tsfun';
+import {to, lookup, isObject, isnt, keys, isArray} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {pairWith} from '../../../utils';
+import {ImportErrors} from './import-errors';
 
 
 /**
@@ -17,16 +18,18 @@ export function preprocessFields(documents: Array<Document>, permitDeletions: bo
 function preprocessFieldsForResource(permitDeletions: boolean) { return (resource: Resource) => {
 
     trimFields(resource);
-    collapseEmptyProperties(resource, Resource.CONSTANT_FIELDS, permitDeletions);
-    collapseEmptyProperties(resource.relations, [], permitDeletions);
+    try {
+        collapseEmptyProperties(resource, permitDeletions);
+    } catch (e) {
+        if (e === ImportErrors.MUST_NOT_BE_EMPTY_STRING) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING, resource.identifier];
+    }
 }}
 
 
-function collapseEmptyProperties(struct: any|undefined, exclusions: string[], permitDeletions: boolean) {
+function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean) {
 
     if (!struct) return;
     keys(struct)
-        .filter(isNot(includedIn(exclusions as any)))
         .map(pairWith(lookup(struct)))
         .forEach(([fieldName, fieldValue]: any) => {
 
@@ -34,13 +37,12 @@ function collapseEmptyProperties(struct: any|undefined, exclusions: string[], pe
 
                 if (!permitDeletions) delete struct[fieldName];
 
-            } else if (typeof fieldValue === 'string' && fieldValue === '') {
+            } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
 
-                // TODO improve
-                throw ["FIELD VALUE MUST NOT BE EMPTY ARRAY"]
+                throw ImportErrors.MUST_NOT_BE_EMPTY_STRING;
 
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
-                collapseEmptyProperties(fieldValue, [], permitDeletions);
+                collapseEmptyProperties(fieldValue, permitDeletions);
                 if (Object.keys(fieldValue).length === 0) {
                     if (permitDeletions) struct[fieldName] = null; // TODO remove duplication
                     else delete struct[fieldName];

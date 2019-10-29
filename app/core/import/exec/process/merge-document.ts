@@ -2,6 +2,7 @@ import {isNot, includedIn} from 'tsfun';
 import {NewDocument, Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
+import {ImportErrors} from '../import-errors';
 
 
 
@@ -10,7 +11,9 @@ import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
  */
 export function mergeDocument(into: Document, additional: NewDocument): Document {
 
-    // console.log('mergeDocument', additional);
+    if (additional.resource.type && into.resource.type !== additional.resource.type) {
+        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.resource.identifier];
+    }
 
     const target = clone(into);
 

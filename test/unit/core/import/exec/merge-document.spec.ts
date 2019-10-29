@@ -3,6 +3,7 @@
  */
 import {Document} from 'idai-components-2';
 import {mergeDocument} from '../../../../../app/core/import/exec/process/merge-document';
+import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 
 
 describe('mergeDocument', () => {
@@ -58,7 +59,7 @@ describe('mergeDocument', () => {
     });
 
 
-    it('dont overwrite identifier, id, type', () => {
+    it('dont overwrite identifier, id', () => { // TODO review, this does not make too much sense, identifier gets used to identify the merge resource in the first place
 
         const source = {
             _id: 'id2',
@@ -66,7 +67,7 @@ describe('mergeDocument', () => {
             created: undefined,
             resource: {
                 id: 'id2',
-                type: 'Object2',
+                type: 'Object',
                 identifier: 'identifier2',
                 shortDescription: 'shortDescription2',
                 anotherField: 'field2',
@@ -80,4 +81,29 @@ describe('mergeDocument', () => {
         expect(result.resource.type).toEqual('Object');
         expect(result.resource.relations).toEqual({});
     });
+
+
+    it('attempted to change type', () => {
+
+        const source = {
+            _id: 'id2',
+            modified: [],
+            created: undefined,
+            resource: {
+                id: 'id2',
+                type: 'Object2',
+                identifier: 'identifier1',
+                shortDescription: 'shortDescription2',
+                anotherField: 'field2',
+                relations: {}
+            }
+        };
+
+        try {
+            mergeDocument(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, 'identifier1']);
+        }
+    })
 });

@@ -30,5 +30,6 @@ export module ImportErrors {
     export const MUST_BE_ARRAY = 'ImportErrors.relationMustBeArray';
     export const MUST_BE_IN_SAME_OPERATION = 'ImportErrors.mustBeInSameOperation';
     export const MUST_NOT_BE_EMPTY_STRING = 'ImportErrors.mustNotBeEmptyString';
-    export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch'
+    export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch';
+    export const TYPE_CANNOT_BE_CHANGED = 'ImportErrors.typesCannotBeChanged';
 }

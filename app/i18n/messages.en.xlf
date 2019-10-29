@@ -3894,6 +3894,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.typeCannotBeChanged" datatype="html">
+        <source>Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: '[0]'</source>
+        <target state="final">Resource type cannot be changed in import. Resource identifier: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
         <target state="final">Empty strings are not allowed as values.</target>

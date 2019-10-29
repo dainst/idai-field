@@ -52,8 +52,8 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
-        if (msg === ImportErrors.INVALID_DROPDOWN_RANGE_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
 
+        if (msg === ImportErrors.INVALID_DROPDOWN_RANGE_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
         if (msg === ImportErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
         if (msg === ImportErrors.BAD_INTERRELATION) replacement = M.IMPORT_EXEC_NOT_INTERRELATED;
@@ -77,6 +77,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE) replacement = M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE;
         if (msg === ImportErrors.TARGET_TYPE_RANGE_MISMATCH) replacement = M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH;
         if (msg === ImportErrors.MUST_NOT_BE_EMPTY_STRING) replacement = M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING;
+        if (msg === ImportErrors.TYPE_CANNOT_BE_CHANGED) replacement = M.IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;
         if (msg === ImportErrors.INVALID_FIELDS) {

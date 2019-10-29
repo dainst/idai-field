@@ -2,6 +2,7 @@ import {Document} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 
 
+// TODO rename
 export async function preprocessDocuments(documents: Array<Document>, find: Function, mergeMode: boolean) {
 
     for (let document of documents) {

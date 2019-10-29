@@ -8,6 +8,7 @@ import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -33,20 +34,24 @@ export class ResourcesMapComponent {
     public activePopoverMenu: PopoverMenu = 'none';
 
 
-    constructor(
-        public loading: Loading,
-        public viewFacade: ViewFacade,
-        public resourcesComponent: ResourcesComponent,
-        private persistenceManager: PersistenceManager,
-        private usernameProvider: UsernameProvider,
-        private settingsService: SettingsService,
-        private messages: Messages,
-        private datastore: DocumentReadDatastore
-    ) {
+    constructor(datastore: DocumentReadDatastore,
+                changesStream: ChangesStream,
+                public loading: Loading,
+                public viewFacade: ViewFacade,
+                public resourcesComponent: ResourcesComponent,
+                private persistenceManager: PersistenceManager,
+                private usernameProvider: UsernameProvider,
+                private settingsService: SettingsService,
+                private messages: Messages) {
+
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 
-        this.datastore.get('project').then(projectDocument => {
+        datastore.get('project').then(projectDocument => {
             this.coordinateReferenceSystem = projectDocument.resource.coordinateReferenceSystem;
+        });
+
+        changesStream.projectDocumentNotifications().subscribe(projectDocument => {
+           this.coordinateReferenceSystem = projectDocument.resource.coordinateReferenceSystem;
         });
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {

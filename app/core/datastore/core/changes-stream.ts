@@ -22,6 +22,7 @@ import {SettingsService} from '../../settings/settings-service';
 export class ChangesStream {
 
     private remoteChangesObservers: Array<Observer<Document>> = [];
+    private projectDocumentObservers: Array<Observer<Document>> = [];
 
     /**
      * For each incoming document, we wait a short and random amount of time
@@ -31,9 +32,11 @@ export class ChangesStream {
     private documentsScheduledToWelcome: { [resourceId: string]: any } = {};
 
 
-    constructor(private datastore: PouchdbDatastore, private indexFacade: IndexFacade,
+    constructor(private datastore: PouchdbDatastore,
+                private indexFacade: IndexFacade,
                 private documentCache: DocumentCache<Document>,
-                private typeConverter: TypeConverter<Document>, private settingsService: SettingsService) {
+                private typeConverter: TypeConverter<Document>,
+                private settingsService: SettingsService) {
 
         datastore.deletedNotifications().subscribe(document => {
 
@@ -42,6 +45,10 @@ export class ChangesStream {
         });
 
         datastore.changesNotifications().subscribe(async document => {
+
+            if (document.resource.type === 'Project') {
+                ObserverUtil.notify(this.projectDocumentObservers, this.typeConverter.convert(document));
+            }
 
             if (await ChangesStream.isRemoteChange(
                     document,
@@ -67,6 +74,9 @@ export class ChangesStream {
 
     public remoteChangesNotifications =
         (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
+
+    public projectDocumentNotifications =
+        (): Observable<Document> => ObserverUtil.register(this.projectDocumentObservers);
 
 
     private async onTimeout(document: Document) {

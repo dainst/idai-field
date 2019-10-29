@@ -30,7 +30,7 @@ describe('mergeDocument', () => {
             resource: { anotherField: null,}
         };
 
-        const result = mergeDocument(target, source as any, true);
+        const result = mergeDocument(target, source as any);
         expect(result.resource.shortDescription).toEqual('shortDescription1');
         expect(result.resource.anotherField).toBeUndefined();
     });
@@ -52,7 +52,7 @@ describe('mergeDocument', () => {
             }
         };
 
-        const result = mergeDocument(target, source, false);
+        const result = mergeDocument(target, source);
         expect(result.resource.shortDescription).toEqual('shortDescription2');
         expect(result.resource.anotherField).toEqual('field2');
     });
@@ -74,7 +74,7 @@ describe('mergeDocument', () => {
             }
         };
 
-        const result = mergeDocument(target, source, false);
+        const result = mergeDocument(target, source);
         expect(result.resource.identifier).toEqual('identifier1');
         expect(result.resource.id).toEqual('id1');
         expect(result.resource.type).toEqual('Object');

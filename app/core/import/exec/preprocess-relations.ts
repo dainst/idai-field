@@ -12,6 +12,7 @@ import {ImportOptions} from './default-import';
 
 /**
  * Converts identifiers in relations to ids.
+ * Converts PARENT relations to LIES_WITHIN.
  *
  * @throws ImportErrors.*
  * @throws [MISSING_RELATION_TARGET]

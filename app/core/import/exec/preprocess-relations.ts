@@ -13,6 +13,7 @@ import {ImportOptions} from './default-import';
 /**
  * Converts identifiers in relations to ids, if useIdentifiersInRelations is true.
  * Converts PARENT relations to LIES_WITHIN.
+ * Makes sure the resources have at least an empty relations map.
  *
  * @throws ImportErrors.*
  * @throws [MISSING_RELATION_TARGET]
@@ -33,7 +34,7 @@ export async function preprocessRelations(documents: Array<Document>,
 
     for (let document of documents) {
         const relations = document.resource.relations;
-        if (!relations) continue;
+        if (!relations) return document.resource.relations = {};
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier);
         if (useIdentifiersInRelations) {

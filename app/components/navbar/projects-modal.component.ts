@@ -7,6 +7,7 @@ import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
 import {MenuService} from '../../menu-service';
 import {StateSerializer} from '../../common/state-serializer';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -43,7 +44,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private messages: Messages,
-                private stateSerializer: StateSerializer) {
+                private stateSerializer: StateSerializer,
+                private datastore: DocumentReadDatastore) {
     }
 
 
@@ -148,17 +150,14 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
         MenuService.setContext('docedit');
         this.subModalOpened = true;
 
-        const document = this.settingsService.getProjectDocument();
-
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        doceditRef.componentInstance.setDocument(document);
+        doceditRef.componentInstance.setDocument(await this.datastore.get('project'));
         doceditRef.componentInstance.activeGroup = activeGroup;
 
         try {
             await doceditRef.result;
-            await this.settingsService.loadProjectDocument();
         } catch(err) {
             // Docedit modal has been canceled
         }

@@ -5,7 +5,7 @@ import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../view/view-facade';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {SettingsService} from '../../../core/settings/settings-service';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 
 
 @Component({
@@ -43,12 +43,12 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     constructor(resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
-                settingsService: SettingsService,
+                datastore: DocumentReadDatastore,
                 renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, settingsService, renderer, i18n);
+        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (this.type) this.reset();

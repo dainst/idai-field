@@ -36,7 +36,6 @@ export class SettingsService {
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
-    private projectDocument: Document;
 
 
     constructor(private imagestore: Imagestore,
@@ -60,7 +59,6 @@ export class SettingsService {
 
     public getDbs = () => this.settings.dbs;
 
-    public getProjectDocument = () => this.projectDocument;
 
     public getSelectedProject(): string {
 
@@ -72,34 +70,6 @@ export class SettingsService {
     public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
 
 
-    public async loadProjectDocument(isBoot = false): Promise<void> {
-
-        delete this.projectDocument; // making sure we start fresh
-
-        try { // new
-            this.projectDocument = await this.pouchdbManager.getDbProxy()
-                .get('project', { conflicts: true });
-        } catch (_) {
-            console.warn('Didn\'t find new style project document, try old method');
-        }
-
-        if (!this.projectDocument) {
-            try { // old
-                this.projectDocument = await this.pouchdbManager.getDbProxy()
-                    .get(this.getSelectedProject(), { conflicts: true });
-            } catch (_) {
-                if (isBoot) {
-                    console.warn('Didn\'t find old style project document either, creating new one');
-                    await this.pouchdbManager.getDbProxy().put(
-                        SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
-                    );
-                    this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
-                }
-            }
-        }
-    }
-
-
     public async bootProjectDb(settings: Settings): Promise<void> {
 
         await this.updateSettings(settings);
@@ -108,7 +78,7 @@ export class SettingsService {
             new FieldSampleDataLoader(this.converter, this.settings.imagestorePath, this.settings.locale));
 
         if (this.settings.isSyncActive) await this.startSync_();
-        await this.loadProjectDocument(true);
+        await this.createProjectDocumentIfMissing();
     }
 
 
@@ -256,6 +226,19 @@ export class SettingsService {
                     this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
                 });
             });
+    }
+
+
+    private async createProjectDocumentIfMissing() {
+
+        try {
+            await this.pouchdbManager.getDbProxy().get('project');
+        } catch (_) {
+            console.warn('Didn\'t find project document, creating new one');
+            await this.pouchdbManager.getDbProxy().put(
+                SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
+            );
+        }
     }
 
 

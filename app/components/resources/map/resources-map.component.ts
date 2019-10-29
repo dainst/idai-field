@@ -7,6 +7,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -28,6 +29,7 @@ export class ResourcesMapComponent {
     @Input() activeTab: string;
 
     public parentDocument: FieldDocument|undefined;
+    public coordinateReferenceSystem: string;
     public activePopoverMenu: PopoverMenu = 'none';
 
 
@@ -38,17 +40,19 @@ export class ResourcesMapComponent {
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
         private settingsService: SettingsService,
-        private messages: Messages
+        private messages: Messages,
+        private datastore: DocumentReadDatastore
     ) {
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
+
+        this.datastore.get('project').then(projectDocument => {
+            this.coordinateReferenceSystem = projectDocument.resource.coordinateReferenceSystem;
+        });
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.parentDocument = this.getParentDocument(path);
         });
     }
-
-
-    public getProjectDocument = () => this.settingsService.getProjectDocument();
 
 
     public async onKeyDown(event: KeyboardEvent) {

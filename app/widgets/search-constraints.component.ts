@@ -4,9 +4,9 @@ import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {SettingsService} from '../core/settings/settings-service';
 import {ValuelistUtil} from '../core/util/valuelist-util';
 import {clone} from '../core/util/object-util';
+import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 
 
 type ConstraintListItem = {
@@ -44,7 +44,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
-                          private settingsService: SettingsService,
+                          private datastore: DocumentReadDatastore,
                           private renderer: Renderer2,
                           protected i18n: I18n) {}
 
@@ -52,7 +52,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     async ngOnChanges(changes: SimpleChanges) {
 
         await this.removeInvalidConstraints();
-        this.reset();
+        await this.reset();
     }
 
 
@@ -106,7 +106,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         constraints[constraintName] = this.searchTerm;
         await this.setCustomConstraints(constraints);
 
-        this.reset();
+        await this.reset();
     }
 
 
@@ -116,7 +116,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         delete constraints[constraintName];
         await this.setCustomConstraints(constraints);
 
-        this.reset();
+        await this.reset();
     }
 
 
@@ -148,7 +148,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public handleClick(event: Event) {
+    public async handleClick(event: Event) {
 
         if (!this.showConstraintsMenu) return;
 
@@ -160,7 +160,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         } while (target);
 
         this.closeConstraintsMenu();
-        this.reset();
+        await this.reset();
     }
 
 
@@ -185,9 +185,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValuelist(field: FieldDefinition): string[] {
+    public async getValuelist(field: FieldDefinition): Promise<string[]> {
 
-        return ValuelistUtil.getValuelist(field, this.settingsService.getProjectDocument());
+        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
     }
 
 
@@ -197,10 +197,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     protected abstract async setCustomConstraints(constraints: { [name: string]: string }): Promise<void>;
 
 
-    protected reset() {
+    protected async reset() {
 
         this.updateConstraintListItems();
-        this.updateFields();
+        await this.updateFields();
         this.removeUserEntries();
     }
 
@@ -210,24 +210,24 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
 
         Object.keys(customConstraints)
-            .filter(constraintName => this.isInvalidConstraint(constraintName))
+            .filter(async constraintName => await this.isInvalidConstraint(constraintName))
             .forEach(constraintName => delete customConstraints[constraintName]);
 
         await this.setCustomConstraints(customConstraints);
     }
 
 
-    private isInvalidConstraint(constraintName: string): boolean {
+    private async isInvalidConstraint(constraintName: string): Promise<boolean> {
 
         const field: FieldDefinition|undefined
             = this.getField(SearchConstraintsComponent.getFieldName(constraintName));
         if (!field) return true;
 
-        return this.isInvalidConstraintValue(constraintName, field);
+        return await this.isInvalidConstraintValue(constraintName, field);
     }
 
 
-    private isInvalidConstraintValue(constraintName: string, field: FieldDefinition): boolean {
+    private async isInvalidConstraintValue(constraintName: string, field: FieldDefinition): Promise<boolean> {
 
         if (!field.inputType
             || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
@@ -236,7 +236,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             return false;
         }
 
-        const valuelist: string[] = this.getValuelist(field);
+        const valuelist: string[] = await this.getValuelist(field);
         return !valuelist.includes(this.getCustomConstraints()[constraintName]);
     }
 
@@ -289,11 +289,15 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private updateFields() {
+    private async updateFields() {
 
         const fields: Array<FieldDefinition> = this.defaultFields
-            .concat(this.projectConfiguration.getFieldDefinitions(this.type))
+            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.type)))
             .filter(field => field.constraintIndexed && this.getSearchInputType(field));
+
+        for (let field of fields) {
+            if (field.valuelistFromProjectField) field.valuelist = await this.getValuelist(field);
+        }
 
         this.fields = this.configureDropdownRangeFields(fields)
             .filter(field => {

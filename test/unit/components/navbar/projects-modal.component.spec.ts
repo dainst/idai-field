@@ -19,7 +19,8 @@ describe('ProjectsModalComponent', () => {
         );
         messages = jasmine.createSpyObj('messages', ['add']);
         projectsModalComponent = new ProjectsModalComponent(
-            undefined, settingsService, undefined, messages, new StateSerializer()
+            undefined, settingsService, undefined, messages, new StateSerializer(),
+            undefined
         );
     });
 

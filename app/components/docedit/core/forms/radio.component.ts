@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {SettingsService} from '../../../../core/settings/settings-service';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
@@ -25,15 +24,14 @@ export class RadioComponent implements OnChanges {
     public valuelist: string[];
 
 
-    constructor(private settingsService: SettingsService,
-                private datastore: DocumentReadDatastore) {}
+    constructor(private datastore: DocumentReadDatastore) {}
 
 
     async ngOnChanges() {
 
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
-            this.settingsService.getProjectDocument(),
+            await this.datastore.get('project'),
             await HierarchyUtil.getParent(this.resource, this.datastore)
         );
     }

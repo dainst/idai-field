@@ -113,8 +113,8 @@ export class ChangesStream {
     private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {
 
         return await asyncMap((revisionId: string) => {
-                return this.datastore.fetchRevision(resourceId, revisionId);
-            })(conflicts);
+            return this.datastore.fetchRevision(resourceId, revisionId);
+        })(conflicts);
     }
 
 
@@ -128,25 +128,17 @@ export class ChangesStream {
             this.documentCache.reassign(convertedDocument);
         }
 
-        if (document.resource.type === 'Project') {
-            await this.settingsService.loadProjectDocument();
-        }
-
         ObserverUtil.notify(this.observers, convertedDocument);
     }
 
 
     private async updateResolvedDocument([document, conflicts]: [Document, Array<RevisionId>]): Promise<Document> {
 
-        console.log("update", document);
-
         try {
-
             return await this.datastore.update(
                 document,
                 this.settingsService.getUsername(),
                 conflicts);
-
         } catch (errWithParams) {
             // If tho clients have auto-resolved the conflict are exactly the same time,
             // the document is already updated and its revisions already removed. Since

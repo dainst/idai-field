@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FieldDocument, FieldResource, FieldGeometry} from 'idai-components-2';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
@@ -24,12 +24,12 @@ declare global {
 /**
  * @author Thomas Kleinke
  */
-export class MapComponent implements OnChanges {
+export class MapComponent implements AfterViewInit, OnChanges {
 
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
     @Input() parentDocument: FieldDocument;
-    @Input() projectDocument: FieldDocument;
+    @Input() coordinateReferenceSystem: string;
     @Input() update: boolean;
 
     @Output() onSelectDocument: EventEmitter<FieldDocument|undefined>
@@ -410,9 +410,9 @@ export class MapComponent implements OnChanges {
 
     private getCoordinateReferenceSystem(): L.CRS {
 
-        if (!this.projectDocument) return L.CRS.Simple;
+        if (!this.coordinateReferenceSystem) return L.CRS.Simple;
 
-        switch (this.projectDocument.resource.coordinateReferenceSystem) {
+        switch (this.coordinateReferenceSystem) {
             case 'EPSG4326 (WGS 84)':
                 return L.CRS.EPSG4326;
             case 'EPSG3857 (WGS 84 Web Mercator)':

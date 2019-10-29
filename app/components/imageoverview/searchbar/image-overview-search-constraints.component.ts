@@ -5,7 +5,7 @@ import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.compo
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {SettingsService} from '../../../core/settings/settings-service';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 
 
 @Component({
@@ -36,12 +36,12 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
-                settingsService: SettingsService,
+                datastore: DocumentReadDatastore,
                 renderer: Renderer2,
                 i18n: I18n,
                 private imageOverviewFacade: ImageOverviewFacade) {
 
-        super(imageOverviewSearchBarComponent, projectConfiguration, settingsService, renderer, i18n);
+        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
     }
 
 

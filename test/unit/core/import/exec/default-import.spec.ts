@@ -78,10 +78,14 @@ describe('DefaultImport', () => {
         }));
 
         await (buildImportFunction(
-            mockValidator, operationTypeNames,
+            mockValidator,
+            operationTypeNames,
             () => undefined,
-             () => '101', undefined, {mergeMode: true, permitDeletions: false}))(
-            [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
+            () => '101', undefined,
+            { mergeMode: true, permitDeletions: false }))(
+            [{ resource: { id: '1', relations: {} } } as any],
+            mockDatastore,
+            'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).toHaveBeenCalled();

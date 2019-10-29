@@ -10,7 +10,7 @@ import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
  */
 export function mergeDocument(into: Document, additional: NewDocument): Document {
 
-    console.log('mergeDocument', additional);
+    // console.log('mergeDocument', additional);
 
     const target = clone(into);
 

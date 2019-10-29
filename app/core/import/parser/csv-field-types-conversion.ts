@@ -37,10 +37,11 @@ export module CsvFieldTypesConversion {
             if (!fieldDefinition) continue;
 
             const inputType = fieldDefinition.inputType as unknown as FieldType;
-            convertTypeDependent(resource, fieldName, inputType);
+            if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
         }
 
         for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
+            if (resource.relations[relationName] === null) continue;
             resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
         }
 

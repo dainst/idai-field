@@ -8,35 +8,39 @@ export module CsvRowsConversion {
 
     const PATH_SEPARATOR = '.';
 
+    type Field = string;
+
 
     export function parse(separator: string) {
 
         return (content: string): Array<ObjectStruct> => {
+
             const rows: string[][] = getRows(content, separator);
             if (rows.length < 0) return [];
-
             const headings: string[] = rows.shift() as string[];
-
-            return map((row: string[]) => makeStruct(headings)(row))(rows);
+            return map((row: string[]) => convertRowToStruct(headings, row))(rows);
         }
     }
 
 
-    function makeStruct(headings: string[]) {
+    function convertRowToStruct(headings: string[], row: string[]): any {
 
         return reduce((struct, fieldOfRow, i: number) => {
             insertFieldIntoDocument(struct, headings[i], fieldOfRow);
             return struct as ObjectStruct;
-        }, {});
+        }, {})(row);
     }
 
 
-    function insertFieldIntoDocument(objectStruct: any, field: any, fieldOfRow: any) {
+    const convertIfEmpty = (val: string) => val === '' ? null : val;
 
-        if (field.includes(PATH_SEPARATOR)) {
-            implodePaths(objectStruct, field.split(PATH_SEPARATOR), fieldOfRow);
+
+    function insertFieldIntoDocument(struct: any, fieldOfHeading: any, fieldOfRow: any) {
+
+        if (fieldOfHeading.includes(PATH_SEPARATOR)) {
+            implodePaths(struct, fieldOfHeading.split(PATH_SEPARATOR), fieldOfRow);
         } else {
-            (objectStruct as any)[field] = fieldOfRow;
+            (struct as any)[fieldOfHeading] = convertIfEmpty(fieldOfRow);
         }
     }
 
@@ -48,7 +52,7 @@ export module CsvRowsConversion {
 
         if (pathSegments.length < 2) {
 
-            currentSegmentObject[index] = val;
+            currentSegmentObject[index] = convertIfEmpty(val);
             return;
         }
 
@@ -62,7 +66,7 @@ export module CsvRowsConversion {
     }
 
 
-    function getRows(content: string, separator: string): string[][] {
+    function getRows(content: string, separator: string): Field[][] {
 
         let rows: string[][] = [];
         let currentRow: string[] = [];

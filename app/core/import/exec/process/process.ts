@@ -65,7 +65,7 @@ export async function process(documents: Array<Document>,
     try {
         assertNoDuplicates(documents);
 
-        const processedDocuments = processDocuments(documents, validator, importOptions);
+        const processedDocuments = processDocuments(documents, validator, importOptions.mergeMode === true);
 
         const relatedDocuments = await processRelations(
             processedDocuments,
@@ -94,21 +94,21 @@ function assertNoDuplicates(documents: Array<Document>) {
 /**
  * @returns clones of the documents with their properties adjusted
  */
-function processDocuments(documents: Array<Document>, validator: ImportValidator, importOptions: ImportOptions)
+function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean)
         : Array<Document> {
 
     return documents.map((document: Document) => {
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
         return validate(
-            mergeOrUseAsIs(document, importOptions),
+            mergeOrUseAsIs(document, mergeMode),
             validator,
-            importOptions.mergeMode === true);
+            mergeMode);
     });
 }
 
 
 function mergeOrUseAsIs(document: NewDocument|Document,
-                        {mergeMode, permitDeletions}: ImportOptions): Document {
+                        mergeMode: boolean): Document {
 
     return !mergeMode
         ? document as Document

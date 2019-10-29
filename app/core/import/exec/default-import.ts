@@ -5,10 +5,10 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {process} from './process/process';
+import {MERGE_TARGET, process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
-import {preprocessDocuments} from './preprocess-documents';
+import {ImportErrors as E} from './import-errors';
 
 
 export interface ImportOptions {
@@ -85,6 +85,22 @@ export function buildImportFunction(validator: ImportValidator,
             updateErrors.push(errWithParams)
         }
         return { errors: updateErrors, successfulImports: documents.length };
+    }
+}
+
+
+async function preprocessDocuments(documents: Array<Document>, find: Function, mergeMode: boolean) {
+
+    for (let document of documents) {
+        const existingDocument = await find(document.resource.identifier);
+        if (mergeMode) {
+            if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
+            document._id = existingDocument._id;
+            document.resource.id = existingDocument.resource.id;
+            (document as any)[MERGE_TARGET] = existingDocument;
+        } else if (existingDocument) {
+            throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
+        }
     }
 }
 

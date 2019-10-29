@@ -100,20 +100,18 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
     return documents.map((document: Document) => {
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
         return validate(
-            mergeOrUseAsIs(document, mergeMode),
+            mergeOrUseAsIs(document),
             validator,
             mergeMode);
     });
 }
 
 
-function mergeOrUseAsIs(document: NewDocument|Document,
-                        mergeMode: boolean): Document {
+function mergeOrUseAsIs(document: NewDocument|Document): Document {
 
-    // TODO replace mergeMode param by lookup if mergeTarget exists
-    return !mergeMode
-        ? document as Document
-        : mergeDocument((document as any)['mergeTarget'], dissoc('mergeTarget')(document));
+    return (document as any)[MERGE_TARGET]
+        ? mergeDocument((document as any)[MERGE_TARGET], dissoc(MERGE_TARGET)(document))
+        : document as Document;
 
 }
 
@@ -127,5 +125,8 @@ function validate(document: Document, validator: ImportValidator, mergeMode: boo
     validator.assertIsWellformed(document);
     return document;
 }
+
+
+export const MERGE_TARGET = 'mergeTarget';
 
 

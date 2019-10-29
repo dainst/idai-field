@@ -34,7 +34,10 @@ export async function preprocessRelations(documents: Array<Document>,
 
     for (let document of documents) {
         const relations = document.resource.relations;
-        if (!relations) return document.resource.relations = {};
+        if (!relations) {
+            document.resource.relations = {};
+            continue;
+        }
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier);
         if (useIdentifiersInRelations) {

@@ -3894,6 +3894,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
+        <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
+        <target state="final">Empty strings are not allowed as values.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
         <target state="final">Missing definition for 'Recorded in operation'. This assignment is mandatory.</target>

@@ -22,7 +22,7 @@ describe('preprocess-fields', () => {
            preprocessFields([document], false);
            fail();
        } catch (expected) {
-           expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
+           expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
        }
    });
 
@@ -65,7 +65,7 @@ describe('preprocess-fields', () => {
             preprocessFields([document], false);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
+            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
         }
     });
 
@@ -109,7 +109,7 @@ describe('preprocess-fields', () => {
             preprocessFields([document], false);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING, '1.']);
+            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
         }
     });
 

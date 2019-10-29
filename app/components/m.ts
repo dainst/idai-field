@@ -107,6 +107,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
     public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
+    public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -856,6 +857,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.mustBeInSameOperation',
                 value: 'Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\''
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING] = {
+            content: i18n({
+                id: 'messages.import.error.mustNotBeEmptyString',
+                value: 'Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.'
             }),
             level: 'danger',
             params: ['?', '?'],

@@ -21,7 +21,7 @@ function preprocessFieldsForResource(permitDeletions: boolean) { return (resourc
     try {
         collapseEmptyProperties(resource, permitDeletions);
     } catch (e) {
-        if (e === ImportErrors.MUST_NOT_BE_EMPTY_STRING) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING, resource.identifier];
+        if (e === ImportErrors.MUST_NOT_BE_EMPTY_STRING) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
     }
 }}
 

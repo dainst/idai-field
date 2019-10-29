@@ -104,9 +104,7 @@ export class DoceditComponent {
 
         this.documentHolder.setDocument(document);
 
-        this.showDoceditImagesTab = (!
-            (this.typeUtility.getTypeAndSubtypes('Image'))[document.resource.type]
-        );
+        this.showDoceditImagesTab = !this.typeUtility.isSubtype(document.resource.type, 'Image');
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);

@@ -22,18 +22,18 @@ export class TaskbarComponent {
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private synchronizationStatus: SynchronizationStatus,
-                remoteChangesStream: ChangesStream) {
+                changesStream: ChangesStream) {
 
-        this.listenToRemoteChanges(remoteChangesStream);
+        this.listenToRemoteChanges(changesStream);
     }
 
 
     public isConnected = (): boolean => this.synchronizationStatus.isConnected();
 
 
-    private listenToRemoteChanges(remoteChangesStream: ChangesStream) {
+    private listenToRemoteChanges(changesStream: ChangesStream) {
 
-        remoteChangesStream.notifications().subscribe(() => {
+        changesStream.remoteChangesNotifications().subscribe(() => {
             this.receivingRemoteChanges = true;
             this.changeDetectorRef.detectChanges();
 

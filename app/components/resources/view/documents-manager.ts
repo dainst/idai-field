@@ -43,12 +43,13 @@ export class DocumentsManager {
 
     constructor(
         private datastore: FieldReadDatastore,
-        private remoteChangesStream: ChangesStream,
+        private changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number
     ) {
-        remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
+        changesStream.remoteChangesNotifications()
+            .subscribe(document => this.handleRemoteChange(document));
     }
 
 

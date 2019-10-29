@@ -21,7 +21,7 @@ import {SettingsService} from '../../settings/settings-service';
  */
 export class ChangesStream {
 
-    private observers: Array<Observer<Document>> = [];
+    private remoteChangesObservers: Array<Observer<Document>> = [];
 
     /**
      * For each incoming document, we wait a short and random amount of time
@@ -64,7 +64,9 @@ export class ChangesStream {
         });
     }
 
-    public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+
+    public remoteChangesNotifications =
+        (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
 
 
     private async onTimeout(document: Document) {
@@ -128,7 +130,7 @@ export class ChangesStream {
             this.documentCache.reassign(convertedDocument);
         }
 
-        ObserverUtil.notify(this.observers, convertedDocument);
+        ObserverUtil.notify(this.remoteChangesObservers, convertedDocument);
     }
 
 

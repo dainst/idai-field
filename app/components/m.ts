@@ -531,7 +531,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_EXEC_NO_LIES_WITHIN_SET] = {
             content: i18n({
                 id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
-                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'liesWithin\'-Zuordnungen haben.'
+                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isChildOf\'-Zuordnungen haben.'
             }),
             level: 'danger',
             params: [],

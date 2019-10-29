@@ -45,7 +45,7 @@ describe('CsvRowsConversion', () => {
         expect(structs[0]['field3']).toBe('Value: "XYZ"');
         expect(structs[0]['field4']).toBe('"XYZ"');
         expect(structs[0]['field5']).toBe('W,"X,Y",Z');
-        expect(structs[0]['field6']).toBe(undefined);
+        expect(structs[0]['field6']).toBe(null);
     });
 
 
@@ -110,5 +110,30 @@ describe('CsvRowsConversion', () => {
         const struct = structs[0];
         const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
         expect(nrEnumeratedItems).toBe(2);
+    });
+
+
+    it('empty fields on different levels', () => {
+
+        const struct = CsvRowsConversion.parse(',')(
+            'a\n' +
+            '""');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['a']).toBe(null);
+
+        const struct1 = CsvRowsConversion.parse(',')(
+            'a,a.b\n' +
+            '"",""');
+
+        expect(struct1.length).toBe(1);
+        expect(struct1[0]['a']['b']).toBe(null);
+
+        const struct2 = CsvRowsConversion.parse(',')(
+            'a,a.b,a.b.c\n' +
+            '"","",""');
+
+        expect(struct2.length).toBe(1);
+        expect(struct2[0]['a']['b']['c']).toBe(null);
     });
 });

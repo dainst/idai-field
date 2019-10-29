@@ -10,14 +10,13 @@ import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './exec/process/import-validator';
 import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
-import {ImportFunction} from './exec/types';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {buildImportFunction, ImportOptions} from './exec/default-import';
+import {buildImportFunction} from './exec/default-import';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
@@ -50,8 +49,8 @@ export module Importer {
      * @param usernameProvider
      * @param projectConfiguration
      * @param mainTypeDocumentId
-     * @param allowMergingExistingResources
-     * @param allowUpdatingRelationsOnMerge
+     * @param mergeMode
+     * @param permitDeletions
      * @param fileContent
      * @param generateId
      * @param selectedType should be defined in case format === csv
@@ -67,14 +66,14 @@ export module Importer {
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,
-                                   allowMergingExistingResources: boolean,
-                                   allowUpdatingRelationsOnMerge: boolean,
+                                   mergeMode: boolean,
+                                   permitDeletions: boolean,
                                    fileContent: string,
                                    generateId: () => string,
                                    selectedType?: IdaiType,
                                    separator?: string) {
 
-        const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
+        const mainTypeDocumentId_ = mergeMode ? '' : mainTypeDocumentId;
 
         const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
         const documents: Document[] = [];
@@ -95,8 +94,8 @@ export module Importer {
             importValidator,
             operationTypeNames,
             mainTypeDocumentId_,
-            allowMergingExistingResources,
-            allowUpdatingRelationsOnMerge,
+            mergeMode,
+            permitDeletions,
             getInverseRelation,
             generateId,
             postProcessDocument(projectConfiguration),
@@ -176,13 +175,15 @@ export module Importer {
                 importFunction = MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, { mergeMode: false, allowOverwriteRelationsInMergeMode: false});
+                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: false, permitDeletions: false});
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument, { mergeMode: true, allowOverwriteRelationsInMergeMode: false});
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: true, permitDeletions: false});
             default: // native | csv
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
-                    { mergeMode: mergeMode, allowOverwriteRelationsInMergeMode: updateRelationsOnMergeMode,
+                    { mergeMode: mergeMode, permitDeletions: updateRelationsOnMergeMode,
                         mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }
 

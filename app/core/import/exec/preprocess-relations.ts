@@ -3,7 +3,7 @@ import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {Relations} from 'idai-components-2/src/model/core/relations';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
-import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty, not} from 'tsfun';
+import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
 import {RESOURCE_ID} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
@@ -11,7 +11,8 @@ import {ImportOptions} from './default-import';
 
 
 /**
- * Converts identifiers in relations to ids.
+ * Converts identifiers in relations to ids, if useIdentifiersInRelations is true.
+ * Converts PARENT relations to LIES_WITHIN.
  *
  * @throws ImportErrors.*
  * @throws [MISSING_RELATION_TARGET]
@@ -26,21 +27,18 @@ export async function preprocessRelations(documents: Array<Document>,
                                           generateId: () => string,
                                           find: Find,
                                           get: Get,
-                                          { mergeMode, allowOverwriteRelationsInMergeMode,
-                                              useIdentifiersInRelations}: ImportOptions) {
+                                          { mergeMode, useIdentifiersInRelations}: ImportOptions) {
 
     const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
-    if ((!mergeMode || allowOverwriteRelationsInMergeMode)) {
-        for (let document of documents) {
-            const relations = document.resource.relations;
-            adjustRelations(document, relations);
-            removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-            if (useIdentifiersInRelations) {
-                await rewriteIdentifiersInRelations(relations, find, identifierMap);
-            } else {
-                await assertNoMissingRelationTargets(relations, get)
-            }
+    for (let document of documents) {
+        const relations = document.resource.relations;
+        adjustRelations(document, relations);
+        removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+        if (useIdentifiersInRelations) {
+            await rewriteIdentifiersInRelations(relations, find, identifierMap);
+        } else {
+            await assertNoMissingRelationTargets(relations, get)
         }
     }
 }
@@ -94,7 +92,9 @@ function adjustRelations(document: Document, relations: Relations) {
         .forEach(assertIsntArrayRelation);
 
     assertParentNotArray(relations[PARENT], document.resource.identifier);
-    if (relations[PARENT]) (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    if (relations[PARENT]) {
+        (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    }
 }
 
 
@@ -114,7 +114,8 @@ function assertIsNotArrayRelation(document: Document) {
 
     return (name: string) => {
 
-        if (not(isArray)(document.resource.relations[name])) throw [E.MUST_BE_ARRAY, document.resource.identifier];
+        const relationValue = document.resource.relations[name];
+        if (!isArray(relationValue) && relationValue !== null) throw [E.MUST_BE_ARRAY, document.resource.identifier];
     }
 }
 
@@ -128,6 +129,8 @@ function assertParentNotArray(parentRelation: any, resourceIdentifier: string) {
 function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifier: Identifier) {
 
     for (let relName of Object.keys(relations)) {
+        if (relations[relName] === null) continue;
+
         relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
         if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
     }

@@ -1,33 +1,46 @@
-import {Document, Resource} from 'idai-components-2';
+import {isNot, includedIn, isnt} from 'tsfun';
+import {NewDocument, Document, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
-import {isNot, includedIn} from 'tsfun';
+import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 
-
-const RECORDED_IN = 'isRecordedIn';
 
 
 /**
  * @author Daniel de Oliveira
  */
-export function mergeDocument(into: Document, additional: Document, allowOverwriteRelationsOnMerge: boolean): Document {
+export function mergeDocument(into: Document, additional: NewDocument): Document {
 
-    const clonedTarget = clone(into);
+    // console.log('mergeDocument', additional);
 
-    clonedTarget.resource =
-        Object.keys(additional.resource)
-            .filter(isNot(includedIn(Resource.CONSTANT_FIELDS)))
-            .reduce((acc: Resource, key: string) => {
-                if (additional.resource[key] !== undefined) acc[key] = clone(additional.resource[key]);
-                return acc;
-            }, clonedTarget.resource);
+    const target = clone(into);
 
-    if (allowOverwriteRelationsOnMerge) {
-        clonedTarget.resource.relations = clone(additional.resource.relations);
-        if (clonedTarget.resource.relations
-            && into.resource.relations
-            && into.resource.relations[RECORDED_IN]) {
-            clonedTarget.resource.relations[RECORDED_IN] = clone(into.resource.relations[RECORDED_IN]);
-        }
-    }
-    return clonedTarget;
+    target.resource =
+        overwriteOrDeleteProperties(
+            target.resource,
+            additional.resource,
+            Resource.CONSTANT_FIELDS);
+
+    if (!additional.resource.relations) return target;
+
+    target.resource.relations =
+        overwriteOrDeleteProperties(
+            target.resource.relations ? target.resource.relations : {},
+            additional.resource.relations,
+            [HIERARCHICAL_RELATIONS.RECORDED_IN]);
+
+    return target;
+}
+
+
+function overwriteOrDeleteProperties(target: any|undefined, source: any, exclusions: string[]) {
+
+    return Object.keys(source)
+        .filter(isNot(includedIn(exclusions)))
+        .reduce((target: {[propertyName: string]: string[]}, propertyName: string) => {
+
+            if (source[propertyName] === null) delete target[propertyName];
+            else target[propertyName] = source[propertyName];
+
+            return target;
+        }, target ? target : {});
 }

@@ -1,20 +1,23 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, to} from 'tsfun';
+import {duplicates, to, dissoc} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
-import {Document} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
-import {Find, Get, GetInverseRelation, Id, ProcessResult} from '../types';
-import {processDocuments} from './process-documents';
+import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../default-import';
+import {mergeDocument} from './merge-document';
 
 
 /**
+ * null values get interpreted as commands to delete the corresponding fields or relations in merge mode.
+ *
  * This function takes relations in the form, that only liesWithin is defined and never isRecordedIn.
  * isRecordedIn gets inferred. This especially is true in cases where a top level item references
  * its operation with liesWithin, which gets resolved to an empty liesWithin and a isRecordedIn in its place.
  *
+ * -------------------------------------------------------
  * ImportErrors (accessible via ProcessResult)
  *
  * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]
@@ -52,17 +55,17 @@ import {ImportOptions} from '../default-import';
 export async function process(documents: Array<Document>,
                               validator: ImportValidator,
                               operationTypeNames: string[],
-                              find: Find,
                               get: Get,
                               getInverseRelation: GetInverseRelation,
-                              importOptions : ImportOptions = {}): Promise<ProcessResult> {
+                              importOptions : ImportOptions = {})
+        : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 
     assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 
     try {
         assertNoDuplicates(documents);
 
-        const processedDocuments = await processDocuments(documents, validator, find, importOptions);
+        const processedDocuments = processDocuments(documents, validator, importOptions.mergeMode === true);
 
         const relatedDocuments = await processRelations(
             processedDocuments,
@@ -81,12 +84,47 @@ export async function process(documents: Array<Document>,
 }
 
 
-
 function assertNoDuplicates(documents: Array<Document>) {
 
     const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
     if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
 }
 
+
+/**
+ * @returns clones of the documents with their properties adjusted
+ */
+function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean)
+        : Array<Document> {
+
+    return documents.map((document: Document) => {
+        validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
+        return validate(
+            mergeOrUseAsIs(document, mergeMode),
+            validator,
+            mergeMode);
+    });
+}
+
+
+function mergeOrUseAsIs(document: NewDocument|Document,
+                        mergeMode: boolean): Document {
+
+    return !mergeMode
+        ? document as Document
+        : mergeDocument((document as any)['mergeTarget'], dissoc('mergeTarget')(document));
+
+}
+
+
+function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
+
+    if (!mergeMode) {
+        validator.assertIsKnownType(document);
+        validator.assertIsAllowedType(document, mergeMode);
+    }
+    validator.assertIsWellformed(document);
+    return document;
+}
 
 

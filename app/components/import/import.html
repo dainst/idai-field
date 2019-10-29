@@ -70,7 +70,7 @@
 
                     <div *ngIf="showMergeOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
-                               [(ngModel)]="allowMergingExistingResources" (change)="updateResourceTypes()">
+                               [(ngModel)]="mergeMode" (change)="updateResourceTypes()">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
                             Vorhandene Ressourcen ergänzen
                         </label>
@@ -97,17 +97,18 @@
                         geschieht per Bezeichner (Spalte <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="showMergeRelationsOption()" class="form-group form-check-inline">
+                    <div *ngIf="showPermitDeletionsOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
-                               [(ngModel)]="allowUpdatingRelationOnMerge">
-                        <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.relationsLabel">
-                            Relationen überschreiben
+                               [(ngModel)]="permitDeletions">
+                        <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
+                            Löschen erlauben
                         </label>
                     </div>
 
-                    <div *ngIf="showMergeRelationsOption()" class="import-info" i18n="@@import.mergeOption.relationsInfo">
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
-                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                    <div *ngIf="showPermitDeletionsOption()" class="import-info" i18n="@@import.mergeOption.deletionsInfo">
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
+                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null oder leerer String in JSONL),
+                        Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
                     </div>
 
                     <div class="form-group" *ngIf="format === 'csv' && file && !typeFromFileName">

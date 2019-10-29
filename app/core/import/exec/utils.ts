@@ -9,7 +9,6 @@ import {Relations} from 'idai-components-2/src/model/core/relations';
 import {Id, Identifier} from './types';
 import {asyncForEach} from 'tsfun-extra';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {ImportOptions} from './default-import';
 
 
 export const unionOfDocuments = unionBy(on('resource.id'));
@@ -47,6 +46,7 @@ export async function iterateRelationsInImport(
     asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
     for (let relation of Object.keys(relations)) {
+        if (relations[relation] === null) continue;
         await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
     }
 }

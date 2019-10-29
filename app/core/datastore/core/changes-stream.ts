@@ -8,10 +8,8 @@ import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {DatastoreUtil} from './datastore-util';
-import isConflicted = DatastoreUtil.isConflicted;
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
-import getConflicts = DatastoreUtil.getConflicts;
 import {ResourceId, RevisionId} from '../../../c';
 import {SettingsService} from '../../settings/settings-service';
 
@@ -48,14 +46,14 @@ export class ChangesStream {
             if (await ChangesStream.isRemoteChange(
                     document,
                     this.settingsService.getUsername())
-                || isConflicted(document)) {
+                || document._conflicts !== undefined) {
 
                 if (this.documentsScheduledToWelcome[document.resource.id]) {
                     clearTimeout(this.documentsScheduledToWelcome[document.resource.id]);
                     delete this.documentsScheduledToWelcome[document.resource.id];
                 }
 
-                if (isProjectDocument(document) && isConflicted(document)) {
+                if (isProjectDocument(document) && document._conflicts !== undefined) {
                     console.log('project document conflict detected');
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         () => this.onTimeout(document), Math.random() * 10000);
@@ -100,7 +98,7 @@ export class ChangesStream {
         if (!latestRevision.resource[STAFF]) latestRevision.resource[STAFF] = [];
         if (!latestRevision.resource[CAMPAIGNS]) latestRevision.resource[CAMPAIGNS] = [];
 
-        const conflicts = getConflicts(latestRevision); // fetch again, to make sure it is up to date after the timeout
+        const conflicts = latestRevision._conflicts;    // fetch again, to make sure it is up to date after the timeout
         if (!conflicts) return latestRevision;          // again, to make sure other client did not solve it in that exact instant
 
         const conflictedDocuments = await this.getConflictedDocuments(conflicts, document.resource.id);

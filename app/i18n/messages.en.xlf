@@ -375,7 +375,7 @@
         <target state="final">Resource type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -514,26 +514,29 @@
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.relationsLabel" datatype="html">
+      <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
         <source>
-                            Relationen überschreiben
+                            Löschen erlauben
                         </source>
         <target state="final">
-            Overwrite relations
+            Permit deletions
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
+      <trans-unit id="import.mergeOption.deletionsInfo" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
-                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
+                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null oder leerer String in JSONL),
+                        Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
                     </source>
         <target state="final">
-                        If this option is active, relations also can get updated. Relations not set in the import record are removed.
-                    </target>
+            Selecting this option, fields as well as relations not only can get updated, but also deleted.
+            This is based on the fields and relations in the import records which exist but are empty (null or empty string in JSONL).
+            Undefined Fields and relations on the other hand do not get modified at all.
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">108</context>
@@ -544,7 +547,7 @@
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -552,7 +555,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -560,7 +563,7 @@
         <target state="final">Field separator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -579,7 +582,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -593,7 +596,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -612,7 +615,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

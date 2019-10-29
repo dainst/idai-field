@@ -1,6 +1,7 @@
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import * as PouchDB from 'pouchdb';
 import {Static} from '../unit/static';
+import {TypeUtility} from '../../app/core/model/type-utility';
 
 
 /**
@@ -24,7 +25,7 @@ describe('DAOs/Convert/Subsystem', () => {
     function expectErr(err) {
 
         if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf('Unknown type') === -1) fail('Wrong Err' + err);
+        if (err.indexOf(TypeUtility.UNKNOWN_TYPE_ERROR) === -1) fail('Wrong Err' + err);
     }
 
 

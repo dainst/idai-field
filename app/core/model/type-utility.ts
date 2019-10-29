@@ -12,13 +12,15 @@ import {IdaiType} from '../configuration/model/idai-type';
  */
 export class TypeUtility {
 
+    public static UNKNOWN_TYPE_ERROR = 'TypeUtility.Errors.UnknownType';
+
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
-        if (!type) throw 'Unknown type "' + typeName + '"';
+        if (!type) throw [TypeUtility.UNKNOWN_TYPE_ERROR, typeName];
         return (type.name === superTypeName)
             || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
     }

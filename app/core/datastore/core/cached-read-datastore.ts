@@ -5,6 +5,7 @@ import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {IndexItem, SimpleIndexItem} from '../index/index-item';
+import {TypeUtility} from '../../model/type-utility';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -237,8 +238,12 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         const result: Array<Document> = await this.datastore.bulkFetch(ids);
 
         result.forEach(document => {
-            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
-            documents.push(this.documentCache.set(this.typeConverter.convert(document)));
+            try {
+                this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+                documents.push(this.documentCache.set(this.typeConverter.convert(document)));
+            } catch (errWithParams) {
+                if (errWithParams[0] !== TypeUtility.UNKNOWN_TYPE_ERROR) throw errWithParams;
+            }
         });
 
         return documents;

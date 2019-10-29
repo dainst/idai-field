@@ -1,10 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {on, is} from 'tsfun';
 import {Resource} from 'idai-components-2'
 import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
-import {SettingsService} from '../../../../../core/settings/settings-service';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
+import {DocumentReadDatastore} from '../../../../../core/datastore/document-read-datastore';
+
+
+type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
 
 
 @Component({
@@ -16,28 +19,21 @@ import {ProjectConfiguration} from '../../../../../core/configuration/project-co
 /**
  * @author Thomas Kleinke
  */
-export class EmptyValuelistInfoComponent {
+export class EmptyValuelistInfoComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() field: FieldDefinition;
 
+    public infoType: EmptyValuelistInfoType;
 
-    constructor(private settingsService: SettingsService,
+
+    constructor(private datastore: DocumentReadDatastore,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public getInfoType(): 'configuration'|'projectDocumentField'|'parent' {
+    async ngOnChanges() {
 
-        if (this.field.valuelist) {
-            return 'configuration';
-        } else if (ValuelistUtil.getValuelistFromProjectField(
-            this.field.valuelistFromProjectField as string,
-            this.settingsService.getProjectDocument()
-        ).length === 0) {
-            return 'projectDocumentField';
-        } else {
-            return 'parent';
-        }
+        this.infoType = await this.getInfoType();
     }
 
 
@@ -50,5 +46,20 @@ export class EmptyValuelistInfoComponent {
             .find(on('name', is(this.field.valuelistFromProjectField)));
 
         return field && field.label ? field.label : '';
+    }
+
+
+    private async getInfoType(): Promise<EmptyValuelistInfoType> {
+
+        if (this.field.valuelist) {
+            return 'configuration';
+        } else if (ValuelistUtil.getValuelistFromProjectField(
+            this.field.valuelistFromProjectField as string,
+            await this.datastore.get('project')
+        ).length === 0) {
+            return 'projectDocumentField';
+        } else {
+            return 'parent';
+        }
     }
 }

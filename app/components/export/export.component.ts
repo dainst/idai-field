@@ -145,14 +145,22 @@ export class ExportComponent implements OnInit {
 
     private async startGeojsonExport(filePath: string) {
 
-        await GeoJsonExporter.performExport(this.fieldDatastore, filePath, this.selectedOperationId);
+        await GeoJsonExporter.performExport(
+            this.fieldDatastore,
+            filePath,
+            this.selectedOperationId
+        );
     }
 
 
     private async startShapeFileExport(filePath: string) {
 
-        await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
-            this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
+        await ShapefileExporter.performExport(
+            this.settingsService.getSelectedProject(),
+            await this.documentDatastore.get('project'),
+            filePath,
+            this.selectedOperationId
+        );
     }
 
 
@@ -167,7 +175,8 @@ export class ExportComponent implements OnInit {
                 this.selectedType,
                 (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
-                CsvExporter.performExport(filePath));
+                CsvExporter.performExport(filePath)
+            );
         } catch(err) {
             console.error(err);
             throw [M.EXPORT_ERROR_GENERIC];

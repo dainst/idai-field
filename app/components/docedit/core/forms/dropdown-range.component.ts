@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {SettingsService} from '../../../../core/settings/settings-service';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
@@ -26,8 +25,7 @@ export class DropdownRangeComponent {
     private endActivated: boolean = false;
 
 
-    constructor(private settingsService: SettingsService,
-                private datastore: DocumentReadDatastore) {}
+    constructor(private datastore: DocumentReadDatastore) {}
 
 
     public activateEnd = () => this.endActivated = true;
@@ -37,7 +35,7 @@ export class DropdownRangeComponent {
 
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
-            this.settingsService.getProjectDocument(),
+            await this.datastore.get('project'),
             await HierarchyUtil.getParent(this.resource, this.datastore)
         );
     }

@@ -631,12 +631,12 @@
       <trans-unit id="import.mergeOption.deletionsInfo" datatype="html">
         <source>
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
-                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null oder leerer String in JSONL),
+                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null in JSON),
                         Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
                     </source>
         <target state="final">
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
-                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null oder leerer String in JSONL),
+                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null in JSON),
                         Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
                     </target>
         <context-group purpose="location">

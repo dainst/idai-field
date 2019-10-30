@@ -357,9 +357,6 @@
       "labNumber": {
         "inputType": "input"
       },
-      "weight": {
-        "inputType": "unsignedFloat"
-      },
       "sampleType": {
         "inputType": "radio",
         "valuelistId": "SampleBoha-sampleType-Boha"
@@ -372,16 +369,6 @@
         "inputType": "input"
       }
     },
-    "commons": [
-      "processor",
-      "date",
-      "description",
-      "dating",
-      "dimensionLength",
-      "dimensionWidth",
-      "dimensionVerticalExtent",
-      "spatialLocation"
-    ],
     "parent": "Find",
     "color": "#9ecae1"
   },

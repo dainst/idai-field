@@ -519,7 +519,7 @@
                             Löschen erlauben
                         </source>
         <target state="final">
-            Permit deletions
+            Permit deletion
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>

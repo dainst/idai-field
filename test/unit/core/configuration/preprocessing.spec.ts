@@ -54,36 +54,6 @@ describe('Preprocessing', () => {
         return configuration;
     }
 
-    /*
-    it('should add missing relations', function() {
-
-        delete configuration.relations; // in case someone defined it in before
-        // new ConfigurationPreprocessor([])
-        //     .addExtraFields(configuration);
-        expect(configuration.relations.length as any).toBe(0);
-    });
-
-
-    it('should add missing type fields', function() {
-
-        delete configuration.types[0].fields;
-        new ConfigurationPreprocessor([])
-            .addExtraFields(configuration);
-        expect(configuration.types[0].fields.length).toBe(0);
-    });
-    */
-
-
-    xit('should add extra fields', () => {
-
-        delete configuration.types['T1'].parent;
-
-        //Preprocessing.addExtraFields(configuration, { identifier: {} as FieldDefinition });
-
-        expect(configuration.types['T1'].fields['identifier']).toBeDefined();
-        expect(configuration.types['T1'].fields['aField']).toBeDefined();
-    });
-
 
     it('add an extra relation', () => {
 
@@ -94,7 +64,6 @@ describe('Preprocessing', () => {
         };
         configuration.relations = [];
 
-        //Preprocessing.addExtraFields(configuration, {});
         Preprocessing.addExtraRelations(configuration, [extraRelation]);
 
         expect(configuration.relations[0].name).toBe('R');
@@ -143,8 +112,6 @@ describe('Preprocessing', () => {
         };
 
         configuration = { identifier: 'test', types: { T1: t1 }, relations: []};
-        //Preprocessing.addExtraFields(addType(addType(configuration,'T1'), 'T1'), {});
-
 
         Preprocessing.addExtraRelations(configuration, [r1, r2]);
 
@@ -164,7 +131,6 @@ describe('Preprocessing', () => {
 
         configuration.relations = [];
 
-        //Preprocessing.addExtraFields(addType(addType(configuration)), {});
         Preprocessing.addExtraRelations(configuration, [r]);
 
         expect(configuration.relations[0].range[0]).toBe('T1');
@@ -181,7 +147,6 @@ describe('Preprocessing', () => {
 
         configuration.relations = [];
 
-        //Preprocessing.addExtraFields(addType(addType(configuration)), {});
         Preprocessing.addExtraRelations(configuration, [r]);
 
         expect(configuration.relations[0].domain[0]).toBe('T1');
@@ -318,24 +283,6 @@ describe('Preprocessing', () => {
         expect(configuration.types['A'].fields['a2'].constraintIndexed).toBeTruthy();
         expect(configuration.types['A'].fields['a3'].constraintIndexed).toBeTruthy();
     });
-
-
-    /*
-    it('applyCustom - merge group field into overwritten field', () => {
-
-        configuration.types['T1'].fields['bField'] = { group: 'time'};
-
-        const builtinTypes = {
-            T1: {
-                fields: {
-                    bField: {}
-                }
-            } as BuiltinTypeDefinition
-        };
-
-        Preprocessing.applyCustom(configuration.types, builtinTypes as any);
-        expect(configuration.types['T1'].fields['bField']['group']).toEqual('time');
-    });*/
 });
 
 

@@ -15,6 +15,7 @@ describe('DocumentHolder', () => {
 
     let docHolder;
     let datastore;
+    let validator;
 
 
     beforeEach(() => {
@@ -75,7 +76,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        const validator = jasmine.createSpyObj('Validator', [
+        validator = jasmine.createSpyObj('Validator', [
             'assertIsRecordedInTargetsExist', 'assertIdentifierIsUnique',
             'assertHasIsRecordedIn', 'assertNoFieldsMissing',
             'assertCorrectnessOfNumericalValues', 'assertGeometryIsValid']);
@@ -154,7 +155,9 @@ describe('DocumentHolder', () => {
     });
 
 
-    xit('throw exception if isRecordedIn relation is missing', async done => {
+    it('throw exception if isRecordedIn relation is missing', async done => {
+
+        validator.assertHasIsRecordedIn.and.callFake(() => { throw [M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]; });
 
         const document: Document = {
             _id: '1',
@@ -173,11 +176,10 @@ describe('DocumentHolder', () => {
         try {
             await docHolder.save();
             fail();
-            done();
         } catch (e) {
             expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]);
-            done();
         }
+        done();
     });
 
 

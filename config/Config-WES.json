@@ -99,10 +99,6 @@
     "hidden": [],
     "fields": {}
   },
-  "Pottery:default": {
-    "hidden": [],
-    "fields": {}
-  },
   "Metal:default": {
     "hidden": [],
     "fields": {}
@@ -112,10 +108,6 @@
     "fields": {}
   },
   "Bone:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Terracotta:default": {
     "hidden": [],
     "fields": {}
   },

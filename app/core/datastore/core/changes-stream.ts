@@ -95,8 +95,6 @@ export class ChangesStream {
 
 
     /**
-     * TODO review if unit tests sufficient
-     *
      * Fetches the latestRevision of the document and tries to solve detected conflicts.
      * If at least one conflict has been solved, updates the document in the database.
      *

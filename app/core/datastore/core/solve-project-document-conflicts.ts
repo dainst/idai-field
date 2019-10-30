@@ -6,6 +6,7 @@ import {RevisionId} from '../../../c';
 import {dissocIndices, penultimate, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
 import RESOURCE = Document.RESOURCE;
+import {clone} from '../../util/object-util';
 
 type ArrayIndex = number;
 
@@ -21,8 +22,6 @@ const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
 
 
 /**
- * TODO review if document is not modified in place (important for cases in which no conflicts gets solved)
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -30,18 +29,19 @@ export function solveProjectDocumentConflict(latestRevision: Document,
                                              conflictedRevisions: Array<Document>)
         : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
+    const clonedLatestRevision = clone(latestRevision);
     const conflictedSortedRevisions = DatastoreUtil.sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(
         conflictedSortedRevisions.map(to(Document.RESOURCE)),
-        latestRevision.resource,
+        clonedLatestRevision.resource,
         conflictedSortedRevisions.map(to(Document._REV)));
 
     if (resource[STAFF] && resource[STAFF].length === 0) delete resource[STAFF];
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(latestRevision);
+    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(clonedLatestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }

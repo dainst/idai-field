@@ -635,45 +635,4 @@ describe('ConfigLoader', () => {
             done();
         }
     });
-
-
-    xit('apply hidden and order configuration', async done => {
-
-        Object.assign(libraryTypes, {
-            'A:0': { extends: 'A', valuelists: {}, fields: { fieldA1: {}, fieldA3: {}, fieldA2: {} }, creationDate: '', createdBy: '', description: {}  }
-        });
-
-        // applyConfig({}, {}, {}, {
-        //         'A': ['fieldA1']
-        //     }, {}, {
-        //         types: ['A'],
-        //         fields: {
-        //             'A': ['fieldA1', 'fieldA2', 'fieldA3']
-        //         }
-        //     },
-        //     { 'A:0':  {} });
-
-
-        let pconf;
-        try {
-            pconf = await configLoader.go('', {},{ A: { fields: {}}}, [], {},
-                undefined, 'de'
-            );
-
-            expect(pconf.getTypesList()[0].fields[0].name).toEqual('fieldA1');
-            expect(pconf.getTypesList()[0].fields[0].visible).toBe(false);
-            expect(pconf.getTypesList()[0].fields[0].editable).toBe(false);
-            expect(pconf.getTypesList()[0].fields[1].name).toEqual('fieldA2');
-            expect(pconf.getTypesList()[0].fields[1].visible).toBe(true);
-            expect(pconf.getTypesList()[0].fields[1].editable).toBe(true);
-            expect(pconf.getTypesList()[0].fields[2].name).toEqual('fieldA3');
-            expect(pconf.getTypesList()[0].fields[2].visible).toBe(true);
-            expect(pconf.getTypesList()[0].fields[2].editable).toBe(true);
-
-            done();
-        } catch(err) {
-            fail(err);
-            done();
-        }
-    });
 });

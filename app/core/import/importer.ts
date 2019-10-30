@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, isnt, on, jsonClone} from 'tsfun';
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';

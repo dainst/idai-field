@@ -456,7 +456,7 @@ export class AppConfigurator {
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
             domain: ['Feature:inherit'],
-            range: ['Find:inherit', 'Feature:inherit', 'Inscription'],
+            range: ['Find:inherit', 'Feature:inherit'],
             sameMainTypeResource: true
         },
         {
@@ -505,7 +505,7 @@ export class AppConfigurator {
             inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Inscription'],
-            range: ['Feature:inherit', 'Find:inherit'],
+            range: ['Find:inherit'],
             sameMainTypeResource: true,
             editable: false
         },

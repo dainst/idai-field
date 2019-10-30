@@ -59,7 +59,7 @@ describe('mergeDocument', () => {
     });
 
 
-    it('dont overwrite identifier, id', () => { // TODO review, this does not make too much sense, identifier gets used to identify the merge resource in the first place
+    it('dont overwrite identifier, id', () => {
 
         const source = {
             _id: 'id2',

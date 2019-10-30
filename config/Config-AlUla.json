@@ -1,0 +1,42 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Feature:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

@@ -95,6 +95,7 @@ export class SettingsService {
         if (this.getSelectedProject().startsWith('castiglione')) customProjectName = 'Castiglione';
         if (this.getSelectedProject().startsWith('kephissostal')) customProjectName = 'Kephissostal';
         if (this.getSelectedProject().startsWith('monte-turcisi')) customProjectName = 'MonTur';
+        if (this.getSelectedProject().startsWith('al-ula')) customProjectName = 'AlUla';
 
         try {
             return await this.appConfigurator.go(

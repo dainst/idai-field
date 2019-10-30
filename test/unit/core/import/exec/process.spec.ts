@@ -86,20 +86,6 @@ describe('process()', () => {
     });
 
 
-    xit('remove self referencing relation target', async done => {
-
-        const result = await process([
-                d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['nf1', 'et1']})
-            ],
-            validator, opTypeNames, get, getInverse,
-            {mergeMode: false, permitDeletions: false});
-
-        expect(result[0][0].resource.relations['isAfter'].length).toEqual(1);
-        expect(result[0][0].resource.relations['isAfter'][0]).toEqual('et1');
-        done();
-    });
-
-
     it('child of existing operation', async done => {
 
         const result = await process([

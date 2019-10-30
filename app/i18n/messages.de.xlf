@@ -475,7 +475,7 @@
         <target state="final">Ressourcentyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -628,20 +628,42 @@
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.deletionsInfo" datatype="html">
+      <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
-                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null in JSON),
-                        Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
+                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </source>
         <target state="final">
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
-                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null in JSON),
-                        Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
+                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
+        <source>
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        bei denen das Feld in der Importdatei leer ist.
+                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                        unverändert.
+                    </source>
+        <target state="final">
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        bei denen das Feld in der Importdatei leer ist.
+                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                        unverändert.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -649,7 +671,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -657,7 +679,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -665,7 +687,7 @@
         <target state="final">Feldtrennzeichen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -685,7 +707,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -699,7 +721,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -719,7 +741,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

@@ -105,10 +105,21 @@
                         </label>
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption()" class="import-info" i18n="@@import.mergeOption.deletionsInfo">
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch
-                        entfernt werden. Als Grundlage hierfür dienen im Importdatensatz zwar aufgeführte, jedoch leere (null in JSON),
-                        Felder und Relationen. Nicht aufgeführte Felder und Relationen werden hingegen nicht berücksichtigt.
+                    <div *ngIf="showPermitDeletionsOption() && format === 'native'"
+                         class="import-info" i18n="@@import.mergeOption.deletionsInfo.jsonl">
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        denen in der Importdatei der Wert <i>null</i> zugewiesen ist.
+                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
+                    </div>
+
+                    <div *ngIf="showPermitDeletionsOption() && format === 'csv'"
+                         class="import-info" i18n="@@import.mergeOption.deletionsInfo.csv">
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        bei denen das Feld in der Importdatei leer ist.
+                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                        unverändert.
                     </div>
 
                     <div class="form-group" *ngIf="format === 'csv' && file && !typeFromFileName">

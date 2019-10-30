@@ -5,15 +5,13 @@ import {DatastoreUtil} from './datastore-util';
 import {RevisionId} from '../../../c';
 import {dissocIndices, penultimate, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
-
+import RESOURCE = Document.RESOURCE;
 
 type ArrayIndex = number;
 
 export const STAFF = 'staff';
 export const CAMPAIGNS = 'campaigns';
-const CRS = 'coordinateReferenceSystem'; // TODO consider in unit test
-const RESOURCE = 'resource';
-const REV_MARKER = '_rev';
+const CRS = 'coordinateReferenceSystem';
 
 const constantProjectFields = [CRS].concat(Resource.CONSTANT_FIELDS);
 
@@ -35,9 +33,9 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     const conflictedSortedRevisions = DatastoreUtil.sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(
-        conflictedSortedRevisions.map(to(RESOURCE)),
+        conflictedSortedRevisions.map(to(Document.RESOURCE)),
         latestRevision.resource,
-        conflictedSortedRevisions.map(to(REV_MARKER)));
+        conflictedSortedRevisions.map(to(Document._REV)));
 
     if (resource[STAFF] && resource[STAFF].length === 0) delete resource[STAFF];
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];

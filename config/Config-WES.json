@@ -137,12 +137,6 @@
   },
   "Pottery:default": {
     "fields": {
-      "hasCoat": {
-        "inputType": "boolean"
-      },
-      "decorationDescription": {
-        "inputType": "input"
-      },
       "vesselpart": {
         "inputType": "checkboxes",
         "valuelistId": "Pottery-vesselpart-WES"
@@ -182,9 +176,6 @@
       "temperParticles": {
         "inputType": "radio",
         "valuelistId": "Pottery-temperParticles-WES"
-      },
-      "temperTypeClay": {
-        "inputType": "input"
       },
       "coatOutsideType": {
         "inputType": "checkboxes",

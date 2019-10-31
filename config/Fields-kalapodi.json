@@ -6,15 +6,15 @@
       },
       "campaign": {
         "inputType": "checkboxes",
-        "valuelist": [
-          "2004",
-          "2009",
-          "2011",
-          "2015",
-          "2016",
-          "2017",
-          "2018"
-        ]
+        "valuelist": []
+      },
+      "supervisor": {
+        "inputType": "radio",
+        "valuelist": []
+      },
+      "processor": {
+            "inputType": "checkboxes",
+            "valuelist": []
       }
     }
   },
@@ -34,7 +34,17 @@
       "measuringPointID": {
         "inputType": "input"
       },
-
+      "measuringPointOrigin": {
+        "inputType": "radio",
+        "valuelist": [
+          "idaifield1",
+          "Fotoliste"
+        ]
+      },
+      "processor": {
+        "inputType": "checkboxes",
+        "valuelist": []
+      },
       "workflow": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -46,6 +56,9 @@
           "Detailbearbeitung fertig",
           "Fehlerhaft"
         ]
+      },
+      "if1MasseSonstige": {
+        "inputType": "input"
       },
       "fixMe": {
         "inputType": "input"
@@ -95,12 +108,34 @@
       },
       "sampleState": {
         "inputType": "radio",
-        "valuelist": [
-          "Stored",
-           "Submitted",
-            "Analyzed",
-             "Discarded"
-           ]
+        "valuelist": ["Stored", "Submitted", "Analyzed", "Discarded"]
+      }
+    }
+  },
+  "Feature": {
+    "fields": {
+      "if1AutoKlassifizierungOhneBefundart": {
+        "inputType": "input"
+      },
+      "if1SchichtKlassifizSonst": {
+        "inputType": "input"
+      },
+      "fixMe": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Image": {
+    "fields": {
+      "importTag": {
+        "inputType": "input"
+      },
+      "draughtsmen": {
+        "inputType": "checkboxes",
+        "valuelist": []
+      },
+      "fixMe": {
+        "inputType": "input"
       }
     }
   },
@@ -133,8 +168,114 @@
     }
   },
   "Metal": {
-    "parent": "Find",
     "fields": {
+      "objectTypeGeneral": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Schmuck",
+          "Gerät",
+          "Produktionsabfall",
+          "Skulptur",
+          "Waffe/Rüstung",
+          "unbestimmbar"
+        ]
+      },
+      "objectType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Anhänger",
+          "Armreif",
+          "Band",
+          "Barren",
+          "Beschlag",
+          "Blech",
+          "Einlage",
+          "Fibel",
+          "Gefäß",
+          "Gerät",
+          "Gewicht",
+          "Glocke",
+          "Gussform",
+          "Gusszapfen",
+          "Halbfabrikat",
+          "Helm",
+          "Kandelaber",
+          "Kette",
+          "Klinge",
+          "Knopf",
+          "Lampe",
+          "Lanzenspitze",
+          "Löffel",
+          "Meissel",
+          "Messer",
+          "Mobiliar",
+          "Nadel",
+          "Nagel",
+          "Obelos",
+          "Perle",
+          "Pfeilspitze",
+          "Plastik/Skulptur",
+          "Produktionsfragment",
+          "Projektil",
+          "Reibe",
+          "Ring",
+          "Ringbarren",
+          "Rührstab",
+          "Sarkophag",
+          "Schild",
+          "Schlacke",
+          "Schlüssel",
+          "Schmiedeabfall",
+          "Schmuck",
+          "Schnalle",
+          "Schreibgerät",
+          "Sichel",
+          "Siegel",
+          "Speerspitze",
+          "Spiegel",
+          "Spielstein",
+          "Spinnwirtel",
+          "Stabbarren",
+          "Strigilis",
+          "Türschloss",
+          "unbestimmbar",
+          "Waffe",
+          "Wasserleitung",
+          "Weinheber",
+          "Werkzeug",
+          "Zierbeschlag"
+        ]
+      },
+      "objectTypeSpecific": {
+        "inputType": "input"
+      },
+      "formDescription": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "amorph",
+          "ausladend",
+          "bauchig",
+          "breitoval",
+          "doppelkonisch",
+          "gewölbt",
+          "halbkugelig",
+          "hochoval",
+          "konisch",
+          "kreuzförmig",
+          "kugelförmig",
+          "länglich",
+          "quadratisch",
+          "rechteckig",
+          "rund",
+          "schlank",
+          "schmal",
+          "spindelförmig",
+          "stabförmig",
+          "tonnenförmig",
+          "trichterförmig",
+          "zylinderförmig"
+        ]
+      },
       "metalMaterial": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -155,7 +296,6 @@
     }
   },
   "Coin": {
-    "parent": "Find",
     "fields": {
       "metalMaterial": {
         "inputType": "checkboxes",
@@ -173,12 +313,273 @@
           "Zink",
           "Zinn"
         ]
+      },
+      "mint": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abdera",
+          "Abydos",
+          "Afrika",
+          "Agrigent",
+          "Aigai (Vergina)",
+          "Aiolis",
+          "Aitolischer Bund",
+          "Akanthus",
+          "Akkon",
+          "Alabanda",
+          "Alexandria",
+          "Alexandria Troas",
+          "Alexandrien",
+          "Amasra",
+          "Amathus",
+          "Ambianum (Amiens)",
+          "Ambracia",
+          "Amiens",
+          "Amisus",
+          "Amphipolis",
+          "Amrit",
+          "Anaktorio",
+          "Antiochia",
+          "Antiochia (Antakya)",
+          "Antiochia am Orontes",
+          "Apameia Kibotos",
+          "Apameia am Orontes",
+          "Apollonia",
+          "Apulien",
+          "Aquileia",
+          "Archaiischer Bund",
+          "Arelate (Arles)",
+          "Argos",
+          "Argos Amphilochicum",
+          "Arles",
+          "Arpi",
+          "Aruad",
+          "Asia Minor",
+          "Asien",
+          "Aspendos",
+          "Assos",
+          "Astibus",
+          "Athen",
+          "Aydın",
+          "Babylon",
+          "Barcino (Barcelona)",
+          "Beirut",
+          "Bozcaada",
+          "Byblos",
+          "Byzantion",
+          "Böotien",
+          "Caesaraugusta",
+          "Caesarea in Kappadokien",
+          "Cales",
+          "Camulodunum (Colchester)",
+          "Canosa di Puglia",
+          "Carnuntum",
+          "Carthago (Tunis)",
+          "Catania",
+          "Caulonia",
+          "Chalcedon",
+          "Chalkida",
+          "Chalkidiki",
+          "Chersones",
+          "Chios",
+          "Colchester",
+          "Colonia Agrippina (Köln)",
+          "Colonia Patricia",
+          "Comitatenses",
+          "Constantinopolis (Istanbul)",
+          "Crotone",
+          "Cyme",
+          "Damaskus",
+          "Diesseitiges Gallian / Norditalien",
+          "Dionysopolis",
+          "Dyrrhachium",
+          "Ekbatana",
+          "Elea",
+          "Elis",
+          "Emerita",
+          "Empüries",
+          "Ephesos",
+          "Eretria",
+          "Erythrai",
+          "Etrurien",
+          "Euböa",
+          "Foça",
+          "Gallien",
+          "Gela",
+          "Germe",
+          "Gortyn",
+          "Halikarnassos",
+          "Harran",
+          "Heraclea",
+          "Herakleia",
+          "Herakleia Pontike",
+          "Himera",
+          "Hispanien",
+          "Hispanien-Punisch",
+          "Histria",
+          "Homs",
+          "Ibiza",
+          "Idalion",
+          "Italien",
+          "Italien (Südosten)",
+          "Kabile",
+          "Kamarina",
+          "Karien",
+          "Karthago",
+          "Karystos",
+          "Kelenderis",
+          "Kertsch",
+          "Klazomenai",
+          "Knidos",
+          "Kolchis",
+          "Kolophon",
+          "Konstantinopel",
+          "Korfu",
+          "Korinth",
+          "Korinthischer Bund",
+          "Kos",
+          "Kydonia",
+          "Kyrenaika",
+          "Kyrene",
+          "Kyzikos",
+          "Köln",
+          "Lampsakos",
+          "Laodikeia am Lykos",
+          "Lapta",
+          "Larissa",
+          "Larnaka",
+          "Latakia",
+          "Lefkada",
+          "Lentini",
+          "Lete",
+          "Locri",
+          "Locri Opuntii (Opus)",
+          "Londinium",
+          "Lucera",
+          "Lugdunum",
+          "Lydien",
+          "Lykien",
+          "Lysimacheia",
+          "Lyttos",
+          "Magnesia am Mäander",
+          "Mainz",
+          "Makedonien",
+          "Makedonien (1. Region)",
+          "Mangalia",
+          "Marmetini",
+          "Maroneia",
+          "Marseille",
+          "Mediolanum",
+          "Megalopoli",
+          "Memphis",
+          "Messene",
+          "Messina",
+          "Metapont",
+          "Milas",
+          "Milet",
+          "Mithymna",
+          "Mittelitalien",
+          "Myriandrus",
+          "Myrina",
+          "Mytilini",
+          "Narbo",
+          "Naxos",
+          "Neapel",
+          "Nessebar",
+          "Nikomedia",
+          "Nisibis",
+          "Nuceria",
+          "Olbia",
+          "Oreus",
+          "Oria",
+          "Ostia Antica",
+          "Ouranoupolis",
+          "Paestum",
+          "Paphos",
+          "Parion",
+          "Paros",
+          "Pella",
+          "Peloponnes",
+          "Pergamon",
+          "Perge",
+          "Persien",
+          "Phanagoria",
+          "Phaselis",
+          "Phokis",
+          "Priene",
+          "Prusias ad Hypium",
+          "Ravenna",
+          "Reggio Calabria",
+          "Republik Zypern",
+          "Rhodos",
+          "Rom",
+          "Rom 4. Officina",
+          "Rouen",
+          "Salamis",
+          "Samos",
+          "Sardes",
+          "Sardinien",
+          "Segesta",
+          "Seleukia Pieria",
+          "Seleukia am Tigris",
+          "Selinus",
+          "Sestos",
+          "Side",
+          "Sidon",
+          "Sikyon",
+          "Sinop",
+          "Sirmium",
+          "Sisak",
+          "Sizilien",
+          "Sizilien 2 (Republican period)",
+          "Sizilisch-Punisch",
+          "Smyrna",
+          "Sofia",
+          "Soloi",
+          "Sosopol",
+          "Susa (Persien)",
+          "Sybaris",
+          "Syrakus",
+          "Syrien",
+          "Südgallische Münzstätte",
+          "Tanagra",
+          "Taras",
+          "Tarraco",
+          "Tarsus",
+          "Tegea",
+          "Temnus",
+          "Teos",
+          "Terina",
+          "Tessin",
+          "Thasos",
+          "Thessalische Liga",
+          "Thessalonica",
+          "Thessaloniki",
+          "Theben",
+          "Thiva",
+          "Thrakien",
+          "Thurioi",
+          "Thyrrheium",
+          "Trier",
+          "Tripoli (Libanon)",
+          "Tyros",
+          "Unsicher bzw. unbestimmbar",
+          "Viminatium",
+          "Vindobona",
+          "Warna",
+          "Zancle",
+          "Äegina",
+          "Äeneas",
+          "Äetolien"
+        ]
       }
     }
   },
   "Brick": {
-    "parent": "Find",
     "fields": {
+      "if1Verwendung": {
+        "inputType": "input"
+      },
       "brickUsage": {
         "inputType": "radio",
         "valuelist": [
@@ -194,6 +595,13 @@
           "Sonstiges",
           "Unklar"
         ]
+      }
+    }
+  },
+  "PlasterFragment": {
+    "fields": {
+      "if1Klassifizierung": {
+        "inputType": "input"
       }
     }
   },
@@ -213,8 +621,11 @@
       }
     }
   },
+  "BrickCluster": {
+    "color": "#CC0000",
+    "parent": "Find"
+  },
   "Pottery": {
-    "parent": "Find",
     "fields": {
       "materialType": {
         "inputType": "radio",
@@ -223,22 +634,58 @@
           "Grob-Feine Ware",
           "Grobe Ware"
         ]
+      },
+      "if1Klassifizierung": {
+        "inputType": "input"
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Alabastron",
+          "Amphoriskos",
+          "Aryballos",
+          "Balsamarium",
+          "Dattelflasche",
+          "Dinos",
+          "Faltenbecher",
+          "Fischteller",
+          "Glockenbecher",
+          "Handelsamphore",
+          "Hydria",
+          "Kopfflasche",
+          "Kotyle",
+          "Kragenschale",
+          "Krater",
+          "Kylix",
+          "Lekane",
+          "Lekythos",
+          "Luterion",
+          "Lutrophore",
+          "Miscellanea",
+          "Oinochoe",
+          "Pelike",
+          "Pithos",
+          "Pyxis",
+          "Salznapf",
+          "Skyphos",
+          "Spitzamphora",
+          "Sprenkler",
+          "Stamnos",
+          "Tierflasche",
+          "Tischamphore",
+          "Tränenfläschchen",
+          "Vierkantflasche",
+          "hexagonale Flasche",
+          "zylindrische Flasche"
+        ]
       }
     }
   },
   "PotteryCluster": {
     "color": "#CC0000",
-    "parent": "Find",
-    "fields": {}
-},
-  "BrickCluster": {
-    "color": "#CC0000",
-    "parent": "Find",
-    "fields": {}
+    "parent": "Find"
   },
-
   "Layer": {
-    "parent": "Feature",
     "fields": {
       "if1Farbe2": {
         "inputType": "input"

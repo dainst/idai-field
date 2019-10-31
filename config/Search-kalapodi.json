@@ -51,13 +51,13 @@
     "constraint": ["denomination", "manufacturingMethod", "metalMaterial", "mint", "mintingRuler", "provenance", "stampPositioning"]
   },
   "Find": {
-    "constraint": ["processor", "storagePlace", "workflow", "messpunktID", "period"]
+    "constraint": ["period", "processor", "storagePlace", "workflow", "measuringPointID", "measuringPointOrigin"]
   },
   "PlasterFragment": {
     "constraint": ["hasDecoration", "color", "plasterComponents"]
   },
   "Metal": {
-    "constraint": ["metalMaterial", "objectType", "decorationTechnique", "formDescription", "manufacturingMethod", "provenance", "vesselForm", "vesselFormSpecific"]
+    "constraint": ["metalMaterial", "objectTypeGeneral", "objectType", "decorationTechnique", "formDescription", "manufacturingMethod", "provenance", "vesselForm", "vesselFormSpecific"]
   },
   "Image": {
     "constraint": [ "draughtsmen", "fixMe"]

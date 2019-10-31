@@ -15,6 +15,14 @@
             top: 5px;
         }
     }
+
+    #edit-project-button {
+        background-color: #efefef;
+
+        &:hover {
+            background-color: lighten(#efefef, 5%);
+        }
+    }
 }
 
 #new-project-menu {

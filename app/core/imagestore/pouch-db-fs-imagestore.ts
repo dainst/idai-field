@@ -196,10 +196,9 @@ export class PouchDbFsImagestore /*implements Imagestore */{
                 else {
                     this.putAttachment(data, key, documentExists)
                         .then(() => resolve()
-                    ).catch((err: any) => {
-                        console.error(err);
-                        console.error(key);
-                        reject([ImagestoreErrors.GENERIC_ERROR])
+                    ).catch((warning: any) => {
+                        console.warn(warning);
+                        resolve();
                     });
                 }
             });
@@ -209,7 +208,11 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
     private putAttachment(data: any, key: any, documentExists: boolean) {
 
-        const buffer = this.converter.convert(data);
+        const buffer: Buffer|undefined = this.converter.convert(data);
+
+        if (!buffer) {
+            return Promise.reject('Failed to create thumbnail for image document ' + key);
+        }
 
         let blob: any;
         if (typeof Blob !== 'undefined') {

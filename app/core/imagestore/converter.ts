@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
 import {nativeImage} from 'electron';
 
-interface NI { createFromBuffer(key: any): any; }
 
 @Injectable()
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class Converter {
 
+    public convert(data: any): Buffer|undefined {
 
-    public convert(data: any) {
+        let img = nativeImage.createFromBuffer(Buffer.from(data));
+        img = img.resize({ height: 320 });
 
-        let img = (nativeImage as NI).createFromBuffer(Buffer.from(data));
-        img = img.resize({height: 320});
-        return img.toJPEG(60);
+        return img.isEmpty() ? undefined : img.toJPEG(60);
     }
 }

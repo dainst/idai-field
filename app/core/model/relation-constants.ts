@@ -22,9 +22,9 @@ export module POSITION_RELATIONS {
     export const IS_ABOVE = 'isAbove';                // is read off by a user by sight
     export const IS_EQUIVALENT_TO = 'isEquivalentTo'; // a user's interpretation that two stratigraphical units (Feature) are the same
 
-    export const BORDERS = 'borders';                 // TODO review 05.09
-    export const CUTS = 'cuts';                       // .
-    export const IS_CUT_BY = 'isCutBy';               // .
+    export const BORDERS = 'borders';                 //
+    export const CUTS = 'cuts';                       //
+    export const IS_CUT_BY = 'isCutBy';               //
 
     export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO];
 }

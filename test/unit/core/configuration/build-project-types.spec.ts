@@ -2,10 +2,7 @@ import {BuiltinTypeDefinitions} from '../../../../app/core/configuration/model/b
 import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
 import {buildProjectTypes} from '../../../../app/core/configuration/build-project-types';
 import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
-import {LibraryTypeDefinition,
-    LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
-import {Preprocessing} from '../../../../app/core/configuration/preprocessing';
-import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
+import {LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
 
 
@@ -997,44 +994,5 @@ describe('buildProjectTypes', () => {
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field2'].inputType).toBe('text');
         expect(result['A'].fields['field3'].inputType).toBe('text');
-    });
-
-
-    // there was a bug where relation was not added if one of the same name but with a different domain was configured
-    xit('add an extra relation to an existing relation', () => {
-
-        const t1 = {
-            typeFamily: 'x1',
-            commons: [],
-            parent: 'x',
-            valuelists: {},
-            description: { 'de': '' },
-            createdBy: '',
-            creationDate: '',
-            color: 'white',
-            fields: {
-                'aField': {}
-            }
-        } as LibraryTypeDefinition;
-
-        const r1: RelationDefinition = {
-            name: 'R',
-            domain: ['domainA'],
-            range : ['rangeA']
-        };
-
-        const r2: RelationDefinition = {
-            name: 'R',
-            domain: ['domainB'],
-            range : ['rangeA']
-        };
-
-        const configuration = { identifier: 'test', types: { T1: t1 }, relations: [r1]} as any;
-
-        //Preprocessing.mergeTheTypes({}, configuration.types);
-        //Preprocessing.addExtraFields(configuration, {});
-        Preprocessing.addExtraRelations(configuration, [r2]);
-
-        expect(configuration.relations.length).toBe(2);
     });
 });

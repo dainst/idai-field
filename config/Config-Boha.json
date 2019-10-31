@@ -43,47 +43,47 @@
       "catalogueNumber"
     ],
     "valuelists": {
-      "period": "periods-boha-1"
+      "period": "periods-boha-1",
+      "drawn": "Find-drawn-Boha",
+      "photographed": "Find-drawn-Boha",
+      "sketched": "Find-drawn-Boha",
+      "hasRestoration": "Find-drawn-Boha",
+      "storagePlace": "Find-storagePlace-Boha"
     },
     "fields": {
       "drawn": {
-        "inputType": "radio",
-        "valuelistId": "Find-drawn-Boha"
+        "inputType": "radio"
       },
       "photographed": {
-        "inputType": "radio",
-        "valuelistId": "Find-drawn-Boha"
+        "inputType": "radio"
       },
       "sketched": {
-        "inputType": "radio",
-        "valuelistId": "Find-drawn-Boha"
+        "inputType": "radio"
       },
       "storageInventoryNumberAdditional": {
         "inputType": "input"
       },
       "hasRestoration": {
-        "inputType": "radio",
-        "valuelistId": "Find-drawn-Boha"
+        "inputType": "radio"
       },
       "storagePlace": {
-        "inputType": "radio",
-        "valuelistId": "Find-storagePlace-Boha"
+        "inputType": "radio"
       }
     }
   },
   "Feature:default": {
     "hidden": [],
     "valuelists": {
-      "period": "periods-boha-1"
+      "period": "periods-boha-1",
+      "stratigraphicReliability": "Feature-stratigraphicReliability-Boha",
+      "color": "Feature-color-Boha"
     },
     "fields": {
       "stratigraphicReliability": {
-        "inputType": "radio",
-        "valuelistId": "Feature-stratigraphicReliability-Boha"
+        "inputType": "radio"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-color-Boha"
+        "inputType": "checkboxes"
       }
     }
   },
@@ -111,12 +111,12 @@
       "conditionAmount"
     ],
     "valuelists": {
-      "period": "periods-boha-1"
+      "period": "periods-boha-1",
+      "objectType": "Inscription-objectType-Boha"
     },
     "fields": {
       "objectType": {
-        "inputType": "checkboxes",
-        "valuelistId": "Inscription-objectType-Boha"
+        "inputType": "checkboxes"
       }
     }
   },
@@ -128,9 +128,11 @@
     "hidden": [],
     "fields": {
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "color": "colors-boha-1"
     }
   },
   "Mollusk:default": {
@@ -148,21 +150,23 @@
     "hidden": [],
     "fields": {
       "brickForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Brick-brickForm-Boha"
+        "inputType": "checkboxes"
       },
       "specificType": {
-        "inputType": "dropdown",
-        "valuelistId": "Brick-specificType-Boha"
+        "inputType": "dropdown"
       },
       "brickUsage": {
-        "inputType": "radio",
-        "valuelistId": "Brick-brickUsage-Boha"
+        "inputType": "radio"
       },
       "manufacturingMethod": {
-        "inputType": "radio",
-        "valuelistId": "Brick-manufacturingMethod-Boha"
+        "inputType": "radio"
       }
+    },
+    "valuelists": {
+      "brickForm": "Brick-brickForm-Boha",
+      "specificType": "Brick-specificType-Boha",
+      "brickUsage": "Brick-brickUsage-Boha",
+      "manufacturingMethod": "Brick-manufacturingMethod-Boha"
     }
   },
   "Burial:default": {
@@ -173,9 +177,11 @@
     "hidden": [],
     "fields": {
       "objectType": {
-        "inputType": "dropdown",
-        "valuelistId": "Wood-objectType-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "objectType": "Wood-objectType-Boha"
     }
   },
   "Architecture:default": {
@@ -185,42 +191,46 @@
     ],
     "fields": {
       "architectureClassification": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-architectureClassification-Boha"
+        "inputType": "radio"
       },
       "construction": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-construction-Boha"
+        "inputType": "dropdown"
       },
       "wallClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallClassification-Boha"
+        "inputType": "dropdown"
       },
       "wallType": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallType-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "architectureClassification": "Architecture-architectureClassification-Boha",
+      "construction": "Architecture-construction-Boha",
+      "wallClassification": "Architecture-wallClassification-Boha",
+      "wallType": "Architecture-wallType-Boha"
     }
   },
   "Layer:default": {
     "hidden": [],
     "fields": {
       "layerClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-layerClassification-Boha"
+        "inputType": "dropdown"
       },
       "distinguishingCriteria": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "checkboxes"
       },
       "consistency": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-Boha"
+        "inputType": "checkboxes"
       },
       "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "layerClassification": "Layer-layerClassification-Boha",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "consistency": "Layer-consistency-Boha",
+      "soilType": "Layer-soilType-Boha"
     }
   },
   "Floor:default": {
@@ -229,42 +239,46 @@
     ],
     "fields": {
       "distinguishingCriteria": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "checkboxes"
       },
       "floorClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Floor-floorClassification-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "floorClassification": "Floor-floorClassification-Boha"
     }
   },
   "Pottery:default": {
     "hidden": [],
     "fields": {
       "clayColorBreak": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       },
       "clayColorInside": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       },
       "clayColorOutside": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       },
       "specificType": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-specificType-Boha"
+        "inputType": "radio"
       },
       "objectType": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-objectType-Boha"
+        "inputType": "dropdown"
       },
       "vesselForm": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-vesselForm-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "clayColorBreak": "colors-boha-1",
+      "clayColorInside": "colors-boha-1",
+      "clayColorOutside": "colors-boha-1",
+      "specificType": "Pottery-specificType-Boha",
+      "objectType": "Pottery-objectType-Boha",
+      "vesselForm": "Pottery-vesselForm-Boha"
     }
   },
   "Grave:default": {
@@ -280,12 +294,14 @@
     "hidden": [],
     "fields": {
       "boneClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Bone-boneClassification-Boha"
+        "inputType": "dropdown"
       },
       "treatment": {
         "inputType": "input"
       }
+    },
+    "valuelists": {
+      "boneClassification": "Bone-boneClassification-Boha"
     }
   },
   "Terracotta:default": {
@@ -306,42 +322,45 @@
     ],
     "fields": {
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       },
       "objectType": {
-        "inputType": "dropdown",
-        "valuelistId": "Stone-objectType-Boha"
+        "inputType": "dropdown"
       },
       "architectureElement": {
-        "inputType": "dropdown",
-        "valuelistId": "Stone-architectureElement-Boha"
+        "inputType": "dropdown"
       },
       "origin": {
-        "inputType": "dropdown",
-        "valuelistId": "Stone-origin-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "color": "colors-boha-1",
+      "objectType": "Stone-objectType-Boha",
+      "architectureElement": "Stone-architectureElement-Boha",
+      "origin": "Stone-origin-Boha"
     }
   },
   "Coin:default": {
     "hidden": [],
     "fields": {
       "mintingRuler": {
-        "inputType": "dropdown",
-        "valuelistId": "Coin-mintingRuler-Boha"
+        "inputType": "dropdown"
       },
       "mint": {
-        "inputType": "dropdown",
-        "valuelistId": "Coin-mint-Boha"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "mintingRuler": "Coin-mintingRuler-Boha",
+      "mint": "Coin-mint-Boha"
     }
   },
   "PlasterFragment:default": {
     "hidden": [],
     "fields": {
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-boha-1"
+        "inputType": "checkboxes"
       },
       "decorationColor": {
         "inputType": "input"
@@ -349,6 +368,9 @@
       "decorationDescription": {
         "inputType": "input"
       }
+    },
+    "valuelists": {
+      "color": "colors-boha-1"
     }
   },
   "Sample": {
@@ -358,19 +380,21 @@
         "inputType": "input"
       },
       "sampleType": {
-        "inputType": "radio",
-        "valuelistId": "SampleBoha-sampleType-Boha"
+        "inputType": "radio"
       },
       "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-Boha"
+        "inputType": "dropdown"
       },
       "comment": {
         "inputType": "input"
       }
     },
     "parent": "Find",
-    "color": "#9ecae1"
+    "color": "#9ecae1",
+    "valuelists": {
+      "sampleType": "SampleBoha-sampleType-Boha",
+      "soilType": "Layer-soilType-Boha"
+    }
   },
   "Excavation:default": {
     "fields": {},

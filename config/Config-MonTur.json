@@ -83,65 +83,66 @@
         "inputType": "input"
       },
       "blockProcessing": {
-        "inputType": "checkboxes",
-        "valuelistId": "Architecture-blockProcessing-default"
+        "inputType": "checkboxes"
       },
       "blockTreatment": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-blockTreatment-default"
+        "inputType": "radio"
       },
       "brickwork": {
-        "inputType": "checkboxes",
-        "valuelistId": "Architecture-brickwork-default"
+        "inputType": "checkboxes"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-condition-default"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "construction": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-construction-default"
+        "inputType": "dropdown"
       },
       "mark": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-mark-default"
+        "inputType": "dropdown"
       },
       "mortarBinder": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-mortarBinder-default"
+        "inputType": "radio"
       },
       "mortarColor": {
-        "inputType": "dropdown",
-        "valuelistId": "colors-default-2"
+        "inputType": "dropdown"
       },
       "mortarConsistency": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-mortarConsistency-default"
+        "inputType": "radio"
       },
       "wallClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallClassification-default"
+        "inputType": "dropdown"
       },
       "wallType": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallType-default"
+        "inputType": "dropdown"
       },
       "wallSide": {
-        "inputType": "radio",
-        "valuelistId": "BuildingPart-wallSide-MonTur"
+        "inputType": "radio"
       },
-      "orientation": {
-        "valuelistId": "orientation-default-1"
-      }
+      "orientation": {}
     },
     "commons": [
       "orientation",
       "spatialLocation"
-    ]
+    ],
+    "valuelists": {
+      "blockProcessing": "Architecture-blockProcessing-default",
+      "blockTreatment": "Architecture-blockTreatment-default",
+      "brickwork": "Architecture-brickwork-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "construction": "Architecture-construction-default",
+      "mark": "Architecture-mark-default",
+      "mortarBinder": "Architecture-mortarBinder-default",
+      "mortarColor": "colors-default-2",
+      "mortarConsistency": "Architecture-mortarConsistency-default",
+      "wallClassification": "Architecture-wallClassification-default",
+      "wallType": "Architecture-wallType-default",
+      "wallSide": "BuildingPart-wallSide-MonTur",
+      "orientation": "orientation-default-1"
+    }
   },
   "Find:default": {
     "fields": {},

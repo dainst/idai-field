@@ -24,13 +24,12 @@ export type CustomFieldDefinitionsMap = { [fieldName: string]: CustomFieldDefini
 
 export interface CustomFieldDefinition extends BaseFieldDefinition {
 
-    valuelistId?: string;
     inputType?: string;
     positionValues?: string;
 }
 
 
-const VALID_FIELD_PROPERTIES = ['valuelistId', 'inputType', 'positionValues'];
+const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];
 
 
 export type CustomTypeDefinitionsMap = {[typeName: string]: CustomTypeDefinition };

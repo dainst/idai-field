@@ -10,19 +10,15 @@
   "Survey:default": {
     "hidden": [],
     "fields": {
-      "orientation": {
-        "valuelistId": "orientation-default-1"
-      },
+      "orientation": {},
       "researchMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-researchMethod-Kephissostal"
+        "inputType": "checkboxes"
       },
       "researchMethodDescription": {
         "inputType": "input"
       },
       "modernIntervention": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-modernIntervention-Kephissostal"
+        "inputType": "checkboxes"
       },
       "cultivatedPlants": {
         "inputType": "input"
@@ -55,8 +51,7 @@
         "inputType": "input"
       },
       "periods": {
-        "inputType": "checkboxes",
-        "valuelistId": "periods-default-1"
+        "inputType": "checkboxes"
       }
     },
     "commons": [
@@ -71,44 +66,43 @@
       "dimensionVerticalExtent",
       "area",
       "spatialLocation"
-    ]
+    ],
+    "valuelists": {
+      "orientation": "orientation-default-1",
+      "researchMethod": "SurveyUnit-researchMethod-Kephissostal",
+      "modernIntervention": "SurveyUnit-modernIntervention-Kephissostal",
+      "periods": "periods-default-1"
+    }
   },
   "SurveyUnit:default": {
     "hidden": [],
     "fields": {
       "researchMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-researchMethod-Kephissostal"
+        "inputType": "checkboxes"
       },
       "measuring": {
-        "inputType": "radio",
-        "valuelistId": "SurveyUnit-measuring-Kephissostal"
+        "inputType": "radio"
       },
       "findSituation": {
         "inputType": "text"
       },
       "siteClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "SurveyUnit-siteClassification-Kephissostal"
+        "inputType": "dropdown"
       },
       "findspotClassification": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-findspotClassification-Kephissostal"
+        "inputType": "checkboxes"
       },
       "finds": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-finds-Kephissostal"
+        "inputType": "checkboxes"
       },
       "findsAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "SurveyUnit-findsAmount-Kephissostal"
+        "inputType": "dropdown"
       },
       "findsAmountm2": {
         "inputType": "unsignedInt"
       },
       "modernIntervention": {
-        "inputType": "checkboxes",
-        "valuelistId": "SurveyUnit-modernIntervention-Kephissostal"
+        "inputType": "checkboxes"
       },
       "cultivatedPlants": {
         "inputType": "input"
@@ -135,11 +129,20 @@
         "inputType": "input"
       },
       "periods": {
-        "inputType": "checkboxes",
-        "valuelistId": "periods-default-1"
+        "inputType": "checkboxes"
       }
     },
-    "color": "#6baed6"
+    "color": "#6baed6",
+    "valuelists": {
+      "researchMethod": "SurveyUnit-researchMethod-Kephissostal",
+      "measuring": "SurveyUnit-measuring-Kephissostal",
+      "siteClassification": "SurveyUnit-siteClassification-Kephissostal",
+      "findspotClassification": "SurveyUnit-findspotClassification-Kephissostal",
+      "finds": "SurveyUnit-finds-Kephissostal",
+      "findsAmount": "SurveyUnit-findsAmount-Kephissostal",
+      "modernIntervention": "SurveyUnit-modernIntervention-Kephissostal",
+      "periods": "periods-default-1"
+    }
   },
   "Place:default": {
     "fields": {},
@@ -201,39 +204,39 @@
         "inputType": "boolean"
       },
       "architecturalOrders": {
-        "inputType": "radio",
-        "valuelistId": "Building-architecturalOrders-default"
+        "inputType": "radio"
       },
       "buildingCategory": {
-        "inputType": "dropdown",
-        "valuelistId": "BuildingPart-buildingCategory-Kephissostal"
+        "inputType": "dropdown"
       },
       "buildingTechnique": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-buildingTechnique-default"
+        "inputType": "dropdown"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-condition-default"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "context": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-context-default"
+        "inputType": "dropdown"
       },
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "Building-material-default"
+        "inputType": "checkboxes"
       },
       "interpretation": {
         "inputType": "text"
       }
     },
     "valuelists": {
-      "period": "periods-default-1"
+      "period": "periods-default-1",
+      "architecturalOrders": "Building-architecturalOrders-default",
+      "buildingCategory": "BuildingPart-buildingCategory-Kephissostal",
+      "buildingTechnique": "Building-buildingTechnique-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "context": "Building-context-default",
+      "material": "Building-material-default"
     },
     "commons": [
       "period",
@@ -366,12 +369,10 @@
         "inputType": "input"
       },
       "featureBorders": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureBorders-default"
+        "inputType": "checkboxes"
       },
       "featureForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureForm-default"
+        "inputType": "checkboxes"
       },
       "ageDetermination": {
         "inputType": "input"
@@ -410,35 +411,39 @@
         "inputType": "input"
       },
       "amountIndividuals": {
-        "inputType": "dropdown",
-        "valuelistId": "Burial-amountIndividuals-default"
+        "inputType": "dropdown"
       },
       "burialCharacteristic": {
-        "inputType": "dropdown",
-        "valuelistId": "Burial-burialCharacteristic-default"
+        "inputType": "dropdown"
       },
       "burialDocumentation": {
-        "inputType": "checkboxes",
-        "valuelistId": "Burial-burialDocumentation-default"
+        "inputType": "checkboxes"
       },
       "graveFeature": {
-        "inputType": "checkboxes",
-        "valuelistId": "Burial-graveFeature-default"
+        "inputType": "checkboxes"
       },
       "positionArms": {
-        "inputType": "checkboxes",
-        "valuelistId": "Burial-positionArms-default"
+        "inputType": "checkboxes"
       },
       "positionLegs": {
-        "inputType": "checkboxes",
-        "valuelistId": "Burial-positionLegs-default"
+        "inputType": "checkboxes"
       },
       "positioningIndividuals": {
-        "inputType": "checkboxes",
-        "valuelistId": "Burial-positioningIndividuals-default"
+        "inputType": "checkboxes"
       }
     },
-    "parent": "Area"
+    "parent": "Area",
+    "valuelists": {
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "amountIndividuals": "Burial-amountIndividuals-default",
+      "burialCharacteristic": "Burial-burialCharacteristic-default",
+      "burialDocumentation": "Burial-burialDocumentation-default",
+      "graveFeature": "Burial-graveFeature-default",
+      "positionArms": "Burial-positionArms-default",
+      "positionLegs": "Burial-positionLegs-default",
+      "positioningIndividuals": "Burial-positioningIndividuals-default"
+    }
   },
   "Architecture_Survey": {
     "hidden": [],
@@ -453,12 +458,10 @@
         "inputType": "input"
       },
       "featureBorders": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureBorders-default"
+        "inputType": "checkboxes"
       },
       "featureForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureForm-default"
+        "inputType": "checkboxes"
       },
       "bibliography": {
         "inputType": "text"
@@ -509,56 +512,60 @@
         "inputType": "input"
       },
       "blockProcessing": {
-        "inputType": "checkboxes",
-        "valuelistId": "Architecture-blockProcessing-default"
+        "inputType": "checkboxes"
       },
       "blockTreatment": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-blockTreatment-default"
+        "inputType": "radio"
       },
       "brickwork": {
-        "inputType": "checkboxes",
-        "valuelistId": "Architecture-brickwork-default"
+        "inputType": "checkboxes"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-condition-default"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "construction": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-construction-default"
+        "inputType": "dropdown"
       },
       "mark": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-mark-default"
+        "inputType": "dropdown"
       },
       "mortarBinder": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-mortarBinder-default"
+        "inputType": "radio"
       },
       "mortarColor": {
-        "inputType": "dropdown",
-        "valuelistId": "colors-default-2"
+        "inputType": "dropdown"
       },
       "mortarConsistency": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-mortarConsistency-default"
+        "inputType": "radio"
       },
       "wallClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallClassification-default"
+        "inputType": "dropdown"
       },
       "wallType": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-wallType-default"
+        "inputType": "dropdown"
       }
     },
     "parent": "Area",
-    "color": "#707070"
+    "color": "#707070",
+    "valuelists": {
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "blockProcessing": "Architecture-blockProcessing-default",
+      "blockTreatment": "Architecture-blockTreatment-default",
+      "brickwork": "Architecture-brickwork-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "construction": "Architecture-construction-default",
+      "mark": "Architecture-mark-default",
+      "mortarBinder": "Architecture-mortarBinder-default",
+      "mortarColor": "colors-default-2",
+      "mortarConsistency": "Architecture-mortarConsistency-default",
+      "wallClassification": "Architecture-wallClassification-default",
+      "wallType": "Architecture-wallType-default"
+    }
   },
   "Layer_Survey": {
     "hidden": [],
@@ -573,12 +580,10 @@
         "inputType": "input"
       },
       "featureBorders": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureBorders-default"
+        "inputType": "checkboxes"
       },
       "featureForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureForm-default"
+        "inputType": "checkboxes"
       },
       "appearance": {
         "inputType": "input"
@@ -587,27 +592,31 @@
         "inputType": "boolean"
       },
       "consistency": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-default"
+        "inputType": "checkboxes"
       },
       "distinguishingCriteria": {
-        "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "radio"
       },
       "layerClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-layerClassification-default"
+        "inputType": "dropdown"
       },
       "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-default"
+        "inputType": "dropdown"
       }
     },
     "commons": [
       "dimensionThickness"
     ],
     "parent": "Area",
-    "color": "#663300"
+    "color": "#663300",
+    "valuelists": {
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "layerClassification": "Layer-layerClassification-default",
+      "soilType": "Layer-soilType-default"
+    }
   },
   "Floor_Survey": {
     "hidden": [],
@@ -622,47 +631,49 @@
         "inputType": "input"
       },
       "featureBorders": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureBorders-default"
+        "inputType": "checkboxes"
       },
       "featureForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureForm-default"
+        "inputType": "checkboxes"
       },
       "conditionComment": {
         "inputType": "input"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-condition-default"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "consistency": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-default"
+        "inputType": "checkboxes"
       },
       "distinguishingCriteria": {
-        "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "radio"
       },
       "floorClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Floor-floorClassification-default"
+        "inputType": "dropdown"
       },
       "layerClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-layerClassification-default"
+        "inputType": "dropdown"
       },
       "mortarBinder": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-mortarBinder-default"
+        "inputType": "radio"
       }
     },
     "parent": "Area",
-    "color": "#6600cc"
+    "color": "#6600cc",
+    "valuelists": {
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "floorClassification": "Floor-floorClassification-default",
+      "layerClassification": "Layer-layerClassification-default",
+      "mortarBinder": "Architecture-mortarBinder-default"
+    }
   },
   "Grave_Survey": {
     "hidden": [],
@@ -677,12 +688,10 @@
         "inputType": "input"
       },
       "featureBorders": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureBorders-default"
+        "inputType": "checkboxes"
       },
       "featureForm": {
-        "inputType": "checkboxes",
-        "valuelistId": "Feature-featureForm-default"
+        "inputType": "checkboxes"
       },
       "bibliography": {
         "inputType": "text"
@@ -706,39 +715,43 @@
         "inputType": "input"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-condition-default"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "distinguishingCriteria": {
-        "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "radio"
       },
       "graveType": {
-        "inputType": "dropdown",
-        "valuelistId": "Grave-graveType-default"
+        "inputType": "dropdown"
       },
       "specificType": {
-        "inputType": "checkboxes",
-        "valuelistId": "Grave-specificType-default"
+        "inputType": "checkboxes"
       },
       "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-default"
+        "inputType": "dropdown"
       },
       "tombBuilding": {
-        "inputType": "checkboxes",
-        "valuelistId": "Grave-tombBuilding-default"
+        "inputType": "checkboxes"
       }
     },
     "commons": [
       "spatialLocation"
     ],
     "parent": "Area",
-    "color": "#339900"
+    "color": "#339900",
+    "valuelists": {
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "graveType": "Grave-graveType-default",
+      "specificType": "Grave-specificType-default",
+      "soilType": "Layer-soilType-default",
+      "tombBuilding": "Grave-tombBuilding-default"
+    }
   },
   "Excavation:default": {
     "hidden": [],
@@ -752,10 +765,12 @@
     "hidden": [],
     "fields": {
       "GeländemerkmalType": {
-        "inputType": "checkboxes",
-        "valuelistId": "TerrainFeature-GeländemerkmalType-Kephissostal"
+        "inputType": "checkboxes"
       }
     },
-    "parent": "Area"
+    "parent": "Area",
+    "valuelists": {
+      "GeländemerkmalType": "TerrainFeature-GeländemerkmalType-Kephissostal"
+    }
   }
 }

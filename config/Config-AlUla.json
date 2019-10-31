@@ -48,69 +48,55 @@
         "inputType": "input"
       },
       "vesselpart": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-vesselpart-WES"
+        "inputType": "checkboxes"
       },
       "Firing": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-Firing-WES"
+        "inputType": "checkboxes"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "inputType": "dropdown"
       },
       "clayColorInside": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
+        "inputType": "checkboxes"
       },
       "clayColorOutside": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
+        "inputType": "checkboxes"
       },
       "decorationTechnique": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-decorationTechnique-WES"
+        "inputType": "dropdown"
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-manufacturingMethod-WES"
+        "inputType": "checkboxes"
       },
       "temper": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-temper-WES"
+        "inputType": "checkboxes"
       },
       "temperAmount": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-temperAmount-WES"
+        "inputType": "radio"
       },
       "temperParticles": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-temperParticles-WES"
+        "inputType": "radio"
       },
       "temperTypeClay": {
         "inputType": "input"
       },
       "coatOutsideType": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-coatOutsideType-WES"
+        "inputType": "checkboxes"
       },
       "FormComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "FormComparisonCompendiadetail": {
         "inputType": "input"
       },
       "DecorationComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "DecorationComparisonCompendiadetail": {
         "inputType": "input"
       },
       "ApplicationComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "ApplicationComparisonCompendiadetail": {
         "inputType": "input"
@@ -119,63 +105,80 @@
         "inputType": "boolean"
       },
       "vesselForm": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-vesselForm-WES"
+        "inputType": "dropdown"
       }
-
+    },
+    "valuelists": {
+      "vesselpart": "Pottery-vesselpart-WES",
+      "Firing": "Pottery-Firing-WES",
+      "condition": "Pottery-condition-WES",
+      "clayColorInside": "Pottery-clayColorInside-WES",
+      "clayColorOutside": "Pottery-clayColorInside-WES",
+      "decorationTechnique": "Pottery-decorationTechnique-WES",
+      "manufacturingMethod": "Pottery-manufacturingMethod-WES",
+      "temper": "Pottery-temper-WES",
+      "temperAmount": "Pottery-temperAmount-WES",
+      "temperParticles": "Pottery-temperParticles-WES",
+      "coatOutsideType": "Pottery-coatOutsideType-WES",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "vesselForm": "Pottery-vesselForm-WES"
     }
   },
   "Terracotta:default": {
     "color": "#FF6600",
     "fields": {
       "clayColorBreak": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
+        "inputType": "checkboxes"
       },
       "clayColorInside": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
+        "inputType": "checkboxes"
       },
       "clayColorOutside": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-clayColorInside-WES"
+        "inputType": "checkboxes"
       },
       "decorationTechnique": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-decorationTechnique-WES"
+        "inputType": "dropdown"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "inputType": "dropdown"
       },
       "Firing": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-Firing-WES"
+        "inputType": "checkboxes"
       },
       "temper": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-temper-WES"
+        "inputType": "checkboxes"
       },
       "temperAmount": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-temperAmount-WES"
+        "inputType": "radio"
       },
       "temperParticles": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-temperParticles-WES"
+        "inputType": "radio"
       },
       "TerracottaType": {
-        "inputType": "dropdown",
-        "valuelistId": "Terracotta-TerracottaType-WES"
+        "inputType": "dropdown"
       },
       "TerracottaTypeSpecific": {
-        "inputType": "dropdown",
-        "valuelistId": "Terracotta-TerracottaTypeSpecific-WES"
+        "inputType": "dropdown"
       },
       "manufacturingMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-manufacturingMethod-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "clayColorBreak": "Pottery-clayColorInside-WES",
+      "clayColorInside": "Pottery-clayColorInside-WES",
+      "clayColorOutside": "Pottery-clayColorInside-WES",
+      "decorationTechnique": "Pottery-decorationTechnique-WES",
+      "condition": "Pottery-condition-WES",
+      "Firing": "Pottery-Firing-WES",
+      "temper": "Pottery-temper-WES",
+      "temperAmount": "Pottery-temperAmount-WES",
+      "temperParticles": "Pottery-temperParticles-WES",
+      "TerracottaType": "Terracotta-TerracottaType-WES",
+      "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-WES",
+      "manufacturingMethod": "Pottery-manufacturingMethod-WES"
     }
   },
   "KnappingWasteProduct": {
@@ -183,28 +186,30 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-material-WES"
+        "inputType": "checkboxes"
       },
       "OrientationPossible": {
         "inputType": "boolean"
       },
       "CorticalSurface": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-CorticalSurface-WES"
+        "inputType": "checkboxes"
       },
       "PlaceOperationalSequence": {
-        "inputType": "dropdown",
-        "valuelistId": "KnappingWasteProduct-PlaceOperationalSequence-WES"
+        "inputType": "dropdown"
       },
       "TechnicalMarks": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-TechnicalMarks-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "KnappingWasteProduct-material-WES",
+      "CorticalSurface": "KnappingWasteProduct-CorticalSurface-WES",
+      "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-WES",
+      "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "KnappedCore": {
@@ -212,24 +217,19 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-material-WES"
+        "inputType": "checkboxes"
       },
       "CorticalSurface": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-CorticalSurface-WES"
+        "inputType": "checkboxes"
       },
       "ForceOnKnappingPlatform": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-ForceOnKnappingPlatform-WES"
+        "inputType": "checkboxes"
       },
       "KnappingPlatformFeatures": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-KnappingPlatformFeatures-WES"
+        "inputType": "checkboxes"
       },
       "SecondaryKnappingPlatforms": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-SecondaryKnappingPlatforms-WES"
+        "inputType": "checkboxes"
       },
       "dimensionLengthOfDebitageSurfaces": {
         "inputType": "dimension",
@@ -249,17 +249,24 @@
         "inputType": "unsignedInt"
       },
       "TechnicalMarks": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-TechnicalMarks-WES"
+        "inputType": "checkboxes"
       },
       "TypicalCoreForms": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappedCore-TypicalCoreForms-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "KnappingWasteProduct-material-WES",
+      "CorticalSurface": "KnappedCore-CorticalSurface-WES",
+      "ForceOnKnappingPlatform": "KnappedCore-ForceOnKnappingPlatform-WES",
+      "KnappingPlatformFeatures": "KnappedCore-KnappingPlatformFeatures-WES",
+      "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-WES",
+      "TechnicalMarks": "KnappedCore-TechnicalMarks-WES",
+      "TypicalCoreForms": "KnappedCore-TypicalCoreForms-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentOfDrill": {
@@ -267,16 +274,13 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfDrill-material-WES"
+        "inputType": "checkboxes"
       },
       "TypeOfDrill": {
-        "inputType": "dropdown",
-        "valuelistId": "FragmentOfDrill-TypeOfDrill-WES"
+        "inputType": "dropdown"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfDrill-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "dimensionPreservedLengthOfDrillingaxis": {
         "inputType": "dimension",
@@ -295,13 +299,18 @@
         "inputType": "unsignedInt"
       },
       "TracesOfUse": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfDrill-TracesOfUse-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentOfDrill-material-WES",
+      "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-WES",
+      "ProductionMethod": "FragmentOfDrill-ProductionMethod-WES",
+      "TracesOfUse": "FragmentOfDrill-TracesOfUse-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentOfCuttingtool": {
@@ -309,25 +318,27 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-material-WES"
+        "inputType": "checkboxes"
       },
       "TypeOfCutter": {
-        "inputType": "dropdown",
-        "valuelistId": "FragmentOfCuttingtool-TypeOfCutter-WES"
+        "inputType": "dropdown"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "TracesOfUse": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-TracesOfUse-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentOfCuttingtool-material-WES",
+      "TypeOfCutter": "FragmentOfCuttingtool-TypeOfCutter-WES",
+      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-WES",
+      "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentOfHammertool": {
@@ -335,21 +346,23 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-material-WES"
+        "inputType": "checkboxes"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "TracesOfUse": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfHammertool-TracesOfUse-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentOfCuttingtool-material-WES",
+      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-WES",
+      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentOfChopper": {
@@ -357,21 +370,23 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-material-WES"
+        "inputType": "checkboxes"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfChopper-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "TracesOfUse": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfHammertool-TracesOfUse-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentOfCuttingtool-material-WES",
+      "ProductionMethod": "FragmentOfChopper-ProductionMethod-WES",
+      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentofCoating": {
@@ -379,24 +394,26 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentofCoating-material-WES"
+        "inputType": "checkboxes"
       },
       "ContactMaterial": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentofCoating-ContactMaterial-WES"
+        "inputType": "checkboxes"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentofCoating-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "TracesOfUse": {
         "inputType": "input"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentofCoating-material-WES",
+      "ContactMaterial": "FragmentofCoating-ContactMaterial-WES",
+      "ProductionMethod": "FragmentofCoating-ProductionMethod-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "RawMaterial": {
@@ -404,13 +421,15 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "RawMaterial-material-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "RawMaterial-material-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentofStonevessel": {
@@ -420,46 +439,37 @@
         "inputType": "input"
       },
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentofStonevessel-material-WES"
+        "inputType": "checkboxes"
       },
       "vesselpart": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-vesselpart-WES"
+        "inputType": "checkboxes"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-condition-WES"
+        "inputType": "dropdown"
       },
       "decorationTechnique": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-decorationTechnique-WES"
+        "inputType": "dropdown"
       },
       "ProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentofStonevessel-ProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "coatOutsideType": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-coatOutsideType-WES"
+        "inputType": "checkboxes"
       },
       "FormComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "FormComparisonCompendiadetail": {
         "inputType": "input"
       },
       "DecorationComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "DecorationComparisonCompendiadetail": {
         "inputType": "input"
       },
       "ApplicationComparisonCompendia": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-FormComparisonCompendia-WES"
+        "inputType": "dropdown"
       },
       "ApplicationComparisonCompendiadetail": {
         "inputType": "input"
@@ -468,13 +478,24 @@
         "inputType": "boolean"
       },
       "vesselForm": {
-        "inputType": "dropdown",
-        "valuelistId": "Pottery-vesselForm-WES"
+        "inputType": "dropdown"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentofStonevessel-material-WES",
+      "vesselpart": "Pottery-vesselpart-WES",
+      "condition": "Pottery-condition-WES",
+      "decorationTechnique": "Pottery-decorationTechnique-WES",
+      "ProductionMethod": "FragmentofStonevessel-ProductionMethod-WES",
+      "coatOutsideType": "Pottery-coatOutsideType-WES",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
+      "vesselForm": "Pottery-vesselForm-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "FragmentOfBead": {
@@ -482,37 +503,39 @@
     "parent": "Find",
     "fields": {
       "material": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfCuttingtool-material-WES"
+        "inputType": "checkboxes"
       },
       "ShapeofBead": {
-        "inputType": "dropdown",
-        "valuelistId": "FragmentOfBead-ShapeofBead-WES"
+        "inputType": "dropdown"
       },
       "KnappingProductionMethod": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfBead-KnappingProductionMethod-WES"
+        "inputType": "checkboxes"
       },
       "TracesofPerforationProductionMethodSideA": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES"
+        "inputType": "checkboxes"
       },
       "TracesofPerforationProductionMethodSideB": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES"
+        "inputType": "checkboxes"
       },
       "TracesofPerforationProductionMethodBreakingedge": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES"
+        "inputType": "checkboxes"
       },
       "TracesOfUse": {
-        "inputType": "checkboxes",
-        "valuelistId": "FragmentOfBead-TracesOfUse-WES"
+        "inputType": "checkboxes"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "KnappingWasteProduct-color-WES"
+        "inputType": "checkboxes"
       }
+    },
+    "valuelists": {
+      "material": "FragmentOfCuttingtool-material-WES",
+      "ShapeofBead": "FragmentOfBead-ShapeofBead-WES",
+      "KnappingProductionMethod": "FragmentOfBead-KnappingProductionMethod-WES",
+      "TracesofPerforationProductionMethodSideA": "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES",
+      "TracesofPerforationProductionMethodSideB": "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES",
+      "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES",
+      "TracesOfUse": "FragmentOfBead-TracesOfUse-WES",
+      "color": "KnappingWasteProduct-color-WES"
     }
   },
   "Mollusk": {
@@ -520,9 +543,11 @@
     "parent": "Find",
     "fields": {
       "classification": {
-        "inputType": "radio",
-        "valuelistId": "Mollusk-classification-WES"
+        "inputType": "radio"
       }
+    },
+    "valuelists": {
+      "classification": "Mollusk-classification-WES"
     }
   }
 }

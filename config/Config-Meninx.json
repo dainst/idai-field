@@ -6,7 +6,9 @@
   },
   "Operation:default": {
     "hidden": [],
-    "commons": ["dating"],
+    "commons": [
+      "dating"
+    ],
     "fields": {}
   },
   "Survey:default": {
@@ -49,14 +51,18 @@
   },
   "Find:default": {
     "hidden": [],
-    "commons": ["dating"],
+    "commons": [
+      "dating"
+    ],
     "valuelists": {
       "period": "periods-meninx-1"
     },
     "fields": {}
   },
   "Feature:default": {
-    "commons": ["dimensionHeight"],
+    "commons": [
+      "dimensionHeight"
+    ],
     "hidden": [],
     "valuelists": {
       "period": "periods-meninx-1"
@@ -68,7 +74,9 @@
     }
   },
   "Room:default": {
-    "commons": ["dating"],
+    "commons": [
+      "dating"
+    ],
     "hidden": [],
     "valuelists": {
       "period": "periods-meninx-1"
@@ -88,7 +96,9 @@
     "fields": {}
   },
   "Inscription:default": {
-    "commons": ["dating"],
+    "commons": [
+      "dating"
+    ],
     "hidden": [],
     "valuelists": {
       "period": "periods-meninx-1"
@@ -150,16 +160,18 @@
     "hidden": [],
     "fields": {
       "temperTypeClay": {
-        "inputType": "checkboxes",
-        "valuelistId": "Pottery-temperTypeClay-Meninx"
+        "inputType": "checkboxes"
       },
       "potteryTypeSpecific": {
-        "inputType": "radio",
-        "valuelistId": "Pottery-potteryTypeSpecific-Meninx"
+        "inputType": "radio"
       },
       "comment": {
         "inputType": "input"
       }
+    },
+    "valuelists": {
+      "temperTypeClay": "Pottery-temperTypeClay-Meninx",
+      "potteryTypeSpecific": "Pottery-potteryTypeSpecific-Meninx"
     }
   },
   "Grave:default": {
@@ -172,13 +184,15 @@
     "hidden": [],
     "fields": {
       "sex": {
-        "inputType": "radio",
-        "valuelistId": "Bone-sex-Meninx"
+        "inputType": "radio"
       },
       "boneClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Bone-boneClassification-Meninx"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "sex": "Bone-sex-Meninx",
+      "boneClassification": "Bone-boneClassification-Meninx"
     }
   },
   "Terracotta:default": {
@@ -217,11 +231,30 @@
   },
   "Wall_surface": {
     "commons": [
-      "area", "description", "processor", "dating",
-      "dimensionHeight", "dimensionWidth", "period"],
+      "area",
+      "description",
+      "processor",
+      "dating",
+      "dimensionHeight",
+      "dimensionWidth",
+      "period"
+    ],
     "hidden": [],
     "valuelists": {
-      "period": "periods-meninx-1"
+      "period": "periods-meninx-1",
+      "blockTreatment": "Architecture-blockTreatment-default",
+      "buildingTechnique": "Building-buildingTechnique-default",
+      "color": "colors-default-1",
+      "condition": "Wall_surface-condition-Meninx",
+      "conditionAmount": "Building-conditionAmount-default",
+      "constructionDetails": "Wall_surface-constructionDetails-Meninx",
+      "jointsCondition": "Wall_surface-jointsCondition-Meninx",
+      "jointsType": "Wall_surface-jointsType-Meninx",
+      "mark": "Architecture-mark-default",
+      "plasterComponents": "PlasterFragment-plasterComponents-default",
+      "wallOrientation": "Wall_surface-wallOrientation-Meninx",
+      "roomSide": "Wall_surface-wallOrientation-Meninx",
+      "wallSide": "Wall_surface-wallOrientation-Meninx"
     },
     "fields": {
       "conditionComment": {
@@ -246,56 +279,43 @@
         "inputType": "input"
       },
       "blockTreatment": {
-        "inputType": "radio",
-        "valuelistId": "Architecture-blockTreatment-default"
+        "inputType": "radio"
       },
       "buildingTechnique": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-buildingTechnique-default"
+        "inputType": "dropdown"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-default-1"
+        "inputType": "checkboxes"
       },
       "condition": {
-        "inputType": "dropdown",
-        "valuelistId": "Wall_surface-condition-Meninx"
+        "inputType": "dropdown"
       },
       "conditionAmount": {
-        "inputType": "dropdown",
-        "valuelistId": "Building-conditionAmount-default"
+        "inputType": "dropdown"
       },
       "constructionDetails": {
-        "inputType": "dropdown",
-        "valuelistId": "Wall_surface-constructionDetails-Meninx"
+        "inputType": "dropdown"
       },
       "jointsCondition": {
-        "inputType": "radio",
-        "valuelistId": "Wall_surface-jointsCondition-Meninx"
+        "inputType": "radio"
       },
       "jointsType": {
-        "inputType": "radio",
-        "valuelistId": "Wall_surface-jointsType-Meninx"
+        "inputType": "radio"
       },
       "mark": {
-        "inputType": "dropdown",
-        "valuelistId": "Architecture-mark-default"
+        "inputType": "dropdown"
       },
       "plasterComponents": {
-        "inputType": "radio",
-        "valuelistId": "PlasterFragment-plasterComponents-default"
+        "inputType": "radio"
       },
       "wallOrientation": {
-        "inputType": "checkboxes",
-        "valuelistId": "Wall_surface-wallOrientation-Meninx"
+        "inputType": "checkboxes"
       },
       "roomSide": {
-        "inputType": "checkboxes",
-        "valuelistId": "Wall_surface-wallOrientation-Meninx"
+        "inputType": "checkboxes"
       },
       "wallSide": {
-        "inputType": "radio",
-        "valuelistId": "Wall_surface-wallOrientation-Meninx"
+        "inputType": "radio"
       }
     }
   },
@@ -307,25 +327,32 @@
         "inputType": "boolean"
       },
       "consistency": {
-        "inputType": "checkboxes",
-        "valuelistId": "Layer-consistency-default"
+        "inputType": "checkboxes"
       },
       "distinguishingCriteria": {
-        "inputType": "radio",
-        "valuelistId": "Layer-distinguishingCriteria-default"
+        "inputType": "radio"
       },
       "otherClassification": {
-        "inputType": "dropdown",
-        "valuelistId": "Other-otherClassification-Meninx"
+        "inputType": "dropdown"
       },
       "soilType": {
-        "inputType": "dropdown",
-        "valuelistId": "Layer-soilType-default"
+        "inputType": "dropdown"
       }
+    },
+    "valuelists": {
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "otherClassification": "Other-otherClassification-Meninx",
+      "soilType": "Layer-soilType-default"
     }
   },
   "Drilling": {
-    "commons": ["description", "dimensionDiameter", "dimensionHeight", "dimensionVerticalExtent"],
+    "commons": [
+      "description",
+      "dimensionDiameter",
+      "dimensionHeight",
+      "dimensionVerticalExtent"
+    ],
     "hidden": [],
     "fields": {}
   },

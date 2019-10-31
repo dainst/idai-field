@@ -187,8 +187,6 @@ export class ImportComponent implements OnInit {
             case 'native':
                 return '.jsonl';
             case 'idig':
-            case 'meninxfind':
-                return '.csv';
             case 'geojson-gazetteer':
             case 'geojson':
                 return '.geojson,.json';

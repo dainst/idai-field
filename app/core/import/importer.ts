@@ -1,14 +1,12 @@
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
-import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './exec/process/import-validator';
-import {MeninxFindImport} from './exec/meninx-find-import';
 import {TypeUtility} from '../model/type-utility';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
@@ -19,7 +17,7 @@ import {IdaiType} from '../configuration/model/idai-type';
 import {buildImportFunction} from './exec/default-import';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
+export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
 export type ImportReport = { errors: any[], successfulImports: number };
 
@@ -133,8 +131,6 @@ export module Importer {
     function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
 
         switch (format) {
-            // case 'meninxfind':
-            //     return MeninxFindCsvParser.parse;
             case 'idig':
                 return IdigCsvParser.parse;
             case 'csv':
@@ -171,8 +167,6 @@ export module Importer {
         let importFunction = undefined;
 
         switch (format) {
-            // case 'meninxfind':
-            //     importFunction = MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,

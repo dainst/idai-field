@@ -811,12 +811,9 @@ describe('buildProjectTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
-                valuelists: {},
+                valuelists: { 'a1': '123'},
                 fields: {
-                    a1: {
-                        inputType: 'dropdown',
-                        valuelistId: '123'
-                    } as any,
+                    a1: { inputType: 'dropdown' },
                     a2: { inputType: 'input' },
                     a3: { inputType: 'input' }},
                 creationDate: '',

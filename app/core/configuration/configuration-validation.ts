@@ -63,7 +63,7 @@ export module ConfigurationValidation {
 
         for (let fieldDef of fieldDefs) {
             if (!fieldDef.hasOwnProperty('name'))
-                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)] as never);
+                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)]);
             if (!fieldDef.hasOwnProperty('inputType'))
                 fieldDef.inputType = 'input';
             if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
@@ -73,7 +73,7 @@ export module ConfigurationValidation {
                         || fieldDef.valuelist.length == 0
                 )
             ) {
-                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST, fieldDef.name] as never);
+                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST, fieldDef.name]);
             }
         }
 

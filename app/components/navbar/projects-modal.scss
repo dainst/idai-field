@@ -17,10 +17,11 @@
   }
 
   #edit-project-button {
-    background-color: #efefef;
+    background-color: #727b84;
+    color: #fff;
 
     &:hover {
-      background-color: lighten(#efefef, 5%);
+      background-color: lighten(#727b84, 20%);
     }
   }
 }

@@ -73,11 +73,11 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                                 fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
 
                                 // write thumb
-                                const blob = this.converter.convert(fs.readFileSync(path + file));
+                                const buffer: Buffer = this.converter.convert(fs.readFileSync(path + file)) as Buffer;
                                 promises.push(
                                     db.get(file)
                                         .then((doc: any) =>
-                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
+                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([buffer]), 'image/jpeg')
                                                 .catch((putAttachmentErr: any) =>
                                                     Promise.reject("putAttachmentErr:"+putAttachmentErr))
                                         , (dbGetErr: any) => Promise.reject("dbGetErr:"+dbGetErr))

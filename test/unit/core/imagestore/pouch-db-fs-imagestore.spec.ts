@@ -34,8 +34,8 @@ describe('PouchDbFsImagestore', () => {
     beforeEach(async done => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
         mockBlobMaker.makeBlob.and.callFake(data => { return { safeResourceUrl: data }; });
-        const mockConverter = jasmine.createSpyObj('converter',['convert']);
-        mockConverter.convert.and.callFake(data => { return data; });
+        const mockImageConverter = jasmine.createSpyObj('imageConverter',['convert']);
+        mockImageConverter.convert.and.callFake(data => { return data; });
         const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
         mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
@@ -47,7 +47,7 @@ describe('PouchDbFsImagestore', () => {
         await manager.loadProjectDb('unittest', undefined);
         await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined));
 
-        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager.getDbProxy());
+        store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, manager.getDbProxy());
         await store.setPath('store/', 'unittest');
 
         done();

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
-import {Converter} from './converter';
+import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
@@ -24,7 +24,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
 
     constructor(
-        private converter: Converter,
+        private converter: ImageConverter,
         private blobMaker: BlobMaker,
         private db: PouchdbProxy) {
     }
@@ -196,10 +196,9 @@ export class PouchDbFsImagestore /*implements Imagestore */{
                 else {
                     this.putAttachment(data, key, documentExists)
                         .then(() => resolve()
-                    ).catch((err: any) => {
-                        console.error(err);
-                        console.error(key);
-                        reject([ImagestoreErrors.GENERIC_ERROR])
+                    ).catch((warning: any) => {
+                        console.warn(warning);
+                        resolve();
                     });
                 }
             });
@@ -209,7 +208,11 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
     private putAttachment(data: any, key: any, documentExists: boolean) {
 
-        const buffer = this.converter.convert(data);
+        const buffer: Buffer|undefined = this.converter.convert(data);
+
+        if (!buffer) {
+            return Promise.reject('Failed to create thumbnail for image document ' + key);
+        }
 
         let blob: any;
         if (typeof Blob !== 'undefined') {

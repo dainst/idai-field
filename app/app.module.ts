@@ -15,7 +15,7 @@ import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {ImageOverviewModule} from './components/imageoverview/image-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
-import {Converter} from './core/imagestore/converter';
+import {ImageConverter} from './core/imagestore/image-converter';
 import {SettingsModule} from './components/settings/settings.module';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
@@ -141,16 +141,16 @@ registerLocaleData(localeDe, 'de');
         },
         {
             provide: Imagestore,
-            useFactory: function(pouchdbManager: PouchdbManager, converter: Converter, blobMaker: BlobMaker) {
+            useFactory: function(pouchdbManager: PouchdbManager, converter: ImageConverter, blobMaker: BlobMaker) {
                 return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDbProxy());
             },
-            deps: [PouchdbManager, Converter, BlobMaker]
+            deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
         TypeUtility,
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
-        Converter,
+        ImageConverter,
         AppController,
         {
             provide: ProjectConfiguration,

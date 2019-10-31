@@ -34,7 +34,7 @@
     "Planum": ["horizontalLocation", "planumForm"],
     "Drilling": ["drillingEquipment"],
     "Sample": ["soilType", "sampleType", "weight", "labNumber", "comment"],
-    "Image": ["draughtsmen"],
+    "Image": [],
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],
     "Photo": ["originalType"],
     "BuildingPart": ["color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "spatialLocation", "condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight", "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm", "materialCharacteristic", "construction", "constructionDetailsDescription", "descriptionOfBuildingTechnique", "brickwork", "blockTreatment", "blockProcessing", "mark", "markDescription", "bibliography", "findingPlace", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"],

@@ -110,6 +110,11 @@ export class AppConfigurator {
             allowOnlyValuesOfParent: true,
             group: 'stem'
         },
+        draughtsmen: {
+            inputType: 'checkboxes',
+            valuelistFromProjectField: 'staff',
+            group: 'stem'
+        },
         description: {
             inputType: 'text'
         },

@@ -776,14 +776,11 @@
     "commons": [
       "processor",
       "campaign",
-      "description"
+      "description",
+      "draughtsmen"
     ],
     "valuelists": {},
-    "fields": {
-      "draughtsmen": {
-        "inputType": "input"
-      }
-    }
+    "fields": {}
   },
   "Pottery:default": {
     "parent": "Find",

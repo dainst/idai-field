@@ -12,7 +12,7 @@ export module GroupUtil {
         switch(groupName) {
             case 'stem':
                 sortGroup(fields, [
-                    'identifier', 'shortDescription', 'supervisor', 'processor', 'campaign', 'description',
+                    'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
                     'diary', 'date', 'beginningDate', 'endDate'
                 ]);
                 break;

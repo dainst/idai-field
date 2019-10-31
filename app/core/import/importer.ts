@@ -133,8 +133,8 @@ export module Importer {
     function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
 
         switch (format) {
-            case 'meninxfind':
-                return MeninxFindCsvParser.parse;
+            // case 'meninxfind':
+            //     return MeninxFindCsvParser.parse;
             case 'idig':
                 return IdigCsvParser.parse;
             case 'csv':
@@ -171,8 +171,8 @@ export module Importer {
         let importFunction = undefined;
 
         switch (format) {
-            case 'meninxfind':
-                importFunction = MeninxFindImport.build();
+            // case 'meninxfind':
+            //     importFunction = MeninxFindImport.build();
             case 'idig':
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,

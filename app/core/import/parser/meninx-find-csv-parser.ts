@@ -5,6 +5,16 @@ import {Parser} from './parser';
 // import * as Papa from 'papaparse'; this does not work in production, fixes only unit test
 
 /**
+ * TODO remove
+ *
+ * This is experimental and was meant to be taken out after usage in 2018.
+ *
+ * 'se,id,description\n'
+ * '1001,1,hallohallo1\n'
+ *
+ * expect(documents[0].resource.identifier).toEqual('1001-1');
+ * expect(documents[0].resource.relations.liesWithin[0]).toEqual('1001');
+ *
  * @author Daniel de Oliveira
  */
 export module MeninxFindCsvParser {
@@ -38,9 +48,7 @@ export module MeninxFindCsvParser {
                                 provenance: object.provenience,
                                 type: 'Pottery',
                                 relations: {
-                                    liesWithin: [
-                                        object.se
-                                    ]
+                                    isChildOf: object.se
                                 }
                             }
                         } as any);

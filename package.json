@@ -109,7 +109,6 @@
     "@types/leaflet-imageoverlay-rotated": "0.1.0",
     "@types/leaflet.pm": "0.13.0",
     "@types/node": "12.7.4",
-    "@types/papaparse": "4.1.28",
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
     "electron": "6.0.7",

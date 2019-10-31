@@ -1,7 +1,6 @@
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
-import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
@@ -17,7 +16,7 @@ import {IdaiType} from '../configuration/model/idai-type';
 import {buildImportFunction} from './exec/default-import';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
+export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
 export type ImportReport = { errors: any[], successfulImports: number };
 
@@ -131,8 +130,6 @@ export module Importer {
     function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
 
         switch (format) {
-            case 'idig':
-                return IdigCsvParser.parse;
             case 'csv':
                 if (!selectedType) throw 'Selected type must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
@@ -167,7 +164,6 @@ export module Importer {
         let importFunction = undefined;
 
         switch (format) {
-            case 'idig':
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: false, permitDeletions: false});

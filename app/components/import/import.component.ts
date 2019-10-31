@@ -89,10 +89,6 @@ export class ImportComponent implements OnInit {
 
     public showPermitDeletionsOption = () => includedIn(['native', 'csv'])(this.format) && this.mergeMode;
 
-    public isMeninxProject = () => this.settingsService.getSelectedProject().indexOf('meninx-project') !== -1;
-
-    public isTestProject = () => this.settingsService.getSelectedProject().indexOf('test') !== -1;
-
     public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.mergeMode;
 
     public getSeparator = () => this.importState.getSeparator();
@@ -186,7 +182,6 @@ export class ImportComponent implements OnInit {
         switch (this.format) {
             case 'native':
                 return '.jsonl';
-            case 'idig':
             case 'geojson-gazetteer':
             case 'geojson':
                 return '.geojson,.json';

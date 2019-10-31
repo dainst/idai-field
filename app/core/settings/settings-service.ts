@@ -7,7 +7,7 @@ import {Imagestore} from '../imagestore/imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
-import {Converter} from '../imagestore/converter';
+import {ImageConverter} from '../imagestore/image-converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
 import {Name} from '../../c';
@@ -42,7 +42,7 @@ export class SettingsService {
                 private pouchdbManager: PouchdbManager,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
-                private converter: Converter,
+                private imageConverter: ImageConverter,
                 private synchronizationStatus: SynchronizationStatus) {
     }
 
@@ -75,7 +75,7 @@ export class SettingsService {
         await this.updateSettings(settings);
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
-            new FieldSampleDataLoader(this.converter, this.settings.imagestorePath, this.settings.locale));
+            new FieldSampleDataLoader(this.imageConverter, this.settings.imagestorePath, this.settings.locale));
 
         if (this.settings.isSyncActive) await this.startSync_();
         await this.createProjectDocumentIfMissing();

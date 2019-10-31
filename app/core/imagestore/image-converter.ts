@@ -8,7 +8,7 @@ import {nativeImage} from 'electron';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class Converter {
+export class ImageConverter {
 
     public convert(data: any): Buffer|undefined {
 

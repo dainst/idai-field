@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
-import {Converter} from './converter';
+import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
@@ -24,7 +24,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
 
     constructor(
-        private converter: Converter,
+        private converter: ImageConverter,
         private blobMaker: BlobMaker,
         private db: PouchdbProxy) {
     }

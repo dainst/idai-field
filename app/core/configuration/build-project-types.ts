@@ -10,6 +10,9 @@ import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-defin
 import {pairWith} from '../../utils';
 
 
+const VALUELISTS = 'valuelists';
+const COMMONS = 'commons';
+
 type CommonFields = {[fieldName: string]: any};
 
 
@@ -94,6 +97,7 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
 
     const selectedTypes: TransientTypeDefinitionsMap =  eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
     replaceCommonFields(selectedTypes, commonFields);
+
     insertValuelistIds(selectedTypes);
     assertValuelistIdsProvided(selectedTypes);
     hideFields(selectedTypes, customTypes);
@@ -408,17 +412,28 @@ function replaceCommonFields(mergedTypes: TransientTypeDefinitionsMap, commonFie
  */
 function mergePropertiesOfType(target: {[_: string]: any}, source: {[_: string]: any}) {
 
-    if (source['commons']) {
-        target['commons'] = union([target['commons'] ? target['commons'] : [], source['commons']]);
+    if (source[COMMONS]) {
+        target[COMMONS] = union([target[COMMONS] ? target[COMMONS] : [], source[COMMONS]]);
+    }
+
+    if (source[VALUELISTS]) {
+        if (!target[VALUELISTS]) target[VALUELISTS] = {};
+        keysAndValues(source[VALUELISTS]).forEach(([k, v]: any) => {
+            target[VALUELISTS][k] = v;
+        });
     }
 
     Object.keys(source)
         .filter(isnt('fields'))
         .filter(isNot(includedIn(keys(target))))
         .map(pairWith(lookup(source)))
-        .forEach(([sourceTypeProp, sourceTypeVal]) => {
-            target[sourceTypeProp] = sourceTypeVal
-        });
+        .forEach(overwriteIn(target));
+}
+
+
+function overwriteIn(target: {[_: string]: any}) {
+
+    return ([key, value]: [string, any]) => target[key] = value;
 }
 
 

@@ -137,6 +137,36 @@ describe('buildProjectTypes', () => {
     });
 
 
+    it('valuelistId - overwrite valuelists property in custom type, extending a library type - for a common field', () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: { fields: {} }};
+        const libraryTypes: LibraryTypeDefinitionsMap = {
+            'A:default': {
+                commons: ['aCommon'],
+                valuelists: { aCommon: 'aCommon-valuelists-id-1' },
+                creationDate: '', createdBy: '', description: {}, fields: {}, typeFamily: 'A'}
+        };
+        const commonFields = { aCommon: { group: 'stem', inputType: 'dropdown' }};
+        const customTypes: CustomTypeDefinitionsMap = {
+            'A:default': {
+                commons: ['aCommon'],
+                valuelists: { aCommon: 'aCommon-valuelist-id-2' },
+                fields: { }
+            }};
+
+        const result = buildProjectTypes(
+            builtInTypes,
+            libraryTypes,
+            customTypes,
+            commonFields,
+            { 'aCommon-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' },
+              'aCommon-valuelist-id-2': { values: { b: {} }, description: {}, createdBy: '', creationDate: '' }});
+
+        expect(result['A'].fields['aCommon']['valuelist']).toEqual(['b']);
+    });
+
+
 
     it('valuelistId - provided via valuelists property in library', () => {
 

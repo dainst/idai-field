@@ -32,7 +32,6 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
 }
 
 const VALID_FIELD_PROPERTIES = [
-    'valuelistId',
     'inputType',
     'positionValues'
 ];

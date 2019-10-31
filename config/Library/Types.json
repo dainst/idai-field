@@ -1396,7 +1396,8 @@
       "area"
     ],
     "valuelists": {
-      "plasterComponents": "PlasterFragment-plasterComponents-default"
+      "plasterComponents": "PlasterFragment-plasterComponents-default",
+      "color": "colors-default-1"
     },
     "fields": {
       "composition": {
@@ -1406,8 +1407,7 @@
         "inputType": "boolean"
       },
       "color": {
-        "inputType": "checkboxes",
-        "valuelistId": "colors-default-1"
+        "inputType": "checkboxes"
       },
       "plasterComponents": {
         "inputType": "radio"

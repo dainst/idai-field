@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 
-const projectName: string = 'WES';
+const projectName: string = 'kalapodi';
 
 const custom = JSON.parse(fs.readFileSync("Config-" + projectName + ".json"));
 

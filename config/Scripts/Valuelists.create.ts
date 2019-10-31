@@ -1,6 +1,6 @@
 'use strict';
 
-import {arrayEquivalent, keysAndValues} from 'tsfun';
+import {sameset, keysAndValues} from 'tsfun';
 
 
 
@@ -12,8 +12,7 @@ const projectName: string = 'kalapodi';
 
 
 const valuelists = JSON.parse(fs.readFileSync('Library/Valuelists.json'));
-const fields = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
-console.log('This is the projectname', projectName)
+const fieldsKalapodi = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.json' : 'Fields-' + projectName + '.json'));
 
 
 /**
@@ -24,29 +23,26 @@ console.log('This is the projectname', projectName)
  */
 function insert(valuelists:any, field:any, newValuelistName:string, newValuelistValues:any) {
 
+
     const conflictedLists =
-            keysAndValues(valuelists)
-            .map(([_, vl]:[string,any]) => [_, Object.keys(vl['values'])])
-            .filter(([_, values]) => arrayEquivalent(values)(newValuelistValues))
+        keysAndValues(valuelists)
+            .map(([_, vl]: any) => [_, Object.keys(vl['values'])])
+            .filter(([_, values]) => sameset(values)(newValuelistValues))
             .map(([name, _]) => name);
 
     if (conflictedLists.length > 0) {
       field['valuelistId'] = conflictedLists[0];
       delete field['valuelist'];
-      console.error("list exists already (old/new)", conflictedLists[0], newValuelistName );
-
     } else {
         valuelists[newValuelistName] = {
             createdBy: "A.K.",
-            creationDate: "",
+            creationDate: "2019",
             description: { de: "", en: "" },
             values: newValuelistValues.reduce((o, key) => ({ ...o, [key]: {}}), {}),
         };
-        field['valuelistId'] = newValuelistName
+        field['valuelistId'] = newValuelistName;
         delete field['valuelist'];
     }
-
-
 }
 
 
@@ -56,20 +52,19 @@ function generateName(typeName: string, fieldName: string, projectName: string) 
 }
 
 
-keysAndValues(fields).forEach(([typeName, type] : [string,any]) => {
+keysAndValues(fieldsKalapodi).forEach(([typeName, type]: any) => {
 
-    keysAndValues(type['fields']).forEach(([fieldName, field] :[string, any]) => {
+    if (!type['fields']) type['fields'] = {};
 
-        if (field['valuelist'] && !field['valuelistId']) {
+    keysAndValues(type['fields']).forEach(([fieldName, field]: any) => {
 
+        if (field['valuelist']) {
             const newValuelistName = generateName(typeName, fieldName, projectName);
-
-            if(valuelists[newValuelistName]) console.error("name already exists", newValuelistName);
-            else insert(valuelists, field, newValuelistName, field['valuelist']);
-        }  else {console.error('I am not being changed ', fieldName)}
+            insert(valuelists, field, newValuelistName, field['valuelist']);
+        }
     })
 });
 
 
-fs.writeFileSync('Valuelists_vMH.json', JSON.stringify(valuelists, null, 2));
-fs.writeFileSync(projectName === '' ? 'Config.json' : 'Config-' + projectName + '.json', JSON.stringify(fields, null, 2));
+fs.writeFileSync('Library/Valuelists.json', JSON.stringify(valuelists, null, 2));
+fs.writeFileSync('Config-' + projectName + '.json', JSON.stringify(fieldsKalapodi, null, 2));

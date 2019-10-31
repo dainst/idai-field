@@ -3,18 +3,6 @@
     "fields": {
       "fixMe": {
         "inputType": "input"
-      },
-      "campaign": {
-        "inputType": "checkboxes",
-        "valuelist": []
-      },
-      "supervisor": {
-        "inputType": "radio",
-        "valuelist": []
-      },
-      "processor": {
-            "inputType": "checkboxes",
-            "valuelist": []
       }
     }
   },
@@ -40,10 +28,6 @@
           "idaifield1",
           "Fotoliste"
         ]
-      },
-      "processor": {
-        "inputType": "checkboxes",
-        "valuelist": []
       },
       "workflow": {
         "inputType": "checkboxes",

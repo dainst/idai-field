@@ -85,15 +85,9 @@
       "importTag": {
         "inputType": "input"
       },
-      "draughtsmen": {
-        "inputType": "checkboxes"
-      },
       "fixMe": {
         "inputType": "input"
       }
-    },
-    "valuelists": {
-      "draughtsmen": "Image-draughtsmen-kalapodi"
     }
   },
   "Photo:default": {

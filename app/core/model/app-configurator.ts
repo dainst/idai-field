@@ -670,14 +670,6 @@ export class AppConfigurator {
                 editable: false
             });
 
-            this.defaultRelations.push({ // override existing definition
-                name: 'isRecordedIn',
-                label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
-                domain: ['Find'],
-                range: ['Building', 'Trench', 'Survey'],
-                editable: false
-            });
-
             this.defaultRelations.push({
                 name: 'isRecordedIn',
                 label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),

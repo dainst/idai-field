@@ -261,7 +261,7 @@
           "label": "Kampagnen"
         },
         "projectSupervisor": {
-          "label": "Leiter/Leiterin",
+          "label": "Leiterin/Leiter",
           "description": "Leitende Person des Projekts"
         }
       }
@@ -566,7 +566,7 @@
           "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs"
         },
         "supervisor": {
-          "label": "Leiter/Leiterin",
+          "label": "Leiterin/Leiter",
           "description": "Leitende Person der Maßnahme"
         }
       }

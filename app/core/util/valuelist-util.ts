@@ -31,6 +31,7 @@ export module ValuelistUtil {
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
 
         return field.allowOnlyValuesOfParent && parentResource
+                && parentResource.type !== 'Place' // TODO Implement generic solution; check if field is defined in parent type
             ? getValuesOfParentField(valuelist, field.name, parentResource)
             : valuelist;
     }

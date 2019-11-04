@@ -168,9 +168,15 @@ export class ChangesStream {
 
     private static shouldUpdate([documentAfterConflictResolution, squashRevisionIds]: [Document, Array<RevisionId>], latestRevisionDocument: Document) {
 
+        const resolvedDocumentStaff = documentAfterConflictResolution.resource[STAFF] || [];
+        const latestRevisionStaff = latestRevisionDocument.resource[STAFF] || [];
+
+        const resolvedDocumentCampaigns = documentAfterConflictResolution.resource[CAMPAIGNS] || [];
+        const latestRevisionCampaigns = latestRevisionDocument.resource[CAMPAIGNS] || [];
+
         return squashRevisionIds.length > 0
             // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite
-            || documentAfterConflictResolution.resource[STAFF].length > latestRevisionDocument.resource[STAFF].length
-            || documentAfterConflictResolution.resource[CAMPAIGNS].length > latestRevisionDocument.resource[CAMPAIGNS].length;
+            || resolvedDocumentStaff.length > latestRevisionStaff.length
+            || resolvedDocumentCampaigns.length > latestRevisionCampaigns.length;
     }
 }

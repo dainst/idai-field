@@ -61,7 +61,6 @@ export class ChangesStream {
                 }
 
                 if (isProjectDocument(document) && document._conflicts !== undefined) {
-                    console.log('project document conflict detected');
                     this.documentsScheduledToWelcome[document.resource.id] = setTimeout(
                         () => this.onTimeout(document), Math.random() * 10000);
                 } else {
@@ -84,10 +83,10 @@ export class ChangesStream {
         delete this.documentsScheduledToWelcome[document.resource.id];
         let solvedDocument: Document|undefined = undefined;
         try {
-            solvedDocument = await this.resolveConflict(document)
+            console.log('Resolve project document conflict', JSON.stringify(document));
+            solvedDocument = await this.resolveConflict(document);
         } catch (err) {
-            console.error("will not put document to index due to " +
-                "error in ChangesStream.resolveConflict", err);
+            console.error('Will not put document to index due to error in ChangesStream.resolveConflict', err);
             return;
         }
         await this.welcomeDocument(solvedDocument);
@@ -168,9 +167,6 @@ export class ChangesStream {
 
 
     private static shouldUpdate([documentAfterConflictResolution, squashRevisionIds]: [Document, Array<RevisionId>], latestRevisionDocument: Document) {
-
-        console.log('document after conflict resolution', documentAfterConflictResolution);
-        console.log('squashRevisionIds', squashRevisionIds);
 
         return squashRevisionIds.length > 0
             // compare for length instead of equality, because we want to avoid loops where one machine reduces a length and then updates while another does the opposite

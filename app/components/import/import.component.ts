@@ -118,6 +118,8 @@ export class ImportComponent implements OnInit {
 
     public async startImport() {
 
+        this.messages.removeAllMessages();
+
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
             this.file as any, this.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);

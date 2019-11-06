@@ -1,5 +1,5 @@
 import {ImportValidator} from './import-validator';
-import {duplicates, to, dissoc} from 'tsfun';
+import {duplicates, to, dissocOn} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
@@ -110,7 +110,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 function mergeOrUseAsIs(document: NewDocument|Document): Document {
 
     return (document as any)[MERGE_TARGET]
-        ? mergeDocument((document as any)[MERGE_TARGET], dissoc(MERGE_TARGET)(document))
+        ? mergeDocument((document as any)[MERGE_TARGET], dissocOn(MERGE_TARGET)(document))
         : document as Document;
 
 }

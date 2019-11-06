@@ -1,4 +1,4 @@
-import {clone as tsfunClone, jsonClone, setOn, getOnOr} from 'tsfun';
+import {clone as tsfunClone, jsonClone, setOn, getOn} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -21,5 +21,5 @@ export function clone<T>(struct: T): T {
  */
 export function takeOrMake<T>(o: T, path: string, alternative: any) {
 
-    return setOn(o, path)(getOnOr(path , alternative)(o));
+    return setOn(o, path)(getOn(path , alternative)(o));
 }

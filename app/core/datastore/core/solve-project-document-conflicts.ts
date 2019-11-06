@@ -1,4 +1,4 @@
-import {assoc, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
+import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
     isEmpty, compose, dissoc, append} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
@@ -41,7 +41,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = assoc(RESOURCE, resource)(clonedLatestRevision);
+    const latestRevisionDocumentWithInsertedResultResource = assocOn(RESOURCE, resource)(clonedLatestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }

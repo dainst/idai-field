@@ -1,5 +1,5 @@
 import {ImportErrors as E, ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {buildImportFunction, ImportOptions} from '../../../../../app/core/import/exec/default-import';
+import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
 
 /**
  * @author Daniel de Oliveira

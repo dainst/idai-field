@@ -11,7 +11,7 @@ export const makeLookup = (path: string) => {
 
         return reduce((amap: {[_:string]: A}, a: A) => {
 
-            amap[getOn(a)(path)] = a;
+            amap[getOn(path)(a)] = a;
             return amap;
 
         }, {})(as);

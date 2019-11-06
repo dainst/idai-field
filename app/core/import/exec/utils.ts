@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/src/model/core/document';
 import {unionBy} from 'tsfun-core';
-import {arrayEqual, getOnOr, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -27,8 +27,8 @@ export function assertLegalCombination(mergeMode: boolean|undefined, mainTypeDoc
 
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
-    const documentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(document);
-    const targetDocumentRecordedIn = getOnOr('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
+    const documentRecordedIn = getOn('resource.relations.' + RECORDED_IN, undefined)(document);
+    const targetDocumentRecordedIn = getOn('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
 
 
     if (isNot(undefinedOrEmpty)(documentRecordedIn)

@@ -122,6 +122,8 @@ export class ExportComponent implements OnInit {
 
     public async startExport() {
 
+        this.messages.removeAllMessages();
+
         const filePath: string = await this.chooseFilepath();
         if (!filePath) return;
 

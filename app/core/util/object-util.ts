@@ -1,4 +1,5 @@
-import {clone as tsfunClone, jsonClone, setOn, getOn} from 'tsfun';
+import {clone as tsfunClone, jsonClone, getOn} from 'tsfun';
+import {setOn} from 'tsfun-extra';
 
 /**
  * @author Thomas Kleinke

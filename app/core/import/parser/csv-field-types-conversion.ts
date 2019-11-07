@@ -1,4 +1,5 @@
-import {getOn, includedIn, is, isNot, on, setOn, isnt} from 'tsfun';
+import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
+import {setOn} from 'tsfun-extra';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {CSVExport} from '../../export/csv-export';

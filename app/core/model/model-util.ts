@@ -23,7 +23,7 @@ export module ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return get(index, undefined as any)(targetIds);
+        return get(index)(targetIds) as (ResourceId|undefined);
     }
 }
 

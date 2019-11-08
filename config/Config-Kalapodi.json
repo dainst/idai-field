@@ -33,7 +33,7 @@
       "workflow": "Find-workflow-kalapodi"
     }
   },
-  "Sample:default": {
+  "Sample": {
     "parent": "Find",
     "color": "#9ecae1",
     "fields": {
@@ -160,7 +160,7 @@
       }
     }
   },
-  "Planum:default": {
+  "Planum": {
     "color": "#00ced1",
     "parent": "Feature",
     "fields": {

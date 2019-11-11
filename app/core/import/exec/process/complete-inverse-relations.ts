@@ -110,13 +110,13 @@ function setInverseRelationsForImportResource(importDocuments: Array<Document>,
     for (let importDocument of importDocuments) {
 
         const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
-        const assertNotBadyInterrelated_ = assertNotBadlyInterrelated(importDocument);
+        const assertNotBadlyInterrelated_ = assertNotBadlyInterrelated(importDocument);
         const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
 
         flow(importDocument.resource.relations,
             keys,
             map(pairRelationWithItsInverse_),
-            forEach(assertNotBadyInterrelated_),
+            forEach(assertNotBadlyInterrelated_),
             forEach(setInverses_));
     }
 }
@@ -156,7 +156,7 @@ function setInverses(importDocument: Document,
 
 function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|undefined) {
 
-    return (document: Document) =>  (relationName: string): [string, string|undefined] => {
+    return (document: Document) => (relationName: string): [string, string|undefined] => {
 
         if (relationName === RECORDED_IN) return [RECORDED_IN, undefined];
         if (isEmpty(document.resource.relations[relationName])) {
@@ -165,7 +165,6 @@ function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|un
         return [relationName, getInverseRelation(relationName)];
     }
 }
-
 
 
 function assertNotBadlyInterrelated(document: Document) {

@@ -20,8 +20,7 @@ export async function processRelations(documents: Array<Document>,
                                        operationTypeNames: string[],
                                        getInverseRelation: GetInverseRelation,
                                        get: Get,
-                                       { mergeMode, permitDeletions,
-                                           mainTypeDocumentId} : ImportOptions) {
+                                       { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
@@ -189,8 +188,8 @@ async function replaceTopLevelLiesWithins(documents: Array<Document>,
 function searchInImport(targetDocumentResourceId: Id,
                         idMap: IdMap,
                         operationTypeNames: string[]
-): Either<string, Document> // recordedInResourceId|targetDocument
-    |undefined {            // targetDocument not found
+        ): Either<string, Document> // recordedInResourceId|targetDocument
+        |undefined {                // targetDocument not found
 
     const targetInImport = idMap[targetDocumentResourceId];
     if (!targetInImport) return undefined;

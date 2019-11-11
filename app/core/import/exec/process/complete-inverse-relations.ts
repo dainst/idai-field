@@ -56,7 +56,7 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
 
     const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
 
-    setInverseRelationsForImportResource(
+    setInverseRelationsForImportResources(
         importDocuments,
         lookupDocument,
         pairRelationWithItsInverse(getInverseRelation),
@@ -102,10 +102,10 @@ function targetIdsReferingToDbResources(document: Document,
 }
 
 
-function setInverseRelationsForImportResource(importDocuments: Array<Document>,
-                                              lookupDocument: LookupDocument,
-                                              pairRelationWithItsInverse: PairRelationWithItsInverse,
-                                              assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
+function setInverseRelationsForImportResources(importDocuments: Array<Document>,
+                                               lookupDocument: LookupDocument,
+                                               pairRelationWithItsInverse: PairRelationWithItsInverse,
+                                               assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {
 
@@ -175,20 +175,21 @@ function assertNotBadlyInterrelated(document: Document) {
 
         const forbiddenRelations = [];
 
-        if (relationName !== inverseRelationName)        forbiddenRelations.push(inverseRelationName);
+        if (relationName !== inverseRelationName) forbiddenRelations.push(inverseRelationName);
 
         if ([IS_ABOVE, IS_BELOW].includes(relationName)) forbiddenRelations.push(IS_EQUIVALENT_TO);
-        else if (IS_EQUIVALENT_TO === relationName)  forbiddenRelations.push(IS_ABOVE, IS_BELOW);
+        else if (IS_EQUIVALENT_TO === relationName) forbiddenRelations.push(IS_ABOVE, IS_BELOW);
 
         if ([IS_BEFORE, IS_AFTER].includes(relationName)) forbiddenRelations.push(IS_CONTEMPORARY_WITH);
-        else if (IS_CONTEMPORARY_WITH === relationName)  forbiddenRelations.push(IS_BEFORE, IS_AFTER);
+        else if (IS_CONTEMPORARY_WITH === relationName) forbiddenRelations.push(IS_BEFORE, IS_AFTER);
 
         assertNoForbiddenRelations(forbiddenRelations, document.resource.relations[relationName], document);
     }
 }
 
 
-function assertNoForbiddenRelations(forbiddenRelations: string[], relationTargets: string[], document: Document) {
+function assertNoForbiddenRelations(forbiddenRelations: string[], relationTargets: string[],
+                                    document: Document) {
 
     forbiddenRelations
         .map(lookup(document.resource.relations))

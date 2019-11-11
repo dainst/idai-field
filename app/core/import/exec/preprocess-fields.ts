@@ -28,15 +28,12 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
     keys(struct)
         .map(pairWith(lookup(struct)))
         .forEach(([fieldName, fieldValue]: any) => {
+            if (fieldName === 'relations') return;
 
             if (fieldValue === null) {
-
                 if (!permitDeletions) delete struct[fieldName];
-
             } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
-
                 throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
-
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
                 collapseEmptyProperties(fieldValue, permitDeletions);
 

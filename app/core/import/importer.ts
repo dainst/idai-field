@@ -167,10 +167,12 @@ export module Importer {
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: false, permitDeletions: false});
+                break;
             case 'shapefile':
             case 'geojson':
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: true, permitDeletions: false});
+                break;
             default: // native | csv
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,

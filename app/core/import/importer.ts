@@ -154,7 +154,7 @@ export module Importer {
                            operationTypeNames: string[],
                            mainTypeDocumentId: string,
                            mergeMode: boolean,
-                           updateRelationsOnMergeMode: boolean,
+                           permitDeletions: boolean,
                            getInverseRelation: (_: string) => string|undefined,
                            generateId: () => string,
                            postProcessDocument: (document: Document) => Document,
@@ -173,7 +173,7 @@ export module Importer {
                     { mergeMode: true, permitDeletions: false});
             default: // native | csv
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
-                    { mergeMode: mergeMode, permitDeletions: updateRelationsOnMergeMode,
+                    { mergeMode: mergeMode, permitDeletions: permitDeletions,
                         mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }
 

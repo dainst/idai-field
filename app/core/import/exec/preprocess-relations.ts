@@ -1,9 +1,8 @@
-import {Document} from 'idai-components-2/src/model/core/document';
+import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
+import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
-import {Relations} from 'idai-components-2/src/model/core/relations';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
-import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
 import {RESOURCE_ID} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;

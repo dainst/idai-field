@@ -35,7 +35,7 @@ export module CsvRowsConversion {
     const convertIfEmpty = (val: string) => val === '' ? null : val;
 
 
-    function insertFieldIntoDocument(struct: any, fieldOfHeading: any, fieldOfRow: any) {
+    function insertFieldIntoDocument(struct: any, fieldOfHeading: string, fieldOfRow: any) {
 
         if (fieldOfHeading.includes(PATH_SEPARATOR)) {
             implodePaths(struct, fieldOfHeading.split(PATH_SEPARATOR), fieldOfRow);
@@ -51,7 +51,6 @@ export module CsvRowsConversion {
         if (isNaN(index)) index = pathSegments[0];
 
         if (pathSegments.length < 2) {
-
             currentSegmentObject[index] = convertIfEmpty(val);
             return;
         }
@@ -118,7 +117,7 @@ export module CsvRowsConversion {
             }
         }
 
-        if (currentField !== '') addFieldToRow(currentField, currentRow);
+        if (lastCharacter !== 'linebreak') addFieldToRow(currentField, currentRow);
         if (currentRow.length > 0) rows.push(currentRow);
 
         return rows;

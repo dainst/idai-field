@@ -80,8 +80,13 @@ function getTargetIds(mergeMode: boolean,
 
         let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
         if (mergeMode) {
-            let oldVersion; try { oldVersion = await get(document.resource.id);
-            } catch { throw "FATAL existing version of document not found" }
+            let oldVersion;
+            try {
+                oldVersion = await get(document.resource.id);
+            } catch {
+                throw 'FATAL: Existing version of document not found';
+            }
+
             return [
                 targetIds,
                 subtract<ResourceId>(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))];

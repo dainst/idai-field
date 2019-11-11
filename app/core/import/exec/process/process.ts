@@ -1,7 +1,7 @@
-import {ImportValidator} from './import-validator';
 import {duplicates, to, dissocOn} from 'tsfun';
-import {ImportErrors as E} from '../import-errors';
 import {Document, NewDocument} from 'idai-components-2';
+import {ImportValidator} from './import-validator';
+import {ImportErrors as E} from '../import-errors';
 import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
 import {Get, GetInverseRelation} from '../types';
@@ -73,7 +73,8 @@ export async function process(documents: Array<Document>,
             operationTypeNames,
             getInverseRelation,
             get,
-            importOptions);
+            importOptions
+        );
 
         return [processedDocuments, relatedDocuments, undefined];
 

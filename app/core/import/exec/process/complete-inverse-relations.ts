@@ -1,8 +1,8 @@
-import {Document, Relations} from 'idai-components-2';
-import {ImportErrors as E} from '../import-errors';
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
     isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
     map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';
+import {Document, Relations} from 'idai-components-2';
+import {ImportErrors as E} from '../import-errors';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
 import {assertInSameOperationWith, makeDocumentsLookup} from '../utils';
@@ -89,9 +89,12 @@ function getTargetIds(mergeMode: boolean,
 
             return [
                 targetIds,
-                subtract<ResourceId>(targetIds)(targetIdsReferingToDbResources(oldVersion as any, lookupDocument))];
+                subtract<ResourceId>(targetIds)(
+                    targetIdsReferingToDbResources(oldVersion as any, lookupDocument)
+                )
+            ];
         }
-        return [ targetIds, [] ];
+        return [targetIds, []];
     }
 }
 

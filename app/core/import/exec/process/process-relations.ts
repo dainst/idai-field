@@ -33,18 +33,14 @@ export async function processRelations(documents: Array<Document>,
     await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId ? mainTypeDocumentId : '');
     await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId ? mainTypeDocumentId : ''));
 
-    if (!mergeMode || permitDeletions) {
-
-        await validator.assertRelationsWellformedness(documents);
-        await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-        return await completeInverseRelations(
-                documents,
-                get,
-                getInverseRelation,
-                assertIsAllowedRelationDomainType_,
-                mergeMode);
-    }
-    return [];
+    await validator.assertRelationsWellformedness(documents);
+    await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
+    return await completeInverseRelations(
+            documents,
+            get,
+            getInverseRelation,
+            assertIsAllowedRelationDomainType_,
+            mergeMode);
 }
 
 
@@ -107,7 +103,7 @@ async function inferRecordedIns(documents: Array<Document>,
             return  operationTypeNames.includes(got.resource.type)
                 ? got.resource.id
                 : got.resource.relations[RECORDED_IN][0];
-        } catch { console.log("FATAL - not found") } // should have been caught earlier, in process()
+        } catch { console.log('FATAL: Not found'); } // should have been caught earlier, in process()
     }
 
 

@@ -74,15 +74,18 @@ describe('DefaultImport', () => {
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
-            documents: [{ resource: { identifier: '123', id: '1' } }]
+            documents: [{ resource: { identifier: '123', id: '1', relations: {} } }]
         }));
+        mockDatastore.get.and.returnValue(Promise.resolve(
+            { resource: { identifier: '123', id: '1', relations: {} } }
+        ));
 
         await (buildImportFunction(
             mockValidator,
             operationTypeNames,
             () => undefined,
             () => '101', undefined,
-            { mergeMode: true, permitDeletions: false }))(
+            { mergeMode: true }))(
             [{ resource: { id: '1', relations: {} } } as any],
             mockDatastore,
             'user1');
@@ -98,7 +101,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101', undefined, { mergeMode: false, permitDeletions: false }))([
+            () => '101', undefined, { mergeMode: false }))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -121,7 +124,7 @@ describe('DefaultImport', () => {
     });
 
 
-    it('not well formed ', async done => { // shows that err from default-import-calc gets propagated
+    it('not well formed', async done => { // shows that err from default-import-calc gets propagated
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
@@ -142,8 +145,7 @@ describe('DefaultImport', () => {
             operationTypeNames,
             () => undefined,
             () => '101', undefined,
-            { mergeMode: false, permitDeletions: false,
-             useIdentifiersInRelations: true }); // !
+            { mergeMode: false, useIdentifiersInRelations: true }); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
@@ -165,9 +167,7 @@ describe('DefaultImport', () => {
             () => undefined,
             () => '101',
             undefined,
-            { mergeMode: false,
-              permitDeletions: false,
-                useIdentifiersInRelations: false}); // !
+            { mergeMode: false, useIdentifiersInRelations: false}); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 

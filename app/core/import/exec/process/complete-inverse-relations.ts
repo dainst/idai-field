@@ -1,5 +1,5 @@
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
-    isEmpty, isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
+    isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
     map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
@@ -166,11 +166,11 @@ function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|un
 
     return (document: Document) => (relationName: string): [string, string|undefined] => {
 
-        if (relationName === RECORDED_IN) return [RECORDED_IN, undefined];
-        if (isEmpty(document.resource.relations[relationName])) {
-            throw [E.EMPTY_RELATION, document.resource.identifier];
+        if (relationName === RECORDED_IN) {
+            return [RECORDED_IN, undefined];
+        } else {
+            return [relationName, getInverseRelation(relationName)];
         }
-        return [relationName, getInverseRelation(relationName)];
     }
 }
 

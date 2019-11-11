@@ -232,6 +232,67 @@ describe('Import/Subsystem', () => {
     });
 
 
+    it('do not delete field if deletions are not permitted', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: {} }});
+        await datastore.create({ resource: {
+                identifier: 'f1',
+                type: 'Feature',
+                shortDescription: 'feature1',
+                relations: { isRecordedIn: ['a'] }
+            } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, false,
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription": null }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.shortDescription).toEqual('feature1');
+        done();
+    });
+
+
+    it('do not delete relation if deletions are not permitted', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: { } }});
+        await datastore.create({ resource: {
+                id: 'f1',
+                identifier: 'f1',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
+            } });
+        await datastore.create({ resource: {
+                id: 'f2',
+                identifier: 'f2',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
+            } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, false,
+            '{ "type": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.relations.isAfter).toEqual(['f2']);
+        expect(result.documents[2].resource.relations.isBefore).toEqual(['f1']);
+        done();
+    });
+
+
     it('unmatched items on merge', async done => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});

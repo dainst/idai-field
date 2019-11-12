@@ -132,33 +132,6 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private async startImport() {
-
-        this.messages.removeAllMessages();
-
-        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
-            this.file as any, this.url as any, this.http);
-        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
-
-        let uploadModalRef: any = undefined;
-        let uploadReady = false;
-        setTimeout(() => {
-            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
-                { backdrop: 'static', keyboard: false });
-        }, 200);
-
-        this.settingsService.stopSync();
-
-        const importReport = await this.doImport(reader);
-
-        this.settingsService.startSync();
-
-        uploadReady = true;
-        if(uploadModalRef) uploadModalRef.close();
-        this.showImportResult(importReport);
-    }
-
-
     public isReady(): boolean|undefined {
 
         return !this.running
@@ -209,6 +182,33 @@ export class ImportComponent implements OnInit {
             case 'csv':
                 return '.csv';
         }
+    }
+
+
+    private async startImport() {
+
+        this.messages.removeAllMessages();
+
+        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
+            this.file as any, this.url as any, this.http);
+        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
+
+        let uploadModalRef: any = undefined;
+        let uploadReady = false;
+        setTimeout(() => {
+            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
+                { backdrop: 'static', keyboard: false });
+        }, 200);
+
+        this.settingsService.stopSync();
+
+        const importReport = await this.doImport(reader);
+
+        this.settingsService.startSync();
+
+        uploadReady = true;
+        if(uploadModalRef) uploadModalRef.close();
+        this.showImportResult(importReport);
     }
 
 

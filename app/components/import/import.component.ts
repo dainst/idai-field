@@ -28,6 +28,7 @@ import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {AngularUtility} from '../../common/angular-utility';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class ImportComponent implements OnInit {
     public mergeMode = false;
     public permitDeletions = false;
     public javaInstalled: boolean = true;
+    public running: boolean = false;
 
     // CSV Import
     public resourceTypes: Array<IdaiType> = [];
@@ -116,7 +118,21 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public async startImport() {
+    public async onImportButtonClick() {
+
+        if (!this.isReady()) return;
+
+        this.running = true;
+        await AngularUtility.refresh();
+        await this.startImport();
+
+        // The timeout is necessary to prevent another import from starting if the import button is clicked
+        // again while the import is running
+        setTimeout(() => this.running = false, 100);
+    }
+
+
+    private async startImport() {
 
         this.messages.removeAllMessages();
 
@@ -145,9 +161,10 @@ export class ImportComponent implements OnInit {
 
     public isReady(): boolean|undefined {
 
-        return this.sourceType === 'file'
-            ? this.file !== undefined
-            : this.url !== undefined;
+        return !this.running
+            && this.sourceType === 'file'
+                ? this.file !== undefined
+                : this.url !== undefined;
     }
     
 

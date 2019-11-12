@@ -11,7 +11,7 @@
   }
 
   .disabled {
-    cursor: not-allowed;
+    transition: none !important;
   }
 
   .import-info {

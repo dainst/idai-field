@@ -201,9 +201,7 @@ export class ImportComponent implements OnInit {
         }, 200);
 
         this.settingsService.stopSync();
-
         const importReport = await this.doImport(reader);
-
         this.settingsService.startSync();
 
         uploadReady = true;

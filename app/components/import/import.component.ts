@@ -123,7 +123,7 @@ export class ImportComponent implements OnInit {
         if (!this.isReady()) return;
 
         this.running = true;
-        await AngularUtility.refresh();
+        await AngularUtility.refresh(100);
         await this.startImport();
 
         // The timeout is necessary to prevent another import from starting if the import button is clicked

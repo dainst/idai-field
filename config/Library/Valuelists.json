@@ -8776,5 +8776,41 @@
       "Toniger Sand": {},
       "Toniger Schluff": {}
     }
+  },
+  "periods-kalapodi": {
+    "createdBy": "A. K. 2019",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Archaisch": {},
+      "Bronzezeitlich": {},
+      "Byzantinisch": {},
+      "Eisenzeitlich": {},
+      "Frühbronzezeitlich": {},
+      "Frühbyzantinisch": {},
+      "Frühhellenistisch": {},
+      "Frühkaiserzeitlich": {},
+      "Frühklassisch": {},
+      "Geometrisch": {},
+      "Hellenistisch": {},
+      "Kaiserzeitlich": {},
+      "Klassisch": {},
+      "Mykenisch": {},
+      "Neolithisch": {},
+      "Neuzeitlich": {},
+      "Osmanisch": {},
+      "Pleistozän": {},
+      "Rezent": {},
+      "Römisch": {},
+      "Spätantik": {},
+      "Spätbronzezeitlich": {},
+      "Spätbyzantinisch": {},
+      "Späthellenistisch": {},
+      "Spätkaiserzeitlich": {},
+      "Spätklassisch": {}
+    }
   }
 }

@@ -1,12 +1,11 @@
-import {Document} from 'idai-components-2/src/model/core/document';
+import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to,
+    undefinedOrEmpty} from 'tsfun';
+import {Document, NewDocument, Relations} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
-import {NewDocument} from 'idai-components-2/src/model/core/new-document';
-import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from '../import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {Relations} from 'idai-components-2';
 import {Get, GetInverseRelation, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../default-import';
@@ -21,8 +20,7 @@ export async function processRelations(documents: Array<Document>,
                                        operationTypeNames: string[],
                                        getInverseRelation: GetInverseRelation,
                                        get: Get,
-                                       { mergeMode, permitDeletions,
-                                           mainTypeDocumentId} : ImportOptions) {
+                                       { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
@@ -35,18 +33,14 @@ export async function processRelations(documents: Array<Document>,
     await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId ? mainTypeDocumentId : '');
     await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId ? mainTypeDocumentId : ''));
 
-    if (!mergeMode || permitDeletions) {
-
-        await validator.assertRelationsWellformedness(documents);
-        await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-        return await completeInverseRelations(
-                documents,
-                get,
-                getInverseRelation,
-                assertIsAllowedRelationDomainType_,
-                mergeMode);
-    }
-    return [];
+    await validator.assertRelationsWellformedness(documents);
+    await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
+    return await completeInverseRelations(
+            documents,
+            get,
+            getInverseRelation,
+            assertIsAllowedRelationDomainType_,
+            mergeMode);
 }
 
 
@@ -109,7 +103,7 @@ async function inferRecordedIns(documents: Array<Document>,
             return  operationTypeNames.includes(got.resource.type)
                 ? got.resource.id
                 : got.resource.relations[RECORDED_IN][0];
-        } catch { console.log("FATAL - not found") } // should have been caught earlier, in process()
+        } catch { console.log('FATAL: Not found'); } // should have been caught earlier, in process()
     }
 
 
@@ -190,8 +184,8 @@ async function replaceTopLevelLiesWithins(documents: Array<Document>,
 function searchInImport(targetDocumentResourceId: Id,
                         idMap: IdMap,
                         operationTypeNames: string[]
-): Either<string, Document> // recordedInResourceId|targetDocument
-    |undefined {            // targetDocument not found
+        ): Either<string, Document> // recordedInResourceId|targetDocument
+        |undefined {                // targetDocument not found
 
     const targetInImport = idMap[targetDocumentResourceId];
     if (!targetInImport) return undefined;

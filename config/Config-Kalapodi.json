@@ -30,7 +30,8 @@
     "valuelists": {
       "storagePlace": "Find-storagePlace-kalapodi",
       "measuringPointOrigin": "Find-measuringPointOrigin-kalapodi",
-      "workflow": "Find-workflow-kalapodi"
+      "workflow": "Find-workflow-kalapodi",
+      "period": "periods-kalapodi"
     }
   },
   "Sample": {
@@ -95,10 +96,14 @@
     "fields": {
       "imageSubject": {
         "inputType": "radio"
+      },
+      "originalType": {
+        "inputType": "dropdown"
       }
     },
     "valuelists": {
-      "imageSubject": "Photo-imageSubject-kalapodi"
+      "imageSubject": "Photo-imageSubject-kalapodi",
+      "originalType": "Photo-originalType-default"
     }
   },
   "Metal:default": {

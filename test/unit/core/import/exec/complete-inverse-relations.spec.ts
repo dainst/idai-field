@@ -501,25 +501,10 @@ describe('completeInverseRelations', () => {
 
         doc1.resource.relations[IS_BELOW] = ['17'];
         try {
-
             await completeInverseRelations([doc1 as any], get, getInverseRelation);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.EXEC_MISSING_RELATION_TARGET)
-        }
-        done();
-    });
-
-
-    it('empty relation', async done => {
-
-        doc1.resource.relations[IS_BELOW] = [];
-        try {
-            await completeInverseRelations([doc1 as any], get, getInverseRelation);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.EMPTY_RELATION);
-            expect(errWithParams[1]).toEqual('one');
         }
         done();
     });

@@ -1,4 +1,4 @@
-import {getOnOr} from 'tsfun';
+import {getOn} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -142,7 +142,7 @@ export module ConstraintIndex {
 
     function putFor(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition, doc: Document) {
 
-        const elForPath = getOnOr(indexDefinition.path, undefined)(doc);
+        const elForPath = getOn(indexDefinition.path, undefined)(doc);
 
         switch(indexDefinition.type) {
             case 'exist':

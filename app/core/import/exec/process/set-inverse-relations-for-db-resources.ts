@@ -1,7 +1,7 @@
-import {Document} from 'idai-components-2';
-import {ImportErrors as E} from '../import-errors';
 import {is, on, union, isNot, includedIn, keysAndValues} from 'tsfun';
 import {asyncMap, asyncReduce} from 'tsfun-extra';
+import {Document} from 'idai-components-2';
+import {ImportErrors as E} from '../import-errors';
 import {ConnectedDocsResolution} from '../../../model/connected-docs-resolution';
 import {clone} from '../../../util/object-util';
 import {ResourceId} from '../../../../c';
@@ -13,8 +13,8 @@ import {AssertIsAllowedRelationDomainType} from '../types';
  * @param importDocuments
  * @param getTargetIds a pair of id lists, where the first list's ids
  *   are of resources already in the db and referenced by the current version of the importDocument,
- *   and the second lists'ids are resources already in the db and referenced
- *   by the version to be updated of importDocument, where only ids which are not in the first list, are listed.
+ *   and the second list's ids are resources already in the db and referenced by the version
+ *   to be updated of importDocument, where only ids that are not in the first list are listed.
  * @param get
  * @param getInverseRelation
  * @param assertIsAllowedRelationDomainType
@@ -24,12 +24,12 @@ import {AssertIsAllowedRelationDomainType} from '../types';
  * @author Thomas Kleinke
  */
 export async function setInverseRelationsForDbResources(
-    importDocuments: Array<Document>,
-    getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
-    get: (_: string) => Promise<Document>,
-    getInverseRelation: (_: string) => string|undefined,
-    assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
-    unidirectionalRelations: string[]): Promise<Array<Document>> {
+        importDocuments: Array<Document>,
+        getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
+        get: (_: string) => Promise<Document>,
+        getInverseRelation: (_: string) => string|undefined,
+        assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
+        unidirectionalRelations: string[]): Promise<Array<Document>> {
 
     let allFetchedDocuments: Array<Document> = []; // store already fetched documents
 
@@ -56,7 +56,8 @@ export async function setInverseRelationsForDbResources(
 }
 
 
-function reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate: (document: Document) => Promise<Array<Document>>) {
+function reduceToDBDocumentsToBeUpdated(
+        getDocumentTargetDocsToUpdate: (document: Document) => Promise<Array<Document>>) {
 
     return asyncReduce(
         async (totalDocsToUpdate: Array<Document>, document: Document) => {
@@ -74,10 +75,8 @@ function reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate: (document
  * and the document here does not reference a targetDocument with a bi-directional relation,
  * there will be no update for that targetDocument
  */
-function getRidOfUnnecessaryTargetDocs(
-    document: Document,
-    targetDocuments: Array<Document>,
-    unidirectionalRelations: string[]) {
+function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Array<Document>,
+                                       unidirectionalRelations: string[]) {
 
     return targetDocuments.filter(targetDocument => {
         for (let k of Object
@@ -115,7 +114,9 @@ function assertTypeIsInRange(document: Document,
             for (let relationTarget of relationTargets) {
                 const targetType = idTypeMap[relationTarget];
                 if (!targetType) continue;
-                assertIsAllowedRelationDomainType(document.resource.type, targetType, relationName, document.resource.identifier);
+                assertIsAllowedRelationDomainType(
+                    document.resource.type, targetType, relationName, document.resource.identifier
+                );
             }
         })
 }
@@ -130,7 +131,7 @@ function getTargetDocument(documents: Array<Document>, get: Function) {
         if (!targetDocument) try {
             targetDocument = clone(await get(targetId));
         } catch {
-            throw [E.EXEC_MISSING_RELATION_TARGET, targetId]
+            throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
         }
         return targetDocument as Document;
     }

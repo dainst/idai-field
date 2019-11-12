@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {nthOr} from 'tsfun';
+import {get} from 'tsfun';
 import {ResourceId} from '../../c';
 
 /**
@@ -23,7 +23,7 @@ export module ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return nthOr(index, undefined as any)(targetIds);
+        return get(index)(targetIds) as (ResourceId|undefined);
     }
 }
 

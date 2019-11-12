@@ -51,14 +51,7 @@ export class FieldTypeConverter extends TypeConverter<Document> {
         } else {
             takeOrMake(document, 'resource.identifier','');
             takeOrMake(document, 'resource.relations.isRecordedIn', []);
-
-            if (this.typeUtility.isSubtype(document.resource.type,'Feature')) {
-                takeOrMake(document, 'resource.relations.isContemporaryWith', []);
-                takeOrMake(document, 'resource.relations.isAfter', []);
-                takeOrMake(document, 'resource.relations.isBefore', []);
-            }
         }
-
 
         return Migrator.migrate(document) as T;
     }

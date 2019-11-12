@@ -113,7 +113,7 @@ describe('CsvRowsConversion', () => {
     });
 
 
-    it('empty fields on different levels', () => {
+    it('parse empty fields on different levels', () => {
 
         const struct = CsvRowsConversion.parse(',')(
             'a\n' +
@@ -135,5 +135,17 @@ describe('CsvRowsConversion', () => {
 
         expect(struct2.length).toBe(1);
         expect(struct2[0]['a']['b']['c']).toBe(null);
+    });
+
+
+    it('parse last field in file even if empty', () => {
+
+        const struct = CsvRowsConversion.parse(',')(
+            'a,b\n' +
+            'Value,');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['a']).toBe('Value');
+        expect(struct[0]['b']).toBe(null);
     });
 });

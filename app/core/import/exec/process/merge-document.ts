@@ -40,9 +40,11 @@ function overwriteOrDeleteProperties(target: any|undefined, source: any, exclusi
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: {[propertyName: string]: string[]}, propertyName: string) => {
-
-            if (source[propertyName] === null) delete target[propertyName];
-            else target[propertyName] = source[propertyName];
+            if (source[propertyName] === null) {
+                delete target[propertyName];
+            } else {
+                target[propertyName] = source[propertyName];
+            }
 
             return target;
         }, target ? target : {});

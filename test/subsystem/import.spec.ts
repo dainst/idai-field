@@ -28,15 +28,15 @@ describe('Import/Subsystem', () => {
     it('create one operation', async done => {
 
        await Importer.doImport(
-            'native',
-            new TypeUtility(_projectConfiguration),
-            datastore,
-            { getUsername: () => 'testuser'},
-            _projectConfiguration,
-            undefined,
-            false,
+           'native',
+           new TypeUtility(_projectConfiguration),
+           datastore,
+           { getUsername: () => 'testuser'},
+           _projectConfiguration,
+           undefined,
            false,
-                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}', () => '101');
+           false,
+           '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}', () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -57,7 +57,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             trench.resource.id,
             false, false,
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
+            '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
             () => '101');
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
@@ -101,7 +101,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('create one find, connect to existing operation ', async done => {
+    it('create one find, connect to existing operation', async done => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
@@ -113,7 +113,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             stored.resource.id,
             false, false,
-                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
+            '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
             () => '101');
 
         const result = await datastore.find({});
@@ -124,7 +124,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('invalid structure - dont import', async done => {
+    it('invalid structure - do not import', async done => {
 
         const resourceId = (await datastore.create(
             { resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}}
@@ -149,23 +149,146 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('update shortDescription', async done => {
+    it('update field', async done => {
 
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: {} }});
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
         await Importer.doImport(
             'native',
             new TypeUtility(_projectConfiguration),
             datastore,
-            { getUsername: () => 'testuser'},
+            { getUsername: () => 'testuser' },
             _projectConfiguration,
             undefined,
             true, false,
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}',
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }',
             () => '101');
 
         const result = await datastore.find({});
-        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
+        expect(result.documents[1].resource.shortDescription).toBe('feature_1');
+        done();
+    });
+
+
+    it('delete field', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: {} }});
+        await datastore.create({ resource: {
+            identifier: 'f1',
+            type: 'Feature',
+            shortDescription: 'feature1',
+                relations: { isRecordedIn: ['a'] }
+        } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, true,
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription": null }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.shortDescription).toBeUndefined();
+        done();
+    });
+
+
+    it('delete relation', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: { } }});
+        await datastore.create({ resource: {
+                id: 'f1',
+                identifier: 'f1',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
+            } });
+        await datastore.create({ resource: {
+                id: 'f2',
+                identifier: 'f2',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
+            } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, true,
+            '{ "type": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.relations.isAfter).toBeUndefined();
+        expect(result.documents[2].resource.relations.isBefore).toBeUndefined();
+        done();
+    });
+
+
+    it('do not delete field if deletions are not permitted', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: {} }});
+        await datastore.create({ resource: {
+                identifier: 'f1',
+                type: 'Feature',
+                shortDescription: 'feature1',
+                relations: { isRecordedIn: ['a'] }
+            } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, false,
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription": null }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.shortDescription).toEqual('feature1');
+        done();
+    });
+
+
+    it('do not delete relation if deletions are not permitted', async done => {
+
+        await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: { } }});
+        await datastore.create({ resource: {
+                id: 'f1',
+                identifier: 'f1',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
+            } });
+        await datastore.create({ resource: {
+                id: 'f2',
+                identifier: 'f2',
+                type: 'Feature',
+                relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
+            } });
+
+        await Importer.doImport(
+            'native',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser' },
+            _projectConfiguration,
+            undefined,
+            true, false,
+            '{ "type": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }',
+            () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents[1].resource.relations.isAfter).toEqual(['f2']);
+        expect(result.documents[2].resource.relations.isBefore).toEqual(['f1']);
         done();
     });
 
@@ -182,7 +305,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             true, false,
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
                 + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}',
             () => '101');
 
@@ -207,7 +330,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             'f1',
             false, false,
-                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}',
+            '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}',
             () => '101');
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);

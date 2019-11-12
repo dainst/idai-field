@@ -1,4 +1,5 @@
-import {getOnOr, includedIn, is, isNot, on, setOn, isnt} from 'tsfun';
+import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
+import {setOn} from 'tsfun-extra';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {CSVExport} from '../../export/csv-export';
@@ -122,7 +123,7 @@ export module CsvFieldTypesConversion {
      */
     function convertNumber(container: any, path: string, type: 'int'|'float') {
 
-        const val = getOnOr(path, undefined)(container);
+        const val = getOn(path, undefined)(container);
         if (!val) return;
         const converted = type === 'int' ? parseInt(val) : parseFloat(val);
         if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, val, path];
@@ -136,7 +137,7 @@ export module CsvFieldTypesConversion {
      */
     function convertBoolean(container: any, path: string) {
 
-        const val = getOnOr(path, undefined)(container);
+        const val = getOn(path, undefined)(container);
         if (!val) return;
         if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
         setOn(container, path)(val === 'true');

@@ -77,9 +77,7 @@ describe('process()', () => {
         const result = await process([
                 d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['ef1']})
             ],
-            validator, opTypeNames, get, getInverse,
-            {mergeMode: false,
-             permitDeletions: false});
+            validator, opTypeNames, get, getInverse, { mergeMode: false });
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('nf1');
         done();
@@ -91,9 +89,7 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
             ],
-            validator, opTypeNames, get, getInverse,
-            {mergeMode:false,
-            permitDeletions: false});
+            validator, opTypeNames, get, getInverse, { mergeMode: false });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -109,9 +105,7 @@ describe('process()', () => {
             [
                 d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
             ],
-            validator, opTypeNames, get, getInverse,
-            {mergeMode: false,
-            permitDeletions: false});
+            validator, opTypeNames, get, getInverse, { mergeMode: false });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -353,7 +347,7 @@ describe('process()', () => {
         (document as any)['mergeTarget'] = existingFeature;
 
         const result = await process([document],
-            validator, opTypeNames, get, getInverse, { mergeMode: true, permitDeletions: true });
+            validator, opTypeNames, get, getInverse, { mergeMode: true });
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
         expect(result[1][0].resource.id).toEqual('ef2');
@@ -368,7 +362,7 @@ describe('process()', () => {
         (document as any)['mergeTarget'] = existingFeature2;
 
         const result = await process([document],
-            validator, opTypeNames, get, getInverse, { mergeMode: true, permitDeletions: true });
+            validator, opTypeNames, get, getInverse, { mergeMode: true });
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -377,7 +371,7 @@ describe('process()', () => {
     });
 
 
-    it('merge, ignore wrong relations when not setting overwrite relations', async done => {
+    it('merge, return error in case of an invalid relation', async done => {
 
         const document = d('nf1', 'Feature', 'existingFeature', { isAfter: 'unknown' });
         (document as any)['mergeTarget'] = existingFeature;
@@ -385,13 +379,13 @@ describe('process()', () => {
         const result = await process([document],
             validator, opTypeNames, get, getInverse, { mergeMode: true });
 
-        expect(result[0].length).toBe(1);
-        expect(result[2]).toBeUndefined();
+        expect(result[0].length).toBe(0);
+        expect(result[2]).not.toBeUndefined();
         done();
     });
 
 
-    // err cases ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    // err cases /////////////////////////////////////////////////////////////////////////////////////////////
 
     it('assert lies within correctness', async done => {
 

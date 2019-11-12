@@ -1,9 +1,8 @@
-import {Document} from 'idai-components-2/src/model/core/document';
+import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
+import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
-import {Relations} from 'idai-components-2/src/model/core/relations';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
-import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
 import {RESOURCE_ID} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
@@ -28,7 +27,7 @@ export async function preprocessRelations(documents: Array<Document>,
                                           generateId: () => string,
                                           find: Find,
                                           get: Get,
-                                          { mergeMode, useIdentifiersInRelations}: ImportOptions) {
+                                          { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
     const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
@@ -40,6 +39,7 @@ export async function preprocessRelations(documents: Array<Document>,
         }
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+        if (!permitDeletions) removeEmptyRelations(relations);
         if (useIdentifiersInRelations) {
             await rewriteIdentifiersInRelations(relations, find, identifierMap);
         } else {
@@ -138,5 +138,15 @@ function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifi
 
         relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
         if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
+    }
+}
+
+
+function removeEmptyRelations(relations: Relations) {
+
+    for (let relName of Object.keys(relations)) {
+        if (relations[relName] === null || relations[relName] === []) {
+            delete relations[relName];
+        }
     }
 }

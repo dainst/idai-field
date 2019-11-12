@@ -154,7 +154,7 @@ export module Importer {
                            operationTypeNames: string[],
                            mainTypeDocumentId: string,
                            mergeMode: boolean,
-                           updateRelationsOnMergeMode: boolean,
+                           permitDeletions: boolean,
                            getInverseRelation: (_: string) => string|undefined,
                            generateId: () => string,
                            postProcessDocument: (document: Document) => Document,
@@ -167,13 +167,15 @@ export module Importer {
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: false, permitDeletions: false});
+                break;
             case 'shapefile':
             case 'geojson':
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
                     { mergeMode: true, permitDeletions: false});
+                break;
             default: // native | csv
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
-                    { mergeMode: mergeMode, permitDeletions: updateRelationsOnMergeMode,
+                    { mergeMode: mergeMode, permitDeletions: permitDeletions,
                         mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }
 

@@ -62,7 +62,7 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [errWithParams], successfulImports: 0 };
         }
 
-        const [ importDocuments, targetDocuments, msgWithParams ] = await process(
+        const [importDocuments, targetDocuments, msgWithParams] = await process(
             documents,
             validator,
             operationTypeNames,
@@ -80,14 +80,12 @@ export function buildImportFunction(validator: ImportValidator,
 
         const updateErrors = [];
         try {
-
             await Updater.go(
                 documentsForImport,
                 targetDocuments,
                 datastore,
                 username,
                 importOptions.mergeMode === true);
-
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }

@@ -28,6 +28,7 @@ import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {AngularUtility} from '../../common/angular-utility';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class ImportComponent implements OnInit {
     public mergeMode = false;
     public permitDeletions = false;
     public javaInstalled: boolean = true;
+    public running: boolean = false;
 
     // CSV Import
     public resourceTypes: Array<IdaiType> = [];
@@ -116,38 +118,26 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public async startImport() {
+    public async onImportButtonClick() {
 
-        this.messages.removeAllMessages();
+        if (!this.isReady()) return;
 
-        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
-            this.file as any, this.url as any, this.http);
-        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
+        this.running = true;
+        await AngularUtility.refresh(100);
+        await this.startImport();
 
-        let uploadModalRef: any = undefined;
-        let uploadReady = false;
-        setTimeout(() => {
-            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
-                { backdrop: 'static', keyboard: false });
-        }, 200);
-
-        this.settingsService.stopSync();
-
-        const importReport = await this.doImport(reader);
-
-        this.settingsService.startSync();
-
-        uploadReady = true;
-        if(uploadModalRef) uploadModalRef.close();
-        this.showImportResult(importReport);
+        // The timeout is necessary to prevent another import from starting if the import button is clicked
+        // again while the import is running
+        setTimeout(() => this.running = false, 100);
     }
 
 
     public isReady(): boolean|undefined {
 
-        return this.sourceType === 'file'
-            ? this.file !== undefined
-            : this.url !== undefined;
+        return !this.running
+            && this.sourceType === 'file'
+                ? this.file !== undefined
+                : this.url !== undefined;
     }
     
 
@@ -192,6 +182,31 @@ export class ImportComponent implements OnInit {
             case 'csv':
                 return '.csv';
         }
+    }
+
+
+    private async startImport() {
+
+        this.messages.removeAllMessages();
+
+        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
+            this.file as any, this.url as any, this.http);
+        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
+
+        let uploadModalRef: any = undefined;
+        let uploadReady = false;
+        setTimeout(() => {
+            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
+                { backdrop: 'static', keyboard: false });
+        }, 200);
+
+        this.settingsService.stopSync();
+        const importReport = await this.doImport(reader);
+        this.settingsService.startSync();
+
+        uploadReady = true;
+        if(uploadModalRef) uploadModalRef.close();
+        this.showImportResult(importReport);
     }
 
 

@@ -5,6 +5,6 @@ export module AngularUtility {
 
     export async function refresh() {
 
-        await new Promise(resolve => setTimeout(async () => resolve(), 1));
+        await new Promise(resolve => setTimeout(async () => resolve(), 100));
     }
 }

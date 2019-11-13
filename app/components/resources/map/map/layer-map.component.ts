@@ -85,7 +85,7 @@ export class LayerMapComponent extends MapComponent {
 
         await super.updateMap(changes);
 
-        if (this.settingsService.getSelectedProject().toLowerCase().startsWith('sudan-digital')) {
+        if (this.settingsService.getSelectedProject().toLowerCase().startsWith('sudan-heritage')) {
             this.updateSudanTileLayer();
         }
 

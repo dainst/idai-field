@@ -12,6 +12,7 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {TabManager} from '../tab-manager';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {POSITION_RELATIONS, TIME_RELATIONS} from '../../core/model/relation-constants';
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
@@ -21,7 +22,6 @@ import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_CUT_BY = POSITION_RELATIONS.IS_CUT_BY;
 import CUTS = POSITION_RELATIONS.CUTS;
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({
@@ -158,6 +158,8 @@ export class MatrixViewComponent implements OnInit {
 
 
     private async populateTrenches(): Promise<void> {
+
+        if (!this.projectConfiguration.getTypesMap()['Trench']) return;
 
         this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
         if (this.trenches.length === 0) return;

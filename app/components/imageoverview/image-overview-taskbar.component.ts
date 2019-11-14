@@ -38,9 +38,7 @@ export class ImageOverviewTaskbarComponent {
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceHelper: PersistenceHelper,
         private imageOverviewComponent: ImageOverviewComponent
-    ) {
-        this.imageOverviewFacade.initialize();
-    }
+    ) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

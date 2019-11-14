@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {equal} from 'tsfun';
 import {Query, ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
@@ -96,11 +97,13 @@ export class ImageOverviewFacade {
 
 
     public getPageCount() {
+
         return Math.ceil(this.getTotalDocumentCount() / this.getNrImagesPerPage());
     }
 
 
     public getCurrentPage() {
+
         return this.currentOffset / this.getNrImagesPerPage() + 1;
     }
 
@@ -140,6 +143,8 @@ export class ImageOverviewFacade {
 
 
     public setCustomConstraints(customConstraints: { [name: string]: string }) {
+
+        if (equal(this.imagesState.getCustomConstraints())(customConstraints)) return;
 
         this.currentOffset = 0;
 

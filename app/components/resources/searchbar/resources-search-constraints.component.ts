@@ -6,6 +6,7 @@ import {ViewFacade} from '../view/view-facade';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {clone} from '../../../core/util/object-util';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     protected getCustomConstraints(): { [name: string]: string } {
 
-        return this.viewFacade.getCustomConstraints();
+        return clone(this.viewFacade.getCustomConstraints());
     }
 
 

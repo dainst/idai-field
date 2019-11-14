@@ -1,0 +1,72 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [
+      "buildingHistory",
+      "buildingResearchHistory",
+      "excavationHistory",
+      "findSituation",
+      "findspotClassification"
+    ],
+    "typeFamily": "Place",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#5572A1",
+    "commons": [
+      "dating",
+      "description"
+    ],
+    "valuelists": {
+      "siteClassification": "Place-siteClassification-SudanHeritage",
+      "periodSudanHeritage": "period-SudanHeritage"
+    },
+    "fields": {
+      "placeName": {
+        "inputType": "input"
+      },
+      "placeNameOriginalLaguage": {
+        "inputType": "input"
+      },
+      "periodSudanHeritage": {
+        "inputType": "checkboxes"
+      },
+      "researchHistory": {
+        "inputType": "text"
+      },
+      "modernIntervention": {
+        "inputType": "input"
+      },
+      "siteClassification": {
+        "inputType": "checkboxes"
+      },
+      "stateOfPerservation": {
+        "inputType": "text"
+      },
+      "coservationMeasures": {
+        "inputType": "text"
+      },
+      "objectCirculation": {
+        "inputType": "text"
+      },
+      "staffInCharge": {
+        "inputType": "text"
+      },
+      "securityMeasures": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  }
+
+}

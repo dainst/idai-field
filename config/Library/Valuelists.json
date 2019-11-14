@@ -274,6 +274,28 @@
       "Recent": {}
     }
   },
+  "period-SudanHeritage": {
+    "creationDate": "14-11-2019",
+    "createdBy": "Sami Elamin",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Paleolithic": {},
+      "Mesolithic": {},
+      "Neolithic": {},
+      "Pre-Kerma": {},
+      "Kerma": {},
+      "New Egyptian Kingdom": {},
+      "Napata": {},
+      "Meroe": {},
+      "Post-Meroitic": {},
+      "Christian": {},
+      "Islamic": {},
+      "Modern History": {}
+    }
+  },
   "colors-default-1": {
     "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
@@ -1338,6 +1360,39 @@
     "values": {
       "Bestattungsplatz": {},
       "Siedlung": {}
+    }
+  },
+  "Place-siteClassification-SudanHeritage": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "settlement": {},
+      "cemetery": {},
+      "tumuli grave": {},
+      "mound grave": {},
+      "rock grave": {},
+      "box grave": {},
+      "other grave": {},
+      "Pyramid (Sandstone)": {},
+      "Pyramid (Mud Brick)": {},
+      "Rock Art": {},
+      "Fortress": {},
+      "Castle": {},
+      "Hafir": {},
+      "Quarry": {},
+      "Granary": {},
+      "Old mining site": {},
+      "Workshop": {},
+      "Church": {},
+      "Monastery": {},
+      "Cathedral": {},
+      "Mosque": {},
+      "Landscape feature": {},
+      "Historical building": {}
     }
   },
   "Layer-consistency-default": {

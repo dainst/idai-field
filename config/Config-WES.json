@@ -37,7 +37,10 @@
   },
   "Find:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists": {
+      "period": "periods-wes-1"
+    }
   },
   "Feature:default": {
     "hidden": [],
@@ -135,7 +138,12 @@
     "hidden": [],
     "fields": {}
   },
-  "Pottery:default": {
+  "Pottery:wes": {
+    "parent": "Find",
+    "typeFamily": "Pottery",
+    "description": {},
+    "createdBy": "Max Haibt",
+    "creationDate": "",
     "fields": {
       "vesselpart": {
         "inputType": "checkboxes"

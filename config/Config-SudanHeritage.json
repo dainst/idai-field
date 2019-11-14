@@ -28,7 +28,7 @@
       "placeName": {
         "inputType": "input"
       },
-      "placeNameOriginalLaguage": {
+      "placeNameOriginalLanguage": {
         "inputType": "input"
       },
       "periodSudanHeritage": {
@@ -43,10 +43,10 @@
       "siteClassification": {
         "inputType": "checkboxes"
       },
-      "stateOfPerservation": {
+      "stateOfPreservation": {
         "inputType": "text"
       },
-      "coservationMeasures": {
+      "conservationMeasures": {
         "inputType": "text"
       },
       "objectCirculation": {
@@ -64,5 +64,4 @@
     "hidden": [],
     "fields": {}
   }
-
 }

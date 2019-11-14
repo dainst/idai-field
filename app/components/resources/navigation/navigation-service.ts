@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
+import {Observable, Observer} from 'rxjs';
 import {FieldDocument, Document} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 import {ObserverUtil} from '../../../core/util/observer-util';
-import {Observable, Observer} from 'rxjs';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
@@ -12,7 +12,8 @@ import {IdaiType} from '../../../core/configuration/model/idai-type';
 
 @Injectable()
 /**
- * This serves to centralize the behaviour of navigation buttons of both the sidebar as well as the full scale list.
+ * This serves to centralize the behaviour of navigation buttons of both the sidebar as well as the
+ * full scale list.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -98,8 +99,11 @@ export class NavigationService {
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.getBypassHierarchy()) return false;
 
-        return this.projectConfiguration.getTypesMap()['Operation'].children
-            .map((type: IdaiType) => type.name)
-            .includes(document.resource.type);
+        const operationType: IdaiType|undefined = this.projectConfiguration.getTypesMap()['Operation'];
+
+        return operationType !== undefined && operationType.children !== undefined
+            && operationType.children
+                .map((type: IdaiType) => type.name)
+                .includes(document.resource.type);
     }
 }

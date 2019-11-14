@@ -1,46 +1,42 @@
 {
   "types": {
-  "Place": {
-          "label": "Heritage Site",
-          "fields": {
-            "placeName": {
-            "label":"Place Name"
-          },
-            "placeNameOriginalLaguage": {
-              "label": "Place Name in arabic"
-                      },
-
-             "researchHistory": {
-              "label": "Research History"
-            },
-            "modernIntervention": {
-             "label": "Modern Structures on the site"
-           },
-           "periodSudanHeritage": {
-            "label": "Periods observable on the site"
-          },
-           "siteClassification": {
-            "label": "General archaeological classification for the Site"
-          },
-          "stateOfPerservation": {
-           "label": "Description of the State of Perservation"
-
-         },
-          "conservationMeasures": {
-              "label": "Measures for Conservation of the Site"
-            },
-          "objectCirculation": {
-                "label": "Archaeological Objects from this Site in Circulation"
+    "Place": {
+      "label": "Heritage Site",
+      "fields": {
+        "placeName": {
+          "label": "Place Name"
         },
-          "staffInCharge": {
-                "label": "Persons in Charge of this Site"
-            },
-            "securityMeasures": {
-                  "label": "Measures for securing the Site"
-              }
-
+        "placeNameOriginalLaguage": {
+          "label": "Place Name in arabic"
+        },
+        "researchHistory": {
+          "label": "Research History"
+        },
+        "modernIntervention": {
+          "label": "Modern Structures on the site"
+        },
+        "periodSudanHeritage": {
+          "label": "Periods observable on the site"
+        },
+        "siteClassification": {
+          "label": "General archaeological classification for the Site"
+        },
+        "stateOfPerservation": {
+          "label": "Description of the State of Perservation"
+        },
+        "conservationMeasures": {
+          "label": "Measures for Conservation of the Site"
+        },
+        "objectCirculation": {
+          "label": "Archaeological Objects from this Site in Circulation"
+        },
+        "staffInCharge": {
+          "label": "Persons in Charge of this Site"
+        },
+        "securityMeasures": {
+          "label": "Measures for securing the Site"
         }
       }
     }
-
+  }
 }

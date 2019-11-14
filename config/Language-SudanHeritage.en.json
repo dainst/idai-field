@@ -4,37 +4,37 @@
       "label": "Heritage Site",
       "fields": {
         "placeName": {
-          "label": "Place Name"
+          "label": "Place name"
         },
-        "placeNameOriginalLaguage": {
-          "label": "Place Name in arabic"
+        "placeNameOriginalLanguage": {
+          "label": "Place name in arabic"
         },
         "researchHistory": {
-          "label": "Research History"
+          "label": "Research history"
         },
         "modernIntervention": {
-          "label": "Modern Structures on the site"
+          "label": "Modern structures on the site"
         },
         "periodSudanHeritage": {
           "label": "Periods observable on the site"
         },
         "siteClassification": {
-          "label": "General archaeological classification for the Site"
+          "label": "General archaeological classification for the site"
         },
-        "stateOfPerservation": {
-          "label": "Description of the State of Perservation"
+        "stateOfPreservation": {
+          "label": "Description of the state of preservation"
         },
         "conservationMeasures": {
-          "label": "Measures for Conservation of the Site"
+          "label": "Measures for conservation of the site"
         },
         "objectCirculation": {
-          "label": "Archaeological Objects from this Site in Circulation"
+          "label": "Archaeological objects from this site in circulation"
         },
         "staffInCharge": {
-          "label": "Persons in Charge of this Site"
+          "label": "Persons in charge of this site"
         },
         "securityMeasures": {
-          "label": "Measures for securing the Site"
+          "label": "Measures for securing the site"
         }
       }
     }

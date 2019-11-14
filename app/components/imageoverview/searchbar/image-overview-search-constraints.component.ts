@@ -6,6 +6,7 @@ import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {clone} from '../../../core/util/object-util';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
 
     protected getCustomConstraints(): { [name: string]: string } {
 
-        return this.imageOverviewFacade.getCustomConstraints();
+        return clone(this.imageOverviewFacade.getCustomConstraints());
     }
 
 

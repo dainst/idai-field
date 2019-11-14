@@ -3,10 +3,6 @@
     "hidden": [],
     "fields": {}
   },
-  "Operation:default": {
-    "hidden": [],
-    "fields": {}
-  },
   "Place:default": {
     "hidden": [
       "buildingHistory",

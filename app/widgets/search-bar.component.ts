@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
 import {TypeUtility} from '../core/model/type-utility';
 import {IdaiType} from '../core/configuration/model/idai-type';
@@ -18,7 +18,7 @@ import {IdaiType} from '../core/configuration/model/idai-type';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent {
+export class SearchBarComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType> = [];
     @Input() showFiltersMenu: boolean = true;
@@ -38,6 +38,14 @@ export class SearchBarComponent {
 
 
     constructor(private typeUtility: TypeUtility) {}
+
+
+    ngOnChanges() {
+
+        if ((!this.types || this.types.length === 0) && this.filterOptions.length === 1) {
+            this.types = [this.filterOptions[0].name];
+        }
+    }
 
 
     public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;

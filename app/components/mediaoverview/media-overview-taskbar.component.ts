@@ -38,9 +38,7 @@ export class MediaOverviewTaskbarComponent {
         private mediaOverviewFacade: MediaOverviewFacade,
         private persistenceHelper: PersistenceHelper,
         private mediaOverviewComponent: MediaOverviewComponent
-    ) {
-        this.mediaOverviewFacade.initialize();
-    }
+    ) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

@@ -1,6 +1,7 @@
-import {ProjectConfiguration, DatastoreErrors} from 'idai-components-2';
+import {DatastoreErrors} from 'idai-components-2';
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 /**

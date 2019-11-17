@@ -34,7 +34,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     @Output() onSelectDocument: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
     @Output() onSetHoverDocument: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    @ViewChild('container') container: ElementRef;
+    @ViewChild('container', { static: false }) container: ElementRef;
 
     public showMarkers: boolean = true;
 

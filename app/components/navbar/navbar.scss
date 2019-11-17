@@ -3,6 +3,10 @@ $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
 $tab-separator-color: lighten($navbar-default-bg, 7%);
 $link-hover-color: lighten($navbar-default-bg, 30%);
 
+@import 'taskbar';
+@import 'projects';
+@import 'projects-modal';
+
 .navbar {
   -webkit-app-region: drag;
   padding: 0 10px;

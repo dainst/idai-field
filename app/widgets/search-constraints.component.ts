@@ -1,8 +1,13 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
+import {asyncFilter} from 'tsfun-extra';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
+import {FieldDefinition} from '../core/configuration/model/field-definition';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {ValuelistUtil} from '../core/util/valuelist-util';
+import {clone} from '../core/util/object-util';
+import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 
 
 type ConstraintListItem = {
@@ -12,6 +17,8 @@ type ConstraintListItem = {
     searchTerm: string,
     searchInputType?: string
 };
+
+type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
 
 
 /**
@@ -30,19 +37,23 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private stopListeningToKeyDownEvents: Function|undefined;
 
+    protected defaultFields: Array<FieldDefinition>;
+
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
-    private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
+    private static dropdownInputTypes: string[] = ['dropdown', 'dropdownRange', 'checkboxes', 'radio'];
 
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
+                          private datastore: DocumentReadDatastore,
                           private renderer: Renderer2,
-                          private i18n: I18n) {}
+                          protected i18n: I18n) {}
 
 
-    ngOnChanges(changes: SimpleChanges): void {
+    async ngOnChanges(changes: SimpleChanges) {
 
-        this.reset();
+        await this.removeInvalidConstraints();
+        await this.reset();
     }
 
 
@@ -60,11 +71,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|'boolean'|undefined {
+    public getSearchInputType(field: FieldDefinition|undefined): SearchInputType|undefined {
 
         if (!field) return undefined;
 
-        if (SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType as string)) {
+        if (field.inputType === 'default') {
+            return 'exists';
+        } else if (SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType as string)) {
             return 'input';
         } else if (SearchConstraintsComponent.dropdownInputTypes.includes(field.inputType as string)) {
             return 'dropdown';
@@ -94,7 +107,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         constraints[constraintName] = this.searchTerm;
         await this.setCustomConstraints(constraints);
 
-        this.reset();
+        await this.reset();
     }
 
 
@@ -104,15 +117,17 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         delete constraints[constraintName];
         await this.setCustomConstraints(constraints);
 
-        this.reset();
+        await this.reset();
     }
 
 
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
-        if (constraintListItem.name.includes(':exist')) {
+        if (constraintListItem.name.includes(':exist')
+                && constraintListItem.searchInputType !== 'exists') {
             return this.getExistIndexSearchTermLabel(constraintListItem.searchTerm);
-        } else if (constraintListItem.searchInputType === 'boolean') {
+        } else if (constraintListItem.searchInputType === 'boolean'
+                || constraintListItem.searchInputType === 'exists') {
             return this.getBooleanSearchTermLabel(constraintListItem.searchTerm);
         } else {
             return constraintListItem.searchTerm;
@@ -122,7 +137,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getBooleanSearchTermLabel(searchTerm: string): string {
 
-        return (searchTerm === 'true')
+        return (searchTerm === 'true' || searchTerm === 'KNOWN')
             ? this.i18n({
                 id: 'boolean.yes',
                 value: 'Ja'
@@ -134,7 +149,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public handleClick(event: Event) {
+    public async handleClick(event: Event) {
 
         if (!this.showConstraintsMenu) return;
 
@@ -146,7 +161,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         } while (target);
 
         this.closeConstraintsMenu();
-        this.reset();
+        await this.reset();
     }
 
 
@@ -171,17 +186,58 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public async getValuelist(field: FieldDefinition): Promise<string[]> {
+
+        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
+    }
+
+
     protected abstract getCustomConstraints(): { [name: string]: string };
 
 
     protected abstract async setCustomConstraints(constraints: { [name: string]: string }): Promise<void>;
 
 
-    protected reset() {
+    protected async reset() {
 
         this.updateConstraintListItems();
-        this.updateFields();
+        await this.updateFields();
         this.removeUserEntries();
+    }
+
+
+    private async removeInvalidConstraints() {
+
+        const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
+
+        (await asyncFilter(this.isInvalidConstraint.bind(this))(Object.keys(customConstraints)))
+            .forEach((constraintName: string) => delete customConstraints[constraintName]);
+
+        await this.setCustomConstraints(customConstraints);
+    }
+
+
+    private async isInvalidConstraint(constraintName: string): Promise<boolean> {
+
+        const field: FieldDefinition|undefined
+            = this.getField(SearchConstraintsComponent.getFieldName(constraintName));
+        if (!field) return true;
+
+        return await this.isInvalidConstraintValue(constraintName, field);
+    }
+
+
+    private async isInvalidConstraintValue(constraintName: string, field: FieldDefinition): Promise<boolean> {
+
+        if (!field.inputType
+            || SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType)
+            || field.inputType === 'boolean'
+            || ['KNOWN', 'UNKNOWN'].includes(this.getCustomConstraints()[constraintName])) {
+            return false;
+        }
+
+        const valuelist: string[] = await this.getValuelist(field);
+        return !valuelist.includes(this.getCustomConstraints()[constraintName]);
     }
 
 
@@ -233,14 +289,54 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private updateFields() {
+    private async updateFields() {
 
-        this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
+        const fields: Array<FieldDefinition> = this.defaultFields
+            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.type)))
+            .filter(field => field.constraintIndexed && this.getSearchInputType(field));
+
+        for (let field of fields) {
+            if (field.valuelistFromProjectField) field.valuelist = await this.getValuelist(field);
+        }
+
+        this.fields = this.configureDropdownRangeFields(fields)
             .filter(field => {
-                return field.constraintIndexed
-                    && this.getSearchInputType(field)
-                    && !this.constraintListItems.find(item => item.fieldName === field.name);
+                return !this.constraintListItems.find(item => item.fieldName === field.name);
             });
+    }
+
+
+    private configureDropdownRangeFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+
+        fields = clone(fields);
+
+        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
+            this.addDropdownRangeEndField(fields, field);
+            field.label = this.getDropdownRangeLabel(field);
+        });
+
+        return fields;
+    }
+
+
+    private getDropdownRangeLabel(field: FieldDefinition): string {
+
+        return field.label + ' / ' + field.label
+            + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
+    }
+
+
+    private addDropdownRangeEndField(fields: Array<FieldDefinition>, dropdownRangeField: FieldDefinition) {
+
+        fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
+            name: dropdownRangeField.name + 'End',
+            label: dropdownRangeField.label
+                + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' }),
+            group: dropdownRangeField.group,
+            inputType: 'dropdownRange',
+            valuelist: dropdownRangeField.valuelist,
+            constraintIndexed: true
+        });
     }
 
 
@@ -276,6 +372,9 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getField(fieldName: string): FieldDefinition {
 
+        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
+        if (defaultField) return defaultField;
+
         return this.projectConfiguration.getFieldDefinitions(this.type)
             .find(field => field.name === fieldName) as FieldDefinition;
     }
@@ -283,10 +382,26 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private getLabel(constraintName: string): string {
 
-        return this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => {
-                return field.name === SearchConstraintsComponent.getFieldName(constraintName);
-            }).label;
+        const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
+
+        const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
+        if (defaultField) return defaultField.label as string;
+
+        if (fieldName.endsWith('End')) {
+            const baseField: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
+                .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
+            if (baseField && baseField.inputType === 'dropdownRange') {
+                return baseField.label
+                    + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
+            }
+        }
+
+        const field: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
+            .find((field: FieldDefinition) => field.name === fieldName);
+
+        return field.inputType === 'dropdownRange'
+            ? this.getDropdownRangeLabel(field)
+            : field.label || '';
     }
 
 
@@ -295,6 +410,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
             ? 'exist'
             : ConstraintIndex.getIndexType(field);
+    }
+
+
+    private getDefaultField(fieldName: string): FieldDefinition|undefined {
+
+        return this.defaultFields.find(field => field.name === fieldName);
     }
 
 

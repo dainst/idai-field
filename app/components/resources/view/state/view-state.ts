@@ -16,18 +16,20 @@ export interface ViewState {
     mode: 'map'|'3dMap'|'list';
 
     bypassHierarchy: boolean;
+    expandAllGroups: boolean;
     searchContext: ViewContext;
     customConstraints: { [name: string]: string }
 }
 
 
-export class ViewState {
+export module ViewState {
 
-    public static default(): ViewState {
+    export function default_(): ViewState {
 
         return {
             operation: undefined,
             bypassHierarchy: false,
+            expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: 'map',
             layerIds: [],
@@ -35,10 +37,10 @@ export class ViewState {
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
-    };
+    }
 
 
-    public static complete(viewState: ViewState) {
+    export function complete(viewState: ViewState) {
 
         if (!viewState.layerIds || !Array.isArray(viewState.layerIds)) {
             viewState.layerIds = [];
@@ -49,6 +51,7 @@ export class ViewState {
         }
 
         if (!viewState.mode) viewState.mode = 'map';
+        if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

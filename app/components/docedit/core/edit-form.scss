@@ -47,8 +47,18 @@
               height: 33px;
             }
 
+            .card-title {
+              cursor: default;
+              user-select: none;
+            }
+
+            .btn:focus,
+            .btn:active {
+              box-shadow: none;
+            }
+
             .btn-success,
-            .btn-danger,
+            .btn-danger:not(.btn-sm),
             .btn-info,
             .btn-outline-primary {
               height: 33px;

@@ -1,9 +1,11 @@
-import {getOnOr, includedIn, is, isNot, on, setOn, isnt} from 'tsfun';
-import {IdaiType, Resource, Dimension, Dating} from 'idai-components-2';
+import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
+import {setOn} from 'tsfun-extra';
+import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {PARENT} from '../../../c';
 import {CSVExport} from '../../export/csv-export';
 import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
+import {PARENT} from '../../model/relation-constants';
+import {IdaiType} from '../../configuration/model/idai-type';
 
 
 /**
@@ -15,7 +17,8 @@ import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
 export module CsvFieldTypesConversion {
 
     type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
-        | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'unsignedFloat' | 'checkboxes'; // | 'geometry'
+        | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
+        | 'checkboxes'; // | 'geometry'
 
 
     const UNCHECKED_FIELDS = ['relation', 'geometry', 'type'];
@@ -35,10 +38,11 @@ export module CsvFieldTypesConversion {
             if (!fieldDefinition) continue;
 
             const inputType = fieldDefinition.inputType as unknown as FieldType;
-            convertTypeDependent(resource, fieldName, inputType);
+            if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
         }
 
         for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
+            if (resource.relations[relationName] === null) continue;
             resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
         }
 
@@ -46,9 +50,11 @@ export module CsvFieldTypesConversion {
     }}
 
 
-    const convertUnsignedInt = convertNumber;    // here only string to number, validation in exec
+    // here only string to number, validation in exec
+    const convertUnsignedInt = (container: any, path: string) => convertNumber(container, path, 'int');
+    const convertUnsignedFloat = (container: any, path: string) => convertNumber(container, path, 'float');
+    const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
-    const convertUnsignedFloat = convertNumber;  // here only string to number, validation in exec
 
 
     function convertTypeDependent(resource: Resource, fieldName: string, inputType: FieldType) {
@@ -61,6 +67,7 @@ export module CsvFieldTypesConversion {
         if (inputType === 'checkboxes')    convertCheckboxes(resource, fieldName);
         if (inputType === 'unsignedInt')   convertUnsignedInt(resource, fieldName);
         if (inputType === 'unsignedFloat') convertUnsignedFloat(resource, fieldName);
+        if (inputType === 'float')         convertFloat(resource, fieldName);
     }
 
 
@@ -76,17 +83,15 @@ export module CsvFieldTypesConversion {
         for (let dimension of resource[fieldName] as Array<Dimension>) {
 
             try {
-
-                convertNumber(dimension, 'value');
-                convertNumber(dimension, 'rangeMin');
-                convertNumber(dimension, 'rangeMax');
-                convertNumber(dimension, 'inputValue');
-                convertNumber(dimension, 'inputRangeEndValue');
+                convertFloat(dimension, 'value');
+                convertFloat(dimension, 'rangeMin');
+                convertFloat(dimension, 'rangeMax');
+                convertFloat(dimension, 'inputValue');
+                convertFloat(dimension, 'inputRangeEndValue');
                 convertBoolean(dimension, 'isImprecise');
                 convertBoolean(dimension, 'isRange');
-
             } catch (msgWithParams) {
-                throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]]
+                throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]];
             }
             i++;
         }
@@ -99,15 +104,13 @@ export module CsvFieldTypesConversion {
         for (let dating of resource[fieldName] as Array<Dating>) {
 
             try {
-
-                convertNumber(dating, 'begin.inputYear');
-                convertNumber(dating, 'end.inputYear');
-                convertNumber(dating, 'margin');
+                convertUnsignedInt(dating, 'begin.inputYear');
+                convertUnsignedInt(dating, 'end.inputYear');
+                convertUnsignedInt(dating, 'margin');
                 convertBoolean(dating, 'isImprecise');
                 convertBoolean(dating, 'isUncertain');
-
             } catch (msgWithParams) {
-                throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]]
+                throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]];
             }
             i++;
         }
@@ -117,15 +120,12 @@ export module CsvFieldTypesConversion {
     /**
      * Modifies container at path by converting string to number.
      * Returns early if no value at path.
-     *
-     * @param container
-     * @param path
      */
-    function convertNumber(container: any, path: string) {
+    function convertNumber(container: any, path: string, type: 'int'|'float') {
 
-        const val = getOnOr(path, undefined)(container);
+        const val = getOn(path, undefined)(container);
         if (!val) return;
-        const converted = parseInt(val);
+        const converted = type === 'int' ? parseInt(val) : parseFloat(val);
         if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, val, path];
         setOn(container, path)(converted);
     }
@@ -134,13 +134,10 @@ export module CsvFieldTypesConversion {
     /**
      * Modifies container at path by convertin string to boolan.
      * Returns early if no value at path.
-     *
-     * @param container
-     * @param path
      */
     function convertBoolean(container: any, path: string) {
 
-        const val = getOnOr(path, undefined)(container);
+        const val = getOn(path, undefined)(container);
         if (!val) return;
         if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
         setOn(container, path)(val === 'true');

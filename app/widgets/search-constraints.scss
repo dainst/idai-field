@@ -103,6 +103,7 @@ media-overview-search-constraints {
       #constraint-field-select,
       #constraint-search-term-select,
       #constraint-search-term-boolean-select,
+      #constraint-search-term-exists-select,
       #constraint-search-search-term-input-dropdown {
         margin-right: 10px;
       }
@@ -115,6 +116,7 @@ media-overview-search-constraints {
           color: #6c757d;
           border-color: #ced4da;
           font-size: 14px;
+          cursor: default;
 
           &:focus {
             z-index: 1;

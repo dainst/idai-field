@@ -1,5 +1,5 @@
 <div id="taskbar-update">
-    <a *ngIf="progressPercent > -1 && !downloadComplete && !downloadInterrupted"
+    <a *ngIf="progressPercent > -1 && !downloadComplete && !downloadInterrupted  && !downloadError"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"
        placement="bottom" container="body">
@@ -22,6 +22,16 @@
     <a *ngIf="downloadInterrupted && !downloadComplete"
        ngbTooltip="Der Download von Version {{version}} wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadInterrupted"
+       placement="bottom" container="body">
+        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+        <span class="badge-pill badge-danger taskbar-badge">
+            X
+        </span>
+    </a>
+
+    <a *ngIf="downloadError && !downloadInterrupted && !downloadComplete"
+       ngbTooltip="Beim Download von Version {{version}} ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter."
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadError"
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-danger taskbar-badge">

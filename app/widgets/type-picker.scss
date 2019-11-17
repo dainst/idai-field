@@ -1,12 +1,29 @@
 .type-picker {
 
-  li.list-group-item {
-    border: 1px solid #eee !important;
+  .list-group-item {
+    border-top: 1px solid #eee !important;
     display: block;
+    transition: background-color .65s ease;
+    padding: 7px 20px;
+
+    &.child-type {
+      border: none !important;
+      padding-left: 40px;
+    }
+
+    &:hover,
+    &.selected-type {
+      background-color: $list-item-hover-color !important;
+    }
+
+    &.parent-selected.selected-type:hover {
+      background-color: darken($list-item-hover-color, 5%) !important;
+    }
 
     .type-item {
-      margin-top: -5px;
-      padding: 2px 0;
+      display: flex;
+      align-items: center;
+      min-height: 30px;
 
       type-icon {
         position: absolute;
@@ -15,36 +32,19 @@
       .type-label {
         display: inline-block;
         margin-left: 40px;
-        margin-top: 4px;
       }
     }
+  }
+
+  #choose-type-option-all {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    height: 44px;
   }
 
   .type-label,
   .all-types-label {
     user-select: none;
-  }
-
-  .type-children-list {
-    padding: 0;
-  }
-
-  li ul {
-    margin-top: 10px;
-  }
-
-  li ul li.list-group-item {
-    border: none !important;
-  }
-
-  li:hover > ul li,
-  .selected-type {
-    background-color: $list-item-hover-color !important;
-    transition: background-color .65s ease;
-  }
-
-  li ul li:hover,
-  .selected-child-type {
-    background-color: darken($list-item-hover-color, 5%) !important;
   }
 }

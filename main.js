@@ -111,6 +111,7 @@ global.toolsPath = global.mode === 'production' ?
     : 'tools';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+process.env['NODE_OPTIONS'] = '--no-deprecation';
 
 
 // -- OTHER GLOBALS

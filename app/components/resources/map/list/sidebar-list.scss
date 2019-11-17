@@ -10,6 +10,10 @@ $teaser-width: $resources-listing-item-slim-width;
   margin: 0;
   background-color: $sidebar-bg-color;
 
+  &:focus {
+    outline: none;
+  }
+
   .new {
     color: #111;
     font-style: italic;
@@ -62,22 +66,32 @@ $teaser-width: $resources-listing-item-slim-width;
       user-select: none;
       cursor: default;
 
+      .btn.left {
+        left: 0;
+      }
+      .btn.right {
+        right: 0;
+      }
+
       .btn {
         position: absolute;
         top: 0;
-        right: 0;
+
         height: 39px;
-        background-color: $popover-header-bg-color;
+        background-color: transparent;
         border: none;
 
         &:hover {
           background-color: $popover-header-hover-bg-color;
         }
 
-        .mdi-close {
+        .mdi {
           position: relative;
           top: 3px;
           color: #000;
+        }
+        .mdi.active {
+          background-color: darken($popover-header-hover-bg-color, 10%);
         }
       }
     }
@@ -136,24 +150,6 @@ $teaser-width: $resources-listing-item-slim-width;
     height: $item-height;
     padding-left: $item-horizontal-padding;
     padding-right: $item-horizontal-padding;
-
-    .title {
-      display: -webkit-box;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      font-size: $font-size-bigger;
-    }
-
-    .subtitle {
-      display: -webkit-box;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      font-size: $font-size-even-smaller;
-    }
   }
 }
 

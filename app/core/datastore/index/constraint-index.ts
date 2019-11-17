@@ -1,6 +1,9 @@
-import {Document, FieldDefinition, IdaiType} from 'idai-components-2';
+import {getOn} from 'tsfun';
+import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
-import {getOnOr} from 'tsfun';
+import {IdaiType} from '../../configuration/model/idai-type';
+import {FieldDefinition} from '../../configuration/model/field-definition';
+import {clone} from '../../util/object-util';
 
 
 export interface IndexDefinition {
@@ -54,7 +57,8 @@ export module ConstraintIndex {
 
         const constraintIndex: ConstraintIndex = {
             showWarnings: true,
-            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}};
+            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}
+        };
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
             defaultIndexDefinitions,
@@ -125,28 +129,28 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(constraintIndex: ConstraintIndex,
-                    indexDefinition: IndexDefinition,
-                    doc: Document) {
+    export function getDescendantIds(constraintIndex: ConstraintIndex, indexName: string,
+                                     matchTerm: string): string[] {
 
-        const elForPath = getOnOr(indexDefinition.path, undefined)(doc);
+        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+
+        return getDescendants(constraintIndex, indexDefinition, matchTerm)
+            .map(indexItem => indexItem.id);
+    }
+
+
+    function putFor(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition, doc: Document) {
+
+        const elForPath = getOn(indexDefinition.path, undefined)(doc);
 
         switch(indexDefinition.type) {
             case 'exist':
-                if ((!elForPath && elForPath !== false)
-                        || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return addToIndex(
-                        constraintIndex.existIndex,
-                        doc,
-                        indexDefinition.path, 'UNKNOWN',
-                        constraintIndex.showWarnings);
-                }
-                // this is a hack to make sure the project document is never listed as conflicted and can be removed when auto conflict resolving gets implemented.
                 addToIndex(
                     constraintIndex.existIndex,
                     doc,
                     indexDefinition.path,
-                    doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN',
+                    isMissing(elForPath) ? 'UNKNOWN' : 'KNOWN',
                     constraintIndex.showWarnings);
                 break;
 
@@ -163,6 +167,13 @@ export module ConstraintIndex {
                 }
                 break;
         }
+    }
+
+
+    function isMissing(elementForPath: any): boolean {
+
+        return (!elementForPath && elementForPath !== false)
+            || (elementForPath instanceof Array && (!elementForPath.length || elementForPath.length === 0));
     }
 
 
@@ -225,6 +236,7 @@ export module ConstraintIndex {
 
         switch (field.inputType) {
             case 'checkboxes':
+            case 'multiInput':
                 return 'contain';
             default:
                 return 'match';
@@ -250,30 +262,57 @@ export module ConstraintIndex {
     function getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
 
         const fields: Array<FieldDefinition> =
-            (types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
-                return result.concat(type.fields);
-            }, []) as any).filter((field: FieldDefinition) => field.constraintIndexed);
+            getUniqueFields(
+                types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
+                    return result.concat(type.fields);
+                }, []) as any
+            ).filter((field: FieldDefinition) => field.constraintIndexed);
 
-        return getUniqueFields(fields);
+        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
+            fields.push({
+                name: field.name + 'End',
+                group: field.group
+            })
+        });
+
+        return fields;
     }
 
 
     function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-        return fields
-            .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
+        return clone(
+            fields.filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {
                         return resultsInSameIndexDefinition(f, field);
                     }) as FieldDefinition
                 ) === index;
-            });
+            })
+        );
+    }
+
+
+    function getDescendants(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+                            matchTerm: string): Array<IndexItem> {
+
+        const result: { [id: string]: IndexItem }|undefined
+            = getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+
+        const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
+        const descendantIndexItems: Array<IndexItem> =
+            indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => {
+                return items.concat(getDescendants(constraintIndex, indexDefinition, item.id))
+            }, []);
+
+        return indexItems.concat(descendantIndexItems);
     }
 
 
     function resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
 
         return field1.name === field2.name
+            && field1.constraintIndexed === field2.constraintIndexed
             && ConstraintIndex.getIndexType(field1) === ConstraintIndex.getIndexType(field2);
     }
 

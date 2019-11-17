@@ -96,13 +96,6 @@ export module MediaOverviewPage {
     }
 
 
-    export function clickSelectLinkFilterOption(optionIndex: number) {
-
-        browser.wait(EC.presenceOf(element(by.id('link-filter-select'))), delays.ECWaitTime);
-        element.all(by.css('#link-filter-select option')).get(optionIndex).click();
-    }
-
-
     export function clickIncreaseGridSizeButton() {
 
         common.click(element(by.id('increase-grid-size-button')));

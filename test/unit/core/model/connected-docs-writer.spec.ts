@@ -1,5 +1,6 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ConnectedDocsWriter} from '../../../../app/core/model/connected-docs-writer';
+import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
 /**
  * @author Daniel de Oliveira

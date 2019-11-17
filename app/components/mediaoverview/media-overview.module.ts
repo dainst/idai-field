@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiWidgetsModule} from 'idai-components-2';
 import {mediaRouting} from './media-overview.routing';
 import {MediaOverviewComponent} from './media-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
@@ -18,6 +17,7 @@ import {MediaOverviewSearchBarComponent} from './searchbar/media-overview-search
 import {MediaOverviewSearchConstraintsComponent} from './searchbar/media-overview-search-constraints.component';
 import {DeleteModalComponent} from './delete-modal.component';
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -25,7 +25,6 @@ import {DeleteModalComponent} from './delete-modal.component';
         NgbModule,
         mediaRouting,
         WidgetsModule,
-        IdaiWidgetsModule,
         ImageGridModule
     ],
     declarations: [

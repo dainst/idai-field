@@ -7,9 +7,11 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 
 
-export type PopoverMenu = 'none'|'info'|'relations'|'children';
+export type PopoverMenu = 'none'|'info'|'children';
 
 
 @Component({
@@ -29,27 +31,34 @@ export class ResourcesMapComponent {
     @Input() mapMode: '2d'|'3d';
 
     public parentDocument: FieldDocument|undefined;
+    public coordinateReferenceSystem: string;
     public activePopoverMenu: PopoverMenu = 'none';
 
 
-    constructor(
-        public loading: Loading,
-        public viewFacade: ViewFacade,
-        public resourcesComponent: ResourcesComponent,
-        private persistenceManager: PersistenceManager,
-        private usernameProvider: UsernameProvider,
-        private settingsService: SettingsService,
-        private messages: Messages
-    ) {
+    constructor(datastore: DocumentReadDatastore,
+                changesStream: ChangesStream,
+                public loading: Loading,
+                public viewFacade: ViewFacade,
+                public resourcesComponent: ResourcesComponent,
+                private persistenceManager: PersistenceManager,
+                private usernameProvider: UsernameProvider,
+                private settingsService: SettingsService,
+                private messages: Messages) {
+
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
+
+        datastore.get('project').then(projectDocument => {
+            this.coordinateReferenceSystem = projectDocument.resource.coordinateReferenceSystem;
+        });
+
+        changesStream.projectDocumentNotifications().subscribe(projectDocument => {
+           this.coordinateReferenceSystem = projectDocument.resource.coordinateReferenceSystem;
+        });
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.parentDocument = this.getParentDocument(path);
         });
     }
-
-
-    public getProjectDocument = () => this.settingsService.getProjectDocument();
 
 
     public async onKeyDown(event: KeyboardEvent) {

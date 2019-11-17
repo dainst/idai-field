@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import earcut from 'earcut';
-import {ProjectConfiguration, FieldDocument, FieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
 import {MeshPreparationUtility} from '../../../../../core-3d/mesh-loading/mesh-preparation-utility';
 import {getPointVector} from '../../../../../../util/util-3d';
+import {ProjectConfiguration} from '../../../../../../core/configuration/project-configuration';
 
 
 /**

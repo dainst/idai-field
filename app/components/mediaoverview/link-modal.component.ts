@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiType} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 @Component({

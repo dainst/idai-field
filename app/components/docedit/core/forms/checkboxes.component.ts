@@ -1,6 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {Helper} from './helper';
+import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 
 @Component({
     moduleId: module.id,
@@ -11,31 +13,40 @@ import {Helper} from './helper';
 /**
  * @author Fabian Z.
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class CheckboxesComponent {
+export class CheckboxesComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() field: any;
 
+    public valuelist: string[];
 
-    public notIncludedInValueList() {
 
-        return Helper.notIncludedInValueList(this.resource, this.field.name, this.field.valuelist);
+    constructor(private datastore: DocumentReadDatastore) {}
+
+
+    async ngOnChanges() {
+
+        this.valuelist = ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get('project'),
+            await HierarchyUtil.getParent(this.resource, this.datastore)
+        );
     }
 
 
-    public removeOutlier(name: string) {
-
-        if (!this.resource || !this.field || !this.field.name || !this.resource[this.field.name]) return;
-        this.removeItem(name);
-    }
-
-
-    public toggleBox(item: any) {
+    public toggleCheckbox(item: string) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
         if (!this.removeItem(item)) this.resource[this.field.name].push(item);
         if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+    }
+
+
+    public hasEmptyValuelist(): boolean {
+
+        return this.valuelist && this.valuelist.length === 0
     }
 
 

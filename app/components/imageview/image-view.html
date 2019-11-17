@@ -16,32 +16,44 @@
 <div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view"
          class="flex-nowrap bg-light px-0"
-         [class.thumbnail-slider-scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+         [class.thumbnail-slider-scrollbar-visible]="thumbnailSliderScrollbarVisible">
         <div id="popover">
             <div id="popover-header">
+                <button id="expand-all-groups-button" class="btn btn-light"
+                     [class.active]="getExpandAllGroups()"
+                     ngbTooltip="Alle Gruppen ausklappen"
+                     i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                     #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
+                     (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+                     (click)="tooltip.close(); toggleExpandAllGroups()">
+                    <span class="mdi mdi-unfold-more-horizontal"></span>
+                </button>
                 <div *ngIf="selectedImage" id="identifier-label">
                     {{selectedImage.document.resource.identifier}}
                 </div>
-                <button class="btn btn-light" (click)="startEdit()">
+                <button id="edit-image-button" class="btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>
 
             <div #imageInfo id="image-info"
-                 [class.scrollbar-visible]="isImageInfoScrollbarVisible()">
+                 [class.scrollbar-visible]="imageInfoScrollbarVisible">
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
-                             (onSectionToggled)="openSection = $event"></fields-view>
+                             [expandAllGroups]="getExpandAllGroups()"
+                             (onSectionToggled)="setOpenSection($event)"></fields-view>
                 <georeference-view *ngIf="selectedImage && selectedImage.document
                                         && selectedImage.document.resource.type !== 'Model3D'"
                                    [document]="selectedImage.document"
                                    [openSection]="openSection"
-                                   (onSectionToggled)="openSection = $event"></georeference-view>
+                                   [expandAllGroups]="getExpandAllGroups()"
+                                   (onSectionToggled)="setOpenSection($event)"></georeference-view>
                 <depicts-relations-view *ngIf="selectedImage"
                                         [resource]="selectedImage.document.resource"
                                         [openSection]="openSection"
-                                        (onSectionToggled)="openSection = $event"
+                                        [expandAllGroups]="getExpandAllGroups()"
+                                        (onSectionToggled)="setOpenSection($event)"
                                         (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
             </div>
         </div>
@@ -60,13 +72,14 @@
         </div>
 
         <div #thumbnailSliderContainer id="thumbnail-slider-container"
-             [class.scrollbar-visible]="isThumbnailSliderScrollbarVisible()">
+             [class.scrollbar-visible]="thumbnailSliderScrollbarVisible">
             <div id="thumbnail-slider">
                 <div *ngFor="let image of images"
                      id="thumbnail-{{image.document.resource.id}}"
                      class="thumbnail-container"
                      [class.selected]="image === selectedImage">
-                    <img [src]="image.thumbSrc" (click)="select(image)">
+                    <img [class.missing-image]="isMissingImage(image)"
+                         [src]="image.thumbSrc" (click)="select(image)">
                 </div>
             </div>
         </div>

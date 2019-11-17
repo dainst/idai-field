@@ -1,5 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
+import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
+import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 
 
 @Component({
@@ -14,15 +17,28 @@ import {Resource} from 'idai-components-2';
  */
 export class DropdownRangeComponent {
 
-    public activateEnd = () => this.endActivated = true;
-
-    private endActivated: boolean = false;
-
     @Input() resource: Resource;
     @Input() field: any;
 
+    public valuelist: string[];
 
-    constructor() {}
+    private endActivated: boolean = false;
+
+
+    constructor(private datastore: DocumentReadDatastore) {}
+
+
+    public activateEnd = () => this.endActivated = true;
+
+
+    async ngOnChanges() {
+
+        this.valuelist = ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get('project'),
+            await HierarchyUtil.getParent(this.resource, this.datastore)
+        );
+    }
 
 
     public showEndElements() {

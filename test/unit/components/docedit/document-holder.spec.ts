@@ -1,7 +1,8 @@
-import {ProjectConfiguration, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
 import {clone} from '../../../../app/core/util/object-util';
 import {M} from '../../../../app/components/m';
+import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
 /**
  * @author Daniel de Oliveira
@@ -14,6 +15,7 @@ describe('DocumentHolder', () => {
 
     let docHolder;
     let datastore;
+    let validator;
 
 
     beforeEach(() => {
@@ -58,6 +60,7 @@ describe('DocumentHolder', () => {
         });
 
         defaultDocument = {
+            _id: '1',
             resource: {
                 type: 'Trench',
                 id: '1',
@@ -73,7 +76,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        const validator = jasmine.createSpyObj('Validator', [
+        validator = jasmine.createSpyObj('Validator', [
             'assertIsRecordedInTargetsExist', 'assertIdentifierIsUnique',
             'assertHasIsRecordedIn', 'assertNoFieldsMissing',
             'assertCorrectnessOfNumericalValues', 'assertGeometryIsValid']);
@@ -153,9 +156,12 @@ describe('DocumentHolder', () => {
     });
 
 
-    xit('throw exception if isRecordedIn relation is missing', async done => {
+    it('throw exception if isRecordedIn relation is missing', async done => {
+
+        validator.assertHasIsRecordedIn.and.callFake(() => { throw [M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]; });
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',
@@ -171,17 +177,17 @@ describe('DocumentHolder', () => {
         try {
             await docHolder.save();
             fail();
-            done();
         } catch (e) {
             expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]);
-            done();
         }
+        done();
     });
 
 
     it('do not throw exception if isRecordedIn relation is found', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',
@@ -209,6 +215,7 @@ describe('DocumentHolder', () => {
     it('do not throw exception if no isRecordedIn relation is expected', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Trench',
                 id: '1',
@@ -234,6 +241,7 @@ describe('DocumentHolder', () => {
     it('convert strings to numbers for int & float fields', async done => {
 
         const document: Document = {
+            _id: '1',
             resource: {
                 type: 'Find',
                 id: '1',

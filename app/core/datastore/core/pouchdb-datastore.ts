@@ -136,8 +136,8 @@ export class PouchdbDatastore {
         const fetchedDocument = await this.fetch(
             document.resource.id, { conflicts: true }, true) as any;
 
-        if (fetchedDocument['_conflicts'] && fetchedDocument['_conflicts'].length > 0) {
-            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument['_conflicts']);
+        if (fetchedDocument._conflicts && fetchedDocument._conflicts.length > 0) {
+            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument._conflicts);
         }
 
         try {
@@ -236,7 +236,6 @@ export class PouchdbDatastore {
         try {
             for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
         } catch (err) {
-            console.error('Error while removing revision', err);
             throw [DatastoreErrors.REMOVE_REVISIONS_ERROR, err];
         }
     }
@@ -256,10 +255,10 @@ export class PouchdbDatastore {
                 // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
 
                 if (!change || !change.id) return;
-                if (change.id.indexOf('_design') == 0) return; // starts with _design
+                if (change.id.indexOf('_design') === 0) return; // starts with _design
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    ObserverUtil.notify(this.deletedObservers, {resource: {id: change.id}} as Document);
+                    ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
                     return;
                 }
 
@@ -291,7 +290,7 @@ export class PouchdbDatastore {
         try {
             await this.db.get(resourceId);
             exists = true;
-        } catch (_) {}
+        } catch { }
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
     }
 

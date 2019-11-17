@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
     Renderer2} from '@angular/core';
-import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../core-3d/viewer-3d';
@@ -9,6 +9,7 @@ import {Map3DCameraManager} from './map-3d-camera-manager';
 import {IntersectionHelper} from '../../../core-3d/helpers/intersection-helper';
 import {SceneManager} from '../../../core-3d/scene-manager';
 import {GeometriesBounds} from './geometries/geometries-bounds';
+import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     @Output() onSelectDocument: EventEmitter<FieldDocument|undefined>
         = new EventEmitter<FieldDocument|undefined>();
 
-    @ViewChild('container') container: ElementRef;
+    @ViewChild('container', { static: true }) container: ElementRef;
 
     public controlState: Map3DControlState;
 

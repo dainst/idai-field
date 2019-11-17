@@ -20,8 +20,12 @@ the image directory can **not** be used by the application.
 
 3. Click on the project name "test" in order to open the **Project management**. In this menu, you can create
 a new project by clicking the plus button. Allowed characters for the project name are letters, numbers and
-hyphens. As soon as the new project has been loaded, you can enter basic project metadata by clicking the edit
-button in the project management menu.
+hyphens.
+
+4. As soon as the new project has been loaded, you can enter basic project data by clicking the edit
+button in the project management menu. First of all, you should create the lists of **staff members** (field
+"Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
+these lists at any time.
 
 Use the menu option **Create backup**, which is accessible via the menu "Tools", to create backup files of
 your project data regularly.
@@ -124,8 +128,11 @@ management**, all images shown in the grid are affected by the search filter.
 The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose
 a subtype (e. g. "Layer"), only the resources of the respective type are shown. In contrast, if you choose a
 supertype (e. g. "Stratigraphical unit"), the resources of the selected type as well as all of its subtypes
-(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. The current context decides which types
-are available: In the overview you can choose operation types, in the image management image types etc.
+(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. Click again to select only the supertype
+itself.
+
+The current context decides which types are available: In the overview you can choose operation types,
+in the image management image types etc.
 
 
 #### Text filter
@@ -221,11 +228,11 @@ these resources.
 
 #### Field specific search criteria
  
-If the extended search mode is activated and a type filter is selected, you can start a search over specific
-fields of a resource by clicking the plus button to the left of the type filter button. Fields available for
-search are those corresponding to the respective type definition. You can choose as many fields as you want in
-order to combine multiple search criteria. Of course, you can also use the field specific search criteria in
-combination with the text filter. 
+If the extended search mode is activated, you can start a search over specific fields of a resource by
+clicking the plus button to the left of the type filter button. Fields available for search are those
+corresponding to the selected filter type. You can choose as many fields as you want in order to combine
+multiple search criteria. Of course, you can also use the field specific search criteria in combination with
+the text filter. 
 
 <p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 
@@ -272,8 +279,8 @@ project's trenches and are preserved when restarting the application.
 
 * *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with" (field group
 "Time"). 
-* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts" and "Cut by" (field group
-"Position").
+* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts", "Cut by" and "Equivalent to"
+(field group "Position").
 
 
 #### Edges

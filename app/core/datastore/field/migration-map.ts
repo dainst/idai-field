@@ -255,3 +255,5 @@ export const subFieldsMigrationMap: { [oldName: string]: string } = {
     'hasSource': 'source',
     'hasValue': 'value'
 };
+
+export const singleToMultipleValuesFieldNames: string[] = ['processor', 'draughtsmen', 'campaign'];

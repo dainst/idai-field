@@ -250,8 +250,7 @@ describe('resources/state --', function() {
         browser.sleep(delays.shortRest * 3);
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'inscription',
-            undefined, undefined, true);
+        ResourcesPage.performCreateResource('2', 'find-glass');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('feature');
@@ -335,12 +334,12 @@ describe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.typeInInputField('diary', 'testvalue');
         DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseTypeFilter('operation');
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.clickSelectConstraintField('diary');
         SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
         SearchConstraintsPage.clickAddConstraintButton();
 
@@ -409,16 +408,54 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchBarPage.clickChooseTypeFilter('operation');
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.clickSelectConstraintField('diary');
 
         SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
         SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(
-            SearchConstraintsPage.getConstraintFieldOption('processor')
+            SearchConstraintsPage.getConstraintFieldOption('diary')
         ));
+    });
+
+
+    it('search -- remove constraints if invalid after filter type change', () => {
+
+        ResourcesPage.clickSwitchHierarchyMode();
+
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('geometry');
+        SearchConstraintsPage.clickSelectExistsDropdownValue(1);
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        SearchBarPage.clickChooseTypeFilter('feature');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+
+        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        SearchConstraintsPage.clickSelectBooleanValue(true);
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+        browser.wait(
+            EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
+            delays.ECWaitTime
+        );
+
+        SearchBarPage.clickChooseTypeFilter('find');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
+            delays.ECWaitTime);
+        browser.wait(
+            EC.stalenessOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
+            delays.ECWaitTime
+        );
     });
 
 

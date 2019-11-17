@@ -1,12 +1,12 @@
-import {Document, ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
-import {NavigationPath} from './state/navigation-path';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 /**
  * Manages an overview of operation type resources
@@ -31,7 +31,7 @@ export class ViewFacade {
     constructor(
         private projectConfiguration: ProjectConfiguration,
         private datastore: FieldReadDatastore,
-        private remoteChangesStream: RemoteChangesStream,
+        private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private indexFacade: IndexFacade
@@ -53,8 +53,7 @@ export class ViewFacade {
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
-    public getCurrentOperation = (): FieldDocument|undefined =>
-        this.resourcesStateManager.getCurrentOperation();
+    public getCurrentOperation = (): FieldDocument|undefined => this.resourcesStateManager.getCurrentOperation();
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
@@ -72,9 +71,9 @@ export class ViewFacade {
 
     public getChildrenCount = (document: FieldDocument) => this.documentsManager.getChildrenCount(document);
 
-    public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
-
     public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
+
+    public navigateDocumentList = (direction: 'previous'|'next') => this.documentsManager.navigateDocumentList(direction);
 
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
@@ -98,8 +97,7 @@ export class ViewFacade {
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 
-    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) =>
-        this.documentsManager.moveInto(document, resetFiltersAndSelection);
+    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) => this.documentsManager.moveInto(document, resetFiltersAndSelection);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
@@ -110,6 +108,10 @@ export class ViewFacade {
     public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
+
+    public getExpandAllGroups = () => ResourcesState.getExpandAllGroups(this.resourcesStateManager.get());
+
+    public toggleExpandAllGroups = () => this.resourcesStateManager.toggleExpandAllGroups();
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 
@@ -125,13 +127,7 @@ export class ViewFacade {
 
     public isReady = () => this.ready && !this.documentsManager.isPopulateInProgress();
 
-
-    public getNavigationPath() {
-
-        return this.isInOverview()
-            ? NavigationPath.empty()
-            : ResourcesState.getNavigationPath(this.resourcesStateManager.get());
-    }
+    public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
     public async selectView(viewName: 'project'|string): Promise<void> {

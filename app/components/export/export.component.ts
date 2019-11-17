@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
-import {FieldDocument, IdaiType, Messages, ProjectConfiguration, Query} from 'idai-components-2';
+import {FieldDocument, Messages, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
@@ -18,6 +18,8 @@ import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 const remote = require('electron').remote;
 
@@ -69,7 +71,7 @@ export class ExportComponent implements OnInit {
 
     public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
 
-    public find = (query: Query) => this.fieldDatastore.find(query);
+    public find = (query: Query) => this.documentDatastore.find(query);
 
     public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
 
@@ -120,6 +122,8 @@ export class ExportComponent implements OnInit {
 
     public async startExport() {
 
+        this.messages.removeAllMessages();
+
         const filePath: string = await this.chooseFilepath();
         if (!filePath) return;
 
@@ -143,14 +147,22 @@ export class ExportComponent implements OnInit {
 
     private async startGeojsonExport(filePath: string) {
 
-        await GeoJsonExporter.performExport(this.fieldDatastore, filePath, this.selectedOperationId);
+        await GeoJsonExporter.performExport(
+            this.fieldDatastore,
+            filePath,
+            this.selectedOperationId
+        );
     }
 
 
     private async startShapeFileExport(filePath: string) {
 
-        await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
-            this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
+        await ShapefileExporter.performExport(
+            this.settingsService.getSelectedProject(),
+            await this.documentDatastore.get('project'),
+            filePath,
+            this.selectedOperationId
+        );
     }
 
 
@@ -165,7 +177,8 @@ export class ExportComponent implements OnInit {
                 this.selectedType,
                 (this.projectConfiguration as any).getRelationDefinitions(this.selectedType.name).map(to('name')),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
-                CsvExporter.performExport(filePath));
+                CsvExporter.performExport(filePath)
+            );
         } catch(err) {
             console.error(err);
             throw [M.EXPORT_ERROR_GENERIC];
@@ -183,8 +196,8 @@ export class ExportComponent implements OnInit {
                     + '.' + this.selectedType.name.toLowerCase();
             }
 
-            const filePath = await remote.dialog.showSaveDialog(options);
-            resolve(filePath);
+            const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+            resolve(saveDialogReturnValue.filePath);
         });
     }
 

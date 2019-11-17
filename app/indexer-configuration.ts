@@ -1,7 +1,7 @@
-import {ProjectConfiguration} from 'idai-components-2';
 import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {IndexFacade} from './core/datastore/index/index-facade';
+import {ProjectConfiguration} from './core/configuration/project-configuration';
 
 /**
  * @author Thomas Kleinke
@@ -17,6 +17,7 @@ export module IndexerConfiguration {
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
+            'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },

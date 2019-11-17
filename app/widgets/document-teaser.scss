@@ -12,12 +12,24 @@
     border-radius: 45px;
   }
 
+  .title,
+  .subtitle {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
+
   .title {
     color: #111;
+    -webkit-line-clamp: 1;
+    font-size: $font-size-bigger;
   }
 
   .subtitle {
-    font-size: 0.7em;
     color: #999;
+    -webkit-line-clamp: 2;
+    font-size: $font-size-even-smaller;
   }
 }

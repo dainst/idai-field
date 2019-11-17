@@ -33,7 +33,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(await this.fetchIsRecordedInCount(document));
+        modalRef.componentInstance.setCount(await this.fetchChildrenCount(document));
 
         const decision: string = await modalRef.result;
         if (decision === 'delete') await this.performDeletion(document);
@@ -77,10 +77,14 @@ export class ResourceDeletion {
     }
 
 
-    private fetchIsRecordedInCount(document: Document): number {
+    private fetchChildrenCount(document: Document): number {
 
         return !document.resource.id
             ? 0
-            : this.indexFacade.getCount('isRecordedIn:contain', document.resource.id);
+            : this.typeUtility.isSubtype(document.resource.type, 'Operation')
+                ? this.indexFacade.getCount('isRecordedIn:contain', document.resource.id)
+                : this.indexFacade
+                    .getDescendantIds('liesWithin:contain',document.resource.id)
+                    .length;
     }
 }

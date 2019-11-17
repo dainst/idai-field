@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, Renderer2,
     ViewChild} from '@angular/core';
-import {DOCUMENT} from '@angular/platform-browser';
+import {DOCUMENT} from '@angular/common';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {Subscription} from 'rxjs';
@@ -25,7 +25,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
     @Output() onSelectForEdit: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('graphContainer') graphContainer: ElementRef;
+    @ViewChild('graphContainer', {static: false}) graphContainer: ElementRef;
 
     private svgRoot: SVGSVGElement|undefined;
     private hoverElement: Element|undefined;

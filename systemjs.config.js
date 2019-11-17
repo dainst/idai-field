@@ -32,6 +32,8 @@
         'rxjs/webSocket': defaultConfiguration,
         'rxjs-compat': defaultConfiguration,
         'tsfun': defaultConfiguration,
+        'tsfun-core': defaultConfiguration,
+        'tsfun-extra': defaultConfiguration,
         'idai-components-2': defaultConfiguration,
         'angular-uuid': defaultConfiguration
     };
@@ -67,6 +69,8 @@
         'ts-md5': 'node_modules/ts-md5',
         'idai-components-2' : 'node_modules/idai-components-2',
         'tsfun' : 'node_modules/tsfun',
+        'tsfun-core' : 'node_modules/tsfun-core',
+        'tsfun-extra' : 'node_modules/tsfun-extra',
         'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
         'fs' : '@node/fs',
         'express': '@node/express',
@@ -74,7 +78,6 @@
         'electron': 'app/desktop/electron',
         'deep-equal': 'node_modules/deep-equal/index.js',
         'moment': 'node_modules/moment/min/moment-with-locales.js',
-        'ip': 'node_modules/ip/lib/ip.js',
         'os': '@node/os',
         'buffer': '@node/buffer',
         'viz.js': 'node_modules/viz.js/viz.js',
@@ -82,7 +85,6 @@
         'stream': '@node/stream',
         'util': '@node/util',
         'string_decoder': '@node/string_decoder',
-        'memorystream': 'node_modules/memorystream/index.js',
         'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
         'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
         'showdown': 'node_modules/showdown/dist/showdown.js',
@@ -101,7 +103,8 @@
         'child_process': '@node/child_process',
         'geojson-rewind': 'node_modules/geojson-rewind/index.js',
         '@mapbox/geojson-area': 'node_modules/@mapbox/geojson-area/index.js',
-        'wgs84': 'node_modules/wgs84/index.js'
+        'wgs84': 'node_modules/wgs84/index.js',
+        'address': 'node_modules/address/lib/address.js'
     };
 
     config.meta = {

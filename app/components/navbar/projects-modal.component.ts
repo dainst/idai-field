@@ -1,11 +1,13 @@
-import {AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
+import {Messages, Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
 import {MenuService} from '../../menu-service';
+import {StateSerializer} from '../../common/state-serializer';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -22,25 +24,34 @@ const remote = require('electron').remote;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ProjectsModalComponent implements AfterViewChecked {
+export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
+    public openConflictResolver: boolean = false;
 
     private focusInput: boolean = false;
     private subModalOpened: boolean = false;
 
-    @ViewChild('createPopover') private createPopover: NgbPopover;
-    @ViewChild('deletePopover') private deletePopover: NgbPopover;
-    @ViewChild('newProjectInput') private newProjectInput: ElementRef;
-    @ViewChild('deleteProjectInput') private deleteProjectInput: ElementRef;
+    @ViewChild('createPopover', { static: false }) private createPopover: NgbPopover;
+    @ViewChild('deletePopover', { static: false }) private deletePopover: NgbPopover;
+    @ViewChild('newProjectInput', { static: false }) private newProjectInput: ElementRef;
+    @ViewChild('deleteProjectInput', { static: false }) private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private messages: Messages) {
+                private messages: Messages,
+                private stateSerializer: StateSerializer,
+                private datastore: DocumentReadDatastore) {
+    }
+
+
+    async ngAfterViewInit() {
+
+        if (this.openConflictResolver) await this.editProject('conflicts');
     }
 
 
@@ -86,11 +97,11 @@ export class ProjectsModalComponent implements AfterViewChecked {
     }
 
 
-    public async selectProject() {
+    public async selectProject(project: string) {
 
         this.settingsService.stopSync();
 
-        await this.settingsService.selectProject(this.selectedProject);
+        await this.settingsService.selectProject(project);
         ProjectsModalComponent.reload();
     }
 
@@ -119,33 +130,42 @@ export class ProjectsModalComponent implements AfterViewChecked {
 
         this.settingsService.stopSync();
 
+        try {
+            await this.stateSerializer.delete('resources-state');
+            await this.stateSerializer.delete('matrix-state');
+            await this.stateSerializer.delete('tabs-state');
+        } catch (err) {
+            // Ignore state file deletion errors
+        }
+
         await this.settingsService.deleteProject(this.selectedProject);
         this.selectedProject = this.getProjects()[0];
+
         ProjectsModalComponent.reload();
     }
 
 
-    public async editProject() {
+    public async editProject(activeGroup: string = 'stem') {
 
         MenuService.setContext('docedit');
         this.subModalOpened = true;
 
-        const document = this.settingsService.getProjectDocument();
+        const projectDocument: Document = await this.datastore.get('project');
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
-        doceditRef.componentInstance.setDocument(document);
+        doceditRef.componentInstance.setDocument(projectDocument);
+        doceditRef.componentInstance.activeGroup = activeGroup;
 
         try {
             await doceditRef.result;
-            await this.settingsService.loadProjectDocument();
         } catch(err) {
             // Docedit modal has been canceled
         }
 
         this.subModalOpened = false;
-        MenuService.setContext('default');
+        MenuService.setContext('projects');
     }
 
 

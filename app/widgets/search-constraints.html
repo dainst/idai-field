@@ -13,10 +13,6 @@
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6 i18n="@@resources.searchBar.constraints.header">Suchkriterien</h6>
 
-    <div *ngIf="!type" id="constraints-type-filter-info" i18n="@@resources.searchBar.constraints.typeFilterInfo">
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </div>
-
     <div *ngFor="let constraint of constraintListItems"
          id="remove-constraint-button-{{constraint.fieldName}}" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">
@@ -89,6 +85,17 @@
             <option id="constraint-search-term-boolean-select-option-true" value="true"
                     i18n="@@boolean.yes">Ja</option>
             <option id="constraint-search-term-boolean-select-option-false" value="false"
+                    i18n="@@boolean.no">Nein</option>
+        </select>
+
+        <select *ngIf="getSearchInputType(selectedField) === 'exists'"
+                id="constraint-search-term-exists-select" [(ngModel)]="searchTerm" class="form-control">
+            <option value="" hidden [selected]="searchTerm.length === 0"
+                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
+            <option value=""></option>
+            <option id="constraint-search-term-exists-select-option-true" value="KNOWN"
+                    i18n="@@boolean.yes">Ja</option>
+            <option id="constraint-search-term-exists-select-option-false" value="UNKNOWN"
                     i18n="@@boolean.no">Nein</option>
         </select>
 

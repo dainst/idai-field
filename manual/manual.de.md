@@ -25,9 +25,12 @@ eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Klicken Sie auf den Projektnamen "test", um die **Projektverwaltung** aufzurufen. Hier
 können Sie über den Plus-Button ein neues Projekt anlegen. Erlaubte Zeichen für den
-Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
-geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
-Metadaten des Projekts eingeben. 
+Projektnamen sind Buchstaben, Zahlen und Bindestriche.
+
+4. Sobald das neue Projekt geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung
+allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" 
+in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt")
+anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 Verwenden Sie das Untermenü **Backup erstellen**, das Sie über das Menü "Werkzeuge" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.
@@ -141,8 +144,10 @@ Raster angezeigten Bilder vom Suchfilter betroffen.
 Über den Typfilter-Button können Sie einen Ressourcentyp wählen. Unterschieden wird zwischen Obertypen und
 Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
 Typs angezeigt. Wählen Sie dagegen einen Obertyp (z. B. "Stratigraphische Einheit"), werden Ressourcen des
-ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur", "Fußboden" etc.)
-berücksichtigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
+ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur",
+"Fußboden" etc.) berücksichtigt. Klicken Sie ein weiteres Mal, um lediglich den Obertyp selbst auszuwählen.
+ 
+Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
 können Maßnahmentypen gewählt werden, in der Bilderverwaltung Bildtypen etc. 
 
 
@@ -241,12 +246,11 @@ die ausgeblendeten Ressourcen zugreifen zu können.
 
 #### Feldspezifische Suchkriterien
  
-Ist der erweiterte Suchmodus aktiviert, können Sie bei aktiviertem Typfilter eine Suche über spezifische
-Felder einer Ressource anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
-Dabei werden Felder zur Suche angeboten, die der entsprechenden Typendefinition entsprechen. Sie können
-beliebig viele Felder auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber
-hinaus können Sie die feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter
-verwenden.
+Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
+anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken. Dabei werden Felder zur
+Suche angeboten, die dem als Filter ausgewählten Ressourcentyp entsprechen. Sie können beliebig viele Felder
+auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber hinaus können Sie die
+feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter verwenden.
 
 <p align="center"><img src="images/de/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
 
@@ -295,8 +299,8 @@ erhalten.
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   (Feldgruppe "Zeit") erstellt.
-* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
-  geschnitten von" (Feldgruppe "Lage") erstellt.
+* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet", "Wird
+  geschnitten von" und "Gleich wie" (Feldgruppe "Lage") erstellt.
 
 
 #### Kanten

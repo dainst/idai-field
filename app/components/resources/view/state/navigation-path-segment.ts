@@ -1,4 +1,5 @@
-import {to, differentFromBy, on} from 'tsfun';
+import {to, on} from 'tsfun';
+import {differentFromBy} from 'tsfun-core';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewContext} from './view-context';
 

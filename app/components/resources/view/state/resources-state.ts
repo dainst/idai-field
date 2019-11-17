@@ -1,3 +1,4 @@
+import {lookup, flow, map, forEach} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
@@ -18,6 +19,7 @@ export interface ResourcesState { // 'the' resources state
 
 
 export module ResourcesState {
+
 
     export function getQueryString(state: ResourcesState) {
 
@@ -61,6 +63,12 @@ export module ResourcesState {
     export function getCurrentOperation(state: ResourcesState): FieldDocument|undefined {
 
         return viewState(state).operation;
+    }
+
+
+    export function getExpandAllGroups(state: ResourcesState) {
+
+        return viewState(state).expandAllGroups;
     }
 
 
@@ -170,6 +178,7 @@ export module ResourcesState {
                 layer3DIds: [],
                 mode: 'map',
                 bypassHierarchy: false,
+                expandAllGroups: false,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -181,6 +190,7 @@ export module ResourcesState {
                     layer3DIds: [],
                     mode: 'map',
                     bypassHierarchy: false,
+                    expandAllGroups: false,
                     navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
@@ -195,7 +205,7 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.default(),
+            overviewState: ViewState.default_(),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -206,8 +216,11 @@ export module ResourcesState {
     export function complete(state: ResourcesState): ResourcesState {
 
         ViewState.complete(state.overviewState);
-        Object.keys(state.operationViewStates)
-            .forEach(viewName => ViewState.complete(state.operationViewStates[viewName]));
+
+        flow(state.operationViewStates,
+            Object.keys,
+            map(lookup(state.operationViewStates)),
+            forEach(ViewState.complete));
 
         return state;
     }
@@ -219,9 +232,15 @@ export module ResourcesState {
     }
 
 
+    export function toggleExpandAllGroups(state: ResourcesState) {
+
+        viewState(state).expandAllGroups = !viewState(state).expandAllGroups;
+    }
+
+
     export function deactivate(state: ResourcesState, viewName: string) {
 
-        const deactivatedState: ViewState = ViewState.default();
+        const deactivatedState: ViewState = ViewState.default_();
         deactivatedState.operation = state.operationViewStates[viewName].operation;
         deactivatedState.layerIds = state.operationViewStates[viewName].layerIds;
 

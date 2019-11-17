@@ -40,6 +40,7 @@ export class SearchBarPage {
 
         this.clickTypeFilterButton(context);
         common.click(element(by.id('choose-type-option-' + typeName)));
+        this.clickTypeFilterButton(context);
     }
 
 

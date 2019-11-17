@@ -71,9 +71,9 @@ export class Model3DViewerControls {
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            zoomValue = event.wheelDelta / 12000;
+            zoomValue = event.deltaY / 12000;
         } else {
-            zoomValue = -event.wheelDelta / 1200;
+            zoomValue = -event.deltaY / 1200;
         }
 
         this.cameraManager.zoom(zoomValue);

@@ -1,4 +1,4 @@
-import {FieldDefinition} from 'idai-components-2';
+import {FieldDefinition} from '../configuration/model/field-definition';
 
 
 /**
@@ -11,13 +11,16 @@ export module GroupUtil {
 
         switch(groupName) {
             case 'stem':
-                sortGroup(fields, ['identifier', 'shortDescription',
-                    'processor', 'description', 'diary', 'date', 'beginningDate', 'endDate']);
+                sortGroup(fields, [
+                    'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
+                    'diary', 'date', 'beginningDate', 'endDate'
+                ]);
                 break;
             case 'dimension':
-                sortGroup(fields, ['dimensionHeight',
-                    'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther']);
+                sortGroup(fields, [
+                    'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
+                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
+                ]);
                 break;
         }
     }

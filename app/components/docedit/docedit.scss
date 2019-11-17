@@ -8,6 +8,10 @@
 @import 'core/forms/geometry';
 @import 'core/forms/dimension';
 @import 'core/forms/dating';
+@import 'core/forms/dropdown';
+@import 'core/forms/dropdown-range';
+@import 'core/forms/widgets/outliers';
+@import 'core/forms/widgets/empty-valuelist-info';
 
 #document-edit-wrapper {
   height: calc(100vh - 65px);

@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {Resource, Dimension, FieldDefinition} from 'idai-components-2';
+import {Resource, Dimension} from 'idai-components-2';
 import {DimensionUtil} from '../../../../core/util/dimension-util';
 import {UtilTranslations} from '../../../../core/util/util-translations';
+import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
 
 
 @Component({

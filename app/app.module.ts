@@ -6,8 +6,7 @@ import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ConfigLoader, ConfigReader, IdaiMessagesModule, MD, Messages,
-    ProjectConfiguration, IdaiWidgetsModule, AppConfigurator, Query} from 'idai-components-2';
+import {IdaiMessagesModule, MD, Messages, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
@@ -16,7 +15,7 @@ import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {MediaOverviewModule} from './components/mediaoverview/media-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
-import {Converter} from './core/imagestore/converter';
+import {ImageConverter} from './core/imagestore/image-converter';
 import {SettingsModule} from './components/settings/settings.module';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
@@ -31,7 +30,7 @@ import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
 import {PersistenceManager} from './core/model/persistence-manager';
 import {Validator} from './core/model/validator';
-import {ImportValidator} from './core/import/exec/import-validator';
+import {ImportValidator} from './core/import/exec/process/import-validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
@@ -54,6 +53,10 @@ import {TabManager} from './components/tab-manager';
 import {MenuService} from './menu-service';
 import {TabSpaceCalculator} from './components/tab-space-calculator';
 import {UtilTranslations} from './core/util/util-translations';
+import {ProjectConfiguration} from './core/configuration/project-configuration';
+import {ConfigReader} from './core/configuration/config-reader';
+import {ConfigLoader} from './core/configuration/config-loader';
+import {AppConfigurator} from './core/model/app-configurator';
 
 
 const remote = require('electron').remote;
@@ -80,7 +83,6 @@ registerLocaleData(localeDe, 'de');
         NgbModule.forRoot(),
         IdaiMessagesModule,
         routing,
-        IdaiWidgetsModule,
         WidgetsModule,
         ImportModule,
         ExportModule,
@@ -141,16 +143,16 @@ registerLocaleData(localeDe, 'de');
         },
         {
             provide: Imagestore,
-            useFactory: function(pouchdbManager: PouchdbManager, converter: Converter, blobMaker: BlobMaker) {
+            useFactory: function(pouchdbManager: PouchdbManager, converter: ImageConverter, blobMaker: BlobMaker) {
                 return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDbProxy());
             },
-            deps: [PouchdbManager, Converter, BlobMaker]
+            deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
         TypeUtility,
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
-        Converter,
+        ImageConverter,
         AppController,
         {
             provide: ProjectConfiguration,

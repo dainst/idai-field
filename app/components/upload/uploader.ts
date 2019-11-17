@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiType} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {UploadStatus} from './upload-status';
 import {UploadResult} from './upload-result';
@@ -8,6 +8,7 @@ import {ExtensionUtil} from '../../core/util/extension-util';
 import {UploadModalComponent} from './upload-modal.component';
 import {IdaiFieldFindResult} from '../../core/datastore/core/cached-read-datastore';
 import {M} from '../m';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 @Injectable()

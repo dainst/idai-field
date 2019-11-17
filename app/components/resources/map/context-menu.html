@@ -18,25 +18,25 @@
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
     </div>
 
-    <hr>
+    <hr *ngIf="isCreateGeometryOptionAvailable() || isEditGeometryOptionAvailable()">
 
-    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+    <div *ngIf="isCreateGeometryOptionAvailable()"
             id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
         <span class="mdi mdi-shape-polygon-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polygon">Polygon anlegen</span>
     </div>
-    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+    <div *ngIf="isCreateGeometryOptionAvailable()"
             id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
         <span class="mdi mdi-vector-polyline"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polyline">Polyline anlegen</span>
     </div>
-    <div *ngIf="sidebarListComponent.contextMenuDocument && !sidebarListComponent.contextMenuDocument.resource.geometry"
+    <div *ngIf="isCreateGeometryOptionAvailable()"
             id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
         <span class="mdi mdi-map-marker-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Punkt anlegen</span>
     </div>
 
-    <div *ngIf="sidebarListComponent.contextMenuDocument && sidebarListComponent.contextMenuDocument.resource.geometry"
+    <div *ngIf="isEditGeometryOptionAvailable()"
             id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" >

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is} from 'tsfun';
-import {FeatureDocument, FieldDocument, ProjectConfiguration} from 'idai-components-2';
+import {FeatureDocument, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -12,6 +12,16 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {TabManager} from '../tab-manager';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {POSITION_RELATIONS, TIME_RELATIONS} from '../../core/model/relation-constants';
+import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
+import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
+import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
+import IS_AFTER = TIME_RELATIONS.IS_AFTER;
+import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
+import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
+import IS_CUT_BY = POSITION_RELATIONS.IS_CUT_BY;
+import CUTS = POSITION_RELATIONS.CUTS;
 
 
 @Component({
@@ -149,6 +159,8 @@ export class MatrixViewComponent implements OnInit {
 
     private async populateTrenches(): Promise<void> {
 
+        if (!this.projectConfiguration.getTypesMap()['Trench']) return;
+
         this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
         if (this.trenches.length === 0) return;
 
@@ -223,7 +235,7 @@ export class MatrixViewComponent implements OnInit {
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 
         return relationsMode === 'temporal'
-            ? { above: ['isAfter'], below: ['isBefore'], sameRank: 'isContemporaryWith' }
-            : { above: ['isAbove', 'cuts'], below: ['isBelow', 'isCutBy'] };
+            ? { above: [IS_AFTER], below: [IS_BEFORE], sameRank: IS_CONTEMPORARY_WITH }
+            : { above: [IS_ABOVE, CUTS], below: [IS_BELOW, IS_CUT_BY], sameRank: IS_EQUIVALENT_TO };
     }
 }

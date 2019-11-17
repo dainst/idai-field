@@ -1,7 +1,8 @@
-import {FieldDocument, Document, IdaiType, Constraint} from 'idai-components-2';
+import {FieldDocument, Document, Constraint} from 'idai-components-2';
 import {clone} from '../../core/util/object-util';
 import {PersistenceManager} from '../../core/model/persistence-manager';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 /**
@@ -22,8 +23,11 @@ export module MoveUtility {
     function updateRelations(document: FieldDocument, newParent: FieldDocument,
                              isRecordedInTargetTypes: Array<IdaiType>) {
 
-        if (isRecordedInTargetTypes.map(type => type.name)
-            .includes(newParent.resource.type)) {
+        if (newParent.resource.type === 'Project') {
+            document.resource.relations['isRecordedIn'] = [];
+            document.resource.relations['liesWithin'] = [];
+        } else if (isRecordedInTargetTypes.map(type => type.name)
+                .includes(newParent.resource.type)) {
             document.resource.relations['isRecordedIn'] = [newParent.resource.id];
             document.resource.relations['liesWithin'] = [];
         } else {
@@ -33,12 +37,12 @@ export module MoveUtility {
     }
 
 
-    export async function createConstraints(document: FieldDocument, datastore: FieldReadDatastore)
+    export async function createConstraints(document: FieldDocument, indexFacade: IndexFacade)
             : Promise<{ [name: string]: Constraint }> {
 
         return {
             'id:match': {
-                value: await getResourceIdsToSubtract(document, datastore),
+                value: await getResourceIdsToSubtract(document, indexFacade),
                 type: 'subtract'
             }
         };
@@ -46,33 +50,25 @@ export module MoveUtility {
 
 
     async function getResourceIdsToSubtract(document: FieldDocument,
-                                            datastore: FieldReadDatastore): Promise<string[]> {
+                                            indexFacade: IndexFacade): Promise<string[]> {
 
         const ids: string[] = [document.resource.id];
 
-        if (Document.hasRelations(document, 'liesWithin')) {
-            ids.push(document.resource.relations['liesWithin'][0]);
-        } else if (Document.hasRelations(document, 'isRecordedIn')) {
-            ids.push(document.resource.relations.isRecordedIn[0]);
-        }
+        const parentId: string|undefined = getParentId(document);
+        if (parentId) ids.push(parentId);
 
-        return ids.concat(await getDescendantIds(document, datastore));
+        return ids.concat(indexFacade.getDescendantIds(
+            'liesWithin:contain', document.resource.id
+        ));
     }
 
 
-    async function getDescendantIds(document: FieldDocument,
-                                    datastore: FieldReadDatastore): Promise<string[]> {
+    function getParentId(document: FieldDocument): string|undefined {
 
-        const descendants: Array<FieldDocument> = (await datastore.find(
-            { constraints: { 'liesWithin:contain': document.resource.id } }
-        )).documents;
-
-        let descendantIds: string[] = descendants.map(descendant => descendant.resource.id);
-
-        for (let descendant of descendants) {
-            descendantIds = descendantIds.concat(await getDescendantIds(descendant, datastore));
+        if (Document.hasRelations(document, 'liesWithin')) {
+            return document.resource.relations['liesWithin'][0];
+        } else if (Document.hasRelations(document, 'isRecordedIn')) {
+            return document.resource.relations.isRecordedIn[0];
         }
-
-        return descendantIds;
     }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
-import {Document, NewDocument, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Imagestore} from '../../core/imagestore/imagestore';
@@ -12,6 +12,10 @@ import {clone} from '../../core/util/object-util';
 import {M} from '../m';
 import {Model3DStore} from '../core-3d/model-3d-store';
 import {DuplicationUtil} from './duplication-util';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {FieldDefinition} from '../../core/configuration/model/field-definition';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {trimFields} from '../../core/util/trim-fields';
 
 
 @Injectable()
@@ -97,12 +101,12 @@ export class DocumentHolder {
         const documentAfterSave: Document = await this.save();
         const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
 
-        let { baseIdentifier, identifierNumber } =
+        let { baseIdentifier, identifierNumber, minDigits } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);
 
         for (let i = 0; i < numberOfDuplicates; i++) {
             identifierNumber = await DuplicationUtil.setUniqueIdentifierForDuplicate(
-                template, baseIdentifier, identifierNumber, this.validator
+                template, baseIdentifier, identifierNumber, minDigits, this.validator
             );
 
             await this.persistenceManager.persist(
@@ -121,8 +125,8 @@ export class DocumentHolder {
 
         // make the doc appear 'new' ...
         delete this.clonedDocument.resource.id; // ... for persistenceManager
-        delete (this.clonedDocument as any)['_id'];      // ... for pouchdbdatastore
-        delete (this.clonedDocument as any)['_rev'];
+        delete this.clonedDocument._id;      // ... for pouchdbdatastore
+        delete this.clonedDocument._rev;
     }
 
 
@@ -160,13 +164,17 @@ export class DocumentHolder {
 
     private cleanup(document: Document): Document {
 
-        return flow(
+        document = flow(
             document,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.validateFields()),
-            Document.removeFields(this.getEmptyFields())
-        )
+            Document.removeFields(this.getEmptyFields()),
+        );
+
+        trimFields(document.resource);
+
+        return document;
     }
 
 

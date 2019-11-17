@@ -1,24 +1,22 @@
-import {includedIn, is, isNot, isnt, on, jsonClone} from 'tsfun';
-import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
+import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
-import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
-import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
-import {ImportValidator} from './exec/import-validator';
-import {DefaultImport} from './exec/default-import';
-import {MeninxFindImport} from './exec/meninx-find-import';
+import {ImportValidator} from './exec/process/import-validator';
 import {TypeUtility} from '../model/type-utility';
-import {ImportFunction} from './exec/import-function';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {DatingUtil} from '../util/dating-util';
 import {DimensionUtil} from '../util/dimension-util';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {IdaiType} from '../configuration/model/idai-type';
+import {buildImportFunction} from './exec/default-import';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind' | 'csv';
+export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
 export type ImportReport = { errors: any[], successfulImports: number };
 
@@ -48,8 +46,8 @@ export module Importer {
      * @param usernameProvider
      * @param projectConfiguration
      * @param mainTypeDocumentId
-     * @param allowMergingExistingResources
-     * @param allowUpdatingRelationsOnMerge
+     * @param mergeMode
+     * @param permitDeletions
      * @param fileContent
      * @param generateId
      * @param selectedType should be defined in case format === csv
@@ -65,20 +63,20 @@ export module Importer {
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,
-                                   allowMergingExistingResources: boolean,
-                                   allowUpdatingRelationsOnMerge: boolean,
+                                   mergeMode: boolean,
+                                   permitDeletions: boolean,
                                    fileContent: string,
                                    generateId: () => string,
                                    selectedType?: IdaiType,
                                    separator?: string) {
 
-        const mainTypeDocumentId_ = allowMergingExistingResources ? '' : mainTypeDocumentId;
+        const mainTypeDocumentId_ = mergeMode ? '' : mainTypeDocumentId;
 
         const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
-        const docsToUpdate: Document[] = [];
+        const documents: Document[] = [];
 
         try {
-            (await parse(fileContent)).forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
+            (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
         } catch (msgWithParams) {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
@@ -87,20 +85,20 @@ export module Importer {
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
         const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
 
-        const importFunction = buildImportFunction(
+        const { errors, successfulImports } = await performImport(
+            documents,
             format,
             importValidator,
             operationTypeNames,
             mainTypeDocumentId_,
-            allowMergingExistingResources,
-            allowUpdatingRelationsOnMerge,
+            mergeMode,
+            permitDeletions,
             getInverseRelation,
             generateId,
-            postProcessDocument(projectConfiguration));
+            postProcessDocument(projectConfiguration),
+            datastore,
+            usernameProvider.getUsername());
 
-        const { errors, successfulImports } = await importFunction(
-            docsToUpdate, datastore, usernameProvider.getUsername()
-        );
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
@@ -129,14 +127,9 @@ export module Importer {
     }}
 
 
-    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType,
-                          separator?: string): any {
+    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
 
         switch (format) {
-            case 'meninxfind':
-                return MeninxFindCsvParser.parse;
-            case 'idig':
-                return IdigCsvParser.parse;
             case 'csv':
                 if (!selectedType) throw 'Selected type must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
@@ -155,29 +148,37 @@ export module Importer {
     }
 
 
-    function buildImportFunction(format: ImportFormat,
-                                 validator: ImportValidator,
-                                 operationTypeNames: string[],
-                                 mainTypeDocumentId: string,
-                                 mergeMode: boolean,
-                                 updateRelationsOnMergeMode: boolean,
-                                 getInverseRelation: (_: string) => string|undefined,
-                                 generateId: () => string,
-                                 postProcessDocument: (document: Document) => Document): ImportFunction {
+    function performImport(documents: Array<Document>,
+                           format: ImportFormat,
+                           validator: ImportValidator,
+                           operationTypeNames: string[],
+                           mainTypeDocumentId: string,
+                           mergeMode: boolean,
+                           permitDeletions: boolean,
+                           getInverseRelation: (_: string) => string|undefined,
+                           generateId: () => string,
+                           postProcessDocument: (document: Document) => Document,
+                           datastore: DocumentDatastore,
+                           username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const defaultImport = () => DefaultImport.build(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument);
+        let importFunction = undefined;
 
         switch (format) {
-            case 'meninxfind':
-                return MeninxFindImport.build();
-            case 'idig':
             case 'geojson-gazetteer':
-                return defaultImport()(false, false);
+                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: false, permitDeletions: false});
+                break;
             case 'shapefile':
             case 'geojson':
-                return defaultImport()(true, false);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: true, permitDeletions: false});
+                break;
             default: // native | csv
-                return defaultImport()(mergeMode, updateRelationsOnMergeMode, mainTypeDocumentId, true);
+                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                    { mergeMode: mergeMode, permitDeletions: permitDeletions,
+                        mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }
+
+        return importFunction(documents, datastore, username);
     }
 }

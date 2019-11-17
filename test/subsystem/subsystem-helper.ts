@@ -1,17 +1,17 @@
 import * as PouchDB from 'pouchdb';
-import {AppConfigurator, ConfigLoader, ConfigReader, Document, ImageDocument, Query} from 'idai-components-2';
+import {Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {TypeUtility} from '../../app/core/model/type-utility';
-import {FieldTypeConverter} from '../../app/core/datastore/field/field-type-converter.service';
+import {FieldTypeConverter} from '../../app/core/datastore/field/field-type-converter';
 import {IndexerConfiguration} from '../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/imagestore/imagestore';
-import {RemoteChangesStream} from '../../app/core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../app/core/datastore/core/changes-stream';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';
@@ -25,6 +25,9 @@ import {MediaState} from '../../app/components/mediaoverview/view/media-state';
 import {MediaDocumentsManager} from '../../app/components/mediaoverview/view/media-documents-manager';
 import {MediaOverviewFacade} from '../../app/components/mediaoverview/view/media-overview-facade';
 import {IdaiFieldMediaDocumentDatastore} from '../../app/core/datastore/idai-field-media-document-datastore';
+import {AppConfigurator} from '../../app/core/model/app-configurator';
+import {ConfigLoader} from '../../app/core/configuration/config-loader';
+import {ConfigReader} from '../../app/core/configuration/config-reader';
 
 
 class IdGenerator {
@@ -80,8 +83,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const {settingsService, projectConfiguration} = await setupSettingsService(
         pouchdbmanager, projectName, startSync);
 
-    const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
-        IndexerConfiguration.configureIndexers(projectConfiguration);
+    const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(
         pouchdbmanager.getDbProxy(),
@@ -89,9 +91,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-
     const typeUtility = new TypeUtility(projectConfiguration);
-
     const typeConverter = new FieldTypeConverter(typeUtility);
 
     const fieldDocumentDatastore = new FieldDatastore(
@@ -103,12 +103,12 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
         documentCache as DocumentCache<ImageDocument>, typeConverter);
 
-    const remoteChangesStream = new RemoteChangesStream(
+    const remoteChangesStream = new ChangesStream(
         datastore,
         createdIndexFacade,
         documentCache,
         typeConverter,
-        { getUsername: () => 'fakeuser' });
+        settingsService);
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
     stateSerializer.load.and.returnValue(Promise.resolve({}));
@@ -146,6 +146,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         projectConfiguration,
         typeUtility,
+        createdIndexFacade
     );
 
     const documentHolder = new DocumentHolder(
@@ -159,13 +160,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore
     );
 
-
     const mediaState = new MediaState();
-
     const mediaDocumentsManager = new MediaDocumentsManager(mediaState, idaiFieldMediaDocumentDatastore);
-
     const mediaOverviewFacade = new MediaOverviewFacade(mediaDocumentsManager, mediaState, typeUtility);
-
 
     return {
         remoteChangesStream,

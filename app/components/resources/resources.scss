@@ -14,7 +14,6 @@
 @import 'map/map-3d/layers/layers-2d/layers-2d';
 @import 'map/map-3d/layers/layers-3d/layers-3d';
 @import 'map/list/geometry-view';
-@import 'map/list/thumbnail-view';
 @import 'map/list/children-view';
 @import 'map/list/thumbnail';
 @import 'list/list';
@@ -93,4 +92,32 @@ $deactivated-button-color: lightgray;
     user-select: none;
     cursor: default;
   }
+}
+
+#search-results-info {
+  @extend .alert;
+  @extend .alert-secondary;
+
+  position: relative;
+  top: -2px;
+  left: 15px;
+  width: 235px;
+  max-height: 39px;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+  cursor: default;
+  user-select: none;
+  border-radius: 0;
+  background-color: #fefefe;
+
+  &.document-limit-exceeded {
+    padding-top: 0;
+  }
+}
+
+#document-limit-info {
+  font-size: 12px;
+  margin-top: -2px;
 }

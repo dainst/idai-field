@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ProjectsModalComponent} from './projects-modal.component';
+import {NavbarComponent} from './navbar.component';
 
 
 @Component({
@@ -19,19 +18,14 @@ export class ProjectsComponent implements OnInit {
 
 
     constructor(private settingsService: SettingsService,
-                private modalService: NgbModal) {
-    }
+                private navbarComponent: NavbarComponent) {}
+
+
+    public openModal = () => this.navbarComponent.openProjectsModal();
 
 
     ngOnInit() {
 
         this.selectedProject = this.settingsService.getSelectedProject();
-    }
-
-
-    public openModal() {
-
-        const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
-        ref.componentInstance.selectedProject = this.selectedProject;
     }
 }

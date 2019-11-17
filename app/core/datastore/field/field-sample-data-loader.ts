@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {Converter} from '../../imagestore/converter';
+import {ImageConverter} from '../../imagestore/image-converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 
@@ -11,7 +11,7 @@ import {getSampleDocuments} from './field-sample-objects';
  */
 export class FieldSampleDataLoader implements SampleDataLoader {
 
-    constructor(private converter: Converter,
+    constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
                 private model3DStorePath: string,
                 private locale: string) {}
@@ -92,11 +92,11 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                                 fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
 
                                 // write thumb
-                                const blob = this.converter.convert(fs.readFileSync(path + file));
+                                const buffer: Buffer = this.imageConverter.convert(fs.readFileSync(path + file)) as Buffer;
                                 promises.push(
                                     db.get(file)
                                         .then((doc: any) =>
-                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([blob]), 'image/jpeg')
+                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([buffer]), 'image/jpeg')
                                                 .catch((putAttachmentErr: any) =>
                                                     Promise.reject("putAttachmentErr:"+putAttachmentErr))
                                         , (dbGetErr: any) => Promise.reject("dbGetErr:"+dbGetErr))
@@ -136,7 +136,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
 
         for (let fileName of thumbnailFileNames) {
             const id: string = fileName.substring('thumbnail-'.length);
-            const blob = this.converter.convert(fs.readFileSync(path + fileName));
+            const blob: any = this.imageConverter.convert(fs.readFileSync(path + fileName));
             const document = await db.get(id);
             await db.putAttachment(id, 'thumb', document._rev, new Blob([blob]), 'image/jpeg');
         }

@@ -92,6 +92,12 @@
             object-fit: scale-down;
             user-select: none;
             -webkit-user-drag: none;
+
+            &.missing-image {
+              width: 100px;
+              height: 100%;
+              object-fit: initial;
+            }
           }
         }
       }
@@ -120,17 +126,30 @@
 
         #identifier-label {
           position: relative;
-          top: -1px;
-          width: calc(100% - 30px);
+          left: 32px;
+          top: -41px;
+          width: calc(100% - 64px);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
+        #expand-all-groups-button {
+          left: -109px;
+          top: -11px;
+
+          &.active {
+            box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
+          }
+        }
+
+        #edit-image-button {
+          left: 109px;
+          top: -71px;
+        }
+
         .btn {
           position: relative;
-          top: -32px;
-          left: 96px;
           height: 39px;
           background-color: transparent;
           border: none;

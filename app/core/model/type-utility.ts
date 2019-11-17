@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {to} from 'tsfun';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {IdaiType} from '../configuration/model/idai-type';
 
 
 @Injectable()
@@ -11,13 +12,15 @@ import {IdaiType, ProjectConfiguration} from 'idai-components-2';
  */
 export class TypeUtility {
 
+    public static UNKNOWN_TYPE_ERROR = 'TypeUtility.Errors.UnknownType';
+
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
-        if (!type) throw 'Unknown type "' + typeName + '"';
+        if (!type) throw [TypeUtility.UNKNOWN_TYPE_ERROR, typeName];
         return (type.name === superTypeName)
             || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
     }
@@ -147,6 +150,14 @@ export class TypeUtility {
                     domainTypeName, type.parentType.name, relationName
                 ));
             });
+    }
+
+
+    public isGeometryType(typeName: string): boolean {
+
+        return !this.getImageTypeNames().includes(typeName)
+            && !this.isSubtype(typeName, 'Inscription')
+            && !TypeUtility.isProjectType(typeName);
     }
 
 

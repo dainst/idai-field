@@ -1,0 +1,15 @@
+/**
+ * @author Thomas Kleinke
+ */
+outliers {
+  .outliers-container {
+    margin-top: 5px;
+
+    .outliers-info {
+      cursor: default;
+      user-select: none;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+  }
+}

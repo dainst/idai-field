@@ -1,15 +1,15 @@
-import {ProjectConfiguration} from 'idai-components-2';
-import {ImportValidator} from '../../../../../app/core/import/exec/import-validator';
+import {ImportValidator} from '../../../../../app/core/import/exec/process/import-validator';
 import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
 import {INPUT_TYPES} from '../../../../../app/c';
+import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('ImportValidation', () => {
+describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {
@@ -35,12 +35,17 @@ describe('ImportValidation', () => {
                         {name: 'type',}
                     ]
                 },
+                {
+                    type: 'T3',
+                    mustLieWithin: true,
+                }
             ],
             relations: [
                 {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
                 {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
                 {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'} // defined but not allowed
+                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}, // defined but not allowed
+                {name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE'}
             ]
         }
     );
@@ -143,7 +148,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc]);
             fail();
         } catch (errWithParams) {
 
@@ -167,13 +172,41 @@ describe('ImportValidation', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc]);
             fail();
         } catch (errWithParams) {
 
             expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
                 'isRelatedTo, isDepictedIn']);
         }
+    });
+
+
+    it('assertLiesWithinCorrectness - must lie within', async done => {
+
+        const doc = {
+            resource: {
+                id: '3',
+                identifier: '3',
+                type: 'T3',
+                relations: {
+                    isRecordedIn: ['T1'],
+                    liesWithin: []
+                }
+            }
+        };
+
+        try {
+            await new ImportValidator(
+                projectConfiguration,
+                {find: (q: any) => Promise.resolve({documents: []})} as any,
+                undefined).assertLiesWithinCorrectness([doc.resource as any]);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, 'T3', '3']);
+        }
+        done();
     });
 
 

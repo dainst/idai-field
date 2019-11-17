@@ -8,7 +8,7 @@ import {NavigationPath} from '../../../../../../app/components/resources/view/st
 describe('NavigationPath', () => {
 
 
-    it('go back and forth between two segments', () => {
+    it('validateFieldDefinitions_ back and forth between two segments', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 

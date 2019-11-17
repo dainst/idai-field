@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ElementRef} from '@angular/core';
-import {IdaiType} from 'idai-components-2';
+import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
+import {sameset} from 'tsfun';
 import {TypeUtility} from '../core/model/type-utility';
+import {IdaiType} from '../core/configuration/model/idai-type';
 
 
 @Component({
@@ -17,7 +18,7 @@ import {TypeUtility} from '../core/model/type-utility';
  * @author Thomas Kleinke
  * @author Jan G. Wieners
  */
-export class SearchBarComponent {
+export class SearchBarComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType> = [];
     @Input() showFiltersMenu: boolean = true;
@@ -28,8 +29,8 @@ export class SearchBarComponent {
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
-    @ViewChild('p') protected popover: any;
-    @ViewChild('searchInput') fulltextSearchInput: ElementRef;
+    @ViewChild('p', {static: false}) protected popover: any;
+    @ViewChild('searchInput', {static: false}) fulltextSearchInput: ElementRef;
 
     public focused: boolean = false;
 
@@ -37,6 +38,14 @@ export class SearchBarComponent {
 
 
     constructor(private typeUtility: TypeUtility) {}
+
+
+    ngOnChanges() {
+
+        if ((!this.types || this.types.length === 0) && this.filterOptions.length === 1) {
+            this.types = [this.filterOptions[0].name];
+        }
+    }
 
 
     public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
@@ -59,10 +68,15 @@ export class SearchBarComponent {
 
     public chooseTypeFilter(type: IdaiType) {
 
-        this.types = type
+        let newTypes: string[]|undefined = type
             ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
+        if (newTypes && newTypes.length > 1 && this.types && sameset(this.types)(newTypes)) {
+            newTypes = [type.name];
+        }
+
+        this.types = newTypes;
         this.onTypesChanged.emit(this.types);
     }
 

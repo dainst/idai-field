@@ -4,7 +4,7 @@
                 i18n="@@imageView.depictsRelationsView.depictedResources"
                 (click)="toggle()">Dargestellte Ressourcen</button>
     </div>
-    <div *ngIf="openSection === 'depicts-relations'" class="collapse show">
+    <div *ngIf="openSection === 'depicts-relations' || expandAllGroups" class="collapse show">
         <div class="card-body resources-listing">
             <div *ngFor="let target of relationTargets" class="resources-listing-item"
                  (click)="jumpToResource(target)">

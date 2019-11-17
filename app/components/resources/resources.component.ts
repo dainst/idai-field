@@ -2,7 +2,7 @@ import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} fr
 import {ActivatedRoute} from '@angular/router';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
-import {Document, FieldDocument, FieldGeometry, Messages, IdaiType} from 'idai-components-2';
+import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -13,6 +13,7 @@ import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../common/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {TabManager} from '../tab-manager';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 @Component({
@@ -66,6 +67,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
             this.isEditingGeometry = false;
         });
+
+        this.viewFacade.rebuildNavigationPath();
     }
 
 
@@ -225,6 +228,24 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
+    public isSearchResultsInfoVisible(): boolean {
+
+        return this.viewFacade.getDocuments() !== undefined
+            && this.viewFacade.getBypassHierarchy()
+            && this.viewFacade.isReady();
+    }
+
+
+    public isDocumentLimitExceeded(): boolean {
+
+        const documents: Array<Document> = this.viewFacade.getDocuments();
+
+        return documents
+            && documents.length > 0
+            && this.viewFacade.getTotalDocumentCount() > documents.length;
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);
@@ -273,7 +294,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         const element = document.getElementById('resource-' + doc.resource.identifier);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ block: 'nearest' });
             return true;
         }
         return false;

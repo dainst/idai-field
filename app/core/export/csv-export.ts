@@ -1,9 +1,10 @@
 import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
     isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
-import {Dating, Dimension, FieldDefinition, FieldResource} from 'idai-components-2';
+import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
-import {HIERARCHICAL_RELATIONS} from '../../c';
 import {fillUpToSize} from './export-helper';
+import {HIERARCHICAL_RELATIONS} from '../model/relation-constants';
+import {FieldDefinition} from '../configuration/model/field-definition';
 
 
 /**
@@ -35,7 +36,7 @@ export module CSVExport {
      * @param fieldDefinitions
      * @param relations
      */
-    export function createExportable(resources: FieldResource[],
+    export function createExportable(resources: Array<FieldResource>,
                                      fieldDefinitions: Array<FieldDefinition>,
                                      relations: Array<string>) {
 
@@ -44,16 +45,16 @@ export module CSVExport {
             .map(toDocumentWithFlattenedRelations)
             .map(toRowsArrangedBy(headings));
 
-        return flow<any>([headings, matrix],
+        return flow([headings, matrix],
             expandDating,
             expandDimension(fieldDefinitions),
             combine);
     }
 
 
-    function combine(headings_and_matrix: HeadingsAndMatrix) {
+    function combine(headingsAndMatrix: HeadingsAndMatrix) {
 
-        return [headings_and_matrix[H]].concat(headings_and_matrix[M]).map(toCsvLine);
+        return [headingsAndMatrix[H]].concat(headingsAndMatrix[M]).map(toCsvLine);
     }
 
 
@@ -65,15 +66,15 @@ export module CSVExport {
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
 
 
-    function expandDating(headings_and_matrix: HeadingsAndMatrix) {
+    function expandDating(headingsAndMatrix: HeadingsAndMatrix) {
 
-        const indexOfDatingElement = headings_and_matrix[H].indexOf('dating');
-        if (indexOfDatingElement === -1) return headings_and_matrix;
+        const indexOfDatingElement = headingsAndMatrix[H].indexOf('dating');
+        if (indexOfDatingElement === -1) return headingsAndMatrix;
 
         return expand(
             expandDatingHeadings,
             expandDatingItems,
-            headings_and_matrix)([indexOfDatingElement])
+            headingsAndMatrix)([indexOfDatingElement]);
     }
 
 
@@ -109,7 +110,7 @@ export module CSVExport {
 
     /**
      * Returns a function that when provided an array of columnIndices,
-     * expands headings_and_matrix at the columns, assuming that
+     * expands headingsAndMatrix at the columns, assuming that
      * these columns contain array values.
      *
      * For example:
@@ -124,25 +125,26 @@ export module CSVExport {
      *  [[7,   2       , 3],
      *   [8,   5,      , undefined]]]
      *
-     * @param expandHeading
+     * @param expandHeadings
      * @param expandLevelTwo
-     * @param headings_and_matrix
+     * @param headingsAndMatrix
      */
-    function expand(expandHeading: Function, // TODO add better typing information
-                    expandLevelTwo: Function,
-                    headings_and_matrix: HeadingsAndMatrix) {
+    function expand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
+                    expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
+                    headingsAndMatrix: HeadingsAndMatrix) {
 
-        return reduce((headings_and_matrix: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce((headingsAndMatrix: HeadingsAndMatrix, columnIndex: number) => {
 
-                const max = Math.max(1, getMax(columnIndex)(headings_and_matrix[M]));
+                const max = Math.max(1, getMax(columnIndex)(headingsAndMatrix[M]));
 
-                return [
-                    replaceItems(columnIndex, 1, expandHeading(max))(headings_and_matrix[H]), // TODO use replaceItem?
-                    headings_and_matrix[M]
-                        .map(expandLevelOne(columnIndex, max))
-                        .map(expandLevelTwo(columnIndex, max))];
+                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headingsAndMatrix[H]);
+                const expandedRows   = headingsAndMatrix[M]
+                    .map(expandLevelOne(columnIndex, max))
+                    .map(expandLevelTwo(columnIndex, max));
 
-            }, headings_and_matrix);
+                return [expandedHeader, expandedRows];
+
+            }, headingsAndMatrix);
     }
 
 
@@ -160,16 +162,16 @@ export module CSVExport {
     }
 
 
-    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: Array<string>) {
+    function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: string[]) {
 
         const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(fieldDefinitions), fieldDefinitions);
 
         return fieldNames
             .concat(
                 relations
-                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS)))
+                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS.ALL)))
                     .map(relation => 'relations.' + relation))
-            .concat([RELATIONS_IS_CHILD_OF]);
+            .concat(relations.find(includedIn(HIERARCHICAL_RELATIONS.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
 
@@ -277,7 +279,7 @@ export module CSVExport {
             return replaceItems(
                 where,
                 nrOfNewItems,
-                flatMap(compose<any>(
+                flatMap(compose(
                     cond(isDefined, computeReplacement, val([])),
                     fillUpToSize(widthOfEachNewItem, EMPTY))));
         }
@@ -380,16 +382,20 @@ export module CSVExport {
 
     function getUsableFieldNames(fieldNames: string[]): string[] {
 
-        return fieldNames
-            .filter(isnt('type'))
-            .filter(isnt('geometry'))
-            .filter(isnt('id'));
+        return fieldNames.filter(isNot(includedIn(
+            ['id', 'type', 'geometry', 'georeference', 'originalFilename', 'filename']
+        )));
     }
 
 
-    function toCsvLine(as: string[]): string {
+    function toCsvLine(fields: string[]): string {
 
-        return as.map(field => field ? '"' + getFieldValue(field) + '"' : '""').join(SEPARATOR);
+        const wrapContents  = (field: string) => '"' + getFieldValue(field) + '"';
+        const createEmptyField = val('""');
+
+        return fields
+            .map(cond(isDefined, wrapContents, createEmptyField))
+            .join(SEPARATOR);
     }
 
 

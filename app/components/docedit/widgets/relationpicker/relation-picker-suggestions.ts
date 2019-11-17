@@ -1,4 +1,5 @@
-import {Document, ReadDatastore, Query, Constraint, RelationDefinition} from 'idai-components-2';
+import {Document, ReadDatastore, Query, Constraint} from 'idai-components-2';
+import {RelationDefinition} from '../../../../core/configuration/model/relation-definition';
 
 
 /**
@@ -26,7 +27,8 @@ export module RelationPickerSuggestions {
             q: idSearchString ? idSearchString : '',
             types: relationDefinition.range,
             constraints: makeConstraints(document, relationDefinition),
-            limit: MAX_SUGGESTIONS
+            limit: MAX_SUGGESTIONS,
+            sort: 'exactMatchFirst'
         };
     }
 

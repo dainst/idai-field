@@ -1,10 +1,11 @@
 import * as THREE from 'three';
-import {ProjectConfiguration, FieldDocument, FieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {Viewer3D} from '../../../../../core-3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
 import {Map3DCameraManager} from '../../map-3d-camera-manager';
 import {getPointVector} from '../../../../../../util/util-3d';
+import {ProjectConfiguration} from '../../../../../../core/configuration/project-configuration';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 

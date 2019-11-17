@@ -3,6 +3,7 @@ import {ImportComponent} from './import.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {UploadModalComponent} from './upload-modal.component';
+import {ImportState} from './import-state';
 
 @NgModule({
     imports: [
@@ -11,7 +12,10 @@ import {UploadModalComponent} from './upload-modal.component';
     ],
     declarations: [
         ImportComponent,
-        UploadModalComponent
+        UploadModalComponent,
+    ],
+    providers: [
+        ImportState
     ],
     exports: [
         ImportComponent

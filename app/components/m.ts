@@ -89,11 +89,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
     public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.operationsNotAllowed';
     public static IMPORT_VALIDATION_INVALID_TYPE = 'M.Import.ImportErrors.invalidType';
+    public static IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE = 'M.Import.ImportErrors.mustLieWithinOtherNonOperationResource';
+    public static IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH = 'M.Import.ImportErrors.targetTypeRangeMismatch';
     public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.Import.ImportErrors.duplicateIdentifier';
     public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
     public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
     public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.typeOnlyAllowedOnUpdate';
     public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
+    public static IMPORT_WARNING_EMPTY = 'M.Import.warning.empty';
     public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'M.Import.success.multiple';
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
@@ -104,6 +107,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
     public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
+    public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
+    public static IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.typeCannotBeChanged';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -391,6 +396,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 })],
             hidden: false
         };
+        this.msgs[M.IMPORT_WARNING_EMPTY] = {
+            content: i18n({
+                id: 'messages.import.warning.empty',
+                value: 'Die Import-Datei enthält keine Einträge.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_READER_GENERIC_START_ERROR] = {
             content: i18n({
                 id: 'messages.import.error.genericStartError',
@@ -529,7 +543,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_EXEC_NO_LIES_WITHIN_SET] = {
             content: i18n({
                 id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
-                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'liesWithin\'-Zuordnungen haben.'
+                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isChildOf\'-Zuordnungen haben.'
             }),
             level: 'danger',
             params: [],
@@ -706,6 +720,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.mustHaveLiesWithin',
+                value: 'Resourcen vom Typ \'[0]\' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: \'[1]\'.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH] = {
+            content: i18n({
+                id: 'messages.import.validation.error.targetTypeRangeMismatch',
+                value: 'Ressource vom Typ \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELD] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidField',
@@ -854,6 +886,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.mustBeInSameOperation',
                 value: 'Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\''
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED] = {
+            content: i18n({
+                id: 'messages.import.error.typeCannotBeChanged',
+                value: 'Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING] = {
+            content: i18n({
+                id: 'messages.import.error.mustNotBeEmptyString',
+                value: 'Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.'
             }),
             level: 'danger',
             params: ['?', '?'],

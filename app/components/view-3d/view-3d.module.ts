@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiWidgetsModule} from 'idai-components-2';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {view3DRouting} from './view-3d.routing';
 import {View3DComponent} from './view-3d.component';
@@ -14,7 +13,6 @@ import {Core3DModule} from '../core-3d/core-3d.module';
         BrowserModule,
         NgbModule,
         WidgetsModule,
-        IdaiWidgetsModule,
         Model3DViewerModule,
         Core3DModule,
         view3DRouting

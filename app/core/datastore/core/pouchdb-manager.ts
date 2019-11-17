@@ -6,7 +6,8 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
-import {FieldnameMigrator} from '../field/fieldname-migrator';
+import {Migrator} from '../field/migrator';
+import {Name} from '../../../c';
 
 const expressPouchDB = require('express-pouchdb');
 
@@ -103,11 +104,12 @@ export class PouchdbManager {
      * Setup peer-to-peer syncing between this datastore and target.
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
+     * @param project
      */
-    public setupSync(url: string, projectName: string): Promise<SyncState> {
+    public setupSync(url: string, project: Name): Promise<SyncState> {
 
-        const fullUrl = url + '/' + (projectName === 'synctest' ? 'synctestremotedb' : projectName);
-        console.debug('Start syncing');
+        const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
+        console.log('Start syncing');
 
         return (this.getDbProxy() as any).ready().then((db: any) => {
             let sync = db.sync(fullUrl, { live: true, retry: false });
@@ -127,7 +129,7 @@ export class PouchdbManager {
 
     public stopSync() {
 
-        console.debug('Stop syncing');
+        console.log('Stop syncing');
 
         for (let handle of this.syncHandles) {
             (handle as any).cancel();
@@ -167,7 +169,7 @@ export class PouchdbManager {
         await this.fetchAll(
         (doc: any) => {
             (indexFacade as IndexFacade)
-                .put(FieldnameMigrator.migrate(doc), true, false);
+                .put(Migrator.migrate(doc), true, false);
         });
     }
 

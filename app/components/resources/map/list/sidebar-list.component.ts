@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
 import {ViewFacade} from '../../view/view-facade';
 import {NavigationService} from '../../navigation/navigation-service';
+import {NavigationPath} from '../../view/state/navigation-path';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
@@ -15,7 +17,7 @@ import {ContextMenuAction} from '../context-menu.component';
     selector: 'sidebar-list',
     moduleId: module.id,
     templateUrl: './sidebar-list.html',
-    host: {'(window:contextmenu)': 'handleClick($event, true)'}
+    host: { '(window:contextmenu)': 'handleClick($event, true)' }
 })
 /**
  * @author Daniel de Oliveira
@@ -23,13 +25,15 @@ import {ContextMenuAction} from '../context-menu.component';
  * @author Sebastian Cuy
  */
 
-export class SidebarListComponent extends BaseList {
+export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public contextMenuPosition: { x: number, y: number }|undefined;
     public contextMenuDocument: FieldDocument|undefined;
 
     public highlightedDocument: FieldDocument|undefined = undefined;
-    public selectedDocumentThumbnailUrl: string|undefined;
+
+    @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
+
 
     constructor(resourcesComponent: ResourcesComponent,
                 loading: Loading,
@@ -47,14 +51,51 @@ export class SidebarListComponent extends BaseList {
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
 
-        this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.closeContextMenu();
+            this.sidebarElement.nativeElement.focus();
         });
     }
 
 
-    public hasThumbnail = (document: FieldDocument): boolean =>
-        Document.hasRelations(document, 'isDepictedIn');
+    public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
+
+    public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
+
+    public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
+
+    public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
+
+
+    ngAfterViewInit() {
+
+        this.sidebarElement.nativeElement.focus();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+            await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
+            event.preventDefault();
+            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
+        }
+
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            await this.navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
+            event.preventDefault();
+        }
+
+        if (event.key === 'Enter') {
+            await this.openChildCollection();
+            event.preventDefault();
+        }
+
+        if (event.key === 'Backspace') {
+            await this.goToUpperHierarchyLevel();
+            event.preventDefault();
+        }
+    }
 
 
     public async editDocument(document: FieldDocument) {
@@ -66,16 +107,6 @@ export class SidebarListComponent extends BaseList {
     public isScrollbarVisible(element: HTMLElement): boolean {
 
         return element.scrollHeight > element.clientHeight;
-    }
-
-
-    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
-            this.closePopover();
-        } else {
-            await this.openPopoverMenu(popoverMenu, document);
-        }
     }
 
 
@@ -99,6 +130,16 @@ export class SidebarListComponent extends BaseList {
     }
 
 
+    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
+
+        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
+            this.closePopover();
+        } else {
+            await this.openPopoverMenu(popoverMenu, document);
+        }
+    }
+
+
     public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
 
         return this.viewFacade.getSelectedDocument() !== undefined
@@ -112,14 +153,28 @@ export class SidebarListComponent extends BaseList {
 
         this.resourcesMapComponent.activePopoverMenu = 'none';
         this.highlightedDocument = undefined;
-        this.selectedDocumentThumbnailUrl = undefined;
     };
+
+
+    public async navigatePopoverMenus(direction: 'previous'|'next') {
+
+        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+
+        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
+
+        let index: number = availablePopoverMenus.indexOf(this.resourcesMapComponent.activePopoverMenu)
+            + (direction === 'next' ? 1 : -1);
+        if (index < 0) index = availablePopoverMenus.length - 1;
+        if (index >= availablePopoverMenus.length) index = 0;
+
+        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
+    }
 
 
     public async select(document: FieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
-        this.selectedDocumentThumbnailUrl = undefined;
 
         if (!document) {
             this.viewFacade.deselect();
@@ -198,7 +253,7 @@ export class SidebarListComponent extends BaseList {
     }
 
 
-    private handleClick(event: any, rightClick: boolean = false) {
+    public handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenuPosition) return;
 
@@ -223,5 +278,41 @@ export class SidebarListComponent extends BaseList {
         this.resourcesMapComponent.activePopoverMenu = popoverMenu;
 
         if (!this.isSelected(document)) await this.select(document);
+    }
+
+
+    private getAvailablePopoverMenus(document: FieldDocument): string[] {
+
+        const availablePopoverMenus: string[] = ['none', 'info'];
+        if (this.navigationService.shouldShowArrowBottomRight(document)) {
+            availablePopoverMenus.push('children');
+        }
+
+        return availablePopoverMenus;
+    }
+
+
+    private async openChildCollection() {
+
+        if (this.viewFacade.getSelectedDocument()) {
+            await this.navigationService.moveInto(this.viewFacade.getSelectedDocument());
+        }
+    }
+
+
+    private async goToUpperHierarchyLevel() {
+
+        const navigationPath: NavigationPath = this.viewFacade.getNavigationPath();
+        if (!navigationPath.selectedSegmentId || navigationPath.segments.length === 0) return;
+
+        const newSegmentIndex: number = navigationPath.segments
+            .map(to('document.resource.id'))
+            .indexOf(navigationPath.selectedSegmentId) - 1;
+
+        await this.navigationService.moveInto(
+            newSegmentIndex < 0
+                ? undefined
+                : navigationPath.segments[newSegmentIndex].document
+        );
     }
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {ProjectConfiguration, FieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {Viewer3D} from '../../../../../core-3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
@@ -7,6 +7,7 @@ import {PolygonBuilder} from './polygon-builder';
 import {Map3DCameraManager} from '../../map-3d-camera-manager';
 import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../../util/util-3d';
 import {SceneManager} from '../../../../../core-3d/scene-manager';
+import {ProjectConfiguration} from '../../../../../../core/configuration/project-configuration';
 
 
 /**

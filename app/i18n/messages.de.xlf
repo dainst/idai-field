@@ -347,11 +347,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -367,11 +375,19 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -470,28 +486,12 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.formats.iDig" datatype="html">
-        <source>iDig (experimentell) – CSV</source>
-        <target state="final">iDig (experimentell) – CSV</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.formats.meninx" datatype="html">
-        <source>Meninx/Funde (experimentell) – CSV</source>
-        <target state="final">Meninx/Funde (experimentell) – CSV</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.source" datatype="html">
         <source>Quelle</source>
         <target state="final">Quelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -499,7 +499,7 @@
         <target state="final">Datei</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
@@ -507,7 +507,7 @@
         <target state="final">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -515,7 +515,7 @@
         <target state="final">Pfad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -523,7 +523,7 @@
         <target state="final">Datei auswählen...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -531,7 +531,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importTypeSelect" datatype="html">
@@ -539,7 +539,7 @@
         <target state="final">Ressourcentyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -551,57 +551,103 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.info" datatype="html">
+      <trans-unit id="import.mergeOption.native.info" datatype="html">
         <source>
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
-                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
-                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </source>
         <target state="final">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
-                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
-                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.relationsLabel" datatype="html">
+      <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source>
-                            Relationen überschreiben
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
+                    </source>
+        <target state="final">
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
+                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
+        <source>
+                            Löschen erlauben
                         </source>
         <target state="final">
-                            Relationen überschreiben
+                            Löschen erlauben
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.relationsInfo" datatype="html">
+      <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
-                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
+                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </source>
         <target state="final">
-                        Ist diese Option aktiviert, so können auch die Relationen neu gesetzt werden.
-                        Nicht im Importdatensatz gesetzte Relationen werden dabei entfernt.
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
+                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
+        <source>
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        bei denen das Feld in der Importdatei leer ist.
+                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                        unverändert.
+                    </source>
+        <target state="final">
+                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                        bei denen das Feld in der Importdatei leer ist.
+                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                        unverändert.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -609,7 +655,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -617,7 +663,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -625,7 +671,7 @@
         <target state="final">Feldtrennzeichen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -645,7 +691,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -659,7 +705,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -679,7 +725,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -755,8 +801,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.all" datatype="html">
-        <source>Alle Maßnahmen</source>
-        <target state="final">Alle Maßnahmen</target>
+        <source>Keine Einschränkung</source>
+        <target state="final">Keine Einschränkung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
           <context context-type="linenumber">53</context>
@@ -942,70 +988,6 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
-        <source>Synchronisation ist aktiv</source>
-        <target state="final">Synchronisation ist aktiv</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.deactivated" datatype="html">
-        <source>Synchronisation ist deaktiviert</source>
-        <target state="final">Synchronisation ist deaktiviert</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.receivingData" datatype="html">
-        <source>Daten werden empfangen...</source>
-        <target state="final">Daten werden empfangen...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
-        <source>Konflikte</source>
-        <target state="final">Konflikte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar-conflicts.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
-        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
-        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
-        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
-        <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
-        <target state="final">Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
-        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
-        <target state="final">Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
         <source>Konflikt behandeln</source>
         <target state="final">Konflikt behandeln</target>
@@ -1113,7 +1095,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/move-modal.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
@@ -1334,6 +1316,82 @@
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
+        <source>Synchronisation ist aktiv</source>
+        <target state="final">Synchronisation ist aktiv</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.deactivated" datatype="html">
+        <source>Synchronisation ist deaktiviert</source>
+        <target state="final">Synchronisation ist deaktiviert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.receivingData" datatype="html">
+        <source>Daten werden empfangen...</source>
+        <target state="final">Daten werden empfangen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
+        <source>Konflikte</source>
+        <target state="final">Konflikte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-conflicts.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
+        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+      
+      
+      
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
+        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
+        <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
+        <target state="final">Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
+        <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter.</source>
+        <target state="final">Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
+        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
+        <target state="final">Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageView.mediaResources" datatype="html">
         <source>
         Medienressourcen
@@ -1358,6 +1416,18 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
+        <source>Alle Gruppen ausklappen</source>
+        <target state="final">Alle Gruppen ausklappen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
         <source>
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
@@ -1367,31 +1437,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageview/image-view.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="mediaOverview.filter.all" datatype="html">
-        <source>Alle Medienressourcen</source>
-        <target state="final">Alle Medienressourcen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="mediaOverview.filter.unlinked" datatype="html">
-        <source>Unverknüpfte Medienressourcen</source>
-        <target state="final">Unverknüpfte Medienressourcen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="mediaOverview.filter.linked" datatype="html">
-        <source>Verknüpfte Medienressourcen</source>
-        <target state="final">Verknüpfte Medienressourcen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/mediaoverview/media-overview.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mediaOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1518,32 +1564,16 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.typeFilterInfo" datatype="html">
-        <source>
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </source>
-        <target state="final">
-        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
         <source>Feld wählen</source>
         <target state="final">Feld wählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
@@ -1551,27 +1581,35 @@
         <target state="final">Suchbegriff</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
@@ -1579,11 +1617,11 @@
         <target state="final">Beliebiger Wert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
@@ -1591,11 +1629,11 @@
         <target state="final">Kein Wert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
@@ -1603,11 +1641,11 @@
         <target state="final">Suchbegriff eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.anyValue" datatype="html">
@@ -1615,19 +1653,19 @@
         <target state="final">- Beliebiger Wert -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
@@ -1635,19 +1673,19 @@
         <target state="final">- Kein Wert -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
@@ -1860,12 +1898,58 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
+        <source>
+                Eine Ressource gefunden
+            </source>
+        <target state="final">
+                Eine Ressource gefunden
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
+        <source>
+                <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden
+            </source>
+        <target state="final">
+                <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
+        <source>
+                    <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> angezeigt
+                </source>
+        <target state="final">
+                    <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> angezeigt
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.documentLimitExceeded.tooltip" datatype="html">
+        <source>Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
+                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen.</source>
+        <target state="final">Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
+                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.tooltips.mode.2dMap" datatype="html">
         <source>2D-Kartendarstellung</source>
         <target state="final">2D-Kartendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.3dMap" datatype="html">
@@ -1873,7 +1957,7 @@
         <target state="final">3D-Kartendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
@@ -1881,7 +1965,7 @@
         <target state="final">Listendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectType" datatype="html">
@@ -1954,24 +2038,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/list.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.list.resourceLimitInfo" datatype="html">
-        <source>
-                    Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
-                    <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
-                    weiter ein oder verlassen Sie den erweiterten Suchmodus, um auf die übrigen Ressourcen
-                    zuzugreifen.
-                </source>
-        <target state="final">
-                    Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
-                    <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
-                    weiter ein oder verlassen Sie den erweiterten Suchmodus, um auf die übrigen Ressourcen
-                    zuzugreifen.
-                </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/list/list.html</context>
-          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
@@ -2138,24 +2204,6 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
-        <source>
-        Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
-        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
-        um auf die übrigen Ressourcen zuzugreifen.
-        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
-    </source>
-        <target state="final">
-        Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
-        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
-        um auf die übrigen Ressourcen zuzugreifen.
-        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
         <source>Daten anzeigen</source>
         <target state="final">Daten anzeigen</target>
@@ -2232,12 +2280,12 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.tabs.images.linkMoreMediaResources" datatype="html">
+      <trans-unit id="docedit.tabs.images.linkMediaResources" datatype="html">
         <source>
-                        Weitere Medienressourcen verknüpfen
+                        Medienressourcen verknüpfen
                     </source>
         <target state="final">
-                        Weitere Medienressourcen verknüpfen
+                        Medienressourcen verknüpfen
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-media-tab.html</context>
@@ -2402,26 +2450,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/relationpicker/relation-picker.html</context>
           <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.outliersInfo" datatype="html">
-        <source>
-        Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
-    </source>
-        <target state="final">
-        Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/checkboxes.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/dropdown.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/radio.html</context>
-          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
@@ -2677,6 +2705,61 @@
           <context context-type="sourcefile">components/docedit/core/forms/geometry.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.outliersInfo" datatype="html">
+        <source>
+        Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:
+    </source>
+        <target state="final">
+        Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/outliers.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deb511940e193e9e5b019171fa6f20ffda230f91" datatype="html">
+        <source>
+    Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
+</source>
+        <target state="final">
+    Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
+      </trans-unit>
+      <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
+        <source>
+    Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten
+    (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+</source>
+        <target state="final">
+    Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten
+    (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.projectDocumentField</note>
+      </trans-unit>
+      <trans-unit id="175491c173cba82a8e28fc5aa08c7fcef82b7df7" datatype="html">
+        <source>
+    Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource
+    nicht ausgefüllt ist.
+</source>
+        <target state="final">
+    Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource
+    nicht ausgefüllt ist.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">docedit.forms.missingValuelistInfo.parent</note>
       </trans-unit>
       <trans-unit id="settings.applySettings" datatype="html">
         <source>Einstellungen übernehmen</source>
@@ -3404,6 +3487,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.warning.empty" datatype="html">
+        <source>Die Import-Datei enthält keine Einträge.</source>
+        <target state="final">Die Import-Datei enthält keine Einträge.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.genericStartError" datatype="html">
         <source>Import kann nicht gestartet werden.</source>
         <target state="final">Import kann nicht gestartet werden.</target>
@@ -3525,8 +3616,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
-        <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</source>
-        <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'liesWithin'-Zuordnungen haben.</target>
+        <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isChildOf'-Zuordnungen haben.</source>
+        <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isChildOf'-Zuordnungen haben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3684,6 +3775,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
+        <source>Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
+        <target state="final">Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
+        <source>Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
+        <target state="final">Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
         <target state="final">Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</target>
@@ -3815,6 +3922,22 @@
       <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
         <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
         <target state="final">Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.typeCannotBeChanged" datatype="html">
+        <source>Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: '[0]'</source>
+        <target state="final">Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
+        <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
+        <target state="final">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4276,6 +4399,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageOverview.searchBar.constraints.linkedResources" datatype="html">
+        <source>Verknüpfte Ressourcen</source>
+        <target state="final">Verknüpfte Ressourcen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/mediaoverview/searchbar/media-overview-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.tabs.media" datatype="html">
         <source>Medienressourcen</source>
         <target state="final">Medienressourcen</target>
@@ -4356,6 +4487,350 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.geometry" datatype="html">
+        <source>Geometrie</source>
+        <target state="final">Geometrie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/searchbar/resources-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.linkedImages" datatype="html">
+        <source>Verknüpfte Bilder</source>
+        <target state="final">Verknüpfte Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/searchbar/resources-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.type" datatype="html">
+        <source>Typ</source>
+        <target state="final">Typ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/config-loader.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.project.crs" datatype="html">
+        <source>Koordinatenbezugssystem</source>
+        <target state="final">Koordinatenbezugssystem</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.image.height" datatype="html">
+        <source>Höhe</source>
+        <target state="final">Höhe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.image.width" datatype="html">
+        <source>Breite</source>
+        <target state="final">Breite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.shortDescription" datatype="html">
+        <source>Kurzbeschreibung</source>
+        <target state="final">Kurzbeschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.identifier.description" datatype="html">
+        <source>Eindeutiger Bezeichner dieser Ressource</source>
+        <target state="final">Eindeutiger Bezeichner dieser Ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="final">Bezeichner</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.depicts" datatype="html">
+        <source>Zeigt</source>
+        <target state="final">Zeigt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isDepictedIn" datatype="html">
+        <source>Wird gezeigt in</source>
+        <target state="final">Wird gezeigt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isAfter" datatype="html">
+        <source>Zeitlich nach</source>
+        <target state="final">Zeitlich nach</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isBefore" datatype="html">
+        <source>Zeitlich vor</source>
+        <target state="final">Zeitlich vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isEquivalentTo" datatype="html">
+        <source>Gleich wie</source>
+        <target state="final">Gleich wie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
+        <source>Zeitgleich mit</source>
+        <target state="final">Zeitgleich mit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isAbove" datatype="html">
+        <source>Liegt über</source>
+        <target state="final">Liegt über</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isBelow" datatype="html">
+        <source>Liegt unter</source>
+        <target state="final">Liegt unter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.cuts" datatype="html">
+        <source>Schneidet</source>
+        <target state="final">Schneidet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isCutBy" datatype="html">
+        <source>Wird geschnitten von</source>
+        <target state="final">Wird geschnitten von</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.borders" datatype="html">
+        <source>Grenzt an</source>
+        <target state="final">Grenzt an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isRecordedIn" datatype="html">
+        <source>Aufgenommen in Maßnahme</source>
+        <target state="final">Aufgenommen in Maßnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.includes" datatype="html">
+        <source>Beinhaltet</source>
+        <target state="final">Beinhaltet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.liesWithin" datatype="html">
+        <source>Liegt in</source>
+        <target state="final">Liegt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.bears" datatype="html">
+        <source>Trägt</source>
+        <target state="final">Trägt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
+        <source>Ist aufgebracht auf</source>
+        <target state="final">Ist aufgebracht auf</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentPicker.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/document-picker.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/document-picker.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="widgets.fieldsView.period" datatype="html">
         <source>Grobdatierung</source>
         <target state="final">Grobdatierung</target>
@@ -4396,287 +4871,23 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.defaultFields.type" datatype="html">
-        <source>Typ</source>
-        <target state="final">Typ</target>
+      <trans-unit id="searchConstraints.dropdownRange.from" datatype="html">
+        <source> (von)</source>
+        <target state="final"> (von)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/configuration/config-loader.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.image.height" datatype="html">
-        <source>Höhe</source>
-        <target state="final">Höhe</target>
+      <trans-unit id="searchConstraints.dropdownRange.to" datatype="html">
+        <source> (bis)</source>
+        <target state="final"> (bis)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.image.width" datatype="html">
-        <source>Breite</source>
-        <target state="final">Breite</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.project" datatype="html">
-        <source>Projekt</source>
-        <target state="final">Projekt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.project.crs" datatype="html">
-        <source>Koordinatenbezugssystem</source>
-        <target state="final">Koordinatenbezugssystem</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.shortDescription" datatype="html">
-        <source>Kurzbeschreibung</source>
-        <target state="final">Kurzbeschreibung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.identifier.description" datatype="html">
-        <source>Eindeutiger Bezeichner dieser Ressource</source>
-        <target state="final">Eindeutiger Bezeichner dieser Ressource</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.identifier" datatype="html">
-        <source>Bezeichner</source>
-        <target state="final">Bezeichner</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.depicts" datatype="html">
-        <source>Zeigt</source>
-        <target state="final">Zeigt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isDepictedIn" datatype="html">
-        <source>Wird gezeigt in</source>
-        <target state="final">Wird gezeigt in</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isAfter" datatype="html">
-        <source>Zeitlich nach</source>
-        <target state="final">Zeitlich nach</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isBefore" datatype="html">
-        <source>Zeitlich vor</source>
-        <target state="final">Zeitlich vor</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
-        <source>Zeitgleich mit</source>
-        <target state="final">Zeitgleich mit</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isAbove" datatype="html">
-        <source>Liegt über</source>
-        <target state="final">Liegt über</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isBelow" datatype="html">
-        <source>Liegt unter</source>
-        <target state="final">Liegt unter</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.cuts" datatype="html">
-        <source>Schneidet</source>
-        <target state="final">Schneidet</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isCutBy" datatype="html">
-        <source>Wird geschnitten von</source>
-        <target state="final">Wird geschnitten von</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.borders" datatype="html">
-        <source>Grenzt an</source>
-        <target state="final">Grenzt an</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isRecordedIn" datatype="html">
-        <source>Aufgenommen in Maßnahme</source>
-        <target state="final">Aufgenommen in Maßnahme</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.includes" datatype="html">
-        <source>Beinhaltet</source>
-        <target state="final">Beinhaltet</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.liesWithin" datatype="html">
-        <source>Liegt in</source>
-        <target state="final">Liegt in</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.bears" datatype="html">
-        <source>Trägt</source>
-        <target state="final">Trägt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
-        <source>Ist aufgebracht auf</source>
-        <target state="final">Ist aufgebracht auf</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

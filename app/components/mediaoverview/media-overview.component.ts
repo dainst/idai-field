@@ -1,18 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
+import {Document, Messages} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {MediaOverviewFacade} from './view/media-overview-facade';
 import {RoutingService} from '../routing-service';
 import {UploadResult} from '../upload/upload-result';
 import {M} from '../m';
-import {MediaFilterOption} from './view/media-state';
 import {TabManager} from '../tab-manager';
 import {ImageViewComponent} from '../imageview/image-view.component';
 import {MenuService} from '../../menu-service';
 import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
-import {TypeUtility} from '../../core/model/type-utility';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({
@@ -30,7 +30,7 @@ import {TypeUtility} from '../../core/model/type-utility';
  */
 export class MediaOverviewComponent implements OnInit {
 
-    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
     public filterOptions: Array<IdaiType> = [];
     public modalOpened: boolean = false;
@@ -42,8 +42,7 @@ export class MediaOverviewComponent implements OnInit {
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
-                private modalService: NgbModal,
-                private typeUtility: TypeUtility) {
+                private modalService: NgbModal) {
 
         this.mediaOverviewFacade.initialize();
     }
@@ -74,8 +73,6 @@ export class MediaOverviewComponent implements OnInit {
 
     public setTypeFilters = (types: string[]) => this.mediaOverviewFacade.setTypeFilters(types);
 
-    public getLinkFilter = () => this.mediaOverviewFacade.getLinkFilter();
-
     public setQueryString = (q: string) => this.mediaOverviewFacade.setQueryString(q);
 
     public onResize = () => this.imageGrid.calcGrid();
@@ -89,8 +86,6 @@ export class MediaOverviewComponent implements OnInit {
     public canTurnPage = () => this.mediaOverviewFacade.canTurnPage();
 
     public canTurnPageBack = () => this.mediaOverviewFacade.canTurnPageBack();
-
-    public setLinkFilter = (filterOption: MediaFilterOption) => this.mediaOverviewFacade.setLinkFilter(filterOption);
 
     public nrOfSelectedMediaResources = () => this.getSelected().length;
 

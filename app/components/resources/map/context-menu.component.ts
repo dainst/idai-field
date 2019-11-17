@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
 import {SidebarListComponent} from './list/sidebar-list.component';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
@@ -28,8 +29,9 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(
         public sidebarListComponent: SidebarListComponent,
-        public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade) {}
+        private resourcesComponent: ResourcesComponent,
+        private viewFacade: ViewFacade,
+        private typeUtility: TypeUtility) {}
 
 
     ngOnChanges() {
@@ -47,6 +49,22 @@ export class ContextMenuComponent implements OnChanges {
     public getBottomPosition(yPosition: number): number {
 
         return window.innerHeight - yPosition;
+    }
+
+
+    public isCreateGeometryOptionAvailable(): boolean {
+
+        return this.sidebarListComponent.contextMenuDocument !== undefined
+            && this.typeUtility.isGeometryType(this.sidebarListComponent.contextMenuDocument.resource.type)
+            && !this.sidebarListComponent.contextMenuDocument.resource.geometry;
+    }
+
+
+    public isEditGeometryOptionAvailable(): boolean {
+
+        return this.sidebarListComponent.contextMenuDocument !== undefined
+            && this.typeUtility.isGeometryType(this.sidebarListComponent.contextMenuDocument.resource.type)
+            && this.sidebarListComponent.contextMenuDocument.resource.geometry !== undefined;
     }
 
 

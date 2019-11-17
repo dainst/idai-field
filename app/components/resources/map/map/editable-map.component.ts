@@ -1,7 +1,10 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {FieldDocument, FieldGeometry, FieldPolyline, FieldMarker, FieldPolygon} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
+import {FieldPolygon} from './field-polygon';
+import {FieldPolyline} from './field-polyline';
+import {FieldMarker} from './field-marker';
 
 const remote = require('electron').remote;
 
@@ -244,74 +247,57 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.selectedDocument) return;
 
-        Object.values(this.polygons || []).forEach(
-            this.forUnselected(this.applyStyle({ opacity: 0.25, fillOpacity: 0.1 })));
+        this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
+            EditableMapComponent.addClass(polygon, 'faded-out');
+        });
 
-        Object.values(this.polylines || []).forEach(
-            this.forUnselected(this.applyStyle({ opacity: 0.25 })));
+        this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
+            EditableMapComponent.addClass(polyline, 'faded-out');
+        });
 
-        if (this.markers) {
-            this.forUnselected(this.applyOpacity(0.5))(
-                Object.values(this.markers)
-            );
-        }
+        this.callForUnselected(this.markers, (marker: FieldMarker) => {
+            marker.setOpacity(0.5);
+            EditableMapComponent.removeClass(marker, 'leaflet-interactive');
+        });
     }
 
 
     private fadeInMapElements() {
 
-        Object.values(this.polygons || []).forEach(
-            this.forAll(this.applyStyle({ opacity: 0.5, fillOpacity: 0.2 })));
+        this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
+            EditableMapComponent.removeClass(polygon, 'faded-out');
+        });
 
-        Object.values(this.polylines || []).forEach(
-            this.forAll(this.applyStyle({ opacity: 0.5 })));
+        this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
+            EditableMapComponent.removeClass(polyline, 'faded-out');
+        });
 
-        if (this.markers) {
-            this.forAll(this.applyOpacity(1))(
-                Object.values(this.markers)
-            );
-        }
+        this.callForUnselected(this.markers, (marker: FieldMarker) => {
+            marker.setOpacity(1);
+            EditableMapComponent.addClass(marker, 'leaflet-interactive');
+        });
     }
 
 
-    private applyStyle = (style: { opacity: number, fillOpacity?: number }) =>
-        (geometry: FieldPolygon|FieldPolyline) => geometry.setStyle(style);
+    private callForUnselected(geometryMap: { [resourceId: string]: Array<L.Layer> },
+                               funct: (geometry: L.Layer) => void) {
 
-
-    private applyOpacity = (style: number) =>
-        (markers: Array<FieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
-
-
-    private forAll<T>(f: (arg: T) => void) {
-
-        return this.forFiltered(f, () => true);
+        Object.values(geometryMap || {}).forEach(
+            (geometries: Array<L.Layer>) => {
+                geometries.filter((geometry: any) => this.isUnselected(geometry))
+                    .forEach((geometry: any) => funct(geometry));
+            }
+        );
     }
 
 
-    private notSelected = (element: any) =>
-        element.document && element.document.resource.id != this.selectedDocument.resource.id;
+    private isUnselected(element: FieldPolygon|FieldPolyline|FieldMarker) {
 
-
-    /**
-     * Returns a function that takes mapElements
-     * and applies f on those which are unselected.
-     */
-    private forUnselected<T>(f: (arg: T) => void) {
-
-        return this.forFiltered(f, this.notSelected);
+        return element.document && element.document.resource.id !== this.selectedDocument.resource.id;
     }
 
 
-    private forFiltered<T>(f: (arg: T) => void, filter: (arg: T) => boolean) {
-
-        return (mapElements: Array<T>) =>
-            mapElements
-                .filter(filter)
-                .forEach((item: any) => f(item));
-    }
-
-
-    protected async updateMap(changes: SimpleChanges): Promise<any> {
+    protected async updateMap(changes: SimpleChanges): Promise<void> {
 
         if (!this.update) return Promise.resolve();
 
@@ -369,20 +355,15 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected select(document: FieldDocument): boolean {
 
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(document);
-            return true;
-        } else {
-            return false;
-        }
+        return this.isEditing
+            ? false
+            : super.select(document);
     }
 
 
     protected deselect() {
 
-        if (!this.isEditing) {
-            this.onSelectDocument.emit(undefined);
-        }
+        if (!this.isEditing) super.deselect();
     }
 
 
@@ -639,5 +620,23 @@ export class EditableMapComponent extends LayerMapComponent {
 
         return document !== undefined && document.resource.geometry !== undefined
             && document.resource.geometry.coordinates !== undefined;
+    }
+
+
+    private static addClass(element: any, classToAdd: string) {
+
+        this.getClassList(element).add(classToAdd);
+    }
+
+
+    private static removeClass(element: any, classToRemove: string) {
+
+        this.getClassList(element).remove(classToRemove);
+    }
+
+
+    private static getClassList(element: any): DOMTokenList {
+
+        return element._path ? element._path.classList : element._icon.classList;
     }
 }

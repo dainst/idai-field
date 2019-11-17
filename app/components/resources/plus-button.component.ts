@@ -1,9 +1,11 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, IdaiType, ProjectConfiguration, FieldDocument, Messages} from 'idai-components-2';
+import {Relations, FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -22,8 +24,17 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
-    @Input() isRecordedIn: FieldDocument | undefined; // undefined when in resources overview
-    @Input() liesWithin: FieldDocument;
+
+    /**
+     * undefined when in resources overview
+     */
+    @Input() isRecordedIn: FieldDocument | undefined;
+    /**
+     * undefined when current level is operation
+     */
+    @Input() liesWithin: FieldDocument | undefined;
+
+
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
@@ -31,7 +42,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover', {static: false}) private popover: any;
 
     public selectedType: string|undefined;
     public typesTreeList: Array<IdaiType>;
@@ -192,9 +203,9 @@ export class PlusButtonComponent implements OnChanges {
             return false;
         }
 
-        return this.liesWithin
-                ? projectConfiguration.isAllowedRelationDomainType(
+        if (!this.liesWithin) return !type.mustLieWithin;
+
+        return projectConfiguration.isAllowedRelationDomainType(
                     type.name, this.liesWithin.resource.type, 'liesWithin')
-                : true;
     }
 }

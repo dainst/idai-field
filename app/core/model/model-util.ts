@@ -1,6 +1,6 @@
-import {Document, FieldDefinition, NewResource, Resource} from 'idai-components-2';
-import {includedIn, is, isNot, nthOr, on} from 'tsfun';
-import {INPUT_TYPE} from '../../c';
+import {Document} from 'idai-components-2';
+import {get} from 'tsfun';
+import {ResourceId} from '../../c';
 
 /**
  * @author: Thomas Kleinke
@@ -8,7 +8,6 @@ import {INPUT_TYPE} from '../../c';
 export module ModelUtil {
 
     export type Label = string;
-    export type ResourceId = string;
 
 
     export function getDocumentLabel(document: Document): Label {
@@ -24,7 +23,7 @@ export module ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return nthOr(index, undefined as any)(targetIds);
+        return get(index)(targetIds) as (ResourceId|undefined);
     }
 }
 

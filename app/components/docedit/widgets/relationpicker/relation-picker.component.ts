@@ -180,7 +180,7 @@ export class RelationPickerComponent implements OnChanges {
                 , 100);
                 // This is to compensate for
                 // a slight delay where idSearchString takes some time to get updated. The behaviour
-                // was discovered on an ocasion where the search string got pasted into the input field.
+                // was discovered on an occasion where the search string got pasted into the input field.
                 // If one does the keyup quickly after pasting, it wasn't working. If One leaves the command
                 // key somewhat later, it worked.
                 break;

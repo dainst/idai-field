@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {unique} from 'tsfun';
-import {Messages, ProjectConfiguration, Document, AppConfigurator} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
-import {Converter} from '../imagestore/converter';
+import {ImageConverter} from '../imagestore/image-converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
+import {Name} from '../../c';
+import {AppConfigurator} from '../model/app-configurator';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 const {remote, ipcRenderer} = require('electron');
 
@@ -33,14 +36,13 @@ export class SettingsService {
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
-    private projectDocument: Document;
 
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
-                private converter: Converter,
+                private imageConverter: ImageConverter,
                 private synchronizationStatus: SynchronizationStatus) {
     }
 
@@ -57,7 +59,6 @@ export class SettingsService {
 
     public getDbs = () => this.settings.dbs;
 
-    public getProjectDocument = () => this.projectDocument;
 
     public getSelectedProject(): string {
 
@@ -69,43 +70,17 @@ export class SettingsService {
     public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
 
 
-    public async loadProjectDocument(isBoot = false): Promise<void> {
-
-        delete this.projectDocument; // making sure we start fresh
-
-        try { // new
-            this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
-        } catch (_) {
-            console.warn('Didn\'t find new style project document, try old method');
-        }
-
-        if (!this.projectDocument) {
-            try { // old
-                this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
-            } catch (_) {
-                if (isBoot) {
-                    console.warn('Didn\'t find old style project document either, creating new one');
-                    await this.pouchdbManager.getDbProxy().put(
-                        SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
-                    );
-                    this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
-                }
-            }
-        }
-    }
-
-
     public async bootProjectDb(settings: Settings): Promise<void> {
 
         await this.updateSettings(settings);
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
-            new FieldSampleDataLoader(this.converter, this.settings.imagestorePath,
+            new FieldSampleDataLoader(this.imageConverter, this.settings.imagestorePath,
                 this.settings.model3DStorePath, this.settings.locale)
         );
 
-        if (this.settings.isSyncActive) await this.startSync();
-        await this.loadProjectDocument(true);
+        if (this.settings.isSyncActive) await this.startSync_();
+        await this.createProjectDocumentIfMissing();
     }
 
 
@@ -118,6 +93,14 @@ export class SettingsService {
             customProjectName = 'WES';
         }
         if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
+        if (this.getSelectedProject().startsWith('campidoglio')) customProjectName = 'Campidoglio';
+        if (this.getSelectedProject().startsWith('castiglione')) customProjectName = 'Castiglione';
+        if (this.getSelectedProject().startsWith('kephissostal')) customProjectName = 'Kephissostal';
+        if (this.getSelectedProject().startsWith('monte-turcisi')) customProjectName = 'MonTur';
+        if (this.getSelectedProject().startsWith('al-ula')) customProjectName = 'AlUla';
+        if (this.getSelectedProject().startsWith('kalapodi')) customProjectName = 'Kalapodi';
+        if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
+
 
         try {
             return await this.appConfigurator.go(
@@ -134,40 +117,41 @@ export class SettingsService {
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
+            await this.selectProject('test');
             throw 'Could not boot project';
         }
     }
 
 
-    public async addProject(name: string) {
+    public async addProject(project: Name) {
 
-        this.settings.dbs = unique(this.settings.dbs.concat([name]));
+        this.settings.dbs = unique(this.settings.dbs.concat([project]));
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async selectProject(name: string) {
+    public async selectProject(project: Name) {
 
-        this.settings.dbs = unique([name].concat(this.settings.dbs));
+        this.settings.dbs = unique([project].concat(this.settings.dbs));
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async deleteProject(name: string) {
+    public async deleteProject(project: Name) {
 
-        await this.pouchdbManager.destroyDb(name);
-        this.settings.dbs.splice(this.settings.dbs.indexOf(name), 1);
+        await this.pouchdbManager.destroyDb(project);
+        this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
         await this.settingsSerializer.store(this.settings);
     }
 
 
-    public async createProject(name: string, destroyBeforeCreate: boolean) {
+    public async createProject(project: Name, destroyBeforeCreate: boolean) {
 
-        await this.selectProject(name);
+        await this.selectProject(project);
 
         await this.pouchdbManager.createDb(
-            name,
-            SettingsService.createProjectDocument(name, this.getUsername()),
+            project,
+            SettingsService.createProjectDocument(project, this.getUsername()),
             destroyBeforeCreate
         );
     }
@@ -202,31 +186,7 @@ export class SettingsService {
     }
 
 
-    public startSync(): Promise<any> {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-
-        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
-        if (!this.currentSyncUrl) return Promise.resolve();
-        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
-
-        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
-            .then(syncState => {
-
-            // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
-
-            syncState.onError.subscribe(() => {
-                clearTimeout(msg); // stop 'connected' msg if error
-                syncState.cancel();
-                this.synchronizationStatus.setConnected(false);
-                this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
-            });
-        });
-    }
-
-
-    public restartSync() {
+    public startSync() {
 
         this.stopSync();
 
@@ -237,7 +197,7 @@ export class SettingsService {
 
         return new Promise<any>(resolve => {
                 setTimeout(() => {
-                    this.startSync().then(() => resolve());
+                    this.startSync_().then(() => resolve());
                 }, 1000);
             });
     }
@@ -248,6 +208,43 @@ export class SettingsService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.synchronizationStatus.setConnected(false);
+    }
+
+
+    private startSync_(): Promise<any> {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+
+        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
+        if (!this.currentSyncUrl) return Promise.resolve();
+        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
+
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
+            .then(syncState => {
+
+                // avoid issuing 'connected' too early
+                const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
+
+                syncState.onError.subscribe(() => {
+                    clearTimeout(msg); // stop 'connected' msg if error
+                    syncState.cancel();
+                    this.synchronizationStatus.setConnected(false);
+                    this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
+                });
+            });
+    }
+
+
+    private async createProjectDocumentIfMissing() {
+
+        try {
+            await this.pouchdbManager.getDbProxy().get('project');
+        } catch (_) {
+            console.warn('Didn\'t find project document, creating new one');
+            await this.pouchdbManager.getDbProxy().put(
+                SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
+            );
+        }
     }
 
 

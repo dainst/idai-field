@@ -1,6 +1,28 @@
 <div class="resources-nav row bg-light">
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex">
         <navigation></navigation>
+        <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
+             [class.document-limit-exceeded]="isDocumentLimitExceeded()">
+            <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
+                  i18n="@@resources.searchResultsInfo.resourcesFound.single">
+                Eine Ressource gefunden
+            </span>
+            <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
+                  i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
+                {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
+            </span>
+            <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info"
+                 ngbTooltip="Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
+                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen."
+                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitExceeded.tooltip"
+                 placement="bottom"
+                 container="body">
+                <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
+                    {{viewFacade.getDocuments().length}} angezeigt
+                </span>
+                <span class="mdi mdi-information-outline"></span>
+            </div>
+        </div>
     </div>
 
     <div class="col-md-6 mr-md-auto">

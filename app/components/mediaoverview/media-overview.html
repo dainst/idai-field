@@ -1,17 +1,7 @@
 <div class="media-overview row">
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
         <div class="row bg-light media-overview-nav">
-            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-3 media-overview-nav-content">
-                <select id="link-filter-select" class="form-control"
-                        [ngModel]="getLinkFilter()"
-                        (ngModelChange)="setLinkFilter($event)">
-                    <option value="ALL"><em i18n="@@mediaOverview.filter.all">Alle Medienressourcen</em></option>
-                    <option value="UNLINKED"><em i18n="@@mediaOverview.filter.unlinked">Unverknüpfte Medienressourcen</em></option>
-                    <option value="LINKED"><em i18n="@@mediaOverview.filter.linked">Verknüpfte Medienressourcen</em></option>
-                </select>
-            </div>
-
-            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-5 media-overview-nav-content">
+            <div *ngIf="!hasSelectedMediaResources()" class="col-sm-8 media-overview-nav-content">
                 <media-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
                                            [types]="getQuery().types"

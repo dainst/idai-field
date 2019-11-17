@@ -1,6 +1,7 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
 import {clone} from '../../../../app/core/util/object-util';
+import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
 /**
  * @author Daniel de Oliveira
@@ -32,6 +33,7 @@ describe('PersistenceManager', () => {
 
     let mockDatastore;
     let mockTypeUtility;
+    let mockIndexFacade;
     let persistenceManager;
     const id = 'abc';
 
@@ -58,12 +60,15 @@ describe('PersistenceManager', () => {
 
         spyOn(console, 'warn');
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
+        mockDatastore = jasmine.createSpyObj('mockDatastore',
+            ['get', 'getMultiple', 'find', 'create', 'update', 'refresh', 'remove']);
         mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
         mockTypeUtility.isSubtype.and.returnValue(true);
+        mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['getDescendantIds']);
 
         persistenceManager = new PersistenceManager(
-            mockDatastore, projectConfiguration, mockTypeUtility);
+            mockDatastore, projectConfiguration, mockTypeUtility, mockIndexFacade
+        );
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
@@ -175,7 +180,7 @@ describe('PersistenceManager', () => {
 
         mockDatastore.get.and.returnValues(
             Promise.resolve(doc), // for being related to relatedDoc
-            Promise.resolve(anotherRelatedDoc), // for beeing related to relatedDoc
+            Promise.resolve(anotherRelatedDoc), // for being related to relatedDoc
             Promise.reject('not exists') // for relatedDoc already deleted, but still linked from anotherRelatedDoc
         );
 
@@ -195,13 +200,10 @@ describe('PersistenceManager', () => {
     it('resource move: should correct lies within relations when resource moved to other operation', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['t2'];
-        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1']};
-        anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1']};
+        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
+        anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1'] };
 
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({documents:[relatedDoc]}),
-            Promise.resolve({documents:[anotherRelatedDoc]}),
-            Promise.resolve({documents:[]}));
+        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
 
         let checked1 = false;
         let checked2 = false;
@@ -231,13 +233,10 @@ describe('PersistenceManager', () => {
     it('resource move: only (!) correct lies within relations when resource moved to other (!) operation', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['t1'];
-        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1']};
-        anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1']};
+        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
+        anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1'] };
 
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({documents:[relatedDoc]}),
-            Promise.resolve({documents:[anotherRelatedDoc]}),
-            Promise.resolve({documents:[]}));
+        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.persist(doc, 'u');
@@ -250,13 +249,10 @@ describe('PersistenceManager', () => {
     it('resource move: filter docs without isRecordedIn', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['t1'];
-        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t2']};
-        anotherRelatedDoc.resource.relations = { liesWithin: ['2']};
+        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t2'] };
+        anotherRelatedDoc.resource.relations = { liesWithin: ['2'] };
 
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({documents:[relatedDoc]}),
-            Promise.resolve({documents:[anotherRelatedDoc]}),
-            Promise.resolve({documents:[]}));
+        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.persist(doc, 'u');

@@ -1,11 +1,12 @@
 import {isnt, on} from 'tsfun';
-import {Document, FindResult, NewDocument, ProjectConfiguration, Query} from 'idai-components-2';
+import {Document, FindResult, NewDocument, Query} from 'idai-components-2';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
 import {Validations} from './validations';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {HIERARCHICAL_RELATIONS} from './relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
-
-const RECORDED_IN = 'isRecordedIn';
 
 /**
  * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database

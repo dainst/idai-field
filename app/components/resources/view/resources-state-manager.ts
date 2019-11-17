@@ -76,7 +76,7 @@ export class ResourcesStateManager {
 
         if (viewName !== 'project') {
             if (!this.resourcesState.operationViewStates[viewName]) {
-                this.resourcesState.operationViewStates[viewName] = ViewState.default();
+                this.resourcesState.operationViewStates[viewName] = ViewState.default_();
             }
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
@@ -141,6 +141,13 @@ export class ResourcesStateManager {
     public setCustomConstraints(constraints: { [name: string]: string}) {
 
         ResourcesState.setCustomConstraints(this.resourcesState, constraints);
+    }
+
+
+    public toggleExpandAllGroups() {
+
+        ResourcesState.toggleExpandAllGroups(this.resourcesState);
+        this.serialize();
     }
 
 
@@ -308,7 +315,12 @@ export class ResourcesStateManager {
 
     private static createObjectToSerializeForViewState(viewState: ViewState): any {
 
-        const objectToSerialize: any = { mode: viewState.mode };
+        const objectToSerialize: any =
+            {
+                mode: viewState.mode,
+                expandAllGroups: viewState.expandAllGroups
+            };
+
         if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
 
         return objectToSerialize;

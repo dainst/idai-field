@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {FieldDocument, IdaiType, Messages, ProjectConfiguration} from 'idai-components-2';
+import {FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -9,6 +9,8 @@ import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
+import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class RowComponent implements AfterViewInit {
     @Input() document: FieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
 
-    @ViewChild('identifierInput') identifierInput: ElementRef;
+    @ViewChild('identifierInput', {static: false}) identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 

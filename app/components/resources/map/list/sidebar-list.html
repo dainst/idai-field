@@ -11,8 +11,21 @@
 
     <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
         <div class="sidebar-popover-header">
+            <div class="btn btn-light left"
+                 [class.active]="getExpandAllGroups()"
+                 (click)="tooltip.close(); toggleExpandAllGroups()"
+                 ngbTooltip="Alle Gruppen ausklappen"
+                 i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                 #tooltip="ngbTooltip"
+                 placement="right"
+                 container="body"
+                 triggers="manual"
+                 (mouseover)="tooltip.open()"
+                 (mouseleave)="tooltip.close()">
+                <span class="mdi mdi-unfold-more-horizontal"></span>
+            </div>
             <div>{{viewFacade.getSelectedDocument().resource.identifier}}</div>
-            <div class="btn btn-light" (click)="closePopover()">
+            <div class="btn btn-light right" (click)="closePopover()">
                 <span class="mdi mdi-close"></span>
             </div>
         </div>
@@ -22,14 +35,17 @@
         </thumbnail>
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
-            <fields-view [resource]="viewFacade.getSelectedDocument().resource"
-                         (onJumpToResource)="jumpToResource($event)"></fields-view>
+            <fields-view
+                    [expandAllGroups]="getExpandAllGroups()"
+                    [resource]="viewFacade.getSelectedDocument().resource"
+                    (onJumpToResource)="jumpToResource($event)"
+                    (onSectionToggled)="disableExpandAllGroups()"></fields-view>
         </div>
     </div>
 </div>
 
 <ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
-    (scroll)="closeContextMenu()">
+    tabindex="0" (scroll)="closeContextMenu()" (keydown)="onKeyDown($event)">
     <li *ngFor="let document of viewFacade.getDocuments()"
         class="resources-listing-item resources-listing-item-wide"
         (mouseover)="highlightDocument(document)"
@@ -47,13 +63,6 @@
                 (click)="select(document)"
                 (dblclick)="editDocument(document)"
                 [document]="document"></document-teaser>
-    </li>
-
-    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info" i18n="@@resources.sidebarList.resourceLimitInfo">
-        Es werden die ersten {{viewFacade.getDocuments().length}} von {{viewFacade.getTotalDocumentCount()}}
-        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
-        um auf die übrigen Ressourcen zuzugreifen.
-        <br><br><br>
     </li>
 </ul>
 

@@ -23,7 +23,7 @@ import {clone} from '../../../core/util/object-util';
  */
 export class MediaResourcePickerComponent implements OnInit {
 
-    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
 
     public documents: Array<IdaiFieldMediaDocument>;
     public document: FieldDocument;

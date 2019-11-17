@@ -1,0 +1,146 @@
+{
+  "types":{
+    "Operation":{
+      "fields":{
+        "fixMe": {
+          "label": "Korrigiere mich!"
+        }
+      }
+    },
+    "Find" :{
+      "fields": {
+        "workflow": {
+          "label": "Workflow",
+          "description": "Was wurde schon getan?"
+        },
+        "measuringPointID": {
+          "label": "MesspunktID vom Tachy",
+          "description": "MesspunktID oder 'nicht gemessen' oder 'unklar'"
+        },
+        "measuringPointOrigin": {
+          "label": "measuringPointOrigin",
+          "description": "Stammt der Messpunkt aus idaifield1 oder aus der Fotoliste"
+        },
+        "if1MasseSonstige": {
+          "label": "if1MasseSonstige",
+          "description": "Sonstige Maße aus idaifield1"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Sample" :{
+      "fields": {
+        "descriptionSample": {
+          "label": "descriptionSample"
+        },
+        "researchQuestion": {
+          "label": "researchQuestion"
+        },
+        "analyzedBy": {
+          "label": "analyzedBy"
+        },
+        "labNumber": {
+          "label": "labNumber"
+        },
+        "sampleType": {
+          "label": "sampleType"
+        },
+        "sampleRelatedTo": {
+          "label": "sampleRelatedTo"
+        },
+        "comment": {
+          "label": "comment"
+        },
+        "sampleState": {
+          "label": "sampleState"
+        }
+      }
+    },
+    "Brick":{
+      "fields":{
+        "if1Verwendung": {
+          "label": "if1Verwendung"
+        }
+      }
+    },
+    "Pottery":{
+      "fields":{
+        "if1Klassifizierung": {
+          "label": "if1Klassifizierung"
+        }
+      }
+    },
+    "Metal":{
+      "fields":{
+        "if1Klassifizierung": {
+          "label": "if1Klassifizierung"
+        },
+        "objectTypeGeneral": {
+          "label": "objectTypeGeneral"
+        },
+        "objectTypeSpecific": {
+          "label": "objectTypeSpecific"
+        }
+      }
+    },
+    "Feature":{
+      "label": "Befund",
+      "fields":{
+        "if1AutoKlassifizierungOhneBefundart": {
+          "label": "if1AutoKlassifizierungOhneBefundart"
+        },
+        "if1SchichtKlassifizSonst": {
+          "label": "if1SchichtKlassifizSonst"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!"
+        }
+      }
+    },
+    "Planum":{
+      "fields":{
+        "objectOrigin": {
+          "label": "objectOrigin"
+        },
+        "if1TiefeRelativ": {
+          "label": "if1TiefeRelativ"
+        }
+      }
+    },
+    "Layer":{
+      "fields":{
+        "if1Farbe2": {
+          "label": "if1Farbe2"
+        },
+        "if1SchichtUnterscheidungsKrit": {
+          "label": "if1SchichtUnterscheidungsKrit"
+        }
+      }
+    },
+    "Image":{
+      "fields":{
+        "importTag": {
+          "label": "importTag"
+        },
+        "fixMe": {
+          "label": "Korrigiere mich!"
+        }
+      }
+    },
+    "Photo" :{
+      "fields": {
+        "imageSubject": {
+          "label": "Fotomotiv",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall wählen Sie 'unklar'."
+        },
+        "originalType": {
+          "label": "originalType",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall lassen Sie das Feld leer."
+        }
+      }
+    }
+  }
+}

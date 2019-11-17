@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
@@ -10,6 +10,7 @@ import {RoutingService} from '../routing-service';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {M} from '../m';
 import {MenuService} from '../../menu-service';
+import {MediaState} from '../mediaoverview/view/media-state';
 
 
 @Component({
@@ -23,16 +24,18 @@ import {MenuService} from '../../menu-service';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ImageViewComponent implements OnInit {
+export class ImageViewComponent implements OnInit, DoCheck {
 
-    @ViewChild('thumbnailSliderContainer') thumbnailSliderContainer: ElementRef;
-    @ViewChild('imageInfo') imageInfo: ElementRef;
+    @ViewChild('thumbnailSliderContainer', {static: false}) thumbnailSliderContainer: ElementRef;
+    @ViewChild('imageInfo', {static: false}) imageInfo: ElementRef;
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
-    public activeTab: string;
     public openSection: string|undefined = 'stem';
+
+    public thumbnailSliderScrollbarVisible: boolean = false;
+    public imageInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
 
@@ -44,13 +47,29 @@ export class ImageViewComponent implements OnInit {
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private routingService: RoutingService
+        private routingService: RoutingService,
+        private mediaState: MediaState
     ) {}
+
+
+    public toggleExpandAllGroups = () => this.mediaState.setExpandAllGroups(
+        !this.mediaState.getExpandAllGroups()
+    );
+
+
+    public getExpandAllGroups = () => this.mediaState.getExpandAllGroups();
 
 
     ngOnInit() {
 
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges();
+    }
+
+
+    ngDoCheck() {
+
+        this.thumbnailSliderScrollbarVisible = this.isThumbnailSliderScrollbarVisible();
+        this.imageInfoScrollbarVisible = this.isImageInfoScrollbarVisible();
     }
 
 
@@ -80,7 +99,8 @@ export class ImageViewComponent implements OnInit {
             }
         }
 
-        this.scrollToThumbnail(this.selectedImage);
+        this.showErrorMessagesForMissingImages();
+        ImageViewComponent.scrollToThumbnail(this.selectedImage);
     }
 
 
@@ -89,7 +109,14 @@ export class ImageViewComponent implements OnInit {
         if (!image.imgSrc) await this.addOriginal(image);
 
         this.selectedImage = image;
-        if (scroll) this.scrollToThumbnail(image);
+        if (scroll) ImageViewComponent.scrollToThumbnail(image);
+    }
+
+
+    public setOpenSection(section: string) {
+
+        this.openSection = section;
+        if (this.getExpandAllGroups()) this.toggleExpandAllGroups();
     }
 
 
@@ -133,7 +160,19 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isThumbnailSliderScrollbarVisible(): boolean {
+    public containsOriginal(image: ImageContainer): boolean {
+
+        return image.imgSrc !== undefined && image.imgSrc !== '';
+    }
+
+
+    public isMissingImage(image: ImageContainer): boolean {
+
+        return image.thumbSrc === BlobMaker.blackImg;
+    }
+
+
+    private isThumbnailSliderScrollbarVisible(): boolean {
 
         return this.thumbnailSliderContainer
             && this.thumbnailSliderContainer.nativeElement.scrollWidth
@@ -141,17 +180,11 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public isImageInfoScrollbarVisible(): boolean {
+    private isImageInfoScrollbarVisible(): boolean {
 
         return this.imageInfo
             && this.imageInfo.nativeElement.scrollHeight
             > this.imageInfo.nativeElement.clientHeight;
-    }
-
-
-    public containsOriginal(image: ImageContainer): boolean {
-
-        return image.imgSrc !== undefined && image.imgSrc !== '';
     }
 
 
@@ -163,7 +196,6 @@ export class ImageViewComponent implements OnInit {
             image.thumbSrc = await this.imagestore.read(document.resource.id, false, true);
         } catch (e) {
             image.thumbSrc = BlobMaker.blackImg;
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
 
         return image;
@@ -180,7 +212,6 @@ export class ImageViewComponent implements OnInit {
             );
         } catch (e) {
             image.imgSrc = BlobMaker.blackImg;
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
         }
     }
 
@@ -211,7 +242,20 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    private scrollToThumbnail(image: ImageContainer) {
+    private showErrorMessagesForMissingImages() {
+
+        const missingImagesCount: number
+            = this.images.filter(image => image.thumbSrc === BlobMaker.blackImg).length;
+
+        if (missingImagesCount === 1) {
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+        } else if (missingImagesCount > 1) {
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
+        }
+    }
+
+
+    private static scrollToThumbnail(image: ImageContainer) {
 
         const element: HTMLElement|null = document.getElementById(
             'thumbnail-' + (image.document as ImageDocument).resource.id

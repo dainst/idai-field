@@ -2,7 +2,7 @@ import {FieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
-import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter';
 import {Static} from '../../../static';
 
 
@@ -65,8 +65,6 @@ describe('CachedDatastore', () => {
             return Promise.resolve(doc);
         });
         mockdb.create.and.callFake(function(dd) {
-            // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
-            dd.resource.id = '1';
             return Promise.resolve(dd);
         });
 
@@ -173,7 +171,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
+        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
              {
                 resource: {
@@ -192,11 +190,11 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find', async done => {
 
-        await ds.create({resource: { // trigger caching of document
+        await ds.create({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any, 'u');
-        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
+        } } as any, 'u');
+        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
@@ -207,17 +205,20 @@ describe('CachedDatastore', () => {
 
     it('should limit the number of documents returned on find', async done => {
 
-        await ds.create({resource: {
+        await ds.create({ resource: {
             id: '1',
             relations: {}
-        }} as any, 'u');
+        } } as any, 'u');
 
-        await ds.create({resource: {
+        await ds.create({ resource: {
             id: '2',
             relations: {}
-        }} as any, 'u');
+        } } as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
+        mockIndexFacade.perform.and.returnValues([
+            { id: '1', identifier: 'eins' },
+            { id: '2', identifier: 'zwei' }
+        ]);
 
         const { documents, totalCount } = await ds.find({ limit: 1 });
         expect(documents.length).toBe(1);
@@ -229,14 +230,15 @@ describe('CachedDatastore', () => {
 
     it('limit the number of documents and use an offset', async done => {
 
-        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
-        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
-        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
         mockIndexFacade.perform.and.returnValues([
-                {id: '1', identifier: 'eins'},
-                {id: '2', identifier: 'zwei'},
-                {id: '3', identifier: 'drei'}]);
+            { id: '1', identifier: 'eins' },
+            { id: '2', identifier: 'zwei' },
+            { id: '3', identifier: 'drei' }
+        ]);
 
         const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
         expect(documents.length).toBe(1);
@@ -251,14 +253,15 @@ describe('CachedDatastore', () => {
 
     it('offset excludes everything', async done => {
 
-        await ds.create({resource: {id: '1', relations: {}}} as any, 'u');
-        await ds.create({resource: {id: '2', relations: {}}} as any, 'u');
-        await ds.create({resource: {id: '3', relations: {}}} as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
         mockIndexFacade.perform.and.returnValues([
-            {id: '1', identifier: 'eins'},
-            {id: '2', identifier: 'zwei'},
-            {id: '3', identifier: 'drei'}]);
+            { id: '1', identifier: 'eins' },
+            { id: '2', identifier: 'zwei' },
+            { id: '3', identifier: 'drei' }
+        ]);
 
         const { documents, totalCount } = await ds.find({ offset: 3 });
         expect(documents.length).toBe(0);
@@ -267,9 +270,32 @@ describe('CachedDatastore', () => {
     });
 
 
+    it('call find with sort option exactMatchFirst', async done => {
+
+        await ds.create({ resource: { id: '1', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
+        await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
+
+        mockIndexFacade.perform.and.returnValues([
+            { id: '1', identifier: 'A-B-100' },
+            { id: '2', identifier: 'B-100' },
+            { id: '3', identifier: 'C-100' }
+        ]);
+
+        const { documents, totalCount } = await ds.find({ q: 'B-100', sort: 'exactMatchFirst' });
+        expect(documents.length).toBe(3);
+        expect(totalCount).toBe(3);
+
+        expect(documents[0].resource.id).toBe('2');
+        expect(documents[1].resource.id).toBe('1');
+        expect(documents[2].resource.id).toBe('3');
+        done();
+    });
+
+
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.perform.and.returnValues([{id: '1'}]);
+        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
@@ -281,7 +307,10 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.perform.and.returnValues([{id: '1', identifier: 'eins'}, {id: '2', identifier: 'zwei'}]);
+        mockIndexFacade.perform.and.returnValues([
+            { id: '1', identifier: 'eins' },
+            { id: '2', identifier: 'zwei' }
+        ]);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
             {
@@ -303,10 +332,10 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on update', async done => {
 
-        await ds.update({resource: { // trigger caching of document
+        await ds.update({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any, 'u');
+        } } as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         verifyIsFieldDocument(document);
         done();
@@ -315,16 +344,16 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on update with reassign', async done => {
 
-        await ds.update({resource: { // trigger caching of document
+        await ds.update({ resource: { // trigger caching of document
             id: '1',
             val: 'a',
             relations: {}
-        }} as any, 'u');
-        await ds.update({resource: { // trigger caching and reassigning of document
+        } } as any, 'u');
+        await ds.update({ resource: { // trigger caching and reassigning of document
             id: '1',
             val: 'b',
             relations: {}
-        }} as any, 'u');
+        } } as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
         verifyIsFieldDocument(document);
@@ -336,10 +365,10 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on create', async done => {
 
-        await ds.create({resource: { // trigger caching of document
+        await ds.create({ resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any, 'u');
+        } } as any, 'u');
 
         const document = await ds.get('1'); // fetch from cache
         verifyIsFieldDocument(document);
@@ -350,6 +379,12 @@ describe('CachedDatastore', () => {
     it('should return the cached instance on create', async done => {
 
         let doc1 = Static.doc('sd1', 'identifier1');
+
+        mockdb.create.and.callFake(function(dd) {
+            // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
+            dd.resource.id = '1';
+            return Promise.resolve(dd);
+        });
 
         await ds.create(doc1, 'u');
         try {
@@ -374,7 +409,7 @@ describe('CachedDatastore', () => {
         doc2.resource.id = '1';
         await ds.update(doc2, 'u');
 
-        const result = await ds.find({q: 'sd1'}); // mockdb returns other instance
+        const result = await ds.find({ q: 'sd1' }); // mockdb returns other instance
         expect((result.documents[0])['_rev']).toBe('2');
         expect((result.documents[0]).resource['identifier']).toBe('identifier_');
         doc2.resource['shortDescription'] = 's4';

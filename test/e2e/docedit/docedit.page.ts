@@ -158,6 +158,14 @@ export class DoceditPage {
     };
 
 
+    public static clickCheckbox(fieldName: string, checkboxIndex: number) {
+
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' .checkbox'))),
+            delays.ECWaitTime);
+        element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox')).get(checkboxIndex).click();
+    };
+
+
     public static clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
         browser.wait(EC.visibilityOf(element(by.id('edit-form-element-' + fieldName))), delays.ECWaitTime);
@@ -179,6 +187,12 @@ export class DoceditPage {
     public static getNumberOfDuplicatesInputField() {
 
         return element(by.id('duplicate-input'));
+    }
+
+
+    public static getCheckboxes(fieldName: string) {
+
+        return element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox'));
     }
 
 

@@ -190,30 +190,6 @@ describe('media/media-overview --', function() {
     });
 
 
-    it('link -- use link filter', () => {
-
-        MediaOverviewPage.createDepictsRelation('testf1');
-
-        MediaOverviewPage.clickSelectLinkFilterOption(1);
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-
-        MediaOverviewPage.clickSelectLinkFilterOption(2);
-        browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-
-        MediaOverviewPage.clickSelectLinkFilterOption(0);
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-    });
-
-
     it('link -- filter types in overview', done => {
 
         MediaOverviewPage.clickCell(0);
@@ -248,14 +224,14 @@ describe('media/media-overview --', function() {
 
         MediaOverviewPage.doubleClickCell(0);
         ImageViewPage.editDocument();
-        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.clickCheckbox('processor', 0);
         DoceditPage.clickSaveDocument();
         ImageViewPage.clickCloseButton();
         MediaOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('processor');
-        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickSelectDropdownValue(3);
         SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),

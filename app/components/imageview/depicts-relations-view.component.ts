@@ -15,6 +15,7 @@ export class DepictsRelationsViewComponent implements OnChanges {
 
     @Input() resource: ImageResource;
     @Input() openSection: string|undefined;
+    @Input() expandAllGroups: boolean;
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
     @Output() onRelationClicked: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -33,7 +34,7 @@ export class DepictsRelationsViewComponent implements OnChanges {
 
     public toggle() {
 
-        if (this.openSection === 'depicts-relations') {
+        if (this.openSection === 'depicts-relations' && !this.expandAllGroups) {
             this.openSection = undefined;
         } else {
             this.openSection = 'depicts-relations';

@@ -70,9 +70,9 @@ export class Map3DControls {
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            zoomValue = event.wheelDelta / 500;
+            zoomValue = event.deltaY / 500;
         } else {
-            zoomValue = -event.wheelDelta / 100;
+            zoomValue = -event.deltaY / 100;
         }
 
         this.cameraManager.zoom(zoomValue);

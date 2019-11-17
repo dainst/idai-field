@@ -6,6 +6,10 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'project',
             'identifier': 'test',
             'shortDescription': locale === 'de' ? 'Testprojekt' : 'Test project',
+            'staff': ['Person 1', 'Person 2'],
+            'campaigns': locale === 'de'
+                ? ['Testkampagne 1', 'Testkampagne 2']
+                : ['Test campaign 1', 'Test campaign 2'],
             'relations': {},
             'type': 'Project'
         }
@@ -51,7 +55,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'si1',
             'identifier': locale === 'de' ? 'SE1' : 'SU1',
             'shortDescription': locale === 'de' ? 'Stratigraphische Einheit' : 'Stratrigraphical unit',
-            'hasPeriod': 'Kaiserzeitlich',
+            'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isAfter': ['si2', 'si5'],
@@ -87,7 +91,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'si2',
             'identifier': locale === 'de' ? 'SE2' : 'SU2',
             'shortDescription': locale === 'de' ? 'Erdbefund' : 'Layer',
-            'hasPeriod': 'Kaiserzeitlich',
+            'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si1'],
@@ -123,7 +127,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'si3',
             'identifier': locale === 'de' ? 'SE3' : 'SU3',
-            'hasPeriod': 'Bronzezeitlich',
+            'period': 'Bronzezeitlich',
             'shortDescription': locale === 'de' ? 'Architektur' : 'Architecture',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -173,7 +177,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'si4',
             'identifier': locale === 'de' ? 'SE4' : 'SU4',
-            'hasPeriod': 'Bronzezeitlich',
+            'period': 'Bronzezeitlich',
             'shortDescription': locale === 'de' ? 'Grab' : 'Grave',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -233,7 +237,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'si5',
             'identifier': locale === 'de' ? 'SE5' : 'SU5',
-            'hasPeriod': 'Bronzezeitlich',
+            'period': 'Bronzezeitlich',
             'shortDescription': locale === 'de' ? 'Erdbefund' : 'Layer',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -294,7 +298,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'si6',
             'identifier': locale === 'de' ? 'SE6' : 'SU6',
-            'hasPeriod': 'Bronzezeitlich',
+            'period': 'Bronzezeitlich',
             'shortDescription': locale === 'de' ? 'Noch ein Erdbefund' : 'Another Layer',
             'relations': {
                 'isRecordedIn': ['t2'],

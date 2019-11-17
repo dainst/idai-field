@@ -1,26 +1,3 @@
-.projects-modal {
-    .project-select{
-        padding-top: 8px;
-    }
-
-    .circular-button {
-        width: 41px;
-        height: 41px;
-        margin-right: 10px;
-        position: inherit;
-        display: inline-block;
-
-        &.type-button {
-            padding: 0;
-            top: 5px;
-        }
-    }
-}
-
-#new-project-menu {
-    width: 425px;
-}
-
 #projects-badge {
     padding: 0.5em !important;
     max-width: 190px;

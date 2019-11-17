@@ -8,9 +8,9 @@
         <editable-map *ngIf="mapMode === '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocument]="parentDocument"
+                      [coordinateReferenceSystem]="coordinateReferenceSystem"
                       [viewName]="viewFacade.getView()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
-                      [projectDocument]="getProjectDocument()"
                       [update]="viewFacade.isReady()"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>

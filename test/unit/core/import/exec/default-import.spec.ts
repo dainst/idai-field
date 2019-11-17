@@ -1,5 +1,5 @@
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {DefaultImport} from '../../../../../app/core/import/exec/default-import';
+import {ImportErrors as E, ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
 
 /**
  * @author Daniel de Oliveira
@@ -16,9 +16,17 @@ describe('DefaultImport', () => {
         mockDatastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed',
-            'assertIsKnownType', 'assertHasLiesWithin', 'assertIsAllowedType', 'assertDropdownRangeComplete',
-            'assertSettingIsRecordedInIsPermissibleForType', 'assertNoForbiddenRelations']);
+            'assertIsRecordedInTargetsExist',
+            'assertRelationsWellformedness',
+            'assertIsAllowedRelationDomainType',
+            'assertIsWellformed',
+            'assertLiesWithinCorrectness',
+            'assertIsKnownType',
+            'assertHasLiesWithin',
+            'assertIsAllowedType',
+            'assertDropdownRangeComplete',
+            'assertSettingIsRecordedInIsPermissibleForType',
+            'assertNoForbiddenRelations']);
 
         mockValidator.assertHasLiesWithin.and.returnValue();
 
@@ -29,17 +37,24 @@ describe('DefaultImport', () => {
 
         mockDatastore.get.and.callFake(async resourceId => {
 
-            if (resourceId === '0') return { resource: { id: '0', identifier: '0', type: 'Trench' }};
+            if (resourceId === '0') return {
+                resource: {
+                    id: '0',
+                    identifier: '0',
+                    type: 'Trench',
+                    relations: {}
+                }
+            };
             else throw 'missing';
         });
 
-        importFunction = DefaultImport.build(
+        importFunction = buildImportFunction(
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101')(
-            false,
-            false);
+            () => '101',
+            undefined,
+            { mergeMode: false, permitDeletions: false });
     });
 
 
@@ -59,14 +74,21 @@ describe('DefaultImport', () => {
         mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
-            documents: [{ resource: { identifier: '123', id: '1' } }]
+            documents: [{ resource: { identifier: '123', id: '1', relations: {} } }]
         }));
+        mockDatastore.get.and.returnValue(Promise.resolve(
+            { resource: { identifier: '123', id: '1', relations: {} } }
+        ));
 
-        await (DefaultImport.build(
-            mockValidator, operationTypeNames,
+        await (buildImportFunction(
+            mockValidator,
+            operationTypeNames,
             () => undefined,
-             () => '101')(true, false))(
-            [{ resource: { id: '1', relations: undefined } } as any], mockDatastore, 'user1');
+            () => '101', undefined,
+            { mergeMode: true }))(
+            [{ resource: { id: '1', relations: {} } } as any],
+            mockDatastore,
+            'user1');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).toHaveBeenCalled();
@@ -76,10 +98,10 @@ describe('DefaultImport', () => {
 
     it('does not overwrite if exists', async done => {
 
-        await (DefaultImport.build(
+        await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101')(false, false))([
+            () => '101', undefined, { mergeMode: false }))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -95,14 +117,14 @@ describe('DefaultImport', () => {
 
         const {errors} = await importFunction(
             [{ resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-            mockDatastore,'user1');
+            mockDatastore, 'user1');
 
         expect(errors[0][0]).toBe('abc');
         done();
     });
 
 
-    it('not well formed ', async done => { // shows that err from default-import-calc gets propagated
+    it('not well formed', async done => { // shows that err from default-import-calc gets propagated
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_TYPE]});
 
@@ -112,6 +134,85 @@ describe('DefaultImport', () => {
 
         expect(errors.length).toBe(1);
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_TYPE);
+        done();
+    });
+
+
+    it('parent not found', async done => {
+
+        importFunction = buildImportFunction(
+            mockValidator,
+            operationTypeNames,
+            () => undefined,
+            () => '101', undefined,
+            { mergeMode: false, useIdentifiersInRelations: true }); // !
+
+        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][1]).toEqual('notfound');
+        done();
+    });
+
+
+    it('parent not found, when using plain ids', async done => {
+
+        importFunction = buildImportFunction(
+            mockValidator,
+            operationTypeNames,
+            () => undefined,
+            () => '101',
+            undefined,
+            { mergeMode: false, useIdentifiersInRelations: false}); // !
+
+        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][1]).toEqual('notfound');
+        done();
+    });
+
+
+    it('isChildOf is an array', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
+        expect(errors[0][1]).toEqual('1a');
+        done();
+    });
+
+
+    it('other relation is not an array', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.MUST_BE_ARRAY);
+        expect(errors[0][1]).toEqual('1a');
+        done();
+    });
+
+
+    it('forbidden relation', async done => {
+
+        const {errors} = await importFunction([
+            { resource: { type: 'Feature', identifier: '1a', relations: { includes: ['a'] } } } as any
+        ], mockDatastore, 'user1');
+
+        expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);
+        expect(errors[0][2]).toEqual('includes');
         done();
     });
 });

@@ -2,7 +2,7 @@ import {Observer, Observable} from 'rxjs';
 import {subtract, unique, jsonClone} from 'tsfun';
 import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
@@ -43,12 +43,13 @@ export class DocumentsManager {
 
     constructor(
         private datastore: FieldReadDatastore,
-        private remoteChangesStream: RemoteChangesStream,
+        private changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number
     ) {
-        remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
+        changesStream.remoteChangesNotifications()
+            .subscribe(document => this.handleRemoteChange(document));
     }
 
 
@@ -87,7 +88,6 @@ export class DocumentsManager {
     public async setTypeFilters(types: string[], populate: boolean = true) {
 
         this.resourcesStateManager.setTypeFilters(types);
-        this.resourcesStateManager.setCustomConstraints({});
         if (populate) await this.populateAndDeselectIfNecessary();
     }
 
@@ -150,7 +150,8 @@ export class DocumentsManager {
 
         try {
             const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
-            this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+            this.newDocumentsFromRemote
+                = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
             if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
@@ -160,6 +161,24 @@ export class DocumentsManager {
             this.selectAndNotify(documentToSelect);
         } catch (e) {
             console.error('documentToSelect undefined in DocumentsManager.setSelected()');
+        }
+    }
+
+
+    public async navigateDocumentList(direction: 'previous'|'next'): Promise<any> {
+
+        if (!this.documents || this.documents.length === 0) return;
+
+        const selectedDocument: FieldDocument|undefined
+            = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
+
+        if (!selectedDocument) {
+            await this.setSelected(this.documents[0].resource.id);
+        } else {
+            let index: number = this.documents.indexOf(selectedDocument) + (direction === 'next' ? 1 : -1);
+            if (index < 0) index = this.documents.length - 1;
+            if (index === this.documents.length) index = 0;
+            await this.setSelected(this.documents[index].resource.id);
         }
     }
 

@@ -65,7 +65,9 @@ describe('resources/list --', () => {
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickMapModeButton();
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Changed resource 1'));
+        FieldsViewPage
+            .getFieldValue(0, 1)
+            .then(typeLabel => expect(typeLabel).toEqual('Changed resource 1'));
     });
 
 

@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {Loading} from '../../../widgets/loading';
+import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 @Component({
     moduleId: module.id,
@@ -20,7 +21,7 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
     @Output() onTypeChanged: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover', {static: false}) private popover: any;
 
     private typesTreeList: Array<IdaiType>;
 

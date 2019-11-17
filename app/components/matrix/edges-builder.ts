@@ -1,5 +1,7 @@
 import {Document, Relations} from 'idai-components-2';
-import {unique, to, on, unionBy, intoObj, is} from 'tsfun';
+import {unique, to, on, is} from 'tsfun';
+import {unionBy} from 'tsfun-core';
+import {intoObj} from 'tsfun-extra';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };
@@ -35,7 +37,7 @@ export module EdgesBuilder {
 
         return graphDocuments
             .map(getEdgesForDocument(graphDocuments, totalDocuments, relations))
-            .reduce(intoObj('resourceId', 'edges'), {});
+            .reduce(intoObj('resourceId', 'edges'), {}) as { [id: string]: Edges };
     }
 
 

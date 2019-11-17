@@ -23,9 +23,13 @@ export module ImportErrors {
     export const EMPTY_RELATION = 'ImportErrors.emptyRelation';
     export const INVALID_RELATIONS = 'ImportErrors.invalidRelations';
     export const INVALID_FIELDS = 'ImportErrors.invalidFields';
+    export const MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE = 'ImportErrors.mustLieWithinNonOperationResource';
     export const LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN = 'ImportErrors.liesWithinTargetNotMatchesIsRecordedIn';
     export const PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'ImportErrors.parentAssignmentOperationnotallowed';
     export const PARENT_MUST_NOT_BE_ARRAY = 'ImportErrors.parentMustNotBeArray';
     export const MUST_BE_ARRAY = 'ImportErrors.relationMustBeArray';
     export const MUST_BE_IN_SAME_OPERATION = 'ImportErrors.mustBeInSameOperation';
+    export const MUST_NOT_BE_EMPTY_STRING = 'ImportErrors.mustNotBeEmptyString';
+    export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch';
+    export const TYPE_CANNOT_BE_CHANGED = 'ImportErrors.typesCannotBeChanged';
 }

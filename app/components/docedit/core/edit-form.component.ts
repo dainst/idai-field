@@ -1,11 +1,15 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
-import {Document, FieldDefinition, RelationDefinition, ProjectConfiguration,
-    IdaiType} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
-import {GROUP_NAME, POSITION_RELATIONS, TIME_RELATIONS} from '../../../c';
+import {GROUP_NAME} from '../../../c';
+import {POSITION_RELATIONS, TIME_RELATIONS} from '../../../core/model/relation-constants';
+import {FieldDefinition} from '../../../core/configuration/model/field-definition';
+import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {IdaiType} from '../../../core/configuration/model/idai-type';
 
 
 interface GroupDefinition {
@@ -29,7 +33,7 @@ interface GroupDefinition {
  */
 export class EditFormComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild('editor') rootElement: ElementRef;
+    @ViewChild('editor', {static: false}) rootElement: ElementRef;
 
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
@@ -70,7 +74,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         return (groupName === 'media'
                 && !this.typeUtility.getMediaTypeNames().includes(this.document.resource.type))
             || (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFieldDefinitions(groupName).length > 0
+            || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
     }
 
@@ -112,9 +116,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     private setRelations() {
 
         this.groups[GROUP_NAME.POSITION].relations =
-            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS)));
+            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS.ALL)));
         this.groups[GROUP_NAME.TIME].relations =
-            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS)));
+            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS.ALL)));
     }
 
 
@@ -125,13 +129,17 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
-        this.groups[GROUP_NAME.POSITION].fields.push({
-            name: 'geometry',
-            label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
-            group: 'position',
-            inputType: 'geometry',
-            editable: true
-        });
+
+        if (this.typeUtility.isGeometryType(this.document.resource.type)) {
+            this.groups[GROUP_NAME.POSITION].fields.push({
+                name: 'geometry',
+                label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
+                group: 'position',
+                inputType: 'geometry',
+                editable: true
+            });
+        }
+
         this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
     }
 

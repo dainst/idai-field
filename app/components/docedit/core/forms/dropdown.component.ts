@@ -1,6 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {Helper} from './helper';
+import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
+import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 
 
 @Component({
@@ -11,27 +14,37 @@ import {Helper} from './helper';
 /**
  * @author Fabian Z.
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class DropdownComponent {
+export class DropdownComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() field: any;
+    @Input() field: FieldDefinition;
+
+    public valuelist: string[];
 
 
-    public notIncludedInValueList() {
+    constructor(private datastore: DocumentReadDatastore) {}
 
-        return Helper.notIncludedInValueList(this.resource, this.field.name, this.field.valuelist);
+
+    async ngOnChanges() {
+
+        this.valuelist = ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get('project'),
+            await HierarchyUtil.getParent(this.resource, this.datastore)
+        );
     }
 
 
-    public setValue(value: any) {
+    public deleteIfEmpty(value: string) {
         
-        if (value === '') this.deleteItem();
+        if (value === '') delete this.resource[this.field.name];
     }
 
 
-    public deleteItem() {
+    public hasEmptyValuelist(): boolean {
 
-        delete this.resource[this.field.name];
+        return this.valuelist && this.valuelist.length === 0
     }
 }

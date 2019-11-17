@@ -1,7 +1,8 @@
-import {Dating, Dimension, IdaiType, Resource} from 'idai-components-2';
+import {Dating, Dimension, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
+import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
 
 
 /**
@@ -124,7 +125,7 @@ describe('CsvFieldTypesConversion', () => {
         expect(dimension.inputRangeEndValue).toBe(5);
         expect(dimension.measurementPosition).toBe('a');
         expect(dimension.measurementComment).toBe('b');
-        expect(dimension.inputUnit).toBe('mm'); // TODO add validation for range of values
+        expect(dimension.inputUnit).toBe('mm');
         expect(dimension.isImprecise).toBe(true);
         expect(dimension.isRange).toBe(false);
     });

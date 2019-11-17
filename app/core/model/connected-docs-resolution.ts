@@ -1,14 +1,15 @@
-import {on, tripleEqual, jsonClone, isnt} from 'tsfun';
+import {on, tripleEqual, jsonClone, isnt, flow, keys, remove, forEach} from 'tsfun';
 import {Document, relationsEquivalent} from 'idai-components-2';
+import {HIERARCHICAL_RELATIONS} from './relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module ConnectedDocsResolution {
-
-    const LIES_WITHIN = 'liesWithin';
-    const RECORDED_IN = 'isRecordedIn';
 
 
     /**
@@ -26,11 +27,12 @@ export module ConnectedDocsResolution {
      *   got an update in their relations.
      *   Note that targetDocuments relations get modified <b>in place</b>.
      */
-    export function determineDocsToUpdate(document: Document, targetDocuments: Array<Document>,
+    export function determineDocsToUpdate(document: Document,
+                                          targetDocuments: Array<Document>,
                                           getInverseRelation: (_: string) => string|undefined,
                                           setInverses: boolean = true): Array<Document> {
 
-        const copyOfTargetDocuments = jsonClone(targetDocuments);
+        const cloneOfTargetDocuments = jsonClone(targetDocuments);
 
         for (let targetDocument of targetDocuments) {
 
@@ -42,7 +44,7 @@ export module ConnectedDocsResolution {
             if (setInverses) setInverseRelations(document, targetDocument, getInverseRelation);
         }
 
-        return compare(targetDocuments, copyOfTargetDocuments);
+        return compare(targetDocuments, cloneOfTargetDocuments);
     }
 
 
@@ -50,9 +52,10 @@ export module ConnectedDocsResolution {
                                    targetDocument: Document,
                                    keepAllNoInverseRelations: boolean) {
 
-        Object.keys(targetDocument.resource.relations)
-            .filter(relation => (!(keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN))))
-            .forEach(removeRelation(resourceId, targetDocument.resource.relations));
+        flow(targetDocument.resource.relations,
+            keys,
+            remove(relation => keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN)),
+            forEach(removeRelation(resourceId, targetDocument.resource.relations)));
     }
 
 
@@ -67,8 +70,11 @@ export module ConnectedDocsResolution {
     }
 
 
-    function setInverseRelation(document: Document, targetDoc: Document, relation: string,
+    function setInverseRelation(document: Document,
+                                targetDoc: Document,
+                                relation: string,
                                 inverse: string|undefined) {
+
 
         if (!inverse) return;
         document.resource.relations[relation]

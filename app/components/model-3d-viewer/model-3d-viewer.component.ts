@@ -21,7 +21,7 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     @Input() document: IdaiField3DDocument;
 
-    @ViewChild('container') container: ElementRef;
+    @ViewChild('container', { static: false }) container: ElementRef;
 
     public mesh: THREE.Mesh;
 

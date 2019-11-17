@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -12,7 +11,6 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ThumbnailViewComponent} from './map/list/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -35,7 +33,7 @@ import {Layer2DMeshBuilder} from './map/map-3d/layers/layers-2d/layer-2d-mesh-bu
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerImageProvider} from './map/map/layer-image-provider';
-import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
@@ -57,6 +55,8 @@ import {TabManager} from '../tab-manager';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {MapComponent} from './map/map/map.component';
 
 const remote = require('electron').remote;
 
@@ -68,13 +68,13 @@ const remote = require('electron').remote;
         NgbModule,
         WidgetsModule,
         ImageGridModule,
-        IdaiWidgetsModule,
         DoceditModule,
         Core3DModule
     ],
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
+        MapComponent,
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
@@ -82,7 +82,6 @@ const remote = require('electron').remote;
         ListComponent,
         RowComponent,
         PlusButtonComponent,
-        ThumbnailViewComponent,
         SidebarListComponent,
         Map3DComponent,
         Layers2DComponent,
@@ -147,7 +146,7 @@ const remote = require('electron').remote;
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: FieldDatastore,
-                changesStream: RemoteChangesStream,
+                changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
                 indexFacade: IndexFacade
@@ -164,7 +163,7 @@ const remote = require('electron').remote;
             deps: [
                 ProjectConfiguration,
                 FieldDatastore,
-                RemoteChangesStream,
+                ChangesStream,
                 ResourcesStateManager,
                 Loading,
                 IndexFacade

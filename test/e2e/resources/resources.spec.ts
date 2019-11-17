@@ -84,7 +84,6 @@ describe('resources --', () => {
     }
 
 
-
     it('messages - everything fine / missing identifier', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
@@ -94,7 +93,7 @@ describe('resources --', () => {
 
         // warn if identifier is missing
         ResourcesPage.performCreateResource('', 'feature',
-            'processor', 'p', undefined,
+            'diary', 'p', undefined,
             false, false);
 
         NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
@@ -202,10 +201,10 @@ describe('resources --', () => {
     it('fields', () => { // formerly sidebar/info
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',
-            'processor', '100');
+            'diary', '100');
         ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.getFieldName(0, 1).then(value => {
-            expect(value).toBe('Bearbeiterin/Bearbeiter'); // with the correct field label
+            expect(value).toBe('Tagebuch'); // with the correct field label
         });
         FieldsViewPage.getFieldValue(0, 1).then(value => {
             expect(value).toBe('100');
@@ -277,6 +276,40 @@ describe('resources --', () => {
     });
 
 
+    it('show only values of parent resource for campaign field in editor', () => {
+
+        NavbarPage.clickTab('project');
+        ResourcesPage.performCreateResource('trench', 'trench');
+        ResourcesPage.clickHierarchyButton('trench');
+        ResourcesPage.performCreateResource('feature', 'feature');
+        ResourcesPage.openEditByDoubleClickResource('feature');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => expect(checkboxes.length).toBe(0));
+
+        DoceditPage.clickCloseEdit();
+        NavbarPage.clickTab('project');
+        ResourcesPage.openEditByDoubleClickResource('trench');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => {
+                expect(checkboxes.length).toBe(2);
+                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
+                expect(checkboxes[1].getText()).toEqual('Testkampagne 2');
+            });
+
+        DoceditPage.clickCheckbox('campaign', 0);
+        DoceditPage.clickSaveDocument();
+        ResourcesPage.clickHierarchyButton('trench');
+        ResourcesPage.openEditByDoubleClickResource('feature');
+        DoceditPage.getCheckboxes('campaign')
+            .then(checkboxes => {
+                expect(checkboxes.length).toBe(1);
+                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
+            });
+
+        DoceditPage.clickCloseEdit();
+    });
+
+
     it('deletion', () => {
 
         ResourcesPage.performCreateLink();
@@ -290,7 +323,7 @@ describe('resources --', () => {
 
         // relations
         ResourcesPage.clickSelectResource('1', 'info');
-        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open TODO put it into clickSelectResource after tab gets opened
+        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open
         FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
     });
 
@@ -411,6 +444,34 @@ describe('resources --', () => {
         NavbarPage.clickTab('project');
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+    });
+
+
+    it('contextMenu/moveModal - move an operation to root level', () => {
+
+        NavbarPage.clickTab('project');
+        browser.sleep(delays.shortRest * 2);
+        ResourcesPage.performCreateResource('P1', 'place');
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('P');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            for (let label of labels) expect(label.getText()).not.toEqual('Projekt');
+        });
+        ResourcesPage.typeInMoveModalSearchBarInput('P1');
+        ResourcesPage.clickResourceListItemInMoveModal('P1');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(1));
+
+        ResourcesPage.clickOpenContextMenu('S1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('P');
+        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
+            expect(labels[0].getText()).toEqual('Projekt');
+        });
+        ResourcesPage.clickResourceListItemInMoveModal('Projekt');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(5));
     });
 
 

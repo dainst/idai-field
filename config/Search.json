@@ -15,7 +15,7 @@
     "constraint": ["amountIndividuals", "burialCharacteristic", "burialDocumentation", "graveFeature", "positionArms", "positionLegs", "positioningIndividuals", "material"]
   },
   "Building": {
-    "constraint": ["hasRestoration", "architecturalOrders", "buildingCategory", "buildingCategorySpecific", "buildingTechnique", "buildingType", "condition", "conditionAmount", "context"]
+    "constraint": ["period", "hasRestoration", "architecturalOrders", "buildingCategory", "buildingCategorySpecific", "buildingTechnique", "buildingType", "condition", "conditionAmount", "context"]
   },
   "Wood": {
     "constraint": ["color", "objectType", "typeOfWood"]
@@ -24,7 +24,7 @@
     "constraint": ["findingPlace", "hasGrouting", "layerAmount", "layerHeight", "blockProcessing", "blockTreatment", "brickwork", "condition", "conditionAmount", "construction", "mark", "mortarBinder", "mortarColor", "mortarConsistency", "orientation", "wallClassification", "wallType"]
   },
   "Operation": {
-    "constraint": ["processor", "supervisor", "campaign"]
+    "constraint": ["area", "processor", "supervisor", "campaign"]
   },
   "Place": {
     "constraint": ["gazId", "placeName", "ancient", "findspotClassification", "siteClassification"]
@@ -33,13 +33,13 @@
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]
   },
   "Feature": {
-    "constraint": ["diary", "hasDisturbance", "featureAmount", "processor", "color", "featureBorders", "featureForm"]
+    "constraint": ["diary", "hasDisturbance", "featureAmount", "area", "processor", "campaign", "period", "color", "featureBorders", "featureForm"]
   },
   "Floor": {
     "constraint": ["condition", "conditionAmount", "consistency", "distinguishingCriteria", "floorClassification", "layerClassification", "mortarBinder"]
   },
   "Inscription": {
-    "constraint": ["language", "processor", "condition", "conditionAmount", "objectType"]
+    "constraint": ["language", "processor", "campaign", "period", "condition", "conditionAmount", "objectType"]
   },
   "Pottery": {
     "constraint": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "materialType", "objectType", "specificType", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific"]
@@ -54,7 +54,19 @@
     "constraint": ["biologicalAge", "boneClassification", "boneType", "burningGrade", "sex", "objectType", "species"]
   },
   "Room": {
-    "constraint": ["processor", "campaign", "condition", "conditionAmount"]
+    "constraint": ["area", "processor", "campaign", "period", "condition", "conditionAmount"]
+  },
+  "RoomCeiling": {
+    "constraint": ["area", "processor", "campaign", "period", "diary"]
+  },
+  "RoomFloor": {
+    "constraint": ["area", "processor", "campaign", "period", "diary"]
+  },
+  "RoomWall": {
+    "constraint": ["processor", "campaign", "period", "diary"]
+  },
+  "BuildingPart": {
+    "constraint": ["processor", "campaign"]
   },
   "ProcessUnit": {
     "constraint": ["processor", "operationClassification"]
@@ -81,10 +93,10 @@
     "constraint": ["denomination", "manufacturingMethod", "metalMaterial", "mint", "mintingRuler", "provenance", "stampPositioning"]
   },
   "Find": {
-    "constraint": ["sketched", "hasRestoration", "drawn", "photographed", "hasRestoration", "amount", "catalogueNumber", "processor", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
+    "constraint": ["sketched", "hasRestoration", "drawn", "photographed", "hasRestoration", "amount", "catalogueNumber", "processor", "campaign", "period", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
   },
   "PlasterFragment": {
-    "constraint": ["hasDecoration", "color", "plasterComponents"]
+    "constraint": ["area", "hasDecoration", "color", "plasterComponents"]
   },
   "Profile": {
     "constraint": ["orientation"]
@@ -93,13 +105,13 @@
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
   },
   "Area": {
-    "constraint": ["area"]
+    "constraint": ["area", "campaign"]
   },
   "Excavation": {
     "constraint": ["isIllegal"]
   },
   "Image": {
-    "constraint": ["draughtsmen", "processor"]
+    "constraint": ["draughtsmen", "processor", "campaign"]
   },
   "Drawing": {
     "constraint": ["drawingMaterial", "drawingTool", "drawingType", "scale"]

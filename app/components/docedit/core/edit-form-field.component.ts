@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Resource, FieldDefinition} from 'idai-components-2';
+import {Resource} from 'idai-components-2';
+import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 
 
 @Component({

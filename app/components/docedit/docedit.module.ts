@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {IdaiWidgetsModule, IdaiMessagesModule} from 'idai-components-2';
+import {IdaiMessagesModule} from 'idai-components-2';
 import {DoceditComponent} from './docedit.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditMediaTabComponent} from './tabs/docedit-media-tab.component';
@@ -26,13 +26,16 @@ import {RadioComponent} from './core/forms/radio.component';
 import {TextComponent} from './core/forms/text.component';
 import {DatingComponent} from './core/forms/dating.component';
 import {DateComponent} from './core/forms/date.component';
-import {NgbDateDEParserFormatter} from './core/forms/date-formatter.component';
+import {NgbDateDEParserFormatter} from './core/forms/widgets/date-formatter.component';
 import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {GenericFormComponent} from './core/generic-form-component';
 import {GeometryComponent} from './core/forms/geometry.component';
+import {MultiInputComponent} from './core/forms/multi-input.component';
+import {OutliersComponent} from './core/forms/widgets/outliers.component';
+import {EmptyValuelistInfoComponent} from './core/forms/widgets/empty-valuelist-info.component';
 
 
 @NgModule({
@@ -44,7 +47,6 @@ import {GeometryComponent} from './core/forms/geometry.component';
         BrowserModule,
         NgbModule,
         FormsModule,
-        IdaiWidgetsModule,
         RouterModule,
         IdaiMessagesModule,
         WidgetsModule,
@@ -69,13 +71,16 @@ import {GeometryComponent} from './core/forms/geometry.component';
         BooleanComponent,
         DropdownComponent,
         InputComponent,
+        MultiInputComponent,
         RadioComponent,
         TextComponent,
         DatingComponent,
         DateComponent,
         DimensionComponent,
         DropdownRangeComponent,
-        GeometryComponent
+        GeometryComponent,
+        OutliersComponent,
+        EmptyValuelistInfoComponent
     ],
     exports: [
         EditSaveDialogComponent,

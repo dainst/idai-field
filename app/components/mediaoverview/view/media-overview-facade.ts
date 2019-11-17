@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
-import {MediaFilterOption, MediaState} from './media-state';
+import {MediaState} from './media-state';
 import {MediaDocumentsManager} from './media-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {clone} from '../../../core/util/object-util';
@@ -48,8 +48,6 @@ export class MediaOverviewFacade {
 
     public getCustomConstraints = (): { [name: string]: string } => this.mediaState.getCustomConstraints();
 
-    public getLinkFilter = (): MediaFilterOption => this.mediaState.getLinkFilter();
-
     public getNrMediaResourcesPerRow = (): number => this.mediaState.getNrMediaResourcesPerRow();
 
     public getDepictsRelationsSelected = () => this.mediaDocumentsManager.getDepictsRelationsSelected();
@@ -59,7 +57,6 @@ export class MediaOverviewFacade {
 
     public async initialize() {
 
-        await this.mediaState.initialize();
         if (!this.mediaState.getQuery()) this.mediaState.setQuery(this.getDefaultQuery());
         this.setQueryConstraints();
         await this.fetchDocuments();
@@ -182,17 +179,6 @@ export class MediaOverviewFacade {
     }
 
 
-    public setLinkFilter(filterOption: MediaFilterOption) {
-
-        this.currentOffset = 0;
-
-        this.mediaState.setLinkFilter(filterOption);
-        this.setQueryConstraints();
-
-        this.fetchDocuments();
-    }
-
-
     public fetchDocuments() {
 
         return this.mediaDocumentsManager.fetchDocuments(
@@ -224,19 +210,6 @@ export class MediaOverviewFacade {
 
     private setQueryConstraints() {
 
-        const query: Query = this.mediaState.getQuery();
-
-        query.constraints = clone(this.getCustomConstraints());
-
-        switch(this.mediaState.getLinkFilter()) {
-            case 'UNLINKED':
-                query.constraints['depicts:exist'] = 'UNKNOWN';
-                break;
-            case 'LINKED':
-                query.constraints['depicts:exist'] = 'KNOWN';
-                break;
-            case 'ALL':
-                delete query.constraints['depicts:exist'];
-        }
+        this.mediaState.getQuery().constraints = clone(this.getCustomConstraints());
     }
 }

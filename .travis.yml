@@ -6,7 +6,8 @@ node_js:
 matrix:
   include:
   - os: osx
-  
+    osx_image: xcode10.2
+
 cache:
   directories:
   - "$HOME/.electron"

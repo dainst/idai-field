@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import {arrayEquivalent, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
+import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
+import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
+import {IndexFacade} from '../datastore/index/index-facade';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {HIERARCHICAL_RELATIONS} from './relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 @Injectable()
@@ -22,7 +26,8 @@ export class PersistenceManager {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: TypeUtility
+        private typeUtility: TypeUtility,
+        private indexFacade: IndexFacade
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -61,7 +66,8 @@ export class PersistenceManager {
     /**
      * Removes the document from the datastore.
      *
-     * Also removes all documents with an 'isRecordedIn' relation pointing to this document.
+     * Also removes all child documents (documents with an 'isRecordedIn' or 'liesWithin' relation pointing to
+     * this document.
      * Deletes all corresponding inverse relations.
      *
      * @throws
@@ -71,11 +77,8 @@ export class PersistenceManager {
      */
     public async remove(document: Document, username: string) {
 
-        // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
-        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
-            for (let recordedInDoc of (await this.findDocsRecordedInDocs(document.resource.id))) {
-                await this.removeWithConnections(recordedInDoc, username);
-            }
+        for (let child of (await this.findChildren(document))) {
+            await this.removeWithConnections(child, username);
         }
         await this.removeWithConnections(document, username);
     }
@@ -103,17 +106,25 @@ export class PersistenceManager {
 
     private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
 
-        if (isUndefinedOrEmpty(document.resource.relations['isRecordedIn'])) return;
+        if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
-            .filter(on('resource.relations.isRecordedIn', isArray))
-            .filter(isNot(on('resource.relations.isRecordedIn', arrayEquivalent)(document)));
+            .filter(on('resource.relations.' + RECORDED_IN, isArray))
+            .filter(isNot(on('resource.relations.' + RECORDED_IN, sameset)(document)));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);
-            cloned.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+            cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
             await this.datastore.update(cloned, username, undefined);
         }
+    }
+
+
+    private async findChildren(document: Document): Promise<Array<Document>> {
+
+        return this.typeUtility.isSubtype(document.resource.type, 'Operation')
+            ? this.findDocsRecordedInDocs(document.resource.id)
+            : this.findAllLiesWithinDocs(document.resource.id);
     }
 
 
@@ -127,20 +138,9 @@ export class PersistenceManager {
 
     private async findAllLiesWithinDocs(resourceId: string): Promise<Array<Document>> {
 
-        let result: Array<Document> = [];
-
-        const go = async (resourceId: string) => {
-
-            const documents = (await this.datastore.find({
-                constraints: { 'liesWithin:contain': resourceId }
-            })).documents;
-            result = result.concat(documents);
-
-            for (let doc of documents) await go(doc.resource.id);
-        };
-
-        await go(resourceId);
-        return result;
+        return this.datastore.getMultiple(
+            this.indexFacade.getDescendantIds('liesWithin:contain', resourceId)
+        );
     }
 
 

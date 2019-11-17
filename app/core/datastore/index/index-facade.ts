@@ -1,10 +1,11 @@
 import {Observable, Observer} from 'rxjs';
-import {Constraint, Document, IdaiType, Query} from 'idai-components-2';
+import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
 import {SimpleIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
+import {IdaiType} from '../../configuration/model/idai-type';
 
 
 /**
@@ -75,6 +76,12 @@ export class IndexFacade {
     public getCount(constraintIndexName: string, matchTerm: string): number {
 
         return ConstraintIndex.getCount(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+
+    public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
+
+        return ConstraintIndex.getDescendantIds(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
 

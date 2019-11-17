@@ -1,15 +1,20 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, on, isNot, undefinedOrEmpty} from 'tsfun';
-import {Document, FieldDocument, IdaiType, ProjectConfiguration, ReadDatastore, RelationDefinition,
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose} from 'tsfun';
+import {Document, FieldDocument,   ReadDatastore,
     Resource} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
-import {GROUP_NAME, INCLUDES, LIES_WITHIN, POSITION_RELATIONS, RECORDED_IN, TIME_RELATIONS} from '../c';
+import {GROUP_NAME, Name, ResourceId} from '../c';
+import {isBoolean} from '../utils';
 import {DatingUtil} from '../core/util/dating-util';
 import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../core/model/relation-constants';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {IdaiType} from '../core/configuration/model/idai-type';
+import {RelationDefinition} from '../core/configuration/model/relation-definition';
 
 
 type FieldViewGroupDefinition = {
@@ -34,9 +39,10 @@ export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() openSection: string|undefined = 'stem';
+    @Input() expandAllGroups: boolean = false;
 
-    @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
-    @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
+    @Output() onSectionToggled = new EventEmitter<string|undefined>();
+    @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> };
     public relations: { [groupName: string]: Array<any> } = {};
@@ -50,6 +56,9 @@ export class FieldsViewComponent implements OnChanges {
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
         { name: 'time', label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
     ];
+
+
+    public isBoolean = (value: any) => isBoolean(value);
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -73,15 +82,15 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.resource) {
             await this.processRelations(this.resource);
-            await this.processFields(this.resource);
+            this.processFields(this.resource);
             this.updateGroupLabels(this.resource.type);
         }
     }
 
 
-    public isBoolean(value: any): boolean {
+    public showGroupSection(group: Name) {
 
-        return typeof value === 'boolean';
+        return this.expandAllGroups || this.openSection === group;
     }
 
 
@@ -97,9 +106,9 @@ export class FieldsViewComponent implements OnChanges {
 
     public toggleGroupSection(group: FieldViewGroupDefinition) {
 
-        this.openSection = this.openSection === group.name
+        this.openSection = (this.openSection === group.name && !this.expandAllGroups)
             ? undefined
-            : this.openSection = group.name;
+            : group.name;
 
         this.onSectionToggled.emit(this.openSection);
     }
@@ -126,7 +135,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private updateGroupLabels(typeName: string) {
+    private updateGroupLabels(typeName: Name) {
 
         const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
         if (type.parentType) {
@@ -138,15 +147,16 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private async processFields(resource: Resource) {
+    private processFields(resource: Resource) {
 
         this.addBaseFields(resource);
 
-        for (let field of this.projectConfiguration
+        const fields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
-            .filter(on(NAME, isnt('relations')))) {
+            .filter(on(NAME, isnt('relations')))
+            .filter(on(NAME, compose(lookup<any>(resource), isDefined)));
 
-            if (resource[field.name] === undefined) continue;
+        for (let field of fields) {
 
             const group: string = field.group ? field.group : 'properties';
 
@@ -215,23 +225,21 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private getLabel(type: string, fieldName: string): string {
+    private getLabel(type: Name, field: Name): string {
 
         return this.projectConfiguration
             .getTypesMap()[type].fields
-            .find(on(NAME, is(fieldName))).label;
+            .find(on(NAME, is(field))).label;
     }
 
 
-    private static getValue(resource: Resource, fieldName: string): any {
+    private static getValue(resource: Resource, field: Name): any {
 
-        if (typeof resource[fieldName] === 'string') {
-            return resource[fieldName]
+        return typeof resource[field] === 'string'
+            ? resource[field]
                 .replace(/^\s+|\s+$/g, '')
-                .replace(/\n/g, '<br>');
-        } else {
-            return resource[fieldName];
-        }
+                .replace(/\n/g, '<br>')
+            : resource[field];
     }
 
 
@@ -243,8 +251,8 @@ export class FieldsViewComponent implements OnChanges {
         for (let relation of this.computeRelationsToShow(resource, relations)) {
 
             let group: string|undefined = undefined;
-            if (TIME_RELATIONS.includes(relation.name)) group = 'time';
-            if (POSITION_RELATIONS.includes(relation.name)) group = 'position';
+            if (TIME_RELATIONS.ALL.includes(relation.name)) group = 'time';
+            if (POSITION_RELATIONS.ALL.includes(relation.name)) group = 'position';
             if (!group) continue;
 
             this.relations[group].push({
@@ -256,15 +264,16 @@ export class FieldsViewComponent implements OnChanges {
 
     private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
 
+        const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS.ALL));
+        const hasTargets = compose(lookup<any>(resource.relations), isNot(undefinedOrEmpty));
+
         return relations
-            .filter(on(NAME, isnt(RECORDED_IN)))
-            .filter(on(NAME, isnt(LIES_WITHIN)))
-            .filter(on(NAME, isnt(INCLUDES)))
-            .filter(relation => isNot(undefinedOrEmpty)(resource.relations[relation.name]))
+            .filter(on(NAME, isNotHierarchical))
+            .filter(on(NAME, hasTargets));
     }
 
 
-    private getTargetDocuments(targetIds: Array<string>): Promise<Array<Document>> {
+    private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
 
         return this.datastore.getMultiple(targetIds); // what if error?
     }

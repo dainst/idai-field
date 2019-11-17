@@ -1,10 +1,14 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {union} from 'tsfun';
-import {Query, FieldDocument, ProjectConfiguration, IdaiType, Constraint, Messages} from 'idai-components-2';
+import {Query, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../core/util/object-util';
 import {AngularUtility} from '../common/angular-utility';
+import {FieldDocumentFindResult} from '../core/datastore/field/field-read-datastore';
+import {IdaiType} from '../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
 
 
 @Component({
@@ -21,6 +25,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<IdaiType>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
+    @Input() showProjectOption: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -33,7 +38,8 @@ export class DocumentPickerComponent implements OnChanges {
     constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
-                private messages: Messages) {}
+                private messages: Messages,
+                private i18n: I18n) {}
 
 
     public isLoading = () => this.loading.isLoading();
@@ -102,14 +108,23 @@ export class DocumentPickerComponent implements OnChanges {
         try {
             if (this.getConstraints) this.query.constraints = await this.getConstraints();
             this.query.id = this.currentQueryId;
-
             const result = await this.datastore.find(clone(this.query));
-            if (result.queryId === this.currentQueryId) this.documents = result.documents;
+            if (result.queryId === this.currentQueryId) this.documents = this.getDocuments(result);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
             this.loading.stop();
         }
+    }
+
+
+    private getDocuments(result: FieldDocumentFindResult): Array<FieldDocument> {
+
+        return this.isProjectOptionVisible()
+            ? [this.getProjectOption()].concat(
+                result.documents.filter(document => document.resource.type !== 'Project')
+            )
+            : result.documents;
     }
 
 
@@ -120,5 +135,27 @@ export class DocumentPickerComponent implements OnChanges {
                 ? [type.name].concat(type.children.map(child => child.name))
                 : [type.name];
         }));
+    }
+
+
+    private getProjectOption(): FieldDocument {
+
+        return {
+            resource: {
+                id: 'project',
+                identifier: this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' }),
+                type: 'Project'
+            }
+        } as any;
+    }
+
+
+    private isProjectOptionVisible(): boolean {
+
+        return this.showProjectOption
+            && ((this.query.q !== undefined && this.query.q.length > 0
+                && this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
+                    .toLowerCase().startsWith(this.query.q.toLowerCase()))
+                || (this.query.types !== undefined && this.query.types.includes('Project')));
     }
 }

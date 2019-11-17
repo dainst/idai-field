@@ -4,14 +4,8 @@
  */
 
 .import {
-  .spinner {
-    position: relative;
-    top: 15px;
-    left: 5px;
-  }
-
   .disabled {
-    cursor: not-allowed;
+    transition: none !important;
   }
 
   .import-info {

@@ -21,7 +21,7 @@ import {DoceditComponent} from '../docedit.component';
  */
 export class DoceditMediaTabComponent {
 
-    @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
 
     @Input() document: FieldDocument;
 

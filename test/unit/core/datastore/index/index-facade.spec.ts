@@ -1,13 +1,14 @@
-import {ProjectConfiguration, Query, FieldDocument} from 'idai-components-2';
+import {Query, FieldDocument} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
-import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter.service';
+import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter';
 import {TypeUtility} from '../../../../../app/core/model/type-utility';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb-manager';
 import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
 import {to} from 'tsfun';
+import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
 class IdGenerator {

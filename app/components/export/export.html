@@ -50,7 +50,7 @@
                                 [(ngModel)]="selectedOperationId"
                                 (change)="setTypeCounts()">
                             <option value="project"
-                                    i18n="@@export.operationSelect.all">Alle Maßnahmen</option>
+                                    i18n="@@export.operationSelect.all">Keine Einschränkung</option>
                             <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
                                 {{getOperationLabel(operation)}}
                             </option>

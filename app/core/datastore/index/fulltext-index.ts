@@ -1,8 +1,9 @@
 import {flatMap, flow as _} from 'tsfun';
-import {Document, IdaiType} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {clone} from '../../util/object-util';
+import {IdaiType} from '../../configuration/model/idai-type';
 
 
 export interface FulltextIndex {
@@ -63,9 +64,9 @@ export module FulltextIndex {
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
-            flatMap(content => content.split(tokenizationPattern)))
-            .map(token => token.toLowerCase())
-            .map(token => Array.from(token))
+            flatMap((content: string) => content.split(tokenizationPattern)))
+            .map((token: string) => token.toLowerCase())
+            .map((token: string) => Array.from(token))
             .forEach(indexToken);
     }
 

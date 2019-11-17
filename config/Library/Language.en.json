@@ -1211,6 +1211,9 @@
       "fields": {
         "georeferenced": {
           "label": "Georeferenced"
+        },
+        "draughtsmen": {
+          "label": "Creator of the model"
         }
       }
     }

@@ -1358,6 +1358,9 @@
       "fields": {
         "georeferenced": {
           "label": "Georeferenziert"
+        },
+        "draughtsmen": {
+          "label": "Erstellerin/Ersteller des 3D-Modells"
         }
       }
     }

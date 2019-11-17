@@ -1,12 +1,12 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from 'idai-components-2';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {MenuService} from '../../../../menu-service';
 import {ImageViewComponent} from '../../../imageview/image-view.component';
-import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../../resources.component';
+import {IdaiFieldMediaDocumentReadDatastore} from '../../../../core/datastore/idai-field-media-document-read-datastore';
+import {IdaiFieldMediaDocument} from '../../../../core/model/idai-field-media-document';
 
 
 @Component({
@@ -24,11 +24,11 @@ export class ThumbnailComponent implements OnChanges {
 
     public thumbnailUrl: string|undefined;
 
-    private images: Array<ImageDocument> = [];
+    private mediaDocuments: Array<IdaiFieldMediaDocument> = [];
 
 
     constructor(private imagestore: Imagestore,
-                private datastore: ImageDatastore,
+                private datastore: IdaiFieldMediaDocumentReadDatastore,
                 private modalService: NgbModal,
                 private resourcesComponent: ResourcesComponent) {}
 
@@ -36,7 +36,7 @@ export class ThumbnailComponent implements OnChanges {
     async ngOnChanges() {
 
         this.thumbnailUrl = await this.getThumbnailUrl(this.isDepictedInRelations);
-        this.images = await this.getImageDocuments(this.isDepictedInRelations);
+        this.mediaDocuments = await this.getMediaDocuments(this.isDepictedInRelations);
     }
 
 
@@ -50,8 +50,8 @@ export class ThumbnailComponent implements OnChanges {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(
-            this.images,
-            this.images[0],
+            this.mediaDocuments,
+            this.mediaDocuments[0],
             this.identifier
         );
         await modalRef.result;
@@ -75,7 +75,7 @@ export class ThumbnailComponent implements OnChanges {
     }
 
 
-    private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
+    private async getMediaDocuments(relations: string[]|undefined): Promise<Array<IdaiFieldMediaDocument>> {
 
         return relations
             ? this.datastore.getMultiple(relations)

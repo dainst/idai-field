@@ -21,7 +21,7 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     @Input() document: IdaiField3DDocument;
 
-    @ViewChild('container', { static: false }) container: ElementRef;
+    @ViewChild('container', { static: true }) container: ElementRef;
 
     public mesh: THREE.Mesh;
 
@@ -62,7 +62,7 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     public isCurrentAction(action: Model3DViewerAction) {
 
-        return this.controls.getCurrentAction() == action;
+        return this.controls.getCurrentAction() === action;
     }
 
 

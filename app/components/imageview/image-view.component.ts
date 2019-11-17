@@ -1,7 +1,7 @@
 import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
+import {Messages, FieldDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
@@ -11,6 +11,7 @@ import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastor
 import {M} from '../m';
 import {MenuService} from '../../menu-service';
 import {MediaState} from '../mediaoverview/view/media-state';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 
 
 @Component({
@@ -81,7 +82,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
-    public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
+    public async initialize(documents: Array<IdaiFieldMediaDocument>, selectedDocument: IdaiFieldMediaDocument,
                             linkedResourceIdentifier?: string) {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
@@ -136,7 +137,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
             { size: 'lg', backdrop: 'static' }
             );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.selectedImage.document as ImageDocument);
+        doceditModalComponent.setDocument(this.selectedImage.document as IdaiFieldMediaDocument);
 
         try {
             const result = await doceditModalRef.result;
@@ -188,7 +189,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
-    private async fetchThumbnail(document: ImageDocument): Promise<ImageContainer> {
+    private async fetchThumbnail(document: IdaiFieldMediaDocument): Promise<ImageContainer> {
 
         const image: ImageContainer = { document: document };
 
@@ -258,7 +259,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
     private static scrollToThumbnail(image: ImageContainer) {
 
         const element: HTMLElement|null = document.getElementById(
-            'thumbnail-' + (image.document as ImageDocument).resource.id
+            'thumbnail-' + (image.document as IdaiFieldMediaDocument).resource.id
         );
 
         if (element) element.scrollIntoView({ inline: 'center' });

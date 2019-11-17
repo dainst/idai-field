@@ -1352,6 +1352,14 @@
           "label": "Raubgrabung"
         }
       }
+    },
+    "Model3D": {
+      "label": "3D-Modell",
+      "fields": {
+        "georeferenced": {
+          "label": "Georeferenziert"
+        }
+      }
     }
   },
   "relations": {

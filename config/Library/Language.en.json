@@ -1205,6 +1205,14 @@
           "label": "Illegal excavation"
         }
       }
+    },
+    "Model3D": {
+      "label": "3D model",
+      "fields": {
+        "georeferenced": {
+          "label": "Georeferenced"
+        }
+      }
     }
   },
   "relations": {

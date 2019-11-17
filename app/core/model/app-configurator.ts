@@ -263,6 +263,30 @@ export class AppConfigurator {
                 }
             }
         } as BuiltinTypeDefinition,
+        Model3D: {
+            superType: true,
+            userDefinedSubtypesAllowed: true,
+            fields: {
+                georeferenced: {
+                    inputType: 'boolean'
+                },
+                originalFilename: {
+                    inputType: 'input',
+                    visible: false,
+                    editable: false
+                },
+                thumbnailWidth: {
+                    inputType: 'unsignedInt',
+                    visible: false,
+                    editable: false
+                },
+                thumbnailHeight: {
+                    inputType: 'unsignedInt',
+                    visible: false,
+                    editable: false
+                }
+            }
+        } as BuiltinTypeDefinition
     };
 
     private defaultFields = {
@@ -293,14 +317,14 @@ export class AppConfigurator {
     private defaultRelations: any[] = [
         {
             name: 'depicts',
-            domain: ['Image:inherit'],
+            domain: ['Image:inherit', 'Model3D:inherit'],
             inverse: 'isDepictedIn',
             label: this.i18n({ id: 'configuration.relations.depicts', value: 'Zeigt' }),
             editable: true
         },
         {
             name: 'isDepictedIn',
-            range: ['Image:inherit'],
+            range: ['Image:inherit', 'Model3D:inherit'],
             inverse: 'depicts',
             label: this.i18n({ id: 'configuration.relations.isDepictedIn', value: 'Wird gezeigt in' }),
             visible: false,

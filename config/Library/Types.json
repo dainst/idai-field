@@ -782,6 +782,20 @@
     "valuelists": {},
     "fields": {}
   },
+  "Model3D:default": {
+    "typeFamily": "Model3D",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "processor",
+      "campaign",
+      "description",
+      "draughtsmen"
+    ],
+    "valuelists": {},
+    "fields": {}
+  },
   "Pottery:default": {
     "parent": "Find",
     "typeFamily": "Pottery",

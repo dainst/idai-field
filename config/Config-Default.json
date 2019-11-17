@@ -142,5 +142,9 @@
   "Excavation:default": {
     "hidden": [],
     "fields": {}
+  },
+  "Model3D:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

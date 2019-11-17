@@ -57,7 +57,7 @@ export class MediaOverviewFacade {
 
     public async initialize() {
 
-        if (!this.mediaState.getQuery()) this.mediaState.setQuery(this.getDefaultQuery());
+        if (!this.mediaState.getQuery()) this.mediaState.setQuery(MediaOverviewFacade.getDefaultQuery());
         this.setQueryConstraints();
         await this.fetchDocuments();
     }
@@ -187,15 +187,6 @@ export class MediaOverviewFacade {
     }
 
 
-    public getDefaultQuery(): Query {
-
-        return {
-            q: '',
-            types: this.typeUtility.getMediaTypeNames()
-        };
-    }
-
-
     private getLimit() {
 
         return this.getNrMediaResourcesPerRow() * this.maxRows - 1 /* drop area */;
@@ -211,5 +202,13 @@ export class MediaOverviewFacade {
     private setQueryConstraints() {
 
         this.mediaState.getQuery().constraints = clone(this.getCustomConstraints());
+    }
+
+
+    private static getDefaultQuery(): Query {
+
+        return {
+            q: ''
+        };
     }
 }

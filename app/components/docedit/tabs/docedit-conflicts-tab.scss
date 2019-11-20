@@ -1,31 +1,40 @@
-#conflict-resolver {
-  height: calc(100vh - 161px);
-  overflow-x: hidden;
-  overflow-y: auto;
+docedit-conflicts-tab {
+  #conflict-resolver {
+    height: calc(100vh - 161px);
+    overflow-x: hidden;
+    overflow-y: auto;
 
-  .conflict-resolver-field {
-    padding: 10px 5px;
+    .conflict-resolver-field {
+      padding: 10px 5px;
+    }
+
+    .radio-button-field {
+      padding-bottom: 5px;
+      padding-left: 20px;
+    }
+
+    .winning-side {
+      color: #1b9519;
+    }
+
+    .losing-side {
+      color: #e00000;
+    }
+
+    #solve-conflict-button {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .row {
+      margin: inherit;
+    }
   }
 
-  .radio-button-field {
-    padding-bottom: 5px;
-    padding-left: 20px;
-  }
-
-  .winning-side {
-    color: #1b9519;
-  }
-
-  .losing-side {
-    color: #e00000;
-  }
-
-  #solve-conflict-button {
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-
-  .row {
-    margin: inherit;
+  loading-icon {
+    position: absolute;
+    top: 70px;
+    left: -15px;
+    width: 100%;
   }
 }

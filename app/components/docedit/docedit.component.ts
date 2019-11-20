@@ -63,7 +63,7 @@ export class DoceditComponent {
 
     public isChanged = () => this.documentHolder.isChanged();
 
-    public isLoading = () => this.loading.isLoading();
+    public isLoading = () => this.loading.isLoading('docedit');
 
     public getFieldDefinitionLabel: (_: string) => string;
 

@@ -1,4 +1,4 @@
-<div *ngIf="ready" id="conflict-resolver">
+<div *ngIf="!isLoading()" id="conflict-resolver">
     <div class="card">
         <div class="card-header">
             <h3 *ngIf="conflictedRevisions.length === 0 && inspectedRevisions.length > 0" class="card-title"
@@ -126,6 +126,9 @@
             <span i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
         </button>
     </div>
+</div>
+<div *ngIf="isLoading()">
+    <loading-icon [context]="'docedit-conflicts-tab'"></loading-icon>
 </div>
 
 

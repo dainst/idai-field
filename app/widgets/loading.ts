@@ -25,9 +25,9 @@ export class Loading {
     }
 
 
-    public isLoading(): boolean {
+    public isLoading(context?: string): boolean {
 
-        return this.loading > 0;
+        return this.loading > 0 && (!context || context === this.context);
     }
 
 

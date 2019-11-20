@@ -4,6 +4,7 @@ import {Relations, Resource, Document, Messages} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {Loading} from '../../../widgets/loading';
 
 const moment = require('moment');
 
@@ -20,8 +21,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
     @Input() document: Document;
     @Input() inspectedRevisions: Document[];
 
-    public ready: boolean = false;
-
     private conflictedRevisions: Array<Document> = [];
     private selectedRevision: Document|undefined;
     private differingFields: any[];
@@ -31,10 +30,16 @@ export class DoceditConflictsTabComponent implements OnChanges {
     constructor(private datastore: DocumentReadDatastore,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
+                private loading: Loading,
                 private i18n: I18n) {}
 
 
+    public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
+
+
     async ngOnChanges() {
+
+        this.loading.start('docedit-conflicts-tab');
 
         this.conflictedRevisions = await this.getConflictedRevisions();
 
@@ -45,7 +50,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             this.differingFields = [];
         }
 
-        this.ready = true;
+        this.loading.stop();
     }
 
 

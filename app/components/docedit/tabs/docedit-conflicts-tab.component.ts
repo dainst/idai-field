@@ -20,7 +20,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     @Input() document: Document;
     @Input() inspectedRevisions: Document[];
 
-    public ready = false;
+    public ready: boolean = false;
 
     private conflictedRevisions: Array<Document> = [];
     private selectedRevision: Document|undefined;
@@ -87,38 +87,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private markRevisionAsInspected(revision: Document) {
-
-        let index = this.conflictedRevisions.indexOf(revision);
-        this.conflictedRevisions.splice(index, 1);
-        this.inspectedRevisions.push(revision);
-    }
-
-
-    private fetchRelationTargets() {
-
-        if (!this.selectedRevision) return;
-
-        this.relationTargets = {};
-
-        for (let field of this.differingFields) {
-            if (field.type === 'relation') {
-                this.fetchRelationTargetsOfField(this.document.resource, field.name);
-                this.fetchRelationTargetsOfField(this.selectedRevision.resource, field.name);
-            }
-        }
-    }
-
-
-    private async fetchRelationTargetsOfField(resource: Resource, fieldName: string) {
-
-        if (resource.relations[fieldName]) {
-            const targets: Array<Document> = await this.datastore.getMultiple(resource.relations[fieldName]);
-            targets.forEach(target => this.relationTargets[target.resource.id] = target);
-        }
-    }
-
-
     public getTargetIdentifiers(targetIds: string[]): string {
 
         let result: string = '';
@@ -165,17 +133,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private sortRevisions(revisions: Array<Document>) {
-
-        revisions.sort((a: Document, b: Document) =>
-            Document.getLastModified(a) < Document.getLastModified(b)
-                ? -1
-                : Document.getLastModified(a) > Document.getLastModified(b)
-                    ? 1
-                    : 0);
-    }
-
-
     public getRevisionLabel(revision: Document): string {
 
         moment.locale('de');
@@ -190,23 +147,19 @@ export class DoceditConflictsTabComponent implements OnChanges {
         const fieldContent: any = revision.resource[field.name];
 
         return fieldContent instanceof Array
-            ? this.getContentStringFor(fieldContent)
+            ? DoceditConflictsTabComponent.getContentStringFor(fieldContent)
             : fieldContent;
     }
 
 
-    public getContentStringFor(fieldContent: any[]): string {
+    private sortRevisions(revisions: Array<Document>) {
 
-        let contentString: string = '';
-        for (let element of fieldContent) {
-            if (element.label) {
-                contentString += '<div>' + element.label + '</div>';
-            } else {
-                if (contentString.length > 0) contentString += ', ';
-                contentString += element;
-            }
-        }
-        return contentString;
+        revisions.sort((a: Document, b: Document) =>
+            Document.getLastModified(a) < Document.getLastModified(b)
+                ? -1
+                : Document.getLastModified(a) > Document.getLastModified(b)
+                ? 1
+                : 0);
     }
 
 
@@ -275,5 +228,52 @@ export class DoceditConflictsTabComponent implements OnChanges {
         }
 
         return differingFields;
+    }
+
+
+    private markRevisionAsInspected(revision: Document) {
+
+        let index = this.conflictedRevisions.indexOf(revision);
+        this.conflictedRevisions.splice(index, 1);
+        this.inspectedRevisions.push(revision);
+    }
+
+
+    private fetchRelationTargets() {
+
+        if (!this.selectedRevision) return;
+
+        this.relationTargets = {};
+
+        for (let field of this.differingFields) {
+            if (field.type === 'relation') {
+                this.fetchRelationTargetsOfField(this.document.resource, field.name);
+                this.fetchRelationTargetsOfField(this.selectedRevision.resource, field.name);
+            }
+        }
+    }
+
+
+    private async fetchRelationTargetsOfField(resource: Resource, fieldName: string) {
+
+        if (resource.relations[fieldName]) {
+            const targets: Array<Document> = await this.datastore.getMultiple(resource.relations[fieldName]);
+            targets.forEach(target => this.relationTargets[target.resource.id] = target);
+        }
+    }
+
+
+    private static getContentStringFor(fieldContent: any[]): string {
+
+        let contentString: string = '';
+        for (let element of fieldContent) {
+            if (element.label) {
+                contentString += '<div>' + element.label + '</div>';
+            } else {
+                if (contentString.length > 0) contentString += ', ';
+                contentString += element;
+            }
+        }
+        return contentString;
     }
 }

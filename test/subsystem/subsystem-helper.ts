@@ -24,7 +24,7 @@ import {TabManager} from '../../app/components/tab-manager';
 import {ImageOverviewFacade} from '../../app/components/imageoverview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../app/components/imageoverview/view/image-documents-manager';
 import {ImagesState} from '../../app/components/imageoverview/view/images-state';
-import {AppConfigurator} from '../../app/core/model/app-configurator';
+import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {ConfigLoader} from '../../app/core/configuration/config-loader';
 import {ConfigReader} from '../../app/core/configuration/config-reader';
 

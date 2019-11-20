@@ -55,7 +55,7 @@ import {UtilTranslations} from './core/util/util-translations';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 import {ConfigReader} from './core/configuration/config-reader';
 import {ConfigLoader} from './core/configuration/config-loader';
-import {AppConfigurator} from './core/model/app-configurator';
+import {AppConfigurator} from './core/configuration/app-configurator';
 
 
 const remote = require('electron').remote;

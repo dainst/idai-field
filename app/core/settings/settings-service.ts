@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {unique} from 'tsfun';
-import {Messages, Document} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
@@ -11,7 +11,7 @@ import {ImageConverter} from '../imagestore/image-converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
 import {Name} from '../../c';
-import {AppConfigurator} from '../model/app-configurator';
+import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
 const {remote, ipcRenderer} = require('electron');

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ConfigLoader} from '../configuration/config-loader';
-import {ProjectConfiguration} from '../configuration/project-configuration';
-import {FieldDefinition} from '../configuration/model/field-definition';
-import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from '../configuration/model/builtin-type-definition';
+import {ConfigLoader} from './config-loader';
+import {ProjectConfiguration} from './project-configuration';
+import {FieldDefinition} from './model/field-definition';
+import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
 
 
 @Injectable()

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, Resource, Document, Messages} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
@@ -31,15 +31,19 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
+                private changeDetectorRef: ChangeDetectorRef,
                 private i18n: I18n) {}
 
 
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
 
+    public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
+
 
     async ngOnChanges() {
 
         this.loading.start('docedit-conflicts-tab');
+        this.detectChangesWhileLoading();
 
         this.conflictedRevisions = await this.getConflictedRevisions();
 
@@ -241,6 +245,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let index = this.conflictedRevisions.indexOf(revision);
         this.conflictedRevisions.splice(index, 1);
         this.inspectedRevisions.push(revision);
+    }
+
+
+    private detectChangesWhileLoading() {
+
+        this.changeDetectorRef.detectChanges();
+
+        if (this.isLoading()) setTimeout(() => this.detectChangesWhileLoading(), 100);
     }
 
 

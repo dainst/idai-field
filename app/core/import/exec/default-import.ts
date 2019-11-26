@@ -68,7 +68,8 @@ export function buildImportFunction(validator: ImportValidator,
             operationTypeNames,
             get,
             getInverseRelation,
-            importOptions);
+            importOptions
+        );
 
         if (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_TYPE_RANGE_MISMATCH

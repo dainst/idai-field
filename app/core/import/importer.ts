@@ -137,7 +137,8 @@ export module Importer {
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
-                    GazGeojsonParserAddOn.postProcess);
+                    GazGeojsonParserAddOn.postProcess
+                );
             case 'geojson':
                 return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
@@ -166,12 +167,12 @@ export module Importer {
         switch (format) {
             case 'geojson-gazetteer':
                 importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
-                    { mergeMode: false, permitDeletions: false});
+                    { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
-                    { mergeMode: true, permitDeletions: false});
+                    { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
                 importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,

@@ -1,7 +1,7 @@
-import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {Parser} from './parser';
+
 
 export interface Geojson {
     type: string,
@@ -9,6 +9,7 @@ export interface Geojson {
     properties?: any;
     geometry: { type: string };
 }
+
 
 export interface GazetteerProperties {
     prefName: {
@@ -76,7 +77,7 @@ export module GeojsonParser {
     }
 
 
-    function iterateDocs(content: Geojson) {
+    function iterateDocs(content: Geojson): Array<Document> {
 
         const docs: Array<Document> = [];
         for (let feature of content.features) {
@@ -131,18 +132,21 @@ export module GeojsonParser {
     }
 
 
-    function makeDoc(feature: any) {
+    function makeDoc(feature: any): any {
 
         const resource = {
             identifier: feature.properties['identifier'],
             geometry: feature.geometry,
             relations: feature.properties.relations,
-            type: feature.properties['type'],
-            shortDescription: feature.properties['shortDescription']
+            type: feature.properties['type']
         };
+
+        if (feature.properties['shortDescription']) {
+            (resource as any)['shortDescription'] = feature.properties['shortDescription'];
+        }
         if (feature.properties['gazId']) (resource as any)['gazId'] = feature.properties['gazId'];
         if (feature.properties['id']) (resource as any)['id'] = feature.properties['id'];
 
-        return {resource: resource}
+        return { resource: resource }
     }
 }

@@ -5,7 +5,6 @@ import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
 
 
-
 /**
  * @author Daniel de Oliveira
  */
@@ -39,7 +38,7 @@ function overwriteOrDeleteProperties(target: any|undefined, source: any, exclusi
 
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
-        .reduce((target: {[propertyName: string]: string[]}, propertyName: string) => {
+        .reduce((target: { [propertyName: string]: string[] }, propertyName: string) => {
             if (source[propertyName] === null) {
                 delete target[propertyName];
             } else {

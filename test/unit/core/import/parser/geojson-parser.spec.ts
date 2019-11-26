@@ -32,7 +32,7 @@ describe('GeojsonParser', () => {
             '"properties" : {"identifier":"123"} } ] }';
 
         const parse = GeojsonParser.getParse(undefined, undefined);
-        const docs: Document[] = [];
+
         parse(fileContent).then(docs => {
             // expect(resultDocument).not.toBe(undefined);
             // docs.push(resultDocument);
@@ -48,6 +48,21 @@ describe('GeojsonParser', () => {
             fail(err);
             done();
         });
+    });
+
+
+    it('do not add empty fields for fields not mentioned in import file', async done => {
+
+        const fileContent  = '{ "type": "FeatureCollection", "features": [' +
+            '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
+            '"properties": { "identifier": "122" } }] }';
+
+        const parse = GeojsonParser.getParse(undefined, undefined);
+        const docs: Document[] = await parse(fileContent);
+
+        expect(Object.getOwnPropertyNames(docs[0])).not.toContain('shortDescription');
+
+        done();
     });
 
 

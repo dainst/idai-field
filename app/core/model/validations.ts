@@ -199,7 +199,7 @@ export module Validations {
 
 
     /**
-     * @returns the names of invalid fields if one or more of the fields are invalid
+     * @returns the names of invalid fields if one or more of the fields are not defined in projectConfiguration
      */
     export function validateDefinedFields(resource: Resource|NewResource,
                                           projectConfiguration: ProjectConfiguration): string[] {
@@ -207,22 +207,20 @@ export module Validations {
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition];
 
-        const fields: Array<any> = projectFields.concat(defaultFields);
+        const definedFields: Array<any> = projectFields.concat(defaultFields);
 
         let invalidFields: Array<any> = [];
 
         for (let resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
                 let fieldFound: boolean = false;
-                for (let i in fields) {
-                    if (fields[i].name === resourceField) {
+                for (let i in definedFields) {
+                    if (definedFields[i].name === resourceField) {
                         fieldFound = true;
                         break;
                     }
                 }
-                if (!fieldFound) {
-                    invalidFields.push(resourceField);
-                }
+                if (!fieldFound) invalidFields.push(resourceField);
             }
         }
 

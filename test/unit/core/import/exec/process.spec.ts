@@ -48,7 +48,6 @@ describe('process()', () => {
 
 
     let resourceIdCounter;
-    let processMergeOverwriteRelations;
 
 
     beforeEach(() => {
@@ -58,6 +57,7 @@ describe('process()', () => {
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist',
             'assertIsWellformed',
+            'assertFieldsDefined',
             'assertLiesWithinCorrectness',
             'assertRelationsWellformedness',
             'assertIsKnownType',
@@ -386,6 +386,19 @@ describe('process()', () => {
 
 
     // err cases /////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('field is not defined', async done => {
+
+        validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS]});
+
+        const result = await process([
+                d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
+            ],
+            validator, opTypeNames, get, getInverse);
+
+        expect(result[2][0]).toEqual(E.INVALID_FIELDS);
+        done();
+    });
 
     it('assert lies within correctness', async done => {
 

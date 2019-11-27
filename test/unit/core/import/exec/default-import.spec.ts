@@ -22,6 +22,7 @@ describe('DefaultImport', () => {
             'assertIsWellformed',
             'assertLiesWithinCorrectness',
             'assertIsKnownType',
+            'assertFieldsDefined',
             'assertHasLiesWithin',
             'assertIsAllowedType',
             'assertDropdownRangeComplete',

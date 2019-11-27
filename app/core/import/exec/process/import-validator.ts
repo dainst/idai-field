@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, NewDocument, NewResource, Query, Resource} from 'idai-components-2';
 import {TypeUtility} from '../../../model/type-utility';
 import {Validator} from '../../../model/validator';
@@ -6,9 +7,8 @@ import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
 import {ValidationErrors} from '../../../model/validation-errors';
 import {DocumentDatastore} from '../../../datastore/document-datastore';
-import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {INPUT_TYPES, ResourceId} from '../../../../c';
-import {HIERARCHICAL_RELATIONS, PARENT} from '../../../model/relation-constants';
+import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
@@ -27,7 +27,6 @@ import {ProjectConfiguration} from '../../../configuration/project-configuration
  */
 export class ImportValidator extends Validator {
 
-
     constructor(projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentDatastore,
                 typeUtility: TypeUtility) {
@@ -36,10 +35,8 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertIsAllowedRelationDomainType(domainTypeName: string,
-                                             rangeTypeName: string,
-                                             relationName: string,
-                                             identifier: string) {
+    public assertIsAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string,
+                                             relationName: string, identifier: string) {
 
         if (!this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName)) {
 
@@ -59,7 +56,7 @@ export class ImportValidator extends Validator {
 
             const type = this.projectConfiguration.getTypesList().find(on('name', is(resource.type)));
             if (!type) {
-                console.error("resource type not found", resource.type);
+                console.error('Resource type not found', resource.type);
                 continue;
             }
             if (!type.mustLieWithin) continue;
@@ -188,7 +185,8 @@ export class ImportValidator extends Validator {
     }
 
 
-    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument, mainTypeDocumentId: ResourceId) {
+    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument,
+                                                             mainTypeDocumentId: ResourceId) {
 
         const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
         if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,

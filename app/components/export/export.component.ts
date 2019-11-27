@@ -192,8 +192,8 @@ export class ExportComponent implements OnInit {
 
             const options: any = { filters: [this.getFileFilter()] };
             if (this.selectedType) {
-                options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' })
-                    + '.' + this.selectedType.name.toLowerCase();
+                options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
+                if (this.format === 'csv') options.defaultPath += '.' + this.selectedType.name.toLowerCase();
             }
 
             const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);

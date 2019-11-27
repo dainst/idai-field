@@ -93,17 +93,21 @@ function assertNoDuplicates(documents: Array<Document>) {
 
 
 /**
- * @returns clones of the documents with their properties adjusted
+ * @returns clones of the documents with their properties validated and adjusted
  */
-function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean)
-        : Array<Document> {
+function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean): Array<Document> {
 
     return documents.map((document: Document) => {
+
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
-        return validate(
-            mergeOrUseAsIs(document),
-            validator,
-            mergeMode);
+
+        if (!mergeMode) validator.assertIsKnownType(document);
+        validator.assertFieldsDefined(document);                  // we do this only for fields of import document
+
+        const finalDocument = mergeOrUseAsIs(document);
+        if (!mergeMode) validator.assertIsAllowedType(finalDocument);
+        validator.assertIsWellformed(finalDocument);
+        return finalDocument;
     });
 }
 
@@ -114,17 +118,6 @@ function mergeOrUseAsIs(document: NewDocument|Document): Document {
         ? mergeDocument((document as any)[MERGE_TARGET], dissocOn(MERGE_TARGET)(document))
         : document as Document;
 
-}
-
-
-function validate(document: Document, validator: ImportValidator, mergeMode: boolean): Document {
-
-    if (!mergeMode) {
-        validator.assertIsKnownType(document);
-        validator.assertIsAllowedType(document, mergeMode);
-    }
-    validator.assertIsWellformed(document);
-    return document;
 }
 
 

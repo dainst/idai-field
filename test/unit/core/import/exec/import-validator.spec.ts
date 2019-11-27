@@ -103,7 +103,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertFieldsDefined(doc);
             fail();
         } catch (errWithParams) {
 
@@ -126,7 +126,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertFieldsDefined(doc);
             fail();
         } catch (errWithParams) {
 

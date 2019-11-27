@@ -83,7 +83,7 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertIsAllowedType(document: Document|NewDocument, mergeMode: boolean) {
+    public assertIsAllowedType(document: Document|NewDocument) {
 
         if (document.resource.type === 'Operation'
             || document.resource.type === 'Project') {
@@ -91,8 +91,7 @@ export class ImportValidator extends Validator {
             throw [E.TYPE_NOT_ALLOWED, document.resource.type];
         }
 
-        if (!mergeMode && (document.resource.type === 'Image'
-            || this.typeUtility.isSubtype(document.resource.type, 'Image'))) {
+        if (document.resource.type === 'Image' || this.typeUtility.isSubtype(document.resource.type, 'Image')) {
 
             throw [E.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
         }
@@ -129,6 +128,23 @@ export class ImportValidator extends Validator {
 
 
     /**
+     * @param document
+     * @throws [E.INVALID_FIELDS]
+     */
+    public assertFieldsDefined(document: Document|NewDocument): void {
+
+        const undefinedFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
+        if (undefinedFields.length > 0) {
+            throw [
+                E.INVALID_FIELDS,
+                document.resource.type,
+                undefinedFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
      * Wellformedness test specifically written for use in import package.
      *
      * Assumes
@@ -145,7 +161,6 @@ export class ImportValidator extends Validator {
      *   e.g. checking identifier uniqueness or relation target existence.
      *
      * @throws [E.INVALID_RELATIONS]
-     * @throws [E.INVALID_FIELDS]
      * @throws [ValidationErrors.MISSING_PROPERTY]
      * @throws [ValidationErrors.MISSING_GEOMETRYTYPE]
      * @throws [ValidationErrors.MISSING_COORDINATES]
@@ -154,16 +169,6 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.INVALID_NUMERICAL_VALUE]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
-
-        const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
-
-        if (invalidFields.length > 0) {
-            throw [
-                E.INVALID_FIELDS,
-                document.resource.type,
-                invalidFields.join(', ')
-            ];
-        }
 
         Validations.assertNoFieldsMissing(document, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);

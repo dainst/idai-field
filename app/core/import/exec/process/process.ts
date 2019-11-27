@@ -1,4 +1,4 @@
-import {duplicates, to, dissocOn} from 'tsfun';
+import {duplicates, to, dissocOn, assocOn} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
@@ -102,9 +102,15 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
 
         if (!mergeMode) validator.assertIsKnownType(document);
-        validator.assertFieldsDefined(document);                  // we do this only for fields of import document
 
         const finalDocument = mergeOrUseAsIs(document);
+
+        // While we want to leave existing documents' fields as they come from the database,
+        // we do test for fields of import document if they are defined.
+        // We need to make sure the resourceType is set in any case.
+        document.resource.type = finalDocument.resource.type;
+        validator.assertFieldsDefined(document);
+
         if (!mergeMode) validator.assertIsAllowedType(finalDocument);
         validator.assertIsWellformed(finalDocument);
         return finalDocument;

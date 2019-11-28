@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('import --', function() {
+fdescribe('import --', function() {
 
     let index = 0;
 
@@ -55,7 +55,7 @@ describe('import --', function() {
 
     it('perform successful import', () => {
 
-        importIt('./test/test-data/importer-test-ok.jsonl');
+        importIt('../test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
 
         NavbarPage.clickCloseNonResourcesTab();
@@ -70,7 +70,7 @@ describe('import --', function() {
 
     it('err case', () => {
 
-        importIt('./test/test-data/importer-test-constraint-violation.jsonl');
+        importIt('../test/test-data/importer-test-constraint-violation.jsonl');
 
         NavbarPage.awaitAlert('existiert bereits', false);
         element(by.css('.alert button')).click();

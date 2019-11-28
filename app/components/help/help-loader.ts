@@ -26,7 +26,7 @@ export module HelpLoader {
 
     function adjustImageLinks(markdown: string): string {
 
-        return markdown.replace(/img src="images/g, 'img src="manual/images');
+        return markdown.replace(/img src="images/g, 'img src="../manual/images');
     }
 
 

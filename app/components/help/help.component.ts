@@ -81,7 +81,7 @@ export class HelpComponent implements OnInit {
 
     private static getFilePath(locale: string): string {
 
-        return 'manual/manual.' + locale + '.md';
+        return '../manual/manual.' + locale + '.md';
     }
 
 

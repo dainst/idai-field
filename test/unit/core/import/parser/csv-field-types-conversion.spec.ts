@@ -291,6 +291,31 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
+    it('field type unsignedFloat', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'uf1',
+                inputType: 'unsignedFloat'
+            }, {
+                name: 'uf2',
+                inputType: 'unsignedFloat'
+            }]
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                uf1: '100.1',
+                uf2: '100,2',
+                relations: {}
+            } as unknown as Resource);
+
+        expect(resource['uf1']).toBe(100.1);
+        expect(resource['uf2']).toBe(100.2);
+    });
+
+
     it('relations', () => {
 
         const type = {
@@ -315,26 +340,6 @@ describe('CsvFieldTypesConversion', () => {
 
 
     // err cases
-
-
-    it('field type unsignedFloat', () => {
-
-        const type = {
-            name: 'TypeName',
-            fields: [{
-                name: 'uf',
-                inputType: 'unsignedFloat'
-            }],
-        } as IdaiType;
-
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
-                uf: '100.0',
-                relations: {}
-            } as unknown as Resource);
-
-        expect(resource['uf']).toBe(100.0);
-    });
 
 
     it('field type unsignedInt - not a number', () => {

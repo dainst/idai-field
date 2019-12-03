@@ -127,10 +127,13 @@ export module CsvFieldTypesConversion {
      */
     function convertNumber(container: any, path: string, type: 'int'|'float') {
 
-        const val = getOn(path, undefined)(container);
-        if (!val) return;
-        const converted = type === 'int' ? parseInt(val) : parseFloat(val);
-        if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, val, path];
+        let value = getOn(path, undefined)(container);
+        if (!value) return;
+
+        if (type === 'float') value = value.replace(',', '.');
+
+        const converted = type === 'int' ? parseInt(value) : parseFloat(value);
+        if (isNaN(converted)) throw [ParserErrors.CSV_NOT_A_NUMBER, value, path];
         setOn(container, path)(converted);
     }
 

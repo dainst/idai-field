@@ -1,12 +1,13 @@
 import {Dating, Dimension, Resource} from 'idai-components-2';
 import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
-import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
+import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('CsvFieldTypesConversion', () => {
 
@@ -80,7 +81,6 @@ describe('CsvFieldTypesConversion', () => {
         } as IdaiType;
 
         try {
-
             CsvFieldTypesConversion
                 .convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
             fail();
@@ -95,14 +95,14 @@ describe('CsvFieldTypesConversion', () => {
         const type = {
             name: 'TypeName',
             fields: [{
-                name: 'Dim',
+                name: 'dimension',
                 inputType: 'dimension'
             }],
         } as IdaiType;
 
         const resource = CsvFieldTypesConversion
             .convertFieldTypes(type)({
-                Dim: [{
+                dimension: [{
                     value: '1',
                     rangeMin: '2',
                     rangeMax: '3',
@@ -117,7 +117,7 @@ describe('CsvFieldTypesConversion', () => {
                 relations: {}
             } as unknown as Resource);
 
-        const dimension: Dimension = resource['Dim'][0];
+        const dimension: Dimension = resource['dimension'][0];
         expect(dimension.value).toBe(1);
         expect(dimension.rangeMin).toBe(2);
         expect(dimension.rangeMax).toBe(3);
@@ -128,6 +128,57 @@ describe('CsvFieldTypesConversion', () => {
         expect(dimension.inputUnit).toBe('mm');
         expect(dimension.isImprecise).toBe(true);
         expect(dimension.isRange).toBe(false);
+    });
+
+
+    it('ignore empty dimensions and datings', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dimension',
+                inputType: 'dimension'
+            },
+            {
+                name: 'dating',
+                inputType: 'dating'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                dimension: [
+                    {
+                        value: null,
+                        inputUnit: null
+                    },
+                    {
+                        value: '10',
+                        inputUnit: 'mm'
+                    },
+                    {}
+                ],
+                dating: [
+                    {
+                        type: null,
+                        begin: null,
+                        end: null
+                    },
+                    {
+                        type: 'range',
+                        begin: { inputType: 'bce', inputYear: '0' },
+                        end: { inputType: 'bce', inputYear: '1' },
+                        source: 'abc'
+                    },
+                    {}
+                ],
+                relations: {}
+            } as unknown as Resource);
+
+        expect(resource['dimension'].length).toBe(1);
+        expect(resource['dimension'][0].value).toBe(10);
+        expect(resource['dating'].length).toBe(1);
+        expect(resource['dating'][0].type).toBe('range');
     });
 
 

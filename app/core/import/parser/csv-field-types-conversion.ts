@@ -2,10 +2,10 @@ import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
 import {setOn} from 'tsfun-extra';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {CSVExport} from '../../export/csv-export';
-import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
 import {PARENT} from '../../model/relation-constants';
 import {IdaiType} from '../../configuration/model/idai-type';
+import {CSVExport} from '../../export/csv-export';
+import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
 
 
 /**
@@ -79,6 +79,8 @@ export module CsvFieldTypesConversion {
 
     function convertDimension(resource: Resource, fieldName: string) {
 
+        removeEmptyObjects(resource, fieldName);
+
         let i = 0;
         for (let dimension of resource[fieldName] as Array<Dimension>) {
 
@@ -99,6 +101,8 @@ export module CsvFieldTypesConversion {
 
 
     function convertDating(resource: Resource, fieldName: string) {
+
+        removeEmptyObjects(resource, fieldName);
 
         let i = 0;
         for (let dating of resource[fieldName] as Array<Dating>) {
@@ -141,5 +145,13 @@ export module CsvFieldTypesConversion {
         if (!val) return;
         if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
         setOn(container, path)(val === 'true');
+    }
+
+
+    function removeEmptyObjects(resource: Resource, fieldName: string) {
+
+        resource[fieldName] = resource[fieldName].filter((object: any) => {
+            return Object.values(object).filter((value: any) => value !== null).length > 0;
+        });
     }
 }

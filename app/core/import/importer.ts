@@ -115,11 +115,10 @@ export module Importer {
             if (!fieldDefinition) continue;
 
             if (fieldDefinition.inputType === 'dating') {
-
                 for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
             }
-            if (fieldDefinition.inputType === 'dimension') {
 
+            if (fieldDefinition.inputType === 'dimension') {
                 for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
             }
         }

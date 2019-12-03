@@ -48,7 +48,7 @@ describe('CsvParser', () => {
         const type = makeFieldDefinitions([]);
 
         const parse = CsvParser.getParse({
-            name: 'Feature', fields: type} as IdaiType,
+            name: 'Feature', fields: type } as IdaiType,
             '',
             ','
         );

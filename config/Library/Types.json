@@ -1534,7 +1534,8 @@
     "commons": [
       "date",
       "description",
-      "processor"
+      "processor",
+      "spatialLocation"
     ],
     "valuelists": {
       "sampleType": "Sample-sampleType-default"

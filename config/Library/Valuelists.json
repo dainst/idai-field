@@ -2968,6 +2968,22 @@
       "zylindrische Flasche": {}
     }
   },
+  "Sample-sampleType-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bodenprobe": {},
+      "C14-Analyse": {},
+      "Dendroprobe": {},
+      "Hammerschlagsprobe": {},
+      "Phosphatanalyse": {},
+      "Pollenanalyse": {}
+    }
+  },
   "Feature-stratigraphicReliability-Boha": {
     "createdBy": "",
     "creationDate": "",

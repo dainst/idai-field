@@ -1095,10 +1095,6 @@
         "sampleType": {
           "label": "Art der Probe",
           "description": "Welche Probe wird genommen? Welche Untersuchungen sollen vorgenommen werden?"
-        },
-        "soilType": {
-          "label": "Bodenart",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
         }
       }
     },

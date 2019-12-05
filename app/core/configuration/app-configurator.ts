@@ -234,6 +234,10 @@ export class AppConfigurator {
             userDefinedSubtypesAllowed: true,
             fields: {}
         },
+        Sample: {
+            mustLieWithin: true,
+            fields: {}
+        },
         Image: {
             superType: true,
             userDefinedSubtypesAllowed: true,
@@ -450,6 +454,13 @@ export class AppConfigurator {
             editable: false
         },
         {
+            name: 'isRecordedIn',
+            label: this.i18n({ id: 'configuration.relations.isRecordedIn', value: 'Aufgenommen in Maßnahme' }),
+            domain: ['Sample'],
+            range: ['Trench', 'Survey'],
+            editable: false
+        },
+        {
             name: 'includes',
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
@@ -461,7 +472,7 @@ export class AppConfigurator {
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
             domain: ['Feature:inherit'],
-            range: ['Find:inherit', 'Feature:inherit'],
+            range: ['Find:inherit', 'Feature:inherit', 'Sample'],
             sameMainTypeResource: true
         },
         {
@@ -469,7 +480,7 @@ export class AppConfigurator {
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
             domain: ['Find:inherit'],
-            range: ['Inscription'],
+            range: ['Inscription', 'Sample'],
             sameMainTypeResource: true
         },
         {
@@ -520,6 +531,15 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
+            sameMainTypeResource: true,
+            editable: false
+        },
+        {
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['Sample'],
+            range: ['Feature:inherit', 'Find:inherit'],
             sameMainTypeResource: true,
             editable: false
         },

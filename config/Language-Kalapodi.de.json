@@ -33,29 +33,9 @@
     },
     "Sample" :{
       "fields": {
-        "descriptionSample": {
-          "label": "descriptionSample"
-        },
-        "researchQuestion": {
-          "label": "researchQuestion"
-        },
-        "analyzedBy": {
-          "label": "analyzedBy"
-        },
-        "labNumber": {
-          "label": "labNumber"
-        },
-        "sampleType": {
-          "label": "sampleType"
-        },
-        "sampleRelatedTo": {
-          "label": "sampleRelatedTo"
-        },
-        "comment": {
-          "label": "comment"
-        },
-        "sampleState": {
-          "label": "sampleState"
+        "fixMe": {
+          "label": "Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
         }
       }
     },

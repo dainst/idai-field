@@ -518,15 +518,6 @@
     "Sample": {
       "label": "Sample",
       "fields": {
-        "labNumber": {
-          "label": "Laboratory number"
-        },
-        "weight": {
-          "label": "Weight (g)"
-        },
-        "sampleType": {
-          "label": "Sample type"
-        },
         "soilType": {
           "label": "Soil type"
         },

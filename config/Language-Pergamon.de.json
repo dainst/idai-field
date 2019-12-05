@@ -616,18 +616,6 @@
     "Sample": {
       "label": "Probe",
       "fields": {
-        "labNumber": {
-          "label": "Labornummer",
-          "description": "Nummer der Probe, vergeben im untersuchenden Labor"
-        },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
-        },
-        "sampleType": {
-          "label": "Art der Probe",
-          "description": "Welche Probe wird genommen?\nWelche Untersuchungen sollen vorgenommen werden?"
-        },
         "soilType": {
           "label": "Bodenart",
           "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"

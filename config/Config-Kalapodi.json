@@ -34,39 +34,13 @@
       "period": "periods-kalapodi"
     }
   },
-  "Sample": {
-    "parent": "Find",
-    "color": "#9ecae1",
+  "Sample:default": {
     "fields": {
-      "descriptionSample": {
-        "inputType": "text"
-      },
-      "researchQuestion": {
-        "inputType": "text"
-      },
-      "analyzedBy": {
+      "fixMe": {
         "inputType": "input"
-      },
-      "labNumber": {
-        "inputType": "input"
-      },
-      "sampleType": {
-        "inputType": "radio"
-      },
-      "sampleRelatedTo": {
-        "inputType": "input"
-      },
-      "comment": {
-        "inputType": "input"
-      },
-      "sampleState": {
-        "inputType": "radio"
       }
     },
-    "valuelists": {
-      "sampleType": "Sample-sampleType-Campidoglio",
-      "sampleState": "Sample-sampleState-Campidoglio"
-    }
+    "valuelists": {}
   },
   "Feature:default": {
     "fields": {

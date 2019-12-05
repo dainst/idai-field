@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
 import {GROUP_NAME} from '../../../c';
-import {POSITION_RELATIONS, TIME_RELATIONS} from '../../../core/model/relation-constants';
+import {POSITION_RELATIONS, TIME_RELATIONS, SHAPE_RELATIONS} from '../../../core/model/relation-constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -49,7 +49,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
+        { name: 'shape', label: this.i18n({ id: 'docedit.group.shape', value: 'Form' }),
             fields: [], relations: [], widget: 'generic' },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
             fields: [], relations: [], widget: 'generic' },
@@ -104,7 +104,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
             this.setFields();
             GroupUtil.sortGroups(this.groups[GROUP_NAME.STEM].fields, 'stem');
-            GroupUtil.sortGroups(this.groups[GROUP_NAME.DIMENSION].fields, 'dimension');
+            GroupUtil.sortGroups(this.groups[GROUP_NAME.SHAPE].fields, 'dimension');
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
@@ -119,6 +119,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS.ALL)));
         this.groups[GROUP_NAME.TIME].relations =
             this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS.ALL)));
+        this.groups[GROUP_NAME.SHAPE].relations =
+            this.relationDefinitions.filter(on('name', includedIn(SHAPE_RELATIONS.ALL)));
     }
 
 
@@ -127,7 +129,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
         this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
-        this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
+        this.groups[GROUP_NAME.SHAPE].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
 
         if (this.typeUtility.isGeometryType(this.document.resource.type)) {

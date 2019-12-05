@@ -3167,9 +3167,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.group.dimensions" datatype="html">
-        <source>Maße</source>
-        <target state="final">Dimensions</target>
+      <trans-unit id="docedit.group.shape" datatype="html">
+        <source>Form</source>
+        <target state="final">Shape</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3180,8 +3180,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.time" datatype="html">
-        <source>Zeit</source>
-        <target state="final">Time</target>
+        <source>Datierung</source>
+        <target state="final">Dating</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3192,8 +3192,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.position" datatype="html">
-        <source>Lage</source>
-        <target state="final">Position</target>
+        <source>räuml. Kontext</source>
+        <target state="final">spatial Context</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>

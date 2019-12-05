@@ -27,10 +27,15 @@ export module POSITION_RELATIONS {
     export const IS_CUT_BY = 'isCutBy';
     export const SHAPE_IS_LIKE = 'shapeIsLike';              //
 
-    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO, SHAPE_IS_LIKE];
+    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO];
 }
 
+export module SHAPE_RELATIONS {
 
+    export const SHAPE_IS_LIKE = 'shapeIsLike';
+
+    export const ALL = [SHAPE_IS_LIKE];
+}
 /**
  * These relations exists for one to many assignments between operations and contained
  * and between resources and resources contained within those. It does not necessarily

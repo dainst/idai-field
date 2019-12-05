@@ -673,11 +673,6 @@ export class AppConfigurator {
                 parent: 'ProcessUnit',
                 fields: {}
             };
-            (this.builtinTypes as any)['Sample'] = {
-                color: '#9ecae1',
-                parent: 'ProcessUnit',
-                fields: {}
-            };
             (this.builtinTypes as any)['BuildingFloor'] = {
                 color: '#6600cc',
                 fields: {}

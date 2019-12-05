@@ -631,6 +631,9 @@
         "soilType": {
           "label": "Bodenart",
           "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+        },
+        "operationClassification": {
+          "label": "Klassifikation Arbeitsgang"
         }
       }
     },

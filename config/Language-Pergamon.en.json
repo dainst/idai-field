@@ -529,6 +529,9 @@
         },
         "soilType": {
           "label": "Soil type"
+        },
+        "operationClassification": {
+          "label": "Operation classification"
         }
       }
     },

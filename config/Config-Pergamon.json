@@ -1014,27 +1014,20 @@
       "orientation": "orientation-default-1"
     }
   },
-  "Sample": {
+  "Sample:default": {
     "hidden": [],
     "fields": {
-      "labNumber": {
-        "inputType": "input"
-      },
-      "weight": {
-        "inputType": "unsignedFloat"
-      },
-      "sampleType": {
-        "inputType": "radio"
-      },
       "soilType": {
+        "inputType": "dropdown"
+      },
+      "operationClassification": {
         "inputType": "dropdown"
       }
     },
-    "parent": "ProcessUnit",
     "color": "#9ecae1",
     "valuelists": {
-      "sampleType": "Sample-sampleType-Pergamon",
-      "soilType": "Layer-soilType-default"
+      "soilType": "Layer-soilType-default",
+      "operationClassification": "ProcessUnit-operationClassification-Pergamon"
     }
   },
   "ProcessUnit": {

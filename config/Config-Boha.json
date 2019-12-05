@@ -373,27 +373,35 @@
       "color": "colors-boha-1"
     }
   },
-  "Sample": {
+  "Sample:default": {
     "hidden": [],
     "fields": {
-      "labNumber": {
-        "inputType": "input"
-      },
-      "sampleType": {
-        "inputType": "radio"
-      },
       "soilType": {
         "inputType": "dropdown"
       },
       "comment": {
         "inputType": "input"
+      },
+      "drawn": {
+        "inputType": "radio"
+      },
+      "photographed": {
+        "inputType": "radio"
+      },
+      "sketched": {
+        "inputType": "radio"
+      },
+      "hasRestoration": {
+        "inputType": "radio"
       }
     },
-    "parent": "Find",
-    "color": "#9ecae1",
     "valuelists": {
       "sampleType": "SampleBoha-sampleType-Boha",
-      "soilType": "Layer-soilType-Boha"
+      "soilType": "Layer-soilType-Boha",
+      "drawn": "Find-drawn-Boha",
+      "photographed": "Find-drawn-Boha",
+      "sketched": "Find-drawn-Boha",
+      "hasRestoration": "Find-drawn-Boha"
     }
   },
   "Excavation:default": {

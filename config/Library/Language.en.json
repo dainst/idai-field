@@ -980,9 +980,6 @@
         },
         "sampleType": {
           "label": "Sample type"
-        },
-        "soilType": {
-          "label": "Soil type"
         }
       }
     },

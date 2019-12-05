@@ -1524,5 +1524,30 @@
         "inputType": "boolean"
       }
     }
+  },
+  "Sample:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "typeFamily": "Sample",
+    "commons": [
+      "date",
+      "description",
+      "processor"
+    ],
+    "valuelists": {
+      "sampleType": "Sample-sampleType-default"
+    },
+    "fields": {
+      "labNumber": {
+        "inputType": "input"
+      },
+      "weight": {
+        "inputType": "unsignedFloat"
+      },
+      "sampleType": {
+        "inputType": "radio"
+      }
+    }
   }
 }

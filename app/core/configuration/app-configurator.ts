@@ -591,7 +591,15 @@ export class AppConfigurator {
             domain: ['Room'],
             range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
             sameMainTypeResource: true
-        }
+        },
+        {
+            name: 'shapeIsLike',
+            inverse: 'shapeIsLike',
+            label: this.i18n({ id: 'configuration.relations.shapeIsLike', value: 'Form ist wie' }),
+            domain: ['Find:inherit'],
+            range: ['Find:inherit'],
+            sameMainTypeResource: false
+        },
     ];
 
 

@@ -24,15 +24,16 @@ export module POSITION_RELATIONS {
 
     export const BORDERS = 'borders';                 //
     export const CUTS = 'cuts';                       //
-    export const IS_CUT_BY = 'isCutBy';               //
+    export const IS_CUT_BY = 'isCutBy';
+    export const SHAPE_IS_LIKE = 'shapeIsLike';              //
 
-    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO];
+    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO, SHAPE_IS_LIKE];
 }
 
 
 /**
  * These relations exists for one to many assignments between operations and contained
- * and between resources and resources contained within those. It does not necessarily 
+ * and between resources and resources contained within those. It does not necessarily
  * describe a spatial relationship (also it may, depending of the concrete resource domain and range)
  * but says that the app handles it as that structural on-to-many relationship and displays it
  * accordingly (so that operations get views, in which other resoures are listed, and resources
@@ -53,4 +54,3 @@ export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only 
 // Used to signal sameness in a generic manner, for example in order to say
 // two resources, recorded in different operations, are the same
 export const SAME_AS = 'isSameAs';
-

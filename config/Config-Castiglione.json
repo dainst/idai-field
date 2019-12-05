@@ -629,7 +629,7 @@
       "base": "Interface-base-Campidoglio"
     }
   },
-  "Sample": {
+  "Sample:default": {
     "hidden": [],
     "fields": {
       "descriptionSample": {
@@ -641,15 +641,6 @@
       "analyzedBy": {
         "inputType": "input"
       },
-      "labNumber": {
-        "inputType": "input"
-      },
-      "sampleType": {
-        "inputType": "radio"
-      },
-      "sampleRelatedTo": {
-        "inputType": "input"
-      },
       "comment": {
         "inputType": "input"
       },
@@ -657,8 +648,6 @@
         "inputType": "radio"
       }
     },
-    "parent": "Find",
-    "color": "#9ecae1",
     "valuelists": {
       "sampleType": "Sample-sampleType-Campidoglio",
       "sampleState": "Sample-sampleState-Campidoglio"

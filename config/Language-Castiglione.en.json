@@ -179,9 +179,6 @@
         "analyzedBy": {
           "label": "Laboratory"
         },
-        "sampleRelatedTo": {
-          "label": "Related Find or SU"
-        },
         "sampleState": {
           "label": "State"
         }

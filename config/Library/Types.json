@@ -1530,6 +1530,7 @@
     "createdBy": "",
     "creationDate": "",
     "typeFamily": "Sample",
+    "color": "#9ecae1",
     "commons": [
       "date",
       "description",

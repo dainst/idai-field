@@ -81,7 +81,7 @@
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "otherClassification", "soilType"]
   },
   "Sample": {
-    "constraint": ["labNumber", "sampleType", "soilType"]
+    "constraint": ["labNumber", "sampleType", "processor"]
   },
   "Survey": {
     "constraint": ["researchMethod"]

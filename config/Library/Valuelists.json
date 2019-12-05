@@ -7074,22 +7074,6 @@
       "Sondage": {}
     }
   },
-  "Sample-sampleType-Pergamon": {
-    "createdBy": "",
-    "creationDate": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "Bodenprobe": {},
-      "C14-Analyse": {},
-      "Dendroprobe": {},
-      "Hammerschlagsprobe": {},
-      "Phosphatanalyse": {},
-      "Pollenanalyse": {}
-    }
-  },
   "Pottery-vesselpart-WES": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",

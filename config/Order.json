@@ -33,7 +33,7 @@
     "Profile": [],
     "Planum": ["horizontalLocation", "planumForm"],
     "Drilling": ["drillingEquipment"],
-    "Sample": ["soilType", "sampleType", "weight", "labNumber", "comment"],
+    "Sample": ["sampleType", "labNumber", "weight"],
     "Image": [],
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],
     "Photo": ["originalType"],

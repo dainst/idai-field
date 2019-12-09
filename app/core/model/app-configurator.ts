@@ -562,22 +562,6 @@ export class AppConfigurator {
             editable: false
         },
         {
-            name: 'bears',
-            inverse: 'isFoundOn',
-            label: this.i18n({ id: 'configuration.relations.bears', value: 'Trägt' }),
-            domain: ['Find:inherit'],
-            range: ['Inscription'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'isFoundOn',
-            inverse: 'bears',
-            label: this.i18n({ id: 'configuration.relations.isFoundOn', value: 'Ist aufgebracht auf' }),
-            domain: ['Inscription'],
-            range: ['Find:inherit'],
-            sameMainTypeResource: true
-        },
-        {
             name: 'liesWithin',
             inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),

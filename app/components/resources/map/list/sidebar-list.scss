@@ -49,6 +49,15 @@ $teaser-width: $resources-listing-item-slim-width;
   z-index: 1002;
   overflow: hidden;
 
+  #info-header {
+    position: relative;
+    left: 30px;
+    width: 176px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   ul {
     padding: 0;
   }

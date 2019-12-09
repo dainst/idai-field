@@ -351,7 +351,7 @@
         <target state="final">Source</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -359,7 +359,7 @@
         <target state="final">File</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
@@ -367,7 +367,7 @@
         <target state="final">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importTypeSelect" datatype="html">
@@ -375,7 +375,7 @@
         <target state="final">Resource type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -383,7 +383,7 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -391,7 +391,7 @@
         <target state="final">Choose file...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -399,7 +399,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format" datatype="html">
@@ -426,14 +426,6 @@
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.formats.iDig" datatype="html">
-        <source>iDig (experimentell) – CSV</source>
-        <target state="final">iDig (experimental) – CSV</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.formats.geoJson" datatype="html">
         <source>GeoJSON</source>
         <target state="final">GeoJSON</target>
@@ -450,14 +442,6 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.formats.meninx" datatype="html">
-        <source>Meninx/Funde (experimentell) – CSV</source>
-        <target state="final">Meninx/Finds (experimental) – CSV</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>
                             Vorhandene Ressourcen ergänzen
@@ -467,7 +451,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
@@ -490,7 +474,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -511,7 +495,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
@@ -523,7 +507,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
@@ -541,7 +525,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
@@ -560,7 +544,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -568,7 +552,7 @@
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -576,7 +560,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -584,7 +568,7 @@
         <target state="final">Field separator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -603,7 +587,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -617,7 +601,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -636,7 +620,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -2001,7 +1985,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.header" datatype="html">
@@ -4539,7 +4523,7 @@
         <source>Höhe</source>
         <target state="final">Height</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4547,7 +4531,7 @@
         <source>Breite</source>
         <target state="final">Width</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4555,7 +4539,7 @@
         <source>Projekt</source>
         <target state="final">Project</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4563,7 +4547,7 @@
         <source>Koordinatenbezugssystem</source>
         <target state="final">Coordinate reference system</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4571,7 +4555,7 @@
         <source>Kurzbeschreibung</source>
         <target state="final">Short description</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4579,7 +4563,7 @@
         <source>Eindeutiger Bezeichner dieser Ressource</source>
         <target state="final">Unique identifier of this resource</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4587,7 +4571,7 @@
         <source>Bezeichner</source>
         <target state="final">Identifier</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4595,7 +4579,7 @@
         <source>Zeigt</source>
         <target state="final">Depicts</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4603,7 +4587,7 @@
         <source>Wird gezeigt in</source>
         <target state="final">Depicted in</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4611,7 +4595,7 @@
         <source>Zeitlich nach</source>
         <target state="final">After</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4619,7 +4603,7 @@
         <source>Zeitlich vor</source>
         <target state="final">Before</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4627,7 +4611,7 @@
         <source>Gleich wie</source>
         <target state="final">Equivalent to</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4635,7 +4619,7 @@
         <source>Zeitgleich mit</source>
         <target state="final">Contemporary with</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4643,7 +4627,7 @@
         <source>Liegt über</source>
         <target state="final">Above</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4651,7 +4635,7 @@
         <source>Liegt unter</source>
         <target state="final">Below</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4659,7 +4643,7 @@
         <source>Schneidet</source>
         <target state="final">Cuts</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4667,7 +4651,7 @@
         <source>Wird geschnitten von</source>
         <target state="final">Cut by</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4675,19 +4659,19 @@
         <source>Grenzt an</source>
         <target state="final">Borders</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4695,51 +4679,63 @@
         <source>Aufgenommen in Maßnahme</source>
         <target state="final">Recorded in operation</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4747,27 +4743,31 @@
         <source>Beinhaltet</source>
         <target state="final">Includes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4775,47 +4775,47 @@
         <source>Liegt in</source>
         <target state="final">Lies within</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.bears" datatype="html">
-        <source>Trägt</source>
-        <target state="final">Bears</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
-        <source>Ist aufgebracht auf</source>
-        <target state="final">Found on</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

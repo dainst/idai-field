@@ -1226,12 +1226,6 @@
     "isCutBy": {
       "label": "Cut by"
     },
-    "bears": {
-      "label": "Bears"
-    },
-    "isFoundOn": {
-      "label": "Found on"
-    },
     "borders": {
       "label": "Borders"
     }

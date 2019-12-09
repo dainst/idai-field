@@ -1372,12 +1372,6 @@
     "isCutBy": {
       "label": "Wird geschnitten von"
     },
-    "bears": {
-      "label": "Trägt"
-    },
-    "isFoundOn": {
-      "label": "ist aufgebracht auf"
-    },
     "borders": {
       "label": "Grenzt an"
     }

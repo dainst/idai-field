@@ -117,7 +117,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
         fieldDocumentDatastore,
-        { url: '/project', events: { subscribe: () => Promise.resolve() } } as any, () => '');
+        { url: '/project', events: { subscribe: () => Promise.resolve() } } as any);
 
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,

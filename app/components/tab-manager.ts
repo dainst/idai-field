@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
@@ -32,8 +31,7 @@ export class TabManager {
                 private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
-                private router: Router,
-                private i18n: I18n) {
+                private router: Router) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.initialize();

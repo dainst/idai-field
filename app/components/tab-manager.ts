@@ -124,6 +124,7 @@ export class TabManager {
         this.tabs.filter(tab => tab.operationId === document.resource.id)
             .forEach(tab => tab.label = this.getLabel(tab.routeName, document.resource.identifier));
 
+        this.validateTabSpace();
         await this.serialize();
     }
 

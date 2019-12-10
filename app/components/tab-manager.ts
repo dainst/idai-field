@@ -91,7 +91,7 @@ export class TabManager {
 
         this.tabs.push({
             routeName: routeName,
-            label: this.getLabel(routeName, operationIdentifier),
+            label: TabManager.getLabel(routeName, operationIdentifier),
             operationId: operationId,
             operationType: operationType,
             shown: true
@@ -122,7 +122,9 @@ export class TabManager {
     private async updateTabLabels(document: Document) {
 
         this.tabs.filter(tab => tab.operationId === document.resource.id)
-            .forEach(tab => tab.label = this.getLabel(tab.routeName, document.resource.identifier));
+            .forEach(tab => {
+                tab.label = TabManager.getLabel(tab.routeName, document.resource.identifier);
+            });
 
         await this.serialize();
     }
@@ -156,7 +158,7 @@ export class TabManager {
                 return tab.operationId === operation.resource.id;
             });
             if (!tab) continue;
-            tab.label = this.getLabel(tab.routeName, operation.resource.identifier);
+            tab.label = TabManager.getLabel(tab.routeName, operation.resource.identifier);
             tab.operationType = operation.resource.type;
             validatedTabs.push(tab);
         }
@@ -252,17 +254,6 @@ export class TabManager {
     }
 
 
-    private getLabel(routeName: string, operationIdentifier: string): string {
-
-        switch(routeName) {
-            case 'resources':
-                return operationIdentifier as string;
-            default:
-                return '';
-        }
-    }
-
-
     private getTabToTheLeftOfActiveTab(): Tab|undefined {
 
         if (!this.activeTab) return undefined;
@@ -275,6 +266,17 @@ export class TabManager {
             return undefined;
         } else {
             return this.tabs[index - 1];
+        }
+    }
+
+
+    private static getLabel(routeName: string, operationIdentifier: string): string {
+
+        switch(routeName) {
+            case 'resources':
+                return operationIdentifier as string;
+            default:
+                return '';
         }
     }
 }

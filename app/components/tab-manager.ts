@@ -124,6 +124,7 @@ export class TabManager {
                 tab.label = TabManager.getLabel(tab.routeName, document.resource.identifier);
             });
 
+        this.validateTabSpace();
         await this.serialize();
     }
 

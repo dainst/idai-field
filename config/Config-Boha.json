@@ -407,5 +407,9 @@
   "Excavation:default": {
     "fields": {},
     "hidden": []
+  },
+  "Metal:default": {
+    "fields": {},
+    "hidden": []
   }
 }

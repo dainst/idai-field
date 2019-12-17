@@ -32,4 +32,5 @@ export module ImportErrors {
     export const MUST_NOT_BE_EMPTY_STRING = 'ImportErrors.mustNotBeEmptyString';
     export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch';
     export const TYPE_CANNOT_BE_CHANGED = 'ImportErrors.typesCannotBeChanged';
+    export const EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'ImportErrors.emptySlotsInArraysForbidden';
 }

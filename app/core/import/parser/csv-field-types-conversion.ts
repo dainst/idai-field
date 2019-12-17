@@ -79,10 +79,13 @@ export module CsvFieldTypesConversion {
 
     function convertDimension(resource: Resource, fieldName: string) {
 
-        removeEmptyObjects(resource, fieldName);
-
         let i = 0;
         for (let dimension of resource[fieldName] as Array<Dimension>) {
+
+            if (!dimension) {
+                console.log(':', "empty dimension");
+                continue;
+            }
 
             try {
                 convertFloat(dimension, 'value');
@@ -101,8 +104,6 @@ export module CsvFieldTypesConversion {
 
 
     function convertDating(resource: Resource, fieldName: string) {
-
-        removeEmptyObjects(resource, fieldName);
 
         let i = 0;
         for (let dating of resource[fieldName] as Array<Dating>) {
@@ -148,13 +149,5 @@ export module CsvFieldTypesConversion {
         if (!val) return;
         if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
         setOn(container, path)(val === 'true');
-    }
-
-
-    function removeEmptyObjects(resource: Resource, fieldName: string) {
-
-        resource[fieldName] = resource[fieldName].filter((object: any) => {
-            return Object.values(object).filter((value: any) => value !== null).length > 0;
-        });
     }
 }

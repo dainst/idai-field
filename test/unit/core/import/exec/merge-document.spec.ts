@@ -129,6 +129,57 @@ describe('mergeDocument', () => {
     });
 
 
+    it('merge objectArray field - ignore null-valued field', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
+        source.resource['objectArray'] = [null, {bField: 'bChangedValue'}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'][0]['aField']).toEqual('aOriginalValue');
+        expect(result.resource['objectArray'][1]['bField']).toEqual('bChangedValue');
+    });
+
+
+    it('merge objectArray field - ignore null-valued field, add array object', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}];
+        source.resource['objectArray'] = [null, {bField: 'bNewValue'}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'][0]['aField']).toEqual('aOriginalValue');
+        expect(result.resource['objectArray'][1]['bField']).toEqual('bNewValue');
+    });
+
+
+    it('merge objectArray field - ignore null-valued field, add two array objects', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}];
+        source.resource['objectArray'] = [null, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'][0]['aField']).toEqual('aOriginalValue');
+        expect(result.resource['objectArray'][1]['bField']).toEqual('bNewValue');
+        expect(result.resource['objectArray'][2]['cField']).toEqual('cNewValue');
+    });
+
+
+    it('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
+
+        target.resource['objectArray'] = [];
+        source.resource['objectArray'] = [null, {bField: 'bNewValue'}];
+
+        try {
+            mergeDocument(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, 'identifier1']);
+        }
+    });
+
+
     it('merge objectArray field - create target objectArray', () => {
 
         source.resource['objectArray'] = [{aField: 'aNewValue'}];

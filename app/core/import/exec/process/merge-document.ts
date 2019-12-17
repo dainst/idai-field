@@ -7,6 +7,10 @@ import {ImportErrors} from '../import-errors';
 
 /**
  * @author Daniel de Oliveira
+ *
+ * @throws
+ *   [ImportErrors.TYPE_CANNOT_BE_CHANGED] TODO document in process apidoc
+ *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN]
  */
 export function mergeDocument(into: Document, additional: NewDocument): Document {
 
@@ -16,22 +20,29 @@ export function mergeDocument(into: Document, additional: NewDocument): Document
 
     const target = clone(into);
 
-    target.resource =
-        overwriteOrDeleteProperties(
-            target.resource,
-            additional.resource,
-            Resource.CONSTANT_FIELDS, true);
+    try {
 
-    if (!additional.resource.relations) return target;
+        target.resource =
+            overwriteOrDeleteProperties(
+                target.resource,
+                additional.resource,
+                Resource.CONSTANT_FIELDS, true);
 
-    target.resource.relations =
-        overwriteOrDeleteProperties(
-            target.resource.relations ? target.resource.relations : {},
-            additional.resource.relations,
-            [HIERARCHICAL_RELATIONS.RECORDED_IN],
-            false);
+        if (!additional.resource.relations) return target;
 
-    return target;
+        target.resource.relations =
+            overwriteOrDeleteProperties(
+                target.resource.relations ? target.resource.relations : {},
+                additional.resource.relations,
+                [HIERARCHICAL_RELATIONS.RECORDED_IN],
+                false);
+        return target;
+
+    } catch (err) {
+        throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
+            ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.resource.identifier]
+            : err;
+    }
 }
 
 
@@ -76,12 +87,16 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
 function expandObjectArray(target: Array<any>, source: Array<any>) {
 
-    keys(source).forEach(key => {
+    keys(source).forEach(index => {
 
-        if (isObject(source[key]) && isObject(target[key])) {
-            overwriteOrDeleteProperties(target[key], source[key], [], true);
+        if (source[index] === undefined || source[index] === null) return; // TODO should ignore only undefined, but not null
+
+        if (target.length < index) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+
+        if (isObject(source[index]) && isObject(target[index])) {
+            overwriteOrDeleteProperties(target[index], source[index], [], true);
         } else {
-            target[key] = source[key];
+            target[index] = source[index];
         }
     });
 }

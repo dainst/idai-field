@@ -106,7 +106,30 @@ describe('mergeDocument', () => {
     });
 
 
-    it('merge objectArray field - create target', () => {
+    it('merge objectArray field - create target object', () => {
+
+        target.resource['objectArray'] = [];
+        source.resource['objectArray'] = [{aField: 'aNewValue'}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'][0]['aField']).toEqual('aNewValue');
+    });
+
+
+    it('merge objectArray field - change one target object and add one target object', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}];
+        source.resource['objectArray'] = [{aField: 'aChangedValue'}, {bField: 'bNewValue'}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'][0]['aField']).toEqual('aChangedValue');
+        expect(result.resource['objectArray'][1]['bField']).toEqual('bNewValue');
+    });
+
+
+    it('merge objectArray field - create target objectArray', () => {
 
         source.resource['objectArray'] = [{aField: 'aNewValue'}];
 

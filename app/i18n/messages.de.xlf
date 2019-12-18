@@ -3833,6 +3833,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
+        <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
+        <target state="final">Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
         <target state="final">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>

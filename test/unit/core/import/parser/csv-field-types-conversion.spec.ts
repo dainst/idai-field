@@ -131,57 +131,6 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
-    it('ignore empty dimensions and datings', () => {
-
-        const type = {
-            name: 'TypeName',
-            fields: [{
-                name: 'dimension',
-                inputType: 'dimension'
-            },
-            {
-                name: 'dating',
-                inputType: 'dating'
-            }],
-        } as IdaiType;
-
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
-                dimension: [
-                    {
-                        value: null,
-                        inputUnit: null
-                    },
-                    {
-                        value: '10',
-                        inputUnit: 'mm'
-                    },
-                    {}
-                ],
-                dating: [
-                    {
-                        type: null,
-                        begin: null,
-                        end: null
-                    },
-                    {
-                        type: 'range',
-                        begin: { inputType: 'bce', inputYear: '0' },
-                        end: { inputType: 'bce', inputYear: '1' },
-                        source: 'abc'
-                    },
-                    {}
-                ],
-                relations: {}
-            } as unknown as Resource);
-
-        expect(resource['dimension'].length).toBe(1);
-        expect(resource['dimension'][0].value).toBe(10);
-        expect(resource['dating'].length).toBe(1);
-        expect(resource['dating'][0].type).toBe('range');
-    });
-
-
     it('field type radio', () => {
 
         const type = {

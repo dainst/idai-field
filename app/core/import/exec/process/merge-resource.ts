@@ -1,13 +1,11 @@
-import {isNot, includedIn, isArray, isObject, keys, dropRightWhile, is} from 'tsfun';
-import {NewDocument, Document, Resource} from 'idai-components-2';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys} from 'tsfun';
+import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
 
 
 /**
- * TODO make it take and return resource instead of document
- *
  * @author Daniel de Oliveira
  *
  * @throws
@@ -17,35 +15,35 @@ import {ImportErrors} from '../import-errors';
  *       the new index and the last index of the array which is filled in the original field.
  *     - if the deletion of an array object will leave it empty
  */
-export function mergeDocument(into: Document, additional: NewDocument): Document {
+export function mergeResource(into: Resource, additional: NewResource): Resource {
 
-    if (additional.resource.type && into.resource.type !== additional.resource.type) {
-        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.resource.identifier];
+    if (additional.type && into.type !== additional.type) {
+        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
     }
 
-    const target = clone(into);
+    let target: Resource = clone(into);
 
     try {
 
-        target.resource =
+        target =
             overwriteOrDeleteProperties(
-                target.resource,
-                additional.resource,
+                target,
+                additional,
                 Resource.CONSTANT_FIELDS, true);
 
-        if (!additional.resource.relations) return target;
+        if (!additional.relations) return target;
 
-        target.resource.relations =
+        target.relations =
             overwriteOrDeleteProperties(
-                target.resource.relations ? target.resource.relations : {},
-                additional.resource.relations,
+                target.relations ? target.relations : {},
+                additional.relations,
                 [HIERARCHICAL_RELATIONS.RECORDED_IN],
                 false);
         return target;
 
     } catch (err) {
         throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
-            ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.resource.identifier]
+            ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.identifier]
             : err;
     }
 }

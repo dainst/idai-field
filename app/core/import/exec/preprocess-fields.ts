@@ -1,7 +1,6 @@
-import {to, lookup, isObject, isnt, keys, isArray, keysAndValues} from 'tsfun';
+import {isArray, isnt, isObject, keysAndValues, to} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
-import {pairWith} from '../../../utils';
 import {ImportErrors} from './import-errors';
 
 

@@ -1,4 +1,4 @@
-import {to, lookup, isObject, isnt, keys, isArray} from 'tsfun';
+import {to, lookup, isObject, isnt, keys, isArray, keysAndValues} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {pairWith} from '../../../utils';
@@ -25,8 +25,7 @@ function preprocessFieldsForResource(permitDeletions: boolean) { return (resourc
 function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean) {
 
     if (!struct) return;
-    keys(struct)
-        .map(pairWith(lookup(struct)))
+    keysAndValues(struct)
         .forEach(([fieldName, fieldValue]: any) => {
             if (fieldName === 'relations') return;
 
@@ -37,11 +36,11 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
                 collapseEmptyProperties(fieldValue, permitDeletions);
 
-                if (Object.keys(fieldValue).length === 0
-                    || Object.values(fieldValue).filter(isnt(null)).length === 0) {
+                if (!permitDeletions
+                    && (Object.keys(fieldValue).length === 0
+                        || Object.values(fieldValue).filter(isnt(null)).length === 0)) {
 
-                    if (permitDeletions) struct[fieldName] = null;
-                    else delete struct[fieldName];
+                    delete struct[fieldName];
                 }
             }
         });

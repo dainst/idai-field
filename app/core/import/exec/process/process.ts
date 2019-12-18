@@ -1,4 +1,4 @@
-import {duplicates, to, dissocOn} from 'tsfun';
+import {assoc, duplicates, to} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
@@ -7,7 +7,7 @@ import {processRelations} from './process-relations';
 import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../default-import';
-import {mergeDocument} from './merge-document';
+import {mergeResource} from './merge-resource';
 
 
 /**
@@ -128,9 +128,15 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
 function mergeOrUseAsIs(document: NewDocument|Document): Document {
 
-    return (document as any)[MERGE_TARGET]
-        ? mergeDocument((document as any)[MERGE_TARGET], dissocOn(MERGE_TARGET)(document))
-        : document as Document;
+    const mergeTarget = (document as any)[MERGE_TARGET];
+
+    return (
+
+        mergeTarget
+            ? assoc('resource', mergeResource(mergeTarget.resource, document.resource))(mergeTarget)
+            : document
+
+    ) as Document;
 
 }
 

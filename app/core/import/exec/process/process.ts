@@ -1,4 +1,4 @@
-import {duplicates, to, dissocOn, assocOn} from 'tsfun';
+import {duplicates, to, dissocOn} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
@@ -11,39 +11,47 @@ import {mergeDocument} from './merge-document';
 
 
 /**
- * null values get interpreted as commands to delete the corresponding fields or relations in merge mode.
+ * null values in resource fields get interpreted as commands to
+ * delete the corresponding fields or relations in merge mode.
  *
  * This function takes relations in the form, that only liesWithin is defined and never isRecordedIn.
  * isRecordedIn gets inferred. This especially is true in cases where a top level item references
  * its operation with liesWithin, which gets resolved to an empty liesWithin and a isRecordedIn in its place.
  *
  * -------------------------------------------------------
- * ImportErrors (accessible via ProcessResult)
+ * @returns an array with 3 entries
+ *   [
+ *     the documents, prepared such that database updates can be performed,
+ *     related documents, with adjusted relations so that the database will be consistent after update,
+ *     ImportErrors, if any
+ *   ]
  *
- * [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]
- *   - if a resource of
- *     a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
- *     directly below an operation.
+ *   Possibly occuring ImportErrors:
  *
- * [BAD_INTERRELATION, sourceId]
- *   - if opposing relations are pointing to the same resource.
- *     For example IS_BEFORE and IS_AFTER pointing both from document '1' to '2'.
- *   - if mutually exluding relations are pointing to the same resource.
- *     For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
+ *   [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]
+ *     - if a resource of
+ *       a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
+ *       directly below an operation.
  *
- * [TARGET_TYPE_RANGE_MISMATCH, resourceIdentifier, relationName, relationTargetResourceType]
- *   - if a resource points to another resource, however, the specified relation is not allowed between the
- *     types of the resources.
+ *   [BAD_INTERRELATION, sourceId]
+ *     - if opposing relations are pointing to the same resource.
+ *       For example IS_BEFORE and IS_AFTER pointing both from document '1' to '2'.
+ *     - if mutually exluding relations are pointing to the same resource.
+ *       For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
  *
- * [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED]
- *   - if mainTypeDocumentId is not '' and
- *     a resource references an operation as parent.
+ *   [TARGET_TYPE_RANGE_MISMATCH, resourceIdentifier, relationName, relationTargetResourceType]
+ *     - if a resource points to another resource, however, the specified relation is not allowed between the
+ *       types of the resources.
  *
- * [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier]
- *   - if the inferredRecordedIn
- *     differs from a possibly specified recordedIn.
+ *   [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED]
+ *     - if mainTypeDocumentId is not '' and
+ *       a resource references an operation as parent.
  *
- * [EXEC_MISSING_RELATION_TARGET, targetId]
+ *   [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier]
+ *     - if the inferredRecordedIn
+ *       differs from a possibly specified recordedIn.
+ *
+ *   [EXEC_MISSING_RELATION_TARGET, targetId]
  *
  * @throws [EMPTY_RELATION, resourceId]
  *   - if relations empty for some relation is empty.

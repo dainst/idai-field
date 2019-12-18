@@ -70,7 +70,7 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field - delete if null', () => {
+    it('complex field - leave null if deletions permitted', () => {
 
         const document = {
             _id: '1',
@@ -86,7 +86,27 @@ describe('preprocess-fields', () => {
 
         preprocessFields([document], true);
         expect(document.resource.id).toEqual('1');
-        expect(document.resource['aField']).toBeNull();
+        expect(document.resource['aField']['aSubfield']).toBeNull();
+    });
+
+
+    it('complex field - collapse if deletions not permitted', () => {
+
+        const document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                type: 'Object',
+                id: '1',
+                relations: {},
+                aField: { aSubfield: null }
+            }
+        };
+
+        preprocessFields([document], false);
+        expect(document.resource.id).toEqual('1');
+        expect(document.resource['aField']).toBeUndefined();
     });
 
 

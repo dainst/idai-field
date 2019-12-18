@@ -7,7 +7,7 @@ import {clone} from '../../../../../app/core/util/object-util';
 /**
  * @author Daniel de Oliveira
  */
-describe('mergeDocument', () => {
+fdescribe('mergeDocument', () => {
 
     const template: Document = {
         _id: 'id1',
@@ -114,6 +114,29 @@ describe('mergeDocument', () => {
         const result = mergeDocument(target, source);
 
         expect(result.resource['objectArray'][0]['aField']).toEqual('aNewValue');
+    });
+
+
+    it('merge objectArray field - delete target object', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}];
+        source.resource['objectArray'] = [{aField: null}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete one target object', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'},{bField: 'bOriginalValue'}];
+        source.resource['objectArray'] = [null, {bField: null}];
+
+        const result = mergeDocument(target, source);
+
+        expect(result.resource['objectArray'].length).toBe(1);
+        expect(result.resource['objectArray'][0]['aField']).toBe('aOriginalValue');
     });
 
 

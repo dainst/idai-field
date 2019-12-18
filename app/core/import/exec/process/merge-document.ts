@@ -6,6 +6,8 @@ import {ImportErrors} from '../import-errors';
 
 
 /**
+ * TODO make it take and return resource instead of document
+ *
  * @author Daniel de Oliveira
  *
  * @throws

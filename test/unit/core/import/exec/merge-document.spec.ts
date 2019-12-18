@@ -7,7 +7,9 @@ import {clone} from '../../../../../app/core/util/object-util';
 /**
  * @author Daniel de Oliveira
  */
-fdescribe('mergeDocument', () => {
+describe('mergeDocument', () => {
+
+    const identifier = 'identifier1';
 
     const template: Document = {
         _id: 'id1',
@@ -16,7 +18,7 @@ fdescribe('mergeDocument', () => {
         resource: {
             id: 'id1',
             type: 'Object',
-            identifier: 'identifier1',
+            identifier: identifier,
             shortDescription: 'shortDescription1',
             relations: { }
         }
@@ -57,7 +59,7 @@ fdescribe('mergeDocument', () => {
             resource: {
                 id: 'id1',
                 type: 'Object',
-                identifier: 'identifier1',
+                identifier: identifier,
                 shortDescription: 'shortDescription2',
                 anotherField: 'field2',
                 relations: {}
@@ -152,6 +154,20 @@ fdescribe('mergeDocument', () => {
     });
 
 
+    it('merge objectArray field - throw if the deletion would occur but there are still objects to the right side', () => {
+
+        target.resource['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
+        source.resource['objectArray'] = [{aField: null}];
+
+        try {
+            mergeDocument(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
+        }
+    });
+
+
     it('merge objectArray field - ignore null-valued field', () => {
 
         target.resource['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
@@ -198,7 +214,7 @@ fdescribe('mergeDocument', () => {
             mergeDocument(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, 'identifier1']);
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
         }
     });
 
@@ -246,7 +262,7 @@ fdescribe('mergeDocument', () => {
             resource: {
                 id: 'id2',
                 type: 'Object2',
-                identifier: 'identifier1',
+                identifier: identifier,
                 shortDescription: 'shortDescription2',
                 anotherField: 'field2',
                 relations: {}
@@ -257,7 +273,7 @@ fdescribe('mergeDocument', () => {
             mergeDocument(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, 'identifier1']);
+            expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]);
         }
     })
 });

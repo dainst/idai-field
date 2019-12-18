@@ -12,7 +12,10 @@ import {ImportErrors} from '../import-errors';
  *
  * @throws
  *   [ImportErrors.TYPE_CANNOT_BE_CHANGED] TODO document in process apidoc
- *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN]
+ *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] // TODO improve actual displayed message
+ *     - if a new array object is to be created at an index which would leave unfilled indices between
+ *       the new index and the last index of the array which is filled in the original field.
+ *     - if the deletion of an array object will leave it empty
  */
 export function mergeDocument(into: Document, additional: NewDocument): Document {
 
@@ -102,10 +105,10 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
             target[index] = source[index];
         }
 
-        if (keys(target[index]).length === 0) {
-            target[index] = null;
-        }
+        if (keys(target[index]).length === 0) target[index] = null;
     });
 
-    return dropRightWhile(is(null))(target);
+    const result = dropRightWhile(is(null))(target);
+    if (result.includes(null)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+    return result;
 }

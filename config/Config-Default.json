@@ -142,9 +142,5 @@
   "Excavation:default": {
     "hidden": [],
     "fields": {}
-  },
-  "Sample:default": {
-    "hidden": [],
-    "fields": {}
   }
 }

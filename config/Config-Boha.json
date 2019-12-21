@@ -190,9 +190,6 @@
       "conditionAmount"
     ],
     "fields": {
-      "architectureClassification": {
-        "inputType": "radio"
-      },
       "construction": {
         "inputType": "dropdown"
       },

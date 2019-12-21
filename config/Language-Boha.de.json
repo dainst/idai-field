@@ -29,13 +29,6 @@
         }
       }
     },
-    "Architecture": {
-      "fields": {
-        "architectureClassification": {
-          "label": "Klassifikation"
-        }
-      }
-    },
     "Find": {
       "fields": {
         "photographed": {

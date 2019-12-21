@@ -3037,6 +3037,7 @@
     },
     "values": {
       "Oberfläche": {},
+      "Versturz": {},
       "Natürliche Ablagerung": {},
       "Künstliche Ablagerung": {},
       "Brandschicht": {},
@@ -3126,7 +3127,9 @@
       "Bastmatten": {},
       "Lehmboden": {},
       "Korkboden": {},
+      "Marmorfußboden": {},
       "Mosaik": {},
+      "Opus caementitium": {},
       "Opus sectile": {},
       "Opus signinum": {},
       "Pflaster": {},
@@ -3134,18 +3137,6 @@
       "Terrazzo": {},
       "Webmatten": {},
       "Ziegel": {}
-    }
-  },
-  "Architecture-architectureClassification-Boha": {
-    "createdBy": "",
-    "creationDate": "",
-    "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "Architektur": {},
-      "Versturz": {}
     }
   },
   "Architecture-construction-Boha": {
@@ -3189,6 +3180,7 @@
       "Mauerdurchbruch": {},
       "Mosaik": {},
       "Opus sectile": {},
+      "Opus caementitium": {},
       "Treppe": {},
       "Türzusetzung": {},
       "Wandgestaltung": {}

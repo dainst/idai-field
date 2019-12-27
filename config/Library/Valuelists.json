@@ -240,6 +240,28 @@
       "Rezent": {}
     }
   },
+  "periods-gadara": {
+    "creationDate": "24-12-2019",
+    "createdBy": "Heike Möller, Hanna Hamel DAI, 2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Eisenzeitlich": {},
+      "Hellenistisch": {},
+      "Hellenistisch/Römisch": {},
+      "Römisch": {},
+      "Römisch/Byzantinisch": {},
+      "Byzantinisch": {},
+      "Byzantinisch/Umayyadisch": {},
+      "Umayyadisch": {},
+      "Ayyubidisch": {},
+      "Mamlukisch": {},
+      "Osmanisch": {},
+      "Modern": {}
+    }
+  },
   "periods-wes-1": {
     "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
@@ -1680,6 +1702,20 @@
       "Gebrauchskeramik (Grobe Ware)": {}
     }
   },
+  "Pottery-materialType-gadara": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "FK": {},
+      "GK": {},
+      "TK": {},
+      "KK": {}
+    }
+  },
   "Pottery-objectType-default": {
     "creationDate": "",
     "createdBy": "",
@@ -1750,6 +1786,29 @@
       "Schlichte Ware": {},
       "Schwarzglanzton Ware": {},
       "Terra sigilata": {}
+    }
+  },
+  "Pottery-specificType-gadara": {
+    "creationDate": "24-12-2019",
+    "createdBy": "Heike Möller, Hanna Hamel DAI 2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "B": {},
+      "Bö": {},
+      "H": {},
+      "Ka": {},
+      "Kr": {},
+      "Sa": {},
+      "Sü": {},
+      "U": {},
+      "A": {},
+      "D": {},
+      "T": {},
+      "P": {},
+      "Ks": {}
     }
   },
   "Pottery-temperAmount-default": {
@@ -4014,17 +4073,17 @@
     },
     "values": {
       "Feature remain / residuo": {},
-      "U-shaped / a forma di U": {},
-      "V-shaped / a forma di V": {},
+      "U-shaped / A forma di U": {},
+      "V-shaped / A forma di V": {},
       "Nearly / approssimativamente": {},
       "Shapeless / informe": {},
-      "Crescent shaped / a forma di mezzaluna": {},
+      "Crescent shaped / A forma di mezzaluna": {},
       "Drawn-out / allungato": {},
       "Oval / ovale": {},
       "Rectangular / rettangolare": {},
       "Regular / regolare": {},
       "Round / tondo": {},
-      "Hourglass shaped / a forma di clessidra": {},
+      "Hourglass shaped / A forma di clessidra": {},
       "Trapezoidal / trapezoidale": {},
       "Irregular / irregolare": {}
     }
@@ -4427,7 +4486,7 @@
       "en": ""
     },
     "values": {
-      "Engraved / Incisa (graffita, a rotella, a pettina, a stecca)": {},
+      "Engraved / Incisa (graffita, A rotella, A pettina, A stecca)": {},
       "Excisa": {},
       "Stamped / Impressa (stampo, cordicella, cilidretto,…)": {},
       "Painted / Dipinta": {},
@@ -4451,7 +4510,7 @@
       "Superficie verniciata": {},
       "Glazed / Superficie invetriata": {},
       "Polished / Superficia lisciata": {},
-      "Exposed to fire / Bruciata o esposta a cottura secondaria": {}
+      "Exposed to fire / Bruciata o esposta A cottura secondaria": {}
     }
   },
   "Pottery-manufacturingMethod-Campidoglio": {
@@ -4567,21 +4626,21 @@
       "East greek pottery / Cermica greco-orientale": {},
       "Protoattic pottery / Ceramica proto-attica": {},
       "Attic pottery / ceramica attica": {},
-      "Attic black-figure pottery / Ceramica a attica a figure nere": {},
-      "Attic red-figure pottery / Ceramica a attica a figure rosse": {},
-      "Attic black-glazed pottery / Ceramica attica a vernice nera": {},
-      "Attic white ground pottery / Ceramica attica a fondo bianco": {},
-      "Etruscan black-figure pottery / Ceramica etrusca a figure nere": {},
-      "Etruscan red-figure pottery / Ceramica etrusca a figure rosse": {},
+      "Attic black-figure pottery / Ceramica A attica A figure nere": {},
+      "Attic red-figure pottery / Ceramica A attica A figure rosse": {},
+      "Attic black-glazed pottery / Ceramica attica A vernice nera": {},
+      "Attic white ground pottery / Ceramica attica A fondo bianco": {},
+      "Etruscan black-figure pottery / Ceramica etrusca A figure nere": {},
+      "Etruscan red-figure pottery / Ceramica etrusca A figure rosse": {},
       "Etruscan sovradipinta pottery / Ceramica etrusca sovradipinta": {},
-      "Apulian red-figure pottery / Cermica apula a figure rosse": {},
-      "Black-glazed pottery / Ceramica a vernice nera": {},
-      "Thin-walled pottery / Ceramica a pareti sottili": {},
+      "Apulian red-figure pottery / Cermica apula A figure rosse": {},
+      "Black-glazed pottery / Ceramica A vernice nera": {},
+      "Thin-walled pottery / Ceramica A pareti sottili": {},
       "Ceramica argentata": {},
       "Aco ware / Ceramica tipo Aco": {},
       "Achrome ware / Ceramica acroma": {},
       "Glazed ware / Ceramica invetriata": {},
-      "Ceramica a vernice rossa interna": {},
+      "Ceramica A vernice rossa interna": {},
       "Sigillata Arretina / Terra sigillata Arretina": {},
       "Italian sigillata / Terra sigillata italica": {},
       "Late Italian sigillata / Terra sigillata tardo-italica": {},
@@ -4697,7 +4756,7 @@
     "values": {
       "Baked / Cotto": {},
       "Pressed / Pressato": {},
-      "Handmade / Fatto a mano": {},
+      "Handmade / Fatto A mano": {},
       "Air dried / Seccato all'aria": {}
     }
   },
@@ -4914,7 +4973,7 @@
     },
     "values": {
       "Melting / Fusione": {},
-      "Lost-wax casting / Fusione a cera persa": {},
+      "Lost-wax casting / Fusione A cera persa": {},
       "Hammering / Martellatura": {},
       "Engraving / A bulino": {},
       "Stamped / A stampo": {}
@@ -5257,6 +5316,77 @@
       "Terra sigillata Focea": {},
       "Terra sigillata Italica": {},
       "unbestimmt": {}
+    }
+  },
+  "Pottery-potteryTypeSpecific-gadara": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+
+      "70 A - Import": {},
+      "47 A - Almagro 50 brown": {},
+      "67 A - Ephesos (?)": {},
+      "46 A - Kapitän II coarse": {},
+      "45 A - Kapitän II fine": {},
+      "32 A - Rhodos": {},
+      "36 ähnl. BP": {},
+      "43 ähnl. HBUFF": {},
+      "53 BB": {},
+      "52 BB semi fine": {},
+      "8  BP": {},
+      "44 BP mit ÜZ": {},
+      "50 BROWNQ": {},
+      "65 BSP": {},
+      "16 BSWP": {},
+      "20 CBUFF": {},
+      "64 CBUFF Red": {},
+      "22 CSTRAW": {},
+      "84 FK - ARS": {},
+      "14 FK - LRC": {},
+      "1  FK - TS": {},
+      "56 FK 1": {},
+      "57 FK 2": {},
+      "58 FK 4": {},
+      "59 FK 5": {},
+      "85 FK 6": {},
+      "3  FK Import": {},
+      "19 FK3 - ESA": {},
+      "77 GB": {},
+      "68 GK Import": {},
+      "12 Glasierte Ware": {},
+      "30 GroW 1": {},
+      "31 Grow 2": {},
+      "62 GroW 3": {},
+      "63 GroW 4": {},
+      "24 GroW VAR": {},
+      "17 Handbade Painted Ware": {},
+      "18 HBUFF": {},
+      "81 HBUFF/BP": {},
+      "13 HRED": {},
+      "51 HREDcalc": {},
+      "4  KK - Jerash?": {},
+      "78 KK 1": {},
+      "83 KK Import": {},
+      "76 MA 1": {},
+      "75 MA 2": {},
+      "74 MA 3": {},
+      "73 MA 4": {},
+      "72 MA 5": {},
+      "71 MA 6": {},
+      "61 Neuzeitlich": {},
+      "66 OG": {},
+      "55 PINK mit ÜZ": {},
+      "23 PK PTD": {},
+      "79 Pompeian redware 1": {},
+      "82 Pompeian Redware 2": {},
+      "40 Porzellan": {},
+      "54 RB": {},
+      "9  REDQ": {},
+      "49 REDQ calc.": {}
     }
   },
   "Bone-sex-Meninx": {
@@ -7066,6 +7196,24 @@
       "Sondage": {}
     }
   },
+  "Pottery-vesselpart-gadara": {
+    "createdBy": "Heike Möller, Hanna Hamel DAI 2019",
+    "creationDate": "24-12-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "RF": {},
+      "BF": {},
+      "WF": {},
+      "H": {},
+      "RF mit H": {},
+      "D": {},
+      "VAR": {},
+      "KOMP": {}
+    }
+  },
   "Pottery-vesselpart-WES": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
@@ -7288,6 +7436,47 @@
       "decorative smoothing": {},
       "decorative burnishing": {},
       "decorative polishing": {}
+    }
+  },
+  "Pottery-coatTpe-gadara": {
+    "createdBy": "Heike Möller, Hanna Hamel",
+    "creationDate": "24-12-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Unbehandelt": {},
+      "Überzug": {},
+      "Poliert": {},
+      "Geglättet": {},
+      "Glasiert": {},
+      "Bemalung": {},
+      "Verstrichen": {}
+    }
+  },
+  "Pottery-coatColor-gadara": {
+    "createdBy": "Heike Möller, Hanna Hamel",
+    "creationDate": "24-12-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "brauner ÜZ": {},
+      "bräunlicher ÜZ": {},
+      "braunrot": {},
+      "dunkelbrauner ÜZ": {},
+      "grauschwarzer ÜZ": {},
+      "hellroter ÜZ": {},
+      "partiell dunkelbrauner ÜZ": {},
+      "roter ÜZ": {},
+      "rotbrauner ÜZ": {},
+      "schwarzbraun": {},
+      "schwarzen ÜZ": {},
+      "schwarzgrauer ÜZ": {},
+      "sf": {},
+      "ÜZ": {}
     }
   },
   "Pottery-FormComparisonCompendia-WES": {
@@ -8231,6 +8420,21 @@
       "Restauriert": {},
       "Detailbearbeitung fertig": {},
       "Fehlerhaft": {}
+    }
+  },
+  "Find-amountDescription-gadara": {
+    "createdBy": "Heike Möller, Hanna Hamel",
+    "creationDate": "24-12-2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Stück": {},
+      "Eimer": {},
+      "Kiste (groß)": {},
+      "Kiste (klein)": {},
+      "Tüte": {}
     }
   },
   "Photo-imageSubject-kalapodi": {

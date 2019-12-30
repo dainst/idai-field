@@ -12,6 +12,20 @@ import {ImportOptions} from '../default-import';
 
 
 /**
+ * Prerequisites:
+ *
+ * This function expects
+ * - relation targets to be resource ids (not identifiers)
+ * - relation targets to be of type Array<string>
+ *
+ * The relation targets can be either
+ * - documents to be imported => accessible in documents parameter
+ * - existing documents => accessible via get
+ *
+ * Does:
+ *
+ * LIES_WITHIN gets replaced by or joined by RECORDED_IN relations.
+ *
  * @param documents get modified in place (document.resource.relations)
  * @param validator
  * @param operationTypeNames

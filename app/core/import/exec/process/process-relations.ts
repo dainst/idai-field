@@ -12,6 +12,15 @@ import {ImportOptions} from '../default-import';
 
 
 /**
+ * @param documents get modified in place (document.resource.relations)
+ * @param validator
+ * @param operationTypeNames
+ * @param getInverseRelation
+ * @param get
+ * @param mergeMode
+ * @param permitDeletions
+ * @param mainTypeDocumentId
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

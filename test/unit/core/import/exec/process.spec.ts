@@ -1,6 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {process} from '../../../../../app/core/import/exec/process/process';
+import {createMockValidator} from './helper';
 
 /**
  * @author Daniel de Oliveira
@@ -14,14 +15,8 @@ describe('process()', () => {
     
     let opTypeNames = ['Trench'];
 
-    const existingTrench = {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
-    const existingTrench2 = {resource: {type: 'Trench', identifier: 'existingTrench2', id: 'et2', relations:{ }}};
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
     const existingFeature2 = {resource: {type: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations:{ isRecordedIn: ['et2']}}};
-
-
-    let generateId = () => { resourceIdCounter++; return '10' + resourceIdCounter.toString() };
-
 
     let getInverse = (_: string) => {
 
@@ -33,8 +28,8 @@ describe('process()', () => {
 
         if (resourceId === 'ef1') return existingFeature;
         if (resourceId === 'ef2') return existingFeature2;
-        if (resourceId === 'et1') return existingTrench;
-        if (resourceId === 'et2') return existingTrench2;
+        if (resourceId === 'et1') return {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
+        if (resourceId === 'et2') return {resource: {type: 'Trench', identifier: 'existingTrench2', id: 'et2', relations:{ }}};
         else throw 'missing';
     };
 
@@ -53,22 +48,7 @@ describe('process()', () => {
     beforeEach(() => {
 
         resourceIdCounter = 0;
-
-        validator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist',
-            'assertIsWellformed',
-            'assertFieldsDefined',
-            'assertLiesWithinCorrectness',
-            'assertRelationsWellformedness',
-            'assertIsKnownType',
-            'assertHasLiesWithin',
-            'assertIsAllowedType',
-            'assertIsAllowedRelationDomainType',
-            'assertSettingIsRecordedInIsPermissibleForType',
-            'assertDropdownRangeComplete',
-            'assertIsNotOverviewType',
-            'isRecordedInTargetAllowedRelationDomainType',
-            'assertNoForbiddenRelations']);
+        validator = createMockValidator();
     });
 
 

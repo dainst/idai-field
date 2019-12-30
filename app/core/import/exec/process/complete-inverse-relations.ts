@@ -161,7 +161,7 @@ function setInverses(importDocument: Document,
     }
 }
 
-
+// TODO remove document param, see if everything can be simplified because the recorded in lookup should give undefined anyway
 function pairRelationWithItsInverse(inverseRelationsMap: {[_: string]: string}) {
 
     return (document: Document) => (relationName: string): [string, string|undefined] => {

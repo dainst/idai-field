@@ -29,7 +29,7 @@ export interface ImportOptions {
  */
 export function buildImportFunction(validator: ImportValidator,
                                     operationTypeNames: string[],
-                                    getInverseRelation: (_: string) => string|undefined,
+                                    inverseRelationsMap: {[_: string]: string},
                                     generateId: () => string,
                                     postProcessDocument: undefined|((_: Document) => Document),
                                     importOptions: ImportOptions = {}): ImportFunction {
@@ -67,7 +67,7 @@ export function buildImportFunction(validator: ImportValidator,
             validator,
             operationTypeNames,
             get,
-            getInverseRelation,
+            inverseRelationsMap,
             importOptions
         );
 

@@ -64,7 +64,7 @@ export async function process(documents: Array<Document>,
                               validator: ImportValidator,
                               operationTypeNames: string[],
                               get: Get,
-                              getInverseRelation: GetInverseRelation,
+                              inverseRelationsMap: {[_: string]: string}, // TODO move param one up
                               importOptions : ImportOptions = {})
         : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 
@@ -79,7 +79,7 @@ export async function process(documents: Array<Document>,
             processedDocuments,
             validator,
             operationTypeNames,
-            getInverseRelation,
+            inverseRelationsMap,
             get,
             importOptions
         );

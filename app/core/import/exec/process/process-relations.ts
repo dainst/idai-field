@@ -29,7 +29,7 @@ import {ImportOptions} from '../default-import';
  * @param documents get modified in place (document.resource.relations)
  * @param validator
  * @param operationTypeNames
- * @param getInverseRelation
+ * @param inverseRelationsMap
  * @param get
  * @param mergeMode
  * @param permitDeletions
@@ -41,7 +41,7 @@ import {ImportOptions} from '../default-import';
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       getInverseRelation: GetInverseRelation, // TODO pass map instead of function, this isn't supposed to change at runtime
+                                       inverseRelationsMap: {[_: string]: string},
                                        get: Get,
                                        { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 
@@ -56,7 +56,7 @@ export async function processRelations(documents: Array<Document>,
     return await completeInverseRelations(
             documents,
             get,
-            getInverseRelation,
+            inverseRelationsMap,
             assertIsAllowedRelationDomainType_,
             mergeMode);
 }

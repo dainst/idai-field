@@ -28,7 +28,7 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  * Between import resources and db resources, it adds the inverses.
  *
  * @param get
- * @param getInverseRelation
+ * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainType
  * @param mergeMode
  *
@@ -50,7 +50,7 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  */
 export async function completeInverseRelations(importDocuments: Array<Document>,
                                                get: (_: string) => Promise<Document>,
-                                               getInverseRelation: (_: string) => string|undefined,
+                                               inverseRelationsMap: {[_: string]: string},
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
                                                mergeMode: boolean = false): Promise<Array<Document>> {
 
@@ -59,14 +59,14 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
     setInverseRelationsForImportResources(
         importDocuments,
         lookupDocument,
-        pairRelationWithItsInverse(getInverseRelation),
+        pairRelationWithItsInverse(inverseRelationsMap),
         assertIsAllowedRelationDomainType);
 
     return await setInverseRelationsForDbResources(
         importDocuments,
         getTargetIds(mergeMode, get, lookupDocument),
         get,
-        getInverseRelation,
+        inverseRelationsMap,
         assertIsAllowedRelationDomainType,
         [LIES_WITHIN, RECORDED_IN]);
 }
@@ -162,14 +162,14 @@ function setInverses(importDocument: Document,
 }
 
 
-function pairRelationWithItsInverse(getInverseRelation: (_: string) => string|undefined) {
+function pairRelationWithItsInverse(inverseRelationsMap: {[_: string]: string}) {
 
     return (document: Document) => (relationName: string): [string, string|undefined] => {
 
         if (relationName === RECORDED_IN) {
             return [RECORDED_IN, undefined];
         } else {
-            return [relationName, getInverseRelation(relationName)];
+            return [relationName, inverseRelationsMap[relationName]];
         }
     }
 }

@@ -12,7 +12,7 @@ describe('ConnectedDocsResolution', () => {
     let relatedDoc;
     let anotherRelatedDoc;
 
-    let getInverseRelation = (_: any) => _ === 'Contains' ? 'BelongsTo' : 'Contains';
+    const relationInverses = { Contains: 'BelongsTo', BelongsTo: 'Contains' };
 
     beforeEach(() => {
 
@@ -39,7 +39,7 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
     });
@@ -50,7 +50,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -64,7 +64,7 @@ describe('ConnectedDocsResolution', () => {
 
         const docsToUpdate
             = ConnectedDocsResolution.determineDocsToUpdate(
-                doc, [relatedDoc, anotherRelatedDoc], getInverseRelation);
+                doc, [relatedDoc, anotherRelatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc, anotherRelatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -78,7 +78,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['4'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
@@ -92,7 +92,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1','4'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
@@ -105,7 +105,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1','4'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
@@ -120,7 +120,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['1']);
@@ -133,7 +133,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation, false);
+            doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
@@ -145,7 +145,7 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['Contains'] = ['2'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation, false);
+            doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
@@ -157,7 +157,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['Contains'] = ['1', '4'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation, false);
+            doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
@@ -173,7 +173,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
@@ -188,7 +188,7 @@ describe('ConnectedDocsResolution', () => {
         relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation, false);
+            doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(undefined);
@@ -201,7 +201,7 @@ describe('ConnectedDocsResolution', () => {
         doc.resource.relations['isRecordedIn'] = ['2'];
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
-            doc, [relatedDoc], getInverseRelation);
+            doc, [relatedDoc], relationInverses);
         expect(docsToUpdate).toEqual([]);
         expect(Object.keys(relatedDoc.resource.relations).length).toEqual(0);
     });

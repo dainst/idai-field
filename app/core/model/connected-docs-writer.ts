@@ -3,6 +3,7 @@ import {Document, Relations, toResourceId} from 'idai-components-2';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
+import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
 
 
 /**
@@ -18,10 +19,14 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
  */
 export class ConnectedDocsWriter {
 
+    private inverseRelationsMap: {[_: string]: string};
+
     constructor(
         private datastore: DocumentDatastore,
-        private projectConfiguration: ProjectConfiguration
-    ) {}
+        private projectConfiguration: ProjectConfiguration) {
+
+        this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
+    }
 
 
     public async update(document: Document, otherVersions: Array<Document>, username: string): Promise<void> {
@@ -31,7 +36,7 @@ export class ConnectedDocsWriter {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             document,
             connectedDocs,
-            (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
+            this.inverseRelationsMap,
             true
         );
 
@@ -46,7 +51,7 @@ export class ConnectedDocsWriter {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             document,
             connectedDocs,
-            (propertyName: string) => this.projectConfiguration.getInverseRelations(propertyName),
+            this.inverseRelationsMap,
             false
         );
 

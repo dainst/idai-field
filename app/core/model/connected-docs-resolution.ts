@@ -19,7 +19,7 @@ export module ConnectedDocsResolution {
      *
      * @param document expected that relations is an object consisting only of proper relation names
      * @param targetDocuments
-     * @param getInverseRelation
+     * @param inverseRelationsMap
      * @param setInverses if <b>false</b>, relations of <i>targetDocuments</i>
      *   which point to <i>document</i>, get only removed, but not (re-)created
      *
@@ -29,7 +29,7 @@ export module ConnectedDocsResolution {
      */
     export function determineDocsToUpdate(document: Document,
                                           targetDocuments: Array<Document>,
-                                          getInverseRelation: (_: string) => string|undefined,
+                                          inverseRelationsMap: {[_: string]: string},
                                           setInverses: boolean = true): Array<Document> {
 
         const cloneOfTargetDocuments = jsonClone(targetDocuments);
@@ -41,7 +41,7 @@ export module ConnectedDocsResolution {
                 targetDocument,
                 setInverses);
 
-            if (setInverses) setInverseRelations(document, targetDocument, getInverseRelation);
+            if (setInverses) setInverseRelations(document, targetDocument, inverseRelationsMap);
         }
 
         return compare(targetDocuments, cloneOfTargetDocuments);
@@ -60,13 +60,13 @@ export module ConnectedDocsResolution {
 
 
     function setInverseRelations(document: Document, targetDocument: Document,
-                                 getInverseRelation: (_: string) => string|undefined) {
+                                 inverseRelationsMap: {[_: string]: string}) {
 
         Object.keys(document.resource.relations)
             .filter(isnt(RECORDED_IN))
             .filter(isnt(LIES_WITHIN))
             .forEach(relation => setInverseRelation(document, targetDocument,
-                    relation, getInverseRelation(relation)));
+                    relation, inverseRelationsMap[relation]));
     }
 
 

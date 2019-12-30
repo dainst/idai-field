@@ -16,7 +16,7 @@ import {AssertIsAllowedRelationDomainType} from '../types';
  *   and the second list's ids are resources already in the db and referenced by the version
  *   to be updated of importDocument, where only ids that are not in the first list are listed.
  * @param get
- * @param getInverseRelation
+ * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainType
  * @param unidirectionalRelations names of relations for which not inverses get set in the db.
  *
@@ -27,7 +27,7 @@ export async function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
         getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
         get: (_: string) => Promise<Document>,
-        getInverseRelation: (_: string) => string|undefined,
+        inverseRelationsMap: {[_: string]: string},
         assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Promise<Array<Document>> {
 
@@ -46,7 +46,7 @@ export async function setInverseRelationsForDbResources(
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
         ConnectedDocsResolution
-            .determineDocsToUpdate(document, copyOfTargetDocuments, getInverseRelation)
+            .determineDocsToUpdate(document, copyOfTargetDocuments, inverseRelationsMap)
             .forEach(assertInSameOperationWith(document));
 
         return copyOfTargetDocuments;

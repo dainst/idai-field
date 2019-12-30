@@ -14,6 +14,7 @@ import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
 import {buildImportFunction} from './exec/default-import';
+import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
 
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
@@ -83,7 +84,8 @@ export module Importer {
 
         const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));
         const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
-        const getInverseRelation = (_: string) => projectConfiguration.getInverseRelations(_);
+
+        const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 
         const { errors, successfulImports } = await performImport(
             documents,
@@ -93,7 +95,7 @@ export module Importer {
             mainTypeDocumentId_,
             mergeMode,
             permitDeletions,
-            getInverseRelation,
+            inverseRelationsMap,
             generateId,
             postProcessDocument(projectConfiguration),
             datastore,
@@ -155,7 +157,7 @@ export module Importer {
                            mainTypeDocumentId: string,
                            mergeMode: boolean,
                            permitDeletions: boolean,
-                           getInverseRelation: (_: string) => string|undefined,
+                           inverseRelationsMap: {[_: string]: string},
                            generateId: () => string,
                            postProcessDocument: (document: Document) => Document,
                            datastore: DocumentDatastore,
@@ -165,16 +167,16 @@ export module Importer {
 
         switch (format) {
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                importFunction =  buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
-                importFunction = buildImportFunction(validator, operationTypeNames, getInverseRelation, generateId, postProcessDocument,
+                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,
                         mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }

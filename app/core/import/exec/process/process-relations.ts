@@ -12,26 +12,44 @@ import {ImportOptions} from '../default-import';
 
 
 /**
+ * Prerequisites:
+ *
+ * This function expects
+ * - relation targets to be resource ids (not identifiers)
+ * - relation targets to be of type Array<string>
+ *
+ * The relation targets can be either
+ * - documents to be imported => accessible in documents parameter
+ * - existing documents => accessible via get
+ *
+ * Does:
+ *
+ * LIES_WITHIN gets replaced by or joined by RECORDED_IN relations.
+ *
+ * @param documents get modified in place (document.resource.relations)
+ * @param validator
+ * @param operationTypeNames
+ * @param getInverseRelation
+ * @param get
+ * @param mergeMode
+ * @param permitDeletions
+ * @param mainTypeDocumentId
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       getInverseRelation: GetInverseRelation,
+                                       getInverseRelation: GetInverseRelation, // TODO pass map instead of function, this isn't supposed to change at runtime
                                        get: Get,
                                        { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
 
-
-    if (!mergeMode) {
-        await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId ? mainTypeDocumentId : '');
-        prepareIsRecordedInRelation(documents, mainTypeDocumentId ? mainTypeDocumentId : '');
-    }
-    await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId ? mainTypeDocumentId : '');
-    await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId ? mainTypeDocumentId : ''));
+    await prepareIsRecordedIns(documents, validator, operationTypeNames, get,
+        mergeMode === true, mainTypeDocumentId ? mainTypeDocumentId : '');
 
     await validator.assertRelationsWellformedness(documents);
     await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
@@ -41,6 +59,22 @@ export async function processRelations(documents: Array<Document>,
             getInverseRelation,
             assertIsAllowedRelationDomainType_,
             mergeMode);
+}
+
+
+async function prepareIsRecordedIns(documents: Array<Document>,
+                                    validator: ImportValidator,
+                                    operationTypeNames: string[],
+                                    get: Get,
+                                    mergeMode: boolean,
+                                    mainTypeDocumentId: string) {
+
+    if (!mergeMode) {
+        await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId);
+        prepareIsRecordedInRelation(documents, mainTypeDocumentId);
+    }
+    await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
+    await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
 }
 
 
@@ -128,6 +162,7 @@ async function inferRecordedIns(documents: Array<Document>,
         if (inferredRecordedIn) relations[RECORDED_IN] = [inferredRecordedIn];
         if (relations
             && relations[LIES_WITHIN]
+            && relations[RECORDED_IN]
             && sameset(relations[LIES_WITHIN])(relations[RECORDED_IN])) {
 
             delete relations[LIES_WITHIN];

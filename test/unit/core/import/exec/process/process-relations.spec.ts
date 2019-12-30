@@ -38,7 +38,7 @@ describe('processRelations', () => {
     it('converts LIES_WITHIN targeting existing operation to RECORDED_IN', async done => {
 
         const documents = [
-            d('nf1', 'Feature', 'NewFeature1', { 'liesWithin': ['et1'] }),
+            d('nf1', 'Feature', 'NewFeature1', { liesWithin: ['et1'] }),
         ];
 
         await processRelations(
@@ -56,7 +56,7 @@ describe('processRelations', () => {
 
         const documents = [
             d('nt1', 'Trench', 'NewTrench1', {}),
-            d('nf1', 'Feature', 'NewFeature1', { 'liesWithin': ['nt1'] }),
+            d('nf1', 'Feature', 'NewFeature1', { liesWithin: ['nt1'] }),
         ];
 
         await processRelations(

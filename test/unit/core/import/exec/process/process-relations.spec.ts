@@ -35,10 +35,10 @@ describe('processRelations', () => {
     });
 
 
-    it('converts LIES_WITHIN targeting existing operation type resource to RECORDED_IN', async done => {
+    it('converts LIES_WITHIN targeting existing operation to RECORDED_IN', async done => {
 
         const documents = [
-            d('fe1', 'Feature', 'Feature 1', { 'liesWithin': ['et1'] }),
+            d('nf1', 'Feature', 'NewFeature1', { 'liesWithin': ['et1'] }),
         ];
 
         await processRelations(
@@ -48,6 +48,25 @@ describe('processRelations', () => {
 
         expect(documents[0].resource.relations[LIES_WITHIN]).toBeUndefined();
         expect(documents[0].resource.relations[RECORDED_IN]).toEqual(['et1']);
+        done();
+    });
+
+
+    it('converts LIES_WITHIN targeting new operation to RECORDED_IN', async done => {
+
+        const documents = [
+            d('nt1', 'Trench', 'NewTrench1', {}),
+            d('nf1', 'Feature', 'NewFeature1', { 'liesWithin': ['nt1'] }),
+        ];
+
+        await processRelations(
+            documents,
+            validator,
+            ['Trench'], getInverse, get, {});
+
+        expect(documents[1].resource.identifier).toBe('NewFeature1');
+        expect(documents[1].resource.relations[LIES_WITHIN]).toBeUndefined();
+        expect(documents[1].resource.relations[RECORDED_IN]).toEqual(['nt1']);
         done();
     });
 });

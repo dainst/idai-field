@@ -162,6 +162,7 @@ async function inferRecordedIns(documents: Array<Document>,
         if (inferredRecordedIn) relations[RECORDED_IN] = [inferredRecordedIn];
         if (relations
             && relations[LIES_WITHIN]
+            && relations[RECORDED_IN]
             && sameset(relations[LIES_WITHIN])(relations[RECORDED_IN])) {
 
             delete relations[LIES_WITHIN];

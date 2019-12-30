@@ -41,7 +41,7 @@ import {ImportOptions} from '../default-import';
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       getInverseRelation: GetInverseRelation,
+                                       getInverseRelation: GetInverseRelation, // TODO pass map instead of function, this isn't supposed to change at runtime
                                        get: Get,
                                        { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 

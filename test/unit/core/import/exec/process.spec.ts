@@ -2,6 +2,9 @@ import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {process} from '../../../../../app/core/import/exec/process/process';
 import {createMockValidator, d} from './helper';
+import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 /**
  * @author Daniel de Oliveira
@@ -10,9 +13,6 @@ describe('process()', () => {
 
     let validator;
 
-    const RECORDED_IN = 'isRecordedIn';
-    const LIES_WITHIN = 'liesWithin';
-    
     let opTypeNames = ['Trench'];
 
     const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};

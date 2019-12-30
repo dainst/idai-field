@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
 import {process} from '../../../../../app/core/import/exec/process/process';
-import {createMockValidator} from './helper';
+import {createMockValidator, d} from './helper';
 
 /**
  * @author Daniel de Oliveira
@@ -32,14 +32,6 @@ describe('process()', () => {
         if (resourceId === 'et2') return {resource: {type: 'Trench', identifier: 'existingTrench2', id: 'et2', relations:{ }}};
         else throw 'missing';
     };
-
-
-    function d(id: string, type: string, identifier: string, rels?: any) {
-
-        const document = { resource: { id: id, identifier: identifier, type: type, relations: {} }};
-        if (rels) document.resource['relations'] = rels;
-        return document as unknown as Document;
-    }
 
 
     let resourceIdCounter;

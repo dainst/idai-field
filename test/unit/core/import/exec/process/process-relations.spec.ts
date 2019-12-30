@@ -1,21 +1,14 @@
 import {processRelations} from '../../../../../../app/core/import/exec/process/process-relations';
-import {Document} from 'idai-components-2/src/model/core/document';
 import {HIERARCHICAL_RELATIONS} from '../../../../../../app/core/model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {createMockValidator} from '../helper';
+import {createMockValidator, d} from '../helper';
 
 
 describe('processRelations', () => {
 
     let validator;
 
-    function d(id: string, type: string, identifier: string, rels?: any) {
-
-        const document = { resource: { id: id, identifier: identifier, type: type, relations: {} }};
-        if (rels) document.resource['relations'] = rels;
-        return document as unknown as Document;
-    }
 
     let getInverse = (_: string) => {
 

@@ -17,6 +17,9 @@ import {ImportErrors} from '../import-errors';
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
 
+    // TODO assert that into contains no empty associatives, which is our general assumption regarding documents stored in our database
+    // TODO assert that additional contains no empty associatives, which is our assumption regarding the import process
+
     if (additional.type && into.type !== additional.type) {
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
     }

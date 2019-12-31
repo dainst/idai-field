@@ -31,10 +31,12 @@ export function buildImportFunction(validator: ImportValidator,
                                     operationTypeNames: string[],
                                     inverseRelationsMap: {[_: string]: string},
                                     generateId: () => string,
-                                    postProcessDocument: undefined|((_: Document) => Document),
+                                    preprocessDocument: undefined|((_: Document) => Document),  // TODO test in default-import.spec
+                                    postprocessDocument: undefined|((_: Document) => Document),
                                     importOptions: ImportOptions = {}): ImportFunction {
 
-    if (!postProcessDocument) postProcessDocument = identity;
+    if (!preprocessDocument) preprocessDocument = identity;
+    if (!postprocessDocument) postprocessDocument = identity;
 
     assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 
@@ -56,8 +58,10 @@ export function buildImportFunction(validator: ImportValidator,
 
         try {
             preprocessFields(documents, importOptions.permitDeletions === true);
-            await preprocessDocuments(documents, findByIdentifier(datastore), importOptions.mergeMode === true);
-            await preprocessRelations(documents, generateId, findByIdentifier(datastore), get, importOptions);
+            await preprocessDocuments(documents,
+                findByIdentifier(datastore), preprocessDocument as Function, importOptions.mergeMode === true);
+            await preprocessRelations(documents,
+                generateId, findByIdentifier(datastore), get, importOptions);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -77,7 +81,7 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const documentsForImport = importDocuments.map(postProcessDocument as any) as Document[];
+        const documentsForImport = importDocuments.map(postprocessDocument as any) as Document[];
 
         const updateErrors = [];
         try {
@@ -95,7 +99,10 @@ export function buildImportFunction(validator: ImportValidator,
 }
 
 
-async function preprocessDocuments(documents: Array<Document>, find: Function, mergeMode: boolean) {
+async function preprocessDocuments(documents: Array<Document>,
+                                   find: Function,
+                                   preprocess: Function,
+                                   mergeMode: boolean) {
 
     for (let document of documents) {
         const existingDocument = await find(document.resource.identifier);
@@ -103,7 +110,7 @@ async function preprocessDocuments(documents: Array<Document>, find: Function, m
             if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
             document._id = existingDocument._id;
             document.resource.id = existingDocument.resource.id;
-            (document as any)[MERGE_TARGET] = existingDocument;
+            (document as any)[MERGE_TARGET] = preprocess(existingDocument);
         } else if (existingDocument) {
             throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }

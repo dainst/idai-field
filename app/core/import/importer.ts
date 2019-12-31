@@ -97,7 +97,8 @@ export module Importer {
             permitDeletions,
             inverseRelationsMap,
             generateId,
-            postProcessDocument(projectConfiguration),
+            preprocessDocument(projectConfiguration),
+            postprocessDocument(projectConfiguration),
             datastore,
             usernameProvider.getUsername());
 
@@ -105,7 +106,29 @@ export module Importer {
     }
 
 
-    function postProcessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
+    function preprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
+
+        const resource = document.resource;
+
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
+            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+
+            if (!fieldDefinition) continue;
+
+            // TODO review; treat dating accordingly
+
+            if (fieldDefinition.inputType === 'dimension') {
+                for (let entryIndex in resource[field]) {
+                    resource[field][entryIndex] = DimensionUtil.revert(resource[field][entryIndex]);
+                }
+            }
+        }
+
+        return document;
+    }}
+
+
+    function postprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
         const resource = document.resource;
 
@@ -159,7 +182,8 @@ export module Importer {
                            permitDeletions: boolean,
                            inverseRelationsMap: {[_: string]: string},
                            generateId: () => string,
-                           postProcessDocument: (document: Document) => Document,
+                           preprocessDocument: (document: Document) => Document,
+                           postprocessDocument: (document: Document) => Document,
                            datastore: DocumentDatastore,
                            username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
@@ -167,16 +191,19 @@ export module Importer {
 
         switch (format) {
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
+                importFunction =  buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                    preprocessDocument, postprocessDocument,
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
+                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                    preprocessDocument, postprocessDocument,
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
-                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId, postProcessDocument,
+                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                    preprocessDocument, postprocessDocument,
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,
                         mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
         }

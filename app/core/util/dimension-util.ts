@@ -1,3 +1,4 @@
+import {flow, dissoc} from 'tsfun';
 import {Dimension} from 'idai-components-2';
 
 
@@ -5,7 +6,23 @@ import {Dimension} from 'idai-components-2';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export module DimensionUtil {
+export module DimensionUtil { // TODO merge this with dimension.ts in idai-components-2
+
+
+    /**
+     * Reverts the dimension back to the state before normalization
+     *
+     * @param dimension gets modified in place
+     * @author Daniel de Oliveira
+     */
+    export function revert(dimension: Dimension) {
+
+        return flow(dimension,
+            dissoc('value'),
+            dissoc('rangeMin'),
+            dissoc('rangeMax'));
+    }
+
 
     export function addNormalizedValues(dimension: Dimension) {
 

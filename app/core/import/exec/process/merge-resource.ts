@@ -1,4 +1,4 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
@@ -78,9 +78,25 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
                 target[propertyName] = expandObjectArray(target[propertyName], source[propertyName]);
                 if (target[propertyName].length === 0) delete target[propertyName];
             }
-            else if (isObject(source[propertyName]) && isObject(target[propertyName])) {
+            else if (isObject(source[propertyName])) {
 
-                overwriteOrDeleteProperties(target[propertyName], source[propertyName], [], expandObjectArrays);
+                if (isEmpty(source[propertyName])) {
+
+                    delete target[propertyName];
+                    return target;
+                }
+
+                if (isObject(target[propertyName])) {
+                    overwriteOrDeleteProperties(target[propertyName], source[propertyName], [], expandObjectArrays);
+                } else {
+                    target[propertyName] = source[propertyName];
+                }
+
+                if (isEmpty(target[propertyName]) ||
+                    values(target[propertyName]).filter(isnt(null)).length === 0) {
+
+                    delete target[propertyName];
+                }
             }
             else target[propertyName] = source[propertyName];
 

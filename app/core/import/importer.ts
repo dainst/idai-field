@@ -105,6 +105,7 @@ export module Importer {
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 
+    // TODO move preprocessDocument and postProcessDocument to other file
 
     function preprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
@@ -115,7 +116,11 @@ export module Importer {
 
             if (!fieldDefinition) continue;
 
-            // TODO review; treat dating accordingly
+            if (fieldDefinition.inputType === 'dating') {
+                for (let entryIndex in resource[field]) {
+                    resource[field][entryIndex] = DatingUtil.revert(resource[field][entryIndex]);
+                }
+            }
 
             if (fieldDefinition.inputType === 'dimension') {
                 for (let entryIndex in resource[field]) {

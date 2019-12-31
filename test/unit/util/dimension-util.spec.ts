@@ -22,4 +22,6 @@ describe('DimensionUtil', () => {
         const reverted = DimensionUtil.revert(dim);
         expect(reverted['value']).toBeUndefined();
     });
+
+    // TODO test also for range
 });

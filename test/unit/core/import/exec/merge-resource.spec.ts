@@ -62,8 +62,8 @@ describe('mergeResource', () => {
     
     it('merge object field', () => {
 
-        target['object'] = {aField: 'aOriginalValue', cField: 'cOriginalValue'};
-        source['object'] = {aField: 'aChangedValue', bField: 'bNewValue'};
+        target['object'] = { aField: 'aOriginalValue', cField: 'cOriginalValue' };
+        source['object'] = { aField: 'aChangedValue', bField: 'bNewValue' };
 
         const result = mergeResource(target, source);
 
@@ -75,7 +75,7 @@ describe('mergeResource', () => {
 
     it('merge object field - create target', () => {
 
-        source['object'] = {aField: 'aNewValue'};
+        source['object'] = { aField: 'aNewValue' };
 
         const result = mergeResource(target, source);
 
@@ -85,8 +85,8 @@ describe('mergeResource', () => {
 
     it('merge objectArray field', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue', cField: 'cOriginalValue'}];
-        source['objectArray'] = [{aField: 'aChangedValue', bField: 'bNewValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue', cField: 'cOriginalValue' }];
+        source['objectArray'] = [{ aField: 'aChangedValue', bField: 'bNewValue' }];
 
         const result = mergeResource(target, source);
 
@@ -114,6 +114,60 @@ describe('mergeResource', () => {
 
         const result = mergeResource(target, source);
 
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete target object (interpret empty object as null if original field was also an object)', () => {
+
+        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
+        source['objectArray'] = [{aField: {}}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete target object (interpret emptied objects as null)', () => {
+
+        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
+        source['objectArray'] = [{aField: { aNested: null }}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete target object (interpret emptied objects as null) - case 2', () => {
+
+        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
+        source['objectArray'] = [{aField: { aNested: null, bNested: null }}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete target object (interpret empty objects as null, if target is undefined)', () => {
+
+        target['objectArray'] = [{aField: undefined}];
+        source['objectArray'] = [{aField: { aNested: null }}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - delete target object (interpret deeply nested, emptied objects as null)', () => {
+
+        target['objectArray'] = [{aField: { aNested: { aDeeplyNested: 'aOriginalValue' }}}];
+        source['objectArray'] = [{aField: { aNested: { aDeeplyNested: null } }}];
+
+        const result = mergeResource(target, source);
         expect(result['objectArray']).toBeUndefined();
     });
 

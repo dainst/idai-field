@@ -31,12 +31,9 @@ export function buildImportFunction(validator: ImportValidator,
                                     operationTypeNames: string[],
                                     inverseRelationsMap: {[_: string]: string},
                                     generateId: () => string,
-                                    preprocessDocument: undefined|((_: Document) => Document),  // TODO test in default-import.spec
-                                    postprocessDocument: undefined|((_: Document) => Document),
+                                    preprocessDocument: (_: Document) => Document = identity,  // TODO test in default-import.spec
+                                    postprocessDocument: (_: Document) => Document = identity,
                                     importOptions: ImportOptions = {}): ImportFunction {
-
-    if (!preprocessDocument) preprocessDocument = identity;
-    if (!postprocessDocument) postprocessDocument = identity;
 
     assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
 

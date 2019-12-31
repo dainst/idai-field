@@ -1,8 +1,10 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
+import {hasEmptyAssociatives} from './has-empty-associatives';
+import {cond} from 'tsfun-core/src/composition';
 
 
 /**
@@ -16,6 +18,9 @@ import {ImportErrors} from '../import-errors';
  *     - if the deletion of an array object will leave it empty
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
+
+    assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
+    assertNoEmptyAssociatives(additional); // our assumption regarding the import process; TODO document precondition in apidoc
 
     if (additional.type && into.type !== additional.type) {
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
@@ -49,6 +54,17 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 }
 
 
+function assertNoEmptyAssociatives(resource: Resource|NewResource) {
+
+    flow(resource,
+        dissoc('geometry'),
+        dissoc('relations'),
+        cond(hasEmptyAssociatives, () => {
+            throw Error('Precondition violated in mergeResource. Identifier: ' + resource.identifier);
+        }));
+}
+
+
 /**
  * Iterates over all fields of source, except those specified by exlusions
  * and either copies them from source to target
@@ -78,7 +94,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
                 target[propertyName] = expandObjectArray(target[propertyName], source[propertyName]);
                 if (target[propertyName].length === 0) delete target[propertyName];
             }
-            else if (isObject(source[propertyName])) {
+            else if (isObject(source[propertyName])) { // TODO review conditions
 
                 if (isEmpty(source[propertyName])) {
 

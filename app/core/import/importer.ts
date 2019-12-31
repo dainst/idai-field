@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, isnt, on} from 'tsfun';
+import {isnt} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {UsernameProvider} from '../settings/username-provider';
 import {GeojsonParser} from './parser/geojson-parser';
@@ -9,13 +9,11 @@ import {ImportValidator} from './exec/process/import-validator';
 import {TypeUtility} from '../model/type-utility';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
-import {DatingUtil} from '../util/dating-util';
-import {DimensionUtil} from '../util/dimension-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
 import {buildImportFunction} from './exec/default-import';
 import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
-
+import {FieldConverter} from './field-converter';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
@@ -97,63 +95,13 @@ export module Importer {
             permitDeletions,
             inverseRelationsMap,
             generateId,
-            preprocessDocument(projectConfiguration),
-            postprocessDocument(projectConfiguration),
+            FieldConverter.preprocessDocument(projectConfiguration),
+            FieldConverter.postprocessDocument(projectConfiguration),
             datastore,
             usernameProvider.getUsername());
 
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
-
-    // TODO move preprocessDocument and postProcessDocument to other file
-
-    function preprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
-
-        const resource = document.resource;
-
-        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
-            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
-
-            if (!fieldDefinition) continue;
-
-            if (fieldDefinition.inputType === 'dating') {
-                for (let entryIndex in resource[field]) {
-                    resource[field][entryIndex] = DatingUtil.revert(resource[field][entryIndex]);
-                }
-            }
-
-            if (fieldDefinition.inputType === 'dimension') {
-                for (let entryIndex in resource[field]) {
-                    resource[field][entryIndex] = DimensionUtil.revert(resource[field][entryIndex]);
-                }
-            }
-        }
-
-        return document;
-    }}
-
-
-    function postprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
-
-        const resource = document.resource;
-
-        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
-            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
-
-            // This could be and -End suffixed field of a dropdownRange input
-            // However, all the necessary validation validation is assumed to have taken place already
-            if (!fieldDefinition) continue;
-
-            if (fieldDefinition.inputType === 'dating') {
-                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
-            }
-
-            if (fieldDefinition.inputType === 'dimension') {
-                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
-            }
-        }
-        return document;
-    }}
 
 
     function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {

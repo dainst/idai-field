@@ -98,7 +98,7 @@ describe('mergeResource', () => {
 
     it('merge objectArray field - create target object', () => {
 
-        target['objectArray'] = [];
+        target['objectArray'] = undefined;
         source['objectArray'] = [{aField: 'aNewValue'}];
 
         const result = mergeResource(target, source);
@@ -111,17 +111,6 @@ describe('mergeResource', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
         source['objectArray'] = [{aField: null}];
-
-        const result = mergeResource(target, source);
-
-        expect(result['objectArray']).toBeUndefined();
-    });
-
-
-    it('merge objectArray field - delete target object (interpret empty object as null if original field was also an object)', () => {
-
-        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
-        source['objectArray'] = [{aField: {}}];
 
         const result = mergeResource(target, source);
 
@@ -249,7 +238,7 @@ describe('mergeResource', () => {
 
     it('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
 
-        target['objectArray'] = [];
+        target['objectArray'] = undefined;
         source['objectArray'] = [null, {bField: 'bNewValue'}];
 
         try {
@@ -307,5 +296,31 @@ describe('mergeResource', () => {
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]);
         }
-    })
+    });
+
+
+    it('violate precondition in target', () => {
+
+        target['anotherField'] = { a: {} };
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual(Error('Precondition violated in mergeResource. Identifier: identifier1'));
+        }
+    });
+
+
+    it('violate precondition in source', () => {
+
+        source['anotherField'] = { a: {} };
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual(Error('Precondition violated in mergeResource. Identifier: identifier1'));
+        }
+    });
 });

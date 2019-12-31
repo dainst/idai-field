@@ -115,13 +115,13 @@ export module Importer {
             if (!fieldDefinition) continue;
 
             if (fieldDefinition.inputType === 'dating') {
-                for (let entryIndex in resource[field]) {
+                for (let entryIndex in resource[field]) { // TODO map array
                     resource[field][entryIndex] = DatingUtil.revert(resource[field][entryIndex]);
                 }
             }
 
             if (fieldDefinition.inputType === 'dimension') {
-                for (let entryIndex in resource[field]) {
+                for (let entryIndex in resource[field]) { // TODO map array
                     resource[field][entryIndex] = DimensionUtil.revert(resource[field][entryIndex]);
                 }
             }

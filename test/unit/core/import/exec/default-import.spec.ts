@@ -55,6 +55,7 @@ describe('DefaultImport', () => {
             () => undefined,
             () => '101',
             undefined,
+            undefined,
             { mergeMode: false, permitDeletions: false });
     });
 
@@ -85,7 +86,9 @@ describe('DefaultImport', () => {
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101', undefined,
+            () => '101',
+            undefined,
+            undefined,
             { mergeMode: true }))(
             [{ resource: { id: '1', relations: {} } } as any],
             mockDatastore,
@@ -102,7 +105,7 @@ describe('DefaultImport', () => {
         await (buildImportFunction(
             mockValidator, operationTypeNames,
             () => undefined,
-            () => '101', undefined, { mergeMode: false }))([
+            () => '101', undefined, undefined,  { mergeMode: false }))([
                 { resource: { type: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
                 mockDatastore, 'user1');
 
@@ -145,7 +148,7 @@ describe('DefaultImport', () => {
             mockValidator,
             operationTypeNames,
             () => undefined,
-            () => '101', undefined,
+            () => '101', undefined, undefined,
             { mergeMode: false, useIdentifiersInRelations: true }); // !
 
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
@@ -167,6 +170,7 @@ describe('DefaultImport', () => {
             operationTypeNames,
             () => undefined,
             () => '101',
+            undefined,
             undefined,
             { mergeMode: false, useIdentifiersInRelations: false}); // !
 

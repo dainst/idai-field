@@ -1,3 +1,4 @@
+import {flow, dissocOn, cond, on, isEmpty, dissoc} from 'tsfun';
 import {Dating, DatingElement, DatingType} from 'idai-components-2';
 
 
@@ -5,7 +6,24 @@ import {Dating, DatingElement, DatingType} from 'idai-components-2';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export module DatingUtil {
+export module DatingUtil { // TODO move to dating.ts
+
+    const dissocIfEmpty = (path: string) => cond(on(path, isEmpty), dissoc(path));
+
+    /**
+     * @param dating
+     *
+     * @author Daniel de Oliveira
+     */
+    export function revert(dating: Dating): Dating {
+
+        return flow(dating,
+            dissocOn('begin.year'),
+            dissocOn('end.year'),
+            dissocIfEmpty('begin'),
+            dissocIfEmpty('end'));
+    }
+
 
     export function addNormalizedValues(dating: Dating) {
 

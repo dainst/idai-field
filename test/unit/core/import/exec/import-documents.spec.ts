@@ -1,10 +1,10 @@
 import {ImportErrors as E, ImportErrors} from '../../../../../app/core/import/exec/import-errors';
-import {buildImportFunction} from '../../../../../app/core/import/exec/default-import';
+import {buildImportFunction} from '../../../../../app/core/import/exec/import-documents';
 
 /**
  * @author Daniel de Oliveira
  */
-describe('DefaultImport', () => {
+describe('importDocuments', () => {
 
     let mockDatastore;
     let mockValidator;

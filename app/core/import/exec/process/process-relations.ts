@@ -6,9 +6,9 @@ import {ImportErrors as E} from '../import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {Get, GetInverseRelation, Id, IdMap} from '../types';
+import {Get, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
-import {ImportOptions} from '../default-import';
+import {ImportOptions} from '../import-documents';
 
 
 /**

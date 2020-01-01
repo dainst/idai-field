@@ -24,8 +24,6 @@ export interface ImportOptions {
 
 
 /**
- * TODO rename importFunction to match default-import filename or do it the other way round
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -33,7 +31,7 @@ export function buildImportFunction(validator: ImportValidator,
                                     operationTypeNames: string[],
                                     inverseRelationsMap: {[_: string]: string},
                                     generateId: () => string,
-                                    preprocessDocument: (_: Document) => Document = identity,  // TODO test in default-import.spec
+                                    preprocessDocument: (_: Document) => Document = identity,
                                     postprocessDocument: (_: Document) => Document = identity,
                                     importOptions: ImportOptions = {}): ImportFunction {
 
@@ -49,9 +47,9 @@ export function buildImportFunction(validator: ImportValidator,
      * @param importReport
      *   .errors of ImportError or Validation Error
      */
-    return async function importFunction(documents: Array<Document>,
-                                         datastore: DocumentDatastore,
-                                         username: string): Promise<{ errors: string[][], successfulImports: number }> {
+    return async function importDocuments(documents: Array<Document>,
+                                          datastore: DocumentDatastore,
+                                          username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
         const get = (resourceId: string) => datastore.get(resourceId);
 

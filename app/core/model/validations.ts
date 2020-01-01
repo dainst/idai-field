@@ -3,13 +3,11 @@ import {Dating, Dimension, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {DatingUtil} from '../util/dating-util';
 import {INPUT_TYPE, INPUT_TYPES} from '../../c';
 import {subtract} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
-import {DimensionUtil} from '../util/dimension-util';
 
 
 export module Validations {
@@ -68,7 +66,7 @@ export module Validations {
                                                     projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dating', DatingUtil.isValid
+            document.resource, projectConfiguration, 'dating', Dating.isValid
         );
 
         if (invalidFields.length > 0) {
@@ -88,7 +86,7 @@ export module Validations {
                                                        projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dimension', DimensionUtil.isValid
+            document.resource, projectConfiguration, 'dimension', Dimension.isValid
         );
 
         if (invalidFields.length > 0) {

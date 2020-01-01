@@ -1,7 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource, Dating} from 'idai-components-2';
-import {DatingUtil} from '../../../../core/util/dating-util';
-import {Validations} from '../../../../core/model/validations';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
@@ -52,7 +50,7 @@ export class DatingComponent {
 
     public getLabel(dating: Dating): string {
 
-        return dating.label ? dating.label : DatingUtil.generateLabel(dating, (key: string) => this.utilTranslations.getTranslation(key));
+        return dating.label ? dating.label : Dating.generateLabel(dating, (key: string) => this.utilTranslations.getTranslation(key));
     }
 
 
@@ -61,8 +59,8 @@ export class DatingComponent {
         if (dating.type === 'exact' || dating.type === 'before') delete dating.begin;
         if (dating.type === 'after') delete dating.end;
 
-        DatingUtil.addNormalizedValues(dating);
+        Dating.addNormalizedValues(dating);
 
-        return DatingUtil.isValid(dating);
+        return Dating.isValid(dating);
     }
 }

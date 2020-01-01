@@ -1,9 +1,7 @@
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {Document} from 'idai-components-2/src/model/core/document';
+import {Document, Dating, Dimension} from 'idai-components-2';
 import {includedIn, isNot, on} from 'tsfun-core';
 import {is} from 'tsfun';
-import {DatingUtil} from '../util/dating-util';
-import {DimensionUtil} from '../util/dimension-util';
 
 
 /**
@@ -24,13 +22,13 @@ export module FieldConverter {
 
             if (fieldDefinition.inputType === 'dating') {
                 for (let entryIndex in resource[field]) { // TODO map array
-                    resource[field][entryIndex] = DatingUtil.revert(resource[field][entryIndex]);
+                    resource[field][entryIndex] = Dating.revert(resource[field][entryIndex]);
                 }
             }
 
             if (fieldDefinition.inputType === 'dimension') {
                 for (let entryIndex in resource[field]) { // TODO map array
-                    resource[field][entryIndex] = DimensionUtil.revert(resource[field][entryIndex]);
+                    resource[field][entryIndex] = Dimension.revert(resource[field][entryIndex]);
                 }
             }
         }
@@ -51,11 +49,11 @@ export module FieldConverter {
             if (!fieldDefinition) continue;
 
             if (fieldDefinition.inputType === 'dating') {
-                for (let dating of resource[field]) DatingUtil.setNormalizedYears(dating);
+                for (let dating of resource[field]) Dating.setNormalizedYears(dating);
             }
 
             if (fieldDefinition.inputType === 'dimension') {
-                for (let dimension of resource[field]) DimensionUtil.addNormalizedValues(dimension);
+                for (let dimension of resource[field]) Dimension.addNormalizedValues(dimension);
             }
         }
         return document;

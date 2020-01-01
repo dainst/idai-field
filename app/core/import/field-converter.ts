@@ -1,42 +1,49 @@
-import {ProjectConfiguration} from '../configuration/project-configuration';
+import {is, isNot, on, includedIn, identity} from 'tsfun';
 import {Document, Dating, Dimension} from 'idai-components-2';
-import {includedIn, isNot, on} from 'tsfun-core';
-import {is} from 'tsfun';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
 /**
+ * Pre- and postprocessing of documents which depends on ProjectConfiguration.
+ * We want the ProjectConfiguration dependency to stay out of DefaultImport/importFunction.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module FieldConverter {
 
 
+    /**
+     * Objects stored in the database have datings and dimensions with values calculated from the user inputs.
+     * We want to restore the dimensions and datings original state so that on a subsequent merge the fields
+     * match exactly the potential user input.
+     *
+     * @param projectConfiguration
+     */
     export function preprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
         const resource = document.resource;
 
         for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
-            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+
+            const fieldDefinition =
+                projectConfiguration
+                    .getFieldDefinitions(resource.type)
+                    .find(on('name', is(field)));
 
             if (!fieldDefinition) continue;
 
-            if (fieldDefinition.inputType === 'dating') {
-                for (let entryIndex in resource[field]) { // TODO map array
-                    resource[field][entryIndex] = Dating.revert(resource[field][entryIndex]);
-                }
-            }
-
-            if (fieldDefinition.inputType === 'dimension') {
-                for (let entryIndex in resource[field]) { // TODO map array
-                    resource[field][entryIndex] = Dimension.revert(resource[field][entryIndex]);
-                }
-            }
+            if (fieldDefinition.inputType === 'dating') resource[field] = resource[field].map(Dating.revert);
+            if (fieldDefinition.inputType === 'dimension') resource[field] = resource[field].map(Dimension.revert);
         }
 
         return document;
     }}
 
 
+    /**
+     * @param projectConfiguration
+     */
     export function postprocessDocument(projectConfiguration: ProjectConfiguration) { return (document: Document) => {
 
         const resource = document.resource;

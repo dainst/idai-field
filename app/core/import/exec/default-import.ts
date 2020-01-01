@@ -24,6 +24,8 @@ export interface ImportOptions {
 
 
 /**
+ * TODO rename importFunction to match default-import filename or do it the other way round
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

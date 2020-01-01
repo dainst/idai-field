@@ -107,7 +107,7 @@ async function preprocessDocuments(documents: Array<Document>,
             if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
             document._id = existingDocument._id;
             document.resource.id = existingDocument.resource.id;
-            (document as any)[MERGE_TARGET] = preprocess(existingDocument);
+            (document as any)[MERGE_TARGET] = preprocess(existingDocument); // TODO MERGE_TARGET should only be resource, not document
         } else if (existingDocument) {
             throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }

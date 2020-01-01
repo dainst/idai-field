@@ -9,6 +9,16 @@ import {Dimension} from 'idai-components-2';
 export module DimensionUtil { // TODO merge this with dimension.ts in idai-components-2
 
 
+    export function isValid(dimension: Dimension): boolean {
+
+        if (dimension.label) return true;
+        if (!dimension.inputValue || !dimension.inputUnit) return false;
+
+        return typeof(dimension.inputValue) === 'number'
+            && (!dimension.inputRangeEndValue || typeof(dimension.inputRangeEndValue) === 'number');
+    }
+
+
     /**
      * Reverts the dimension back to the state before normalization
      *

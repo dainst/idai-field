@@ -8,6 +8,35 @@ import {Dating, DatingElement, DatingType} from 'idai-components-2';
  */
 export module DatingUtil { // TODO move to dating.ts
 
+    export function isValid(dating: Dating): boolean {
+
+        if (dating.label) return true;
+        if (!dating.type || !['range', 'exact', 'after', 'before', 'scientific'].includes(dating.type)) {
+            return false;
+        }
+        if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
+        if (['range', 'exact', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
+        if (dating.type === 'scientific' && !dating.margin) return false;
+
+        if (dating.begin && (!dating.begin.inputYear || !dating.begin.inputType
+            || !Number.isInteger(dating.begin.inputYear)
+            || dating.begin.inputYear < 0)) return false;
+        if (dating.end && (!dating.end.inputYear || !dating.end.inputType
+            || !Number.isInteger(dating.end.inputYear)
+            || dating.end.inputYear < 0)) return false;
+
+        return dating.type !== 'range' || validateRangeDating(dating);
+    }
+
+
+    function validateRangeDating(dating: Dating): boolean {
+
+        return dating.begin !== undefined && dating.end !== undefined &&
+            DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType)
+            <  DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
+    }
+
+
     const dissocIfEmpty = (path: string) => cond(on(path, isEmpty), dissoc(path));
 
     /**

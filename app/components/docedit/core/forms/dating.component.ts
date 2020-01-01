@@ -63,6 +63,6 @@ export class DatingComponent {
 
         DatingUtil.addNormalizedValues(dating);
 
-        return Validations.validateDating(dating);
+        return DatingUtil.isValid(dating);
     }
 }

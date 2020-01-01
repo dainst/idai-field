@@ -6,7 +6,7 @@ import {RESOURCE_IDENTIFIER} from '../../../../c';
 import {processRelations} from './process-relations';
 import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
-import {ImportOptions} from '../default-import';
+import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';
 
 

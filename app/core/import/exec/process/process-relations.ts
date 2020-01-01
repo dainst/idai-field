@@ -8,7 +8,7 @@ import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {Get, GetInverseRelation, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
-import {ImportOptions} from '../default-import';
+import {ImportOptions} from '../import-documents';
 
 
 /**
@@ -41,7 +41,7 @@ import {ImportOptions} from '../default-import';
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       getInverseRelation: GetInverseRelation, // TODO pass map instead of function, this isn't supposed to change at runtime
+                                       getInverseRelation: GetInverseRelation,
                                        get: Get,
                                        { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 

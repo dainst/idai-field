@@ -11,7 +11,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {buildImportFunction} from './exec/default-import';
+import {buildImportFunction} from './exec/import-documents';
 import {FieldConverter} from './field-converter';
 
 

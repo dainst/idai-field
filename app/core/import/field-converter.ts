@@ -5,7 +5,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 
 /**
  * Pre- and postprocessing of documents which depends on ProjectConfiguration.
- * We want the ProjectConfiguration dependency to stay out of DefaultImport/importFunction.
+ * We want the ProjectConfiguration dependency to stay out of DefaultImport/importDocuments.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

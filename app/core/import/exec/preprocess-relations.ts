@@ -6,7 +6,7 @@ import {ImportErrors as E} from './import-errors';
 import {RESOURCE_ID} from '../../../c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import {ImportOptions} from './default-import';
+import {ImportOptions} from './import-documents';
 
 
 /**

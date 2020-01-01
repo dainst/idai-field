@@ -10,9 +10,12 @@ import {cond} from 'tsfun-core/src/composition';
 /**
  * @author Daniel de Oliveira
  *
+ * @param into
+ * @param additional Must not contain empty objects or arrays as any leaf of the tree.
+ *
  * @throws
- *   [ImportErrors.TYPE_CANNOT_BE_CHANGED] TODO document in process apidoc
- *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] // TODO improve actual displayed message
+ *   [ImportErrors.TYPE_CANNOT_BE_CHANGED]
+ *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN]
  *     - if a new array object is to be created at an index which would leave unfilled indices between
  *       the new index and the last index of the array which is filled in the original field.
  *     - if the deletion of an array object will leave it empty
@@ -20,7 +23,7 @@ import {cond} from 'tsfun-core/src/composition';
 export function mergeResource(into: Resource, additional: NewResource): Resource {
 
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
-    assertNoEmptyAssociatives(additional); // our assumption regarding the import process; TODO document precondition in apidoc
+    assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
 
     if (additional.type && into.type !== additional.type) {
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
@@ -85,36 +88,27 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
-        .reduce((target: any, propertyName: string|number) => {
+        .reduce((target: any, property: string|number) => {
 
-            if (source[propertyName] === null) delete target[propertyName];
-            else if (expandObjectArrays && isArray(source[propertyName])) {
+            if (source[property] === null) delete target[property];
+            else if (expandObjectArrays && isArray(source[property])) {
 
-                if (!target[propertyName]) target[propertyName] = [];
-                target[propertyName] = expandObjectArray(target[propertyName], source[propertyName]);
-                if (target[propertyName].length === 0) delete target[propertyName];
-            }
-            else if (isObject(source[propertyName])) { // TODO review conditions
+                if (!target[property]) target[property] = [];
+                target[property] = expandObjectArray(target[property], source[property]);
+                if (target[property].length === 0) delete target[property];
 
-                if (isEmpty(source[propertyName])) {
+            } else if (isObject(source[property]) && isObject(target[property])) {
 
-                    delete target[propertyName];
-                    return target;
+                overwriteOrDeleteProperties(target[property], source[property], [], expandObjectArrays);
+                if (isEmpty(target[property])) delete target[property];
+
+            } else if (isObject(source[property]) && target[property] === undefined) {
+
+                if (values(source[property]).filter(isnt(null)).length > 0) {
+                    target[property] = source[property];
                 }
 
-                if (isObject(target[propertyName])) {
-                    overwriteOrDeleteProperties(target[propertyName], source[propertyName], [], expandObjectArrays);
-                } else {
-                    target[propertyName] = source[propertyName];
-                }
-
-                if (isEmpty(target[propertyName]) ||
-                    values(target[propertyName]).filter(isnt(null)).length === 0) {
-
-                    delete target[propertyName];
-                }
-            }
-            else target[propertyName] = source[propertyName];
+            } else target[property] = source[property];
 
             return target;
         }, target ? target : {});

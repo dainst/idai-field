@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension} from 'idai-components-2';
-import {DimensionUtil} from '../../../../core/util/dimension-util';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
 
@@ -48,7 +47,7 @@ export class DimensionComponent {
 
         return dimension.label
             ? dimension.label
-            : DimensionUtil.generateLabel(
+            : Dimension.generateLabel(
                 dimension,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key));
@@ -89,7 +88,7 @@ export class DimensionComponent {
 
     public saveDimension(dimension: Dimension) {
 
-        DimensionUtil.addNormalizedValues(dimension);
+        Dimension.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {
             if (!this.resource[this.field.name]) this.resource[this.field.name] = [];

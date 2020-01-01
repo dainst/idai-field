@@ -2,14 +2,11 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose} from 'tsfun';
-import {Document, FieldDocument,   ReadDatastore,
-    Resource} from 'idai-components-2';
+import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../components/routing-service';
 import {GroupUtil} from '../core/util/group-util';
 import {GROUP_NAME, Name, ResourceId} from '../c';
 import {isBoolean} from '../utils';
-import {DatingUtil} from '../core/util/dating-util';
-import {DimensionUtil} from '../core/util/dimension-util';
 import {UtilTranslations} from '../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../core/model/relation-constants';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
@@ -123,9 +120,9 @@ export class FieldsViewComponent implements OnChanges {
     public getArrayItemLabel(arrayItem: any): string {
 
         if (arrayItem.begin || arrayItem.end) {
-            return DatingUtil.generateLabel(arrayItem, (key: string) => this.utilTranslations.getTranslation(key));
+            return Dating.generateLabel(arrayItem, (key: string) => this.utilTranslations.getTranslation(key));
         } else if (arrayItem.inputUnit) {
-            return DimensionUtil.generateLabel(
+            return Dimension.generateLabel(
                 arrayItem,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key));

@@ -3,7 +3,6 @@ import {Dating, Dimension, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {DatingUtil} from '../util/dating-util';
 import {INPUT_TYPE, INPUT_TYPES} from '../../c';
 import {subtract} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -67,7 +66,7 @@ export module Validations {
                                                     projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dating', Validations.validateDating
+            document.resource, projectConfiguration, 'dating', Dating.isValid
         );
 
         if (invalidFields.length > 0) {
@@ -87,7 +86,7 @@ export module Validations {
                                                        projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dimension', validateDimension
+            document.resource, projectConfiguration, 'dimension', Dimension.isValid
         );
 
         if (invalidFields.length > 0) {
@@ -388,45 +387,6 @@ export module Validations {
                 return resource[field.name] !== undefined &&
                     resource[field.name].filter((object: any) => !validate(object)).length > 0;
             }).map(field => field.name);
-    }
-
-
-    export function validateDating(dating: Dating): boolean {
-
-        if (dating.label) return true;
-        if (!dating.type || !['range', 'exact', 'after', 'before', 'scientific'].includes(dating.type)) {
-            return false;
-        }
-        if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
-        if (['range', 'exact', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
-        if (dating.type === 'scientific' && !dating.margin) return false;
-
-        if (dating.begin && (!dating.begin.inputYear || !dating.begin.inputType
-            || !Number.isInteger(dating.begin.inputYear)
-            || dating.begin.inputYear < 0)) return false;
-        if (dating.end && (!dating.end.inputYear || !dating.end.inputType
-            || !Number.isInteger(dating.end.inputYear)
-            || dating.end.inputYear < 0)) return false;
-
-        return dating.type !== 'range' || validateRangeDating(dating);
-    }
-
-
-    function validateDimension(dimension: Dimension): boolean {
-
-        if (dimension.label) return true;
-        if (!dimension.inputValue || !dimension.inputUnit) return false;
-
-        return typeof(dimension.inputValue) === 'number'
-            && (!dimension.inputRangeEndValue || typeof(dimension.inputRangeEndValue) === 'number');
-    }
-
-
-    function validateRangeDating(dating: Dating): boolean {
-
-        return dating.begin !== undefined && dating.end !== undefined &&
-            DatingUtil.getNormalizedYear(dating.begin.inputYear, dating.begin.inputType)
-            <  DatingUtil.getNormalizedYear(dating.end.inputYear, dating.end.inputType);
     }
 
 

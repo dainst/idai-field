@@ -36,8 +36,8 @@ function assertHeadingsConsistent(headings: string[]) {
         if (heading.lastIndexOf(PATH_SEPARATOR) === -1) return;
 
         headings
-            .filter(heading2 => heading2.startsWith(heading))
-            .filter(heading2 => heading2.length > heading.length)
+            .filter(startsWith(heading))
+            .filter(longerThan(heading))
             .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
     });
 }
@@ -149,3 +149,8 @@ function addFieldToRow(field: string, row: string[]) {
     if (field === '"') field = '';
     row.push(field);
 }
+
+
+function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
+
+function longerThan(than: string) { return (what: string) => what.length > than.length }

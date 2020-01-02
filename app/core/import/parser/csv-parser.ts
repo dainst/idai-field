@@ -26,7 +26,7 @@ export module CsvParser {
      * @param operationId converted into isChildOf entry if not empty
      * @param separator
      */
-    export const getParse = (type: IdaiType, operationId: string, separator: string): Parser => {
+    export const build = (type: IdaiType, operationId: string, separator: string): Parser => {
 
         /**
          * @throws [CSV_GENERIC] // currently unused

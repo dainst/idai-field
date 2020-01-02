@@ -109,7 +109,7 @@ export module Importer {
             case 'csv':
                 if (!selectedType) throw 'Selected type must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
-                return CsvParser.getParse(selectedType, operationId, separator);
+                return CsvParser.build(selectedType, operationId, separator);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,

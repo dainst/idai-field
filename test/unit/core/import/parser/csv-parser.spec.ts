@@ -12,7 +12,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields:type } as IdaiType,
             'opId1',
             ','
@@ -31,7 +31,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields: type } as IdaiType,
             '',
             ','
@@ -47,7 +47,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields: type } as IdaiType,
             '',
             ','
@@ -63,7 +63,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse(
+        const parse = CsvParser.build(
             { name: 'Feature', fields: type } as IdaiType,
             'opId1',
             ','
@@ -85,7 +85,7 @@ describe('CsvParser', () => {
             }],
         } as IdaiType;
 
-        const parse = CsvParser.getParse(
+        const parse = CsvParser.build(
             type,
             '',
             ',');

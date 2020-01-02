@@ -3481,6 +3481,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
+        <source>Ungültiger CSV-Header: Siehe [0].</source>
+        <target state="final">Ungültiger CSV-Header: Siehe [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</source>
         <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</target>

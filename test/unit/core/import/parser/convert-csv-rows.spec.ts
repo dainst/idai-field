@@ -1,15 +1,17 @@
-import {CsvRowsConversion} from '../../../../../app/core/import/parser/csv-rows-conversion';
+import {convertCsvRows} from '../../../../../app/core/import/parser/convert-csv-rows';
+import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
+import CSV_INVALID_HEADING = ParserErrors.CSV_INVALID_HEADING;
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('CsvRowsConversion', () => {
+describe('convertCsvRows', () => {
 
     it('three fields', () => {
 
-        const struct = CsvRowsConversion.parse(',')(
+        const struct = convertCsvRows(',')(
             'identifier,shortDescription,custom\n' +
             '10,zehn,bla');
 
@@ -22,7 +24,7 @@ describe('CsvRowsConversion', () => {
 
     it('two lines', () => {
 
-        const structs = CsvRowsConversion.parse(',')(
+        const structs = convertCsvRows(',')(
             'a\n' +
             '10\n' +
             '11');
@@ -35,7 +37,7 @@ describe('CsvRowsConversion', () => {
 
     it('parse content with quotes', () => {
 
-        const structs = CsvRowsConversion.parse(',')(
+        const structs = convertCsvRows(',')(
             'field1,field2,field3,field4,field5,field6\n' +
             '"Value","ValueX,ValueY,ValueZ","Value: ""XYZ""","""XYZ""","W,""X,Y"",Z",""');
 
@@ -51,7 +53,7 @@ describe('CsvRowsConversion', () => {
 
     it('parse linebreaks in field values', () => {
 
-        const structs = CsvRowsConversion.parse(',')(
+        const structs = convertCsvRows(',')(
             'field1,field2,field3\n' +
             '"Line 1\nLine 2","Line 1\rLine 2","Line 1\n\rLine 2"\r' +
             'ValueX,ValueY,ValueZ\n\r' +
@@ -76,7 +78,7 @@ describe('CsvRowsConversion', () => {
             'a.b\n' +
             '100';
 
-        const structs = CsvRowsConversion.parse(',')(content);
+        const structs = convertCsvRows(',')(content);
         const struct = structs[0];
         expect(struct['a']['b']).toBe('100');
     });
@@ -88,7 +90,7 @@ describe('CsvRowsConversion', () => {
             'identifier,array.0.begin.year,array.0.end.year,array.0.source,array.0.label\n' +
             'identifier1,100,200,S,L';
 
-        const structs = CsvRowsConversion.parse(',')(content);
+        const structs = convertCsvRows(',')(content);
         expect(structs.length).toBe(1);
 
         const struct = structs[0];
@@ -106,7 +108,7 @@ describe('CsvRowsConversion', () => {
             'a.1.b.c\n' +
             '10';
 
-        const structs = CsvRowsConversion.parse(',')(content);
+        const structs = convertCsvRows(',')(content);
         const struct = structs[0];
         const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
         expect(nrEnumeratedItems).toBe(2);
@@ -115,21 +117,21 @@ describe('CsvRowsConversion', () => {
 
     it('parse empty fields on different levels', () => {
 
-        const struct = CsvRowsConversion.parse(',')(
+        const struct = convertCsvRows(',')(
             'a\n' +
             '""');
 
         expect(struct.length).toBe(1);
         expect(struct[0]['a']).toBe(null);
 
-        const struct1 = CsvRowsConversion.parse(',')(
+        const struct1 = convertCsvRows(',')(
             'a,a.b\n' +
             '"",""');
 
         expect(struct1.length).toBe(1);
         expect(struct1[0]['a']['b']).toBe(null);
 
-        const struct2 = CsvRowsConversion.parse(',')(
+        const struct2 = convertCsvRows(',')(
             'a,a.b,a.b.c\n' +
             '"","",""');
 
@@ -140,12 +142,34 @@ describe('CsvRowsConversion', () => {
 
     it('parse last field in file even if empty', () => {
 
-        const struct = CsvRowsConversion.parse(',')(
+        const struct = convertCsvRows(',')(
             'a,b\n' +
             'Value,');
 
         expect(struct.length).toBe(1);
         expect(struct[0]['a']).toBe('Value');
         expect(struct[0]['b']).toBe(null);
+    });
+
+
+    it('inconsistent headings found', () => {
+
+        try {
+            convertCsvRows(',')('a.10,a.10.a');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([CSV_INVALID_HEADING, 'a.10']);
+        }
+    });
+
+
+    it('can set array entry to null', () => {
+
+        const struct = convertCsvRows(',')(
+            'a.0\n' + '""');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['a'].length).toBe(1);
+        expect(struct[0]['a'][0]).toBeNull();
     });
 });

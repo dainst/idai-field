@@ -12,7 +12,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields:type } as IdaiType,
             'opId1',
             ','
@@ -31,7 +31,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions(['custom1, custom2']);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields: type } as IdaiType,
             '',
             ','
@@ -47,7 +47,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse({
+        const parse = CsvParser.build({
             name: 'Feature', fields: type } as IdaiType,
             '',
             ','
@@ -63,7 +63,7 @@ describe('CsvParser', () => {
 
         const type = makeFieldDefinitions([]);
 
-        const parse = CsvParser.getParse(
+        const parse = CsvParser.build(
             { name: 'Feature', fields: type } as IdaiType,
             'opId1',
             ','
@@ -85,7 +85,7 @@ describe('CsvParser', () => {
             }],
         } as IdaiType;
 
-        const parse = CsvParser.getParse(
+        const parse = CsvParser.build(
             type,
             '',
             ',');
@@ -95,6 +95,32 @@ describe('CsvParser', () => {
             fail();
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([ParserErrors.CSV_NOT_A_NUMBER, 'a100.0', 'uf']);
+        } finally {
+            done();
+        }
+    });
+
+
+    it('erroneous array', async done => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dim',
+                inputType: 'dimension'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.build(
+            type,
+            '',
+            ',');
+
+        try {
+            const docs = await parse('dim.0,dim.0.a\n,');
+            fail();
+        } catch (msgWithParams) {
+            expect(msgWithParams).toEqual([ParserErrors.CSV_INVALID_HEADING, 'dim.0']);
         } finally {
             done();
         }

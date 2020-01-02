@@ -53,6 +53,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
     public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
     public static IMPORT_PARSER_INVALID_CSV = 'M.Import.ParserErrors.invalidCsv';
+    public static IMPORT_PARSER_CSV_INVALID_HEADING = 'M.Import.ParserErrors.invalidCsvHeading';
     public static IMPORT_PARSER_GENERIC_CSV_ERROR = 'M.Import.ParserErrors.genericCsvError';
     public static IMPORT_PARSER_NOT_A_NUMBER = 'M.Import.ParserErrors.notANumber';
     public static IMPORT_PARSER_NOT_A_BOOLEAN = 'M.Import.ParserErrors.notABoolean';
@@ -472,6 +473,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.invalidCsv',
                 value: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PARSER_CSV_INVALID_HEADING] = {
+            content: i18n({
+                id: 'messages.import.error.csvInvalidHeading',
+                value: 'Ungültiger CSV-Header: Siehe [0].'
             }),
             level: 'danger',
             params: ['?'],

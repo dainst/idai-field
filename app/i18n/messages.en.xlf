@@ -3555,6 +3555,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
+        <source>Ungültiger CSV-Header: Siehe [0].</source>
+        <target state="final">Erroneous CSV heading: See [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</source>
         <target state="final">Erroneous CSV: Value "[0]" in column "[1]" is not a boolean.</target>
@@ -4790,22 +4798,6 @@
           <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.bears" datatype="html">
-        <source>Trägt</source>
-        <target state="final">Bears</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
-        <source>Ist aufgebracht auf</source>
-        <target state="final">Found on</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
           <context context-type="linenumber">1</context>

@@ -2,10 +2,9 @@ import {assoc, update, flow, map} from 'tsfun';
 import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
 import {CsvFieldTypesConversion} from './csv-field-types-conversion';
-import {CsvRowsConversion} from './csv-rows-conversion';
-import parse = CsvRowsConversion.parse;
 import convertFieldTypes = CsvFieldTypesConversion.convertFieldTypes;
 import {IdaiType} from '../../configuration/model/idai-type';
+import {convertCsvRows} from './convert-csv-rows';
 
 
 /**
@@ -29,8 +28,10 @@ export module CsvParser {
     export const build = (type: IdaiType, operationId: string, separator: string): Parser => {
 
         /**
+         * ParserErrors
          * @throws [CSV_GENERIC] // currently unused
          * @throws [CSV_NOT_A_NUMBER]
+         * @throws [CSV_INVALID_HEADING]
          */
         return (content: string) => {
 
@@ -46,7 +47,7 @@ export module CsvParser {
     function doParse(type: IdaiType, content: string, separator: string) {
 
         return flow(content,
-            parse(separator),
+            convertCsvRows(separator),
             map(assoc('type', type.name)),
             map(insertRelations),
             map(convertFieldTypes(type)),

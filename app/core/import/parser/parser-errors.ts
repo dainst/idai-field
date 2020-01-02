@@ -17,6 +17,7 @@ export module ParserErrors {
     export const MANDATORY_CSV_FIELD_MISSING = 'importerrors/mandatorycsvfieldmissing';
     export const CSV_GENERIC = 'importerrors/csv/genericerror';
     export const CSV_INVALID = 'importerrors/csv/invalid';
+    export const CSV_INVALID_HEADING = 'parsererrors/csv/invalidheading';
     export const CSV_NOT_A_NUMBER = 'importerrors/csv/notanumber'; // [error, value, column]
     export const CSV_NOT_A_BOOLEAN = 'importerrors/csvs/notaboolean';
 }

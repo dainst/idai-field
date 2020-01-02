@@ -99,4 +99,30 @@ describe('CsvParser', () => {
             done();
         }
     });
+
+
+    it('erroneous array', async done => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dim',
+                inputType: 'dimension'
+            }],
+        } as IdaiType;
+
+        const parse = CsvParser.build(
+            type,
+            '',
+            ',');
+
+        try {
+            const docs = await parse('dim.0,dim.0.a\n,');
+            fail();
+        } catch (msgWithParams) {
+            expect(msgWithParams).toEqual([ParserErrors.CSV_INVALID_HEADING, 'dim.0']);
+        } finally {
+            done();
+        }
+    });
 });

@@ -1324,22 +1324,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.relations.bears" datatype="html">
-        <source>Trägt</source>
-        <target state="final">Trägt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
-        <source>Ist aufgebracht auf</source>
-        <target state="final">Ist aufgebracht auf</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/core/model/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
         <source>Synchronisation ist aktiv</source>
         <target state="final">Synchronisation ist aktiv</target>
@@ -3460,6 +3444,14 @@
       <trans-unit id="messages.import.error.invalidCsv" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</source>
         <target state="final">Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
+        <source>Ungültiger CSV-Header: Siehe [0].</source>
+        <target state="final">Ungültiger CSV-Header: Siehe [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

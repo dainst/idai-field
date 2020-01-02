@@ -11,7 +11,7 @@ type Field = string;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  *
- * @throws if inconsistent headings found
+ * @throws [ParserError.CSV_INVALID_HEADING, columnHeading] if inconsistent headings found
  *   this can be the case when the leafs and nodes of nested associatives are both set as
  *   - with an array: dim.0 and dim.0.a cannot be both set at the same time
  *   - with an object: dim.a and dim.a.b cannot be both set at the same time

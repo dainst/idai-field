@@ -12,7 +12,9 @@ type Field = string;
  * @author Thomas Kleinke
  *
  * @throws if inconsistent headings found
- *   this can be the case with an array: dim.0 and dim.0.a cannot be both set at the same time
+ *   this can be the case when the leafs and nodes of nested associatives are both set as
+ *   - with an array: dim.0 and dim.0.a cannot be both set at the same time
+ *   - with an object: dim.a and dim.a.b cannot be both set at the same time
  */
 export function convertCsvRows(separator: string) {
 
@@ -31,14 +33,12 @@ function assertHeadingsConsistent(headings: string[]) {
 
     headings.forEach(heading => {
 
-        const ending = heading.substr(heading.lastIndexOf('.') + 1);
-        if (/^\d+$/.test(ending)) {
+        if (heading.lastIndexOf(PATH_SEPARATOR) === -1) return;
 
-            headings
-                .filter(heading2 => heading2.startsWith(heading))
-                .filter(heading2 => heading2.length > heading.length)
-                .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
-        }
+        headings
+            .filter(heading2 => heading2.startsWith(heading))
+            .filter(heading2 => heading2.length > heading.length)
+            .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
     });
 }
 

@@ -115,31 +115,6 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse empty fields on different levels', () => {
-
-        const struct = convertCsvRows(',')(
-            'a\n' +
-            '""');
-
-        expect(struct.length).toBe(1);
-        expect(struct[0]['a']).toBe(null);
-
-        const struct1 = convertCsvRows(',')(
-            'a,a.b\n' +
-            '"",""');
-
-        expect(struct1.length).toBe(1);
-        expect(struct1[0]['a']['b']).toBe(null);
-
-        const struct2 = convertCsvRows(',')(
-            'a,a.b,a.b.c\n' +
-            '"","",""');
-
-        expect(struct2.length).toBe(1);
-        expect(struct2[0]['a']['b']['c']).toBe(null);
-    });
-
-
     it('parse last field in file even if empty', () => {
 
         const struct = convertCsvRows(',')(
@@ -152,14 +127,28 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('inconsistent headings found', () => {
+    it('parse empty fields on different levels', () => {
 
-        try {
-            convertCsvRows(',')('a.10,a.10.a');
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([CSV_INVALID_HEADING, 'a.10']);
-        }
+        const struct = convertCsvRows(',')(
+            'a\n' +
+            '""');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['a']).toBeNull();
+
+        const struct1 = convertCsvRows(',')(
+            'a,a.b\n' +
+            '"",""');
+
+        expect(struct1.length).toBe(1);
+        expect(struct1[0]['a']['b']).toBeNull();
+
+        const struct2 = convertCsvRows(',')(
+            'a,a.b.c\n' +
+            '"",""');
+
+        expect(struct2.length).toBe(1);
+        expect(struct2[0]['a']['b']['c']).toBeNull();
     });
 
 
@@ -171,5 +160,27 @@ describe('convertCsvRows', () => {
         expect(struct.length).toBe(1);
         expect(struct[0]['a'].length).toBe(1);
         expect(struct[0]['a'][0]).toBeNull();
+    });
+
+
+    it('inconsistent headings found - array', () => {
+
+        try {
+            convertCsvRows(',')('a.10,a.10.a');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([CSV_INVALID_HEADING, 'a.10']);
+        }
+    });
+
+
+    it('inconsistent headings found - object', () => {
+
+        try {
+            convertCsvRows(',')('a.b,a.b.c');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([CSV_INVALID_HEADING, 'a.b']);
+        }
     });
 });

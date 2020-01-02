@@ -31,9 +31,9 @@ export function convertCsvRows(separator: string) {
 
 function assertHeadingsConsistent(headings: string[]) {
 
-    headings.forEach(heading => {
-
-        if (heading.lastIndexOf(PATH_SEPARATOR) === -1) return;
+    headings
+        .filter(includes(PATH_SEPARATOR))
+        .forEach(heading => {
 
         headings
             .filter(startsWith(heading))
@@ -154,3 +154,5 @@ function addFieldToRow(field: string, row: string[]) {
 function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
 
 function longerThan(than: string) { return (what: string) => what.length > than.length }
+
+function includes(it: string) { return (what: string) => what.includes(it) }

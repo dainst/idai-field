@@ -1,6 +1,6 @@
-import {ImportValidator} from '../../../../../app/core/import/exec/process/import-validator';
+import {ImportValidator} from '../../../../../app/core/import/import/process/import-validator';
 import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 import {INPUT_TYPES} from '../../../../../app/c';
 import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 

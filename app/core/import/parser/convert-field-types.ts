@@ -79,10 +79,8 @@ function convertDimension(resource: Resource, fieldName: string) {
     let i = 0;
     for (let dimension of resource[fieldName] as Array<Dimension>) {
 
-        if (!dimension) {
-            console.log(':', "empty dimension");
-            continue;
-        }
+        if (dimension === null) continue;
+        if (dimension === undefined) throw Error("unexpected error: dimension cannot be undefined");
 
         try {
             convertFloat(dimension, 'value');
@@ -106,6 +104,7 @@ function convertDating(resource: Resource, fieldName: string) {
     for (let dating of resource[fieldName] as Array<Dating>) {
 
         if (dating === null) continue;
+        if (dating === undefined) throw Error("unexpected error: dating cannot be undefined");
 
         try {
             convertUnsignedInt(dating, 'begin.inputYear');

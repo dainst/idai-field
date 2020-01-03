@@ -1,6 +1,6 @@
 
-import {preprocessFields} from '../../../../../app/core/import/exec/preprocess-fields';
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {preprocessFields} from '../../../../../app/core/import/import/preprocess-fields';
+import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 
 describe('preprocess-fields', () => {
 

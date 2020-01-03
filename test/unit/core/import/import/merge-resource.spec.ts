@@ -1,6 +1,6 @@
 import {Resource} from 'idai-components-2';
-import {mergeResource} from '../../../../../app/core/import/exec/process/merge-resource';
-import {ImportErrors} from '../../../../../app/core/import/exec/import-errors';
+import {mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
+import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
 
 

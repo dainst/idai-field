@@ -5,14 +5,14 @@ import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
-import {ImportValidator} from './exec/process/import-validator';
+import {ImportValidator} from './import/process/import-validator';
 import {TypeUtility} from '../model/type-utility';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
 import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
-import {buildImportFunction} from './exec/import-documents';
+import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';

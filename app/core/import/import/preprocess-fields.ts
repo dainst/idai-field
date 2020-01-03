@@ -31,7 +31,7 @@ function preprocessFieldsForResource(convertNulls: boolean) { return (resource: 
 
 function collapseEmptyProperties(struct: any|undefined) {
 
-    if (!struct) return;
+    if (!struct) return; // TODO review
     keysAndValues(struct).forEach(([fieldName, fieldValue]: any) => {
 
         if (fieldName === 'relations') return;

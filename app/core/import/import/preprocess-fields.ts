@@ -32,32 +32,32 @@ function preprocessFieldsForResource(convertNulls: boolean) { return (resource: 
 function collapseEmptyProperties(struct: any|undefined) {
 
     if (!struct) return;
-    keysAndValues(struct)
-        .forEach(([fieldName, fieldValue]: any) => {
-            if (fieldName === 'relations') return;
-            if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
-            if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
+    keysAndValues(struct).forEach(([fieldName, fieldValue]: any) => {
 
-            if (fieldValue === null) {
+        if (fieldName === 'relations') return;
+        if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
+        if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
+
+        if (fieldValue === null) {
+
+            if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
+            else delete struct[fieldName];
+
+        } else if (isObject(fieldValue) || isArray(fieldValue)) {
+            collapseEmptyProperties(fieldValue);
+
+            let fv = fieldValue;
+            if (isArray(fieldValue)) {
+                fv = dropRightWhile(isNot(defined))(fieldValue);
+                struct[fieldName] = fv;
+            }
+
+            if (keys(fv).length === 0 || keys(fv).filter(isDefined).length === 0) {
 
                 if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
                 else delete struct[fieldName];
-
-            } else if (isObject(fieldValue) || isArray(fieldValue)) {
-                collapseEmptyProperties(fieldValue);
-
-                let fv = fieldValue;
-                if (isArray(fieldValue)) {
-                    fv = dropRightWhile(isNot(defined))(fieldValue);
-                    struct[fieldName] = fv;
-                }
-
-                if (keys(fv).length === 0 || keys(fv).filter(isDefined).length === 0) {
-
-                    if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
-                    else delete struct[fieldName];
-                }
             }
-        });
+        }
+    });
 }
 

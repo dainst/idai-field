@@ -2,7 +2,7 @@ import {preprocessFields} from '../../../../../app/core/import/import/preprocess
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 
 
-describe('preprocess-fields', () => {
+describe('preprocessFields', () => {
 
     let resource = undefined;
 

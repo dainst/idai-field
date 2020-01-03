@@ -1,15 +1,15 @@
 import {Dating, Dimension, Resource} from 'idai-components-2';
-import {CsvFieldTypesConversion} from '../../../../../app/core/import/parser/csv-field-types-conversion';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
+import {convertFieldTypes} from '../../../../../app/core/import/parser/convert-field-types';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('CsvFieldTypesConversion', () => {
+describe('convertFieldTypes', () => {
 
     it('field type boolean', () => {
 
@@ -24,8 +24,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const result = CsvFieldTypesConversion
-            .convertFieldTypes(type)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
+        const result = convertFieldTypes(type)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
 
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
@@ -42,8 +41,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 dating: [{
                     type: 'range',
                     begin: { inputType: 'bce', inputYear: '0' },
@@ -80,8 +78,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 dating: [null],
                 relations: {}
             } as unknown as Resource);
@@ -101,8 +98,7 @@ describe('CsvFieldTypesConversion', () => {
         } as IdaiType;
 
         try {
-            CsvFieldTypesConversion
-                .convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
+            convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
             fail();
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
@@ -120,8 +116,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 dimension: [{
                     value: '1',
                     rangeMin: '2',
@@ -161,8 +156,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 r: 'rr',
                 relations: {}
             } as unknown as Resource);
@@ -181,8 +175,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 d: '10.07.2019',
                 relations: {}
             } as unknown as Resource);
@@ -205,8 +198,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 dd1: 'a',
                 dd2: 'b',
                 dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
@@ -229,8 +221,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 CB: 'a;b;c',
                 relations: {}
             } as unknown as Resource);
@@ -250,8 +241,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 ui: '100',
                 relations: {}
             } as unknown as Resource);
@@ -277,8 +267,7 @@ describe('CsvFieldTypesConversion', () => {
             }]
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 uf1: '100.1',
                 uf2: '100,2',
                 uf3: '-100,3',
@@ -304,8 +293,7 @@ describe('CsvFieldTypesConversion', () => {
             }]
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 uf1: '100.1',
                 uf2: '100,2',
                 relations: {}
@@ -326,8 +314,7 @@ describe('CsvFieldTypesConversion', () => {
             }],
         } as IdaiType;
 
-        const resource = CsvFieldTypesConversion
-            .convertFieldTypes(type)({
+        const resource = convertFieldTypes(type)({
                 relations: {
                     isAbove: 'a;b',
                     isBelow: 'd'
@@ -376,7 +363,7 @@ describe('CsvFieldTypesConversion', () => {
 
             const resource: Resource = {} as unknown as Resource;
             (resource as any)[fieldName] = value;
-            CsvFieldTypesConversion.convertFieldTypes(type)(resource);
+            convertFieldTypes(type)(resource);
 
             fail();
         } catch (msgWithParams) {

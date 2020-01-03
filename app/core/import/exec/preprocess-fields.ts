@@ -1,16 +1,20 @@
-import {isArray, isnt, isObject, keysAndValues, to} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {isArray, isnt, isObject, keysAndValues} from 'tsfun';
+import {Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {ImportErrors} from './import-errors';
+import {isNumber} from '../util';
 
 
 /**
+ * @param resources modified in place
+ * @param permitDeletions
+ *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function preprocessFields(documents: Array<Document>, permitDeletions: boolean) {
+export function preprocessFields(resources: Array<Resource>, permitDeletions: boolean): void {
 
-    documents.map(to('resource')).forEach(preprocessFieldsForResource(permitDeletions));
+    resources.forEach(preprocessFieldsForResource(permitDeletions));
 }
 
 
@@ -30,7 +34,7 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
 
             if (fieldValue === null) {
                 if (!permitDeletions) {
-                    if (typeof fieldName === 'number' /* array index */) struct[fieldName] = undefined;
+                    if (isNumber(fieldName) /* array index */) struct[fieldName] = undefined;
                     else delete struct[fieldName];
                 }
             } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
@@ -43,7 +47,7 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
                     if (Object.keys(fieldValue).length === 0
                            || Object.values(fieldValue).filter(isnt(null)).length === 0) {
 
-                        if (typeof  fieldName === 'number') struct[fieldName] = undefined;
+                        if (isNumber(fieldName)) struct[fieldName] = undefined;
                         else delete struct[fieldName];
                     }
                 }

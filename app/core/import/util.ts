@@ -22,3 +22,12 @@ export function withDissoc(struct: any, path: string) {
 
    return dissoc(path)(struct);
 }
+
+
+export function isNumber(a: any) { return typeof a === 'number'; }
+
+export function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
+
+export function longerThan(than: string) { return (what: string) => what.length > than.length }
+
+export function includes(it: string) { return (what: string) => what.includes(it) }

@@ -38,19 +38,6 @@ describe('preprocessFields', () => {
     });
 
 
-    it('complex field - empty string not allowed', () => {
-
-        resource['aField'] = { aSubfield: ''};
-
-        try {
-            preprocessFields([resource], false);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
-        }
-    });
-
-
     it('complex field - leave null if deletions permitted', () => {
 
         resource['aField'] = { aSubfield: null };
@@ -78,12 +65,30 @@ describe('preprocessFields', () => {
     });
 
 
-    it('objectArray - collapse null array if deletions not permitted', () => {
+    it('objectArray - collapse null array', () => {
 
         resource['aField'] = [null];
 
         preprocessFields([resource], false);
         expect(resource['aField']).toBeUndefined();
+    });
+
+
+    it('objectArray - do not collapse null entries if deletions permitted', () => {
+
+        resource['aField'] = [null];
+
+        preprocessFields([resource], true);
+        expect(resource['aField'][0]).toBeNull();
+    });
+
+
+    it('objectArray - leave objectArray as is if deletions are permitted', () => {
+
+        resource['aField'] = [{a: null}];
+
+        preprocessFields([resource], true);
+        expect(resource['aField'][0]['a']).toBeNull();
     });
 
 
@@ -96,12 +101,13 @@ describe('preprocessFields', () => {
     });
 
 
-    it('objectArray - leave objectArray as is if deletions are permitted', () => {
+    it('objectArray - collapse array', () => {
 
-        resource['aField'] = [{a: null}];
+        resource['aField'] = [{}, { aSubfield: null}];
 
-        preprocessFields([resource], true);
-        expect(resource['aField'][0]['a']).toBeNull();
+        preprocessFields([resource], false);
+        expect(resource.id).toEqual('1');
+        expect(resource['aField']).toBeUndefined();
     });
 
 
@@ -118,12 +124,15 @@ describe('preprocessFields', () => {
     });
 
 
-    it('complex field - collapse array', () => {
+    it('complex field - empty string not allowed', () => {
 
-        resource['aField'] = [{}, { aSubfield: null}];
+        resource['aField'] = { aSubfield: ''};
 
-        preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
-        expect(resource['aField']).toBeUndefined();
+        try {
+            preprocessFields([resource], false);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
+        }
     });
 });

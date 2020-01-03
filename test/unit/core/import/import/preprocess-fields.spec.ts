@@ -85,7 +85,7 @@ describe('preprocessFields', () => {
 
     it('objectArray - leave objectArray as is if deletions are permitted', () => {
 
-        resource['aField'] = [{a: null}];
+        resource['aField'] = [{ a: null }];
 
         preprocessFields([resource], true);
         expect(resource['aField'][0]['a']).toBeNull();
@@ -94,7 +94,7 @@ describe('preprocessFields', () => {
 
     it('objectArray - convert null to undefined in object', () => {
 
-        resource['aField'] = [{a: null}];
+        resource['aField'] = [{ a: null }];
 
         preprocessFields([resource], false);
         expect(resource['aField']).toBeUndefined();
@@ -113,7 +113,7 @@ describe('preprocessFields', () => {
 
     it('complex field - array - empty string not allowed', () => {
 
-        resource['aField'] = ['', ''];
+        resource['aField'] = [''];
 
         try {
             preprocessFields([resource], false);

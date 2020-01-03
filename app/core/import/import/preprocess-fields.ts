@@ -1,55 +1,61 @@
-import {isArray, isnt, isObject, keysAndValues} from 'tsfun';
+import {defined, dropRightWhile, isArray, isDefined, isNot, isObject, keys, keysAndValues} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {ImportErrors} from './import-errors';
-import {isNumber} from '../util';
+import {isArrayIndex, isEmptyString} from '../util';
 
 
 /**
+ * Trims leading and trailing empty characters.
+ * Converts nulls to undefined values.
+ *
  * @param resources modified in place
- * @param permitDeletions
+ * @param permitDeletions if set to false, all nulls get converted to undefined values.
+ *   Nested associative structures will be collapsed.
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export function preprocessFields(resources: Array<Resource>, permitDeletions: boolean): void {
 
-    resources.forEach(preprocessFieldsForResource(permitDeletions));
+    resources.forEach(preprocessFieldsForResource(!permitDeletions));
 }
 
 
-function preprocessFieldsForResource(permitDeletions: boolean) { return (resource: Resource) => {
+function preprocessFieldsForResource(convertNulls: boolean) { return (resource: Resource) => {
 
     trimFields(resource);
-    collapseEmptyProperties(resource, permitDeletions);
+    if (convertNulls) collapseEmptyProperties(resource);
 }}
 
 
-function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean) {
+function collapseEmptyProperties(struct: any|undefined) {
 
     if (!struct) return;
     keysAndValues(struct)
         .forEach(([fieldName, fieldValue]: any) => {
             if (fieldName === 'relations') return;
+            if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
+            if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
 
             if (fieldValue === null) {
-                if (!permitDeletions) {
-                    if (isNumber(fieldName) /* array index */) struct[fieldName] = undefined;
-                    else delete struct[fieldName];
-                }
-            } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
-                throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
+
+                if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
+                else delete struct[fieldName];
+
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
-                collapseEmptyProperties(fieldValue, permitDeletions);
+                collapseEmptyProperties(fieldValue);
 
-                if (!permitDeletions) {
+                let fv = fieldValue;
+                if (isArray(fieldValue)) {
+                    fv = dropRightWhile(isNot(defined))(fieldValue);
+                    struct[fieldName] = fv;
+                }
 
-                    if (Object.keys(fieldValue).length === 0
-                           || Object.values(fieldValue).filter(isnt(null)).length === 0) {
+                if (keys(fv).length === 0 || keys(fv).filter(isDefined).length === 0) {
 
-                        if (isNumber(fieldName)) struct[fieldName] = undefined;
-                        else delete struct[fieldName];
-                    }
+                    if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
+                    else delete struct[fieldName];
                 }
             }
         });

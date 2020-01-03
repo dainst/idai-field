@@ -56,7 +56,6 @@ describe('preprocess-fields', () => {
         resource['aField'] = { aSubfield: null };
 
         preprocessFields([resource], true);
-        expect(resource.id).toEqual('1');
         expect(resource['aField']['aSubfield']).toBeNull();
     });
 
@@ -66,28 +65,43 @@ describe('preprocess-fields', () => {
         resource['aField'] = { aSubfield: null };
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
         expect(resource['aField']).toBeUndefined();
     });
 
 
-    it('objectArray field - convert null to undefined if deletions not permitted', () => {
+    it('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
+
+        resource['aField'] = [null, { aField: 'aValue'}, null];
+
+        preprocessFields([resource], false);
+        expect(resource['aField']).toEqual([undefined, { aField: 'aValue' }]);
+    });
+
+
+    it('objectArray - collapse null array if deletions not permitted', () => {
 
         resource['aField'] = [null];
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined]);
+        expect(resource['aField']).toBeUndefined();
     });
 
 
-    it('objectArray field - convert null to undefined in object if deletions not permitted', () => {
+    it('objectArray - convert null to undefined in object', () => {
 
         resource['aField'] = [{a: null}];
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined]);
+        expect(resource['aField']).toBeUndefined();
+    });
+
+
+    it('objectArray - leave objectArray as is if deletions are permitted', () => {
+
+        resource['aField'] = [{a: null}];
+
+        preprocessFields([resource], true);
+        expect(resource['aField'][0]['a']).toBeNull();
     });
 
 
@@ -104,12 +118,12 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field - array and object nested', () => {
+    it('complex field - collapse array', () => {
 
         resource['aField'] = [{}, { aSubfield: null}];
 
         preprocessFields([resource], false);
         expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined, undefined]);
+        expect(resource['aField']).toBeUndefined();
     });
 });

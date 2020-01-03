@@ -1,5 +1,6 @@
 import {reduce, map, ObjectStruct, arrayList} from 'tsfun';
 import {ParserErrors} from './parser-errors';
+import {includes, longerThan, startsWith} from '../util';
 
 
 const PATH_SEPARATOR = '.';
@@ -149,10 +150,3 @@ function addFieldToRow(field: string, row: string[]) {
     if (field === '"') field = '';
     row.push(field);
 }
-
-
-function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
-
-function longerThan(than: string) { return (what: string) => what.length > than.length }
-
-function includes(it: string) { return (what: string) => what.includes(it) }

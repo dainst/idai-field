@@ -1,4 +1,4 @@
-import {identity} from 'tsfun';
+import {identity, to} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -54,7 +54,7 @@ export function buildImportFunction(validator: ImportValidator,
         const get = (resourceId: string) => datastore.get(resourceId);
 
         try {
-            preprocessFields(documents, importOptions.permitDeletions === true);
+            preprocessFields(documents.map(to('resource')), importOptions.permitDeletions === true);
             await preprocessDocuments(documents,
                 findByIdentifier(datastore), preprocessDocument as Function, importOptions.mergeMode === true);
             await preprocessRelations(documents,

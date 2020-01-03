@@ -1,36 +1,37 @@
-
 import {preprocessFields} from '../../../../../app/core/import/import/preprocess-fields';
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 
-describe('preprocess-fields', () => {
 
-   it('empty string not allowed', () => {
+describe('preprocessFields', () => {
 
-       const resource = {
-           type: 'Object',
-           id: '1',
-           identifier: '1.',
-           relations: {},
-           aField: ''
-       };
+    let resource = undefined;
 
-       try {
+    beforeEach(() => {
+
+        resource = {
+            type: 'Object',
+            id: '1',
+            relations: {}
+        }
+    });
+
+
+    it('empty string not allowed', () => {
+
+        resource['aField'] = '';
+
+        try {
            preprocessFields([resource], false);
            fail();
-       } catch (expected) {
+        } catch (expected) {
            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
-       }
-   });
+        }
+    });
 
 
     it('delete if null', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: null
-        }
+        resource['aField'] = null;
 
         preprocessFields([resource], false);
         expect(resource['aField']).toBeUndefined();
@@ -39,13 +40,7 @@ describe('preprocess-fields', () => {
 
     it('complex field - empty string not allowed', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            identifier: '1.',
-            relations: {},
-            aField: { aSubfield: ''}
-        };
+        resource['aField'] = { aSubfield: ''};
 
         try {
             preprocessFields([resource], false);
@@ -58,73 +53,61 @@ describe('preprocess-fields', () => {
 
     it('complex field - leave null if deletions permitted', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: { aSubfield: null }
-        };
+        resource['aField'] = { aSubfield: null };
 
         preprocessFields([resource], true);
-        expect(resource.id).toEqual('1');
         expect(resource['aField']['aSubfield']).toBeNull();
     });
 
 
     it('complex field - collapse if deletions not permitted', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: { aSubfield: null }
-        };
+        resource['aField'] = { aSubfield: null };
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
         expect(resource['aField']).toBeUndefined();
     });
 
 
-    it('objectArray field - convert null to undefined if deletions not permitted', () => {
+    it('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: [null]
-        };
+        resource['aField'] = [null, { aField: 'aValue'}, null];
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined]);
+        expect(resource['aField']).toEqual([undefined, { aField: 'aValue' }]);
     });
 
 
-    it('objectArray field - convert null to undefined in object if deletions not permitted', () => {
+    it('objectArray - collapse null array if deletions not permitted', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: [{a: null}]
-        };
+        resource['aField'] = [null];
 
         preprocessFields([resource], false);
-        expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined]);
+        expect(resource['aField']).toBeUndefined();
+    });
+
+
+    it('objectArray - convert null to undefined in object', () => {
+
+        resource['aField'] = [{a: null}];
+
+        preprocessFields([resource], false);
+        expect(resource['aField']).toBeUndefined();
+    });
+
+
+    it('objectArray - leave objectArray as is if deletions are permitted', () => {
+
+        resource['aField'] = [{a: null}];
+
+        preprocessFields([resource], true);
+        expect(resource['aField'][0]['a']).toBeNull();
     });
 
 
     it('complex field - array - empty string not allowed', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            identifier: '1.',
-            relations: {},
-            aField: ['', '']
-        };
+        resource['aField'] = ['', ''];
 
         try {
             preprocessFields([resource], false);
@@ -135,17 +118,12 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field - array and object nested', () => {
+    it('complex field - collapse array', () => {
 
-        const resource = {
-            type: 'Object',
-            id: '1',
-            relations: {},
-            aField: [{}, { aSubfield: null}]
-        };
+        resource['aField'] = [{}, { aSubfield: null}];
 
         preprocessFields([resource], false);
         expect(resource.id).toEqual('1');
-        expect(resource['aField']).toEqual([undefined, undefined]);
+        expect(resource['aField']).toBeUndefined();
     });
 });

@@ -3,7 +3,7 @@ import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-help
 import {Importer} from '../../app/core/import/importer';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
-import {ImportErrors} from '../../app/core/import/exec/import-errors';
+import {ImportErrors} from '../../app/core/import/import/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 
 /**

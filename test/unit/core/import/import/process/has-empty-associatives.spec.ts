@@ -1,4 +1,4 @@
-import {hasEmptyAssociatives} from '../../../../../../app/core/import/exec/process/has-empty-associatives';
+import {hasEmptyAssociatives} from '../../../../../../app/core/import/import/process/has-empty-associatives';
 
 
 describe('hasEmptyAssociatives', () => {

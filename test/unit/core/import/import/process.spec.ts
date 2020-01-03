@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
-import {ImportErrors as E} from '../../../../../app/core/import/exec/import-errors';
-import {process} from '../../../../../app/core/import/exec/process/process';
+import {ImportErrors as E} from '../../../../../app/core/import/import/import-errors';
+import {process} from '../../../../../app/core/import/import/process/process';
 import {createMockValidator, d} from './helper';
 import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;

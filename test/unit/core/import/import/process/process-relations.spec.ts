@@ -1,4 +1,4 @@
-import {processRelations} from '../../../../../../app/core/import/exec/process/process-relations';
+import {processRelations} from '../../../../../../app/core/import/import/process/process-relations';
 import {HIERARCHICAL_RELATIONS} from '../../../../../../app/core/model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;

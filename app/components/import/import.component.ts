@@ -17,7 +17,7 @@ import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
-import {ImportValidator} from '../../core/import/exec/process/import-validator';
+import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';

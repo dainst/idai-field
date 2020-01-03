@@ -146,6 +146,25 @@ describe('convertFieldTypes', () => {
     });
 
 
+    it('field type dimension - leave nulls unconverted', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dimension',
+                inputType: 'dimension'
+            }],
+        } as IdaiType;
+
+        const resource = convertFieldTypes(type)({
+            dimension: [null],
+            relations: {}
+        } as unknown as Resource);
+
+        expect(resource['dimension']).toEqual([null]);
+    });
+
+
     it('field type radio', () => {
 
         const type = {

@@ -29,17 +29,23 @@ function collapseEmptyProperties(struct: any|undefined, permitDeletions: boolean
             if (fieldName === 'relations') return;
 
             if (fieldValue === null) {
-                if (!permitDeletions) delete struct[fieldName];
+                if (!permitDeletions) {
+                    if (typeof fieldName === 'number' /* array index */) struct[fieldName] = undefined;
+                    else delete struct[fieldName];
+                }
             } else if (typeof (fieldValue as any) === 'string' && fieldValue === '') {
                 throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
             } else if (isObject(fieldValue) || isArray(fieldValue)) {
                 collapseEmptyProperties(fieldValue, permitDeletions);
 
-                if (!permitDeletions
-                    && (Object.keys(fieldValue).length === 0
-                        || Object.values(fieldValue).filter(isnt(null)).length === 0)) {
+                if (!permitDeletions) {
 
-                    delete struct[fieldName];
+                    if (Object.keys(fieldValue).length === 0
+                           || Object.values(fieldValue).filter(isnt(null)).length === 0) {
+
+                        if (typeof  fieldName === 'number') struct[fieldName] = undefined;
+                        else delete struct[fieldName];
+                    }
                 }
             }
         });

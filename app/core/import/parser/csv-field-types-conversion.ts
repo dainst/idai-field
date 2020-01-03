@@ -108,6 +108,8 @@ export module CsvFieldTypesConversion {
         let i = 0;
         for (let dating of resource[fieldName] as Array<Dating>) {
 
+            if (dating === null) continue;
+
             try {
                 convertUnsignedInt(dating, 'begin.inputYear');
                 convertUnsignedInt(dating, 'end.inputYear');

@@ -119,9 +119,11 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
 
     keys(source).forEach(index => {
 
-        if (source[index] === undefined || source[index] === null) return; // TODO should ignore only undefined, but not null
+        if (source[index] === undefined) return; // TODO, review - this should not happen, right?
 
         if (target.length < index) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+
+        if (source[index] === null) return target[index] = null;
 
         if (isObject(source[index]) && isObject(target[index])) {
             overwriteOrDeleteProperties(target[index], source[index], [], true);

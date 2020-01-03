@@ -118,6 +118,17 @@ describe('mergeResource', () => {
     });
 
 
+    it('merge objectArray field - delete target object with null entry', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [null];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
     it('merge objectArray field - delete target object (interpret emptied objects as null)', () => {
 
         target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
@@ -189,7 +200,7 @@ describe('mergeResource', () => {
     it('merge objectArray field - delete one target object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'},{bField: 'bOriginalValue'}];
-        source['objectArray'] = [null, {bField: null}];
+        source['objectArray'] = [undefined, {bField: null}];
 
         const result = mergeResource(target, source);
 
@@ -224,10 +235,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore null-valued field', () => {
+    it('merge objectArray field - ignore undefined-valued field', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
-        source['objectArray'] = [null, {bField: 'bChangedValue'}];
+        source['objectArray'] = [undefined, {bField: 'bChangedValue'}];
 
         const result = mergeResource(target, source);
 
@@ -236,10 +247,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore null-valued field, add array object', () => {
+    it('merge objectArray field - ignore undefined-valued field, add array object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [null, {bField: 'bNewValue'}];
+        source['objectArray'] = [undefined, {bField: 'bNewValue'}];
 
         const result = mergeResource(target, source);
 
@@ -248,10 +259,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore null-valued field, add two array objects', () => {
+    it('merge objectArray field - ignore undefined-valued field, add two array objects', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [null, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
+        source['objectArray'] = [undefined, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
 
         const result = mergeResource(target, source);
 

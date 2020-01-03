@@ -70,6 +70,26 @@ describe('CsvFieldTypesConversion', () => {
     });
 
 
+    it('field type dating - leave nulls unconverted', () => {
+
+        const type = {
+            name: 'TypeName',
+            fields: [{
+                name: 'dating',
+                inputType: 'dating'
+            }],
+        } as IdaiType;
+
+        const resource = CsvFieldTypesConversion
+            .convertFieldTypes(type)({
+                dating: [null],
+                relations: {}
+            } as unknown as Resource);
+
+        expect(resource['dating']).toEqual([null]);
+    });
+
+
     it('dating.isUncertain is not a boolean', () => {
 
         const type = {

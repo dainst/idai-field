@@ -110,6 +110,46 @@ describe('preprocess-fields', () => {
     });
 
 
+    it('objectArray field - convert null to undefined if deletions not permitted', () => {
+
+        const document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                type: 'Object',
+                id: '1',
+                relations: {},
+                aField: [null]
+            }
+        };
+
+        preprocessFields([document], false);
+        expect(document.resource.id).toEqual('1');
+        expect(document.resource['aField']).toEqual([undefined]);
+    });
+
+
+    it('objectArray field - convert null to undefined in object if deletions not permitted', () => {
+
+        const document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                type: 'Object',
+                id: '1',
+                relations: {},
+                aField: [{a: null}]
+            }
+        };
+
+        preprocessFields([document], false);
+        expect(document.resource.id).toEqual('1');
+        expect(document.resource['aField']).toEqual([undefined]);
+    });
+
+
     it('complex field - array - empty string not allowed', () => {
 
         const document = {
@@ -134,7 +174,7 @@ describe('preprocess-fields', () => {
     });
 
 
-    it('complex field - array and object nested - delete if null', () => {
+    it('complex field - array and object nested', () => {
 
         const document = {
             _id: '1',
@@ -150,6 +190,6 @@ describe('preprocess-fields', () => {
 
         preprocessFields([document], false);
         expect(document.resource.id).toEqual('1');
-        expect(document.resource['aField']).toBeUndefined();
+        expect(document.resource['aField']).toEqual([undefined, undefined]);
     });
 });

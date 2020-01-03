@@ -11,7 +11,7 @@ type Field = string;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  *
- * @throws if inconsistent headings found
+ * @throws [ParserError.CSV_INVALID_HEADING, columnHeading] if inconsistent headings found
  *   this can be the case when the leafs and nodes of nested associatives are both set as
  *   - with an array: dim.0 and dim.0.a cannot be both set at the same time
  *   - with an object: dim.a and dim.a.b cannot be both set at the same time
@@ -31,13 +31,13 @@ export function convertCsvRows(separator: string) {
 
 function assertHeadingsConsistent(headings: string[]) {
 
-    headings.forEach(heading => {
-
-        if (heading.lastIndexOf(PATH_SEPARATOR) === -1) return;
+    headings
+        .filter(includes(PATH_SEPARATOR))
+        .forEach(heading => {
 
         headings
-            .filter(heading2 => heading2.startsWith(heading))
-            .filter(heading2 => heading2.length > heading.length)
+            .filter(startsWith(heading))
+            .filter(longerThan(heading))
             .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
     });
 }
@@ -149,3 +149,10 @@ function addFieldToRow(field: string, row: string[]) {
     if (field === '"') field = '';
     row.push(field);
 }
+
+
+function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
+
+function longerThan(than: string) { return (what: string) => what.length > than.length }
+
+function includes(it: string) { return (what: string) => what.includes(it) }

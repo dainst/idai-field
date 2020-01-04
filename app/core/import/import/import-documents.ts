@@ -54,7 +54,7 @@ export function buildImportFunction(validator: ImportValidator,
         const get = (resourceId: string) => datastore.get(resourceId);
 
         try {
-            preprocessFields(documents.map(to('resource')), importOptions.permitDeletions === true);
+            preprocessFields(documents, importOptions.permitDeletions === true);
             await preprocessDocuments(documents,
                 findByIdentifier(datastore), preprocessDocument as Function, importOptions.mergeMode === true);
             await preprocessRelations(documents,

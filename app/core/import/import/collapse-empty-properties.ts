@@ -14,7 +14,7 @@ export function collapseEmptyProperties(struct: any|undefined) {
     keysAndValues(struct).forEach(([fieldName, fieldValue]: any) => {
 
         if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
-        if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
+        if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
 
         if (fieldValue === null) {
 

@@ -17,7 +17,17 @@ describe('collapseEmptyProperties', () => {
     });
 
 
-    it('delete if null', () => {
+    it('remove if null', () => {
+
+        const resource = { aField: 'aValue', bField: null };
+
+        collapseEmptyProperties(resource);
+        expect(resource['aField']).toEqual('aValue');
+        expect(resource['bField']).toBeUndefined();
+    });
+
+
+    it('delete completely if null', () => {
 
         const resource = { aField: null };
 

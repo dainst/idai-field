@@ -5,8 +5,6 @@ import {removeNullProperties} from './remove-null-properties';
 
 
 /**
- * TODO merge preprocessFields and preprocessDocuments
- *
  * Trims leading and trailing empty characters.
  * Converts nulls to undefined values.
  *

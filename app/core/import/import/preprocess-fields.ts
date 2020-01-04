@@ -23,11 +23,11 @@ export function preprocessFields(documents: Array<Document>, permitDeletions: bo
 }
 
 
-function preprocessFieldsForResource(convertNulls: boolean) { return (document: Document) => {
+function preprocessFieldsForResource(removeNulls: boolean) { return (document: Document) => {
 
     trimFields(document.resource);
 
-    if (convertNulls) {
+    if (removeNulls) {
 
         const relations = document.resource.relations;
         document.resource = removeNullProperties(dissoc('relations')(document.resource)) as Resource;

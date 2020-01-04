@@ -1,4 +1,4 @@
-import {defined, dropRightWhile, isArray, isDefined, isNot, isObject, keys, keysAndValues} from 'tsfun';
+import {defined, dropRightWhile, isArray, isEmpty, isNot, keysAndValues, copy, ObjectCollection} from 'tsfun';
 import {isArrayIndex, isAssociative, isEmptyString} from '../util';
 import {ImportErrors} from './import-errors';
 
@@ -8,34 +8,34 @@ import {ImportErrors} from './import-errors';
  *
  * @author Daniel de Oliveira
  */
-export function collapseEmptyProperties(struct: any|undefined) {
+export function collapseEmptyProperties(struct: ObjectCollection<any>): ObjectCollection<any>;
+export function collapseEmptyProperties(struct: Array<any>): Array<any>
+export function collapseEmptyProperties(struct: ObjectCollection<any>|Array<any>): ObjectCollection<any>|Array<any> {
 
-    keysAndValues(struct).forEach(([fieldName, fieldValue]: any) => {
+    const struct_ = copy(struct) as any;
+
+    keysAndValues(struct_).forEach(([fieldName, fieldValue]: any) => {
 
         if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
         if (isEmptyString(fieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
 
+        function undefineField() {
+
+            if (isArrayIndex(fieldName)) struct_[fieldName] = undefined;
+            else delete struct_[fieldName];
+        }
+
         if (fieldValue === null) {
 
-            if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
-            else delete struct[fieldName];
+            undefineField();
 
         } else if (isAssociative(fieldValue)) {
 
-            let fv = collapseEmptyProperties(fieldValue);
-
-            if (isArray(fv)) {
-                fv = dropRightWhile(isNot(defined))(fv);
-                struct[fieldName] = fv;
-            }
-
-            if (keys(fv).length === 0 || keys(fv).filter(isDefined).length === 0) {
-
-                if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
-                else delete struct[fieldName];
-            }
+            struct_[fieldName] = collapseEmptyProperties(fieldValue);
+            if (isEmpty(struct_[fieldName])) undefineField();
         }
     });
 
-    return struct;
+    if (isArray(struct_)) return dropRightWhile(isNot(defined))(struct_);
+    return struct_;
 }

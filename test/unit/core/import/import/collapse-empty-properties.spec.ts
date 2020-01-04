@@ -21,9 +21,9 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: 'aValue', bField: null };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toEqual('aValue');
-        expect(resource['bField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toEqual('aValue');
+        expect(result['bField']).toBeUndefined();
     });
 
 
@@ -31,8 +31,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: null };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toBeUndefined();
     });
 
     // TODO review if necessary to replace with preprocessFields test
@@ -49,8 +49,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: { aSubfield: null }};
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toBeUndefined();
     });
 
 
@@ -58,8 +58,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toEqual([undefined, { aField: 'aValue' }]);
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]);
     });
 
 
@@ -67,8 +67,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toBeUndefined();
     });
 
 
@@ -94,8 +94,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [{ a: null }] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toBeUndefined();
     });
 
 
@@ -103,8 +103,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [{}, { aSubfield: null}] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = collapseEmptyProperties(resource);
+        expect(result['aField']).toBeUndefined();
     });
 
 

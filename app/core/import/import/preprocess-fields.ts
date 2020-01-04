@@ -5,6 +5,8 @@ import {collapseEmptyProperties} from './collapse-empty-properties';
 
 
 /**
+ * TODO merge preprocessFields and preprocessDocuments
+ *
  * Trims leading and trailing empty characters.
  * Converts nulls to undefined values.
  *

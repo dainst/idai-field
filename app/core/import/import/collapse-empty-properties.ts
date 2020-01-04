@@ -1,5 +1,5 @@
 import {defined, dropRightWhile, isArray, isDefined, isNot, isObject, keys, keysAndValues} from 'tsfun';
-import {isArrayIndex, isEmptyString} from '../util';
+import {isArrayIndex, isAssociative, isEmptyString} from '../util';
 import {ImportErrors} from './import-errors';
 
 
@@ -21,7 +21,7 @@ export function collapseEmptyProperties(struct: any|undefined) {
             if (isArrayIndex(fieldName)) struct[fieldName] = undefined;
             else delete struct[fieldName];
 
-        } else if (isObject(fieldValue) || isArray(fieldValue)) {
+        } else if (isAssociative(fieldValue)) {
 
             let fv = collapseEmptyProperties(fieldValue); // TODO review
 

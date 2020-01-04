@@ -10,7 +10,6 @@ import {ImportErrors} from './import-errors';
  */
 export function collapseEmptyProperties(struct: any|undefined) {
 
-    if (!struct) return; // TODO review
     keysAndValues(struct).forEach(([fieldName, fieldValue]: any) => {
 
         if (fieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
@@ -23,7 +22,7 @@ export function collapseEmptyProperties(struct: any|undefined) {
 
         } else if (isAssociative(fieldValue)) {
 
-            let fv = collapseEmptyProperties(fieldValue); // TODO review
+            let fv = collapseEmptyProperties(fieldValue);
 
             if (isArray(fv)) {
                 fv = dropRightWhile(isNot(defined))(fv);
@@ -38,5 +37,5 @@ export function collapseEmptyProperties(struct: any|undefined) {
         }
     });
 
-    return struct; // TODO review
+    return struct;
 }

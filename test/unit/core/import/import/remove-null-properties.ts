@@ -1,15 +1,15 @@
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
-import {collapseEmptyProperties} from '../../../../../app/core/import/import/collapse-empty-properties';
+import {removeNullProperties} from '../../../../../app/core/import/import/remove-null-properties';
 
 
-describe('collapseEmptyProperties', () => {
+describe('removeNullProperties', () => {
 
     it('empty string not allowed', () => {
 
         const resource = { aField: '' };
 
         try {
-           collapseEmptyProperties(resource);
+           removeNullProperties(resource);
            fail();
         } catch (expected) {
            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
@@ -21,7 +21,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: 'aValue', bField: null };
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result['aField']).toEqual('aValue');
         expect(result['bField']).toBeUndefined();
     });
@@ -31,7 +31,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: null };
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result).toBeUndefined();
     });
 
@@ -49,7 +49,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: { aSubfield: null }};
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result).toBeUndefined();
     });
 
@@ -58,7 +58,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]);
     });
 
@@ -67,7 +67,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null] };
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result).toBeUndefined();
     });
 
@@ -76,7 +76,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null], bField: 'bValue' };
 
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result['aField']).toBeUndefined();
         expect(result['bField']).toEqual('bValue');
     });
@@ -104,16 +104,7 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [{ a: null }] };
 
-        const result = collapseEmptyProperties(resource);
-        expect(result).toBeUndefined();
-    });
-
-
-    it('objectArray - collapse array', () => {
-
-        const resource = { aField: [{}, { aSubfield: null}] };
-
-        const result = collapseEmptyProperties(resource);
+        const result = removeNullProperties(resource);
         expect(result).toBeUndefined();
     });
 
@@ -123,7 +114,7 @@ describe('collapseEmptyProperties', () => {
         const resource = { aField: [''] };
 
         try {
-            collapseEmptyProperties(resource);
+            removeNullProperties(resource);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
@@ -136,7 +127,7 @@ describe('collapseEmptyProperties', () => {
         const resource = { aField: { aSubfield: ''}};
 
         try {
-            collapseEmptyProperties(resource);
+            removeNullProperties(resource);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);

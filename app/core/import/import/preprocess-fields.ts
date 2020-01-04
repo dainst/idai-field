@@ -1,7 +1,7 @@
 import {dissoc} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
-import {collapseEmptyProperties} from './collapse-empty-properties';
+import {removeNullProperties} from './remove-null-properties';
 
 
 /**
@@ -30,7 +30,7 @@ function preprocessFieldsForResource(convertNulls: boolean) { return (document: 
     if (convertNulls) {
 
         const relations = document.resource.relations;
-        document.resource = collapseEmptyProperties(dissoc('relations')(document.resource)) as Resource;
+        document.resource = removeNullProperties(dissoc('relations')(document.resource)) as Resource;
         document.resource.relations = relations;
     }
 }}

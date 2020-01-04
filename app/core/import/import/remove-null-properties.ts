@@ -4,24 +4,25 @@ import {ImportErrors} from './import-errors';
 
 
 /**
- * @param struct
+ * @param struct must not be empty, nor must it contain any empty collection at nested levels
  *
  * @author Daniel de Oliveira
  */
-export function collapseEmptyProperties(struct: ObjectCollection<any>): ObjectCollection<any>|undefined;
-export function collapseEmptyProperties(struct: Array<any>): Array<any>|undefined;
-export function collapseEmptyProperties(struct: ObjectCollection<any>|Array<any>): ObjectCollection<any>|Array<any>|undefined {
+export function removeNullProperties(struct: ObjectCollection<any>): ObjectCollection<any>|undefined;
+export function removeNullProperties(struct: Array<any>): Array<any>|undefined;
+export function removeNullProperties(struct: ObjectCollection<any>|Array<any>): ObjectCollection<any>|Array<any>|undefined {
 
+    if (isEmpty(struct)) throw Error("illegal parameter. empty collection given to removeNullProperties");
     let struct_ = copy(struct) as any;
 
     keysAndValues(struct_).forEach(([fieldName, originalFieldValue]: any) => {
 
-        if (originalFieldValue === undefined) throw Error("unexpected 'undefined' value found in preprocessFields");
+        if (originalFieldValue === undefined) throw Error("unexpected 'undefined' value found in removeNullProperties");
         if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
 
         if (isAssociative(originalFieldValue)) {
 
-            struct_[fieldName] = collapseEmptyProperties(originalFieldValue);
+            struct_[fieldName] = removeNullProperties(originalFieldValue);
         }
 
         if (originalFieldValue === null || struct_[fieldName] === undefined) {

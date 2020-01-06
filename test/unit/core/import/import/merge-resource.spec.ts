@@ -209,6 +209,44 @@ describe('mergeResource', () => {
     });
 
 
+    it('merge objectArray field - target object to delete is not defined', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, {bField: null}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'].length).toBe(1);
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
+    });
+
+
+    it('merge objectArray field - target object to delete is not defined - 2 undefined', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, undefined ,{bField: null}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'].length).toBe(1);
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
+    });
+
+
+    it('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, undefined ,{bField: 'bNewValue'}];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
+        }
+    });
+
+
     it('merge objectArray field - change one target object and add one target object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];

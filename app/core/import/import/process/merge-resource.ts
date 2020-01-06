@@ -121,11 +121,15 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
 
         // This can happen if user has not specified this, for example in csv import
         // where columns are not defined for a specific index
-        if (source[index] === undefined) return;
-
-        if (target.length < index) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+        if (source[index] === undefined) {
+            // make the slot so array will not be sparse
+            if (target[index] === undefined) target[index] = undefined;
+            return;
+        }
 
         if (source[index] === null) return target[index] = null;
+
+        if (target[index] === undefined && isObject(source[index])) target[index] = {};
 
         if (isObject(source[index]) && isObject(target[index])) {
             overwriteOrDeleteProperties(target[index], source[index], [], true);
@@ -136,7 +140,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         if (keys(target[index]).length === 0) target[index] = null;
     });
 
-    const result = dropRightWhile(is(null))(target);
-    if (result.includes(null)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+    const result = dropRightWhile(is(undefined))(dropRightWhile(is(null))(target));
+    if (result.includes(null) || result.includes(undefined)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
     return result;
 }

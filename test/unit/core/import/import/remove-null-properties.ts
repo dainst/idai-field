@@ -1,15 +1,15 @@
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
-import {collapseEmptyProperties} from '../../../../../app/core/import/import/collapse-empty-properties';
+import {removeNullProperties} from '../../../../../app/core/import/import/remove-null-properties';
 
 
-describe('collapseEmptyProperties', () => {
+describe('removeNullProperties', () => {
 
     it('empty string not allowed', () => {
 
         const resource = { aField: '' };
 
         try {
-           collapseEmptyProperties(resource);
+           removeNullProperties(resource);
            fail();
         } catch (expected) {
            expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
@@ -17,12 +17,22 @@ describe('collapseEmptyProperties', () => {
     });
 
 
-    it('delete if null', () => {
+    it('remove if null', () => {
+
+        const resource = { aField: 'aValue', bField: null };
+
+        const result = removeNullProperties(resource);
+        expect(result['aField']).toEqual('aValue');
+        expect(result['bField']).toBeUndefined();
+    });
+
+
+    it('delete completely if null', () => {
 
         const resource = { aField: null };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = removeNullProperties(resource);
+        expect(result).toBeUndefined();
     });
 
     // TODO review if necessary to replace with preprocessFields test
@@ -39,8 +49,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: { aSubfield: null }};
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = removeNullProperties(resource);
+        expect(result).toBeUndefined();
     });
 
 
@@ -48,8 +58,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toEqual([undefined, { aField: 'aValue' }]);
+        const result = removeNullProperties(resource);
+        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]);
     });
 
 
@@ -57,8 +67,18 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [null] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = removeNullProperties(resource);
+        expect(result).toBeUndefined();
+    });
+
+
+    it('objectArray - collapse null array but leave object', () => {
+
+        const resource = { aField: [null], bField: 'bValue' };
+
+        const result = removeNullProperties(resource);
+        expect(result['aField']).toBeUndefined();
+        expect(result['bField']).toEqual('bValue');
     });
 
 
@@ -84,17 +104,8 @@ describe('collapseEmptyProperties', () => {
 
         const resource = { aField: [{ a: null }] };
 
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
-    });
-
-
-    it('objectArray - collapse array', () => {
-
-        const resource = { aField: [{}, { aSubfield: null}] };
-
-        collapseEmptyProperties(resource);
-        expect(resource['aField']).toBeUndefined();
+        const result = removeNullProperties(resource);
+        expect(result).toBeUndefined();
     });
 
 
@@ -103,7 +114,7 @@ describe('collapseEmptyProperties', () => {
         const resource = { aField: [''] };
 
         try {
-            collapseEmptyProperties(resource);
+            removeNullProperties(resource);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);
@@ -116,7 +127,7 @@ describe('collapseEmptyProperties', () => {
         const resource = { aField: { aSubfield: ''}};
 
         try {
-            collapseEmptyProperties(resource);
+            removeNullProperties(resource);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.MUST_NOT_BE_EMPTY_STRING]);

@@ -1,7 +1,7 @@
 import {dissoc} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
-import {collapseEmptyProperties} from './collapse-empty-properties';
+import {removeNullProperties} from './remove-null-properties';
 
 
 /**
@@ -21,14 +21,14 @@ export function preprocessFields(documents: Array<Document>, permitDeletions: bo
 }
 
 
-function preprocessFieldsForResource(convertNulls: boolean) { return (document: Document) => {
+function preprocessFieldsForResource(removeNulls: boolean) { return (document: Document) => {
 
     trimFields(document.resource);
 
-    if (convertNulls) {
+    if (removeNulls) {
 
         const relations = document.resource.relations;
-        document.resource = collapseEmptyProperties(dissoc('relations')(document.resource));
+        document.resource = removeNullProperties(dissoc('relations')(document.resource)) as Resource;
         document.resource.relations = relations;
     }
 }}

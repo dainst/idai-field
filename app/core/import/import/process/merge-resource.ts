@@ -119,7 +119,9 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
 
     keys(source).forEach(index => {
 
-        if (source[index] === undefined) return; // TODO, review - this should not happen, right?
+        // This can happen if user has not specified this, for example in csv import
+        // where columns are not defined for a specific index
+        if (source[index] === undefined) return;
 
         if (target.length < index) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
 

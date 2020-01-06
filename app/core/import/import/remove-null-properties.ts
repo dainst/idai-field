@@ -1,4 +1,4 @@
-import {defined, dropRightWhile, isArray, isEmpty, isNot, keysAndValues, copy, ObjectCollection} from 'tsfun';
+import {defined, dropRightWhile, isArray, isEmpty, isNot, keysAndValues, copy, ObjectCollection, isObject} from 'tsfun';
 import {isAssociative, isEmptyString} from '../util';
 import {ImportErrors} from './import-errors';
 
@@ -17,7 +17,7 @@ export function removeNullProperties(struct: ObjectCollection<any>|Array<any>): 
 
     keysAndValues(struct_).forEach(([fieldName, originalFieldValue]: any) => {
 
-        if (originalFieldValue === undefined) throw Error("unexpected 'undefined' value found in removeNullProperties");
+        if (isObject(struct) && originalFieldValue === undefined) throw Error("unexpected 'undefined' value found in object parameter in removeNullProperties()");
         if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
 
         if (isAssociative(originalFieldValue)) {

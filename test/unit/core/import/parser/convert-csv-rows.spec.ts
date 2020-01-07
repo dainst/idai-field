@@ -183,4 +183,22 @@ describe('convertCsvRows', () => {
             expect(expected).toEqual([CSV_INVALID_HEADING, 'a.b']);
         }
     });
+
+
+    it('row entries does not match headings length', () => {
+
+        try {
+            convertCsvRows(';')('a;b;c\n;');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
+        }
+
+        try {
+            convertCsvRows(';')('a;b;c\n;;;');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
+        }
+    });
 });

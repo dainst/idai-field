@@ -69,7 +69,10 @@ export class ImportComponent implements OnInit {
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,
-        public importState: ImportState) {}
+        public importState: ImportState) {
+
+        this.resetOperationIfNecessary();
+    }
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -170,6 +173,18 @@ export class ImportComponent implements OnInit {
                 return '.shp';
             case 'csv':
                 return '.csv';
+        }
+    }
+
+
+    private async resetOperationIfNecessary() {
+
+        if (!this.importState.selectedOperationId) return;
+
+        try {
+            await this.datastore.get(this.importState.selectedOperationId);
+        } catch {
+            this.importState.selectedOperationId = '';
         }
     }
 

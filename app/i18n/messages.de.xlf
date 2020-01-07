@@ -3489,6 +3489,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.csvRowsLengthMismatch" datatype="html">
+        <source>Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</source>
+        <target state="final">Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</source>
         <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</target>

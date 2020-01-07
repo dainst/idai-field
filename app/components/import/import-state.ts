@@ -1,9 +1,35 @@
+import {ImportFormat} from '../../core/import/importer';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ImportState {
 
-    private separator: string = ',';  // For CSV import
+    // For CSV import
+
+    private separator: string = ',';
+
+    public resourceTypes: Array<IdaiType> = [];
+
+    public selectedType: IdaiType|undefined = undefined;
+
+    public typeFromFileName: boolean = false;
+    //
+
+    public sourceType: string = 'file';
+
+    public format: ImportFormat = 'native';
+
+    public file: File|undefined;
+
+    public selectedOperationId: string = '';
+
+    public mergeMode = false;
+
+    public permitDeletions = false;
+
 
 
     public getSeparator(): string {

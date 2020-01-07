@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, forEach, isNot, map, take, includedIn} from 'tsfun';
 import {Document, Messages} from 'idai-components-2';
@@ -26,7 +27,6 @@ import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
-import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../common/angular-utility';
 
@@ -49,21 +49,10 @@ import {AngularUtility} from '../../common/angular-utility';
  */
 export class ImportComponent implements OnInit {
 
-    public sourceType: string = 'file';
-    public format: ImportFormat = 'native';
-    public file: File|undefined;
     public url: string|undefined;
     public operations: Array<Document> = [];
-    public selectedOperationId: string = '';
-    public mergeMode = false;
-    public permitDeletions = false;
     public javaInstalled: boolean = true;
     public running: boolean = false;
-
-    // CSV Import
-    public resourceTypes: Array<IdaiType> = [];
-    public selectedType: IdaiType|undefined = undefined;
-    public typeFromFileName: boolean = false;
 
 
     constructor(
@@ -80,18 +69,18 @@ export class ImportComponent implements OnInit {
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,
-        private importState: ImportState) {}
+        public importState: ImportState) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
+    public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public showMergeOption = () => this.format === 'native' || this.format === 'csv';
+    public showMergeOption = () => this.importState.format === 'native' || this.importState.format === 'csv';
 
-    public showPermitDeletionsOption = () => includedIn(['native', 'csv'])(this.format) && this.mergeMode;
+    public showPermitDeletionsOption = () => includedIn(['native', 'csv'])(this.importState.format) && this.importState.mergeMode;
 
-    public showImportIntoOperation = () => (this.format === 'native' || this.format === 'csv') && !this.mergeMode;
+    public showImportIntoOperation = () => (this.importState.format === 'native' || this.importState.format === 'csv') && !this.importState.mergeMode;
 
     public getSeparator = () => this.importState.getSeparator();
 
@@ -114,7 +103,7 @@ export class ImportComponent implements OnInit {
 
     public onFormatChange() {
 
-        if (this.format === 'shapefile' && this.sourceType === 'http') this.sourceType = 'file';
+        if (this.importState.format === 'shapefile' && this.importState.sourceType === 'http') this.importState.sourceType = 'file';
     }
 
 
@@ -135,8 +124,8 @@ export class ImportComponent implements OnInit {
     public isReady(): boolean|undefined {
 
         return !this.running
-            && this.sourceType === 'file'
-                ? this.file !== undefined
+            && this.importState.sourceType === 'file'
+                ? this.importState.file !== undefined
                 : this.url !== undefined;
     }
     
@@ -144,24 +133,24 @@ export class ImportComponent implements OnInit {
     public reset(): void {
 
         this.messages.removeAllMessages();
-        this.file = undefined;
+        this.importState.file = undefined;
         this.url = undefined;
     }
 
 
     public selectFile(event: any) {
 
-        this.typeFromFileName = false;
+        this.importState.typeFromFileName = false;
 
         const files = event.target.files;
-        this.file = !files || files.length === 0
+        this.importState.file = !files || files.length === 0
             ? undefined
             : files[0];
 
-        if (this.file) {
-            this.selectedType = this.getResourceTypeFromFileName(this.file.name);
-            if (this.selectedType) {
-                this.typeFromFileName = true;
+        if (this.importState.file) {
+            this.importState.selectedType = this.getResourceTypeFromFileName(this.importState.file.name);
+            if (this.importState.selectedType) {
+                this.importState.typeFromFileName = true;
             } else {
                 this.selectFirstResourceType();
             }
@@ -171,7 +160,7 @@ export class ImportComponent implements OnInit {
 
     public getFileInputExtensions(): string {
 
-        switch (this.format) {
+        switch (this.importState.format) {
             case 'native':
                 return '.jsonl';
             case 'geojson-gazetteer':
@@ -189,8 +178,8 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
 
-        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
-            this.file as any, this.url as any, this.http);
+        const reader: Reader|undefined = ImportComponent.createReader(this.importState.sourceType, this.importState.format,
+            this.importState.file as any, this.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
@@ -212,11 +201,11 @@ export class ImportComponent implements OnInit {
 
     private updateResourceTypes() {
 
-        this.resourceTypes = getTypesWithoutExcludedTypes(
+        this.importState.resourceTypes = getTypesWithoutExcludedTypes(
             this.projectConfiguration.getTypesList(), this.getTypesToExclude()
         );
 
-        if (!this.selectedType || !this.resourceTypes.includes(this.selectedType)) {
+        if (!this.importState.selectedType || !this.importState.resourceTypes.includes(this.importState.selectedType)) {
             this.selectFirstResourceType();
         }
     }
@@ -224,7 +213,7 @@ export class ImportComponent implements OnInit {
 
     private getTypesToExclude() {
 
-        return this.mergeMode
+        return this.importState.mergeMode
             ? BASE_EXCLUSION
             : BASE_EXCLUSION.concat(this.typeUtility.getImageTypeNames());
     }
@@ -233,18 +222,18 @@ export class ImportComponent implements OnInit {
     private async doImport(reader: Reader) {
 
         return Importer.doImport(
-            this.format,
+            this.importState.format,
             this.typeUtility,
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,
-            this.selectedOperationId,
-            this.mergeMode,
-            this.permitDeletions,
+            this.importState.selectedOperationId,
+            this.importState.mergeMode,
+            this.importState.permitDeletions,
             await reader.go(),
             () => this.idGenerator.generateId(),
-            this.format === 'csv' ? this.selectedType : undefined,
-            this.format === 'csv' ? this.getSeparator() : undefined);
+            this.importState.format === 'csv' ? this.importState.selectedType : undefined,
+            this.importState.format === 'csv' ? this.getSeparator() : undefined);
     }
 
 
@@ -309,7 +298,7 @@ export class ImportComponent implements OnInit {
 
     private selectFirstResourceType() {
 
-        if (this.resourceTypes.length > 0) this.selectedType = this.resourceTypes[0];
+        if (this.importState.resourceTypes.length > 0) this.importState.selectedType = this.importState.resourceTypes[0];
     }
 
 

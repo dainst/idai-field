@@ -12,10 +12,13 @@ type Field = string;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  *
- * @throws [ParserError.CSV_INVALID_HEADING, columnHeading] if inconsistent headings found
+ * @throws [ParserErrors.CSV_INVALID_HEADING, columnHeading] if inconsistent headings found
  *   this can be the case when the leafs and nodes of nested associatives are both set as
  *   - with an array: dim.0 and dim.0.a cannot be both set at the same time
  *   - with an object: dim.a and dim.a.b cannot be both set at the same time
+ * @throws [ParserErrors.CSV_ROWS_LENGTH_MISMATCH, rowIndex] (rowIndex starting from 1)
+ *   if length of a row does not match the length of the header
+ *
  */
 export function convertCsvRows(separator: string) {
 
@@ -25,7 +28,18 @@ export function convertCsvRows(separator: string) {
         if (rows.length < 0) return [];
         const headings: string[] = rows.shift() as string[];
         assertHeadingsConsistent(headings);
+        assertRowsAndHeadingLengthsMatch(headings, rows);
         return map((row: string[]) => convertRowToStruct(headings, row))(rows);
+    }
+}
+
+
+function assertRowsAndHeadingLengthsMatch(headings: string[], rows: string[][]) {
+
+    let i = 1;
+    for (let row of rows) {
+        if (row.length !== headings.length) throw [ParserErrors.CSV_ROW_LENGTH_MISMATCH, i];
+        i++;
     }
 }
 

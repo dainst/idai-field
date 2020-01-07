@@ -470,7 +470,7 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operation view: restore previous selection on view change', async () => {
+    it('operation view: restore previous selection on view toggleRangeOnOff', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSelectedDocument(featureDocument2.resource.id);

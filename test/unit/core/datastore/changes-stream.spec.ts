@@ -81,7 +81,7 @@ describe('RemoteChangesStream', () => {
     });
 
 
-    it('detect that it is remote change', async done => {
+    it('detect that it is remote toggleRangeOnOff', async done => {
 
         typeConverter.convert.and.returnValue(doc);
 
@@ -91,7 +91,7 @@ describe('RemoteChangesStream', () => {
     });
 
 
-    it('detect that it is local change', async done => {
+    it('detect that it is local toggleRangeOnOff', async done => {
 
         doc.modified[0] = {
             user: 'localuser', // same user
@@ -106,7 +106,7 @@ describe('RemoteChangesStream', () => {
     });
 
 
-    it('detect remote change for conflicted document', async done => {
+    it('detect remote toggleRangeOnOff for conflicted document', async done => {
 
         const rev2 = {
             resource: {

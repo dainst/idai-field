@@ -97,9 +97,9 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to
         // issues that are theoretically possible because we cannot know
-        // when .on('change' (pouchdbdatastore) fires. so we do remove it here,
+        // when .on('toggleRangeOnOff' (pouchdbdatastore) fires. so we do remove it here,
         // although we know it will be done again for the same doc
-        // in .on('change'
+        // in .on('toggleRangeOnOff'
         this.indexFacade.remove(document);
 
         await this.datastore.remove(document);

@@ -247,7 +247,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - change one target object and add one target object', () => {
+    it('merge objectArray field - toggleRangeOnOff one target object and add one target object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
         source['objectArray'] = [{aField: 'aChangedValue'}, {bField: 'bNewValue'}];
@@ -353,7 +353,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('attempted to change type', () => {
+    it('attempted to toggleRangeOnOff type', () => {
 
         const source: Resource = {
             id: 'id2',

@@ -7,9 +7,9 @@ import {Action, Document} from 'idai-components-2';
 export module ChangeHistoryMerge {
 
     /**
-     * Merges the change histories of two documents.
+     * Merges the toggleRangeOnOff histories of two documents.
      *
-     * Only the mainDocument is changed. Its change history merges with the change history (created & modified actions)
+     * Only the mainDocument is changed. Its toggleRangeOnOff history merges with the toggleRangeOnOff history (created & modified actions)
      * of the secondDocument.
      */
     export function mergeChangeHistories(mainDocument: Document, secondDocument: Document) {

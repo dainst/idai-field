@@ -30,7 +30,8 @@
 		<div class="card">
 			<div class="card-block">
 
-				<select class="form-control w100 mb-2" [(ngModel)]="dimension.isRange" name="range">
+				<select class="form-control w100 mb-2" [(ngModel)]="dimension['isRange']"
+						(ngModelChange)="toggleRangeOnOff(dimension, $event)" name="range">
 					<option [ngValue]="false" i18n="@@docedit.forms.dimension.singleValue">Einzelwert</option>
 					<option [ngValue]="true" i18n="@@docedit.forms.dimension.range">Bereich</option>
 				</select>
@@ -40,7 +41,7 @@
 					<input [(ngModel)]="dimension.inputValue" type="number"
 						   step="0.001" min="0" size="6" name="inputValue"
 						   class="form-control value-input">
-					<span *ngIf="dimension.isRange" class="ml-2 form-inline form-group">
+					<span *ngIf="dimension['isRange']" class="ml-2 form-inline form-group">
 						 -
 						<input [(ngModel)]="dimension.inputRangeEndValue" type="number"
 							   step="0.001" min="0" size="6" name="inputRangeEndValue"

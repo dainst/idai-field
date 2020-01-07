@@ -226,7 +226,7 @@ describe('ConstraintIndexer', () => {
     });
 
 
-    it('update docs where the relations change', () => {
+    it('update docs where the relations toggleRangeOnOff', () => {
 
         const doc = docWithMultipleConstraints()[0];
 

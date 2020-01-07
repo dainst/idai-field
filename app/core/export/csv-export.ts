@@ -60,7 +60,7 @@ export module CSVExport {
 
     const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
-    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 7);
+    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
 
     const expandLevelOne =
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
@@ -210,8 +210,7 @@ export module CSVExport {
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isRange']
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise']
             )(range(n));
     }}
 
@@ -239,7 +238,7 @@ export module CSVExport {
     function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
 
         const {inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-            inputUnit, isImprecise, isRange} = dimension;
+            inputUnit, isImprecise} = dimension;
 
         const expandedDimension = [
             inputValue ? inputValue.toString() : '',
@@ -249,7 +248,6 @@ export module CSVExport {
             inputUnit ? inputUnit : ''];
 
         if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
-        if (isRange !== undefined) expandedDimension.push(isRange ? 'true' : 'false');
 
         return expandedDimension;
     }

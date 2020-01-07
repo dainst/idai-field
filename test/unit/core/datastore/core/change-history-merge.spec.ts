@@ -130,7 +130,7 @@ describe('ChangeHistoryMerge', () => {
     });
 
 
-    it('merges two change histories', () => {
+    it('merges two toggleRangeOnOff histories', () => {
 
         ChangeHistoryMerge.mergeChangeHistories(document1Revision1, document1Revision2);
 
@@ -149,7 +149,7 @@ describe('ChangeHistoryMerge', () => {
     });
 
 
-    it('merges two change histories of separately created documents', () => {
+    it('merges two toggleRangeOnOff histories of separately created documents', () => {
 
         ChangeHistoryMerge.mergeChangeHistories(document2Revision1, document2Revision2);
 

@@ -46,7 +46,7 @@ import {mergeResource} from './merge-resource';
  * [EXEC_MISSING_RELATION_TARGET, targetId]
  *
  * [TYPE_CANNOT_BE_CHANGED]
- *   - if it is tried to change the type of a resource
+ *   - if it is tried to toggleRangeOnOff the type of a resource
  *
  * [EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN]
  *   - if deletion would result in empty array slots

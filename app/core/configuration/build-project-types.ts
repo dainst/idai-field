@@ -493,7 +493,7 @@ function issueWarningOnFieldTypeChanges(customTypeName: string, customType: any,
             && customTypeField.inputType
             && customTypeField.inputType !== existingField.inputType) {
 
-            console.warn('change of input type detected', customTypeName, customTypeFieldName);
+            console.warn('toggleRangeOnOff of input type detected', customTypeName, customTypeFieldName);
         }
     });
 }

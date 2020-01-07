@@ -12,7 +12,7 @@ export interface ViewState {
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
-    mode: 'map' | 'list';
+    mode: 'map'|'list';
 
     bypassHierarchy: boolean;
     expandAllGroups: boolean;

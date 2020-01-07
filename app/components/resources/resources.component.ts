@@ -119,14 +119,18 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     private updateFilterOptions() {
 
-        this.filterOptions = this.viewFacade.isInOverview()
-         ? this.viewFacade.getBypassHierarchy()
-             ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
-             : this.typeUtility.getOverviewTopLevelTypes()
-         : this.typeUtility.getAllowedRelationDomainTypes(
-             'isRecordedIn',
+        if (this.viewFacade.isInOverview()) {
+            this.filterOptions = this.viewFacade.getBypassHierarchy()
+                ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
+                : this.typeUtility.getOverviewTopLevelTypes();
+        } else if (this.viewFacade.isInTypesManagement()) {
+            this.filterOptions = this.typeUtility.getTypeManagementTopLevelTypes();
+        } else {
+            this.filterOptions = this.typeUtility.getAllowedRelationDomainTypes(
+                'isRecordedIn',
                 (this.viewFacade.getCurrentOperation() as FieldDocument).resource.type
             );
+        }
     }
 
 

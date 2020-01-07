@@ -238,6 +238,14 @@ export class AppConfigurator {
             mustLieWithin: true,
             fields: {}
         },
+        TypeCatalog: {
+            superType: true,
+            fields: {}
+        },
+        Type: {
+            superType: true,
+            fields: {}
+        },
         Image: {
             superType: true,
             userDefinedSubtypesAllowed: true,
@@ -500,6 +508,21 @@ export class AppConfigurator {
             sameMainTypeResource: true
         },
         {
+            name: 'includes',
+            inverse: 'liesWithin',
+            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
+            domain: ['Room'],
+            range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
+            sameMainTypeResource: true
+        },
+        {
+            name: 'includes',
+            inverse: 'liesWithin',
+            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
+            domain: ['TypeCatalog:inherit'],
+            range: ['Type:inherit']
+        },
+        {
             name: 'liesWithin',
             inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
@@ -589,12 +612,12 @@ export class AppConfigurator {
             editable: false
         },
         {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Room'],
-            range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
-            sameMainTypeResource: true
+            name: 'liesWithin',
+            inverse: 'includes',
+            label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
+            domain: ['Type:inherit'],
+            range: ['TypeCatalog:inherit'],
+            editable: false
         }
     ];
 

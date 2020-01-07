@@ -55,15 +55,21 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement();
+
     public isInOverview = () => this.resourcesState.view === 'project';
+
+    public isInTypesManagement = () => this.resourcesState.view === 'types';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
 
     public getOverviewTypeNames = (): string[] => this.typeUtility.getOverviewTypeNames();
 
+    public getTypesManagementTypeNames = (): string[] => this.typeUtility.getTypesManagementTypeNames();
 
-    public async initialize(viewName: 'project' | string) {
+
+    public async initialize(viewName: 'project'|'types'|string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
@@ -74,7 +80,7 @@ export class ResourcesStateManager {
 
         this.resourcesState.view = viewName;
 
-        if (viewName !== 'project') {
+        if (viewName !== 'project' && viewName !== 'types') {
             if (!this.resourcesState.operationViewStates[viewName]) {
                 this.resourcesState.operationViewStates[viewName] = ViewState.default_();
             }
@@ -151,7 +157,7 @@ export class ResourcesStateManager {
     }
 
 
-    public setMode(mode: 'map' | 'list') {
+    public setMode(mode: 'map'|'list') {
 
         ResourcesState.setMode(this.resourcesState, mode);
         this.serialize();
@@ -308,11 +314,10 @@ export class ResourcesStateManager {
 
     private static createObjectToSerializeForViewState(viewState: ViewState): any {
 
-        const objectToSerialize: any =
-            {
-                mode: viewState.mode,
-                expandAllGroups: viewState.expandAllGroups
-            };
+        const objectToSerialize: any = {
+            mode: viewState.mode,
+            expandAllGroups: viewState.expandAllGroups
+        };
 
         if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
 

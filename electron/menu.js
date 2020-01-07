@@ -83,7 +83,14 @@ const getTemplate = (mainWindow, context) => {
             accelerator: 'CmdOrCtrl+B',
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
             enabled: context === 'default'
-        }, {
+        },
+        {
+            label: messages.get('menu.tools.types'),
+            accelerator: 'CmdOrCtrl+T',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),
+            enabled: context === 'default'
+        },
+        {
             label: messages.get('menu.tools.matrix'),
             accelerator: 'CmdOrCtrl+Y',
             click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),

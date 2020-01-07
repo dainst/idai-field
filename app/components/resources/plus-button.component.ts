@@ -6,6 +6,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ViewFacade} from './view/view-facade';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -25,13 +26,10 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
-    /**
-     * undefined when in resources overview
-     */
+    // undefined when in resources overview
     @Input() isRecordedIn: FieldDocument | undefined;
-    /**
-     * undefined when current level is operation
-     */
+
+    //undefined when current level is operation
     @Input() liesWithin: FieldDocument | undefined;
 
 
@@ -54,6 +52,7 @@ export class PlusButtonComponent implements OnChanges {
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
         private typeUtility: TypeUtility,
+        private viewFacade: ViewFacade,
         private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
@@ -157,15 +156,15 @@ export class PlusButtonComponent implements OnChanges {
 
         if (this.preselectedType) {
             const type = projectConfiguration.getTypesMap()[this.preselectedType];
-            if (type) this.typesTreeList.push(type);
-            else this.messages.add([M.RESOURCES_ERROR_TYPE_NOT_FOUND, this.preselectedType]);
+            if (type) {
+                this.typesTreeList.push(type);
+            } else {
+                this.messages.add([M.RESOURCES_ERROR_TYPE_NOT_FOUND, this.preselectedType]);
+            }
         } else {
-
             for (let type of projectConfiguration.getTypesList()) {
-
                 if (this.isAllowedType(type, projectConfiguration)
                         && (!type.parentType || !this.isAllowedType(type.parentType, projectConfiguration))) {
-
                     this.typesTreeList.push(type);
                 }
             }
@@ -185,7 +184,8 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private getOverviewTypes() {
+    // TODO Move this to TypeUtility
+    private getOverviewTypes(): string[] {
 
         return Object.keys(this.typeUtility.getTypeAndSubtypes('Operation'))
             .concat(['Place'])
@@ -193,10 +193,22 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
+    // TODO Move this to TypeUtility
+    private getTypeManagementTypes(): string[] {
+
+        return Object.keys(this.typeUtility.getTypeAndSubtypes('TypeCatalog'))
+            .concat(Object.keys(this.typeUtility.getTypeAndSubtypes('Type')));
+    }
+
+
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
         if (type.name === 'Image') return false;
-        if (!this.isRecordedIn) return this.getOverviewTypes().includes(type.name);
+        if (!this.isRecordedIn) {
+            return this.viewFacade.isInOverview()
+                ? this.getOverviewTypes().includes(type.name)
+                : this.getTypeManagementTypes().includes(type.name);
+        }
 
         if (!projectConfiguration.isAllowedRelationDomainType(type.name,
                 this.isRecordedIn.resource.type, 'isRecordedIn')) {
@@ -206,6 +218,7 @@ export class PlusButtonComponent implements OnChanges {
         if (!this.liesWithin) return !type.mustLieWithin;
 
         return projectConfiguration.isAllowedRelationDomainType(
-                    type.name, this.liesWithin.resource.type, 'liesWithin')
+            type.name, this.liesWithin.resource.type, 'liesWithin'
+        );
     }
 }

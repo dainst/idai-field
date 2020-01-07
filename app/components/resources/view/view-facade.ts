@@ -56,7 +56,11 @@ export class ViewFacade {
 
     public getCurrentOperation = (): FieldDocument|undefined => this.resourcesStateManager.getCurrentOperation();
 
+    public isInSpecialView = () => this.resourcesStateManager.isInSpecialView();
+
     public isInOverview = () => this.resourcesStateManager.isInOverview();
+
+    public isInTypesManagement = () => this.resourcesStateManager.isInTypesManagement();
 
     public getMode = () => this.resourcesStateManager.getMode();
 
@@ -127,7 +131,7 @@ export class ViewFacade {
     public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
-    public async selectView(viewName: 'project'|string): Promise<void> {
+    public async selectView(viewName: 'project'|'types'|string): Promise<void> {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);

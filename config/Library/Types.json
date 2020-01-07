@@ -1551,5 +1551,23 @@
         "inputType": "radio"
       }
     }
+  },
+  "TypeCatalog:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "typeFamily": "TypeCatalog",
+    "commons": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Type:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "typeFamily": "Type",
+    "commons": [],
+    "valuelists": {},
+    "fields": {}
   }
 }

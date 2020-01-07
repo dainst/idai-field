@@ -218,23 +218,32 @@ export class DocumentsManager {
     public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
+        if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
             return { documents: [], totalCount: 0 };
         }
 
-        const operationId: string|undefined = this.resourcesStateManager.get().view === 'project'
+        const operationId: string|undefined = this.resourcesStateManager.isInSpecialView()
             ? undefined
             : this.resourcesStateManager.get().view;
 
         const query = DocumentsManager.buildQuery(
             operationId,
             this.resourcesStateManager.get(),
-            this.resourcesStateManager.isInOverview(),
-            this.resourcesStateManager.getOverviewTypeNames(),
+            this.getAllowedTypeNames(),
             queryId
         );
 
         return (await this.fetchDocuments(query));
+    }
+
+
+    private getAllowedTypeNames(): string[]|undefined {
+
+        return this.resourcesStateManager.isInOverview()
+            ? this.resourcesStateManager.getOverviewTypeNames()
+            : this.resourcesStateManager.isInTypesManagement()
+                ? this.resourcesStateManager.getTypesManagementTypeNames()
+                : undefined;
     }
 
 
@@ -333,8 +342,8 @@ export class DocumentsManager {
     }
 
 
-    private static buildQuery(operationId: string|undefined, state: ResourcesState, isInOverview: boolean,
-                              overviewTypeNames: string[], queryId?: string): Query {
+    private static buildQuery(operationId: string|undefined, state: ResourcesState,
+                              allowedTypeNames?: string[], queryId?: string,): Query {
 
         const bypassHierarchy: boolean = ResourcesState.getBypassHierarchy(state);
         const typeFilters: string[] = ResourcesState.getTypeFilters(state);
@@ -350,8 +359,8 @@ export class DocumentsManager {
             ),
             types: (typeFilters.length > 0)
                 ? typeFilters
-                : isInOverview && !bypassHierarchy
-                    ? overviewTypeNames
+                : allowedTypeNames && !bypassHierarchy
+                    ? allowedTypeNames
                     : undefined,
             limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined,
             id: queryId

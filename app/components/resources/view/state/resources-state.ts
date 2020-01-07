@@ -12,6 +12,7 @@ import {ViewContext} from './view-context';
 export interface ResourcesState { // 'the' resources state
 
     overviewState: ViewState;
+    typesManagementState: ViewState;
     operationViewStates: { [operationId: string]: ViewState };
     view: 'project' | string; // <- active view state
     activeDocumentViewTab: string|undefined;
@@ -169,6 +170,16 @@ export module ResourcesState {
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
             },
+            typesManagementState: {
+                operation: undefined,
+                layerIds: [],
+                mode: 'map',
+                bypassHierarchy: false,
+                expandAllGroups: false,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {}
+            },
             operationViewStates: {
                 't1': {
                     operation: undefined,
@@ -191,6 +202,7 @@ export module ResourcesState {
 
         return {
             overviewState: ViewState.default_(),
+            typesManagementState: ViewState.default_(),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -237,7 +249,9 @@ export module ResourcesState {
 
         return state.view === 'project'
             ? state.overviewState
-            : state.operationViewStates[state.view];
+            : state.view === 'types'
+                ? state.typesManagementState
+                : state.operationViewStates[state.view];
     }
 }
 

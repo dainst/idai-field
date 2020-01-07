@@ -61,7 +61,7 @@ export class RoutingService {
         if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
-            const viewName: 'project'|string = this.getViewName(document);
+            const viewName: 'project'|'types'|string = this.getViewName(document);
             if (this.router.url.includes('resources')) {
                 // indirect away first to reload the resources component, in case you are already there
                 await this.router.navigate(['resources', viewName]);
@@ -94,7 +94,7 @@ export class RoutingService {
     private async jumpToFieldTypeResource(documentToSelect: Document,
                                           comingFromOutsideResourcesComponent: boolean = false) {
 
-        const viewName: 'project'|string = this.getViewName(documentToSelect);
+        const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
 
         if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
@@ -131,10 +131,12 @@ export class RoutingService {
     }
 
 
-    private getViewName(document: Document): 'project'|string {
+    private getViewName(document: Document): 'project'|'types'|string {
 
         return this.typeUtility.getOverviewTypeNames().includes(document.resource.type)
             ? 'project'
-            : document.resource.relations['isRecordedIn'][0];
+            : this.typeUtility.getTypesManagementTypeNames().includes(document.resource.type)
+                ? 'types'
+                : document.resource.relations['isRecordedIn'][0];
     }
 }

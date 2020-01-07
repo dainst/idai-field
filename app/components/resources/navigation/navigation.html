@@ -15,7 +15,7 @@
     </div>
 
     <div *ngIf="!getBypassHierarchy()" class="btn-group">
-        <div *ngIf="!viewFacade.isInOverview() && viewFacade.getCurrentOperation()"
+        <div *ngIf="!viewFacade.isInSpecialView() && viewFacade.getCurrentOperation()"
              id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
@@ -27,6 +27,13 @@
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             <span i18n="@@resources.navigation.project">Projekt</span>
+        </div>
+
+        <div *ngIf="viewFacade.isInTypesManagement()"
+             id="types-navigation-root" type="button" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="!navigationPath.selectedSegmentId"
+             (click)="moveInto(undefined)">
+            <span i18n="@@resources.navigation.typeCatalogs">Typenkataloge</span>
         </div>
 
         <div *ngFor="let document of getSegments()"

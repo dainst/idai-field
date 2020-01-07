@@ -53,6 +53,13 @@ export class TypeUtility {
     }
 
 
+    public getTypeManagementTopLevelTypes(): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => type.name === 'TypeCatalog' || type.name === 'Type');
+    }
+
+
     public getNonImageTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
@@ -99,7 +106,9 @@ export class TypeUtility {
             .filter(typename => typename !== 'Place')
             .filter(typename => typename !== 'Project')
             .filter(typename => !this.isSubtype(typename, 'Operation'))
-            .filter(typename => !this.isSubtype(typename, 'Image'));
+            .filter(typename => !this.isSubtype(typename, 'Image'))
+            .filter(typename => !this.isSubtype(typename, 'TypeCatalog'))
+            .filter(typename => !this.isSubtype(typename, 'Type'));
     }
 
 
@@ -110,6 +119,12 @@ export class TypeUtility {
             .map(to('name'))
             .filter(typename => this.isSubtype(typename, 'Operation'))
             .concat('Place');
+    }
+
+
+    public getTypesManagementTypeNames(): string[] {
+
+        return ['TypeCatalog', 'Type'];
     }
 
 

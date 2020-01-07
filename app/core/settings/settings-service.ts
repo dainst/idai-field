@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {unique} from 'tsfun';
-import {Messages, Document} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';

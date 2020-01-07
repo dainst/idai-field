@@ -20,7 +20,7 @@
                         <label class="control-label col-form-label"
                                for="importFormatSelect" i18n="@@import.format">Format</label>
                         <select id="importFormatSelect" class="form-control"
-                                [(ngModel)]="format" (change)="onFormatChange()">
+                                [(ngModel)]="importState.format" (change)="onFormatChange()">
                             <option value="native" i18n="@@import.formats.native">JSONL</option>
                             <option value="csv" i18n="@@import.formats.csv">CSV</option>
                             <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
@@ -32,19 +32,19 @@
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
                         <select id="importSourceSelect" class="form-control"
-                                [(ngModel)]="sourceType"
+                                [(ngModel)]="importState.sourceType"
                                 (ngModelChange)="reset()">
                             <option value="file" i18n="@@import.file">Datei</option>
-                            <option *ngIf="format !== 'shapefile'" value="http"
+                            <option *ngIf="importState.format !== 'shapefile'" value="http"
                                     i18n="@@import.http">HTTP</option>
                         </select>
                     </div>
 
-                    <div *ngIf="sourceType === 'file'" class="form-group">
+                    <div *ngIf="importState.sourceType === 'file'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
 
                         <div class="input-group">
-                            <input [ngModel]="file ? file.path : ''" class="form-control"
+                            <input [ngModel]="importState.file ? importState.file.path : ''" class="form-control"
                                    placeholder="Datei auswählen..."
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="sourceType === 'http'" class="form-group">
+                    <div *ngIf="importState.sourceType === 'http'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.url">URL</label>
                         <input class="form-control" id="importUrlInput"
                                type="text"
@@ -66,13 +66,13 @@
 
                     <div *ngIf="showMergeOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
-                               [(ngModel)]="mergeMode" (change)="updateResourceTypes()">
+                               [(ngModel)]="importState.mergeMode" (change)="updateResourceTypes()">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
                             Vorhandene Ressourcen ergänzen
                         </label>
                     </div>
 
-                    <div *ngIf="showMergeOption() && format === 'native'" class="import-info"
+                    <div *ngIf="showMergeOption() && importState.format === 'native'" class="import-info"
                          i18n="@@import.mergeOption.native.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -83,7 +83,7 @@
                         geschieht per Bezeichner (Feld <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="showMergeOption() && format === 'csv'" class="import-info"
+                    <div *ngIf="showMergeOption() && importState.format === 'csv'" class="import-info"
                          i18n="@@import.mergeOption.csv.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -95,13 +95,13 @@
 
                     <div *ngIf="showPermitDeletionsOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
-                               [(ngModel)]="permitDeletions">
+                               [(ngModel)]="importState.permitDeletions">
                         <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
                             Löschen erlauben
                         </label>
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption() && format === 'native'"
+                    <div *ngIf="showPermitDeletionsOption() && importState.format === 'native'"
                          class="import-info" i18n="@@import.mergeOption.deletionsInfo.jsonl">
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
                         verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
@@ -109,7 +109,7 @@
                         Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption() && format === 'csv'"
+                    <div *ngIf="showPermitDeletionsOption() && importState.format === 'csv'"
                          class="import-info" i18n="@@import.mergeOption.deletionsInfo.csv">
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
                         verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
@@ -118,15 +118,15 @@
                         unverändert.
                     </div>
 
-                    <div class="form-group" *ngIf="format === 'csv' && file && !typeFromFileName">
+                    <div class="form-group" *ngIf="importState.format === 'csv' && importState.file && !importState.typeFromFileName">
                         <label class="control-label col-form-label"
                                for="importTypeSelect"
                                i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
 
                         <select id="importTypeSelect" class="form-control"
-                                [(ngModel)]="selectedType">
+                                [(ngModel)]="importState.selectedType">
 
-                            <option *ngFor="let t of resourceTypes" [ngValue]="t">
+                            <option *ngFor="let t of importState.resourceTypes" [ngValue]="t">
                                 {{t.label}}
                             </option>
                         </select>
@@ -137,7 +137,7 @@
                                for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>
                         <select id="operationSelect" class="form-control"
-                                [(ngModel)]="selectedOperationId">
+                                [(ngModel)]="importState.selectedOperationId">
                             <option value="" i18n="@@import.assignToOperation.noAssignment">Keine Zuordnung</option>
                             <option *ngFor="let document of operations" value="{{document.resource.id}}">
                                 {{getDocumentLabel(document)}}
@@ -145,7 +145,7 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'csv'" class="form-group">
+                    <div *ngIf="importState.format === 'csv'" class="form-group">
                         <label class="control-label col-form-label"
                                i18n="@@import.csv.separator">Feldtrennzeichen</label>
                         <input class="form-control" id="separatorInput"
@@ -153,7 +153,7 @@
                                [value]="getSeparator()" (change)="setSeparator($event.srcElement.value)">
                     </div>
 
-                    <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
+                    <div *ngIf="importState.format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
@@ -166,7 +166,7 @@
                         erforderlich.
                     </div>
 
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
+                    <div *ngIf="importState.format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
                         Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per

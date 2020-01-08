@@ -3571,6 +3571,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.csvHeadingArrayIndicesInvalidSequence" datatype="html">
+        <source>Ungültige Sequenz für Array Indices in CSV-Header: [0]</source>
+        <target state="final">Invalid sequence for array indices in csv header: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.csvRowsLengthMismatch" datatype="html">
         <source>Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</source>
         <target state="final">Number of entries in line [0] does not match length of heading</target>

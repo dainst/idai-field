@@ -2,7 +2,7 @@ import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flo
 import {ParserErrors} from './parser-errors';
 import {includes, longerThan, startsWith} from '../util';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH;
-import CSV_INCONSISTENT_ARRAY = ParserErrors.CSV_INCONSISTENT_ARRAY;
+import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 
 
 const PATH_SEPARATOR = '.';
@@ -22,9 +22,13 @@ type Field = string;
  * @throws [ParserErrors.CSV_ROWS_LENGTH_MISMATCH, rowIndex] (rowIndex starting from 1)
  *   if length of a row does not match the length of the header
  *
- * @throws [CSV_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
+ * @throws [ParserError.CSV_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
  *   if at a certain point in a path, there is a clash because on the one hand an array index
  *   and on the other hand an object key is defined
+ *
+ * @throws [ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices]
+ *
+ * @throws [ParserErrors.CSV_HEADING_EMPTY_ENTRY]
  */
 export function convertCsvRows(separator: string) {
 
@@ -61,7 +65,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
     unique(indices).forEach((n, i) => {
-        if (n !== i) throw [CSV_INCONSISTENT_ARRAY, indices];
+        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices];
     });
 
     flow(headings,

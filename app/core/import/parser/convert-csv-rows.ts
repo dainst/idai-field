@@ -73,10 +73,15 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
 }
 
 
-function extractLeadingIndices(headings: string[]) {
+/**
+ * Example:
+ *   paths: ['3.b','c.4','5']
+ *   returns: [3, 5]
+ */
+function extractLeadingIndices(paths: string[]): number[] {
 
-    return headings
-        .map(heading => heading.split(PATH_SEPARATOR)[0])
+    return paths
+        .map(path => path.split(PATH_SEPARATOR)[0])
         .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
         .filter(isNot(isNaN))
         .sort();
@@ -90,10 +95,10 @@ function extractLeadingIndices(headings: string[]) {
  */
 function groupByFirstSegment(paths: string[]) {
 
-    return reduce((group, heading: any) => {
+    return reduce((group, path: string) => {
 
-        const first = heading.split(PATH_SEPARATOR).slice(0)[0];
-        const rest = heading.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
+        const first = path.split(PATH_SEPARATOR).slice(0)[0];
+        const rest = path.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
 
         if (!group[first]) group[first] = [];
         group[first].push(rest);

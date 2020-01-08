@@ -164,6 +164,12 @@ describe('convertCsvRows', () => {
     });
 
 
+    it('arrays with 1 entry are legal', () => {
+
+        convertCsvRows(',')('a.0,a');
+        convertCsvRows(',')('a.0.c,a');
+    });
+
     // err cases
 
     it('inconsistent headings found - array', () => {
@@ -206,7 +212,18 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('invalid array detected', () => {
+    it('path item mismatch at first element', () => {
+
+        try {
+            convertCsvRows(',')('a.b,0.d');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
+        }
+    });
+
+
+    it('path item mismatch at nested element', () => {
 
         try {
             convertCsvRows(',')('a.b.a.a,a.b.0.b');
@@ -239,31 +256,13 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('invalid', () => { // TODO rename
-
-        try {
-            convertCsvRows(',')('a.b,0.d');
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
-        }
-    });
-
-
-    it('do not throw', () => { // TODO rename
-
-        convertCsvRows(',')('a.0,a');
-        convertCsvRows(',')('a.0.c,a');
-    });
-
-
-    xit('do not throw 2', () => { // TODO rename
+    it('empty heading entry', () => {
 
         try {
             convertCsvRows(',')(',b');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [1, 2, 3]]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_EMPTY_ENTRY]);
         }
     });
 });

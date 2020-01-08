@@ -33,6 +33,7 @@ export function convertCsvRows(separator: string) {
         const rows: string[][] = getRows(content, separator);
         if (rows.length < 0) return [];
         const headings: string[] = rows.shift() as string[];
+        assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
@@ -41,14 +42,23 @@ export function convertCsvRows(separator: string) {
 }
 
 
+function assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings: string[]) {
+
+    // current implementation of parser gives at least ['']
+    if (headings.length === 0) throw Error('illegal argument');
+
+    if (headings.includes('')) throw [ParserErrors.CSV_HEADING_EMPTY_ENTRY];
+}
+
+
 function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
 
     if (headings.length === 0) return;
-    if (headings.includes('')) throw "E"; // ?
+    if (headings.includes('')) throw Error('illegal argument');
 
     const numbers: number[] =
         headings
-            .map((entry: string) => entry.split('.')[0]) // ?
+            .map(heading => heading.split(PATH_SEPARATOR)[0])
             .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
             .filter(isNot(isNaN))
             .sort();
@@ -63,10 +73,9 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     flow(headings,
         reduce((group, heading: any) => {
 
-            const first_ = heading.split('.').slice(0);
-            if (first_.length === 0) return group;
-            const first = first_[0];
-            const rest = heading.split('.').slice(1).join('.');
+            const first = heading.split(PATH_SEPARATOR).slice(0)[0];
+            const rest = heading.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
+
             if (!group[first]) group[first] = [];
             group[first].push(rest);
             return group;

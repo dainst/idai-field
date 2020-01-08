@@ -9,7 +9,7 @@ import {convertFieldTypes} from '../../../../../app/core/import/parser/convert-f
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('convertFieldTypes', () => {
+fdescribe('convertFieldTypes', () => {
 
     it('field type boolean', () => {
 

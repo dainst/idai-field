@@ -2,6 +2,8 @@ import {values, isEmpty, is, isArray, isObject} from 'tsfun';
 
 
 /**
+ * TODO move to util
+ *
  * @param struct
  * @author Daniel de Oliveira
  */

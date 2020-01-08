@@ -2528,7 +2528,7 @@
         <target state="final">Einzelwert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
@@ -2536,7 +2536,7 @@
         <target state="final">Bereich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
@@ -2544,7 +2544,7 @@
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -2552,7 +2552,7 @@
         <target state="final">Ungenau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2560,7 +2560,7 @@
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -3452,6 +3452,14 @@
       <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
         <source>Ungültiger CSV-Header: Siehe [0].</source>
         <target state="final">Ungültiger CSV-Header: Siehe [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.csvHeadingEmptyEntry" datatype="html">
+        <source>CSV-Header darf keine leeren Einträge haben.</source>
+        <target state="final">CSV-Header darf keine leeren Einträge haben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4444,7 +4452,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
@@ -4662,7 +4670,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">

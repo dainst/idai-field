@@ -41,6 +41,7 @@ export module MessagesConversion {
         if (msg === ParserErrors.CSV_GENERIC) replacement = M.IMPORT_PARSER_GENERIC_CSV_ERROR;
         if (msg === ParserErrors.CSV_INVALID) replacement = M.IMPORT_PARSER_INVALID_CSV;
         if (msg === ParserErrors.CSV_INVALID_HEADING) replacement = M.IMPORT_PARSER_CSV_INVALID_HEADING;
+        if (msg === ParserErrors.CSV_HEADING_EMPTY_ENTRY) replacement = M.IMPORT_PARSER_CSV_HEADING_EMPTY_ENTRY;
         if (msg === ParserErrors.CSV_ROW_LENGTH_MISMATCH) replacement = M.IMPORT_PARSER_CSV_ROWS_LENGTH_MISMATCH;
         if (msg === ParserErrors.CSV_NOT_A_NUMBER) replacement = M.IMPORT_PARSER_NOT_A_NUMBER;
         if (msg === ParserErrors.CSV_NOT_A_BOOLEAN) replacement = M.IMPORT_PARSER_NOT_A_BOOLEAN;

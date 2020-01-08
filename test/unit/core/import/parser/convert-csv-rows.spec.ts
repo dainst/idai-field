@@ -102,20 +102,6 @@ describe('convertCsvRows', () => {
     });
 
 
-    // TODO review, remove
-    xit('make sure arrays are dense', () => {
-
-        const content =
-            'a.1.b.c\n' +
-            '10';
-
-        const structs = convertCsvRows(',')(content);
-        const struct = structs[0];
-        const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
-        expect(nrEnumeratedItems).toBe(2);
-    });
-
-
     it('parse last field in file even if empty', () => {
 
         const struct = convertCsvRows(',')(

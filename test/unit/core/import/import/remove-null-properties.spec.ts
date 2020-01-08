@@ -2,7 +2,7 @@ import {ImportErrors} from '../../../../../app/core/import/import/import-errors'
 import {removeNullProperties} from '../../../../../app/core/import/import/remove-null-properties';
 
 
-describe('removeNullProperties', () => {
+fdescribe('removeNullProperties', () => {
 
     it('empty string not allowed', () => {
 
@@ -80,24 +80,6 @@ describe('removeNullProperties', () => {
         expect(result['aField']).toBeUndefined();
         expect(result['bField']).toEqual('bValue');
     });
-
-
-    // it('objectArray - do not collapse null entries if deletions permitted', () => {
-    //
-    //     resource['aField'] = [null];
-    //
-    //     collapseEmptyProperties([resource], true);
-    //     expect(resource['aField'][0]).toBeNull();
-    // });
-
-
-    // it('objectArray - leave objectArray as is if deletions are permitted', () => {
-    //
-    //     resource['aField'] = [{ a: null }];
-    //
-    //     collapseEmptyProperties([resource], true);
-    //     expect(resource['aField'][0]['a']).toBeNull();
-    // });
 
 
     it('objectArray - convert null to undefined in object', () => {

@@ -1348,6 +1348,14 @@
           "label": "Raubgrabung"
         }
       }
+    },
+    "Type": {
+      "label": "Typus",
+      "fields": {}
+    },
+    "TypeCatalog": {
+      "label": "Typenkatalog",
+      "fields": {}
     }
   },
   "relations": {

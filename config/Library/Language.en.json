@@ -1202,6 +1202,14 @@
           "label": "Illegal excavation"
         }
       }
+    },
+    "Type": {
+      "label": "Type",
+      "fields": {}
+    },
+    "TypeCatalog": {
+      "label": "Type catalog",
+      "fields": {}
     }
   },
   "relations": {

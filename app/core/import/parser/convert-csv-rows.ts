@@ -56,13 +56,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     if (headings.length === 0) return;
     if (headings.includes('')) throw Error('illegal argument');
 
-    const indices: number[] =
-        headings
-            .map(heading => heading.split(PATH_SEPARATOR)[0])
-            .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
-            .filter(isNot(isNaN))
-            .sort();
-
+    const indices: number[] = extractLeadingIndices(headings);
     if (indices.length !== 0 && indices.length !== headings.length) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
@@ -71,20 +65,41 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     });
 
     flow(headings,
-        reduce((group, heading: any) => {
-
-            const first = heading.split(PATH_SEPARATOR).slice(0)[0];
-            const rest = heading.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
-
-            if (!group[first]) group[first] = [];
-            group[first].push(rest);
-            return group;
-
-        }, {} as {[_:string]:any}),
+        groupByFirstSegment,
         values,
         filter(isArray),
         map(filter(isnt(''))),
         forEach(assertHeadingsDoNotContainIncompleteArrays));
+}
+
+
+function extractLeadingIndices(headings: string[]) {
+
+    return headings
+        .map(heading => heading.split(PATH_SEPARATOR)[0])
+        .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
+        .filter(isNot(isNaN))
+        .sort();
+}
+
+
+/**
+ * Example:
+ *   paths: ['a.3.b', 'a.4', 'b.5', 'c']
+ *   returns: { a: ['3.b', '4'], b: ['5'], c: []}
+ */
+function groupByFirstSegment(paths: string[]) {
+
+    return reduce((group, heading: any) => {
+
+        const first = heading.split(PATH_SEPARATOR).slice(0)[0];
+        const rest = heading.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
+
+        if (!group[first]) group[first] = [];
+        group[first].push(rest);
+        return group;
+
+    }, {} as {[_:string]:any})(paths);
 }
 
 

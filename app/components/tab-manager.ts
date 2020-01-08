@@ -211,7 +211,7 @@ export class TabManager {
 
         const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
 
-        if (operationId && operationId !== 'project'
+        if (operationId && operationId !== 'project' && operationId !== 'types'
                 && !this.getTab(routeName, operationId) && routeName === 'resources') {
             try {
                 const document: FieldDocument = await this.datastore.get(operationId);

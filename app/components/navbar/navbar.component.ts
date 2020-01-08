@@ -108,6 +108,8 @@ export class NavbarComponent implements DoCheck {
 
         if (this.activeRoute.startsWith('/images')) {
             return this.i18n({ id: 'navbar.tabs.images', value: 'Bilder' });
+        } else if (this.activeRoute.startsWith('/resources/types')) {
+            return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/import')) {

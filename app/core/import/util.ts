@@ -1,5 +1,4 @@
-import {ObjectCollection, reduce, dissoc, getOn, isObject, isArray} from 'tsfun';
-
+import {ObjectCollection, reduce, dissoc, getOn, isObject, isArray, values, isEmpty, is, } from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -16,6 +15,20 @@ export const makeLookup = (path: string) => {
         }, {})(as);
     }
 };
+
+
+/**
+ * @param struct
+ * @author Daniel de Oliveira
+ */
+export function hasEmptyAssociatives(struct: any): boolean {
+
+    if (!isArray(struct) && !isObject(struct)) return false;
+    if (isEmpty(struct)) return true;
+    return values(struct)
+        .map(hasEmptyAssociatives)
+        .some(is(true));
+}
 
 
 export function withDissoc(struct: any, path: string) {

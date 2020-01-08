@@ -26,7 +26,6 @@ function preprocessFieldsForResource(removeNulls: boolean) { return (document: D
     trimFields(document.resource);
 
     if (removeNulls) {
-
         const relations = document.resource.relations;
         document.resource = removeNullProperties(dissoc('relations')(document.resource)) as Resource;
         document.resource.relations = relations;

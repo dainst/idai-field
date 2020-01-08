@@ -17,11 +17,11 @@ export module ParserErrors {
     export const MANDATORY_CSV_FIELD_MISSING = 'importerrors/mandatorycsvfieldmissing';
     export const CSV_GENERIC = 'importerrors/csv/genericerror';
     export const CSV_INVALID = 'importerrors/csv/invalid';
-    export const CSV_HEADING_EMPTY_ENTRY = 'parsererrors/csv/headingEmptyEntry'; // TODO add conversion for display
+    export const CSV_HEADING_EMPTY_ENTRY = 'parsererrors/csv/headingEmptyEntry';
     export const CSV_INVALID_HEADING = 'parsererrors/csv/invalidheading';
     export const CSV_ROW_LENGTH_MISMATCH = 'parsererrors/csv/rowLengthMismatch';
-    export const CSV_INCONSISTENT_ARRAY = 'parsererrors/csv/inconsistentArray'; // TODO add conversion for display
-    export const CSV_PATH_ITEM_TYPE_MISMATCH = 'parsererrors/csv/pathItemTypeMismatch'; // TODO add conversion for display
+    export const CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = 'parsererrors/csv/csvHeadingArrayIndicesInvalidSequence';
+    export const CSV_HEADING_PATH_ITEM_TYPE_MISMATCH = 'parsererrors/csv/pathItemTypeMismatch';
     export const CSV_NOT_A_NUMBER = 'importerrors/csv/notanumber'; // [error, value, column]
     export const CSV_NOT_A_BOOLEAN = 'importerrors/csvs/notaboolean';
 }

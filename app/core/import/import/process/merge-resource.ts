@@ -1,10 +1,10 @@
-import {dropRightWhile, includedIn, is, isUndefined, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives} from './has-empty-associatives';
 import {cond} from 'tsfun-core/src/composition';
+import {hasEmptyAssociatives} from '../../util';
 
 
 /**
@@ -117,13 +117,17 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
 function expandObjectArray(target: Array<any>, source: Array<any>) {
 
-    source
-        .filter(isUndefined)
-        .forEach(() => { throw Error('illegal argument - source contains undefined entries'); });
-
     keys(source).forEach(index => {
 
-        if (source[index] === null) return target[index] = null;
+        // This can happen if deletions are not permitted and
+        // null values got collapsed via preprocessFields
+        if (source[index] === undefined) {
+            // make the slot so array will not be sparse
+            if (target[index] === undefined) return target[index] = null;
+            return;
+        } else if (source[index] === null) {
+            return target[index] = null;
+        }
 
         if (target[index] === undefined && isObject(source[index])) target[index] = {};
 
@@ -136,7 +140,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         if (keys(target[index]).length === 0) target[index] = null;
     });
 
-    const result = dropRightWhile(is(undefined))(dropRightWhile(is(null))(target));
-    if (result.includes(null) || result.includes(undefined)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+    const result = dropRightWhile(is(null))(target);
+    if (result.includes(null)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
     return result;
 }

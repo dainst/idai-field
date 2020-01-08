@@ -200,31 +200,43 @@ describe('mergeResource', () => {
     it('merge objectArray field - delete one target object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'},{bField: 'bOriginalValue'}];
-        source['objectArray'] = [{aField: 'aNewValue'}, {bField: null}];
+        source['objectArray'] = [undefined, {bField: null}];
 
         const result = mergeResource(target, source);
 
         expect(result['objectArray'].length).toBe(1);
-        expect(result['objectArray'][0]['aField']).toBe('aNewValue');
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
     });
 
 
     it('merge objectArray field - target object to delete is not defined', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: 'aNewValue'}, {bField: null}];
+        source['objectArray'] = [undefined, {bField: null}];
 
         const result = mergeResource(target, source);
 
         expect(result['objectArray'].length).toBe(1);
-        expect(result['objectArray'][0]['aField']).toBe('aNewValue');
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
+    });
+
+
+    it('merge objectArray field - target object to delete is not defined - 2 undefined', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, undefined ,{bField: null}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'].length).toBe(1);
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
     });
 
 
     it('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
-        source['objectArray'] = [null, {bField: 'bNewValue'}];
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, undefined ,{bField: 'bNewValue'}];
 
         try {
             mergeResource(target, source);
@@ -261,14 +273,26 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore undefined-valued field, add array object', () => {
+    it('merge objectArray field - ignore undefined-valued field', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: 'aNewValue'}, {bField: 'bNewValue'}];
+        target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
+        source['objectArray'] = [undefined, {bField: 'bChangedValue'}];
 
         const result = mergeResource(target, source);
 
-        expect(result['objectArray'][0]['aField']).toEqual('aNewValue');
+        expect(result['objectArray'][0]['aField']).toEqual('aOriginalValue');
+        expect(result['objectArray'][1]['bField']).toEqual('bChangedValue');
+    });
+
+
+    it('merge objectArray field - ignore undefined-valued field, add array object', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, {bField: 'bNewValue'}];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'][0]['aField']).toEqual('aOriginalValue');
         expect(result['objectArray'][1]['bField']).toEqual('bNewValue');
     });
 
@@ -276,11 +300,11 @@ describe('mergeResource', () => {
     it('merge objectArray field - ignore undefined-valued field, add two array objects', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: 'aNewValue'}, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
+        source['objectArray'] = [undefined, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
 
         const result = mergeResource(target, source);
 
-        expect(result['objectArray'][0]['aField']).toEqual('aNewValue');
+        expect(result['objectArray'][0]['aField']).toEqual('aOriginalValue');
         expect(result['objectArray'][1]['bField']).toEqual('bNewValue');
         expect(result['objectArray'][2]['cField']).toEqual('cNewValue');
     });
@@ -329,8 +353,6 @@ describe('mergeResource', () => {
     });
 
 
-    // err cases
-
     it('attempted to toggleRangeOnOff type', () => {
 
         const source: Resource = {
@@ -373,34 +395,6 @@ describe('mergeResource', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual(Error('Precondition violated in mergeResource. Identifier: identifier1'));
-        }
-    });
-
-
-    it('must not cotain undefined values in array', () => {
-
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined];
-
-        try {
-            mergeResource(target, source);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual(Error('illegal argument - source contains undefined entries'));
-        }
-    });
-
-
-    it('must not cotain undefined values in array - nested', () => {
-
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: [undefined]}];
-
-        try {
-            mergeResource(target, source);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual(Error('illegal argument - source contains undefined entries'));
         }
     });
 });

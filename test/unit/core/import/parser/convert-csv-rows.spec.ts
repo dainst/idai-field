@@ -102,20 +102,6 @@ describe('convertCsvRows', () => {
     });
 
 
-    // TODO review, remove
-    xit('make sure arrays are dense', () => {
-
-        const content =
-            'a.1.b.c\n' +
-            '10';
-
-        const structs = convertCsvRows(',')(content);
-        const struct = structs[0];
-        const nrEnumeratedItems = struct['a'].reduce((sum, _) => sum + 1, 0);
-        expect(nrEnumeratedItems).toBe(2);
-    });
-
-
     it('parse last field in file even if empty', () => {
 
         const struct = convertCsvRows(',')(
@@ -218,7 +204,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b,0.d');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
         }
     });
 
@@ -229,7 +215,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b.a.a,a.b.0.b');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.a', '0.b']]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.a', '0.b']]);
         }
     });
 
@@ -240,7 +226,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b.0.a,a.b.0.b,a.b.2');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [0, 0, 2]]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [0, 0, 2]]);
         }
     });
 
@@ -251,7 +237,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b.1.a,a.b.2.b,a.b.3');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [1, 2, 3]]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [1, 2, 3]]);
         }
     });
 

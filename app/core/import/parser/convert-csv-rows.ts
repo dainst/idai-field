@@ -1,7 +1,7 @@
 import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import {includes, longerThan, startsWith} from '../util';
-import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH;
+import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 
 
@@ -22,11 +22,13 @@ type Field = string;
  * @throws [ParserErrors.CSV_ROWS_LENGTH_MISMATCH, rowIndex] (rowIndex starting from 1)
  *   if length of a row does not match the length of the header
  *
- * @throws [ParserError.CSV_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
+ * @throws [ParserError.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
  *   if at a certain point in a path, there is a clash because on the one hand an array index
- *   and on the other hand an object key is defined
+ *   and on the other hand an object key is defined,
+ *   for example with headings ['a.b', 'a.0.c']
  *
  * @throws [ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices]
+ *   for example with headings ['a.0.b', 'a.2'], where 'a.1' is missing
  *
  * @throws [ParserErrors.CSV_HEADING_EMPTY_ENTRY]
  */

@@ -3565,7 +3565,15 @@
       </trans-unit>
       <trans-unit id="messages.import.error.csvHeadingEmptyEntry" datatype="html">
         <source>CSV-Header darf keine leeren Einträge haben.</source>
-        <target state="final">CSV Header must not have empty entries.</target>
+        <target state="final">CSV header must not have empty entries.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.parser.error.csvHeadingPathItemTypeMismatch" datatype="html">
+        <source>CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]</source>
+        <target state="final">CSV header: array indices and object keys must not be mixed: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

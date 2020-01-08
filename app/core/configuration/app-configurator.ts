@@ -244,6 +244,7 @@ export class AppConfigurator {
         },
         Type: {
             superType: true,
+            mustLieWithin: true,
             fields: {}
         },
         Image: {

@@ -3497,6 +3497,30 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.csvHeadingEmptyEntry" datatype="html">
+        <source>CSV-Header darf keine leeren Einträge haben.</source>
+        <target state="final">CSV-Header darf keine leeren Einträge haben.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.parser.error.csvHeadingPathItemTypeMismatch" datatype="html">
+        <source>CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]</source>
+        <target state="final">CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.csvHeadingArrayIndicesInvalidSequence" datatype="html">
+        <source>Ungültige Sequenz für Array Indices in CSV-Header: [0]</source>
+        <target state="final">Ungültige Sequenz für Array Indices in CSV-Header: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.csvRowsLengthMismatch" datatype="html">
         <source>Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</source>
         <target state="final">Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</target>

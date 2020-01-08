@@ -59,7 +59,7 @@ describe('removeNullProperties', () => {
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
         const result = removeNullProperties(resource);
-        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]);
+        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]); // TODO review
     });
 
 

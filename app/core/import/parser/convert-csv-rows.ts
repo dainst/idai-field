@@ -1,8 +1,8 @@
 import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import {includes, longerThan, startsWith} from '../util';
-import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH;
-import CSV_INCONSISTENT_ARRAY = ParserErrors.CSV_INCONSISTENT_ARRAY;
+import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
+import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 
 
 const PATH_SEPARATOR = '.';
@@ -22,9 +22,15 @@ type Field = string;
  * @throws [ParserErrors.CSV_ROWS_LENGTH_MISMATCH, rowIndex] (rowIndex starting from 1)
  *   if length of a row does not match the length of the header
  *
- * @throws [CSV_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
+ * @throws [ParserError.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
  *   if at a certain point in a path, there is a clash because on the one hand an array index
- *   and on the other hand an object key is defined
+ *   and on the other hand an object key is defined,
+ *   for example with headings ['a.b', 'a.0.c']
+ *
+ * @throws [ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices]
+ *   for example with headings ['a.0.b', 'a.2'], where 'a.1' is missing
+ *
+ * @throws [ParserErrors.CSV_HEADING_EMPTY_ENTRY]
  */
 export function convertCsvRows(separator: string) {
 
@@ -33,7 +39,7 @@ export function convertCsvRows(separator: string) {
         const rows: string[][] = getRows(content, separator);
         if (rows.length < 0) return [];
         const headings: string[] = rows.shift() as string[];
-        assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings);
+        assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
@@ -42,7 +48,7 @@ export function convertCsvRows(separator: string) {
 }
 
 
-function assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings: string[]) {
+function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[]) {
 
     // current implementation of parser gives at least ['']
     if (headings.length === 0) throw Error('illegal argument');
@@ -56,35 +62,55 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     if (headings.length === 0) return;
     if (headings.includes('')) throw Error('illegal argument');
 
-    const numbers: number[] =
-        headings
-            .map(heading => heading.split(PATH_SEPARATOR)[0])
-            .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
-            .filter(isNot(isNaN))
-            .sort();
-
-    if (numbers.length !== 0 && numbers.length !== headings.length) {
+    const indices: number[] = extractLeadingIndices(headings);
+    if (indices.length !== 0 && indices.length !== headings.length) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
-    unique(numbers).forEach((n, i) => {
-        if (n !== i) throw [CSV_INCONSISTENT_ARRAY, numbers];
+    unique(indices).forEach((n, i) => {
+        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices];
     });
 
     flow(headings,
-        reduce((group, heading: any) => {
-
-            const first = heading.split(PATH_SEPARATOR).slice(0)[0];
-            const rest = heading.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
-
-            if (!group[first]) group[first] = [];
-            group[first].push(rest);
-            return group;
-
-        }, {} as {[_:string]:any}),
+        groupByFirstSegment,
         values,
         filter(isArray),
         map(filter(isnt(''))),
         forEach(assertHeadingsDoNotContainIncompleteArrays));
+}
+
+
+/**
+ * Example:
+ *   paths: ['3.b','c.4','5']
+ *   returns: [3, 5]
+ */
+function extractLeadingIndices(paths: string[]): number[] {
+
+    return paths
+        .map(path => path.split(PATH_SEPARATOR)[0])
+        .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
+        .filter(isNot(isNaN))
+        .sort();
+}
+
+
+/**
+ * Example:
+ *   paths: ['a.3.b', 'a.4', 'b.5', 'c']
+ *   returns: { a: ['3.b', '4'], b: ['5'], c: []}
+ */
+function groupByFirstSegment(paths: string[]) {
+
+    return reduce((group, path: string) => {
+
+        const first = path.split(PATH_SEPARATOR).slice(0)[0];
+        const rest = path.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
+
+        if (!group[first]) group[first] = [];
+        group[first].push(rest);
+        return group;
+
+    }, {} as {[_:string]:any})(paths);
 }
 
 

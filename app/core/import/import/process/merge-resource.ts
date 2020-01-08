@@ -1,4 +1,4 @@
-import {dropRightWhile, includedIn, is, isUndefined, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
@@ -117,11 +117,15 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
 function expandObjectArray(target: Array<any>, source: Array<any>) {
 
-    source
-        .filter(isUndefined)
-        .forEach(() => { throw Error('illegal argument - source contains undefined entries'); });
-
     keys(source).forEach(index => {
+
+        // This can happen if user has not specified this, for example in csv import
+        // where columns are not defined for a specific index
+        if (source[index] === undefined) {
+            // make the slot so array will not be sparse
+            if (target[index] === undefined) target[index] = undefined;
+            return;
+        }
 
         if (source[index] === null) return target[index] = null;
 

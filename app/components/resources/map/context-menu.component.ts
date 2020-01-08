@@ -68,6 +68,16 @@ export class ContextMenuComponent implements OnChanges {
     }
 
 
+    public isMoveOptionAvailable(): boolean {
+
+        if (!this.sidebarListComponent.contextMenuDocument) return false;
+
+        return this.typeUtility.getHierarchyParentTypes(
+            this.sidebarListComponent.contextMenuDocument.resource.type
+        ).length > 0;
+    }
+
+
     private static computeOrientation(yPosition: number): ContextMenuOrientation {
 
         return yPosition <= window.innerHeight * 0.6

@@ -9,7 +9,8 @@
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
     </div>
-    <div id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
+    <div *ngIf="isMoveOptionAvailable()"
+            id="context-menu-move-button" class="dropdown-item" (click)="selectAction('move')">
         <span class="mdi mdi-file-tree"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
     </div>

@@ -156,6 +156,13 @@ export class TypeUtility {
     }
 
 
+    public getHierarchyParentTypes(typeName: string): Array<IdaiType> {
+
+        return this.getAllowedRelationRangeTypes('isRecordedIn', typeName)
+            .concat(this.getAllowedRelationRangeTypes('liesWithin', typeName));
+    }
+
+
     public isGeometryType(typeName: string): boolean {
 
         return !this.getImageTypeNames().includes(typeName)

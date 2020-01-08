@@ -11,6 +11,7 @@ import {M} from '../../m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class RowComponent implements AfterViewInit {
         private validator: Validator,
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
-        private projectConfiguration: ProjectConfiguration
+        private projectConfiguration: ProjectConfiguration,
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -94,6 +96,12 @@ export class RowComponent implements AfterViewInit {
 
         if (this.initialValueOfCurrentlyEditedField != fieldValue) await this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;
+    }
+
+
+    public isMoveOptionAvailable(): boolean {
+
+        return this.typeUtility.getHierarchyParentTypes(this.document.resource.type).length > 0;
     }
 
 

@@ -83,7 +83,8 @@
                 (click)="editDocument()">
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
-        <button class="btn btn-small btn-link float-right list-move-button"
+        <button *ngIf="isMoveOptionAvailable()"
+                class="btn btn-small btn-link float-right list-move-button"
                 ngbTooltip="Verschieben"
                 i18n-ngbTooltip="@@resources.list.moveButton.tooltip"
                 placement="bottom"

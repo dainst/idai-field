@@ -2,7 +2,7 @@ import {ImportErrors} from '../../../../../app/core/import/import/import-errors'
 import {removeNullProperties} from '../../../../../app/core/import/import/remove-null-properties';
 
 
-fdescribe('removeNullProperties', () => {
+describe('removeNullProperties', () => {
 
     it('empty string not allowed', () => {
 

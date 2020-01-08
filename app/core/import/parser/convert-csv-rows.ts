@@ -33,7 +33,7 @@ export function convertCsvRows(separator: string) {
         const rows: string[][] = getRows(content, separator);
         if (rows.length < 0) return [];
         const headings: string[] = rows.shift() as string[];
-        assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings);
+        assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
@@ -42,7 +42,7 @@ export function convertCsvRows(separator: string) {
 }
 
 
-function assertHeadingsIntEmptyandDoesntContainEmptyEntries(headings: string[]) {
+function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[]) {
 
     // current implementation of parser gives at least ['']
     if (headings.length === 0) throw Error('illegal argument');

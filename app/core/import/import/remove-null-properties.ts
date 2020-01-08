@@ -21,12 +21,10 @@ export function removeNullProperties(struct: ObjectCollection<any>|Array<any>): 
         if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
 
         if (isAssociative(originalFieldValue)) {
-
             struct_[fieldName] = removeNullProperties(originalFieldValue);
         }
 
         if (originalFieldValue === null || struct_[fieldName] === undefined) {
-
             if (isArray(struct_)) struct_[fieldName] = undefined;
             else delete struct_[fieldName];
         }

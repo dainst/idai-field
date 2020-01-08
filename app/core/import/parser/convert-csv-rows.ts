@@ -56,18 +56,18 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     if (headings.length === 0) return;
     if (headings.includes('')) throw Error('illegal argument');
 
-    const numbers: number[] =
+    const indices: number[] =
         headings
             .map(heading => heading.split(PATH_SEPARATOR)[0])
             .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
             .filter(isNot(isNaN))
             .sort();
 
-    if (numbers.length !== 0 && numbers.length !== headings.length) {
+    if (indices.length !== 0 && indices.length !== headings.length) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
-    unique(numbers).forEach((n, i) => {
-        if (n !== i) throw [CSV_INCONSISTENT_ARRAY, numbers];
+    unique(indices).forEach((n, i) => {
+        if (n !== i) throw [CSV_INCONSISTENT_ARRAY, indices];
     });
 
     flow(headings,

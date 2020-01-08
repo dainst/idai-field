@@ -82,24 +82,6 @@ describe('removeNullProperties', () => {
     });
 
 
-    // it('objectArray - do not collapse null entries if deletions permitted', () => {
-    //
-    //     resource['aField'] = [null];
-    //
-    //     collapseEmptyProperties([resource], true);
-    //     expect(resource['aField'][0]).toBeNull();
-    // });
-
-
-    // it('objectArray - leave objectArray as is if deletions are permitted', () => {
-    //
-    //     resource['aField'] = [{ a: null }];
-    //
-    //     collapseEmptyProperties([resource], true);
-    //     expect(resource['aField'][0]['a']).toBeNull();
-    // });
-
-
     it('objectArray - convert null to undefined in object', () => {
 
         const resource = { aField: [{ a: null }] };

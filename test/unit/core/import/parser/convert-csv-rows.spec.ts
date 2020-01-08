@@ -102,7 +102,8 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('make sure arrays are dense', () => {
+    // TODO review, remove
+    xit('make sure arrays are dense', () => {
 
         const content =
             'a.1.b.c\n' +
@@ -163,6 +164,14 @@ describe('convertCsvRows', () => {
     });
 
 
+    it('arrays with 1 entry are legal', () => {
+
+        convertCsvRows(',')('a.0,a');
+        convertCsvRows(',')('a.0.c,a');
+    });
+
+    // err cases
+
     it('inconsistent headings found - array', () => {
 
         try {
@@ -199,6 +208,61 @@ describe('convertCsvRows', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
+        }
+    });
+
+
+    it('path item mismatch at first element', () => {
+
+        try {
+            convertCsvRows(',')('a.b,0.d');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
+        }
+    });
+
+
+    it('path item mismatch at nested element', () => {
+
+        try {
+            convertCsvRows(',')('a.b.a.a,a.b.0.b');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.a', '0.b']]);
+        }
+    });
+
+
+    it('incomplete array detected', () => {
+
+        try {
+            convertCsvRows(',')('a.b.0.a,a.b.0.b,a.b.2');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [0, 0, 2]]);
+        }
+    });
+
+
+    it('incomplete array detected - array does not start at 0', () => {
+
+        try {
+            convertCsvRows(',')('a.b.1.a,a.b.2.b,a.b.3');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [1, 2, 3]]);
+        }
+    });
+
+
+    it('empty heading entry', () => {
+
+        try {
+            convertCsvRows(',')(',b');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_EMPTY_ENTRY]);
         }
     });
 });

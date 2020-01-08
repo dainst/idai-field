@@ -46,8 +46,6 @@ export class RowComponent implements AfterViewInit {
     ) {}
 
 
-    ngAfterViewInit = () => this.focusIdentifierInputIfDocumentIsNew();
-
     public editDocument = () => this.resourcesComponent.editDocument(this.document);
 
     public moveDocument = () => this.resourcesComponent.moveDocument(this.document);
@@ -75,6 +73,12 @@ export class RowComponent implements AfterViewInit {
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier
         : 'new-resource';
+
+
+    ngAfterViewInit() {
+
+        this.focusIdentifierInputIfDocumentIsNew();
+    }
 
 
     public async onKeyUp(event: KeyboardEvent, fieldValue: string) {

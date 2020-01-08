@@ -1,6 +1,8 @@
-import {reduce, map, ObjectStruct, arrayList} from 'tsfun';
+import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import {includes, longerThan, startsWith} from '../util';
+import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH;
+import CSV_INCONSISTENT_ARRAY = ParserErrors.CSV_INCONSISTENT_ARRAY;
 
 
 const PATH_SEPARATOR = '.';
@@ -16,9 +18,13 @@ type Field = string;
  *   this can be the case when the leafs and nodes of nested associatives are both set as
  *   - with an array: dim.0 and dim.0.a cannot be both set at the same time
  *   - with an object: dim.a and dim.a.b cannot be both set at the same time
+ *
  * @throws [ParserErrors.CSV_ROWS_LENGTH_MISMATCH, rowIndex] (rowIndex starting from 1)
  *   if length of a row does not match the length of the header
  *
+ * @throws [CSV_PATH_ITEM_TYPE_MISMATCH, mismatching segments]
+ *   if at a certain point in a path, there is a clash because on the one hand an array index
+ *   and on the other hand an object key is defined
  */
 export function convertCsvRows(separator: string) {
 
@@ -28,9 +34,48 @@ export function convertCsvRows(separator: string) {
         if (rows.length < 0) return [];
         const headings: string[] = rows.shift() as string[];
         assertHeadingsConsistent(headings);
+        assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
         return map((row: string[]) => convertRowToStruct(headings, row))(rows);
     }
+}
+
+
+function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
+
+    if (headings.length === 0) return;
+    if (headings.includes('')) throw "E"; // ?
+
+    const numbers: number[] =
+        headings
+            .map((entry: string) => entry.split('.')[0]) // ?
+            .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
+            .filter(isNot(isNaN))
+            .sort();
+
+    if (numbers.length !== 0 && numbers.length !== headings.length) {
+        throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
+    }
+    unique(numbers).forEach((n, i) => {
+        if (n !== i) throw [CSV_INCONSISTENT_ARRAY, numbers];
+    });
+
+    flow(headings,
+        reduce((group, heading: any) => {
+
+            const first_ = heading.split('.').slice(0);
+            if (first_.length === 0) return group;
+            const first = first_[0];
+            const rest = heading.split('.').slice(1).join('.');
+            if (!group[first]) group[first] = [];
+            group[first].push(rest);
+            return group;
+
+        }, {} as {[_:string]:any}),
+        values,
+        filter(isArray),
+        map(filter(isnt(''))),
+        forEach(assertHeadingsDoNotContainIncompleteArrays));
 }
 
 

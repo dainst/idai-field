@@ -19,6 +19,8 @@ export module ParserErrors {
     export const CSV_INVALID = 'importerrors/csv/invalid';
     export const CSV_INVALID_HEADING = 'parsererrors/csv/invalidheading';
     export const CSV_ROW_LENGTH_MISMATCH = 'parsererrors/csv/rowLengthMismatch';
+    export const CSV_INCONSISTENT_ARRAY = 'parsererrors/csv/inconsistentArray'; // TODO add conversion for display
+    export const CSV_PATH_ITEM_TYPE_MISMATCH = 'parsererrors/csv/pathItemTypeMismatch'; // TODO add conversion for display
     export const CSV_NOT_A_NUMBER = 'importerrors/csv/notanumber'; // [error, value, column]
     export const CSV_NOT_A_BOOLEAN = 'importerrors/csvs/notaboolean';
 }

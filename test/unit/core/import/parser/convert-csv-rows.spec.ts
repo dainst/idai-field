@@ -102,7 +102,8 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('make sure arrays are dense', () => {
+    // TODO review, remove
+    xit('make sure arrays are dense', () => {
 
         const content =
             'a.1.b.c\n' +
@@ -163,6 +164,8 @@ describe('convertCsvRows', () => {
     });
 
 
+    // err cases
+
     it('inconsistent headings found - array', () => {
 
         try {
@@ -199,6 +202,68 @@ describe('convertCsvRows', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
+        }
+    });
+
+
+    it('invalid array detected', () => {
+
+        try {
+            convertCsvRows(',')('a.b.a.a,a.b.0.b');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.a', '0.b']]);
+        }
+    });
+
+
+    it('incomplete array detected', () => {
+
+        try {
+            convertCsvRows(',')('a.b.0.a,a.b.0.b,a.b.2');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [0, 0, 2]]);
+        }
+    });
+
+
+    it('incomplete array detected - array does not start at 0', () => {
+
+        try {
+            convertCsvRows(',')('a.b.1.a,a.b.2.b,a.b.3');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [1, 2, 3]]);
+        }
+    });
+
+
+    it('invalid', () => { // TODO rename
+
+        try {
+            convertCsvRows(',')('a.b,0.d');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
+        }
+    });
+
+
+    it('do not throw', () => { // TODO rename
+
+        convertCsvRows(',')('a.0,a');
+        convertCsvRows(',')('a.0.c,a');
+    });
+
+
+    xit('do not throw 2', () => { // TODO rename
+
+        try {
+            convertCsvRows(',')(',b');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ParserErrors.CSV_INCONSISTENT_ARRAY, [1, 2, 3]]);
         }
     });
 });

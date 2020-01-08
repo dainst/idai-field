@@ -99,6 +99,7 @@ export class SettingsService {
         if (this.getSelectedProject().startsWith('kalapodi')) customProjectName = 'Kalapodi';
         if (this.getSelectedProject().startsWith('gadara-project')) customProjectName = 'Gadara';
         if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
+        if (this.getSelectedProject().startsWith('ayamonte')) customProjectName = 'Ayamonte';
 
         try {
             return await this.appConfigurator.go(

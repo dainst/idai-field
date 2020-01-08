@@ -160,6 +160,8 @@ export class TypeUtility {
 
         return !this.getImageTypeNames().includes(typeName)
             && !this.isSubtype(typeName, 'Inscription')
+            && !this.isSubtype(typeName, 'Type')
+            && !this.isSubtype(typeName, 'TypeCatalog')
             && !TypeUtility.isProjectType(typeName);
     }
 

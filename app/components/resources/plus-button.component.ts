@@ -61,6 +61,9 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
+    public isGeometryType = (typeName: string) => this.typeUtility.isGeometryType(typeName);
+
+
     ngOnChanges() {
 
         this.initializeTypesTreeList(this.projectConfiguration);
@@ -109,7 +112,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (this.preselectedGeometryType) {
             this.startDocumentCreation();
-        } else if (this.selectedType === 'Inscription') {
+        } else if (!this.isGeometryType(this.selectedType)) {
             this.startDocumentCreation('none');
         }
     }

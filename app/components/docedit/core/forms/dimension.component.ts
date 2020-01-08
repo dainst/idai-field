@@ -33,13 +33,13 @@ export class DimensionComponent {
     	this.newDimension = {
     		value: 0,
             inputValue: 0,
-            inputRangeEndValue: 0,
 			measurementPosition: '',
 			measurementComment: '',
 			inputUnit: 'cm',
-			isImprecise: false,
-            isRange: false
+			isImprecise: false
     	};
+
+        (this.newDimension as any)['isRange'] = false;
     }
 
 
@@ -61,6 +61,9 @@ export class DimensionComponent {
 
 
     public startEditing(dimension: Dimension) {
+
+        if (dimension.inputRangeEndValue) (dimension as any)['isRange'] = true;
+        else (dimension as any)['isRange'] = false;
 
         this.dimensionsInEditing.push(dimension);
     }
@@ -86,8 +89,16 @@ export class DimensionComponent {
     }
 
 
+    public toggleRangeOnOff(dimension: Dimension, toggleRangeOn: boolean) {
+
+        if (toggleRangeOn) dimension.inputRangeEndValue = 0;
+        else delete dimension.inputRangeEndValue;
+    }
+
+
     public saveDimension(dimension: Dimension) {
 
+        delete (dimension as any)['isRange'];
         Dimension.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {

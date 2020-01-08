@@ -18,9 +18,9 @@ export class PouchdbDatastore {
     private changesObservers = [];
     private deletedObservers = [];
 
-    // There is an issue where docs pop up in }).on('change',
+    // There is an issue where docs pop up in }).on('toggleRangeOnOff',
     // despite them beeing deleted in remove before. When they
-    // pop up in 'change', they do not have the deleted property.
+    // pop up in 'toggleRangeOnOff', they do not have the deleted property.
     // So in order to identify them as to remove from the indices
     // they are marked 'manually'.
     private deletedOnes = [];
@@ -251,8 +251,8 @@ export class PouchdbDatastore {
                 conflicts: true,
                 since: 'now'
             }).on('change', (change: any) => {
-                // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
-                // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
+                // it is noteworthy that currently often after a deletion of a document we get a toggleRangeOnOff that does not reflect deletion.
+                // neither is toggleRangeOnOff.deleted set nor is sure if the document already is deleted (meaning fetch still works)
 
                 if (!change || !change.id) return;
                 if (change.id.indexOf('_design') === 0) return; // starts with _design
@@ -278,7 +278,7 @@ export class PouchdbDatastore {
         try {
             ObserverUtil.notify(this.changesObservers, await this.fetch(changeId));
         } catch (e) {
-            console.warn('Document from remote change not found or not valid', changeId);
+            console.warn('Document from remote toggleRangeOnOff not found or not valid', changeId);
             throw e;
         }
     }

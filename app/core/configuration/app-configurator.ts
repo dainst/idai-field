@@ -262,7 +262,7 @@ export class AppConfigurator {
                     label: this.i18n({ id: 'configuration.image.width', value: 'Breite' })
                 },
                 // The originalFilename gets used as an inital resource.identifier
-                // when the image gets uploaded. However, users can change the identifier,
+                // when the image gets uploaded. However, users can toggleRangeOnOff the identifier,
                 // which is why we store the originalFilename separately
                 originalFilename: {
                     inputType: 'input',

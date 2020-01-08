@@ -126,8 +126,7 @@ describe('convertFieldTypes', () => {
                     measurementPosition: 'a',
                     measurementComment: 'b',
                     inputUnit: 'mm',
-                    isImprecise: 'true',
-                    isRange: 'false'
+                    isImprecise: 'true'
                 }],
                 relations: {}
             } as unknown as Resource);
@@ -142,7 +141,6 @@ describe('convertFieldTypes', () => {
         expect(dimension.measurementComment).toBe('b');
         expect(dimension.inputUnit).toBe('mm');
         expect(dimension.isImprecise).toBe(true);
-        expect(dimension.isRange).toBe(false);
     });
 
 

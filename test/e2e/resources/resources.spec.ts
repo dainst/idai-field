@@ -342,7 +342,7 @@ describe('resources --', () => {
 
     it('typechange', () => {
 
-        // change to child type
+        // toggleRangeOnOff to child type
         ResourcesPage.performCreateResource('1', 'feature');
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickTypeSwitcherButton();

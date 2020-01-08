@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take, includedIn} from 'tsfun';
+import {empty, filter, flow, forEach, includedIn, isNot, map, take} from 'tsfun';
 import {Document, Messages} from 'idai-components-2';
-import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
+import {Importer, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
 import {HttpReader} from '../../core/import/reader/http-reader';
@@ -25,10 +25,10 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
-import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
-import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../common/angular-utility';
+import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
+import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 
 
 @Component({
@@ -69,7 +69,10 @@ export class ImportComponent implements OnInit {
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,
-        public importState: ImportState) {}
+        public importState: ImportState) {
+
+        this.resetOperationIfNecessary();
+    }
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -170,6 +173,18 @@ export class ImportComponent implements OnInit {
                 return '.shp';
             case 'csv':
                 return '.csv';
+        }
+    }
+
+
+    private async resetOperationIfNecessary() {
+
+        if (!this.importState.selectedOperationId) return;
+
+        try {
+            await this.datastore.get(this.importState.selectedOperationId);
+        } catch {
+            this.importState.selectedOperationId = '';
         }
     }
 

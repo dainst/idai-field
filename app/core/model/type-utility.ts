@@ -60,10 +60,12 @@ export class TypeUtility {
     }
 
 
-    public getNonImageTypes(): Array<IdaiType> {
+    public getFieldTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => !this.isSubtype(type.name, 'Image'))
+            .filter(type => !this.isSubtype(type.name, 'TypeCatalog'))
+            .filter(type => !this.isSubtype(type.name, 'Type'))
             .filter(type => !TypeUtility.isProjectType(type.name))
     }
 
@@ -74,9 +76,9 @@ export class TypeUtility {
     }
 
 
-    public getNonImageTypeNames(): string[] {
+    public getFieldTypeNames(): string[] {
 
-        return this.getNonImageTypes().map(type => type.name);
+        return this.getFieldTypes().map(type => type.name);
     }
 
 

@@ -121,7 +121,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.getBypassHierarchy()
-                ? this.typeUtility.getNonImageTypes().filter(type => !type.parentType)
+                ? this.typeUtility.getFieldTypes().filter(type => !type.parentType)
                 : this.typeUtility.getOverviewTopLevelTypes();
         } else if (this.viewFacade.isInTypesManagement()) {
             this.filterOptions = this.typeUtility.getTypeManagementTopLevelTypes();

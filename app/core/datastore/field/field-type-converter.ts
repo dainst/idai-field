@@ -38,7 +38,7 @@ export class FieldTypeConverter extends TypeConverter<Document> {
         } else if (typeClass === 'FeatureDocument') {
             return this.typeUtility.getFeatureTypeNames();
         } else if (typeClass === 'FieldDocument') {
-            return this.typeUtility.getNonImageTypeNames();
+            return this.typeUtility.getFieldTypeNames();
         }
     }
 

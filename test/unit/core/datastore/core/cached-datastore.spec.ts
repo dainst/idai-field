@@ -21,9 +21,9 @@ describe('CachedDatastore', () => {
     ) {
 
         const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
-            ['isSubtype', 'validate', 'getNonImageTypeNames']);
+            ['isSubtype', 'validate', 'getFieldTypeNames']);
         mockTypeUtility.isSubtype.and.returnValue(false);
-        mockTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
+        mockTypeUtility.getFieldTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<FieldDocument>();
         const docDatastore = new FieldDatastore(

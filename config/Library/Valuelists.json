@@ -9063,5 +9063,165 @@
       "Spätkaiserzeitlich": {},
       "Spätklassisch": {}
     }
+  },
+  "Trench-excavationType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Schnitt": {},
+      "Sektor": {}
+    }
+  },
+  "Feature-findMaterial-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Keramik": {},
+      "Probe": {},
+      "Steinobjekt": {}
+    }
+  },
+  "Feature-qualityRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "ungestört": {},
+      "gestört": {},
+      "stratifiziert": {},
+      "Bergung nach natürlicher Schichtung": {}
+    }
+  },
+  "Grave-findMaterial-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Keramik": {},
+      "Probe": {}
+    }
+  },
+  "Grave-qualityRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "ungestört": {},
+      "gestört": {},
+      "stratifiziert": {},
+      "Bergung nach natürlicher Schichtung": {}
+    }
+  },
+  "Layer-findMaterial-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Keramik": {},
+      "Glas": {},
+      "Steinobjekt": {},
+      "Mollusken": {},
+      "sonstiger Fund": {},
+      "Probe": {},
+      "Knochen": {},
+      "Ziegel": {}
+    }
+  },
+  "Layer-qualityRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "ungestört": {},
+      "gestört": {},
+      "stratifiziert": {},
+      "Bergung nach natürlicher Schichtung": {},
+      "Bergung in künstlichen Plana": {}
+    }
+  },
+  "Feature-featureClassification-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Brandschicht": {},
+      "Kulturschicht": {},
+      "Laufhorizont": {},
+      "Planierschicht": {},
+      "Archäologisches Planum": {},
+      "Anthropologisches Planum": {}
+    }
+  },
+  "Find-findCategory-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Botanik": {},
+      "Sonstiges": {}
+    }
+  },
+  "Find-findObjectType-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Amulett": {}
+    }
+  },
+  "Find-materialColor-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "beige": {}
+    }
+  },
+  "Sample-material-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Erde": {},
+      "gebrannter Ton": {}
+    }
   }
 }

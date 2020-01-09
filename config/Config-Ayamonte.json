@@ -336,7 +336,6 @@
     }
   },
   "Sample:default": {
-    "parent": "Find",
     "hidden": [],
     "fields": {
       "sampleTakenBy": {

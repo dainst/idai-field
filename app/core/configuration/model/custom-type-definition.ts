@@ -48,7 +48,9 @@ export module CustomTypeDefinition {
                 .forEach(key => { throw [ConfigurationErrors.ILLEGAL_TYPE_PROPERTY, key] });
 
             if (!builtinTypes.includes(typeName) && !libraryTypes.includes(typeName)) {
-                if (!type.parent) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', typeName];
+                if (!type.parent) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', typeName, 'must be set for new types'];
+            } else {
+                if (type.parent) throw [ConfigurationErrors.ILLEGAL_TYPE_PROPERTY, 'parent', typeName, 'must not be set if not a new type']
             }
 
             if (!type.fields) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'fields', type];

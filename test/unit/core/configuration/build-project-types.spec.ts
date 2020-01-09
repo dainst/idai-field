@@ -849,6 +849,7 @@ describe('buildProjectTypes', () => {
         }
     });
 
+
     it('missing parent in library type', () => {
 
         const builtInTypes = {} as any;
@@ -890,7 +891,7 @@ describe('buildProjectTypes', () => {
                 {},
                 {});
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0'])
+            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0', 'must be set for new types'])
         }
     });
 

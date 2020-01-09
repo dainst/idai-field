@@ -20,7 +20,10 @@
       "workflow": {
         "inputType": "checkboxes"
       },
-      "if1MasseSonstige": {
+      "MasseSonstige": {
+        "inputType": "input"
+      },
+      "MasseFixMe": {
         "inputType": "input"
       },
       "fixMe": {
@@ -31,23 +34,73 @@
       "storagePlace": "Find-storagePlace-kalapodi",
       "measuringPointOrigin": "Find-measuringPointOrigin-kalapodi",
       "workflow": "Find-workflow-kalapodi",
-      "period": "periods-kalapodi"
+      "period": "periods-kalapodi-1"
     }
   },
   "Sample:default": {
+    "color": "#cef500",
+    "hidden": ["weight"],
     "fields": {
-      "fixMe": {
+      "descriptionSample": {
+        "inputType": "text"
+      },
+      "researchQuestion": {
+        "inputType": "text"
+      },
+      "analyzedBy": {
         "inputType": "input"
+      },
+      "sampleRelatedTo": {
+        "inputType": "input"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "sampleState": {
+        "inputType": "radio"
       }
     },
-    "valuelists": {}
+    "valuelists": {
+      "sampleType": "Sample-sampleType-Campidoglio",
+      "sampleState": "Sample-sampleState-Campidoglio"
+    }
   },
   "Feature:default": {
     "fields": {
+      "if1Befundart": {
+        "inputType": "input"
+      },
+      "if1SchichtKuenstlichNatuerlich": {
+        "inputType": "input"
+      },
       "if1AutoKlassifizierungOhneBefundart": {
         "inputType": "input"
       },
+      "if1SchichtPartikel": {
+        "inputType": "input"
+      },
+      "if1SchichtBrocken": {
+        "inputType": "input"
+      },
+      "if1SchichtBroeckchen": {
+        "inputType": "input"
+      },
+      "if1SchichtMaxGroesze": {
+        "inputType": "input"
+      },
+      "if1SchichtKonsistenz": {
+        "inputType": "input"
+      },
+      "if1SchichtBesondereBeobachtungen": {
+        "inputType": "input"
+      },
+      "if1SchichtFormat": {
+        "inputType": "input"
+      },
       "if1SchichtKlassifizSonst": {
+        "inputType": "input"
+      },
+      "if1MasseSonstige": {
         "inputType": "input"
       },
       "fixMe": {
@@ -57,9 +110,6 @@
   },
   "Image:default": {
     "fields": {
-      "importTag": {
-        "inputType": "input"
-      },
       "fixMe": {
         "inputType": "input"
       }
@@ -78,6 +128,24 @@
     "valuelists": {
       "imageSubject": "Photo-imageSubject-kalapodi",
       "originalType": "Photo-originalType-default"
+    }
+  },
+  "Drawing:default": {
+    "commons": ["date"],
+    "fields": {
+      "imageSubject": {
+        "inputType": "radio"
+      },
+      "drawingType": {
+        "inputType": "radio"
+      },
+      "if1ZeichnungsGegenstand": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "imageSubject": "Photo-imageSubject-kalapodi",
+      "drawingType":  "Drawing-drawingType-kalapodi"
     }
   },
   "Metal:default": {
@@ -140,7 +208,7 @@
     }
   },
   "Planum": {
-    "color": "#00ced1",
+    "color": "#cef500",
     "parent": "Feature",
     "fields": {
       "objectOrigin": {
@@ -155,7 +223,7 @@
     }
   },
   "BrickCluster": {
-    "color": "#CC0000",
+    "color": "#cef500",
     "parent": "Find",
     "fields": {}
   },
@@ -177,7 +245,7 @@
     }
   },
   "PotteryCluster": {
-    "color": "#CC0000",
+    "color": "#cef500",
     "parent": "Find",
     "fields": {}
   },
@@ -187,6 +255,9 @@
         "inputType": "input"
       },
       "if1SchichtUnterscheidungsKrit": {
+        "inputType": "input"
+      },
+      "if1SchichtEntstehung": {
         "inputType": "input"
       },
       "layerClassification": {
@@ -286,10 +357,6 @@
     "fields": {}
   },
   "Terracotta:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Drawing:default": {
     "hidden": [],
     "fields": {}
   },

@@ -1,0 +1,198 @@
+{
+    "types": {
+    "Project": {
+        "fields": {
+        "projectProgression": {
+            "label": "Projektverlauf"
+                }
+            }
+        },
+    "Place": {
+        "fields": {
+        "boundary": {
+            "label": "Begrenzung"
+                }
+            }
+        }
+    ,
+    "Survey": {
+        "fields": {
+        "siteClassification": {
+            "label": "Klassifikation Fundplatz"
+              }
+        }
+    },
+    "Trench": {
+        "fields": {
+            "excavationType": {
+                "label": "Ausgrabungsart",
+                "description": "Art der durchgeführten Ausgrabung"
+              },
+              "projectProgression": {
+                "label": "Projektverlauf"
+                },
+              "researchQuestion": {
+                "label": "Fragestellung"
+                }
+        }
+    },
+    "Drawing": {
+        "fields": {
+            "imageRights": {
+                "label": "Bildrechte"
+              },
+              "representedObject": {
+                "label": "Darstellungsgegenstand"
+                }
+        }
+    },
+    "Find": {
+        "fields": {
+            "storageContactPerson": {
+                "label": "Aufbewahrung Ansprechperson"
+              },
+              "storageCounty": {
+                "label": "Aufbewahrung Kreis"
+              },
+              "storageMuseum": {
+                "label": "Aufbewahrung Museum"
+              },
+              "storageProvince": {
+                "label": "Aufbewahrung Provinz"
+              },
+              "storageState": {
+                "label": "Aufbewahrung Staat"
+              },
+              "storageStatus": {
+                "label": "Aufbewahrung Status"
+              },
+              "isGraveFind": {
+                "label": "Grabfund"
+              },
+              "isReadingFind": {
+                "label": "Lesefund"
+              },
+              "isTemporaryStorage": {
+                "label": "Temporäre Aufbewahrung"
+              },
+              "findCategory": {
+                "label": "Fundgattung"
+              },
+              "findObjectType": {
+                "label": "Objektart"
+              },
+              "material": {
+                "label": "Material"
+              },
+              "materialColor": {
+                "label": "Materialfarbe"
+              },
+              "materialDescription": {
+                "label": "Materialbeschreibung"
+              }
+        }
+    },
+    "Profile": {
+      "fields": {
+        "profileClassification": {
+          "label": "Klassifizierung"
+        },
+        "verticalPosition": {
+          "label": "Vertikallage"
+        }
+      }
+    },
+    "Feature": {
+      "fields": {
+        "findMaterial": {
+          "label": "Fundmaterial"
+        },
+        "qualityRemark": {
+          "label": "Anmerkungen zur Qualität"
+        },
+        "featureClassification": {
+          "label": "Bezeichnung bzw. Klassifikation Stratigraphische Einheit"
+        },
+        "layerClassification": {
+          "label": "Bezeichnung bzw. Klassifikation Schicht"
+        },
+        "createdAfterLayer": {
+          "label": "Angelegt nach Abhub"
+        }
+      }
+    },
+    "Grave": {
+      "fields": {
+        "findMaterial": {
+          "label": "Fundmaterial"
+        },
+        "qualityRemark": {
+          "label": "Anmerkungen zur Qualität"
+        },
+        "hasBurialGifts": {
+          "label": "Hat Beigaben"
+        }
+      }
+    },
+    "Layer": {
+      "fields": {
+        "findMaterial": {
+          "label": "Fundmaterial"
+        },
+        "qualityRemark": {
+          "label": "Anmerkungen zur Qualität"
+        }
+      }
+    },
+    "Wood": {
+      "fields": {
+        "materialDescription": {
+          "label": "Beschreibung des Materials"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "conservationRemarks": {
+          "label": "Anmerkungen zur Konservierung"
+        },
+        "conservationEarlierActions": {
+          "label": "Frühere Maßnahmen zur Konservierung"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "sexDeterminationCertainty": {
+          "label": "Sicherheit der Geschlechtsbestimmung"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "sampleTakenBy": {
+          "label": "Entnahme durch"
+        },
+        "sampleReason": {
+          "label": "Grund für Probe"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "sampleNumber": {
+          "label": "Probennummer"
+        },
+        "examinationResult": {
+          "label": "Untersuchungsergebnis"
+        },
+        "examinationMethod": {
+          "label": "Untersuchungsmethode"
+        }
+      }
+    }
+
+  }
+  }
+
+
+  

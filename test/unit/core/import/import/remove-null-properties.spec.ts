@@ -35,15 +35,6 @@ describe('removeNullProperties', () => {
         expect(result).toBeUndefined();
     });
 
-    // TODO review if necessary to replace with preprocessFields test
-    // it('complex field - leave null if deletions permitted', () => {
-    //
-    //     resource['aField'] = { aSubfield: null };
-    //
-    //     collapseEmptyProperties([resource], true);
-    //     expect(resource['aField']['aSubfield']).toBeNull();
-    // });
-
 
     it('complex field - collapse if deletions not permitted', () => {
 
@@ -59,7 +50,7 @@ describe('removeNullProperties', () => {
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
         const result = removeNullProperties(resource);
-        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]); // TODO review
+        expect(result['aField']).toEqual([undefined, { aField: 'aValue' }]);
     });
 
 

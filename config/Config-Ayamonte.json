@@ -307,11 +307,7 @@
     "hidden": [],
     "fields": {}
   },
-  "Profile:default": {
-    "typeFamily": "Profile",
-    "description": {},
-    "createdBy": "T.H.",
-    "creationDate": "31.12.2019",
+  "Profile:ayamonte": {
     "parent": "Feature",
     "color": "#6da4fc",
     "commons": [
@@ -336,7 +332,6 @@
     }
   },
   "Sample:default": {
-    "parent": "Find",
     "hidden": [],
     "fields": {
       "sampleTakenBy": {

@@ -21,6 +21,7 @@ export module ConfigurationErrors {
     export const MUST_HAVE_PARENT = 'configuration/buildProjectTypes/musthaveparent';
     export const MUST_HAVE_TYPE_FAMILY = 'configuration/buildProjectTypes/musthavetypefamily';
     export const MISSING_TYPE_PROPERTY = 'configuration/buildProjectTypes/missingTypeProperty';
+    export const ILLEGAL_TYPE_PROPERTY = 'configuration/buildProjectTypes/illegalTypeProperty';
     export const MISSING_VALUELIST_PROPERTY = 'configuration/buildProjectTypes/missingValuelistProperty';
     export const MISSING_FIELD_PROPERTY = 'configuration/buildProjectTypes/missingFieldProperty';
     export const MUST_NOT_SET_INPUT_TYPE = 'configuration/buildProjectTypes/mustNotSetInputType';

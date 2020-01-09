@@ -140,10 +140,6 @@
   },
   "Pottery:wes": {
     "parent": "Find",
-    "typeFamily": "Pottery",
-    "description": {},
-    "createdBy": "Max Haibt",
-    "creationDate": "",
     "fields": {
       "vesselpart": {
         "inputType": "checkboxes"

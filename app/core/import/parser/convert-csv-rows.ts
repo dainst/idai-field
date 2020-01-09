@@ -127,12 +127,12 @@ function assertRowsAndHeadingLengthsMatch(headings: string[], rows: string[][]) 
 function assertHeadingsConsistent(headings: string[]) {
 
     headings
-        .filter(includes(PATH_SEPARATOR))
         .forEach(heading => {
 
         headings
             .filter(startsWith(heading))
             .filter(longerThan(heading))
+            .filter(otherHeading => otherHeading.substr(heading.length).includes('.'))
             .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
     });
 }

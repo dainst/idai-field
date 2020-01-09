@@ -1,6 +1,7 @@
 import {convertCsvRows} from '../../../../../app/core/import/parser/convert-csv-rows';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
 import CSV_INVALID_HEADING = ParserErrors.CSV_INVALID_HEADING;
+import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 
 
 /**
@@ -124,14 +125,14 @@ describe('convertCsvRows', () => {
         expect(struct[0]['a']).toBeNull();
 
         const struct1 = convertCsvRows(',')(
-            'a,a.b\n' +
+            'a.a,a.b\n' +
             '"",""');
 
         expect(struct1.length).toBe(1);
         expect(struct1[0]['a']['b']).toBeNull();
 
         const struct2 = convertCsvRows(',')(
-            'a,a.b.c\n' +
+            'a.b.d,a.b.c\n' +
             '"",""');
 
         expect(struct2.length).toBe(1);
@@ -152,11 +153,33 @@ describe('convertCsvRows', () => {
 
     it('arrays with 1 entry are legal', () => {
 
-        convertCsvRows(',')('a.0,a');
-        convertCsvRows(',')('a.0.c,a');
+        convertCsvRows(',')('a.0');
+        convertCsvRows(',')('a.0.c');
+    });
+
+
+    it('legal case where one entry is longer than the other', () => {
+
+        try {
+            convertCsvRows(',')('a.12.a,a.120.b');
+            fail();
+        } catch (expected) {
+            if (expected[0] !== CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE) fail();
+        }
     });
 
     // err cases
+
+    it('inconsistent headings found', () => {
+
+        try {
+            convertCsvRows(',')('a,a.0.a');
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([CSV_INVALID_HEADING, 'a']);
+        }
+    });
+
 
     it('inconsistent headings found - array', () => {
 

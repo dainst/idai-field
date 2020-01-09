@@ -1,6 +1,6 @@
 import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
-import {includes, longerThan, startsWith} from '../util';
+import {longerThan, startsWith} from '../util';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
 
@@ -67,7 +67,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
     unique(indices).forEach((n, i) => {
-        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices];
+        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, unique(indices)];
     });
 
     flow(headings,
@@ -127,12 +127,12 @@ function assertRowsAndHeadingLengthsMatch(headings: string[], rows: string[][]) 
 function assertHeadingsConsistent(headings: string[]) {
 
     headings
-        .filter(includes(PATH_SEPARATOR))
         .forEach(heading => {
 
         headings
             .filter(startsWith(heading))
             .filter(longerThan(heading))
+            .filter(otherHeading => otherHeading.substr(heading.length).includes('.'))
             .forEach(() => { throw [ParserErrors.CSV_INVALID_HEADING, heading]; });
     });
 }

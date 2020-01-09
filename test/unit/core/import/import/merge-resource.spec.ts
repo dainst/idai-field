@@ -233,20 +233,6 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
-
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined, undefined ,{bField: 'bNewValue'}];
-
-        try {
-            mergeResource(target, source);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
-        }
-    });
-
-
     it('merge objectArray field - toggleRangeOnOff one target object and add one target object', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
@@ -256,20 +242,6 @@ describe('mergeResource', () => {
 
         expect(result['objectArray'][0]['aField']).toEqual('aChangedValue');
         expect(result['objectArray'][1]['bField']).toEqual('bNewValue');
-    });
-
-
-    it('merge objectArray field - throw if the deletion would occur but there are still objects to the right side', () => {
-
-        target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
-        source['objectArray'] = [{aField: null}];
-
-        try {
-            mergeResource(target, source);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
-        }
     });
 
 
@@ -310,20 +282,6 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
-
-        target['objectArray'] = undefined;
-        source['objectArray'] = [null, {bField: 'bNewValue'}];
-
-        try {
-            mergeResource(target, source);
-            fail();
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
-        }
-    });
-
-
     it('merge objectArray field - create target objectArray', () => {
 
         source['objectArray'] = [{aField: 'aNewValue'}];
@@ -352,6 +310,7 @@ describe('mergeResource', () => {
         expect(result.relations).toEqual({});
     });
 
+    // err cases
 
     it('attempted to toggleRangeOnOff type', () => {
 
@@ -369,6 +328,47 @@ describe('mergeResource', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]);
+        }
+    });
+
+
+    it('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        source['objectArray'] = [undefined, undefined ,{bField: 'bNewValue'}];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
+        }
+    });
+
+    it('merge objectArray field - throw if the deletion would occur but there are still objects to the right side', () => {
+
+        target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
+        source['objectArray'] = [{aField: null}];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
+        }
+    });
+
+
+    it('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
+
+        target['objectArray'] = undefined;
+        source['objectArray'] = [null, {bField: 'bNewValue'}];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
         }
     });
 

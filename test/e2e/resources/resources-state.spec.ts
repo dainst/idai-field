@@ -419,7 +419,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- remove constraints if invalid after filter type toggleRangeOnOff', () => {
+    it('search -- remove constraints if invalid after filter type change', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 

@@ -103,6 +103,8 @@ export class RowComponent implements AfterViewInit {
 
     private async save() {
 
+        if (!this.document.resource.identifer || this.document.resource.identifier === '') return;
+
         try {
             await this.validator.assertIdentifierIsUnique(this.document);
             await this.validator.assertIsRecordedInTargetsExist(this.document);

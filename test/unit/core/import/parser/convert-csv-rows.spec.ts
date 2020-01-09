@@ -226,7 +226,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b.0.a,a.b.0.b,a.b.2');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [0, 0, 2]]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [0, 2]]);
         }
     });
 

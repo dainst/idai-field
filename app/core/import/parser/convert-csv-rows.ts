@@ -67,7 +67,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
     unique(indices).forEach((n, i) => {
-        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, indices];
+        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, unique(indices)];
     });
 
     flow(headings,

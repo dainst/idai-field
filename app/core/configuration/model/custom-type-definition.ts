@@ -1,3 +1,4 @@
+import {keys, isNot, includedIn} from 'tsfun';
 import {assertFieldsAreValid} from '../assert-fields-are-valid';
 import {ConfigurationErrors} from '../configuration-errors';
 import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
@@ -28,6 +29,7 @@ export interface CustomFieldDefinition extends BaseFieldDefinition {
     positionValues?: string;
 }
 
+const VALID_TYPE_PROPERTIES = ['valuelists', 'commons', 'color', 'hidden', 'parent', 'fields'];
 
 const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];
 
@@ -40,6 +42,10 @@ export module CustomTypeDefinition {
     export function makeAssertIsValid(builtinTypes: string[], libraryTypes: string[]) {
 
         return function assertIsValid([typeName, type]: [string, CustomTypeDefinition]) {
+
+            keys(type)
+                .filter(isNot(includedIn(VALID_TYPE_PROPERTIES)))
+                .forEach(key => { throw [ConfigurationErrors.ILLEGAL_TYPE_PROPERTY, key] });
 
             if (!builtinTypes.includes(typeName) && !libraryTypes.includes(typeName)) {
                 if (!type.parent) throw [ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', typeName];

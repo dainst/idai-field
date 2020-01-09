@@ -308,9 +308,6 @@
     "fields": {}
   },
   "Profile:ayamonte": {
-    "description": {},
-    "createdBy": "T.H.",
-    "creationDate": "31.12.2019",
     "parent": "Feature",
     "color": "#6da4fc",
     "commons": [

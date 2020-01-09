@@ -400,15 +400,12 @@ describe('ConfigLoader', () => {
 
         Object.assign(libraryTypes, {});
 
-        const customFieldsConfiguration = {
+        const customFieldsConfiguration: CustomTypeDefinitionsMap = {
             'B:0': {
                 parent: 'Find',
                 commons: [],
                 valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'}},
-                creationDate: '',
-                createdBy: '',
-                description: {}
+                fields: { fieldC1: { inputType: 'boolean'}}
             }
         };
 
@@ -437,15 +434,12 @@ describe('ConfigLoader', () => {
 
         Object.assign(libraryTypes, {});
 
-        const customFieldsConfiguration = {
+        const customFieldsConfiguration: CustomTypeDefinitionsMap = {
             'Extension:0': {
                 parent: 'Place',
                 commons: [],
                 valuelists: {},
-                fields: { fieldC1: { inputType: 'boolean'}},
-                creationDate: '',
-                createdBy: '',
-                description: {} }
+                fields: { fieldC1: { inputType: 'boolean'}}}
         };
 
         applyConfig(customFieldsConfiguration);

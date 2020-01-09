@@ -98,7 +98,7 @@ describe('ImageOverviewFacade/Subsystem', () => {
     });
 
 
-    it('toggleRangeOnOff nrImagesPerRow -> jump back to initial page', async done => {
+    it('change nrImagesPerRow -> jump back to initial page', async done => {
 
         await imageOverviewFacade.turnPage();
         let documents = await imageOverviewFacade.getDocuments();

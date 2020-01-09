@@ -37,7 +37,7 @@ export class ResourcesStateManager {
      * setter methods return always copies. So the only way to modify
      * the resources state is via the setters of ResourcesStateManager,
      * which replace the whole ResourcesState in a proper transformation
-     * on every toggleRangeOnOff.
+     * on every change.
      */
     public get = (): ResourcesState => this.resourcesState;
 

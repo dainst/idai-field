@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/src/model/core/document';
-import {unionBy} from 'tsfun-core';
+import {unionBy} from 'tsfun/base';
 import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';

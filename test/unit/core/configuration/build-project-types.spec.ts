@@ -586,6 +586,8 @@ describe('buildProjectTypes', () => {
     });
 
 
+    // err cases
+
     it('field property validation - invalid input Type', () => {
 
         const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};

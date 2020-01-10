@@ -306,7 +306,7 @@
     "hidden": [],
     "fields": {}
   },
-  "Profile:ayamonte": {
+  "Profile": {
     "parent": "Feature",
     "color": "#6da4fc",
     "commons": [

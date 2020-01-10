@@ -3,7 +3,7 @@ import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {cond} from 'tsfun-core/src/composition';
+import {cond} from 'tsfun';
 import {hasEmptyAssociatives} from '../../util';
 
 

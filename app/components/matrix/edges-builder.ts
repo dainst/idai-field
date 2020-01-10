@@ -1,6 +1,6 @@
 import {Document, Relations} from 'idai-components-2';
 import {unique, to, on, is} from 'tsfun';
-import {unionBy} from 'tsfun-core';
+import {unionBy} from 'tsfun/base';
 import {intoObj} from 'tsfun-extra';
 
 

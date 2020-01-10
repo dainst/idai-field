@@ -114,10 +114,10 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
 
     if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
 
-    const resolved = solveConflictBetweenTwoRevisions(penultimate(revisions), ultimate(revisions));
+    const resolved = solveConflictBetweenTwoRevisions(penultimate(revisions), ultimate(revisions) as any);
     return resolved !== undefined
         ? collapse(replaceLastPair(revisions, resolved), indicesOfUsedRevisions.concat(revisions.length - 2))
-        : collapse(replaceLastPair(revisions, ultimate(revisions)), indicesOfUsedRevisions);
+        : collapse(replaceLastPair(revisions, ultimate(revisions) as any), indicesOfUsedRevisions);
 }
 
 

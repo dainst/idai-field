@@ -39,6 +39,8 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                 additional,
                 Resource.CONSTANT_FIELDS, true);
 
+        if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
+
         if (!additional.relations) return target;
 
         target.relations =
@@ -95,6 +97,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
+
                 if (target[property].length === 0) delete target[property];
 
             } else if (isObject(source[property]) && isObject(target[property])) {
@@ -123,10 +126,11 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         // null values got collapsed via preprocessFields
         if (source[index] === undefined) {
             // make the slot so array will not be sparse
-            if (target[index] === undefined) return target[index] = null;
+            if (target[index] === undefined) target[index] = null;
             return;
         } else if (source[index] === null) {
-            return target[index] = null;
+            target[index] = null;
+            return;
         }
 
         if (target[index] === undefined && isObject(source[index])) target[index] = {};
@@ -137,7 +141,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
             target[index] = source[index];
         }
 
-        if (keys(target[index]).length === 0) target[index] = null;
+        if (isObject(target[index]) && keys(target[index]).length === 0) target[index] = null;
     });
 
     const result = dropRightWhile(is(null))(target);

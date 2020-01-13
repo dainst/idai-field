@@ -310,6 +310,29 @@ describe('mergeResource', () => {
         expect(result.relations).toEqual({});
     });
 
+
+    // TODO review, if this is the desired behaviour for normal (i.e. non-object) array fields in resources. object arrays are used for dimension and dating currently. also consider that all arrays on every nesting level are treated accordingly
+    it('merge array fields', () => {
+
+        target['array'] = [1, 2, 7];
+        source['array'] = [3, 4];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual([3, 4, 7]);
+    });
+
+
+    it('overwrite, do not merge geometry', () => {
+
+        target['geometry'] = { a: 1 };
+        source['geometry'] = { b: 2 };
+
+        const result = mergeResource(target, source);
+        expect(result['geometry']['b']).toEqual(2);
+        expect(result['geometry']['a']).toBeUndefined();
+    });
+
+
     // err cases
 
     it('attempted to change type', () => {

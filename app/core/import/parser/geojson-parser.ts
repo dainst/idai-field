@@ -136,9 +136,7 @@ export module GeojsonParser {
 
         const resource = {
             identifier: feature.properties['identifier'],
-            geometry: feature.geometry,
-            relations: feature.properties.relations,
-            type: feature.properties['type']
+            geometry: feature.geometry
         };
 
         if (feature.properties['shortDescription']) {

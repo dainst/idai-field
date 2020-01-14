@@ -48,7 +48,7 @@ export class BaseList {
 
     public getPlusButtonStatus(): PlusButtonStatus {
 
-        if (this.viewFacade.getBypassHierarchy()) {
+        if (this.viewFacade.isInExtendedSearchMode()) {
             return 'disabled-hierarchy';
         } else {
             return 'enabled';

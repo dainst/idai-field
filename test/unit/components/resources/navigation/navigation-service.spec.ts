@@ -12,7 +12,7 @@ describe('NavigationService', () => {
 
         viewFacade = jasmine.createSpyObj(
             'vf',
-            ['isInOverview', 'moveInto', 'getBypassHierarchy']
+            ['isInOverview', 'moveInto', 'isInExtendedSearchMode']
         );
 
         projectConfiguration = jasmine.createSpyObj(
@@ -23,7 +23,7 @@ describe('NavigationService', () => {
         navigationService = new NavigationService(projectConfiguration, undefined, viewFacade, undefined);
 
         viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.getBypassHierarchy.and.returnValue(false);
+        viewFacade.isInExtendedSearchMode.and.returnValue(false);
     });
 
 
@@ -79,7 +79,7 @@ describe('NavigationService', () => {
     it('do not show hierarchy buttons in extended search mode', () => {
 
         viewFacade.isInOverview.and.returnValue(true);
-        viewFacade.getBypassHierarchy.and.returnValue(true);
+        viewFacade.isInExtendedSearchMode.and.returnValue(true);
 
         projectConfiguration.getTypesMap.and.returnValue({
             Operation: { children: [ { name: 'operationSubtype' } ] }

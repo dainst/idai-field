@@ -14,7 +14,10 @@ export interface ViewState {
     navigationPath: NavigationPath;
     mode: 'map'|'list';
 
+    // Extended search mode. The name bypassHierarchy is legacy and is kept to prevent issues with existing
+    // config.json files.
     bypassHierarchy: boolean;
+
     expandAllGroups: boolean;
     searchContext: ViewContext;
     customConstraints: { [name: string]: string }

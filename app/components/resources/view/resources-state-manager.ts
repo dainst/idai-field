@@ -70,6 +70,8 @@ export class ResourcesStateManager {
 
     public getAbstractTypeNames = (): string[] => this.typeUtility.getAbstractFieldTypeNames();
 
+    public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
+
 
     public async initialize(viewName: 'project'|'types'|string) {
 
@@ -166,9 +168,9 @@ export class ResourcesStateManager {
     }
 
 
-    public setBypassHierarchy(bypassHierarchy: boolean) {
+    public setExtendedSearchMode(extendedSearchMode: boolean) {
 
-        ResourcesState.setBypassHierarchy(this.resourcesState, bypassHierarchy);
+        ResourcesState.setExtendedSearchMode(this.resourcesState, extendedSearchMode);
         this.notifyNavigationPathObservers();
     }
 
@@ -213,7 +215,7 @@ export class ResourcesStateManager {
 
     public async updateNavigationPathForDocument(document: FieldDocument) {
 
-        this.setBypassHierarchy(false);
+        this.setExtendedSearchMode(false);
 
         if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavigationPath(this.resourcesState),
                 this.resourcesState.view)) {

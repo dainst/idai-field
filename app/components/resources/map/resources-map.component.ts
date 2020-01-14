@@ -145,7 +145,7 @@ export class ResourcesMapComponent {
 
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
 
-        if ((this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) && currentOperation) {
+        if ((this.viewFacade.isInExtendedSearchMode() || !navigationPath.selectedSegmentId) && currentOperation) {
             return currentOperation;
         }
 

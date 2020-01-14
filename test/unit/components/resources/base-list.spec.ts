@@ -13,7 +13,7 @@ describe('BaseList', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('viewFacade', ['getBypassHierarchy', 'navigationPathNotifications',
+        viewFacade = jasmine.createSpyObj('viewFacade', ['isInExtendedSearchMode', 'navigationPathNotifications',
             'isInOverview', 'getSelectedOperations', 'isReady']);
         viewFacade.navigationPathNotifications.and.returnValue({subscribe: () => {}});
         viewFacade.getSelectedOperations.and.returnValue([]);
@@ -34,9 +34,9 @@ describe('BaseList', () => {
 
     it('plus button status', () => {
 
-        viewFacade.getBypassHierarchy.and.returnValue(true);
+        viewFacade.isInExtendedSearchMode.and.returnValue(true);
         expect(bl.getPlusButtonStatus()).toEqual('disabled-hierarchy');
-        viewFacade.getBypassHierarchy.and.returnValue(false);
+        viewFacade.isInExtendedSearchMode.and.returnValue(false);
         expect(bl.getPlusButtonStatus()).toEqual('enabled');
     });
 

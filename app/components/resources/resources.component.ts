@@ -84,7 +84,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
-    public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
+    public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 
     public isReady = () => this.viewFacade.isReady();
 
@@ -120,7 +120,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     private updateFilterOptions() {
 
         if (this.viewFacade.isInOverview()) {
-            this.filterOptions = this.viewFacade.getBypassHierarchy()
+            this.filterOptions = this.viewFacade.isInExtendedSearchMode()
                 ? this.typeUtility.getFieldTypes().filter(type => !type.parentType)
                 : this.typeUtility.getOverviewTopLevelTypes();
         } else if (this.viewFacade.isInTypesManagement()) {
@@ -235,7 +235,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public isSearchResultsInfoVisible(): boolean {
 
         return this.viewFacade.getDocuments() !== undefined
-            && this.viewFacade.getBypassHierarchy()
+            && this.viewFacade.isInExtendedSearchMode()
             && this.viewFacade.isReady();
     }
 

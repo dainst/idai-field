@@ -54,7 +54,7 @@ export class NavigationService {
 
     public async jumpToResourceInSameView(document: FieldDocument) { // arrow up
 
-        await this.viewFacade.setBypassHierarchy(false);
+        await this.viewFacade.setExtendedSearchMode(false);
         await this.routingService.jumpToResource(document);
     }
 
@@ -62,7 +62,7 @@ export class NavigationService {
     public async jumpToResourceFromOverviewToOperation(document: FieldDocument) { // arrow top right, when in search
 
         await this.routingService.jumpToResource(document);
-        await this.viewFacade.setBypassHierarchy(false);
+        await this.viewFacade.setExtendedSearchMode(false);
         await this.routingService.jumpToResource(document);
     }
 
@@ -70,7 +70,7 @@ export class NavigationService {
     public shouldShowArrowBottomRight(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
-        if (this.viewFacade.getBypassHierarchy()) return false;
+        if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         return ((this.projectConfiguration
             .getRelationDefinitions(document.resource.type, true) as any)
@@ -81,15 +81,15 @@ export class NavigationService {
 
     public shouldShowArrowTopRightForSearchMode(document: FieldDocument) {
 
-        return (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
+        return (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
             && (!this.typeUtility.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
     }
 
 
     public shouldShowArrowUpForSearchMode(document: FieldDocument) {
 
-        return (!this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy())
-            || (this.viewFacade.isInOverview() && this.viewFacade.getBypassHierarchy()
+        return (!this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode())
+            || (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
                 && (this.typeUtility.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))
     }
 
@@ -97,7 +97,7 @@ export class NavigationService {
     private showJumpToViewOption(document: FieldDocument): boolean {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
-        if (this.viewFacade.getBypassHierarchy()) return false;
+        if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         const operationType: IdaiType|undefined = this.projectConfiguration.getTypesMap()['Operation'];
 

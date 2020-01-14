@@ -73,7 +73,7 @@ export module ResourcesState {
     }
 
 
-    export function getBypassHierarchy(state: ResourcesState): boolean {
+    export function isInExtendedSearchMode(state: ResourcesState): boolean {
 
         return viewState(state).bypassHierarchy;
     }
@@ -223,9 +223,9 @@ export module ResourcesState {
     }
 
 
-    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean) {
+    export function setExtendedSearchMode(state: ResourcesState, extendedSearchMode: boolean) {
 
-        viewState(state).bypassHierarchy = bypassHierarchy;
+        viewState(state).bypassHierarchy = extendedSearchMode;
     }
 
 

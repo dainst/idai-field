@@ -31,7 +31,7 @@
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
                                       [types]="getTypeFilters()"
-                                      [extendedSearch]="getBypassHierarchy()"
+                                      [extendedSearch]="isInExtendedSearchMode()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">
                 </resources-search-bar>

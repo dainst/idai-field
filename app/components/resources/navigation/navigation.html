@@ -1,6 +1,6 @@
 <div id="navigation" class="row">
     <div id="hierarchy-mode-switch"
-         class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
+         class="btn {{isInExtendedSearchMode() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="{{getTooltip()}}"
          placement="right"
          container="body"
@@ -10,11 +10,11 @@
          (mouseleave)="tooltip.close()"
          (mousedown)="tooltip.close()"
          (click)="toggleDisplayHierarchy()">
-            <span *ngIf="!getBypassHierarchy()" class="mdi mdi-magnify"></span>
-            <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
+            <span *ngIf="!isInExtendedSearchMode()" class="mdi mdi-magnify"></span>
+            <span *ngIf="isInExtendedSearchMode()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="!getBypassHierarchy()" class="btn-group">
+    <div *ngIf="!isInExtendedSearchMode()" class="btn-group">
         <div *ngIf="!viewFacade.isInSpecialView() && viewFacade.getCurrentOperation()"
              id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"

@@ -47,7 +47,7 @@ export class NavigationComponent {
 
     public getNavigationButtonLabel = (id: string) => this.labels[id];
 
-    public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
+    public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 
     public moveInto = (document: FieldDocument|undefined) => this.navigationService.moveInto(document);
 
@@ -56,7 +56,7 @@ export class NavigationComponent {
 
     public getTooltip() {
 
-        return this.viewFacade.getBypassHierarchy()
+        return this.viewFacade.isInExtendedSearchMode()
             ? this.i18n({
                 id: 'resources.navigation.tooltips.deactivateExtendedSearchMode',
                 value: 'Erweiterten Suchmodus deaktivieren'
@@ -72,13 +72,13 @@ export class NavigationComponent {
 
         if (this.loading.isLoading()) return;
 
-        await this.viewFacade.setBypassHierarchy(!this.viewFacade.getBypassHierarchy());
+        await this.viewFacade.setExtendedSearchMode(!this.viewFacade.isInExtendedSearchMode());
     }
 
 
     public getSegments(): Array<FieldDocument> {
 
-        return !this.viewFacade.getBypassHierarchy()
+        return !this.viewFacade.isInExtendedSearchMode()
             ? this.navigationPath.segments.map(_ => _.document)
             : [];
     }

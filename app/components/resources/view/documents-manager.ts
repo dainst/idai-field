@@ -99,9 +99,9 @@ export class DocumentsManager {
     }
 
 
-    public async setBypassHierarchy(bypassHierarchy: boolean) {
+    public async setExtendedSearchMode(extendedSearchMode: boolean) {
 
-        this.resourcesStateManager.setBypassHierarchy(bypassHierarchy);
+        this.resourcesStateManager.setExtendedSearchMode(extendedSearchMode);
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -228,7 +228,7 @@ export class DocumentsManager {
 
         const query = DocumentsManager.buildQuery(
             operationId,
-            this.resourcesStateManager.get(),
+            this.resourcesStateManager,
             this.getAllowedTypeNames(),
             queryId
         );
@@ -240,7 +240,7 @@ export class DocumentsManager {
     private getAllowedTypeNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
-                && !ResourcesState.getBypassHierarchy(this.resourcesStateManager.get())
+                && !this.resourcesStateManager.isInExtendedSearchMode()
             ? this.resourcesStateManager.getOverviewTypeNames()
             : this.resourcesStateManager.isInTypesManagement()
                 ? this.resourcesStateManager.getAbstractTypeNames()
@@ -333,7 +333,7 @@ export class DocumentsManager {
 
         try {
             const ignoreTypes = !query.types
-                && !(this.resourcesStateManager.isInOverview() && ResourcesState.getBypassHierarchy(this.resourcesStateManager.get()));
+                && !(this.resourcesStateManager.isInOverview() && ResourcesState.isInExtendedSearchMode(this.resourcesStateManager.get()));
             return await this.datastore.find(query, ignoreTypes);
 
         } catch (errWithParams) {
@@ -343,10 +343,11 @@ export class DocumentsManager {
     }
 
 
-    private static buildQuery(operationId: string|undefined, state: ResourcesState,
-                              allowedTypeNames: string[], queryId?: string,): Query {
+    private static buildQuery(operationId: string|undefined, resourcesStateManager: ResourcesStateManager,
+                              allowedTypeNames: string[], queryId?: string): Query {
 
-        const bypassHierarchy: boolean = ResourcesState.getBypassHierarchy(state);
+        const extendedSearchMode: boolean = resourcesStateManager.isInExtendedSearchMode();
+        const state: ResourcesState = resourcesStateManager.get();
         const typeFilters: string[] = ResourcesState.getTypeFilters(state);
         const customConstraints: { [name: string]: string } = ResourcesState.getCustomConstraints(state);
 
@@ -356,12 +357,12 @@ export class DocumentsManager {
                 customConstraints,
                 operationId,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                !bypassHierarchy
+                !extendedSearchMode
             ),
             types: (typeFilters.length > 0)
                 ? typeFilters
                 : allowedTypeNames,
-            limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined,
+            limit: extendedSearchMode ? DocumentsManager.documentLimit : undefined,
             id: queryId
         };
     }

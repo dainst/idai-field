@@ -106,9 +106,9 @@ export class ViewFacade {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesStateManager.setActiveDocumentViewTab(activeDocumentViewTab);
 
-    public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
+    public isInExtendedSearchMode = () => ResourcesState.isInExtendedSearchMode(this.resourcesStateManager.get());
 
-    public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
+    public setExtendedSearchMode = (extendedSearchMode: boolean) => this.documentsManager.setExtendedSearchMode(extendedSearchMode);
 
     public getExpandAllGroups = () => ResourcesState.getExpandAllGroups(this.resourcesStateManager.get());
 

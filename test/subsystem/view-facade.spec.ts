@@ -253,7 +253,7 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewContext -- keep custom constraints when switching views', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setBypassHierarchy(true);
+        await viewFacade.setExtendedSearchMode(true);
         await viewFacade.setFilterTypes(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         await viewFacade.selectView('project');
@@ -267,7 +267,7 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewContext -- keep custom constraints on switching mode', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setBypassHierarchy(true);
+        await viewFacade.setExtendedSearchMode(true);
         await viewFacade.setFilterTypes(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         viewFacade.setMode('list');
@@ -282,9 +282,9 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
-        await viewFacade.setBypassHierarchy(true);
+        await viewFacade.setExtendedSearchMode(true);
         expect(viewFacade.getSearchString()).toEqual('');
-        await viewFacade.setBypassHierarchy(false);
+        await viewFacade.setExtendedSearchMode(false);
         expect(viewFacade.getSearchString()).toEqual('abc');
         done();
     });
@@ -365,7 +365,7 @@ describe('ViewFacade/Subsystem', () => {
     it('overview: show all resources in extended search mode', async done => {
 
         await viewFacade.selectView('project');
-        await viewFacade.setBypassHierarchy(true);
+        await viewFacade.setExtendedSearchMode(true);
         expect(viewFacade.getDocuments().length).toBe(6);
         done();
     });
@@ -505,7 +505,7 @@ describe('ViewFacade/Subsystem', () => {
     it('operation view: search with custom constraint filter', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setBypassHierarchy(true);
+        await viewFacade.setExtendedSearchMode(true);
 
         await viewFacade.setFilterTypes(['Find']);
         expect(viewFacade.getDocuments().length).toBe(2);

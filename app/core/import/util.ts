@@ -1,5 +1,9 @@
 import {ObjectCollection, reduce, dissoc, getOn, isObject, isArray, values, isEmpty, is, } from 'tsfun';
 
+
+export type Associative<T> = ObjectCollection<T> | Array<T>; // TODO move to tsfun
+
+
 /**
  * @author Daniel de Oliveira
  */
@@ -21,7 +25,7 @@ export const makeLookup = (path: string) => {
  * @param struct
  * @author Daniel de Oliveira
  */
-export function hasEmptyAssociatives(struct: any): boolean {
+export function hasEmptyAssociatives(struct: Associative<any>): boolean {
 
     if (!isArray(struct) && !isObject(struct)) return false;
     if (isEmpty(struct)) return true;
@@ -45,4 +49,4 @@ export function includes(it: string) { return (what: string) => what.includes(it
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
-export function isAssociative(a: any) { return isObject(a) || isArray(a) }
+export function isAssociative(a: any) { return isObject(a) || isArray(a) } // TODO move to tsfun

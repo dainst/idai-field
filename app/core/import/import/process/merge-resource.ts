@@ -4,7 +4,7 @@ import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives, isAssociative} from '../../util';
+import {Associative, hasEmptyAssociatives, isAssociative} from '../../util';
 
 
 export const GEOMETRY = 'geometry';
@@ -84,7 +84,7 @@ const assertArrayHomogeneouslyTyped =
  * [undefined, 2, null, 3]
  * undefined and null values get ignored
  */
-function assertArraysHomogeneouslyTyped(o: any /* TODO Replace any with new Associative type */) {
+function assertArraysHomogeneouslyTyped(o: Associative<any>) {
 
     flow(values(o),
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),

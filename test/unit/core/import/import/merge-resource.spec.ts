@@ -311,14 +311,15 @@ describe('mergeResource', () => {
     });
 
 
-    // TODO review, if this is the desired behaviour for normal (i.e. non-object) array fields in resources. object arrays are used for dimension and dating currently. also consider that all arrays on every nesting level are treated accordingly
     it('merge array fields', () => {
 
         target['array'] = [1, 2, 7];
+        // we choose to make it shorter than the target array for the test
+        // to ensure the object array rule does not apply, which would make the result [3,4,7]
         source['array'] = [3, 4];
 
         const result = mergeResource(target, source);
-        expect(result['array']).toEqual([3, 4, 7]);
+        expect(result['array']).toEqual([3, 4]);
     });
 
 

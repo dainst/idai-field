@@ -1,5 +1,5 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject,
-    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach} from 'tsfun';
+    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
@@ -98,6 +98,21 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 }
 
 
+function isObjectArray(a: any) {
+
+    if (!isArray(a)) return false;
+
+    const arrayType = a
+        .map((v: any) => typeof v)
+        // typeof null -> 'object', typeof undefined -> 'undefined
+        .map(cond(is('undefined'), val('object')))
+        // By assertion we know our arrays are not empty and all entries are of one type
+        [0];
+
+    return arrayType === 'object';
+}
+
+
 /**
  * Iterates over all fields of source, except those specified by exlusions
  * and either copies them from source to target
@@ -121,7 +136,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
         .reduce((target: any, property: string|number) => {
 
             if (source[property] === null) delete target[property];
-            else if (expandObjectArrays && isArray(source[property])) {
+            else if (expandObjectArrays && isObjectArray(source[property])) {
 
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);

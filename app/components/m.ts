@@ -921,7 +921,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: \'[0]\''
             }),
             level: 'danger',
-            params: ['?', '?'],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] = {
@@ -936,7 +936,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES] = {
             content: i18n({
                 id: 'messages.import.error.arrayOfHeterogeneousTypes',
-                value: 'Arrays müssen konsistent Felder vom gleichen Typ beinhalten'
+                value: 'Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: \'[0]\''
             }),
             level: 'danger',
             params: ['?'],

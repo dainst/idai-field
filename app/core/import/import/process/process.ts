@@ -53,13 +53,13 @@ import {mergeResource} from './merge-resource';
  *
  *   [EXEC_MISSING_RELATION_TARGET, targetId]
  *
- * [TYPE_CANNOT_BE_CHANGED]
+ * [TYPE_CANNOT_BE_CHANGED, identifier]
  *   - if it is tried to change the type of a resource
  *
  * [EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
  *   - if deletion would result in empty array slots
  *
- * [ARRAY_OF_HETEROGENEOUS_TYPES, identifier] todo add identifier
+ * [ARRAY_OF_HETEROGENEOUS_TYPES, identifier]
  *
  * [EMPTY_RELATION, resourceId]
  *   - if relations empty for some relation is empty.

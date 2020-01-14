@@ -18,25 +18,23 @@ export const RELATIONS = 'relations';
  * @param additional Must not contain empty objects or arrays as any leaf of the tree.
  *
  * @throws
- *   [ImportErrors.TYPE_CANNOT_BE_CHANGED]
+ *   [ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]
  *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
  *     - if a new array object is to be created at an index which would leave unfilled indices between
  *       the new index and the last index of the array which is filled in the original field.
  *     - if the deletion of an array object will leave it empty
- *   [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES] todo add identifier
+ *   [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
 
-    // preconditions
     assertRelationsSet(into);
-    assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
-
-    // user input via import
+    assertNoEmptyAssociatives(into);       // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
-    assertArraysHomogeneouslyTyped(additional);
-    assertNoAttemptToChangeType(into, additional);
 
     try {
+        assertArraysHomogeneouslyTyped(additional);
+        assertNoAttemptToChangeType(into, additional);
+
         const target =
             overwriteOrDeleteProperties(
                 clone(into),
@@ -55,10 +53,14 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             (target) as Resource;
 
     } catch (err) {
-        throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
-            ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.identifier]
-            : err;
+        throw appendIdentifier(err, into.identifier);
     }
+}
+
+
+function appendIdentifier(err: any, identifier: string) {
+
+    return isArray(err) ? err.concat(identifier) : err;
 }
 
 
@@ -81,7 +83,7 @@ const assertArrayHomogeneouslyTyped =
  * [undefined, 2, null, 3]
  * undefined and null values get ignored
  */
-function assertArraysHomogeneouslyTyped(o: any) {
+function assertArraysHomogeneouslyTyped(o: any /* TODO Replace any with new Associative type */) {
 
     flow(values(o),
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
@@ -98,7 +100,7 @@ function assertRelationsSet(into: Resource) {
 function assertNoAttemptToChangeType(into: Resource, additional: NewResource) {
 
     if (additional.type && into.type !== additional.type) {
-        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
+        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED];
     }
 }
 
@@ -202,6 +204,6 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
     });
 
     const result = dropRightWhile(is(null))(target);
-    if (result.includes(null)) throw ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
+    if (result.includes(null)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
     return result;
 }

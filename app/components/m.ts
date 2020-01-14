@@ -115,6 +115,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
     public static IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.typeCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
+    public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -927,6 +928,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.emptySlotsInArraysForbidden',
                 value: 'Leere Array-Felder sind nicht erlaubt. Betroffen ist: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES] = {
+            content: i18n({
+                id: 'messages.import.error.arrayOfHeterogeneousTypes',
+                value: 'Arrays müssen konsistent Felder vom gleichen Typ beinhalten'
             }),
             level: 'danger',
             params: ['?'],

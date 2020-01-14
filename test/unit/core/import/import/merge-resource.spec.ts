@@ -333,7 +333,78 @@ describe('mergeResource', () => {
     });
 
 
+    it('array of heterogeneous types allowed when entries null or undefined', () => {
+
+        source['array'] = [1, null, null];
+        mergeResource(target, source);
+
+        source['array'] = [1, undefined, null];
+        mergeResource(target, source);
+
+        try {
+            source['array'] = [undefined, 2];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+
+        try {
+            source['array'] = [null, 2];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+
+        try {
+            source['array'] = [null, 2, undefined, 3];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+    });
+
+
     // err cases
+
+    it('array of heterogeneous types - top level', () => {
+
+        source['array'] = [{a: 1}, 2];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
+    it('array of heterogeneous types - nested', () => {
+
+        source['array'] = { b: [{a: 1}, 2] };
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
+    it('array of heterogeneous types - undefined and null interposed', () => {
+
+        source['array'] = [undefined, 2, null, '3'];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
 
     it('attempted to change type', () => {
 

@@ -1,10 +1,10 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject,
+    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {cond} from 'tsfun';
-import {hasEmptyAssociatives} from '../../util';
+import {hasEmptyAssociatives, isAssociative} from '../../util';
 
 
 /**
@@ -24,6 +24,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
+    assertArraysHomogeneouslyTyped(additional);
 
     if (additional.type && into.type !== additional.type) {
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
@@ -37,7 +38,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target,
                 additional,
-                Resource.CONSTANT_FIELDS, true);
+                Resource.CONSTANT_FIELDS /* todo ignore geometry */, true);
 
         if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
 
@@ -56,6 +57,35 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.identifier]
             : err;
     }
+}
+
+
+const assertArrayHomogeneouslyTyped =
+    reduce((arrayItemsType: string|undefined, arrayItem) => {
+        const t = arrayItem === null || arrayItem === undefined ? 'undefinedOrNull' : typeof arrayItem;
+        if (t === 'undefinedOrNull') {
+            return arrayItemsType === undefined ? undefined : arrayItemsType;
+        }
+
+        if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
+        return t;
+    }, undefined);
+
+
+/**
+ * heterogeneous arrays like
+ * [1, {b: 2}]
+ * are not allowed
+ *
+ * exceptions are undefined values
+ * [undefined, 2, null, 3]
+ * undefined and null values get ignored
+ */
+function assertArraysHomogeneouslyTyped(o: any) {
+
+    flow(values(o),
+        forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
+        forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
 }
 
 

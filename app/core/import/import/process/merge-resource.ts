@@ -62,10 +62,8 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
 const assertArrayHomogeneouslyTyped =
     reduce((arrayItemsType: string|undefined, arrayItem) => {
-        const t = arrayItem === null || arrayItem === undefined ? 'undefinedOrNull' : typeof arrayItem;
-        if (t === 'undefinedOrNull') {
-            return arrayItemsType === undefined ? undefined : arrayItemsType;
-        }
+        // typeof null -> 'object', typeof undefined -> 'undefined
+        const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
 
         if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
         return t;

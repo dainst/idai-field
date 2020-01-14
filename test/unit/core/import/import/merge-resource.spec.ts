@@ -333,30 +333,33 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types allowed when entries null or undefined', () => {
+    it('null or undefined values in object arrays are not considered as arrayOfHeterogeneous types', () => {
 
-        source['array'] = [1, null, null];
+        const o = {a: 1};
+
+        source['array'] = [o, null, null];
         mergeResource(target, source);
 
-        source['array'] = [1, undefined, null];
+        source['array'] = [o, undefined, null];
         mergeResource(target, source);
+
 
         try {
-            source['array'] = [undefined, 2];
+            source['array'] = [undefined, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
         }
 
         try {
-            source['array'] = [null, 2];
+            source['array'] = [null, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
         }
 
         try {
-            source['array'] = [null, 2, undefined, 3];
+            source['array'] = [null, o, undefined, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
@@ -392,9 +395,18 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types - undefined and null interposed', () => {
+    it('array of heterogeneous types - non-object array must not contain undefined', () => {
 
-        source['array'] = [undefined, 2, null, '3'];
+        source['array'] = [2, undefined];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+
+        source['array'] = [undefined, 2];
 
         try {
             mergeResource(target, source);
@@ -404,6 +416,27 @@ describe('mergeResource', () => {
         }
     });
 
+
+    it('array of heterogeneous types - non-object array cannot contain null', () => {
+
+        source['array'] = [2, null];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+
+        source['array'] = [null, 2];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
 
 
     it('attempted to change type', () => {

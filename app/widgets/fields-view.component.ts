@@ -242,10 +242,11 @@ export class FieldsViewComponent implements OnChanges {
 
     private async processRelations(resource: Resource) {
 
-        const relations: Array<RelationDefinition>|undefined = this.projectConfiguration.getRelationDefinitions(resource.type);
+        const relations: Array<RelationDefinition>|undefined
+            = this.projectConfiguration.getRelationDefinitions(resource.type);
         if (!relations) return;
 
-        for (let relation of this.computeRelationsToShow(resource, relations)) {
+        for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
 
             let group: string|undefined = undefined;
             if (TIME_RELATIONS.ALL.includes(relation.name)) group = 'time';
@@ -259,7 +260,8 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private computeRelationsToShow(resource: Resource, relations: Array<RelationDefinition>) {
+    private static computeRelationsToShow(resource: Resource,
+                                          relations: Array<RelationDefinition>): Array<RelationDefinition> {
 
         const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS.ALL));
         const hasTargets = compose(lookup<any>(resource.relations), isNot(undefinedOrEmpty));

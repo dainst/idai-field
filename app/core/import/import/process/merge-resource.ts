@@ -26,6 +26,8 @@ export const RELATIONS = 'relations';
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
 
+    if (!into.relations) throw Error('illegal argument in mergeResource: relations not defined for \'into\'');
+
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
     assertArraysHomogeneouslyTyped(additional);
@@ -48,7 +50,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
         return assoc(
             RELATIONS,
             overwriteOrDeleteProperties(
-                target.relations ? target.relations : {}, // TODO add assertion and simplify here
+                target.relations,
                 additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
         (target) as Resource;
 

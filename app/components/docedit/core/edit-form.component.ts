@@ -3,7 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
-import {GroupUtil} from '../../../core/util/group-util';
+import {GroupUtil} from '../../../core/model/group-util';
 import {GROUP_NAME} from '../../../c';
 import {POSITION_RELATIONS, TIME_RELATIONS, IS_LIKE} from '../../../core/model/relation-constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';

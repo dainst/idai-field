@@ -1,5 +1,5 @@
 import {FieldDefinition} from '../configuration/model/field-definition';
-import {IS_LIKE, POSITION_RELATIONS, TIME_RELATIONS} from '../model/relation-constants';
+import {IS_LIKE, POSITION_RELATIONS, TIME_RELATIONS} from './relation-constants';
 
 
 /**

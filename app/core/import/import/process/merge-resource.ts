@@ -55,10 +55,15 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             (target) as Resource;
 
     } catch (err) {
-        throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
-            ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.identifier]
-            : err;
+        throw appendIdentifierOnUserError(err, into.identifier);
     }
+}
+
+
+function appendIdentifierOnUserError(err: any, identifier: string) {
+    return err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
+        ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
+        : err;
 }
 
 

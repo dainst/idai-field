@@ -22,25 +22,7 @@ import {clone} from '../../../core/util/object-util';
  */
 export class ResourcesSearchConstraintsComponent extends SearchConstraintsComponent {
 
-    protected defaultFields: Array<FieldDefinition> = [
-        {
-            name: 'geometry',
-            label: this.i18n({ id: 'resources.searchBar.constraints.geometry', value: 'Geometrie' }),
-            inputType: 'default',
-            constraintIndexed: true,
-            group: ''
-        },
-        {
-            name: 'isDepictedIn',
-            label: this.i18n({
-                id: 'resources.searchBar.constraints.linkedImages',
-                value: 'Verknüpfte Bilder'
-            }),
-            inputType: 'default',
-            constraintIndexed: true,
-            group: ''
-        }
-    ];
+    protected defaultFields: Array<FieldDefinition>;
 
     constructor(resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
@@ -51,8 +33,37 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, i18n);
 
+        this.initializeDefaultFields();
+
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (this.type) this.reset();
+        });
+    }
+
+
+    private initializeDefaultFields() {
+
+        this.defaultFields = [];
+
+        if (!this.viewFacade.isInTypesManagement()) {
+            this.defaultFields.push({
+                name: 'geometry',
+                label: this.i18n({ id: 'resources.searchBar.constraints.geometry', value: 'Geometrie' }),
+                inputType: 'default',
+                constraintIndexed: true,
+                group: ''
+            });
+        }
+
+        this.defaultFields.push({
+            name: 'isDepictedIn',
+            label: this.i18n({
+                id: 'resources.searchBar.constraints.linkedImages',
+                value: 'Verknüpfte Bilder'
+            }),
+            inputType: 'default',
+            constraintIndexed: true,
+            group: ''
         });
     }
 

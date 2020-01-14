@@ -403,7 +403,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
@@ -416,7 +416,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
@@ -429,7 +429,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
 
         source['array'] = [undefined, 2];
@@ -438,7 +438,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
@@ -451,7 +451,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
 
         source['array'] = [null, 2];
@@ -460,7 +460,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 

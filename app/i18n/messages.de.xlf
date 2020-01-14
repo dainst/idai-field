@@ -3850,8 +3850,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten</source>
-        <target state="final">Arrays müssen konsistent Felder vom gleichen Typ beinhalten</target>
+        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
+        <target state="final">Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -247,14 +247,10 @@ export class FieldsViewComponent implements OnChanges {
         if (!relations) return;
 
         for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
+            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            if (!groupName) continue;
 
-            let group: string|undefined = undefined;
-            if (TIME_RELATIONS.ALL.includes(relation.name)) group = 'time';
-            if (POSITION_RELATIONS.ALL.includes(relation.name)) group = 'position';
-            if (relation.name === IS_LIKE) group = 'properties';
-            if (!group) continue;
-
-            this.relations[group].push({
+            this.relations[groupName].push({
                 label: relation.label,
                 targets: (await this.getTargetDocuments(resource.relations[relation.name]))});
         }

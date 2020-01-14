@@ -1,4 +1,5 @@
 import {FieldDefinition} from '../configuration/model/field-definition';
+import {IS_LIKE, POSITION_RELATIONS, TIME_RELATIONS} from '../model/relation-constants';
 
 
 /**
@@ -22,6 +23,20 @@ export module GroupUtil {
                     'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
                 ]);
                 break;
+        }
+    }
+
+
+    export function getGroupName(relationName: string): string|undefined {
+
+        if (TIME_RELATIONS.ALL.includes(relationName)) {
+            return 'time';
+        } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
+            return 'position';
+        } else if (relationName === IS_LIKE) {
+            return 'properties';
+        } else {
+            return undefined;
         }
     }
 

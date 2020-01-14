@@ -115,15 +115,12 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setRelations() {
 
-        this.groups[GROUP_NAME.POSITION].relations =
-            this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS.ALL)));
-        this.groups[GROUP_NAME.TIME].relations =
-            this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS.ALL)));
+        for (let relation of this.relationDefinitions) {
+            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            if (!groupName) continue;
 
-        if (this.typeUtility.isSubtype(this.document.resource.type, 'Find')) {
-            this.groups[GROUP_NAME.PROPERTIES].relations = this.relationDefinitions.filter(
-                on('name', (name: string) => name === IS_LIKE)
-            );
+            const group = this.groups.find(group => group.name === groupName) as GroupDefinition;
+            group.relations.push(relation);
         }
     }
 

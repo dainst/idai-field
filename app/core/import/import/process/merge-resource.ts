@@ -86,7 +86,7 @@ const assertArrayHomogeneouslyTyped =
  * [undefined, 2, null, 3]
  * undefined and null values get ignored
  */
-function assertArraysHomogeneouslyTyped(o: any) {
+function assertArraysHomogeneouslyTyped(o: any /* TODO Replace any with new Associative type */) {
 
     flow(values(o),
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),

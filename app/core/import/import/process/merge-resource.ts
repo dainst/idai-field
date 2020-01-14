@@ -7,6 +7,10 @@ import {ImportErrors} from '../import-errors';
 import {hasEmptyAssociatives, isAssociative} from '../../util';
 
 
+export const GEOMETRY = 'geometry';
+export const RELATIONS = 'relations';
+
+
 /**
  * @author Daniel de Oliveira
  *
@@ -38,9 +42,9 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target,
                 additional,
-                Resource.CONSTANT_FIELDS.concat(['geometry']));
+                Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
 
-        if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
+        if (additional[GEOMETRY]) target[GEOMETRY] = additional[GEOMETRY];
 
         if (!additional.relations) return target;
         target.relations =
@@ -61,7 +65,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
 const assertArrayHomogeneouslyTyped =
     reduce((arrayItemsType: string|undefined, arrayItem) => {
-        // typeof null -> 'object', typeof undefined -> 'undefined
+        // typeof null -> 'object', typeof undefined -> 'undefined'
         const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
 
         if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
@@ -89,8 +93,8 @@ function assertArraysHomogeneouslyTyped(o: any) {
 function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 
     flow(resource,
-        dissoc('geometry'),
-        dissoc('relations'),
+        dissoc(GEOMETRY),
+        dissoc(RELATIONS),
         cond(hasEmptyAssociatives, () => {
             throw Error('Precondition violated in mergeResource. Identifier: ' + resource.identifier);
         }));
@@ -103,7 +107,7 @@ function isObjectArray(a: any) {
 
     const arrayType = a
         .map((v: any) => typeof v)
-        // typeof null -> 'object', typeof undefined -> 'undefined
+        // typeof null -> 'object', typeof undefined -> 'undefined'
         .map(cond(is('undefined'), val('object')))
         // By assertion we know our arrays are not empty and all entries are of one type
         [0];

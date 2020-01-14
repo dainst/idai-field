@@ -1,5 +1,5 @@
 import {Resource} from 'idai-components-2';
-import {mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
+import {GEOMETRY, mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
@@ -327,12 +327,12 @@ describe('mergeResource', () => {
 
     it('overwrite, do not merge geometry', () => {
 
-        target['geometry'] = { a: 1 };
-        source['geometry'] = { b: 2 };
+        target[GEOMETRY] = { a: 1 };
+        source[GEOMETRY] = { b: 2 };
 
         const result = mergeResource(target, source);
-        expect(result['geometry']['b']).toEqual(2);
-        expect(result['geometry']['a']).toBeUndefined();
+        expect(result[GEOMETRY]['b']).toEqual(2);
+        expect(result[GEOMETRY]['a']).toBeUndefined();
     });
 
 

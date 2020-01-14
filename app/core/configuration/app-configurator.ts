@@ -619,6 +619,12 @@ export class AppConfigurator {
             domain: ['Type:inherit'],
             range: ['TypeCatalog:inherit'],
             editable: false
+        },
+        {
+            name: 'isLike',
+            label: this.i18n({ id: 'configuration.relations.isLike', value: 'Ist wie' }),
+            domain: ['Find:inherit'],
+            range: ['Type:inherit']
         }
     ];
 

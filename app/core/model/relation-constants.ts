@@ -54,3 +54,6 @@ export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only 
 // two resources, recorded in different operations, are the same
 export const SAME_AS = 'isSameAs';
 
+
+// Used to connect finds with type resources
+export const IS_LIKE = 'isLike';

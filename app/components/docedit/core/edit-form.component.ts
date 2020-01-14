@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/util/group-util';
 import {GROUP_NAME} from '../../../c';
-import {POSITION_RELATIONS, TIME_RELATIONS} from '../../../core/model/relation-constants';
+import {POSITION_RELATIONS, TIME_RELATIONS, IS_LIKE} from '../../../core/model/relation-constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -119,6 +119,12 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             this.relationDefinitions.filter(on('name', includedIn(POSITION_RELATIONS.ALL)));
         this.groups[GROUP_NAME.TIME].relations =
             this.relationDefinitions.filter(on('name', includedIn(TIME_RELATIONS.ALL)));
+
+        if (this.typeUtility.isSubtype(this.document.resource.type, 'Find')) {
+            this.groups[GROUP_NAME.PROPERTIES].relations = this.relationDefinitions.filter(
+                on('name', (name: string) => name === IS_LIKE)
+            );
+        }
     }
 
 

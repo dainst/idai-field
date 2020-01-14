@@ -27,9 +27,11 @@ export const RELATIONS = 'relations';
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
 
-    if (!into.relations) throw Error('illegal argument in mergeResource: relations not defined for \'into\'');
-
+    // preconditions
+    assertRelationsSet(into);
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
+
+    // user input via import
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
     assertArraysHomogeneouslyTyped(additional);
     assertNoAttemptToChangeType(into, additional);
@@ -84,6 +86,12 @@ function assertArraysHomogeneouslyTyped(o: any) {
     flow(values(o),
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
         forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
+}
+
+
+function assertRelationsSet(into: Resource) {
+
+    if (!into.relations) throw Error('illegal argument in mergeResource: relations not defined for \'into\'');
 }
 
 

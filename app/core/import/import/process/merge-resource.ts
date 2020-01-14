@@ -1,10 +1,14 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject,
-    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc,
+    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
 import {hasEmptyAssociatives, isAssociative} from '../../util';
+
+
+export const GEOMETRY = 'geometry';
+export const RELATIONS = 'relations';
 
 
 /**
@@ -15,42 +19,38 @@ import {hasEmptyAssociatives, isAssociative} from '../../util';
  *
  * @throws
  *   [ImportErrors.TYPE_CANNOT_BE_CHANGED]
- *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN]
+ *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
  *     - if a new array object is to be created at an index which would leave unfilled indices between
  *       the new index and the last index of the array which is filled in the original field.
  *     - if the deletion of an array object will leave it empty
+ *   [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES] todo add identifier
  */
 export function mergeResource(into: Resource, additional: NewResource): Resource {
+
+    if (!into.relations) throw Error('illegal argument in mergeResource: relations not defined for \'into\'');
 
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
     assertArraysHomogeneouslyTyped(additional);
-
-    if (additional.type && into.type !== additional.type) {
-        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
-    }
-
-    let target: Resource = clone(into);
+    assertNoAttemptToChangeType(into, additional);
 
     try {
-
-        target =
+        const target =
             overwriteOrDeleteProperties(
-                target,
+                clone(into),
                 additional,
-                Resource.CONSTANT_FIELDS /* todo ignore geometry */, true);
+                Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
 
-        if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
+        if (additional[GEOMETRY]) target[GEOMETRY] = additional[GEOMETRY];
 
-        if (!additional.relations) return target;
-
-        target.relations =
-            overwriteOrDeleteProperties(
-                target.relations ? target.relations : {},
-                additional.relations,
-                [HIERARCHICAL_RELATIONS.RECORDED_IN],
-                false);
-        return target;
+        return !additional.relations
+            ? target
+            : assoc(
+                RELATIONS,
+                overwriteOrDeleteProperties(
+                    target.relations,
+                    additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+            (target) as Resource;
 
     } catch (err) {
         throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
@@ -62,10 +62,8 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
 const assertArrayHomogeneouslyTyped =
     reduce((arrayItemsType: string|undefined, arrayItem) => {
-        const t = arrayItem === null || arrayItem === undefined ? 'undefinedOrNull' : typeof arrayItem;
-        if (t === 'undefinedOrNull') {
-            return arrayItemsType === undefined ? undefined : arrayItemsType;
-        }
+        // typeof null -> 'object', typeof undefined -> 'undefined'
+        const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
 
         if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
         return t;
@@ -89,14 +87,37 @@ function assertArraysHomogeneouslyTyped(o: any) {
 }
 
 
+function assertNoAttemptToChangeType(into: Resource, additional: NewResource) {
+
+    if (additional.type && into.type !== additional.type) {
+        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
+    }
+}
+
+
 function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 
     flow(resource,
-        dissoc('geometry'),
-        dissoc('relations'),
+        dissoc(GEOMETRY),
+        dissoc(RELATIONS),
         cond(hasEmptyAssociatives, () => {
             throw Error('Precondition violated in mergeResource. Identifier: ' + resource.identifier);
         }));
+}
+
+
+function isObjectArray(a: any) {
+
+    if (!isArray(a)) return false;
+
+    const arrayType = a
+        .map((v: any) => typeof v)
+        // typeof null -> 'object', typeof undefined -> 'undefined'
+        .map(cond(is('undefined'), val('object')))
+        // By assertion we know our arrays are not empty and all entries are of one type
+        [0];
+
+    return arrayType === 'object';
 }
 
 
@@ -111,19 +132,17 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
  * @param target
  * @param source
  * @param exclusions
- * @param expandObjectArrays
  */
 function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
                                      source: {[_: string]: any},
-                                     exclusions: string[],
-                                     expandObjectArrays: boolean) {
+                                     exclusions: string[]) {
 
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
 
             if (source[property] === null) delete target[property];
-            else if (expandObjectArrays && isArray(source[property])) {
+            else if (isObjectArray(source[property])) {
 
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
@@ -132,7 +151,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
             } else if (isObject(source[property]) && isObject(target[property])) {
 
-                overwriteOrDeleteProperties(target[property], source[property], [], expandObjectArrays);
+                overwriteOrDeleteProperties(target[property], source[property], []);
                 if (isEmpty(target[property])) delete target[property];
 
             } else if (isObject(source[property]) && target[property] === undefined) {
@@ -166,7 +185,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         if (target[index] === undefined && isObject(source[index])) target[index] = {};
 
         if (isObject(source[index]) && isObject(target[index])) {
-            overwriteOrDeleteProperties(target[index], source[index], [], true);
+            overwriteOrDeleteProperties(target[index], source[index], []);
         } else {
             target[index] = source[index];
         }

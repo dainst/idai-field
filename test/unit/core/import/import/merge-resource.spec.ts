@@ -1,7 +1,9 @@
 import {Resource} from 'idai-components-2';
-import {mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
+import {GEOMETRY, mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
+import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 /**
@@ -311,52 +313,79 @@ describe('mergeResource', () => {
     });
 
 
-    // TODO review, if this is the desired behaviour for normal (i.e. non-object) array fields in resources. object arrays are used for dimension and dating currently. also consider that all arrays on every nesting level are treated accordingly
     it('merge array fields', () => {
 
         target['array'] = [1, 2, 7];
+        // we choose to make it shorter than the target array for the test
+        // to ensure the object array rule does not apply, which would make the result [3,4,7]
         source['array'] = [3, 4];
 
         const result = mergeResource(target, source);
-        expect(result['array']).toEqual([3, 4, 7]);
+        expect(result['array']).toEqual([3, 4]);
     });
 
 
     it('overwrite, do not merge geometry', () => {
 
-        target['geometry'] = { a: 1 };
-        source['geometry'] = { b: 2 };
+        target[GEOMETRY] = { a: 1 };
+        source[GEOMETRY] = { b: 2 };
 
         const result = mergeResource(target, source);
-        expect(result['geometry']['b']).toEqual(2);
-        expect(result['geometry']['a']).toBeUndefined();
+        expect(result[GEOMETRY]['b']).toEqual(2);
+        expect(result[GEOMETRY]['a']).toBeUndefined();
     });
 
 
-    it('array of heterogeneous types allowed when entries null or undefined', () => {
+    it('merge relations', () => {
 
-        source['array'] = [1, null, null];
+        target['relations'] = { a: ['a1', 'a2'] };
+        source['relations'] = {
+            a: ['a3'], // fewer entries than original, to make sure arrayObject rule is not applied
+            b: ['b1'] };
+
+        const result = mergeResource(target, source);
+        expect(result['relations']['a']).toEqual(['a3']);
+        expect(result['relations']['b']).toEqual(['b1']);
+    });
+
+
+    it('merge relations, do not overwrite RECORDED_IN', () => {
+
+        target['relations'][RECORDED_IN] = ['a', 'b'];
+        source['relations'][RECORDED_IN] = ['c'];
+
+        const result = mergeResource(target, source);
+        expect(result['relations'][RECORDED_IN]).toEqual(['a', 'b']);
+    });
+
+
+    it('null or undefined values in object arrays are not considered as arrayOfHeterogeneous types', () => {
+
+        const o = {a: 1};
+
+        source['array'] = [o, null, null];
         mergeResource(target, source);
 
-        source['array'] = [1, undefined, null];
+        source['array'] = [o, undefined, null];
         mergeResource(target, source);
+
 
         try {
-            source['array'] = [undefined, 2];
+            source['array'] = [undefined, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
         }
 
         try {
-            source['array'] = [null, 2];
+            source['array'] = [null, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
         }
 
         try {
-            source['array'] = [null, 2, undefined, 3];
+            source['array'] = [null, o, undefined, o];
             mergeResource(target, source);
         } catch (expected) {
             if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
@@ -392,9 +421,18 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types - undefined and null interposed', () => {
+    it('array of heterogeneous types - non-object array must not contain undefined', () => {
 
-        source['array'] = [undefined, 2, null, '3'];
+        source['array'] = [2, undefined];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+
+        source['array'] = [undefined, 2];
 
         try {
             mergeResource(target, source);
@@ -404,6 +442,27 @@ describe('mergeResource', () => {
         }
     });
 
+
+    it('array of heterogeneous types - non-object array cannot contain null', () => {
+
+        source['array'] = [2, null];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+
+        source['array'] = [null, 2];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
 
 
     it('attempted to change type', () => {

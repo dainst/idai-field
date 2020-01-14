@@ -5,6 +5,7 @@ import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 @Component({
     moduleId: module.id,
@@ -32,7 +33,8 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,
-                private renderer: Renderer2) {
+                private renderer: Renderer2,
+                private typeUtility: TypeUtility) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -125,8 +127,8 @@ export class SearchSuggestionsComponent implements OnChanges {
         return this.viewFacade.getFilterTypes().length > 0
             ? this.viewFacade.getFilterTypes()
             : this.viewFacade.isInTypesManagement()
-                ? this.resourcesComponent.filterOptions.map(type => type.name)
-                : undefined;
+                ? this.typeUtility.getAbstractFieldTypeNames()
+                : this.typeUtility.getConcreteFieldTypeNames();
     }
 
 

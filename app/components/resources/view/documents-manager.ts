@@ -229,7 +229,6 @@ export class DocumentsManager {
         const query = DocumentsManager.buildQuery(
             operationId,
             this.resourcesStateManager.get(),
-            this.resourcesStateManager.isInOverview(),
             this.getAllowedTypeNames(),
             queryId
         );
@@ -238,13 +237,13 @@ export class DocumentsManager {
     }
 
 
-    private getAllowedTypeNames(): string[]|undefined {
+    private getAllowedTypeNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
             ? this.resourcesStateManager.getOverviewTypeNames()
             : this.resourcesStateManager.isInTypesManagement()
-                ? this.resourcesStateManager.getTypesManagementTypeNames()
-                : undefined;
+                ? this.resourcesStateManager.getAbstractTypeNames()
+                : this.resourcesStateManager.getConcreteTypeNames();
     }
 
 
@@ -344,8 +343,7 @@ export class DocumentsManager {
 
 
     private static buildQuery(operationId: string|undefined, state: ResourcesState,
-                              isInOverview: boolean, allowedTypeNames?: string[],
-                              queryId?: string,): Query {
+                              allowedTypeNames: string[], queryId?: string,): Query {
 
         const bypassHierarchy: boolean = ResourcesState.getBypassHierarchy(state);
         const typeFilters: string[] = ResourcesState.getTypeFilters(state);
@@ -361,9 +359,7 @@ export class DocumentsManager {
             ),
             types: (typeFilters.length > 0)
                 ? typeFilters
-                : allowedTypeNames && (!bypassHierarchy || !isInOverview)
-                    ? allowedTypeNames
-                    : undefined,
+                : allowedTypeNames,
             limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined,
             id: queryId
         };

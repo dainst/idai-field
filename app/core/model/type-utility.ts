@@ -53,20 +53,28 @@ export class TypeUtility {
     }
 
 
-    public getTypeManagementTopLevelTypes(): Array<IdaiType> {
+    public getFieldTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => type.name === 'TypeCatalog' || type.name === 'Type');
+            .filter(type => !this.isSubtype(type.name, 'Image'))
+            .filter(type => !TypeUtility.isProjectType(type.name));
     }
 
 
-    public getFieldTypes(): Array<IdaiType> {
+    public getConcreteFieldTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => !this.isSubtype(type.name, 'Image'))
             .filter(type => !this.isSubtype(type.name, 'TypeCatalog'))
             .filter(type => !this.isSubtype(type.name, 'Type'))
-            .filter(type => !TypeUtility.isProjectType(type.name))
+            .filter(type => !TypeUtility.isProjectType(type.name));
+    }
+
+
+    public getAbstractFieldTypes(): Array<IdaiType> {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => type.name === 'TypeCatalog' || type.name === 'Type');
     }
 
 
@@ -79,6 +87,18 @@ export class TypeUtility {
     public getFieldTypeNames(): string[] {
 
         return this.getFieldTypes().map(type => type.name);
+    }
+
+
+    public getConcreteFieldTypeNames(): string[] {
+
+        return this.getConcreteFieldTypes().map(type => type.name);
+    }
+
+
+    public getAbstractFieldTypeNames(): string[] {
+
+        return this.getAbstractFieldTypes().map(type => type.name);
     }
 
 
@@ -104,7 +124,7 @@ export class TypeUtility {
 
         return this.projectConfiguration
             .getTypesList()
-            .map(to('name'))
+            .map(type => type.name)
             .filter(typename => typename !== 'Place')
             .filter(typename => typename !== 'Project')
             .filter(typename => !this.isSubtype(typename, 'Operation'))
@@ -118,15 +138,9 @@ export class TypeUtility {
 
         return this.projectConfiguration
             .getTypesList()
-            .map(to('name'))
+            .map(type => type.name)
             .filter(typename => this.isSubtype(typename, 'Operation'))
             .concat('Place');
-    }
-
-
-    public getTypesManagementTypeNames(): string[] {
-
-        return ['TypeCatalog', 'Type'];
     }
 
 

@@ -124,7 +124,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 ? this.typeUtility.getFieldTypes().filter(type => !type.parentType)
                 : this.typeUtility.getOverviewTopLevelTypes();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.typeUtility.getTypeManagementTopLevelTypes();
+            this.filterOptions = this.typeUtility.getAbstractFieldTypes();
         } else {
             this.filterOptions = this.typeUtility.getAllowedRelationDomainTypes(
                 'isRecordedIn',

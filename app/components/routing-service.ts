@@ -135,7 +135,7 @@ export class RoutingService {
 
         return this.typeUtility.getOverviewTypeNames().includes(document.resource.type)
             ? 'project'
-            : this.typeUtility.getTypesManagementTypeNames().includes(document.resource.type)
+            : this.typeUtility.getAbstractFieldTypeNames().includes(document.resource.type)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

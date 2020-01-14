@@ -66,7 +66,9 @@ export class ResourcesStateManager {
 
     public getOverviewTypeNames = (): string[] => this.typeUtility.getOverviewTypeNames();
 
-    public getTypesManagementTypeNames = (): string[] => this.typeUtility.getTypesManagementTypeNames();
+    public getConcreteTypeNames = (): string[] => this.typeUtility.getConcreteFieldTypeNames();
+
+    public getAbstractTypeNames = (): string[] => this.typeUtility.getAbstractFieldTypeNames();
 
 
     public async initialize(viewName: 'project'|'types'|string) {

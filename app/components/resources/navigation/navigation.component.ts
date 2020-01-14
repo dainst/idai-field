@@ -43,8 +43,6 @@ export class NavigationComponent {
     }
 
 
-    public getOperationButtonLabel = (document: FieldDocument) => ModelUtil.getDocumentLabel(document);
-
     public getNavigationButtonLabel = (id: string) => this.labels[id];
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();

@@ -31,10 +31,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
     assertArraysHomogeneouslyTyped(additional);
-
-    if (additional.type && into.type !== additional.type) {
-        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
-    }
+    assertNoAttemptToChangeType(into, additional);
 
     try {
         const target =
@@ -45,14 +42,14 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
         if (additional[GEOMETRY]) target[GEOMETRY] = additional[GEOMETRY];
 
-        if (!additional.relations) return target;
-
-        return assoc(
-            RELATIONS,
-            overwriteOrDeleteProperties(
-                target.relations,
-                additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
-        (target) as Resource;
+        return !additional.relations
+            ? target
+            : assoc(
+                RELATIONS,
+                overwriteOrDeleteProperties(
+                    target.relations,
+                    additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+            (target) as Resource;
 
     } catch (err) {
         throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN
@@ -86,6 +83,14 @@ function assertArraysHomogeneouslyTyped(o: any) {
     flow(values(o),
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
         forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
+}
+
+
+function assertNoAttemptToChangeType(into: Resource, additional: NewResource) {
+
+    if (additional.type && into.type !== additional.type) {
+        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
+    }
 }
 
 

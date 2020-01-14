@@ -4,7 +4,7 @@ import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives, } from '../../util';
+import {hasEmptyAssociatives, typeOf} from '../../util';
 
 
 export const GEOMETRY = 'geometry';
@@ -117,12 +117,12 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 }
 
 
-function isObjectArray(a: any) {
+function isObjectArray(as: Array<any>|any) {
 
-    if (!isArray(a)) return false;
+    if (!isArray(as)) return false;
 
-    const arrayType = a
-        .map((v: any) => typeof v)
+    const arrayType = as
+        .map(typeOf)
         // typeof null -> 'object', typeof undefined -> 'undefined'
         .map(cond(is('undefined'), val('object')))
         // By assertion we know our arrays are not empty and all entries are of one type

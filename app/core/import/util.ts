@@ -46,3 +46,5 @@ export function longerThan(than: string) { return (what: string) => what.length 
 export function includes(it: string) { return (what: string) => what.includes(it) }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
+
+export function typeOf(v: any) { return typeof v }

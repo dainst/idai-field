@@ -240,6 +240,7 @@ export class DocumentsManager {
     private getAllowedTypeNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
+                && !ResourcesState.getBypassHierarchy(this.resourcesStateManager.get())
             ? this.resourcesStateManager.getOverviewTypeNames()
             : this.resourcesStateManager.isInTypesManagement()
                 ? this.resourcesStateManager.getAbstractTypeNames()

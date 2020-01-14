@@ -38,7 +38,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target,
                 additional,
-                Resource.CONSTANT_FIELDS /* todo ignore geometry */, true);
+                Resource.CONSTANT_FIELDS /* todo ignore geometry */);
 
         if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
 
@@ -48,8 +48,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target.relations ? target.relations : {},
                 additional.relations,
-                [HIERARCHICAL_RELATIONS.RECORDED_IN],
-                false);
+                [HIERARCHICAL_RELATIONS.RECORDED_IN]);
         return target;
 
     } catch (err) {
@@ -124,19 +123,17 @@ function isObjectArray(a: any) {
  * @param target
  * @param source
  * @param exclusions
- * @param expandObjectArrays
  */
 function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
                                      source: {[_: string]: any},
-                                     exclusions: string[],
-                                     expandObjectArrays: boolean) {
+                                     exclusions: string[]) {
 
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
 
             if (source[property] === null) delete target[property];
-            else if (expandObjectArrays && isObjectArray(source[property])) {
+            else if (isObjectArray(source[property])) {
 
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
@@ -145,7 +142,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
             } else if (isObject(source[property]) && isObject(target[property])) {
 
-                overwriteOrDeleteProperties(target[property], source[property], [], expandObjectArrays);
+                overwriteOrDeleteProperties(target[property], source[property], []);
                 if (isEmpty(target[property])) delete target[property];
 
             } else if (isObject(source[property]) && target[property] === undefined) {
@@ -179,7 +176,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         if (target[index] === undefined && isObject(source[index])) target[index] = {};
 
         if (isObject(source[index]) && isObject(target[index])) {
-            overwriteOrDeleteProperties(target[index], source[index], [], true);
+            overwriteOrDeleteProperties(target[index], source[index], []);
         } else {
             target[index] = source[index];
         }

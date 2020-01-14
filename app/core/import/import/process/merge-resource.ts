@@ -38,17 +38,17 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target,
                 additional,
-                Resource.CONSTANT_FIELDS /* todo ignore geometry */);
+                Resource.CONSTANT_FIELDS.concat(['geometry']));
 
         if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
 
         if (!additional.relations) return target;
-
         target.relations =
             overwriteOrDeleteProperties(
                 target.relations ? target.relations : {},
                 additional.relations,
                 [HIERARCHICAL_RELATIONS.RECORDED_IN]);
+
         return target;
 
     } catch (err) {

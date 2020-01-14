@@ -3897,6 +3897,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
+        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten</source>
+        <target state="final">Arrays müssen konsistent Felder vom gleichen Typ beinhalten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
         <target state="final">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>

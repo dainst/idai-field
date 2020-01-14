@@ -310,7 +310,101 @@ describe('mergeResource', () => {
         expect(result.relations).toEqual({});
     });
 
+
+    // TODO review, if this is the desired behaviour for normal (i.e. non-object) array fields in resources. object arrays are used for dimension and dating currently. also consider that all arrays on every nesting level are treated accordingly
+    it('merge array fields', () => {
+
+        target['array'] = [1, 2, 7];
+        source['array'] = [3, 4];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual([3, 4, 7]);
+    });
+
+
+    it('overwrite, do not merge geometry', () => {
+
+        target['geometry'] = { a: 1 };
+        source['geometry'] = { b: 2 };
+
+        const result = mergeResource(target, source);
+        expect(result['geometry']['b']).toEqual(2);
+        expect(result['geometry']['a']).toBeUndefined();
+    });
+
+
+    it('array of heterogeneous types allowed when entries null or undefined', () => {
+
+        source['array'] = [1, null, null];
+        mergeResource(target, source);
+
+        source['array'] = [1, undefined, null];
+        mergeResource(target, source);
+
+        try {
+            source['array'] = [undefined, 2];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+
+        try {
+            source['array'] = [null, 2];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+
+        try {
+            source['array'] = [null, 2, undefined, 3];
+            mergeResource(target, source);
+        } catch (expected) {
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+        }
+    });
+
+
     // err cases
+
+    it('array of heterogeneous types - top level', () => {
+
+        source['array'] = [{a: 1}, 2];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
+    it('array of heterogeneous types - nested', () => {
+
+        source['array'] = { b: [{a: 1}, 2] };
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
+    it('array of heterogeneous types - undefined and null interposed', () => {
+
+        source['array'] = [undefined, 2, null, '3'];
+
+        try {
+            mergeResource(target, source);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES]);
+        }
+    });
+
+
 
     it('attempted to change type', () => {
 

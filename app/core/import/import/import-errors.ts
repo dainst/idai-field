@@ -33,4 +33,5 @@ export module ImportErrors {
     export const TARGET_TYPE_RANGE_MISMATCH = 'ImportErrors.targetTypeRangeMismatch';
     export const TYPE_CANNOT_BE_CHANGED = 'ImportErrors.typesCannotBeChanged';
     export const EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'ImportErrors.emptySlotsInArraysForbidden';
+    export const ARRAY_OF_HETEROGENEOUS_TYPES = 'ImportErrors.arrayOfHeterogeneousTypes';
 }

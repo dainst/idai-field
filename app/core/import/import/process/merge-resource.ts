@@ -1,10 +1,10 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, keys, isEmpty, values, isnt, flow, dissoc} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject,
+    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {cond} from 'tsfun';
-import {hasEmptyAssociatives} from '../../util';
+import {hasEmptyAssociatives, isAssociative} from '../../util';
 
 
 /**
@@ -24,6 +24,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
     assertNoEmptyAssociatives(into); // our general assumption regarding documents stored in the database
     assertNoEmptyAssociatives(additional); // our assumption regarding the import process;
+    assertArraysHomogeneouslyTyped(additional);
 
     if (additional.type && into.type !== additional.type) {
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
@@ -37,7 +38,9 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             overwriteOrDeleteProperties(
                 target,
                 additional,
-                Resource.CONSTANT_FIELDS, true);
+                Resource.CONSTANT_FIELDS /* todo ignore geometry */, true);
+
+        if (additional['geometry']) target['geometry'] = additional['geometry']; // overwrite, do not merge
 
         if (!additional.relations) return target;
 
@@ -54,6 +57,35 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
             ? [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, into.identifier]
             : err;
     }
+}
+
+
+const assertArrayHomogeneouslyTyped =
+    reduce((arrayItemsType: string|undefined, arrayItem) => {
+        const t = arrayItem === null || arrayItem === undefined ? 'undefinedOrNull' : typeof arrayItem;
+        if (t === 'undefinedOrNull') {
+            return arrayItemsType === undefined ? undefined : arrayItemsType;
+        }
+
+        if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
+        return t;
+    }, undefined);
+
+
+/**
+ * heterogeneous arrays like
+ * [1, {b: 2}]
+ * are not allowed
+ *
+ * exceptions are undefined values
+ * [undefined, 2, null, 3]
+ * undefined and null values get ignored
+ */
+function assertArraysHomogeneouslyTyped(o: any) {
+
+    flow(values(o),
+        forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
+        forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
 }
 
 
@@ -95,6 +127,7 @@ function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
 
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
+
                 if (target[property].length === 0) delete target[property];
 
             } else if (isObject(source[property]) && isObject(target[property])) {
@@ -123,10 +156,11 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
         // null values got collapsed via preprocessFields
         if (source[index] === undefined) {
             // make the slot so array will not be sparse
-            if (target[index] === undefined) return target[index] = null;
+            if (target[index] === undefined) target[index] = null;
             return;
         } else if (source[index] === null) {
-            return target[index] = null;
+            target[index] = null;
+            return;
         }
 
         if (target[index] === undefined && isObject(source[index])) target[index] = {};
@@ -137,7 +171,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
             target[index] = source[index];
         }
 
-        if (keys(target[index]).length === 0) target[index] = null;
+        if (isObject(target[index]) && keys(target[index]).length === 0) target[index] = null;
     });
 
     const result = dropRightWhile(is(null))(target);

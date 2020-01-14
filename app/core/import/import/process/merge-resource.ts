@@ -1,10 +1,10 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc,
-    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssociative, ObjectCollection,
+    Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {Associative, hasEmptyAssociatives, isAssociative} from '../../util';
+import {hasEmptyAssociatives, } from '../../util';
 
 
 export const GEOMETRY = 'geometry';
@@ -144,11 +144,11 @@ function isObjectArray(a: any) {
  * @param source
  * @param exclusions
  */
-function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
-                                     source: {[_: string]: any},
+function overwriteOrDeleteProperties(target: ObjectCollection<any>|undefined,
+                                     source: ObjectCollection<any>,
                                      exclusions: string[]) {
 
-    return Object.keys(source)
+    return keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
 

@@ -1,7 +1,5 @@
-import {ObjectCollection, reduce, dissoc, getOn, isObject, isArray, values, isEmpty, is, } from 'tsfun';
-
-
-export type Associative<T> = ObjectCollection<T> | Array<T>; // TODO move to tsfun
+import {ObjectCollection, reduce, dissoc, getOn, isObject,
+    isArray, values, isEmpty, is, Associative} from 'tsfun';
 
 
 /**
@@ -48,5 +46,3 @@ export function longerThan(than: string) { return (what: string) => what.length 
 export function includes(it: string) { return (what: string) => what.includes(it) }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
-
-export function isAssociative(a: any) { return isObject(a) || isArray(a) } // TODO move to tsfun

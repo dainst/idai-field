@@ -1,4 +1,4 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject,
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc,
     keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
@@ -34,26 +34,23 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
         throw [ImportErrors.TYPE_CANNOT_BE_CHANGED, into.identifier];
     }
 
-    let target: Resource = clone(into);
-
     try {
-
-        target =
+        const target =
             overwriteOrDeleteProperties(
-                target,
+                clone(into),
                 additional,
                 Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
 
         if (additional[GEOMETRY]) target[GEOMETRY] = additional[GEOMETRY];
 
         if (!additional.relations) return target;
-        target.relations =
-            overwriteOrDeleteProperties(
-                target.relations ? target.relations : {},
-                additional.relations,
-                [HIERARCHICAL_RELATIONS.RECORDED_IN]);
 
-        return target;
+        return assoc(
+            RELATIONS,
+            overwriteOrDeleteProperties(
+                target.relations ? target.relations : {}, // TODO add assertion and simplify here
+                additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+        (target) as Resource;
 
     } catch (err) {
         throw err === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN

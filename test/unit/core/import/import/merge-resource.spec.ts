@@ -2,6 +2,8 @@ import {Resource} from 'idai-components-2';
 import {mergeResource} from '../../../../../app/core/import/import/process/merge-resource';
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 import {clone} from '../../../../../app/core/util/object-util';
+import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
+import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 
 
 /**
@@ -331,6 +333,29 @@ describe('mergeResource', () => {
         const result = mergeResource(target, source);
         expect(result['geometry']['b']).toEqual(2);
         expect(result['geometry']['a']).toBeUndefined();
+    });
+
+
+    it('merge relations', () => {
+
+        target['relations'] = { a: ['a1', 'a2'] };
+        source['relations'] = {
+            a: ['a3'], // fewer entries than original, to make sure arrayObject rule is not applied
+            b: ['b1'] };
+
+        const result = mergeResource(target, source);
+        expect(result['relations']['a']).toEqual(['a3']);
+        expect(result['relations']['b']).toEqual(['b1']);
+    });
+
+
+    it('merge relations, do not overwrite RECORDED_IN', () => {
+
+        target['relations'][RECORDED_IN] = ['a', 'b'];
+        source['relations'][RECORDED_IN] = ['c'];
+
+        const result = mergeResource(target, source);
+        expect(result['relations'][RECORDED_IN]).toEqual(['a', 'b']);
     });
 
 

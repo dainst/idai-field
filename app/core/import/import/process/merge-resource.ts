@@ -49,7 +49,8 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                 RELATIONS,
                 overwriteOrDeleteProperties(
                     target.relations,
-                    additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+                    additional.relations,
+                    [HIERARCHICAL_RELATIONS.RECORDED_IN]))
             (target) as Resource;
 
     } catch (err) {

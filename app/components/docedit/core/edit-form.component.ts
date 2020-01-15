@@ -1,11 +1,10 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {includedIn, is, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/model/group-util';
 import {GROUP_NAME} from '../../../c';
-import {POSITION_RELATIONS, TIME_RELATIONS, IS_LIKE} from '../../../core/model/relation-constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -47,6 +46,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public groups: Array<GroupDefinition> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), fields: [],
             relations: [], widget: 'generic' },
+        { name: 'identification', label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }),
+            fields: [], relations: [], widget: 'generic' },
         { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
@@ -115,6 +116,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setRelations() {
 
+        this.groups.forEach(group => group.relations = []);
+
         for (let relation of this.relationDefinitions) {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
             if (!groupName) continue;
@@ -128,6 +131,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     private setFields() {
 
         this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
+        this.groups[GROUP_NAME.IDENTIFICATION].fields = this.fieldDefinitions.filter(on('group', is('identification')));
         this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));

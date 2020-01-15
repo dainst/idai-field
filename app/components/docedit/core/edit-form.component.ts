@@ -116,6 +116,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setRelations() {
 
+        this.groups.forEach(group => group.relations = []);
+
         for (let relation of this.relationDefinitions) {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
             if (!groupName) continue;

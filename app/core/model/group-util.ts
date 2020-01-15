@@ -34,7 +34,7 @@ export module GroupUtil {
         } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
             return 'position';
         } else if (relationName === IS_LIKE) {
-            return 'properties';
+            return 'identification';
         } else {
             return undefined;
         }

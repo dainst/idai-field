@@ -1,5 +1,6 @@
-import {defined, dropRightWhile, isArray, isEmpty, isNot, keysAndValues, copy, ObjectCollection, isObject} from 'tsfun';
-import {isAssociative, isEmptyString} from '../util';
+import {defined, dropRightWhile, isArray, isEmpty, isAssociative,
+    isNot, keysAndValues, copy, ObjectCollection, isObject} from 'tsfun';
+import {isEmptyString} from '../util';
 import {ImportErrors} from './import-errors';
 
 

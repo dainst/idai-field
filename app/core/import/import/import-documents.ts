@@ -78,7 +78,7 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const documentsForImport = importDocuments.map(postprocessDocument as any) as Document[];
+        const documentsForImport = importDocuments.map(postprocessDocument);
 
         const updateErrors = [];
         try {

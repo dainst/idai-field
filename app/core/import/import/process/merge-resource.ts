@@ -1,10 +1,10 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc,
-    keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssociative, ObjectCollection,
+    Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives, isAssociative} from '../../util';
+import {hasEmptyAssociatives, typeOf} from '../../util';
 
 
 export const GEOMETRY = 'geometry';
@@ -49,7 +49,8 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                 RELATIONS,
                 overwriteOrDeleteProperties(
                     target.relations,
-                    additional.relations, [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+                    additional.relations,
+                    [HIERARCHICAL_RELATIONS.RECORDED_IN]))
             (target) as Resource;
 
     } catch (err) {
@@ -83,9 +84,9 @@ const assertArrayHomogeneouslyTyped =
  * [undefined, 2, null, 3]
  * undefined and null values get ignored
  */
-function assertArraysHomogeneouslyTyped(o: any /* TODO Replace any with new Associative type */) {
+function assertArraysHomogeneouslyTyped(o: Associative<any>) {
 
-    flow(values(o),
+    flow(o,
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
         forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
 }
@@ -116,12 +117,12 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 }
 
 
-function isObjectArray(a: any) {
+function isObjectArray(as: Array<any>|any) {
 
-    if (!isArray(a)) return false;
+    if (!isArray(as)) return false;
 
-    const arrayType = a
-        .map((v: any) => typeof v)
+    const arrayType = as
+        .map(typeOf)
         // typeof null -> 'object', typeof undefined -> 'undefined'
         .map(cond(is('undefined'), val('object')))
         // By assertion we know our arrays are not empty and all entries are of one type
@@ -143,11 +144,11 @@ function isObjectArray(a: any) {
  * @param source
  * @param exclusions
  */
-function overwriteOrDeleteProperties(target: {[_: string]: any}|undefined,
-                                     source: {[_: string]: any},
+function overwriteOrDeleteProperties(target: ObjectCollection<any>|undefined,
+                                     source: ObjectCollection<any>,
                                      exclusions: string[]) {
 
-    return Object.keys(source)
+    return keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
 

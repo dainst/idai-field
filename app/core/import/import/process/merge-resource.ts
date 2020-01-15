@@ -86,7 +86,7 @@ const assertArrayHomogeneouslyTyped =
  */
 function assertArraysHomogeneouslyTyped(o: Associative<any>) {
 
-    flow(values(o),
+    flow(o,
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
         forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
 }

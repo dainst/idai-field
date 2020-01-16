@@ -159,8 +159,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
-    public static IMAGES_ERROR_NOT_FOUND_SINGLE = 'images.error.notFound.single';
-    public static IMAGES_ERROR_NOT_FOUND_MULTIPLE = 'images.error.notFound.multiple';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -1279,24 +1277,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.images.error.duplicateFilenames',
                 value: 'Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_ERROR_NOT_FOUND_SINGLE] = {
-            content: i18n({
-                id: 'messages.images.error.notFound.single',
-                value: 'Das Bild konnte nicht gefunden werden.',
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_ERROR_NOT_FOUND_MULTIPLE] = {
-            content: i18n({
-                id: 'messages.images.error.notFound.multiple',
-                value: 'Einige Bilder konnten nicht gefunden werden.'
             }),
             level: 'danger',
             params: [],

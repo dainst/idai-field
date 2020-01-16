@@ -5,6 +5,7 @@ import {Imagestore} from '../../core/imagestore/imagestore';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
+import {showMissingImageMessageOnConsole} from './public';
 
 
 @Component({
@@ -125,8 +126,7 @@ export class ImageGridComponent implements OnChanges {
                 try {
                     cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
                 } catch(e) {
-                    console.error('No original and no thumbnail found for image. The filename of the missing image' +
-                        ' is \’' + cell.document.resource.id + '\' (note: no file extension!). It should be found in the project folder below the imagestore (see settings page).');
+                    showMissingImageMessageOnConsole(cell.document.resource.id);
                 }
             }
         }

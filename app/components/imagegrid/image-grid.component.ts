@@ -5,6 +5,7 @@ import {Imagestore} from '../../core/imagestore/imagestore';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
+import {showMissingImageMessageOnConsole} from './public';
 
 
 @Component({
@@ -125,22 +126,9 @@ export class ImageGridComponent implements OnChanges {
                 try {
                     cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
                 } catch(e) {
-                    console.error('error fetching image', e);
+                    showMissingImageMessageOnConsole(cell.document.resource.id);
                 }
             }
-        }
-    }
-
-
-    private showImagesNotFoundMessage(result: any) {
-
-        if (result.errsWithParams &&
-            result.errsWithParams.length &&
-            result.errsWithParams.length > 0 &&
-            !this.imagesNotFoundMessageDisplayed) {
-
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
-            this.imagesNotFoundMessageDisplayed = true;
         }
     }
 

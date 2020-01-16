@@ -4217,22 +4217,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.images.error.notFound.single" datatype="html">
-        <source>Das Bild konnte nicht gefunden werden.</source>
-        <target state="final">Das Bild konnte nicht gefunden werden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.images.error.notFound.multiple" datatype="html">
-        <source>Einige Bilder konnten nicht gefunden werden.</source>
-        <target state="final">Einige Bilder konnten nicht gefunden werden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath" datatype="html">
         <source>Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</source>
         <target state="final">Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</target>

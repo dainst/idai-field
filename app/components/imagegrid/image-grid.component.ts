@@ -125,7 +125,8 @@ export class ImageGridComponent implements OnChanges {
                 try {
                     cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
                 } catch(e) {
-                    console.error('error fetching image', e);
+                    console.error('No original and no thumbnail found for image. The filename of the missing image' +
+                        ' is \’' + cell.document.resource.id + '\' (note: no file extension!). It should be found in the project folder below the imagestore (see settings page).');
                 }
             }
         }

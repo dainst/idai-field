@@ -24,9 +24,9 @@ import {TabManager} from '../../app/components/tab-manager';
 import {ImageOverviewFacade} from '../../app/components/image/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../app/components/image/overview/view/image-documents-manager';
 import {ImagesState} from '../../app/components/image/overview/view/images-state';
-import {AppConfigurator} from '../../app/core/model/app-configurator';
 import {ConfigLoader} from '../../app/core/configuration/config-loader';
 import {ConfigReader} from '../../app/core/configuration/config-reader';
+import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 
 
 class IdGenerator {

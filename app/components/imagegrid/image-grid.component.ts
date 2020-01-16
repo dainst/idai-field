@@ -132,19 +132,6 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    private showImagesNotFoundMessage(result: any) {
-
-        if (result.errsWithParams &&
-            result.errsWithParams.length &&
-            result.errsWithParams.length > 0 &&
-            !this.imagesNotFoundMessageDisplayed) {
-
-            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
-            this.imagesNotFoundMessageDisplayed = true;
-        }
-    }
-
-
     /**
      * Insert stub document for first cell that will act as drop area for uploading images
      */

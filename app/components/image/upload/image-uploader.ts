@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewImageDocument} from 'idai-components-2';
-import {Imagestore} from '../../core/imagestore/imagestore';
+import {Imagestore} from '../../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
-import {ExtensionUtil} from '../../core/util/extension-util';
+import {ExtensionUtil} from '../../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
-import {PersistenceManager} from '../../core/model/persistence-manager';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
-import {UsernameProvider} from '../../core/settings/username-provider';
-import {M} from '../m';
-import {IdaiType} from '../../core/configuration/model/idai-type';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {UsernameProvider} from '../../../core/settings/username-provider';
+import {M} from '../../m';
+import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 export interface ImageUploadResult {
 

@@ -1,9 +1,9 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ImageGeoreference, Messages} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {PersistenceManager} from '../../core/model/persistence-manager';
-import {UsernameProvider} from '../../core/settings/username-provider';
-import {M} from '../m';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {UsernameProvider} from '../../../core/settings/username-provider';
+import {M} from '../../m';
 
 
 @Component({

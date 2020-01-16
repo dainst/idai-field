@@ -6,7 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiMessagesModule} from 'idai-components-2';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
-import {ImageUploadModule} from '../imageupload/image-upload.module';
+import {ImageUploadModule} from '../upload/image-upload.module';
 import {ImageGridCellComponent} from "./image-grid-cell.component";
 
 

@@ -2,16 +2,16 @@ import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
-import {Imagestore} from '../../core/imagestore/imagestore';
-import {DoceditComponent} from '../docedit/docedit.component';
-import {BlobMaker} from '../../core/imagestore/blob-maker';
-import {ImageContainer} from '../../core/imagestore/image-container';
-import {RoutingService} from '../routing-service';
-import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
-import {M} from '../m';
-import {MenuService} from '../../menu-service';
-import {ImagesState} from '../imageoverview/view/images-state';
-import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../imagegrid/public';
+import {Imagestore} from '../../../core/imagestore/imagestore';
+import {DoceditComponent} from '../../docedit/docedit.component';
+import {BlobMaker} from '../../../core/imagestore/blob-maker';
+import {ImageContainer} from '../../../core/imagestore/image-container';
+import {RoutingService} from '../../routing-service';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {M} from '../../m';
+import {MenuService} from '../../../menu-service';
+import {ImagesState} from '../overview/view/images-state';
+import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../log-messages';
 
 
 @Component({

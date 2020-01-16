@@ -3,7 +3,7 @@ import * as PouchDB from 'pouchdb';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
-import {ImageOverviewFacade} from '../../app/components/imageoverview/view/imageoverview-facade';
+import {ImageOverviewFacade} from '../../app/components/image/overview/view/imageoverview-facade';
 
 
 /**

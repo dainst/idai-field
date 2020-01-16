@@ -3,11 +3,11 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument, Messages} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ViewFacade} from '../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {DeleteModalComponent} from './delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
+import {ViewFacade} from '../../resources/view/view-facade';
 
 
 @Component({

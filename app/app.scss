@@ -16,12 +16,12 @@ $roboto-font-path: '../fonts/';
 @import 'components/import/import';
 @import 'components/export/export';
 @import 'components/settings/settings';
-@import 'components/imageview/image-view';
+@import 'components/image/view/image-view';
 @import 'widgets/widgets';
 @import 'components/docedit/docedit';
-@import 'components/imagegrid/image-grid';
-@import 'components/imageoverview/image-overview';
-@import 'components/imageupload/image-upload';
+@import 'components/image/grid/image-grid';
+@import 'components/image/overview/image-overview';
+@import 'components/image/upload/image-upload';
 @import 'components/matrix/matrix-view';
 @import 'components/help/help';
 

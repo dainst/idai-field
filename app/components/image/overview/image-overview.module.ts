@@ -4,10 +4,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
-import {WidgetsModule} from '../../widgets/widgets.module';
+import {WidgetsModule} from '../../../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
 import {ImagesState} from './view/images-state';
-import {ImageGridModule} from '../imagegrid/image-grid.module';
+import {ImageGridModule} from '../grid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewTaskbarComponent} from './image-overview-taskbar.component';
 import {ImageOverviewSearchBarComponent} from './searchbar/image-overview-search-bar.component';

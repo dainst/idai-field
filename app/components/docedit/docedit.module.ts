@@ -12,7 +12,7 @@ import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.com
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.component';
 import {ImagePickerComponent} from './widgets/image-picker.component';
-import {ImageGridModule} from '../imagegrid/image-grid.module';
+import {ImageGridModule} from '../image/grid/image-grid.module';
 import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
 import {DocumentHolder} from './document-holder';
 import {EditFormComponent} from './core/edit-form.component';

@@ -1,18 +1,18 @@
 import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
 import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.component';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
-import {clone} from '../../../core/util/object-util';
+import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
+import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {clone} from '../../../../core/util/object-util';
+import {SearchConstraintsComponent} from '../../../../widgets/search-constraints.component';
 
 
 @Component({
     moduleId: module.id,
     selector: 'image-overview-search-constraints',
-    templateUrl: '../../../widgets/search-constraints.html',
+    templateUrl: '../../../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)',
     }

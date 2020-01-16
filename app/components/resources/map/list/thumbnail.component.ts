@@ -4,7 +4,7 @@ import {ImageDocument} from 'idai-components-2';
 import {BlobMaker} from '../../../../core/imagestore/blob-maker';
 import {Imagestore} from '../../../../core/imagestore/imagestore';
 import {MenuService} from '../../../../menu-service';
-import {ImageViewComponent} from '../../../imageview/image-view.component';
+import {ImageViewComponent} from '../../../image/view/image-view.component';
 import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../../resources.component';
 

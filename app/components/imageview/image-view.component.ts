@@ -11,7 +11,7 @@ import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastor
 import {M} from '../m';
 import {MenuService} from '../../menu-service';
 import {ImagesState} from '../imageoverview/view/images-state';
-import {showMissingImageMessageOnConsole} from '../imagegrid/public';
+import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../imagegrid/public';
 
 
 @Component({
@@ -246,11 +246,12 @@ export class ImageViewComponent implements OnInit, DoCheck {
     private showErrorMessagesForMissingImages() {
 
         this.images
-            .filter(image => image.thumbSrc === BlobMaker.blackImg)
+            .filter(image => !this.containsOriginal(image))
             .forEach(image => {
                 const name = image.document && image.document.resource ? image.document.resource.id : 'unknown';
-                showMissingImageMessageOnConsole(name);
-            })
+                if (this.isMissingImage(image)) showMissingImageMessageOnConsole(name);
+                else showMissingOginalImageMessageOnConsole(name);
+            });
     }
 
 

@@ -93,7 +93,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
         await this.select(await this.fetchThumbnail(selectedDocument), false);
 
         for (let document of documents) {
-            if (document === selectedDocument) {
+            if (document === selectedDocument) { // TODO use ternary to simplify
                 this.images.push(this.selectedImage);
             } else {
                 this.images.push(await this.fetchThumbnail(document));

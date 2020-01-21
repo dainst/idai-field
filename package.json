@@ -65,7 +65,7 @@
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/platform-server": "8.2.14",
-    "@angular/router": "8.2.4",
+    "@angular/router": "8.2.14",
     "@mdi/font": "3.5.95",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",

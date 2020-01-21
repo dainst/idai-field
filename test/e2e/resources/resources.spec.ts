@@ -388,7 +388,7 @@ describe('resources --', () => {
     });
 
 
-    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

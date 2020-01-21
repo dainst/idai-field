@@ -14,7 +14,7 @@ import {BackupProvider} from './backup-provider';
     imports: [
         BrowserModule,
         FormsModule,
-        NgbModule.forRoot()
+        NgbModule
     ],
     declarations: [
         BackupCreationComponent,

@@ -153,7 +153,7 @@ describe('matrix --', () => {
     });
 
 
-    it('clear selection when switching trenches', () => {
+    xit('clear selection when switching trenches', () => {
 
         MatrixPage.clickSingleSelectionModeButton();
         MatrixPage.clickNode('si1');

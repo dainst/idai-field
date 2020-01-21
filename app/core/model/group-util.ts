@@ -1,5 +1,5 @@
 import {FieldDefinition} from '../configuration/model/field-definition';
-import {IS_LIKE, POSITION_RELATIONS, TIME_RELATIONS} from './relation-constants';
+import {IS_INSTANCE_OF, POSITION_RELATIONS, TIME_RELATIONS} from './relation-constants';
 
 
 /**
@@ -33,7 +33,7 @@ export module GroupUtil {
             return 'time';
         } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
             return 'position';
-        } else if (relationName === IS_LIKE) {
+        } else if (relationName === IS_INSTANCE_OF) {
             return 'identification';
         } else {
             return undefined;

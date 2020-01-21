@@ -621,8 +621,8 @@ export class AppConfigurator {
             editable: false
         },
         {
-            name: 'isLike',
-            label: this.i18n({ id: 'configuration.relations.isLike', value: 'Ist wie' }),
+            name: 'isInstanceOf',
+            label: this.i18n({ id: 'configuration.relations.isInstanceOf', value: 'Instanz von' }),
             domain: ['Find:inherit'],
             range: ['Type:inherit']
         }

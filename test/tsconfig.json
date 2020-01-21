@@ -10,7 +10,11 @@
     "removeComments": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
-    "lib": ["es2017", "dom"]
+    "lib": ["es2017", "dom"],
+    "baseUrl": "./",
+    "paths": {
+      "protractor": ["e2e/config/protractor.d.ts"]
+    }
   },
   "exclude": [
     "../node_modules",

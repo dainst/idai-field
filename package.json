@@ -58,13 +58,13 @@
     "url": "https://github.com/dainst/idai-field.git"
   },
   "dependencies": {
-    "@angular/common": "8.2.4",
-    "@angular/core": "8.2.4",
-    "@angular/forms": "8.2.4",
+    "@angular/common": "8.2.14",
+    "@angular/core": "8.2.14",
+    "@angular/forms": "8.2.14",
     "@angular/http": "8.0.0-beta.10",
-    "@angular/platform-browser": "8.2.4",
-    "@angular/platform-browser-dynamic": "8.2.4",
-    "@angular/platform-server": "8.2.4",
+    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/platform-server": "8.2.14",
     "@angular/router": "8.2.4",
     "@mdi/font": "3.5.95",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
@@ -107,7 +107,6 @@
     "@types/leaflet": "1.0.69",
     "@types/leaflet-imageoverlay-rotated": "0.1.0",
     "@types/leaflet.pm": "0.13.0",
-    "@types/node": "12.7.4",
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
     "electron": "6.0.7",
@@ -124,13 +123,13 @@
     "jasmine-core": "2.5.2",
     "ngx-i18nsupport": "0.17.1",
     "pouchdb-adapter-memory": "7.0.0",
-    "protractor": "5.4.1",
+    "protractor": "5.4.2",
     "protractor-console-plugin": "0.1.1",
     "protractor-fail-fast": "3.1.0",
     "protractor-hotkeys": "0.0.5",
     "rimraf": "2.6.2",
     "spectron": "8.0.0",
-    "typescript": "3.5.2",
+    "typescript": "3.7.5",
     "yargs": "12.0.2"
   }
 }

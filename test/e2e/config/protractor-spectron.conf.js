@@ -101,4 +101,4 @@ exports.config = {
     useAllAngular2AppRoots: true
 };
 
-if (failFastActive) exports.config.plugins.push({package: 'protractor-fail-fast'});
+if (failFastActive) exports.config.plugins.push(failFast.init());

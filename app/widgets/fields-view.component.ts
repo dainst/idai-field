@@ -8,7 +8,7 @@ import {GroupUtil} from '../core/model/group-util';
 import {GROUP_NAME, Name, ResourceId} from '../c';
 import {isBoolean} from '../utils';
 import {UtilTranslations} from '../core/util/util-translations';
-import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS, IS_LIKE} from '../core/model/relation-constants';
+import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS, IS_INSTANCE_OF} from '../core/model/relation-constants';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {IdaiType} from '../core/configuration/model/idai-type';
 import {RelationDefinition} from '../core/configuration/model/relation-definition';

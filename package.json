@@ -94,8 +94,8 @@
     "showdown": "1.8.7",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
-    "tsfun": "4.0.11",
-    "tsfun-extra": "4.0.9",
+    "tsfun": "4.0.12",
+    "tsfun-extra": "4.0.12",
     "viz.js": "1.8.1",
     "zone.js": "0.8.26"
   },
@@ -109,8 +109,9 @@
     "@types/leaflet.pm": "0.13.0",
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
-    "electron": "6.0.7",
+    "electron": "7.1.9",
     "electron-builder": "21.2.0",
+    "electron-chromedriver": "7.0.0",
     "electron-notarize": "0.1.1",
     "electron-packager": "14.0.5",
     "file-api": "0.10.4",
@@ -128,7 +129,7 @@
     "protractor-fail-fast": "3.1.0",
     "protractor-hotkeys": "0.0.5",
     "rimraf": "2.6.2",
-    "spectron": "8.0.0",
+    "spectron": "9.0.0",
     "typescript": "3.7.5",
     "yargs": "12.0.2"
   }

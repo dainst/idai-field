@@ -8,6 +8,7 @@ pids
 *.seed
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
+build
 build/Release
 
 # Dependency directory

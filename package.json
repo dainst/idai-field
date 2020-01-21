@@ -97,10 +97,10 @@
     "tsfun": "4.0.12",
     "tsfun-extra": "4.0.12",
     "viz.js": "1.8.1",
-    "zone.js": "0.8.26"
+    "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "8.2.4",
+    "@angular/compiler-cli": "8.2.14",
     "@mapbox/geojsonhint": "2.1.0",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~2.5.41",

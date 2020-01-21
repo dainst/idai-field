@@ -402,7 +402,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
+          <context context-type="sourcefile">components/image/overview/searchbar/image-overview-search-bar.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
@@ -1356,9 +1356,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.relations.isLike" datatype="html">
-        <source>Ist wie</source>
-        <target state="final">Ist wie</target>
+      <trans-unit id="configuration.relations.isInstanceOf" datatype="html">
+        <source>Instanz von</source>
+        <target state="final">Instanz von</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
@@ -1480,11 +1480,11 @@
         Löschen
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
@@ -1496,7 +1496,7 @@
         <source>Löschen</source>
         <target state="final">Löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="sourcefile">components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
@@ -1504,7 +1504,7 @@
         <source>Verknüpfungen entfernen</source>
         <target state="final">Verknüpfungen entfernen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="sourcefile">components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
@@ -1512,7 +1512,7 @@
         <source>Verknüpfen</source>
         <target state="final">Verknüpfen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="sourcefile">components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
@@ -1520,7 +1520,7 @@
         <source>Auswahl aufheben</source>
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="sourcefile">components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
@@ -1528,7 +1528,7 @@
         <source>Nach Bildtyp filtern:</source>
         <target state="final">Nach Bildtyp filtern:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
+          <context context-type="sourcefile">components/image/overview/searchbar/image-overview-search-bar.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -1672,7 +1672,7 @@
         <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</source>
         <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
+          <context context-type="sourcefile">components/image/grid/drop-area.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
@@ -1684,7 +1684,7 @@
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
                 </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="sourcefile">components/image/view/image-view.html</context>
           <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
@@ -1696,7 +1696,7 @@
         Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -1704,7 +1704,7 @@
         <source>Georeferenzdaten</source>
         <target state="final">Georeferenzdaten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
@@ -1712,7 +1712,7 @@
         <source>Vorhanden</source>
         <target state="final">Vorhanden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -1720,7 +1720,7 @@
         <source>Georeferenzdaten löschen</source>
         <target state="final">Georeferenzdaten löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
@@ -1728,7 +1728,7 @@
         <source>Nicht vorhanden</source>
         <target state="final">Nicht vorhanden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
@@ -1736,7 +1736,7 @@
         <source>Worldfile laden</source>
         <target state="final">Worldfile laden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
@@ -1744,7 +1744,7 @@
         <source>Dargestellte Ressourcen</source>
         <target state="final">Dargestellte Ressourcen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/depicts-relations-view.html</context>
+          <context context-type="sourcefile">components/image/view/depicts-relations-view.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -1982,7 +1982,7 @@
         <source>Alle Gruppen ausklappen</source>
         <target state="final">Alle Gruppen ausklappen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="sourcefile">components/image/view/image-view.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -3100,6 +3100,10 @@
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.dimensions" datatype="html">
         <source>Maße</source>
@@ -3237,7 +3241,7 @@
         <source>Verknüpfte Ressourcen</source>
         <target state="final">Verknüpfte Ressourcen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/imageoverview/searchbar/image-overview-search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4487,23 +4491,23 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/link-modal.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/remove-link-modal.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
@@ -4729,7 +4733,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
@@ -4773,7 +4777,7 @@
        Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
@@ -4785,7 +4789,7 @@
             Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
@@ -4799,7 +4803,7 @@
             verknüpft.
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
@@ -4807,7 +4811,7 @@
         <source>Bitte wählen Sie den gewünschten Typ aus.</source>
         <target state="final">Bitte wählen Sie den gewünschten Typ aus.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
@@ -4819,7 +4823,7 @@
                 Bild wird eingelesen...
             </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/upload-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/upload-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -4831,7 +4835,7 @@
                 <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen...
             </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageupload/upload-modal.html</context>
+          <context context-type="sourcefile">components/image/upload/upload-modal.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
@@ -4839,7 +4843,7 @@
         <source>Bilder</source>
         <target state="final">Bilder</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="sourcefile">components/image/view/image-view.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -4851,7 +4855,7 @@
         Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="sourcefile">components/image/view/image-view.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
@@ -4859,7 +4863,7 @@
         <source>Zu verknüpfende Ressource wählen:</source>
         <target state="final">Zu verknüpfende Ressource wählen:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/link-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -4871,7 +4875,7 @@
     Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
 </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/remove-link-modal.html</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4879,7 +4883,7 @@
         <source>Verknüpfungen löschen</source>
         <target state="final">Verknüpfungen löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/remove-link-modal.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
@@ -4891,7 +4895,7 @@
         Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -4903,7 +4907,7 @@
         Möchten Sie das markierte Bild wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/imageoverview/delete-modal.html</context>
+          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>

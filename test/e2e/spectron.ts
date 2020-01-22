@@ -66,8 +66,9 @@ app.start()
     })
     .then(code => {
         return new Promise(resolve => {
-                console.log('removing appData, path:', appDataPath + '/idai-field-client/imagestore/test');
-                rimraf(appDataPath + '/idai-field-client/imagestore/test', () => resolve(code))
+                const deletionPath = appDataPath + '/idai-field-client/imagestore/test';
+                console.log('removing appData at', deletionPath);
+                rimraf(deletionPath, () => resolve(code))
             })
             .catch(err => console.log('error when removing app data', err))
             .then(() => Promise.resolve(code));

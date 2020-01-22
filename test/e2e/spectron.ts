@@ -36,27 +36,19 @@ app.start()
     .then(() => app.client.sessions())
     .then(sessions => {
 
-        let i = 0;
         const sessionId = sessions.value[0].id;
         console.log('electron webdriver session id:', sessionId);
 
-        function takeShot(mode) {}
-
         return new Promise(resolve => {
-            let protractor;
-            if (/^win/.test(process.platform)) { // windows
-                protractor = spawn('cmd', ['/s', '/c', 'protractor',
-                    'test/e2e/config/protractor-spectron.conf.js',
-                    '--seleniumSessionId=' + sessionId,
-                    '--params=' + failFast
+            const protractor = (/^win/.test(process.platform))
+                // windows
+                ? spawn('cmd', ['/s', '/c', 'protractor',
+                    'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
+                ])
+                : spawn('protractor', [
+                    'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
                 ]);
-            } else {
-                protractor = spawn('protractor', [
-                    'test/e2e/config/protractor-spectron.conf.js',
-                    '--seleniumSessionId=' + sessionId,
-                    '--params=' + failFast
-                ]);
-            }
+
             protractor.stdout.setEncoding('utf8');
             protractor.stdout.on('data', data => {
 
@@ -64,18 +56,17 @@ app.start()
                     process.stdout.write(data.substring(10))
                 } else {
                     if (data.indexOf('FAILED') != -1) {
-                        takeShot('Failed in stdout');
+                        // takeScreenshot('Failed in stdout');
                     }
                     process.stdout.write(data);
                 }
             });
             protractor.stderr.setEncoding('utf8');
             protractor.stderr.on('data', data => {
-                takeShot('stderr event');
+                // takeScreenshot('stderr event');
                 process.stderr.write(data);
             });
             protractor.on('close', code => {
-
                 resolve(code);
             });
         });

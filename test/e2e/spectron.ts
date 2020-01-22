@@ -72,4 +72,5 @@ app.start()
             .catch(err => console.log('error when removing app data', err))
             .then(() => Promise.resolve(code));
     })
-    .then(code => app.stop().then(() => process.exit(code)));
+    .then(code => app.stop().then(() => process.exit(code)))
+    .catch(() => process.exit(1));

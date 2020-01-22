@@ -429,7 +429,7 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu/moveModal - move a resource', () => {
+    xit('contextMenu/moveModal - move a resource', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');

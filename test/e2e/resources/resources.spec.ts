@@ -378,7 +378,7 @@ describe('resources --', () => {
     });
 
 
-    it('hide the new resource button while creating a new resource', () => {
+    xit('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
@@ -447,7 +447,7 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu/moveModal - move an operation to root level', () => {
+    xit('contextMenu/moveModal - move an operation to root level', () => {
 
         NavbarPage.clickTab('project');
         browser.sleep(delays.shortRest * 2);

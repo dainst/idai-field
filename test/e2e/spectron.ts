@@ -36,33 +36,29 @@ app.start()
             'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
         ];
 
-        return new Promise(resolve => {
-            const protractor = (/^win/.test(process.platform))
-                // windows
-                ? spawn('cmd', ['/s', '/c', 'protractor'].concat(args))
-                : spawn('protractor', args);
+        const protractor = (/^win/.test(process.platform))
+            // windows
+            ? spawn('cmd', ['/s', '/c', 'protractor'].concat(args))
+            : spawn('protractor', args);
 
-            protractor.stdout.setEncoding('utf8');
-            protractor.stdout.on('data', data => {
+        protractor.stdout.setEncoding('utf8');
+        protractor.stdout.on('data', data => {
 
-                if (data.indexOf('.') == 5) {
-                    process.stdout.write(data.substring(10))
-                } else {
-                    if (data.indexOf('FAILED') != -1) {
-                        // takeScreenshot('Failed in stdout');
-                    }
-                    process.stdout.write(data);
+            if (data.indexOf('.') == 5) {
+                process.stdout.write(data.substring(10))
+            } else {
+                if (data.indexOf('FAILED') != -1) {
+                    // takeScreenshot('Failed in stdout');
                 }
-            });
-            protractor.stderr.setEncoding('utf8');
-            protractor.stderr.on('data', data => {
-                // takeScreenshot('stderr event');
-                process.stderr.write(data);
-            });
-            protractor.on('close', code => {
-                resolve(code);
-            });
+                process.stdout.write(data);
+            }
         });
+        protractor.stderr.setEncoding('utf8');
+        protractor.stderr.on('data', data => {
+            // takeScreenshot('stderr event');
+            process.stderr.write(data);
+        });
+        return new Promise(resolve => protractor.on('close', code => resolve(code)));
     })
     .then(code => {
         return new Promise(resolve => {

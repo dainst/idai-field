@@ -400,7 +400,7 @@ describe('resources --', () => {
     });
 
 
-    it('duplicate a resource', () => {
+    xit('duplicate a resource', () => {
 
         ResourcesPage.performCreateResource('resource1', 'feature');
         ResourcesPage.openEditByDoubleClickResource('resource1');

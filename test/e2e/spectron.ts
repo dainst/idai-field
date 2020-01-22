@@ -14,71 +14,76 @@ let app = new Application({
     path: require('electron'),
     args: ['.', 'test']
 });
+let appDataPath = undefined;
 
-app.start().then(() => app.client.sessions()).then(sessions => {
-
-    let i = 0;
-    const sessionId = sessions.value[0].id;
-    console.log('electron webdriver session id:', sessionId);
-
-    function takeShot(mode) {
-        // console.log('taking screenshot ' + i + ' on ' + mode);
-        // app.browserWindow.capturePage().then(function(imageBuffer) {
-        //     fs.writeFileSync('test/e2e-screenshots/' + i + '.png', imageBuffer);
-        //     i++;
-        // });
-    }
-
-    return new Promise(resolve => {
-        let protractor;
-        if (/^win/.test(process.platform)) { // windows
-            protractor = spawn('cmd', ['/s', '/c', 'protractor',
-                'test/e2e/config/protractor-spectron.conf.js',
-                '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast
-            ]);
+app.start()
+    .then(() => {
+        if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
+            return app.electron.remote.app.getPath('appData');
         } else {
-            protractor = spawn('protractor', [
-                'test/e2e/config/protractor-spectron.conf.js',
-                '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast
-            ]);
+            return Promise.resolve(undefined);
         }
-        protractor.stdout.setEncoding('utf8');
-        protractor.stdout.on('data', data => {
+    })
+    .then(appPath => {
+        if (appPath !== undefined && appPath.length > 10) {
+            appDataPath = appPath;
+            console.log('appDataPath: ', appDataPath);
+            return Promise.resolve(undefined);
+        } else {
+            return Promise.reject(undefined);
+        }
+    })
+    .then(() => app.client.sessions())
+    .then(sessions => {
 
-            if (data.indexOf('.') == 5) {
-                process.stdout.write(data.substring(10))
+        let i = 0;
+        const sessionId = sessions.value[0].id;
+        console.log('electron webdriver session id:', sessionId);
+
+        function takeShot(mode) {}
+
+        return new Promise(resolve => {
+            let protractor;
+            if (/^win/.test(process.platform)) { // windows
+                protractor = spawn('cmd', ['/s', '/c', 'protractor',
+                    'test/e2e/config/protractor-spectron.conf.js',
+                    '--seleniumSessionId=' + sessionId,
+                    '--params=' + failFast
+                ]);
             } else {
-                if (data.indexOf('FAILED') != -1) {
-                    takeShot('Failed in stdout');
-                }
-                process.stdout.write(data);
+                protractor = spawn('protractor', [
+                    'test/e2e/config/protractor-spectron.conf.js',
+                    '--seleniumSessionId=' + sessionId,
+                    '--params=' + failFast
+                ]);
             }
-        });
-        protractor.stderr.setEncoding('utf8');
-        protractor.stderr.on('data', data => {
-            takeShot('stderr event');
-            process.stderr.write(data);
-        });
-        protractor.on('close', code => {
+            protractor.stdout.setEncoding('utf8');
+            protractor.stdout.on('data', data => {
 
-            // app.browserWindow.capturePage().then(function(imageBuffer) {
-            //     fs.writeFileSync('test/e2e-screenshots/close.png', imageBuffer);
-            // });
-            resolve(code);
+                if (data.indexOf('.') == 5) {
+                    process.stdout.write(data.substring(10))
+                } else {
+                    if (data.indexOf('FAILED') != -1) {
+                        takeShot('Failed in stdout');
+                    }
+                    process.stdout.write(data);
+                }
+            });
+            protractor.stderr.setEncoding('utf8');
+            protractor.stderr.on('data', data => {
+                takeShot('stderr event');
+                process.stderr.write(data);
+            });
+            protractor.on('close', code => {
+
+                resolve(code);
+            });
         });
-    });
-
-}).then(code => {
-    if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
-
+    })
+    .then(code => {
         console.log("remove appdata");
-        // does not work on linux anymore since last overall dependencies upgrade, thats what the surrounding if is for
-        return app.electron.remote.app.getPath('appData').then(path => {
-            console.log('appData, path:', path);
-            return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
-        });
-    } else return Promise.resolve(code);
-}).then(code => app.stop().then(() => process.exit(code)))
-.catch(err => console.log('error when removing app data', err));
+        console.log('appData, path:', appDataPath);
+        return new Promise(resolve => rimraf(appDataPath + '/idai-field-client/imagestore/test', () => resolve(code)));
+    })
+    .then(code => app.stop().then(() => process.exit(code)))
+    .catch(err => console.log('error when removing app data', err));

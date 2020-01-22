@@ -81,9 +81,11 @@ app.start()
         });
     })
     .then(code => {
-        console.log("remove appdata");
-        console.log('appData, path:', appDataPath);
-        return new Promise(resolve => rimraf(appDataPath + '/idai-field-client/imagestore/test', () => resolve(code)));
+        return new Promise(resolve => {
+                console.log('removing appData, path:', appDataPath + '/idai-field-client/imagestore/test');
+                rimraf(appDataPath + '/idai-field-client/imagestore/test', () => resolve(code))
+            })
+            .catch(err => console.log('error when removing app data', err))
+            .then(() => Promise.resolve(code));
     })
-    .then(code => app.stop().then(() => process.exit(code)))
-    .catch(err => console.log('error when removing app data', err));
+    .then(code => app.stop().then(() => process.exit(code)));

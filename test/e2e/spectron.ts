@@ -38,16 +38,15 @@ app.start()
 
         const sessionId = sessions.value[0].id;
         console.log('electron webdriver session id:', sessionId);
+        const args = [
+            'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
+        ];
 
         return new Promise(resolve => {
             const protractor = (/^win/.test(process.platform))
                 // windows
-                ? spawn('cmd', ['/s', '/c', 'protractor',
-                    'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
-                ])
-                : spawn('protractor', [
-                    'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
-                ]);
+                ? spawn('cmd', ['/s', '/c', 'protractor'].concat(args))
+                : spawn('protractor', args);
 
             protractor.stdout.setEncoding('utf8');
             protractor.stdout.on('data', data => {

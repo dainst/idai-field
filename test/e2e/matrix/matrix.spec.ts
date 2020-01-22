@@ -78,7 +78,7 @@ describe('matrix --', () => {
     });
 
 
-    it('select and deselect resources', () => {
+    xit('select and deselect resources', () => {
 
         MatrixPage.clickSingleSelectionModeButton();
         MatrixPage.clickNode('si1');

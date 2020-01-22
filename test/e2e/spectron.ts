@@ -17,13 +17,7 @@ let app = new Application({
 let appDataPath = undefined;
 
 app.start()
-    .then(() => {
-        if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
-            return app.electron.remote.app.getPath('appData');
-        } else {
-            return Promise.resolve(undefined);
-        }
-    })
+    .then(() => app?.electron?.remote?.app?.getPath('appData'))
     .then(appPath => {
         if (appPath !== undefined && appPath.length > 10) {
             appDataPath = appPath;

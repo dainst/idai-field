@@ -414,7 +414,7 @@ describe('resources --', () => {
     });
 
 
-    it('create two instances of a new resource', () => {
+    xit('create two instances of a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

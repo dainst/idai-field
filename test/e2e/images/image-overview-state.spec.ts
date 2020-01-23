@@ -19,7 +19,7 @@ describe('images/state --', () => {
     afterEach(done => common.resetConfigJson().then(done));
 
 
-    it('autoselect last selected type filter after returning to images overview', () => {
+    xit('autoselect last selected type filter after returning to images overview', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 

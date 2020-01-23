@@ -31,7 +31,7 @@ describe('matrix --', () => {
         if (i > 0) {
             MenuPage.navigateToSettings();
             await common.resetApp();
-            browser.sleep(delays.shortRest);
+            browser.sleep(delays.shortRest * 2);
             NavbarPage.clickCloseNonResourcesTab();
             MatrixPage.get();
             MatrixPage.performSelectOperation(1);

@@ -25,6 +25,43 @@ describe('Import/Subsystem', () => {
     });
 
 
+    it('update geometry of trench with geojson', async done => {
+
+        await datastore.create(
+            { resource: { identifier: 't1', type: 'Trench', relations: {}}});
+
+        await Importer.doImport(
+            'geojson',
+            new TypeUtility(_projectConfiguration),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            undefined,
+            false, // merge mode gets set automatically
+            false,
+            '{\n' +
+            '  "type": "FeatureCollection",\n' +
+            '  "features": [\n' +
+            '    { "type": "Feature","properties": { "identifier": "t1" },\n' +
+            '    "geometry": {\n' +
+            '        "type": "Polygon",\n' +
+            '        "coordinates": [[[21.0, 37.0],[21.0, 37.0],[21.0,37.0],[21.0,37.0],[21.0,37.0]]]\n' +
+            '      }\n' +
+            '    }\n' +
+            '  ]\n' +
+            ' }', () => '101');
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(1);
+        const resource = result.documents[0].resource;
+        expect(resource.identifier).toEqual('t1');
+        expect(resource.type).toEqual('Trench');
+        expect(resource.geometry.type).toEqual('Polygon');
+        expect(resource.geometry.coordinates).toEqual([[[21.0, 37.0],[21.0, 37.0],[21.0,37.0],[21.0,37.0],[21.0,37.0]]]);
+        done();
+    });
+
+
     it('create one operation', async done => {
 
        await Importer.doImport(

@@ -49,7 +49,7 @@ describe('matrix --', () => {
 
         MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(6));
         for (let i = 1; i <= 6; i++) {
-            browser.wait(EC.presenceOf(MatrixPage.getNode('si' + i)), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(MatrixPage.getNode('si' + i)), delays.ECWaitTime * 2);
         }
 
         MatrixPage.getEdges().then(edges => expect(edges.length).toBe(5));
@@ -60,6 +60,33 @@ describe('matrix --', () => {
         browser.wait(EC.presenceOf(MatrixPage.getSameRankEdge('si3', 'si5')),
             delays.ECWaitTime);
     }
+
+
+    it('clear selection when switching trenches', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+
+        MatrixPage.performSelectOperation(0);
+        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
+        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
+    });
+
+
+    it('select and deselect resources', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+        MatrixPage.clickNode('si2');
+        MatrixPage.clickNode('si3');
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(3));
+
+        MatrixPage.clickNode('si3');
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(2));
+
+        MatrixPage.clickClearSelectionButton();
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
+    });
 
 
     it('edit relations and show updated matrix', () => {
@@ -75,22 +102,6 @@ describe('matrix --', () => {
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si4')), delays.ECWaitTime);
-    });
-
-
-    xit('select and deselect resources', () => {
-
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-        MatrixPage.clickNode('si2');
-        MatrixPage.clickNode('si3');
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(3));
-
-        MatrixPage.clickNode('si3');
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(2));
-
-        MatrixPage.clickClearSelectionButton();
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
     });
 
 
@@ -150,16 +161,5 @@ describe('matrix --', () => {
 
         MatrixPage.performSelectOperation(1);
         testDefaultMatrix();
-    });
-
-
-    xit('clear selection when switching trenches', () => {
-
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-
-        MatrixPage.performSelectOperation(0);
-        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
-        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 });

@@ -62,17 +62,6 @@ describe('matrix --', () => {
     }
 
 
-    it('clear selection when switching trenches', () => {
-
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-
-        MatrixPage.performSelectOperation(0);
-        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
-        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
-    });
-
-
     it('select and deselect resources', () => {
 
         MatrixPage.clickSingleSelectionModeButton();
@@ -86,6 +75,17 @@ describe('matrix --', () => {
 
         MatrixPage.clickClearSelectionButton();
         MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
+    });
+
+
+    it('clear selection when switching trenches', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+
+        MatrixPage.performSelectOperation(0);
+        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
+        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 
 

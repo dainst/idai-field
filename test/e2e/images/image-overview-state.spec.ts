@@ -49,7 +49,7 @@ describe('images/state --', () => {
     });
 
 
-    it('restore grid size after returning to images overview', () => {
+    xit('restore grid size after returning to images overview', () => {
 
         ImageOverviewPage.clickIncreaseGridSizeButton();
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));

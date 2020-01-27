@@ -3,16 +3,16 @@ import {unique} from 'tsfun';
 import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
-import {Imagestore} from '../imagestore/imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
-import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
-import {ImageConverter} from '../imagestore/image-converter';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
 import {Name} from '../../c';
 import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
+import {Imagestore} from '../images/imagestore/imagestore';
+import {ImageConverter} from '../images/imagestore/image-converter';
+import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 
 const {remote, ipcRenderer} = require('electron');
 

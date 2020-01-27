@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewImageDocument} from 'idai-components-2';
-import {Imagestore} from '../../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../../core/util/extension-util';
@@ -13,6 +12,7 @@ import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {Imagestore} from '../../../core/images/imagestore/imagestore';
 
 export interface ImageUploadResult {
 

@@ -1,6 +1,6 @@
 import {Document, ImageResource} from 'idai-components-2';
-import {ImageContainer} from '../../../core/imagestore/image-container';
-import {BlobMaker} from '../../../core/imagestore/blob-maker';
+import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import {ImageContainer} from '../../../core/images/imagestore/image-container';
 
 
 /**

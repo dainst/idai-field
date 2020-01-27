@@ -9,8 +9,6 @@ import {IndexerConfiguration} from '../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
-import {Imagestore} from '../../app/core/imagestore/imagestore';
 import {ChangesStream} from '../../app/core/datastore/core/changes-stream';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
@@ -27,6 +25,8 @@ import {ConfigLoader} from '../../app/core/configuration/config-loader';
 import {ConfigReader} from '../../app/core/configuration/config-reader';
 import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {TabManager} from '../../app/core/tabs/tab-manager';
+import {PouchDbFsImagestore} from '../../app/core/images/imagestore/pouch-db-fs-imagestore';
+import {Imagestore} from '../../app/core/images/imagestore/imagestore';
 
 
 class IdGenerator {

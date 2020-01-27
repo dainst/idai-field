@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, Document} from 'idai-components-2';
-import {ReadImagestore} from '../../../core/imagestore/read-imagestore';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 
 
 @Component({

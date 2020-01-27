@@ -3,7 +3,6 @@ import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
-import {Imagestore} from '../../core/imagestore/imagestore';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
@@ -15,6 +14,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {trimFields} from '../../core/util/trim-fields';
+import {Imagestore} from '../../core/images/imagestore/imagestore';
 
 
 @Injectable()

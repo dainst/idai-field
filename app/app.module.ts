@@ -10,16 +10,11 @@ import {IdaiMessagesModule, MD, Messages, Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
-import {Imagestore} from './core/imagestore/imagestore';
-import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {NavbarComponent} from './components/navbar/navbar.component';
-import {BlobMaker} from './core/imagestore/blob-maker';
-import {ImageConverter} from './core/imagestore/image-converter';
 import {SettingsModule} from './components/settings/settings.module';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
 import {BackupModule} from './components/backup/backup.module';
@@ -59,6 +54,11 @@ import {FieldReadDatastore} from './core/datastore/field/field-read-datastore';
 import {Router} from '@angular/router';
 import {TabManager} from './core/tabs/tab-manager';
 import {TabSpaceCalculator} from './core/tabs/tab-space-calculator';
+import {Imagestore} from './core/images/imagestore/imagestore';
+import {PouchDbFsImagestore} from './core/images/imagestore/pouch-db-fs-imagestore';
+import {ImageConverter} from './core/images/imagestore/image-converter';
+import {BlobMaker} from './core/images/imagestore/blob-maker';
+import {ReadImagestore} from './core/images/imagestore/read-imagestore';
 
 
 const remote = require('electron').remote;

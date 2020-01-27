@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import {ImageConverter} from '../../imagestore/image-converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
+import {ImageConverter} from '../../images/imagestore/image-converter';
 
 
 /**

@@ -1,5 +1,3 @@
-import {ImagestoreErrors} from '../../../../app/core/imagestore/imagestore-errors';
-import {PouchDbFsImagestore} from '../../../../app/core/imagestore/pouch-db-fs-imagestore';
 import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
 import {IndexFacade} from '../../../../app/core/datastore/index/index-facade';
 
@@ -7,6 +5,8 @@ import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
 import {ConstraintIndex} from '../../../../app/core/datastore/index/constraint-index';
+import {PouchDbFsImagestore} from '../../../../app/core/images/imagestore/pouch-db-fs-imagestore';
+import {ImagestoreErrors} from '../../../../app/core/images/imagestore/imagestore-errors';
 
 /**
  * @author Sebastian Cuy

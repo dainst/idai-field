@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {Imagestore} from '../../../../core/imagestore/imagestore';
-import {BlobMaker} from '../../../../core/imagestore/blob-maker';
+import {Imagestore} from '../../../../core/images/imagestore/imagestore';
+import {ImageContainer} from '../../../../core/images/imagestore/image-container';
+import {BlobMaker} from '../../../../core/images/imagestore/blob-maker';
 
 
 @Injectable()

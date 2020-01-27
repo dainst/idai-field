@@ -7,7 +7,7 @@ import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 import {DeleteModalComponent} from './delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
-import {ViewFacade} from '../../resources/view/view-facade';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Component({

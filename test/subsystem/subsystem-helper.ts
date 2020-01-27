@@ -10,14 +10,12 @@ import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore'
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {ChangesStream} from '../../app/core/datastore/core/changes-stream';
-import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
 import {DocumentHolder} from '../../app/components/docedit/document-holder';
 import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
-import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 import {ImageOverviewFacade} from '../../app/components/image/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../app/components/image/overview/view/image-documents-manager';
 import {ImagesState} from '../../app/components/image/overview/view/images-state';
@@ -27,6 +25,8 @@ import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {TabManager} from '../../app/core/tabs/tab-manager';
 import {PouchDbFsImagestore} from '../../app/core/images/imagestore/pouch-db-fs-imagestore';
 import {Imagestore} from '../../app/core/images/imagestore/imagestore';
+import {ViewFacade} from '../../app/core/resources/view/view-facade';
+import {ResourcesStateManager} from '../../app/core/resources/view/resources-state-manager';
 
 
 class IdGenerator {

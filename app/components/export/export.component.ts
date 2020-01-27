@@ -6,7 +6,6 @@ import {FieldDocument, Messages, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
-import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
@@ -20,6 +19,7 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 const remote = require('electron').remote;
 

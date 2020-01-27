@@ -1,7 +1,7 @@
 import {FieldDocument} from 'idai-components-2';
 import {Static} from '../../../static';
-import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
-import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
+import {ResourcesStateManager} from '../../../../../app/core/resources/view/resources-state-manager';
+import {ResourcesState} from '../../../../../app/core/resources/view/state/resources-state';
 
 /**
  * @author Daniel de Oliveira

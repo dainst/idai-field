@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {FieldDocument, Document} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {ViewFacade} from '../view/view-facade';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Injectable()

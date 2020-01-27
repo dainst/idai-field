@@ -9,7 +9,6 @@ import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
 import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
-import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
@@ -29,6 +28,7 @@ import {AngularUtility} from '../../common/angular-utility';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import {TabManager} from '../../core/tabs/tab-manager';
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 
 @Component({

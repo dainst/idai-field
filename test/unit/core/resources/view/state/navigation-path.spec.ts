@@ -1,6 +1,6 @@
 import {Static} from '../../../../static';
-import {toResourceId} from '../../../../../../app/components/resources/view/state/navigation-path-segment';
-import {NavigationPath} from '../../../../../../app/components/resources/view/state/navigation-path';
+import {NavigationPath} from '../../../../../../app/core/resources/view/state/navigation-path';
+import {toResourceId} from '../../../../../../app/core/resources/view/state/navigation-path-segment';
 
 /**
  * @author Daniel de Oliveira

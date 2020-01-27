@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewDocument, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
-import {ViewFacade} from '../view/view-facade';
 import {MenuService} from '../../../menu-service';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Injectable()

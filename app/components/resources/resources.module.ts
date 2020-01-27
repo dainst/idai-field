@@ -14,7 +14,6 @@ import {DoceditModule} from '../docedit/docedit.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {ViewFacade} from './view/view-facade';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
@@ -29,7 +28,6 @@ import {SearchSuggestionsComponent} from './searchbar/search-suggestions.compone
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
-import {ResourcesStateManager} from './view/resources-state-manager';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
@@ -47,6 +45,8 @@ import {MapComponent} from './map/map/map.component';
 import {ResourcesTypesComponent} from './types/resources-types.component';
 import {TypeRowComponent} from './types/type-row.component';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {ResourcesStateManager} from '../../core/resources/view/resources-state-manager';
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 const remote = require('electron').remote;
 

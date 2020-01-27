@@ -6,7 +6,6 @@ import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {ViewFacade} from './view/view-facade';
 import {M} from '../m';
 import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
@@ -14,6 +13,7 @@ import {AngularUtility} from '../../common/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 
 @Component({

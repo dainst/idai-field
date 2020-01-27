@@ -2,13 +2,13 @@ import {Component, Input} from '@angular/core';
 import {FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
-import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {NavigationPath} from '../view/state/navigation-path';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 
 
 export type PopoverMenu = 'none'|'info'|'children';

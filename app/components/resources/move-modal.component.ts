@@ -6,10 +6,10 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from './move-utility';
-import {ViewFacade} from './view/view-facade';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 
 @Component({

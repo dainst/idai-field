@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
-import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';
@@ -12,6 +11,7 @@ import {MessagesConversion} from '../../docedit/messages-conversion';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Component({

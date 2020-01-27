@@ -2,10 +2,10 @@ import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/co
 import {Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
-import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({
     moduleId: module.id,

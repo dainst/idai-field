@@ -6,7 +6,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {ViewFacade} from './view/view-facade';
+import {ViewFacade} from '../../core/resources/view/view-facade';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {ViewFacade} from '../view/view-facade';
 import {ResourcesComponent} from '../resources.component';
 import {SidebarListComponent} from './list/sidebar-list.component';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';

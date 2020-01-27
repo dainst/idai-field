@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument, Messages} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
-import {ViewFacade} from '../../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
@@ -12,6 +11,7 @@ import {M} from '../../m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {TabManager} from '../../../core/tabs/tab-manager';
+import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Component({

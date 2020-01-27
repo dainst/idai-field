@@ -1,7 +1,7 @@
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import * as PouchDB from 'pouchdb';
-import {Static} from '../unit/static';
-import {TypeUtility} from '../../app/core/model/type-utility';
+import {TypeUtility} from '../../../../app/core/model/type-utility';
+import {Static} from '../../static';
 
 
 /**

@@ -1,6 +1,7 @@
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import * as PouchDB from 'pouchdb';
-import {Static} from '../unit/static';
+import {Static} from '../../static';
+
 
 describe('DAOs/Access/Subsystem', () => {
 

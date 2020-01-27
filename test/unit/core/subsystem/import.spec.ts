@@ -1,11 +1,11 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
-import {Importer} from '../../app/core/import/importer';
-import {TypeUtility} from '../../app/core/model/type-utility';
-import {ValidationErrors} from '../../app/core/model/validation-errors';
-import {ImportErrors} from '../../app/core/import/import/import-errors';
-import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {IdaiType} from '../../app/core/configuration/model/idai-type';
+import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
+import {Importer} from '../../../../app/core/import/importer';
+import {TypeUtility} from '../../../../app/core/model/type-utility';
+import {IdaiType} from '../../../../app/core/configuration/model/idai-type';
+import {ValidationErrors} from '../../../../app/core/model/validation-errors';
+import {ImportErrors} from '../../../../app/core/import/import/import-errors';
 
 /**
  * @author Daniel de Oliveira

@@ -19,7 +19,7 @@ export class TypeRowComponent implements OnChanges {
     @Input() document: FieldDocument;
 
     public mainThumbnailUrl: string|undefined;
-    public linkedThumbnailUrls: string[] = ['1', '2', '3', '4'];
+    public linkedThumbnailUrls: string[] = [];
 
 
     constructor(private imagestore: ReadImagestore,

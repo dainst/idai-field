@@ -43,12 +43,14 @@ export class TabManager {
         this.getTabToTheLeftOfActiveTab()
     );
 
+
     public async routeChanged(url: string) {
 
         await this.openTabForRoute(url);
         this.updateActiveTab(url);
         this.url = url;
     }
+
 
     async initialize() {
 

@@ -80,13 +80,13 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
-        const currentMode: 'map'|'list' = this.getMode();
+        const currentMode: 'map'|'list'|'types' = this.getMode();
 
         this.resourcesState.view = viewName;
 
         if (viewName !== 'project' && viewName !== 'types') {
             if (!this.resourcesState.operationViewStates[viewName]) {
-                this.resourcesState.operationViewStates[viewName] = ViewState.default_();
+                this.resourcesState.operationViewStates[viewName] = ViewState.build();
             }
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
@@ -118,7 +118,7 @@ export class ResourcesStateManager {
     }
 
 
-    public getMode(): 'map'|'list' {
+    public getMode(): 'map'|'list'|'types' {
 
         return ResourcesState.getMode(this.resourcesState);
     }
@@ -161,7 +161,7 @@ export class ResourcesStateManager {
     }
 
 
-    public setMode(mode: 'map'|'list') {
+    public setMode(mode: 'map'|'list'|'types') {
 
         ResourcesState.setMode(this.resourcesState, mode);
         this.serialize();

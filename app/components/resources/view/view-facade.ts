@@ -86,7 +86,7 @@ export class ViewFacade {
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: 'map'|'list') => this.resourcesStateManager.setMode(mode);
+    public setMode = (mode: 'map'|'list'|'types') => this.resourcesStateManager.setMode(mode);
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 

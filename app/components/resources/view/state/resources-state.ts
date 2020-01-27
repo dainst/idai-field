@@ -86,7 +86,7 @@ export module ResourcesState {
     }
 
 
-    export function getMode(state: ResourcesState): 'map'|'list' {
+    export function getMode(state: ResourcesState): 'map'|'list'|'types' {
 
         return viewState(state).mode;
     }
@@ -145,7 +145,7 @@ export module ResourcesState {
     }
 
 
-    export function setMode(state: ResourcesState, mode: 'map'|'list') {
+    export function setMode(state: ResourcesState, mode: 'map'|'list'|'types') {
 
         viewState(state).mode = mode;
     }
@@ -201,8 +201,8 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.default_(),
-            typesManagementState: ViewState.default_(),
+            overviewState: ViewState.build(),
+            typesManagementState: ViewState.build('types'),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -237,7 +237,7 @@ export module ResourcesState {
 
     export function deactivate(state: ResourcesState, viewName: string) {
 
-        const deactivatedState: ViewState = ViewState.default_();
+        const deactivatedState: ViewState = ViewState.build();
         deactivatedState.operation = state.operationViewStates[viewName].operation;
         deactivatedState.layerIds = state.operationViewStates[viewName].layerIds;
 

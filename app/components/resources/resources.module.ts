@@ -45,6 +45,7 @@ import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {MapComponent} from './map/map/map.component';
+import {ResourcesTypesComponent} from './types/resources-types.component';
 
 const remote = require('electron').remote;
 
@@ -64,6 +65,7 @@ const remote = require('electron').remote;
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
+        ResourcesTypesComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,

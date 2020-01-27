@@ -88,6 +88,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isReady = () => this.viewFacade.isReady();
 
+    public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
+
 
     ngAfterViewChecked() {
 
@@ -213,7 +215,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async switchMode(mode: 'map' | 'list') {
+    public async switchMode(mode: 'map'|'list'|'types') {
 
         if (!this.isReady()) return;
 

@@ -12,7 +12,7 @@ export interface ViewState {
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
-    mode: 'map'|'list';
+    mode: 'map'|'list'|'types';
 
     // Extended search mode. The name bypassHierarchy is legacy and is kept to prevent issues with existing
     // config.json files.
@@ -26,14 +26,14 @@ export interface ViewState {
 
 export module ViewState {
 
-    export function default_(): ViewState {
+    export function build(mode: 'map'|'list'|'types' = 'map'): ViewState {
 
         return {
             operation: undefined,
             bypassHierarchy: false,
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
-            mode: 'map',
+            mode: mode,
             layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}

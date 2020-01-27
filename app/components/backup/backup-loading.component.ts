@@ -7,7 +7,7 @@ import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../common/project-name-validator';
-import {TabManager} from '../tab-manager';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({

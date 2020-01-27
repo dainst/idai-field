@@ -6,12 +6,12 @@ import {ViewFacade} from '../../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {TabManager} from '../../tab-manager';
 import {ImageViewComponent} from '../view/image-view.component';
 import {MenuService} from '../../../menu-service';
 import {M} from '../../m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {TabManager} from '../../../core/tabs/tab-manager';
 
 
 @Component({

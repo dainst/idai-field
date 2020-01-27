@@ -48,9 +48,7 @@ import {Translations} from './translations';
 import {ExportModule} from './components/export/export.module';
 import {ProjectsModalComponent} from './components/navbar/projects-modal.component';
 import {FieldDatastore} from './core/datastore/field/field-datastore';
-import {TabManager} from './components/tab-manager';
 import {MenuService} from './menu-service';
-import {TabSpaceCalculator} from './components/tab-space-calculator';
 import {UtilTranslations} from './core/util/util-translations';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 import {ConfigReader} from './core/configuration/config-reader';
@@ -59,6 +57,8 @@ import {AppConfigurator} from './core/configuration/app-configurator';
 import {StateSerializer} from './common/state-serializer';
 import {FieldReadDatastore} from './core/datastore/field/field-read-datastore';
 import {Router} from '@angular/router';
+import {TabManager} from './core/tabs/tab-manager';
+import {TabSpaceCalculator} from './core/tabs/tab-space-calculator';
 
 
 const remote = require('electron').remote;

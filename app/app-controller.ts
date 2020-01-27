@@ -8,7 +8,7 @@ import {DocumentCache} from './core/datastore/core/document-cache';
 import {ImagesState} from './components/image/overview/view/images-state';
 import {ResourcesStateManager} from './components/resources/view/resources-state-manager';
 import {IndexFacade} from './core/datastore/index/index-facade';
-import {TabManager} from './components/tab-manager';
+import {TabManager} from './core/tabs/tab-manager';
 
 const remote = require('electron').remote;
 

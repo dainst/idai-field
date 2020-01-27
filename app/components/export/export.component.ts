@@ -13,13 +13,13 @@ import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastor
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {TypeUtility} from '../../core/model/type-utility';
-import {TabManager} from '../tab-manager';
 import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 const remote = require('electron').remote;
 

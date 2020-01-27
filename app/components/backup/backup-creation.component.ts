@@ -6,7 +6,7 @@ import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
-import {TabManager} from '../tab-manager';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({

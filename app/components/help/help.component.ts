@@ -3,7 +3,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
-import {TabManager} from '../tab-manager';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({

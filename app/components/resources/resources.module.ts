@@ -39,7 +39,6 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './map/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
-import {TabManager} from '../tab-manager';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
@@ -47,6 +46,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {MapComponent} from './map/map/map.component';
 import {ResourcesTypesComponent} from './types/resources-types.component';
 import {TypeRowComponent} from './types/type-row.component';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 const remote = require('electron').remote;
 

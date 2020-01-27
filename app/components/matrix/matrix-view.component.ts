@@ -11,7 +11,6 @@ import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
-import {TabManager} from '../tab-manager';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {POSITION_RELATIONS, TIME_RELATIONS} from '../../core/model/relation-constants';
 import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
@@ -22,6 +21,7 @@ import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
 import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
 import IS_CUT_BY = POSITION_RELATIONS.IS_CUT_BY;
 import CUTS = POSITION_RELATIONS.CUTS;
+import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({

@@ -22,12 +22,12 @@ import {ImportValidator} from '../../core/import/import/process/import-validator
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {TabManager} from '../tab-manager';
 import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../common/angular-utility';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
+import {TabManager} from '../../core/tabs/tab-manager';
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
 
 

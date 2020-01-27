@@ -9,7 +9,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {clone} from '../../../core/util/object-util';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {TypeUtility} from '../../../core/model/type-utility';
-import {TabManager} from '../../tab-manager';
+import {TabManager} from '../../../core/tabs/tab-manager';
 
 
 /**

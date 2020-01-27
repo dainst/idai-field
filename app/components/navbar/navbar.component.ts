@@ -2,12 +2,13 @@ import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ViewFacade} from '../resources/view/view-facade';
-import {Tab, TabManager} from '../tab-manager';
-import {TabUtil} from '../tab-util';
 import {MenuService} from '../../menu-service';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectsModalComponent} from './projects-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
+import {TabManager} from '../../core/tabs/tab-manager';
+import {Tab} from '../../core/tabs/tab';
+import {TabUtil} from '../../core/tabs/tab-util';
 
 
 @Component({

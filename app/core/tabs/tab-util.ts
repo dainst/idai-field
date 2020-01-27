@@ -1,9 +1,9 @@
-import {Tab} from './tab-manager';
-
-
 /**
  * @author Thomas Kleinke
  */
+import {Tab} from './tab';
+
+
 export module TabUtil {
 
     export function getTabId(tab: Tab): string {

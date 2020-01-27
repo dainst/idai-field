@@ -20,13 +20,13 @@ import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
-import {TabManager} from '../../app/components/tab-manager';
 import {ImageOverviewFacade} from '../../app/components/image/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../app/components/image/overview/view/image-documents-manager';
 import {ImagesState} from '../../app/components/image/overview/view/images-state';
 import {ConfigLoader} from '../../app/core/configuration/config-loader';
 import {ConfigReader} from '../../app/core/configuration/config-reader';
 import {AppConfigurator} from '../../app/core/configuration/app-configurator';
+import {TabManager} from '../../app/core/tabs/tab-manager';
 
 
 class IdGenerator {
@@ -117,7 +117,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
         fieldDocumentDatastore,
-        { url: '/project', events: { subscribe: () => Promise.resolve() } } as any);
+        () => Promise.resolve());
+    tabManager.routeChanged('/project');
 
     const resourcesStateManager = new ResourcesStateManager(
         fieldDocumentDatastore,

@@ -5,7 +5,7 @@ import {ResourcesStateManager} from '../../app/components/resources/view/resourc
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
-import {TabManager} from '../../app/components/tab-manager';
+import {TabManager} from '../../app/core/tabs/tab-manager';
 
 
 /**

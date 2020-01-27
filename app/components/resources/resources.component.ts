@@ -12,8 +12,8 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../common/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
-import {TabManager} from '../tab-manager';
 import {IdaiType} from '../../core/configuration/model/idai-type';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({

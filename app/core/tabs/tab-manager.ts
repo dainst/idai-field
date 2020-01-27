@@ -1,18 +1,10 @@
 import {Document, FieldDocument} from 'idai-components-2';
-import {StateSerializer} from '../common/state-serializer';
-import {IndexFacade} from '../core/datastore/index/index-facade';
-import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
-
-
-export type Tab = {
-    routeName: string,
-    label: string
-    operationId: string,
-    operationType: string;
-    shown: boolean
-}
+import {Tab} from './tab';
+import {IndexFacade} from '../datastore/index/index-facade';
+import {StateSerializer} from '../../common/state-serializer';
+import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 
 
 /**

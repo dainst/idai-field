@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldDocument} from 'idai-components-2';
 import {Loading} from '../../../widgets/loading';
-import {NavigationService} from './navigation-service';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 
 
 type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string, shortened: boolean } };

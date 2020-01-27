@@ -2,10 +2,10 @@ import {Component, Input} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {SidebarListComponent} from './sidebar-list.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
-import {NavigationService} from '../../navigation/navigation-service';
 import {RoutingService} from '../../../routing-service';
 import {ResourcesComponent} from '../../resources.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
+import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
 
 
 @Component({

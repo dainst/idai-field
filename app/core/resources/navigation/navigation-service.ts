@@ -1,16 +1,14 @@
-import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {FieldDocument, Document} from 'idai-components-2';
-import {RoutingService} from '../../routing-service';
-import {ObserverUtil} from '../../../core/util/observer-util';
-import {TypeUtility} from '../../../core/model/type-utility';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {ObserverUtil} from '../../util/observer-util';
+import {TypeUtility} from '../../model/type-utility';
+import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {RelationDefinition} from '../../configuration/model/relation-definition';
+import {IdaiType} from '../../configuration/model/idai-type';
+import {ViewFacade} from '../view/view-facade';
+import {RoutingService} from '../../../components/routing-service';
 
 
-@Injectable()
 /**
  * This serves to centralize the behaviour of navigation buttons of both the sidebar as well as the
  * full scale list.

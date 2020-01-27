@@ -22,7 +22,6 @@ import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
-import {NavigationService} from './navigation/navigation-service';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
@@ -47,6 +46,7 @@ import {TypeRowComponent} from './types/type-row.component';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesStateManager} from '../../core/resources/view/resources-state-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {NavigationService} from '../../core/resources/navigation/navigation-service';
 
 const remote = require('electron').remote;
 
@@ -86,12 +86,22 @@ const remote = require('electron').remote;
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
-        NavigationService,
         RoutingService,
         DoceditLauncher,
         LayerManager,
         LayerImageProvider,
         ResourceDeletion,
+        {
+            provide: NavigationService,
+            useFactory: (projectConfiguration: ProjectConfiguration,
+                         routingService: RoutingService,
+                         viewFacade: ViewFacade,
+                         typeUtility: TypeUtility) => {
+
+                return new NavigationService(projectConfiguration, routingService, viewFacade, typeUtility);
+            },
+            deps: [ProjectConfiguration, RoutingService, ViewFacade, TypeUtility]
+        },
         {
             provide: ResourcesStateManager,
             useFactory: (datastore: FieldReadDatastore,

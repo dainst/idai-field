@@ -3,7 +3,6 @@ import {to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../../widgets/loading';
-import {NavigationService} from '../../navigation/navigation-service';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
@@ -11,6 +10,7 @@ import {RoutingService} from '../../../routing-service';
 import {ContextMenuAction} from '../context-menu.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
+import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
 
 
 @Component({

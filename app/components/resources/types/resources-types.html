@@ -1,5 +1,5 @@
 <div>
     <div *ngFor="let document of documents">
-        {{document.resource.identifier}}
+        <type-row [document]="document"></type-row>
     </div>
 </div>

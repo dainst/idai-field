@@ -18,11 +18,12 @@ export module IndexerConfiguration {
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', type: 'exist' },
+            'isInstanceOf:contain': { path: 'resource.relations.isInstanceOf', type: 'contain' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
-            'conflicts:exist': { path: '_conflicts', type: 'exist' }
+            'conflicts:exist': { path: '_conflicts', type: 'exist' },
         }, projectConfiguration.getTypesMap(), true);
 
         const createdFulltextIndex = FulltextIndex.setUp({ index: {}, showWarnings: true } as any);

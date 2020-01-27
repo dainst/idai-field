@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
+import {FieldDocument} from 'idai-components-2';
 
 @Component({
     selector: 'resources-types',

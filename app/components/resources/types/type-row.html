@@ -1,0 +1,11 @@
+<div>
+    <b>{{document.resource.identifier}}</b>
+    <div class="image-row">
+        <div class="type-image-container">
+            <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
+        </div>
+        <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
+            <img [src]="thumbnailUrl">
+        </div>
+    </div>
+</div>

@@ -11,7 +11,6 @@ import {DocumentCache} from '../../../../app/core/datastore/core/document-cache'
 import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
 import {ChangesStream} from '../../../../app/core/datastore/core/changes-stream';
 import {PersistenceManager} from '../../../../app/core/model/persistence-manager';
-import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
 import {Validator} from '../../../../app/core/model/validator';
 import {SyncTarget} from '../../../../app/core/settings/settings';
 import {FsConfigReader} from '../../../../app/core/util/fs-config-reader';
@@ -27,6 +26,7 @@ import {PouchDbFsImagestore} from '../../../../app/core/images/imagestore/pouch-
 import {Imagestore} from '../../../../app/core/images/imagestore/imagestore';
 import {ViewFacade} from '../../../../app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../app/core/resources/view/resources-state-manager';
+import {DocumentHolder} from '../../../../app/core/docedit/document-holder';
 
 
 class IdGenerator {

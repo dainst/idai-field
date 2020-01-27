@@ -1,23 +1,21 @@
-import {Injectable} from '@angular/core';
 import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
+import {clone} from '../util/object-util';
 import {Document, NewDocument} from 'idai-components-2';
-import {Validator} from '../../core/model/validator';
-import {PersistenceManager} from '../../core/model/persistence-manager';
-import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {Validations} from '../../core/model/validations';
-import {TypeUtility} from '../../core/model/type-utility';
-import {UsernameProvider} from '../../core/settings/username-provider';
-import {clone} from '../../core/util/object-util';
-import {M} from '../m';
+import {Validator} from '../model/validator';
+import {PersistenceManager} from '../model/persistence-manager';
+import {DocumentDatastore} from '../datastore/document-datastore';
+import {Validations} from '../model/validations';
+import {TypeUtility} from '../model/type-utility';
+import {UsernameProvider} from '../settings/username-provider';
 import {DuplicationUtil} from './duplication-util';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {FieldDefinition} from '../../core/configuration/model/field-definition';
-import {IdaiType} from '../../core/configuration/model/idai-type';
-import {trimFields} from '../../core/util/trim-fields';
-import {Imagestore} from '../../core/images/imagestore/imagestore';
+import {ProjectConfiguration} from '../configuration/project-configuration';
+import {FieldDefinition} from '../configuration/model/field-definition';
+import {IdaiType} from '../configuration/model/idai-type';
+import {trimFields} from '../util/trim-fields';
+import {Imagestore} from '../images/imagestore/imagestore';
+import {M} from '../../components/m';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

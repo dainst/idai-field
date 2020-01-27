@@ -7,7 +7,6 @@ import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.com
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {DocumentHolder} from './document-holder';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
@@ -16,6 +15,7 @@ import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {DocumentHolder} from '../../core/docedit/document-holder';
 
 
 @Component({

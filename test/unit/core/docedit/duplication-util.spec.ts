@@ -1,5 +1,5 @@
 import {NewDocument, Document} from 'idai-components-2';
-import {DuplicationUtil} from '../../../../app/components/docedit/duplication-util';
+import {DuplicationUtil} from '../../../../app/core/docedit/duplication-util';
 
 
 /**

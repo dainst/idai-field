@@ -1,8 +1,8 @@
 import {Document} from 'idai-components-2';
-import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
 import {clone} from '../../../../app/core/util/object-util';
 import {M} from '../../../../app/components/m';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
+import {DocumentHolder} from '../../../../app/core/docedit/document-holder';
 
 /**
  * @author Daniel de Oliveira

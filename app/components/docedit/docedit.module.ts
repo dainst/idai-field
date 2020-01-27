@@ -14,7 +14,6 @@ import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.compon
 import {ImagePickerComponent} from './widgets/image-picker.component';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
-import {DocumentHolder} from './document-holder';
 import {EditFormComponent} from './core/edit-form.component';
 import {RelationPickerComponent} from './widgets/relationpicker/relation-picker.component';
 import {RelationPickerGroupComponent} from './widgets/relationpicker/relation-picker-group.component';
@@ -36,11 +35,34 @@ import {GeometryComponent} from './core/forms/geometry.component';
 import {MultiInputComponent} from './core/forms/multi-input.component';
 import {OutliersComponent} from './core/forms/widgets/outliers.component';
 import {EmptyValuelistInfoComponent} from './core/forms/widgets/empty-valuelist-info.component';
+import {DocumentHolder} from '../../core/docedit/document-holder';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {PersistenceManager} from '../../core/model/persistence-manager';
+import {Validator} from '../../core/model/validator';
+import {Imagestore} from '../../core/images/imagestore/imagestore';
+import {TypeUtility} from '../../core/model/type-utility';
+import {UsernameProvider} from '../../core/settings/username-provider';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 
 
 @NgModule({
     providers: [
-        DocumentHolder,
+        {
+            provide: DocumentHolder,
+            useFactory: (projectConfiguration: ProjectConfiguration,
+                         persistenceManager: PersistenceManager,
+                         validator: Validator,
+                         imagestore: Imagestore,
+                         typeUtility: TypeUtility,
+                         usernameProvider: UsernameProvider,
+                         datastore: DocumentDatastore) => {
+
+                return new DocumentHolder(projectConfiguration, persistenceManager,
+                    validator, imagestore, typeUtility, usernameProvider, datastore);
+            },
+            deps: [ProjectConfiguration, PersistenceManager, Validator,
+                Imagestore, TypeUtility, UsernameProvider, DocumentDatastore]
+        },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],
     imports: [

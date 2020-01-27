@@ -5,7 +5,7 @@ import {Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
-import {MoveUtility} from './move-utility';
+import {MoveUtility} from '../../core/resources/move-utility';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

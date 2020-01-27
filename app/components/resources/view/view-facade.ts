@@ -4,7 +4,6 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
-import {NavigationPath} from './state/navigation-path';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

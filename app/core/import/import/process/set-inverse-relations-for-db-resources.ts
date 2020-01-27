@@ -2,11 +2,11 @@ import {is, on, union, isNot, includedIn, keysAndValues} from 'tsfun';
 import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
-import {ConnectedDocsResolution} from '../../../model/connected-docs-resolution';
 import {clone} from '../../../util/object-util';
 import {ResourceId} from '../../../../c';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
+import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
 
 
 /**
@@ -45,8 +45,7 @@ export async function setInverseRelationsForDbResources(
         assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
-        ConnectedDocsResolution
-            .determineDocsToUpdate(document, copyOfTargetDocuments, inverseRelationsMap)
+        determineDocsToUpdate(document, copyOfTargetDocuments, inverseRelationsMap)
             .forEach(assertInSameOperationWith(document));
 
         return copyOfTargetDocuments;

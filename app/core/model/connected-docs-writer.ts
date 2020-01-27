@@ -1,9 +1,9 @@
 import {flatMap, subtract, to} from 'tsfun';
 import {Document, Relations, toResourceId} from 'idai-components-2';
-import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
+import {determineDocsToUpdate} from './determine-docs-to-update';
 
 
 /**
@@ -33,7 +33,7 @@ export class ConnectedDocsWriter {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+        const docsToUpdate = determineDocsToUpdate(
             document,
             connectedDocs,
             this.inverseRelationsMap,
@@ -48,7 +48,7 @@ export class ConnectedDocsWriter {
 
         const connectedDocs = await this.getExistingConnectedDocs([document]);
 
-        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+        const docsToUpdate = determineDocsToUpdate(
             document,
             connectedDocs,
             this.inverseRelationsMap,

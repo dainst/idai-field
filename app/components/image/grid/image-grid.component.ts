@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
 import {Messages, Document, ImageDocument} from 'idai-components-2';
-import {ImageGridConstruction} from './image-grid-builder';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {showMissingImageMessageOnConsole} from '../log-messages';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {constructGrid} from '../../../core/images/grid/construct-grid';
 
 
 @Component({
@@ -102,7 +102,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) return;
 
-        const rows = ImageGridConstruction.calcGrid(
+        const rows = constructGrid(
             this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth,
             this.paddingRight
         );

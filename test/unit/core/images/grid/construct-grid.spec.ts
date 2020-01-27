@@ -1,9 +1,10 @@
-import {ImageGridConstruction} from '../../../app/components/image/grid/image-grid-builder';
+import {constructGrid} from '../../../../../app/core/images/grid/construct-grid';
+
 
 /**
  * @author Daniel de Oliveira
  */
-describe('ImageGridConstruction', () => {
+describe('constructGrid', () => {
 
     const documents = [{
         id: 'o1',
@@ -20,7 +21,7 @@ describe('ImageGridConstruction', () => {
 
     it('should keep the aspect ration of an image', ()=> {
 
-        const rows = ImageGridConstruction.calcGrid(documents as any,4,800, 20);
+        const rows = constructGrid(documents as any,4,800, 20);
 
         expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight * 2);
     });
@@ -28,6 +29,6 @@ describe('ImageGridConstruction', () => {
 
     it('should throw when nrOfColumns not integer', () => {
 
-        expect(function(){ImageGridConstruction.calcGrid([],4.1,0, 20)}).toThrow();
+        expect(function(){constructGrid([],4.1,0, 20)}).toThrow();
     });
 });

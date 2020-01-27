@@ -1,5 +1,3 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
 import {Document, FieldDocument} from 'idai-components-2';
 import {StateSerializer} from '../common/state-serializer';
 import {IndexFacade} from '../core/datastore/index/index-facade';
@@ -17,7 +15,6 @@ export type Tab = {
 }
 
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  */
@@ -26,20 +23,17 @@ export class TabManager {
     private tabs: Array<Tab> = [];
     private activeTab: Tab|undefined;
 
+    private url: string = '';
+
 
     constructor(indexFacade: IndexFacade,
                 private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,
-                private router: Router) {
+                private navigate: (path: string[]) => Promise<void>) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
         this.initialize();
-
-        this.router.events.subscribe(async () => {
-            await this.openTabForRoute(this.router.url);
-            this.updateActiveTab(this.router.url);
-        });
     }
 
 
@@ -57,13 +51,19 @@ export class TabManager {
         this.getTabToTheLeftOfActiveTab()
     );
 
+    public async routeChanged(url: string) {
+
+        await this.openTabForRoute(url);
+        this.updateActiveTab(url);
+        this.url = url;
+    }
 
     async initialize() {
 
         this.tabs = await this.deserialize();
         this.validateTabSpace();
 
-        await this.openTabForRoute(this.router.url);
+        await this.openTabForRoute(this.url);
         await this.validateTabs();
         this.validateTabSpace();
     }
@@ -200,9 +200,9 @@ export class TabManager {
     private async navigateToTabRoute(tab: Tab|undefined) {
 
         if (tab) {
-            await this.router.navigate([tab.routeName, tab.operationId]);
+            await this.navigate([tab.routeName, tab.operationId]);
         } else {
-            await this.router.navigate(['resources', 'project']);
+            await this.navigate(['resources', 'project']);
         }
     }
 

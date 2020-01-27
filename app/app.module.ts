@@ -56,6 +56,9 @@ import {ProjectConfiguration} from './core/configuration/project-configuration';
 import {ConfigReader} from './core/configuration/config-reader';
 import {ConfigLoader} from './core/configuration/config-loader';
 import {AppConfigurator} from './core/configuration/app-configurator';
+import {StateSerializer} from './common/state-serializer';
+import {FieldReadDatastore} from './core/datastore/field/field-read-datastore';
+import {Router} from '@angular/router';
 
 
 const remote = require('electron').remote;
@@ -216,7 +219,23 @@ registerLocaleData(localeDe, 'de');
         ImportValidator,
         { provide: MD, useClass: M},
         SynchronizationStatus,
-        TabManager,
+        {
+            provide: TabManager,
+            useFactory: (
+                indexFacade: IndexFacade,
+                tabSpaceCalculator: TabSpaceCalculator,
+                stateSerializer: StateSerializer,
+                datastore: FieldReadDatastore,
+                router: Router
+            ) => {
+                const tabManager = new TabManager(
+                    indexFacade, tabSpaceCalculator, stateSerializer, datastore,
+                    async (path: string[]) => { await router.navigate(path) });
+                router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
+                return tabManager;
+            },
+            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldReadDatastore, Router]
+        },
         TabSpaceCalculator,
         MenuService,
         UtilTranslations

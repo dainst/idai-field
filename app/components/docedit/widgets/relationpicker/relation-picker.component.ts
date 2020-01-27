@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
 import {isNot, undefinedOrEmpty} from 'tsfun';
 import {Document, ReadDatastore} from 'idai-components-2';
-import {RelationPickerSuggestions} from './relation-picker-suggestions';
+import {RelationPickerSuggestions} from '../../../../core/docedit/relation-picker-suggestions';
 
 
 @Component({

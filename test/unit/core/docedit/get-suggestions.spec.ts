@@ -1,13 +1,13 @@
 import {Document} from 'idai-components-2';
 import {Static} from '../../static';
-import {RelationPickerSuggestions} from '../../../../app/core/docedit/relation-picker-suggestions';
 import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
+import {getSuggestions, MAX_SUGGESTIONS} from '../../../../app/core/docedit/get-suggestions';
 
 
 /**
  * @author Thomas Kleinke
  */
-describe('RelationPickerSuggestions', () => {
+describe('getSuggestions', () => {
 
     let datastore;
 
@@ -30,7 +30,7 @@ describe('RelationPickerSuggestions', () => {
             range: ['RangeType1', 'RangeType2']
         };
 
-        await RelationPickerSuggestions.getSuggestions(datastore, document, relationDefinition,
+        await getSuggestions(datastore, document, relationDefinition,
             'input');
 
         expect(datastore.find).toHaveBeenCalledWith({
@@ -41,7 +41,7 @@ describe('RelationPickerSuggestions', () => {
                    value: ['id'],
                    type: 'subtract'
                }
-            }, limit: RelationPickerSuggestions.MAX_SUGGESTIONS,
+            }, limit: MAX_SUGGESTIONS,
             sort: 'exactMatchFirst'
         });
 
@@ -62,7 +62,7 @@ describe('RelationPickerSuggestions', () => {
             range: ['RangeType']
         };
 
-        await RelationPickerSuggestions.getSuggestions(datastore, document, relationDefinition);
+        await getSuggestions(datastore, document, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
@@ -72,7 +72,7 @@ describe('RelationPickerSuggestions', () => {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
                     type: 'subtract'
                 }
-            }, limit: RelationPickerSuggestions.MAX_SUGGESTIONS,
+            }, limit: MAX_SUGGESTIONS,
             sort: 'exactMatchFirst'
         });
 
@@ -94,7 +94,7 @@ describe('RelationPickerSuggestions', () => {
             sameMainTypeResource: true
         };
 
-        await RelationPickerSuggestions.getSuggestions(datastore, document, relationDefinition);
+        await getSuggestions(datastore, document, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
@@ -104,7 +104,7 @@ describe('RelationPickerSuggestions', () => {
                     value: ['id'],
                     type: 'subtract'
                 }, 'isRecordedIn:contain': 'operationId',
-            }, limit: RelationPickerSuggestions.MAX_SUGGESTIONS,
+            }, limit: MAX_SUGGESTIONS,
             sort: 'exactMatchFirst'
         });
 
@@ -126,7 +126,7 @@ describe('RelationPickerSuggestions', () => {
         };
 
         try {
-            await RelationPickerSuggestions.getSuggestions(datastore, document, relationDefinition);
+            await getSuggestions(datastore, document, relationDefinition);
         } catch (err) {
             fail();
         }
@@ -139,7 +139,7 @@ describe('RelationPickerSuggestions', () => {
                     value: [],
                     type: 'subtract'
                 },
-            }, limit: RelationPickerSuggestions.MAX_SUGGESTIONS,
+            }, limit: MAX_SUGGESTIONS,
             sort: 'exactMatchFirst'
         });
 

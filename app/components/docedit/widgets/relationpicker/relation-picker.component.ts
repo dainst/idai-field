@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
 import {isNot, undefinedOrEmpty} from 'tsfun';
 import {Document, ReadDatastore} from 'idai-components-2';
-import {RelationPickerSuggestions} from '../../../../core/docedit/relation-picker-suggestions';
+import {getSuggestions} from '../../../../core/docedit/get-suggestions';
 
 
 @Component({
@@ -215,8 +215,8 @@ export class RelationPickerComponent implements OnChanges {
         this.updateSuggestionsMode = true;
 
         try {
-            this.suggestions = await RelationPickerSuggestions
-                .getSuggestions(this.datastore, this.document, this.relationDefinition, this.idSearchString);
+            this.suggestions = await getSuggestions(
+                this.datastore, this.document, this.relationDefinition, this.idSearchString);
         } catch (err) {
             console.error(err);
         } finally {

@@ -39,7 +39,6 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Validator} from '../../core/model/validator';
-import {Imagestore} from '../../core/images/imagestore/imagestore';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
@@ -52,16 +51,15 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         imagestore: Imagestore,
                          typeUtility: TypeUtility,
                          usernameProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
                 return new DocumentHolder(projectConfiguration, persistenceManager,
-                    validator, imagestore, typeUtility, usernameProvider, datastore);
+                    validator, typeUtility, usernameProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
-                Imagestore, TypeUtility, UsernameProvider, DocumentDatastore]
+                TypeUtility, UsernameProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

@@ -32,10 +32,6 @@
       object-fit: scale-down;
       user-select: none;
       -webkit-user-drag: none;
-
-      &.incomplete {
-        filter: grayscale(100%) brightness(50%);
-      }
     }
   }
 

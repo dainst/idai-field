@@ -150,7 +150,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         projectConfiguration,
         persistenceManager,
         new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), typeUtility),
-        undefined,
         typeUtility,
         { getUsername: () => 'fakeuser' },
         documentDatastore

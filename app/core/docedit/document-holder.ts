@@ -12,7 +12,6 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {IdaiType} from '../configuration/model/idai-type';
 import {trimFields} from '../util/trim-fields';
-import {Imagestore} from '../images/imagestore/imagestore';
 import {DoceditErrors} from './docedit-errors';
 
 
@@ -42,7 +41,6 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private imagestore: Imagestore,
         private typeUtility: TypeUtility,
         private usernameProvider: UsernameProvider,
         private datastore: DocumentDatastore) {

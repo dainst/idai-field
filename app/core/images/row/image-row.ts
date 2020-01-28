@@ -2,15 +2,17 @@ import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
 
 
+export type NextPageResult = { newImageIds: string[], scrollWidth: number };
+
 /**
  * @author Thomas Kleinke
  */
 export class ImageRow {
 
-    private firstShownImageIndex: number = -1;
-    private lastShownImageIndex: number = -1;
+    private firstShownImageIndex: number = 0;
+    private lastShownImageIndex: number = 0;
 
-    private highestImageIndex: number = 0;
+    private highestImageIndex: number = -1;
 
 
     constructor(private width: number,
@@ -20,16 +22,17 @@ export class ImageRow {
 
 
     public getFirstShownImageIndex = (): number => this.firstShownImageIndex;
+
     public getLastShownImageIndex = (): number => this.lastShownImageIndex;
 
 
-    public nextPage(): { newImageIds: string[], scrollWidth: number }|undefined {
+    public nextPage(): NextPageResult {
 
-        if (this.images.length === 0) return undefined;
+        if (this.images.length === 0) return { newImageIds: [], scrollWidth: 0 };
 
         const scrollWidth: number = this.computeScrollWidth();
 
-        this.firstShownImageIndex = this.lastShownImageIndex + 1;
+        this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();
 
         const newImagesIds: string[] = this.getNewImagesIds();
@@ -47,30 +50,32 @@ export class ImageRow {
 
         let scrollWidth = 0;
 
-        if (this.firstShownImageIndex === -1) return scrollWidth;
+        if (this.lastShownImageIndex === 0) return scrollWidth;
 
-        for (let i = this.firstShownImageIndex; i <= this.lastShownImageIndex; i++) {
-            scrollWidth += this.images[i].resource.width;
+        for (let i = this.firstShownImageIndex; i < this.lastShownImageIndex; i++) {
+            scrollWidth += this.calculateImageWidth(this.images[i]);
         }
 
         return scrollWidth;
     }
 
 
-    private calculateLastShownImageIndex() {
+    private calculateImageWidth(image: ImageDocument) {
 
-        this.lastShownImageIndex = this.firstShownImageIndex;
+        return ImageWidthCalculator.computeWidth(
+            image.resource.width, image.resource.height, this.height, this.maxImageWidth
+        );
+    }
+
+
+    private calculateLastShownImageIndex() {
 
         let availableWidth: number = this.width;
 
         for (let i = this.firstShownImageIndex; i < this.images.length; i++) {
-            availableWidth -= ImageWidthCalculator.computeWidth(
-                this.images[i].resource.width, this.images[i].resource.height, this.height, this.maxImageWidth
-            );
-
-            if (availableWidth < 0) break;
-
+            availableWidth -= this.calculateImageWidth(this.images[i]);
             this.lastShownImageIndex = i;
+            if (availableWidth < 0) break;
         }
     }
 
@@ -79,11 +84,7 @@ export class ImageRow {
 
         if (this.highestImageIndex >= this.lastShownImageIndex) return [];
 
-        const maxIndex: number = this.lastShownImageIndex === this.images.length - 1
-            ? this.lastShownImageIndex
-            : this.lastShownImageIndex + 1;
-
-        return this.images.slice(this.highestImageIndex, maxIndex + 1)
+        return this.images.slice(this.highestImageIndex + 1, this.lastShownImageIndex + 1)
             .map(image => image.resource.id);
     }
 }

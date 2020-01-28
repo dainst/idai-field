@@ -4,7 +4,7 @@ import {FieldDocument, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageRow} from '../../../core/images/row/image-row';
+import {ImageRow, NextPageResult} from '../../../core/images/row/image-row';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -22,6 +22,7 @@ const MAX_IMAGE_WIDTH: number = 600;
 export class TypeRowComponent implements OnChanges {
 
     @ViewChild('typeRow', { static: false }) typeRowElement: ElementRef;
+    @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
     @Input() document: FieldDocument;
 
@@ -44,12 +45,16 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    public isShown(thumbnailUrl: string): boolean {
+    public async nextPage() {
 
-        const index: number = this.linkedThumbnailUrls.indexOf(thumbnailUrl);
+        const result: NextPageResult = this.imageRow.nextPage();
+        if (result.scrollWidth === 0) return;
 
-        return index >= this.imageRow.getFirstShownImageIndex()
-            && index <= this.imageRow.getLastShownImageIndex();
+        this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
+            await this.getThumbnailUrls(result.newImageIds)
+        );
+
+        this.imageRowElement.nativeElement.style['right'] = result.scrollWidth + 'px';
     }
 
 
@@ -79,12 +84,11 @@ export class TypeRowComponent implements OnChanges {
             await this.imageDatastore.getMultiple(imageIds)
         );
 
-        const result: any = this.imageRow.nextPage();
-        if (result) {
-            this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
-                await this.getThumbnailUrls(result.newImageIds)
-            );
-        }
+        const result: NextPageResult = this.imageRow.nextPage();
+
+        this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
+            await this.getThumbnailUrls(result.newImageIds)
+        );
     }
 
 

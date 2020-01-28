@@ -39,10 +39,25 @@
     }
   }
 
-  .image-row {
-    display: flex;
-    align-items: center;
-    background-color: black;
+  .image-row-container {
     overflow: hidden;
+
+    .image-row {
+      position: relative;
+      width: fit-content;
+
+      display: flex;
+      align-items: center;
+      background-color: black;
+    }
+  }
+
+  .next-page-button {
+    height: 175px;
+    right: 23px;
+    position: absolute;
+    width: 30px;
+    background-color: black;
+    opacity: 0.5;
   }
 }

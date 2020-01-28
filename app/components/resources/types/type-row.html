@@ -7,9 +7,14 @@
             <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
         </div>
     </div>
-    <div class="image-row">
-        <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
-            <img [src]="thumbnailUrl" [class.incomplete]="!isShown(thumbnailUrl)">
+
+    <div class="image-row-container">
+        <div #imageRow class="image-row">
+            <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
+                <img [src]="thumbnailUrl">
+            </div>
         </div>
     </div>
+
+    <div class="next-page-button" (click)="nextPage()"></div>
 </div>

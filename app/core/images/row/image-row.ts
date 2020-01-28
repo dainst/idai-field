@@ -21,11 +21,6 @@ export class ImageRow {
                 private images: Array<ImageDocument>) {}
 
 
-    public getFirstShownImageIndex = (): number => this.firstShownImageIndex;
-
-    public getLastShownImageIndex = (): number => this.lastShownImageIndex;
-
-
     public nextPage(): NextPageResult {
 
         if (this.images.length === 0) return { newImageIds: [], scrollWidth: 0 };

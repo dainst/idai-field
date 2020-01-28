@@ -10,6 +10,8 @@ export class ImageRow {
     private firstShownImageIndex: number = -1;
     private lastShownImageIndex: number = -1;
 
+    private highestImageIndex: number = 0;
+
 
     constructor(private width: number,
                 private height: number,
@@ -17,14 +19,41 @@ export class ImageRow {
                 private images: Array<ImageDocument>) {}
 
 
-    public nextPage(): string[] {
+    public getFirstShownImageIndex = (): number => this.firstShownImageIndex;
+    public getLastShownImageIndex = (): number => this.lastShownImageIndex;
 
-        if (this.images.length === 0) return [];
+
+    public nextPage(): { newImageIds: string[], scrollWidth: number }|undefined {
+
+        if (this.images.length === 0) return undefined;
+
+        const scrollWidth: number = this.computeScrollWidth();
 
         this.firstShownImageIndex = this.lastShownImageIndex + 1;
         this.calculateLastShownImageIndex();
 
-        return this.getIdsOfShownImages();
+        const newImagesIds: string[] = this.getNewImagesIds();
+
+        this.highestImageIndex = Math.max(this.highestImageIndex, this.lastShownImageIndex);
+
+        return {
+            newImageIds: newImagesIds,
+            scrollWidth: scrollWidth
+        }
+    }
+
+
+    private computeScrollWidth(): number {
+
+        let scrollWidth = 0;
+
+        if (this.firstShownImageIndex === -1) return scrollWidth;
+
+        for (let i = this.firstShownImageIndex; i <= this.lastShownImageIndex; i++) {
+            scrollWidth += this.images[i].resource.width;
+        }
+
+        return scrollWidth;
     }
 
 
@@ -46,9 +75,15 @@ export class ImageRow {
     }
 
 
-    private getIdsOfShownImages(): string[] {
+    private getNewImagesIds(): string[] {
 
-        return this.images.slice(this.firstShownImageIndex, this.lastShownImageIndex + 1)
+        if (this.highestImageIndex >= this.lastShownImageIndex) return [];
+
+        const maxIndex: number = this.lastShownImageIndex === this.images.length - 1
+            ? this.lastShownImageIndex
+            : this.lastShownImageIndex + 1;
+
+        return this.images.slice(this.highestImageIndex, maxIndex + 1)
             .map(image => image.resource.id);
     }
 }

@@ -9,7 +9,7 @@
     </div>
     <div class="image-row">
         <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
-            <img [src]="thumbnailUrl">
+            <img [src]="thumbnailUrl" [class.incomplete]="!isShown(thumbnailUrl)">
         </div>
     </div>
 </div>

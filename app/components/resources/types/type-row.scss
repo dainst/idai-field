@@ -4,7 +4,7 @@
   margin: 2px;
 
   .type-info {
-    width: 304px;
+    min-width: 304px;
     height: 175px;
     border-right: 2px solid lightgrey;
 
@@ -32,6 +32,10 @@
       object-fit: scale-down;
       user-select: none;
       -webkit-user-drag: none;
+
+      &.incomplete {
+        filter: grayscale(100%) brightness(50%);
+      }
     }
   }
 
@@ -39,5 +43,6 @@
     display: flex;
     align-items: center;
     background-color: black;
+    overflow: hidden;
   }
 }

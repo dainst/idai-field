@@ -39,7 +39,17 @@ export class TypeRowComponent implements OnChanges {
     async ngOnChanges() {
 
         this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);
-        this.linkedThumbnailUrls = await this.getLinkedThumbnailUrls(this.document);
+
+        await this.updateLinkedThumbnails(this.document);
+    }
+
+
+    public isShown(thumbnailUrl: string): boolean {
+
+        const index: number = this.linkedThumbnailUrls.indexOf(thumbnailUrl);
+
+        return index >= this.imageRow.getFirstShownImageIndex()
+            && index <= this.imageRow.getLastShownImageIndex();
     }
 
 
@@ -56,7 +66,7 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    private async getLinkedThumbnailUrls(document: FieldDocument): Promise<string[]> {
+    private async updateLinkedThumbnails(document: FieldDocument) {
 
         const imageIds: string[] = document.resource.type === 'TypeCatalog'
             ? await this.getLinkedImageIdsForTypeCatalog(document)
@@ -69,7 +79,12 @@ export class TypeRowComponent implements OnChanges {
             await this.imageDatastore.getMultiple(imageIds)
         );
 
-        return this.getThumbnailUrls(this.imageRow.nextPage());
+        const result: any = this.imageRow.nextPage();
+        if (result) {
+            this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
+                await this.getThumbnailUrls(result.newImageIds)
+            );
+        }
     }
 
 

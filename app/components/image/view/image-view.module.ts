@@ -31,29 +31,17 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
     providers: [
         {
             provide: ImageDocumentsManager,
-            useFactory: (imagesState: ImagesState,
-                         imageDatastore: ImageReadDatastore) => {
-                return new ImageDocumentsManager(imagesState, imageDatastore);
-            },
+            useClass: ImageDocumentsManager,
             deps: [ImagesState, ImageReadDatastore]
         },
         {
             provide: ImageOverviewFacade,
-            useFactory: (imageDocumentsManager: ImageDocumentsManager,
-                         imagesState: ImagesState,
-                         typeUtility: TypeUtility) => {
-                return new ImageOverviewFacade(imageDocumentsManager, imagesState, typeUtility);
-            },
+            useClass: ImageOverviewFacade,
             deps: [ImageDocumentsManager, ImagesState, TypeUtility]
         },
         {
             provide: PersistenceHelper,
-            useFactory: (imageOverviewFacade: ImageOverviewFacade,
-                         persistenceManager: PersistenceManager,
-                         usernameProvider: UsernameProvider,
-                         imagestore: Imagestore) => {
-                return new PersistenceHelper(imageOverviewFacade, persistenceManager, usernameProvider, imagestore);
-            },
+            useClass: PersistenceHelper,
             deps: [ImageOverviewFacade, PersistenceManager, UsernameProvider, Imagestore]
         }
     ],

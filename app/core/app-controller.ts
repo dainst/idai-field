@@ -1,14 +1,14 @@
-/// <reference path="desktop/express-import" />
+/// <reference path="../desktop/express-import" />
 
 import {Injectable} from '@angular/core';
 import * as express from 'express';
 import {Document} from 'idai-components-2';
-import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
-import {DocumentCache} from './core/datastore/core/document-cache';
-import {ImagesState} from './core/images/overview/view/images-state';
-import {IndexFacade} from './core/datastore/index/index-facade';
-import {TabManager} from './core/tabs/tab-manager';
-import {ResourcesStateManager} from './core/resources/view/resources-state-manager';
+import {PouchdbManager} from './datastore/core/pouchdb-manager';
+import {DocumentCache} from './datastore/core/document-cache';
+import {ImagesState} from './images/overview/view/images-state';
+import {IndexFacade} from './datastore/index/index-facade';
+import {TabManager} from './tabs/tab-manager';
+import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
 const remote = require('electron').remote;
 

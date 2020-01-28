@@ -7,23 +7,23 @@
 $roboto-font-path: '../fonts/';
 @import 'roboto-fontface';
 
-@import 'components/navbar/navbar';
-@import 'desktop/info-window';
+@import 'navbar/navbar';
+@import '../desktop/info-window';
 @import 'spinner';
 @import 'buttons';
 @import 'default-page';
-@import 'components/resources/resources';
-@import 'components/import/import';
-@import 'components/export/export';
-@import 'components/settings/settings';
-@import 'components/image/view/image-view';
-@import 'components/widgets/widgets';
-@import 'components/docedit/docedit';
-@import 'components/image/grid/image-grid';
-@import 'components/image/overview/image-overview';
-@import 'components/image/upload/image-upload';
-@import 'components/matrix/matrix-view';
-@import 'components/help/help';
+@import 'resources/resources';
+@import 'import/import';
+@import 'export/export';
+@import 'settings/settings';
+@import 'image/view/image-view';
+@import 'widgets/widgets';
+@import 'docedit/docedit';
+@import 'image/grid/image-grid';
+@import 'image/overview/image-overview';
+@import 'image/upload/image-upload';
+@import 'matrix/matrix-view';
+@import 'help/help';
 
 .search-help-tooltip {
   .tooltip-inner {
@@ -266,7 +266,7 @@ select.form-control:not([size]):not([multiple]) {
   -moz-appearance: none;
   background-position: right 50%;
   background-repeat: no-repeat;
-  background-image: url(../img/chevron-down.png);
+  background-image: url(../../img/chevron-down.png);
   padding-right: 1.5em;
   height: auto;
 }

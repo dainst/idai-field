@@ -7,7 +7,7 @@ var rename = require('gulp-rename');
 gulp.task('convert-sass', () => {
 
     return gulp.src([
-        'app/app.scss',
+        'app/components/app.scss',
         'node_modules/leaflet/dist/leaflet.css',
         'node_modules/Leaflet.vector-markers/dist/leaflet-vector-markers.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'

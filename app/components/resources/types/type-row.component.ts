@@ -1,8 +1,13 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
+import {ImageRow} from '../../../core/images/row/image-row';
+
+
+const MAX_IMAGE_WIDTH: number = 600;
 
 
 @Component({
@@ -16,14 +21,19 @@ import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
  */
 export class TypeRowComponent implements OnChanges {
 
+    @ViewChild('typeRow', { static: false }) typeRowElement: ElementRef;
+
     @Input() document: FieldDocument;
 
     public mainThumbnailUrl: string|undefined;
     public linkedThumbnailUrls: string[] = [];
 
+    private imageRow: ImageRow;
+
 
     constructor(private imagestore: ReadImagestore,
-                private datastore: FieldReadDatastore) {}
+                private fieldDatastore: FieldReadDatastore,
+                private imageDatastore: ImageReadDatastore) {}
 
 
     async ngOnChanges() {
@@ -35,10 +45,11 @@ export class TypeRowComponent implements OnChanges {
 
     private async getMainThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
 
-        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+        const mainImageId: string|undefined = TypeRowComponent.getMainImageId(document);
+        if (!mainImageId) return undefined;
 
         return await this.imagestore.read(
-            document.resource.relations['isDepictedIn'][0],
+            mainImageId,
             false,
             true
         );
@@ -47,45 +58,69 @@ export class TypeRowComponent implements OnChanges {
 
     private async getLinkedThumbnailUrls(document: FieldDocument): Promise<string[]> {
 
-        return document.resource.type === 'TypeCatalog'
-            ? this.getLinkedThumbnailUrlsForTypeCatalog(document)
-            : this.getLinkedThumbnailUrlsForType(document);
+        const imageIds: string[] = document.resource.type === 'TypeCatalog'
+            ? await this.getLinkedImageIdsForTypeCatalog(document)
+            : await this.getLinkedImageIdsForType(document);
+
+        this.imageRow = new ImageRow(
+            this.typeRowElement.nativeElement.offsetWidth - MAX_IMAGE_WIDTH,
+            this.typeRowElement.nativeElement.offsetHeight,
+            MAX_IMAGE_WIDTH,
+            await this.imageDatastore.getMultiple(imageIds)
+        );
+
+        return this.getThumbnailUrls(this.imageRow.nextPage());
     }
 
 
-    private async getLinkedThumbnailUrlsForTypeCatalog(document: FieldDocument): Promise<string[]> {
+    private async getLinkedImageIdsForTypeCatalog(document: FieldDocument): Promise<string[]> {
 
-        const documents: Array<FieldDocument> = (await this.datastore.find(
+        const documents: Array<FieldDocument> = (await this.fieldDatastore.find(
             { constraints: { 'liesWithin:contain': document.resource.id } }
         )).documents;
 
         return (await asyncMap(
-            (document: FieldDocument) => this.getTypeThumbnailUrl(document)
+            (document: FieldDocument) => this.getTypeImageId(document)
         )(documents)).filter(id => id !== undefined) as string[];
     }
 
 
-    private async getLinkedThumbnailUrlsForType(document: FieldDocument): Promise<string[]> {
+    private async getLinkedImageIdsForType(document: FieldDocument): Promise<string[]> {
 
-        const documents: Array<FieldDocument> = (await this.datastore.find(
+        const documents: Array<FieldDocument> = (await this.fieldDatastore.find(
             { constraints: { 'isInstanceOf:contain': document.resource.id } }
         )).documents;
 
-        return (await asyncMap(
-            (document: FieldDocument) => this.getMainThumbnailUrl(document)
-        )(documents)).filter(id => id !== undefined) as string[];
+        return documents.map((document: FieldDocument) => TypeRowComponent.getMainImageId(document))
+            .filter(id => id !== undefined) as string[];
     }
 
 
-    private async getTypeThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
+    private async getTypeImageId(document: FieldDocument): Promise<string|undefined> {
 
-        let thumbnailUrl: string|undefined = await this.getMainThumbnailUrl(document);
+        let imageId: string|undefined = await TypeRowComponent.getMainImageId(document);
 
-        if (!thumbnailUrl) {
-            const linkedThumbnailUrls: string[] = await this.getLinkedThumbnailUrlsForType(document);
-            if (linkedThumbnailUrls.length > 0) thumbnailUrl = linkedThumbnailUrls[0];
+        if (!imageId) {
+            const linkedImageIds: string[] = await this.getLinkedImageIdsForType(document);
+            if (linkedImageIds.length > 0) imageId = linkedImageIds[0];
         }
 
-        return thumbnailUrl;
+        return imageId;
+    }
+
+
+    private async getThumbnailUrls(imageIds: string[]): Promise<string[]> {
+
+        return asyncMap((imageId: string) => {
+            return this.imagestore.read(imageId, false, true);
+        })(imageIds);
+    }
+
+
+    private static getMainImageId(document: FieldDocument): string|undefined {
+
+        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+
+        return document.resource.relations['isDepictedIn'][0];
     }
 }

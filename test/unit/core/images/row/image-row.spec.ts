@@ -48,7 +48,7 @@ describe('ImageRow', () => {
         const firstPageResult = imageRow.nextPage();
         expect(firstPageResult.newImageIds).toEqual(['i1', 'i2']);
         const secondPageResult = imageRow.nextPage();
-        expect(secondPageResult.newImageIds).toEqual([]);
-        expect(secondPageResult.scrollWidth).toBe(200);
+        expect(secondPageResult.newImageIds).toEqual([]); // no new images
+        expect(secondPageResult.scrollWidth).toBe(200);   // show the second image of the first page as first image now
     });
 });

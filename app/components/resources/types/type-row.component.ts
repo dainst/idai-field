@@ -63,7 +63,7 @@ export class TypeRowComponent implements OnChanges {
             : await this.getLinkedImageIdsForType(document);
 
         this.imageRow = new ImageRow(
-            this.typeRowElement.nativeElement.offsetWidth - MAX_IMAGE_WIDTH,
+            this.typeRowElement.nativeElement.offsetWidth - 304,
             this.typeRowElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
             await this.imageDatastore.getMultiple(imageIds)

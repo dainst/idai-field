@@ -16,6 +16,7 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {DocumentHolder} from '../../core/docedit/document-holder';
+import {DoceditErrors} from '../../core/docedit/docedit-errors';
 
 
 @Component({
@@ -168,7 +169,10 @@ export class DoceditComponent {
                 : await this.documentHolder.save();
             await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, this.operationInProgress);
         } catch (errorWithParams) {
-            await this.handleSaveError(errorWithParams);
+            await this.handleSaveError(
+                errorWithParams.length > 0 && errorWithParams[0] === DoceditErrors.NOT_FOUND
+                    ? M.DATASTORE_ERROR_NOT_FOUND
+                    : errorWithParams);
         } finally {
             this.loading.stop();
             this.operationInProgress = 'none';

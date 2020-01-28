@@ -13,7 +13,7 @@ import {FieldDefinition} from '../configuration/model/field-definition';
 import {IdaiType} from '../configuration/model/idai-type';
 import {trimFields} from '../util/trim-fields';
 import {Imagestore} from '../images/imagestore/imagestore';
-import {M} from '../../components/m';
+import {DoceditErrors} from './docedit-errors';
 
 
 /**
@@ -76,6 +76,9 @@ export class DocumentHolder {
     };
 
 
+    /**
+     * @throws [DoceditErrors.NOT_FOUND]
+     */
     public async save(): Promise<Document> {
 
         await this.performAssertions();
@@ -92,6 +95,9 @@ export class DocumentHolder {
     }
 
 
+    /**
+     * @throws [DoceditErrors.NOT_FOUND]
+     */
     public async duplicate(numberOfDuplicates: number): Promise<Document> {
 
         const documentAfterSave: Document = await this.save();
@@ -179,7 +185,7 @@ export class DocumentHolder {
         try {
             return await this.datastore.get(id, { skipCache: true });
         } catch (e) {
-            throw [M.DATASTORE_ERROR_NOT_FOUND];
+            throw [DoceditErrors.NOT_FOUND];
         }
     }
 

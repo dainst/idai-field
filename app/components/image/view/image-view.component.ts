@@ -6,7 +6,7 @@ import {DoceditComponent} from '../../docedit/docedit.component';
 import {RoutingService} from '../../routing-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {M} from '../../m';
-import {MenuService} from '../../../menu-service';
+import {MenuService} from '../../../desktop/menu-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../log-messages';
 import {ImageContainer} from '../../../core/images/imagestore/image-container';

@@ -1,7 +1,7 @@
 import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {MenuService} from '../../menu-service';
+import {MenuService} from '../../desktop/menu-service';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectsModalComponent} from './projects-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';

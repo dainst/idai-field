@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ImageDocument} from 'idai-components-2';
-import {MenuService} from '../../../../menu-service';
+import {MenuService} from '../../../../desktop/menu-service';
 import {ImageViewComponent} from '../../../image/view/image-view.component';
 import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../../resources.component';

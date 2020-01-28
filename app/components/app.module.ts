@@ -43,7 +43,7 @@ import {Translations} from '../translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
-import {MenuService} from '../menu-service';
+import {MenuService} from '../desktop/menu-service';
 import {UtilTranslations} from '../core/util/util-translations';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {ConfigReader} from '../core/configuration/config-reader';

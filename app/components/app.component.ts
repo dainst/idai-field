@@ -3,7 +3,7 @@ import {Event, NavigationStart, Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Messages} from 'idai-components-2';
 import {AppController} from '../core/app-controller';
-import {MenuService} from '../menu-service';
+import {MenuService} from '../desktop/menu-service';
 import {UtilTranslations} from '../core/util/util-translations';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 

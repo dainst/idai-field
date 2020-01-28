@@ -6,7 +6,7 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewComponent} from '../view/image-view.component';
-import {MenuService} from '../../../menu-service';
+import {MenuService} from '../../../desktop/menu-service';
 import {M} from '../../m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

@@ -1,13 +1,11 @@
-import {Injectable} from '@angular/core';
 import {equal} from 'tsfun';
 import {Query, ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {TypeUtility} from '../../../../core/model/type-utility';
-import {clone} from '../../../../core/util/object-util';
+import {TypeUtility} from '../../../model/type-utility';
+import {clone} from '../../../util/object-util';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy

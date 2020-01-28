@@ -5,7 +5,7 @@ import * as express from 'express';
 import {Document} from 'idai-components-2';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {DocumentCache} from './core/datastore/core/document-cache';
-import {ImagesState} from './components/image/overview/view/images-state';
+import {ImagesState} from './core/images/overview/view/images-state';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {TabManager} from './core/tabs/tab-manager';
 import {ResourcesStateManager} from './core/resources/view/resources-state-manager';

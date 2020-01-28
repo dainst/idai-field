@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument, Messages} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
-import {ImageOverviewFacade} from './view/imageoverview-facade';
+import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewComponent} from '../view/image-view.component';

@@ -2,7 +2,7 @@ import {ImageDocument} from 'idai-components-2';
 import * as PouchDB from 'pouchdb';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
-import {ImageOverviewFacade} from '../../../../app/components/image/overview/view/imageoverview-facade';
+import {ImageOverviewFacade} from '../../../../app/core/images/overview/view/imageoverview-facade';
 import {Static} from '../../static';
 
 

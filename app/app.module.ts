@@ -59,6 +59,7 @@ import {PouchDbFsImagestore} from './core/images/imagestore/pouch-db-fs-imagesto
 import {ImageConverter} from './core/images/imagestore/image-converter';
 import {BlobMaker} from './core/images/imagestore/blob-maker';
 import {ReadImagestore} from './core/images/imagestore/read-imagestore';
+import {ImageModule} from './components/image/image.module';
 
 
 const remote = require('electron').remote;
@@ -74,8 +75,9 @@ registerLocaleData(localeDe, 'de');
 
 @NgModule({
     imports: [
-        ImageOverviewModule,
+        ImageModule,
         ImageViewModule,
+        ImageOverviewModule,
         ResourcesModule,
         SettingsModule,
         BrowserModule,

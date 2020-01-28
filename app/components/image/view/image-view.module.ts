@@ -38,11 +38,6 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
             provide: ImageOverviewFacade,
             useClass: ImageOverviewFacade,
             deps: [ImageDocumentsManager, ImagesState, TypeUtility]
-        },
-        {
-            provide: PersistenceHelper,
-            useClass: PersistenceHelper,
-            deps: [ImageOverviewFacade, PersistenceManager, UsernameProvider, Imagestore]
         }
     ],
     entryComponents: [

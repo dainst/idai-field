@@ -7,7 +7,7 @@ import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/m';
 import {SynchronizationStatus} from './synchronization-status';
-import {Name} from '../../c';
+import {Name} from '../../common/c';
 import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Imagestore} from '../images/imagestore/imagestore';

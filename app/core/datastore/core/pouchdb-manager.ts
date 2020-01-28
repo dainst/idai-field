@@ -7,7 +7,7 @@ import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
-import {Name} from '../../../c';
+import {Name} from '../../../common/c';
 
 const expressPouchDB = require('express-pouchdb');
 

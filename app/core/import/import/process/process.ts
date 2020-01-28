@@ -2,7 +2,7 @@ import {assoc, duplicates, to} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
-import {RESOURCE_IDENTIFIER} from '../../../../c';
+import {RESOURCE_IDENTIFIER} from '../../../../common/c';
 import {processRelations} from './process-relations';
 import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';

@@ -7,7 +7,7 @@ import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {withDissoc} from '../import/util';
 import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
-import {pairWith} from '../../utils';
+import {pairWith} from '../../common/utils';
 
 
 const VALUELISTS = 'valuelists';

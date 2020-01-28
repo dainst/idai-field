@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import {assoc} from 'tsfun';
-import {Name} from '../../c';
+import {Name} from '../../common/c';
 
 const PouchDB = require('pouchdb');
 const replicationStream = require('pouchdb-replication-stream');

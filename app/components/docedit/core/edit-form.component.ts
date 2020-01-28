@@ -4,7 +4,7 @@ import {is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {GroupUtil} from '../../../core/model/group-util';
-import {GROUP_NAME} from '../../../c';
+import {GROUP_NAME} from '../../../common/c';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

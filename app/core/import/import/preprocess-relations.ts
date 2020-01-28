@@ -3,7 +3,7 @@ import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
-import {RESOURCE_ID} from '../../../c';
+import {RESOURCE_ID} from '../../../common/c';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {ImportOptions} from './import-documents';

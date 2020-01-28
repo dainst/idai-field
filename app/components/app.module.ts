@@ -39,7 +39,7 @@ import {M} from './m';
 import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
 import {SynchronizationStatus} from '../core/settings/synchronization-status';
-import {Translations} from '../translations';
+import {Translations} from '../common/translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';

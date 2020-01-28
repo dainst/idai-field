@@ -1,8 +1,6 @@
-import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
 
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  */

@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
 import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
-import {PersistenceManager} from '../../../../core/model/persistence-manager';
-import {UsernameProvider} from '../../../../core/settings/username-provider';
-import {M} from '../../../m';
-import {clone} from '../../../../core/util/object-util';
-import {Imagestore} from '../../../../core/images/imagestore/imagestore';
+import {PersistenceManager} from '../../../model/persistence-manager';
+import {UsernameProvider} from '../../../settings/username-provider';
+import {M} from '../../../../components/m';
+import {clone} from '../../../util/object-util';
+import {Imagestore} from '../../imagestore/imagestore';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy

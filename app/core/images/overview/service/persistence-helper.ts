@@ -2,9 +2,9 @@ import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {PersistenceManager} from '../../../model/persistence-manager';
 import {UsernameProvider} from '../../../settings/username-provider';
-import {M} from '../../../../components/m';
 import {clone} from '../../../util/object-util';
 import {Imagestore} from '../../imagestore/imagestore';
+import {PersistenceHelperErrors} from './persistence-helper-errors';
 
 
 /**
@@ -22,9 +22,13 @@ export class PersistenceHelper {
     ) {}
 
 
+    /**
+     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
+     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
+     */
     public async deleteSelectedImageDocuments() {
 
-        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+        if (!this.imagestore.getPath()) throw [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
 
         for (let document of this.imageOverviewFacade.getSelected()) {
             if (!document.resource.id) continue;
@@ -33,7 +37,7 @@ export class PersistenceHelper {
             try {
                 await this.imagestore.remove(resourceId);
             } catch (err) {
-                throw [M.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
+                throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
             await this.persistenceManager.remove(document, this.usernameProvider.getUsername());

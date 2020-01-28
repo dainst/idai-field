@@ -8,6 +8,8 @@ import {PersistenceHelper} from '../../../core/images/overview/service/persisten
 import {DeleteModalComponent} from './delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {PersistenceHelperErrors} from '../../../core/images/overview/service/persistence-helper-errors';
+import {M} from '../../m';
 
 
 @Component({
@@ -118,7 +120,16 @@ export class ImageOverviewTaskbarComponent {
             this.imageOverviewFacade.clearSelection();
             await this.imageOverviewFacade.fetchDocuments();
         } catch(msgWithParams) {
-            this.messages.add(msgWithParams);
+            let m = msgWithParams;
+            if (msgWithParams.length > 0) {
+                if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE) {
+                    m = M.IMAGESTORE_ERROR_DELETE;
+                }
+                if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
+                    m = M.IMAGESTORE_ERROR_INVALID_PATH_DELETE;
+                }
+            }
+            this.messages.add(m);
         }
     }
 }

@@ -4,7 +4,7 @@ import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
-import {Loading} from '../../../widgets/loading';
+import {Loading} from '../../../components/widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';

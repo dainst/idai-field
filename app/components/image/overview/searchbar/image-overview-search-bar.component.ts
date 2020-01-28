@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SearchBarComponent} from '../../../../widgets/search-bar.component';
+import {SearchBarComponent} from '../../../widgets/search-bar.component';
 
 @Component({
     moduleId: module.id,

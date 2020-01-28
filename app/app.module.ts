@@ -14,7 +14,7 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {SettingsModule} from './components/settings/settings.module';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
-import {WidgetsModule} from './widgets/widgets.module';
+import {WidgetsModule} from './components/widgets/widgets.module';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
 import {BackupModule} from './components/backup/backup.module';

@@ -1,13 +1,13 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {asyncFilter} from 'tsfun-extra';
-import {ConstraintIndex} from '../core/datastore/index/constraint-index';
+import {ConstraintIndex} from '../../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
-import {FieldDefinition} from '../core/configuration/model/field-definition';
-import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {ValuelistUtil} from '../core/util/valuelist-util';
-import {clone} from '../core/util/object-util';
-import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
+import {FieldDefinition} from '../../core/configuration/model/field-definition';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ValuelistUtil} from '../../core/util/valuelist-util';
+import {clone} from '../../core/util/object-util';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 
 type ConstraintListItem = {

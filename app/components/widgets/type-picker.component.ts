@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {IdaiType} from '../core/configuration/model/idai-type';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 @Component({

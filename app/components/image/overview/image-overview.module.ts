@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
-import {WidgetsModule} from '../../../widgets/widgets.module';
+import {WidgetsModule} from '../../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ImageGridModule} from '../grid/image-grid.module';

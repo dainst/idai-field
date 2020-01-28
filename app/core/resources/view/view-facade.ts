@@ -2,7 +2,7 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/core/changes-stream';
-import {Loading} from '../../../widgets/loading';
+import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../datastore/index/index-facade';

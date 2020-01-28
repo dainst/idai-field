@@ -7,7 +7,7 @@ import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 import {FeatureReadDatastore} from '../../core/datastore/field/feature-read-datastore';
-import {Loading} from '../../widgets/loading';
+import {Loading} from '../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';

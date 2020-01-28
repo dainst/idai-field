@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input} from '@angular/core';
-import {SearchBarComponent} from '../../../widgets/search-bar.component';
+import {SearchBarComponent} from '../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
 
 @Component({

@@ -10,7 +10,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
-import {Loading} from '../../widgets/loading';
+import {Loading} from '../widgets/loading';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';

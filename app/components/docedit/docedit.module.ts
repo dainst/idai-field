@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {IdaiMessagesModule} from 'idai-components-2';
 import {DoceditComponent} from './docedit.component';
-import {WidgetsModule} from '../../widgets/widgets.module';
+import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';
 import {DoceditConflictsTabComponent} from './tabs/docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';

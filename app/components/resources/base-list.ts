@@ -1,5 +1,5 @@
 import {ResourcesComponent} from './resources.component';
-import {Loading} from '../../widgets/loading';
+import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../core/resources/view/view-facade';

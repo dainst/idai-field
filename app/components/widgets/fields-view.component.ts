@@ -3,15 +3,15 @@ import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
-import {RoutingService} from '../components/routing-service';
-import {GroupUtil} from '../core/model/group-util';
-import {GROUP_NAME, Name, ResourceId} from '../c';
-import {isBoolean} from '../utils';
-import {UtilTranslations} from '../core/util/util-translations';
-import {HIERARCHICAL_RELATIONS} from '../core/model/relation-constants';
-import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {IdaiType} from '../core/configuration/model/idai-type';
-import {RelationDefinition} from '../core/configuration/model/relation-definition';
+import {RoutingService} from '../routing-service';
+import {GroupUtil} from '../../core/model/group-util';
+import {GROUP_NAME, Name, ResourceId} from '../../c';
+import {isBoolean} from '../../utils';
+import {UtilTranslations} from '../../core/util/util-translations';
+import {HIERARCHICAL_RELATIONS} from '../../core/model/relation-constants';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {IdaiType} from '../../core/configuration/model/idai-type';
+import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 
 
 type FieldViewGroupDefinition = {

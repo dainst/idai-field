@@ -9,7 +9,7 @@ import {ResourcesMapComponent} from './map/resources-map.component';
 import {ListComponent} from './list/list.component';
 import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
-import {WidgetsModule} from '../../widgets/widgets.module';
+import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {RoutingService} from '../routing-service';
@@ -26,7 +26,7 @@ import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.comp
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
-import {Loading} from '../../widgets/loading';
+import {Loading} from '../widgets/loading';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';

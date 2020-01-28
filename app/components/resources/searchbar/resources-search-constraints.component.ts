@@ -3,7 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
+import {SearchConstraintsComponent} from '../../widgets/search-constraints.component';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {clone} from '../../../core/util/object-util';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -12,7 +12,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 @Component({
     moduleId: module.id,
     selector: 'resources-search-constraints',
-    templateUrl: '../../../widgets/search-constraints.html',
+    templateUrl: '../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)',
     }

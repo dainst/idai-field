@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
-import {Loading} from '../../../../widgets/loading';
+import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';

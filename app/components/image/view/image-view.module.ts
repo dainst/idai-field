@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ImageViewComponent} from './image-view.component';
 import {GeoreferenceViewComponent} from './georeference-view.component';
-import {WidgetsModule} from '../../../widgets/widgets.module';
+import {WidgetsModule} from '../../widgets/widgets.module';
 import {ImageGridModule} from '../grid/image-grid.module';
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';

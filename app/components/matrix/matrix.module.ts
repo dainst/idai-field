@@ -6,7 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatrixViewComponent} from './matrix-view.component';
 import {GraphComponent} from './graph.component';
 import {MatrixState} from './matrix-state';
-import {WidgetsModule} from '../../widgets/widgets.module';
+import {WidgetsModule} from '../widgets/widgets.module';
 import {MatrixOptionsMenuComponent} from './matrix-options-menu.component';
 
 @NgModule({

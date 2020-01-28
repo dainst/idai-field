@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
-import {Loading} from '../../../widgets/loading';
+import {Loading} from '../../widgets/loading';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';

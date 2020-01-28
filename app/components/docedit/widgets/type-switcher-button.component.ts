@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
-import {Loading} from '../../../widgets/loading';
+import {Loading} from '../../widgets/loading';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 

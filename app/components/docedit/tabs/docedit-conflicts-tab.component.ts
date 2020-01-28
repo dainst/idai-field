@@ -4,7 +4,7 @@ import {Relations, Resource, Document, Messages} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Loading} from '../../../widgets/loading';
+import {Loading} from '../../widgets/loading';
 
 const moment = require('moment');
 

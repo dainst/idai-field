@@ -9,10 +9,18 @@
     </div>
 
     <div class="modal-body">
+
+        <div class="type-search-bar">
+            <search-bar [showFiltersMenu]="false"
+                        (onQueryStringChanged)="setQueryString($event)">
+            </search-bar>
+        </div>
+
         <div *ngFor="let typeDocumentWithLinkedImageIds of typeDocumentsWithLinkedImageIds">
             <dai-type-row
                     [document]="typeDocumentWithLinkedImageIds[0]"
-                    [imageIds]="typeDocumentWithLinkedImageIds[1]">
+                    [imageIds]="typeDocumentWithLinkedImageIds[1]"
+                    (click)="activeModal.close(typeDocumentWithLinkedImageIds[0])">
             </dai-type-row>
         </div>
     </div>

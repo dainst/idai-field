@@ -5,8 +5,9 @@
     height: calc(100vh - 138px);
     overflow: auto;
 
-    input {
-      width: 100% !important;
+    .type-search-bar {
+      margin-bottom: 20px;
+      height: 38px;
     }
   }
 }

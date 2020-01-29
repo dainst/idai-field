@@ -8,10 +8,12 @@ import {FieldDocument} from 'idai-components-2';
     templateUrl: './type-row.html'
 })
 /**
+ * TODO show type foto on the left side
+ *
  * @author Daniel de Oliveira
  */
 export class TypeRowComponent {
 
     @Input() document: FieldDocument;
-    @Input() imageIds: string[]
+    @Input() imageIds: string[];
 }

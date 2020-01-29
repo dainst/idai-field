@@ -45,7 +45,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRelationComponent} from './core/forms/type-relation/type-relation.component';
 import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
-import {TypeRelationModalComponent} from './core/forms/type-relation/type-relation-modal.component';
+import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relation-picker.component';
 
 
 @NgModule({
@@ -103,7 +103,7 @@ import {TypeRelationModalComponent} from './core/forms/type-relation/type-relati
         DateComponent,
         TypeRelationComponent,
         TypeRowComponent,
-        TypeRelationModalComponent,
+        TypeRelationPickerComponent,
         DimensionComponent,
         DropdownRangeComponent,
         GeometryComponent,
@@ -117,7 +117,7 @@ import {TypeRelationModalComponent} from './core/forms/type-relation/type-relati
     entryComponents: [
         DoceditComponent,
         ConflictDeletedModalComponent,
-        TypeRelationModalComponent,
+        TypeRelationPickerComponent,
         ImagePickerComponent,
         DuplicateModalComponent,
         DeleteModalComponent,

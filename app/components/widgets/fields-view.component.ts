@@ -153,12 +153,12 @@ export class FieldsViewComponent implements OnChanges {
 
         const existsInResource = compose(lookup(resource), isDefined);
 
-        const fields = this.projectConfiguration
+        const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
             .filter(on(NAME, isnt('relations')))
             .filter(on(NAME, existsInResource));
 
-        for (let field of fields) {
+        for (let field of existingResourceFields) {
 
             const group: string = field.group ? field.group : 'properties';
 

@@ -4,28 +4,29 @@ import {ImageRow} from '../../../../../app/core/images/row/image-row';
 
 describe('ImageRow', () => {
 
-    it('switch pages', () => {
-
-        const imageDocuments = [
-            {
-                resource: {
-                    type: 'Drawing', id: 'i1', identifier: 'I1', width: 200, height: 100,
-                    relations: { depicts: [] }
-                }
-            },
-            {
-                resource: {
-                    type: 'Drawing', id: 'i2', identifier: 'I2', width: 250, height: 100,
-                    relations: { depicts: [] }
-                }
-            },
-            {
-                resource: {
-                    type: 'Drawing', id: 'i3', identifier: 'I3', width: 150, height: 100,
-                    relations: { depicts: [] }
-                }
+    const imageDocuments = [
+        {
+            resource: {
+                type: 'Drawing', id: 'i1', identifier: 'I1', width: 200, height: 100,
+                relations: { depicts: [] }
             }
-        ] as unknown as Array<ImageDocument>;
+        },
+        {
+            resource: {
+                type: 'Drawing', id: 'i2', identifier: 'I2', width: 250, height: 100,
+                relations: { depicts: [] }
+            }
+        },
+        {
+            resource: {
+                type: 'Drawing', id: 'i3', identifier: 'I3', width: 150, height: 100,
+                relations: { depicts: [] }
+            }
+        }
+    ] as unknown as Array<ImageDocument>;
+
+
+    it('switch pages', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);
 
@@ -58,5 +59,31 @@ describe('ImageRow', () => {
         expect(result.newImageIds).toEqual([]);
         expect(result.positionLeft).toBe(-200);
         // Show i2 and i3; i3 is not shown completely
+    });
+
+
+    it('return correct values for hasNextPage and hasPreviousPage', () => {
+
+        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+
+        imageRow.nextPage();
+        expect(imageRow.hasPreviousPage()).toBe(false);
+        expect(imageRow.hasNextPage()).toBe(true);
+
+        imageRow.nextPage();
+        expect(imageRow.hasPreviousPage()).toBe(true);
+        expect(imageRow.hasNextPage()).toBe(true);
+
+        imageRow.nextPage();
+        expect(imageRow.hasPreviousPage()).toBe(true);
+        expect(imageRow.hasNextPage()).toBe(false);
+
+        imageRow.previousPage();
+        expect(imageRow.hasPreviousPage()).toBe(true);
+        expect(imageRow.hasNextPage()).toBe(true);
+
+        imageRow.previousPage();
+        expect(imageRow.hasPreviousPage()).toBe(false);
+        expect(imageRow.hasNextPage()).toBe(true);
     });
 });

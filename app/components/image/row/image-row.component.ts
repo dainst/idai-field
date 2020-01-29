@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
 import {ReadImagestore} from '../../core/images/imagestore/read-imagestore';
-import {ImageRowUpdate} from '../../core/images/row/image-row';
+import {ImageRow, ImageRowUpdate} from '../../core/images/row/image-row';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -20,14 +20,13 @@ export class ImageRowComponent implements OnChanges {
 
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
-    @Input() imageRow: any = undefined;
+    @Input() imageRow: ImageRow;
 
     public linkedThumbnailUrls: string[] = [];
 
-    constructor(private imagestore: ReadImagestore) {
 
-        if (this.imageRow) this.nextPage();
-    }
+    constructor(private imagestore: ReadImagestore) {}
+
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
 
@@ -36,8 +35,7 @@ export class ImageRowComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        console.log('ngOnChanges', this.imageRow !== undefined);
-        if (this.imageRow) this.nextPage();
+        if (this.imageRow) await this.nextPage();
     }
 
 

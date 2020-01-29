@@ -6,13 +6,13 @@ import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
 
+const INSTANCE_OF = 'isInstanceOf';
 
 @Component({
     moduleId: module.id,
     selector: 'dai-type-relation',
     templateUrl: './type-relation.html'
 })
-
 /**
  * TODO make that it has the functionality of relation-picker-group, so it behaves alike and so that types can be removed
  *
@@ -40,9 +40,10 @@ export class TypeRelationComponent {
 
         try {
             const result = await typeRelationPicker.result;
-            if (!this.resource.relations['isInstanceOf']) this.resource.relations['isInstanceOf'];
-            this.resource.relations['isInstanceOf'] =
-                unique(this.resource.relations['isInstanceOf'].concat(result.resource.id))
+
+            if (!this.resource.relations[INSTANCE_OF]) this.resource.relations[INSTANCE_OF];
+            this.resource.relations[INSTANCE_OF] =
+                unique(this.resource.relations[INSTANCE_OF].concat(result.resource.id))
 
         } catch(err) {
             // Image picker modal has been canceled

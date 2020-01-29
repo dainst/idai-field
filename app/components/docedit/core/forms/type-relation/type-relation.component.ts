@@ -14,6 +14,8 @@ import {TypeRelationPickerComponent} from './type-relation-picker.component';
 })
 
 /**
+ * TODO make that it has the functionality of relation-picker-group, so it behaves alike and so that types can be removed
+ *
  * @author Daniel de Oliveira
  */
 export class TypeRelationComponent {

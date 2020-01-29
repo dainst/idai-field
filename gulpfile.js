@@ -21,7 +21,7 @@ gulp.task('convert-sass', () => {
             ], precision: 8
         }))
         .pipe(concat('app.css'))
-        .pipe(gulp.dest('app/components/'));
+        .pipe(gulp.dest('app/'));
 });
 
 gulp.task('copy-fonts-convert-sass', ['convert-sass'], () => {

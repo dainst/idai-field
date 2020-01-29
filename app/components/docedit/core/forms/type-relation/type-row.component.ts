@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ModelUtil} from '../../../../../core/model/model-util';
 import {ReadImagestore} from '../../../../../core/images/imagestore/read-imagestore';
-import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 
 
 @Component({
@@ -11,8 +10,6 @@ import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read
     templateUrl: './type-row.html'
 })
 /**
- * TODO show type foto on the left side
- *
  * @author Daniel de Oliveira
  */
 export class TypeRowComponent implements OnChanges {

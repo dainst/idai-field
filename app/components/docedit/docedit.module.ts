@@ -42,9 +42,10 @@ import {Validator} from '../../core/model/validator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {InstanceOfComponent} from './core/forms/instance-of.component';
-import {InstanceOfModalComponent} from './core/forms/instance-of-modal.component';
+import {InstanceOfComponent} from './core/forms/instance-of/instance-of.component';
+import {InstanceOfModalComponent} from './core/forms/instance-of/instance-of-modal.component';
 import {ImageRowModule} from '../image/row/image-row.module';
+import {InstanceOfTypeRowComponent} from './core/forms/instance-of/instance-of-type-row.component';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import {ImageRowModule} from '../image/row/image-row.module';
         DatingComponent,
         DateComponent,
         InstanceOfComponent,
+        InstanceOfTypeRowComponent,
         InstanceOfModalComponent,
         DimensionComponent,
         DropdownRangeComponent,

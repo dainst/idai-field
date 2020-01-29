@@ -10,14 +10,10 @@
 
     <div class="modal-body">
         <div *ngFor="let typeDocumentWithLinkedImageIds of typeDocumentsWithLinkedImageIds">
-            <div class="type-row">
-
-                <div class="type-info">
-                    {{typeDocumentWithLinkedImageIds[0].resource.identifier}}
-                </div>
-
-                <image-row [imageIds]="typeDocumentWithLinkedImageIds[1]"></image-row>
-            </div>
+            <dai-instance-of-type-row
+                    [document]="typeDocumentWithLinkedImageIds[0]"
+                    [imageIds]="typeDocumentWithLinkedImageIds[1]">
+            </dai-instance-of-type-row>
         </div>
     </div>
 </div>

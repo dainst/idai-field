@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Resource} from 'idai-components-2';
-import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
-import {DoceditComponent} from '../../docedit.component';
+import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
+import {DoceditComponent} from '../../../docedit.component';
 import {InstanceOfModalComponent} from './instance-of-modal.component';
 
 

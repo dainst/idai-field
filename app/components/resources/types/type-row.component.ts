@@ -1,8 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ModelUtil} from '../../../core/model/model-util';
 

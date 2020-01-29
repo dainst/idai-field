@@ -33,8 +33,6 @@ export module GroupUtil {
             return 'time';
         } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
             return 'position';
-        } else if (relationName === IS_INSTANCE_OF) {
-            return 'identification';
         } else {
             return undefined;
         }

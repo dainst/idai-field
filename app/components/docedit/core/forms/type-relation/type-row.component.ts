@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 
 
@@ -16,4 +16,5 @@ export class TypeRowComponent {
 
     @Input() document: FieldDocument;
     @Input() imageIds: string[];
+    @Output() onSelect: EventEmitter<void> = new EventEmitter<void>();
 }

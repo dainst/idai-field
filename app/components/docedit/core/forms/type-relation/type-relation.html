@@ -1,8 +1,15 @@
-<div class="instance-of">
+<div class="type-relation">
 
-    Hallo
-    <div (click)="openInstanceOfModal()">
-        Open Modal
+    <div class="circular-button add-type-relation"
+         type="button"
+         (click)="openInstanceOfModal()">+</div>
+
+    <div *ngIf="resource.relations['isInstanceOf'] && document">
+        <div *ngFor="let relation of resource.relations['isInstanceOf']; let i = index">
+            <relation-picker [(document)]="document"
+                             [relationDefinition]="{ name: 'isInstanceOf'}"
+                             [relationIndex]="i" [primary]="'identifier'">
+            </relation-picker>
+        </div>
     </div>
-
 </div>

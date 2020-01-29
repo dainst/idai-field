@@ -1,5 +1,5 @@
-import {Document} from 'idai-components-2';
 import {get} from 'tsfun';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ResourceId} from '../../common/c';
 
 /**
@@ -18,7 +18,8 @@ export module ModelUtil {
     }
 
 
-    export function getRelationTargetId(document: Document, relationName: string, index: number): ResourceId|undefined {
+    export function getRelationTargetId(document: Document, relationName: string,
+                                        index: number): ResourceId|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
@@ -27,11 +28,15 @@ export module ModelUtil {
     }
 
 
+    export function getMainImageId(document: FieldDocument): string|undefined {
+
+        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+
+        return document.resource.relations['isDepictedIn'][0];
+    }
+
+
     export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id === r.resource.id);
 
     export const hasId = (doc: Document) => doc.resource.id !== undefined;
 }
-
-
-
-

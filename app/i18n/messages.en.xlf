@@ -7,7 +7,7 @@
         <target state="final">Close</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/alert/alert.d.ts</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.carousel.previous" datatype="html">
@@ -55,11 +55,11 @@
         <target state="final">Select month</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-year" datatype="html">
@@ -67,11 +67,11 @@
         <target state="final">Select year</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.first" datatype="html">
@@ -79,7 +79,7 @@
         <target state="final">««</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.first-aria" datatype="html">
@@ -87,7 +87,7 @@
         <target state="final">First</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.previous" datatype="html">
@@ -95,7 +95,7 @@
         <target state="final">«</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.previous-aria" datatype="html">
@@ -103,7 +103,7 @@
         <target state="final">Previous</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.next" datatype="html">
@@ -111,7 +111,7 @@
         <target state="final">»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.next-aria" datatype="html">
@@ -119,7 +119,7 @@
         <target state="final">Next</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.last" datatype="html">
@@ -127,7 +127,7 @@
         <target state="final">»»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
@@ -135,7 +135,7 @@
         <target state="final">Last</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
@@ -159,7 +159,7 @@
         <target state="final">HH</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.hours" datatype="html">
@@ -167,7 +167,7 @@
         <target state="final">Hours</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
@@ -175,7 +175,7 @@
         <target state="final">Decrement hours</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
@@ -183,7 +183,7 @@
         <target state="final">Increment minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.MM" datatype="html">
@@ -191,7 +191,7 @@
         <target state="final">MM</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.minutes" datatype="html">
@@ -199,7 +199,7 @@
         <target state="final">Minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-minutes" datatype="html">
@@ -207,7 +207,7 @@
         <target state="final">Decrement minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-seconds" datatype="html">
@@ -215,7 +215,7 @@
         <target state="final">Increment seconds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.SS" datatype="html">
@@ -223,7 +223,7 @@
         <target state="final">SS</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.seconds" datatype="html">
@@ -231,7 +231,7 @@
         <target state="final">Seconds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-seconds" datatype="html">
@@ -239,23 +239,31 @@
         <target state="final">Decrement seconds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
-        <source>PM</source>
-        <target state="final">PM</target>
+        <source><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></source>
+        <target state="translated">PM</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
-        <source>AM</source>
-        <target state="final">AM</target>
+        <source><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></source>
+        <target state="translated">AM</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ngb.toast.close-aria" datatype="html">
+        <source>Close</source>
+        <target state="final">Close</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/toast/toast.d.ts</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
@@ -318,7 +326,7 @@
         <source>Keine Suchkriterien angegeben</source>
         <target state="final">No search criteria specified</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/document-picker.html</context>
+          <context context-type="sourcefile">components/widgets/document-picker.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
@@ -326,7 +334,7 @@
         <source>Keine Ziele gefunden</source>
         <target state="final">No targets found</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/document-picker.html</context>
+          <context context-type="sourcefile">components/widgets/document-picker.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
@@ -886,7 +894,7 @@
         <source>Grobdatierung</source>
         <target state="final">Period</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -894,7 +902,7 @@
         <source> (von)</source>
         <target state="final"> (from)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -902,7 +910,7 @@
         <source>Grobdatierung (bis)</source>
         <target state="final">Period (to)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1117,10 +1125,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
-        <source>
-        Löschen
-    </source>
-        <target state="final">Delete</target>
+        <source>Löschen</source>
+        <target state="translated">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -1636,12 +1642,20 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.tooltips.mode.types" datatype="html">
+        <source>Typendarstellung</source>
+        <target state="final">Type view</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
         <source>Listendarstellung</source>
         <target state="final">List view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
@@ -1828,7 +1842,7 @@
         <source>Suchen...</source>
         <target state="final">Search...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-bar.html</context>
+          <context context-type="sourcefile">components/widgets/search-bar.html</context>
           <context context-type="linenumber">9</context>
         </context-group>
         <context-group purpose="location">
@@ -1844,7 +1858,7 @@
         <source>Nach Ressourcentyp filtern:</source>
         <target state="final">Filter by resource type:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-bar.html</context>
+          <context context-type="sourcefile">components/widgets/search-bar.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
@@ -1856,7 +1870,7 @@
         <source>Alle Typen</source>
         <target state="final">All types</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/type-picker.html</context>
+          <context context-type="sourcefile">components/widgets/type-picker.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
@@ -2000,11 +2014,11 @@
         <source>Suchkriterien</source>
         <target state="final">Search criteria</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
@@ -2012,11 +2026,11 @@
         <source>Feld wählen</source>
         <target state="final">Select field</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
@@ -2024,35 +2038,35 @@
         <source>Suchbegriff</source>
         <target state="final">Search term</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
@@ -2060,11 +2074,11 @@
         <source>Beliebiger Wert</source>
         <target state="final">Any value</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
@@ -2072,11 +2086,11 @@
         <source>Kein Wert</source>
         <target state="final">No value</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
@@ -2084,11 +2098,11 @@
         <source>Suchbegriff eingeben</source>
         <target state="final">Enter search term</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
@@ -2096,19 +2110,19 @@
         <source>- Beliebiger Wert -</source>
         <target state="final">- Any value -</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
@@ -2116,19 +2130,19 @@
         <source>- Kein Wert -</source>
         <target state="final">- No value -</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
@@ -2136,23 +2150,23 @@
         <source>Ja</source>
         <target state="final">Yes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/fields-view.html</context>
+          <context context-type="sourcefile">components/widgets/fields-view.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
@@ -2164,23 +2178,23 @@
         <source>Nein</source>
         <target state="final">No</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/fields-view.html</context>
+          <context context-type="sourcefile">components/widgets/fields-view.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
@@ -2192,7 +2206,7 @@
         <source>Neue Ressource</source>
         <target state="final">New resource</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">widgets/document-teaser.html</context>
+          <context context-type="sourcefile">components/widgets/document-teaser.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
@@ -3103,7 +3117,7 @@
         <source>v. Chr.</source>
         <target state="final">BCE</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3111,7 +3125,7 @@
         <source>n. Chr.</source>
         <target state="final">CE</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3119,7 +3133,7 @@
         <source>BP</source>
         <target state="final">BP</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3127,7 +3141,7 @@
         <source>Vor</source>
         <target state="final">Before</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3135,7 +3149,7 @@
         <source>Nach</source>
         <target state="final">After</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3143,7 +3157,7 @@
         <source>gemessen an</source>
         <target state="final">as measured by</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="sourcefile">app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3155,7 +3169,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3167,7 +3181,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3179,7 +3193,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3191,7 +3205,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3203,7 +3217,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4539,7 +4553,11 @@
         <source>Projekt</source>
         <target state="final">Project</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/document-picker.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/document-picker.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4547,7 +4565,7 @@
         <source>Weitere Suchkriterien einstellen</source>
         <target state="final">Specify additional search criteria</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4555,7 +4573,7 @@
         <source>Aktive Suchkriterien</source>
         <target state="final">Active search criteria</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4563,7 +4581,7 @@
         <source> (von)</source>
         <target state="final"> (from)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4571,11 +4589,11 @@
         <source> (bis)</source>
         <target state="final"> (to)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

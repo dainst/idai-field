@@ -41,7 +41,7 @@ function makeConstraints(resource: Resource,
     };
 
     if (relationDefinition.sameMainTypeResource
-            && Document.hasRelations({resource: resource /* TODO hack */} as unknown as Document, 'isRecordedIn')) {
+            && Resource.hasRelations(resource, 'isRecordedIn')) {
         (constraints as any)['isRecordedIn:contain'] = resource.relations['isRecordedIn'][0];
     }
 
@@ -62,7 +62,7 @@ function getForbiddenIds(resource: Resource, relationDefinition: RelationDefinit
         .filter((id: string) => id && id.length > 0);
 
     if (relationDefinition.inverse && relationDefinition.name !== relationDefinition.inverse
-            && Document.hasRelations({resource: resource /* TODO hack */} as unknown as Document, relationDefinition.inverse)) {
+            && Resource.hasRelations(resource, relationDefinition.inverse)) {
         ids = ids.concat(resource.relations[relationDefinition.inverse])
     }
 

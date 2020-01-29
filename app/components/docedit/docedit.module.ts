@@ -44,6 +44,7 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {InstanceOfComponent} from './core/forms/instance-of.component';
 import {InstanceOfModalComponent} from './core/forms/instance-of-modal.component';
+import {ImageRowModule} from '../image/row/image-row.module';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import {InstanceOfModalComponent} from './core/forms/instance-of-modal.component
         RouterModule,
         IdaiMessagesModule,
         WidgetsModule,
-        ImageGridModule
+        ImageGridModule,
+        ImageRowModule
     ],
     declarations: [
         ConflictDeletedModalComponent,

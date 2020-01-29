@@ -19,7 +19,7 @@ const MAX_IMAGE_WIDTH: number = 600;
  */
 export class ImageRowComponent implements OnChanges {
 
-    @ViewChild('imageRowContainer', { static: false }) containerElement: ElementRef;
+    @ViewChild('imageRowContainer', { static: true }) containerElement: ElementRef;
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
     @Input() imageIds: string[];

@@ -23,12 +23,11 @@ export class TypeRowComponent implements OnChanges {
     @Input() document: FieldDocument;
 
     public mainThumbnailUrl: string|undefined;
-    public linkedImages: Array<ImageDocument>;
+    public linkedImagesIds: string[];
 
 
     constructor(private imagestore: ReadImagestore,
-                private fieldDatastore: FieldReadDatastore,
-                private imageDatastore: ImageReadDatastore) {}
+                private fieldDatastore: FieldReadDatastore) {}
 
 
     async ngOnChanges() {
@@ -41,9 +40,7 @@ export class TypeRowComponent implements OnChanges {
 
     private async updateLinkedImages(document: FieldDocument) {
 
-        this.linkedImages = await this.imageDatastore.getMultiple(
-            await TypeImagesUtil.getIdsOfLinkedImages(document, this.fieldDatastore)
-        );
+        this.linkedImagesIds = await TypeImagesUtil.getIdsOfLinkedImages(document, this.fieldDatastore);
     }
 
 

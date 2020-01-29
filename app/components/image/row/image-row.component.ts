@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
-import {ImageDocument} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -22,14 +22,15 @@ export class ImageRowComponent implements OnChanges {
     @ViewChild('imageRowContainer', { static: false }) containerElement: ElementRef;
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
-    @Input() images: Array<ImageDocument>;
+    @Input() imageIds: string[];
 
     public linkedThumbnailUrls: string[] = [];
 
     private imageRow: ImageRow;
 
 
-    constructor(private imagestore: ReadImagestore) {}
+    constructor(private imagestore: ReadImagestore,
+                private datastore: ImageReadDatastore) {}
 
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
@@ -43,13 +44,13 @@ export class ImageRowComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        if (!this.images) return;
+        if (!this.imageIds) return;
 
         this.imageRow = new ImageRow(
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
-            this.images
+            await this.datastore.getMultiple(this.imageIds)
         );
 
         await this.nextPage();

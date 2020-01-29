@@ -1,6 +1,3 @@
-import {M} from '../../components/m';
-
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -9,21 +6,29 @@ export module ProjectNameValidator {
 
     const PROJECT_NAME_MAX_LENGTH: number = 18;
 
+    export module Errors {
+
+        export const RESOURCES_ERROR_NO_PROJECT_NAME = 'projectNameValidator/errors/resources_error_no_project_name';
+        export const RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'projectNameValidator/errors/resources_error_projectNameExists';
+        export const RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'projectNameValidator/errors/resources_error_projectNameLength';
+        export const RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'projectNameValidator/errors/resources_error_projectNameSymbols';
+    }
+
     /**
      * @returns msgWithParams if invalid, otherwise undefined
      */
     export function validate(newProjectName: string, existingProjectNames?: string[]): string[]|undefined {
 
-        if (newProjectName === '') return [M.RESOURCES_ERROR_NO_PROJECT_NAME];
+        if (newProjectName === '') return [Errors.RESOURCES_ERROR_NO_PROJECT_NAME];
 
         if (existingProjectNames && existingProjectNames.includes(newProjectName)) {
-            return [M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, newProjectName];
+            return [Errors.RESOURCES_ERROR_PROJECT_NAME_EXISTS, newProjectName];
         }
 
         const lengthDiff = newProjectName.length - PROJECT_NAME_MAX_LENGTH;
-        if (lengthDiff > 0) return [M.RESOURCES_ERROR_PROJECT_NAME_LENGTH, lengthDiff.toString()];
+        if (lengthDiff > 0) return [Errors.RESOURCES_ERROR_PROJECT_NAME_LENGTH, lengthDiff.toString()];
 
         const allowed = /^[0-9a-z\-_]+$/.test(newProjectName);
-        if (!allowed) return [M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS];
+        if (!allowed) return [Errors.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS];
     }
 }

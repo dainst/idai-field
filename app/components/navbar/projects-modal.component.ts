@@ -8,6 +8,7 @@ import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {MenuService} from '../../desktop/menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 
 const remote = require('electron').remote;
 
@@ -108,9 +109,10 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async createProject() {
 
-        const validationErrorMessage: string[]|undefined = ProjectNameValidator.validate(
-            this.newProject, this.getProjects()
-        );
+        const validationErrorMessage: string[]|undefined =
+            ProjectNameValidatorMsgConversion.convert(
+                ProjectNameValidator.validate(this.newProject, this.getProjects())
+            );
         if (validationErrorMessage) return this.messages.add(validationErrorMessage);
 
         this.settingsService.stopSync();

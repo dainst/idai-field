@@ -8,6 +8,7 @@ import {BackupProvider} from './backup-provider';
 import {M} from '../m';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 
 
 @Component({
@@ -72,7 +73,9 @@ export class BackupLoadingComponent {
             return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
         }
 
-        return ProjectNameValidator.validate(this.projectName);
+        return ProjectNameValidatorMsgConversion.convert(
+            ProjectNameValidator.validate(this.projectName)
+        );
     }
 
 

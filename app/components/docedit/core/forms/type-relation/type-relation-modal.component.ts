@@ -7,14 +7,14 @@ import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 
 
 @Component({
-    selector: 'instance-of-modal',
+    selector: 'type-relation-modal',
     moduleId: module.id,
-    templateUrl: './instance-of-modal.html'
+    templateUrl: './type-relation-modal.html'
 })
 /**
  * @author Daniel de Oliveira
  */
-export class InstanceOfModalComponent {
+export class TypeRelationModalComponent {
 
     public resource: Resource | undefined = undefined;
 

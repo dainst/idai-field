@@ -3,19 +3,19 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Resource} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
 import {DoceditComponent} from '../../../docedit.component';
-import {InstanceOfModalComponent} from './instance-of-modal.component';
+import {TypeRelationModalComponent} from './type-relation-modal.component';
 
 
 @Component({
     moduleId: module.id,
-    selector: 'dai-instance-of',
-    templateUrl: './instance-of.html'
+    selector: 'dai-type-relation',
+    templateUrl: './type-relation.html'
 })
 
 /**
  * @author Daniel de Oliveira
  */
-export class InstanceOfComponent {
+export class TypeRelationComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
@@ -31,7 +31,7 @@ export class InstanceOfComponent {
         this.doceditComponent.subModalOpened = true;
 
         const instanceOfModal: NgbModalRef = this.modalService.open(
-            InstanceOfModalComponent, { size: 'lg', keyboard: false }
+            TypeRelationModalComponent, { size: 'lg', keyboard: false }
         );
         instanceOfModal.componentInstance.setResource(this.resource);
 

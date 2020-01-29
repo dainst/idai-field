@@ -42,10 +42,10 @@ import {Validator} from '../../core/model/validator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {InstanceOfComponent} from './core/forms/instance-of/instance-of.component';
-import {InstanceOfModalComponent} from './core/forms/instance-of/instance-of-modal.component';
 import {ImageRowModule} from '../image/row/image-row.module';
-import {InstanceOfTypeRowComponent} from './core/forms/instance-of/instance-of-type-row.component';
+import {TypeRelationComponent} from './core/forms/type-relation/type-relation.component';
+import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
+import {TypeRelationModalComponent} from './core/forms/type-relation/type-relation-modal.component';
 
 
 @NgModule({
@@ -101,9 +101,9 @@ import {InstanceOfTypeRowComponent} from './core/forms/instance-of/instance-of-t
         TextComponent,
         DatingComponent,
         DateComponent,
-        InstanceOfComponent,
-        InstanceOfTypeRowComponent,
-        InstanceOfModalComponent,
+        TypeRelationComponent,
+        TypeRowComponent,
+        TypeRelationModalComponent,
         DimensionComponent,
         DropdownRangeComponent,
         GeometryComponent,
@@ -117,7 +117,7 @@ import {InstanceOfTypeRowComponent} from './core/forms/instance-of/instance-of-t
     entryComponents: [
         DoceditComponent,
         ConflictDeletedModalComponent,
-        InstanceOfModalComponent,
+        TypeRelationModalComponent,
         ImagePickerComponent,
         DuplicateModalComponent,
         DeleteModalComponent,

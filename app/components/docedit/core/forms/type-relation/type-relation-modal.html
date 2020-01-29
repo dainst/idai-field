@@ -1,4 +1,4 @@
-<div id="instance-of-modal">
+<div id="type-relation-modal">
 
     <div class="modal-header">
         Hallo
@@ -10,10 +10,10 @@
 
     <div class="modal-body">
         <div *ngFor="let typeDocumentWithLinkedImageIds of typeDocumentsWithLinkedImageIds">
-            <dai-instance-of-type-row
+            <dai-type-row
                     [document]="typeDocumentWithLinkedImageIds[0]"
                     [imageIds]="typeDocumentWithLinkedImageIds[1]">
-            </dai-instance-of-type-row>
+            </dai-type-row>
         </div>
     </div>
 </div>

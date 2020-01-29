@@ -1,13 +1,9 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
-import {FieldDocument, Document} from 'idai-components-2';
+import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {ImageRow} from '../../../core/images/row/image-row';
-
-
-const MAX_IMAGE_WIDTH: number = 600;
 
 
 @Component({
@@ -27,7 +23,7 @@ export class TypeRowComponent implements OnChanges {
 
     public mainThumbnailUrl: string|undefined;
 
-    public imageRow: any = undefined;
+    private linkedImages: Array<ImageDocument>;
 
 
     constructor(private imagestore: ReadImagestore,
@@ -39,7 +35,7 @@ export class TypeRowComponent implements OnChanges {
 
         this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);
 
-        await this.updateLinkedThumbnails(this.document);
+        await this.updateLinkedImages(this.document);
     }
 
 
@@ -56,18 +52,13 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    private async updateLinkedThumbnails(document: FieldDocument) {
+    private async updateLinkedImages(document: FieldDocument) {
 
         const imageIds = document.resource.type === 'TypeCatalog'
             ? await this.getLinkedImageIdsForTypeCatalog(document)
             : await this.getLinkedImageIdsForType(document);
 
-        this.imageRow = new ImageRow(
-            this.typeRowElement.nativeElement.offsetWidth - 304,
-            this.typeRowElement.nativeElement.offsetHeight,
-            MAX_IMAGE_WIDTH,
-            await this.imageDatastore.getMultiple(imageIds)
-        );
+        this.linkedImages = await this.imageDatastore.getMultiple(imageIds)
     }
 
 

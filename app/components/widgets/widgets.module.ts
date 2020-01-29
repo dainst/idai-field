@@ -14,7 +14,6 @@ import {FieldsViewComponent} from './fields-view.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {TypeIconComponent} from './type-icon.component';
 import {TypeRowComponent} from './type-row.component';
-import {ImageRowComponent} from './image-row.component';
 
 @NgModule({
     imports: [
@@ -33,8 +32,7 @@ import {ImageRowComponent} from './image-row.component';
         TypePickerComponent,
         ZoomButtonsComponent,
         TypeIconComponent,
-        TypeRowComponent,
-        ImageRowComponent
+        TypeRowComponent
     ],
     providers: [
         Loading
@@ -48,8 +46,7 @@ import {ImageRowComponent} from './image-row.component';
         TypePickerComponent,
         ZoomButtonsComponent,
         TypeIconComponent,
-        TypeRowComponent,
-        ImageRowComponent
+        TypeRowComponent
     ],
     entryComponents: []
 })

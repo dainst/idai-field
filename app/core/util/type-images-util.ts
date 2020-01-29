@@ -16,7 +16,7 @@ export module TypeImagesUtil {
      * Returns images of linked types (for type catalogs) or finds (for types). If the types linked to a
      * type catalog are not directly linked to an image, the images of finds linked to the types are returned.
      */
-    export async function getIdsOfLinkedImages(document: FieldDocument,
+    export function getIdsOfLinkedImages(document: FieldDocument,
                                                datastore: FieldReadDatastore): Promise<string[]> {
 
         if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
@@ -24,8 +24,8 @@ export module TypeImagesUtil {
         }
 
         return document.resource.type === 'TypeCatalog'
-            ? await getLinkedImageIdsForTypeCatalog(document, datastore)
-            : await getLinkedImageIdsForType(document, datastore);
+            ? getLinkedImageIdsForTypeCatalog(document, datastore)
+            : getLinkedImageIdsForType(document, datastore);
     }
 
 

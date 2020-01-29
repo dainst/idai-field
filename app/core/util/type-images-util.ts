@@ -19,6 +19,10 @@ export module TypeImagesUtil {
     export async function getIdsOfLinkedImages(document: FieldDocument,
                                                datastore: FieldReadDatastore): Promise<string[]> {
 
+        if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
+            throw 'Illegal argument: Document must be of resource type Type or TypeCatalog.';
+        }
+
         return document.resource.type === 'TypeCatalog'
             ? await getLinkedImageIdsForTypeCatalog(document, datastore)
             : await getLinkedImageIdsForType(document, datastore);

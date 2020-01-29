@@ -232,7 +232,12 @@ export class AppConfigurator {
         Find: {
             superType: true,
             userDefinedSubtypesAllowed: true,
-            fields: {}
+            fields: {
+                instanceOf: {
+                    inputType: 'instanceOf',
+                    group: 'identification'
+                }
+            }
         },
         Sample: {
             mustLieWithin: true,

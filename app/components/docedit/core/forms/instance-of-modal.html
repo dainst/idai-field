@@ -1,0 +1,16 @@
+<div id="instance-of-modal">
+
+    <div class="modal-header">
+        Hallo
+        <button type="button" class="btn btn-secondary"
+                (click)="activeModal.dismiss('cancel')">
+            <span class="mdi mdi-close"></span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div *ngFor="let document of typeDocuments">
+            <type-row [document]="document"></type-row>
+        </div>
+    </div>
+</div>

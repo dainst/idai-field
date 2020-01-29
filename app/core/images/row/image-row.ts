@@ -14,6 +14,8 @@ export class ImageRow {
     private lastShownImageIndex: number = 0;
     private highestImageIndex: number = -1;
 
+    private lastImageFullyVisible: boolean = false;
+
     private positionLeft: number = 0;
 
 
@@ -63,7 +65,7 @@ export class ImageRow {
 
     public hasNextPage(): boolean {
 
-        return this.lastShownImageIndex + 1 < this.images.length;
+        return this.lastShownImageIndex < this.images.length && !this.lastImageFullyVisible;
     }
 
 
@@ -104,6 +106,8 @@ export class ImageRow {
             this.lastShownImageIndex = i;
             if (availableWidth < 0) break;
         }
+
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 
@@ -116,6 +120,8 @@ export class ImageRow {
             if (availableWidth < 0) break;
             this.firstShownImageIndex = i;
         }
+
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 
@@ -125,5 +131,18 @@ export class ImageRow {
 
         return this.images.slice(this.highestImageIndex + 1, this.lastShownImageIndex + 1)
             .map(image => image.resource.id);
+    }
+
+
+    private isLastImageFullyVisible(): boolean {
+
+        let availableWidth: number = this.width;
+
+        for (let i = this.firstShownImageIndex; i <= this.lastShownImageIndex; i++) {
+            availableWidth -= this.calculateImageWidth(this.images[i]);
+            if (availableWidth < 0) return false;
+        }
+
+        return true;
     }
 }

@@ -42,7 +42,6 @@ import {ChildrenViewComponent} from './map/list/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {MapComponent} from './map/map/map.component';
 import {ResourcesTypesComponent} from './types/resources-types.component';
-import {TypeRowComponent} from './types/type-row.component';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesStateManager} from '../../core/resources/view/resources-state-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
@@ -67,7 +66,6 @@ const remote = require('electron').remote;
         EditableMapComponent,
         ResourcesMapComponent,
         ResourcesTypesComponent,
-        TypeRowComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,

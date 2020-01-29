@@ -1,10 +1,10 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, Document} from 'idai-components-2';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageRow, NextPageResult} from '../../../core/images/row/image-row';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
+import {ReadImagestore} from '../../core/images/imagestore/read-imagestore';
+import {ImageRow, NextPageResult} from '../../core/images/row/image-row';
 
 
 const MAX_IMAGE_WIDTH: number = 600;

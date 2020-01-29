@@ -1,5 +1,5 @@
 import {get} from 'tsfun';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Resource, Document, FieldResource} from 'idai-components-2';
 import {ResourceId} from '../constants';
 
 /**
@@ -28,11 +28,11 @@ export module ModelUtil {
     }
 
 
-    export function getMainImageId(document: FieldDocument): string|undefined {
+    export function getMainImageId(resource: FieldResource): string|undefined {
 
-        if (!Document.hasRelations(document, 'isDepictedIn')) return undefined;
+        if (!Resource.hasRelations(resource, 'isDepictedIn')) return undefined;
 
-        return document.resource.relations['isDepictedIn'][0];
+        return resource.relations['isDepictedIn'][0];
     }
 
 

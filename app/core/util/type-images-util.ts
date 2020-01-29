@@ -1,3 +1,4 @@
+import {to, isDefined} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
@@ -39,7 +40,7 @@ export module TypeImagesUtil {
 
         return (await asyncMap(
             (document: FieldDocument) => getTypeImageId(document, datastore)
-        )(documents)).filter(id => id !== undefined) as string[];
+        )(documents)).filter(isDefined) as string[];
     }
 
 
@@ -50,15 +51,17 @@ export module TypeImagesUtil {
             { constraints: { 'isInstanceOf:contain': document.resource.id } }
         )).documents;
 
-        return documents.map((document: FieldDocument) => ModelUtil.getMainImageId(document))
-            .filter(id => id !== undefined) as string[];
+        return documents
+            .map(to('resource'))
+            .map(ModelUtil.getMainImageId)
+            .filter(isDefined) as string[];
     }
 
 
     async function getTypeImageId(document: FieldDocument,
                                   datastore: FieldReadDatastore): Promise<string|undefined> {
 
-        let imageId: string|undefined = await ModelUtil.getMainImageId(document);
+        let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
 
         if (!imageId) {
             const linkedImageIds: string[] = await getLinkedImageIdsForType(document, datastore);

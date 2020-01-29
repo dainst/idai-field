@@ -29,7 +29,7 @@ export class TypeRowComponent implements OnChanges {
 
     private async getMainThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
 
-        const mainImageId: string | undefined = ModelUtil.getMainImageId(document);
+        const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
         if (!mainImageId) return undefined;
 
         return await this.imagestore.read(mainImageId, false, true);

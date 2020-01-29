@@ -7,10 +7,7 @@ import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-da
 @Component({
     selector: 'instance-of-modal',
     moduleId: module.id,
-    templateUrl: './instance-of-modal.html',
-    host: {
-        '(window:keydown)': 'onKeyDown($event)'
-    }
+    templateUrl: './instance-of-modal.html'
 })
 /**
  * @author Daniel de Oliveira

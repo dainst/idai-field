@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {asyncMap} from 'tsfun-extra';
-import {ReadImagestore} from '../../core/images/imagestore/read-imagestore';
-import {ImageRow, ImageRowUpdate} from '../../core/images/row/image-row';
+import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
+import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 
 
 const MAX_IMAGE_WIDTH: number = 600;

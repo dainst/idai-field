@@ -46,6 +46,8 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesStateManager} from '../../core/resources/view/resources-state-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
+import {ImageRowModule} from '../image/row/image-row.module';
+import {TypeRowComponent} from './types/type-row.component';
 
 const remote = require('electron').remote;
 
@@ -56,6 +58,7 @@ const remote = require('electron').remote;
         NgbModule,
         WidgetsModule,
         ImageGridModule,
+        ImageRowModule,
         DoceditModule
     ],
     declarations: [
@@ -69,6 +72,7 @@ const remote = require('electron').remote;
         LayerMenuComponent,
         ListComponent,
         RowComponent,
+        TypeRowComponent,
         PlusButtonComponent,
         SidebarListComponent,
         SidebarListButtonGroupComponent,

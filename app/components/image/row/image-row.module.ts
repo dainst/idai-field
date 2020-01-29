@@ -12,7 +12,7 @@ import {ImageRowComponent} from './image-row.component';
     declarations: [
         ImageRowComponent
     ],
-    providers: [
+    exports: [
         ImageRowComponent
     ]
 })

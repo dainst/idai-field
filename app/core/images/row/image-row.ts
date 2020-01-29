@@ -61,6 +61,18 @@ export class ImageRow {
     }
 
 
+    public hasNextPage(): boolean {
+
+        return this.lastShownImageIndex + 1 < this.images.length;
+    }
+
+
+    public hasPreviousPage(): boolean {
+
+        return this.firstShownImageIndex > 0;
+    }
+
+
     private computeScrollWidth(): number {
 
         let scrollWidth = 0;

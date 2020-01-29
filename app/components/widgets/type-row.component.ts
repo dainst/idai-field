@@ -37,6 +37,10 @@ export class TypeRowComponent implements OnChanges {
                 private imageDatastore: ImageReadDatastore) {}
 
 
+    public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
+    public hasPreviousPage = (): boolean => this.imageRow && this.imageRow.hasPreviousPage();
+
+
     async ngOnChanges() {
 
         this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);

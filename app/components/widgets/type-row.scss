@@ -26,7 +26,6 @@
   }
 
   .type-image-container {
-
     img {
       max-width: 600px;
       max-height: 175px;
@@ -51,10 +50,27 @@
 
   .next-page-button {
     height: 175px;
-    right: 23px;
+    right: 0;
     position: absolute;
     width: 30px;
     background-color: black;
     opacity: 0.5;
+    transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+
+    &:hover {
+      background-color: lighten(black, 10%);
+    }
+
+    &:active {
+      background-color: black !important;
+      opacity: 0.7;
+    }
+
+    .mdi {
+      position: relative;
+      top: 76px;
+      left: 7px;
+      color: white;
+    }
   }
 }

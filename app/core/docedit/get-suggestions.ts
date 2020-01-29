@@ -1,4 +1,4 @@
-import {Document, ReadDatastore, Query, Constraint} from 'idai-components-2';
+import {Document, Resource, ReadDatastore, Query, Constraint} from 'idai-components-2';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 
 export const MAX_SUGGESTIONS: number = 5;
@@ -7,42 +7,42 @@ export const MAX_SUGGESTIONS: number = 5;
 /**
  * @author Thomas Kleinke
  */
-export async function getSuggestions(datastore: ReadDatastore, document: Document,
+export async function getSuggestions(datastore: ReadDatastore, resource: Resource,
                                      relationDefinition: RelationDefinition,
                                      idSearchString?: string): Promise<Array<Document>> {
 
     return (await datastore.find(
-        makeQuery(document, relationDefinition, idSearchString)
+        makeQuery(resource, relationDefinition, idSearchString)
     )).documents;
 }
 
 
-function makeQuery(document: Document, relationDefinition: RelationDefinition,
+function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
                    idSearchString?: string): Query {
 
     return {
         q: idSearchString ? idSearchString : '',
         types: relationDefinition.range,
-        constraints: makeConstraints(document, relationDefinition),
+        constraints: makeConstraints(resource, relationDefinition),
         limit: MAX_SUGGESTIONS,
         sort: 'exactMatchFirst'
     };
 }
 
 
-function makeConstraints(document: Document,
+function makeConstraints(resource: Resource,
                          relationDefinition: RelationDefinition): { [constraintName: string]: Constraint } {
 
     const constraints = {
         'id:match': {
-            value: getForbiddenIds(document, relationDefinition),
+            value: getForbiddenIds(resource, relationDefinition),
             type: 'subtract'
         }
     };
 
     if (relationDefinition.sameMainTypeResource
-            && Document.hasRelations(document, 'isRecordedIn')) {
-        (constraints as any)['isRecordedIn:contain'] = document.resource.relations['isRecordedIn'][0];
+            && Document.hasRelations({resource: resource /* TODO hack */} as unknown as Document, 'isRecordedIn')) {
+        (constraints as any)['isRecordedIn:contain'] = resource.relations['isRecordedIn'][0];
     }
 
     return constraints;
@@ -55,15 +55,15 @@ function makeConstraints(document: Document,
  *      - Resources which are already targets of the relation
  *      - Resources which are targets of the inverse relation
  */
-function getForbiddenIds(document: Document, relationDefinition: RelationDefinition): string[] {
+function getForbiddenIds(resource: Resource, relationDefinition: RelationDefinition): string[] {
 
-    let ids: string[] = [document.resource.id]
-        .concat(document.resource.relations[relationDefinition.name])
+    let ids: string[] = [resource.id]
+        .concat(resource.relations[relationDefinition.name])
         .filter((id: string) => id && id.length > 0);
 
     if (relationDefinition.inverse && relationDefinition.name !== relationDefinition.inverse
-            && Document.hasRelations(document, relationDefinition.inverse)) {
-        ids = ids.concat(document.resource.relations[relationDefinition.inverse])
+            && Document.hasRelations({resource: resource /* TODO hack */} as unknown as Document, relationDefinition.inverse)) {
+        ids = ids.concat(resource.relations[relationDefinition.inverse])
     }
 
     return ids;

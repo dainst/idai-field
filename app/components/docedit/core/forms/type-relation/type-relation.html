@@ -4,9 +4,9 @@
          type="button"
          (click)="openInstanceOfModal()">+</div>
 
-    <div *ngIf="resource.relations['isInstanceOf'] && document">
+    <div *ngIf="resource.relations['isInstanceOf'] && resource">
         <div *ngFor="let relation of resource.relations['isInstanceOf']; let i = index">
-            <relation-picker [(document)]="document"
+            <relation-picker [(resource)]="resource"
                              [relationDefinition]="{ name: 'isInstanceOf'}"
                              [relationIndex]="i" [primary]="'identifier'">
             </relation-picker>

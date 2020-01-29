@@ -30,7 +30,7 @@ describe('getSuggestions', () => {
             range: ['RangeType1', 'RangeType2']
         };
 
-        await getSuggestions(datastore, document, relationDefinition,
+        await getSuggestions(datastore, document.resource, relationDefinition,
             'input');
 
         expect(datastore.find).toHaveBeenCalledWith({
@@ -62,7 +62,7 @@ describe('getSuggestions', () => {
             range: ['RangeType']
         };
 
-        await getSuggestions(datastore, document, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
@@ -94,7 +94,7 @@ describe('getSuggestions', () => {
             sameMainTypeResource: true
         };
 
-        await getSuggestions(datastore, document, relationDefinition);
+        await getSuggestions(datastore, document.resource, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
@@ -126,7 +126,7 @@ describe('getSuggestions', () => {
         };
 
         try {
-            await getSuggestions(datastore, document, relationDefinition);
+            await getSuggestions(datastore, document.resource, relationDefinition);
         } catch (err) {
             fail();
         }

@@ -1,5 +1,5 @@
 import {unique} from 'tsfun';
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, Resource} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
@@ -18,23 +18,15 @@ const INSTANCE_OF = 'isInstanceOf';
  *
  * @author Daniel de Oliveira
  */
-export class TypeRelationComponent implements OnChanges {
+export class TypeRelationComponent {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
 
-    public document: Document;
 
     constructor(private datastore: ImageReadDatastore,
                 private modalService: NgbModal,
                 private doceditComponent: DoceditComponent) {}
-
-
-    ngOnChanges() {
-
-        // TODO see if we can work with resource instead of document in RelationPicker
-        if (this.resource) this.document = { resource: this.resource} as Document;
-    }
 
 
     public async openInstanceOfModal () {

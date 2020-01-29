@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
 import {isNot, undefinedOrEmpty} from 'tsfun';
-import {Document, ReadDatastore} from 'idai-components-2';
+import {Document, Resource, ReadDatastore} from 'idai-components-2';
 import {getSuggestions} from '../../../../core/docedit/get-suggestions';
 
 
@@ -16,7 +16,7 @@ import {getSuggestions} from '../../../../core/docedit/get-suggestions';
  */
 export class RelationPickerComponent implements OnChanges {
 
-    @Input() document: any;
+    @Input() resource: Resource;
     
     @Input() relationDefinition: any;
     @Input() relationIndex: number;
@@ -45,7 +45,7 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = undefined;
 
         const relationTargetResourceId: string =
-            this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
+            this.resource.relations[this.relationDefinition.name][this.relationIndex];
 
         if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
 
@@ -73,7 +73,7 @@ export class RelationPickerComponent implements OnChanges {
      */
     public createRelation(document: Document) {
 
-        this.document.resource.relations[this.relationDefinition.name][this.relationIndex] = document.resource.id;
+        this.resource.relations[this.relationDefinition.name][this.relationIndex] = document.resource.id;
         this.selectedTarget = document;
         this.idSearchString = '';
         this.suggestions = [];
@@ -99,16 +99,16 @@ export class RelationPickerComponent implements OnChanges {
 
     public leaveSuggestionMode() {
 
-        if (!this.document.resource.relations[this.relationDefinition.name][this.relationIndex]
-            || this.document.resource.relations[this.relationDefinition.name][this.relationIndex] == '') {
+        if (!this.resource.relations[this.relationDefinition.name][this.relationIndex]
+            || this.resource.relations[this.relationDefinition.name][this.relationIndex] == '') {
             return this.deleteRelation();
         }
 
         this.suggestionsVisible = false;
 
-        if (!this.selectedTarget && this.document.resource.relations[this.relationDefinition.name][this.relationIndex]
-            && this.document.resource.relations[this.relationDefinition.name][this.relationIndex] != '') {
-            this.datastore.get(this.document.resource.relations[this.relationDefinition.name][this.relationIndex])
+        if (!this.selectedTarget && this.resource.relations[this.relationDefinition.name][this.relationIndex]
+            && this.resource.relations[this.relationDefinition.name][this.relationIndex] != '') {
+            this.datastore.get(this.resource.relations[this.relationDefinition.name][this.relationIndex])
                 .then(
                     document => { this.selectedTarget = document as Document; },
                     err => { console.error(err); }
@@ -129,10 +129,10 @@ export class RelationPickerComponent implements OnChanges {
 
     public deleteRelation() {
 
-        this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
+        this.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
 
-        if (this.document.resource.relations[this.relationDefinition.name].length==0)
-            delete this.document.resource.relations[this.relationDefinition.name];
+        if (this.resource.relations[this.relationDefinition.name].length==0)
+            delete this.resource.relations[this.relationDefinition.name];
     }
 
 
@@ -190,18 +190,18 @@ export class RelationPickerComponent implements OnChanges {
     private async deleteLiesWithinConditionally(relationId?: string) {
 
         if (this.relationDefinition.name === 'isRecordedIn'
-            && this.document.resource.relations['liesWithin']
-            && this.document.resource.relations['liesWithin'].length > 0) {
+            && this.resource.relations['liesWithin']
+            && this.resource.relations['liesWithin'].length > 0) {
 
             const liesWithinTarget =
-                await this.datastore.get(this.document.resource.relations['liesWithin'][0]);
+                await this.datastore.get(this.resource.relations['liesWithin'][0]);
 
             if (liesWithinTarget) {
                 if (liesWithinTarget.resource.relations['isRecordedIn']
                     && liesWithinTarget.resource.relations['isRecordedIn'].length > 0) {
 
                     if (liesWithinTarget.resource.relations['isRecordedIn'][0] !== relationId) {
-                        this.document.resource.relations['liesWithin'] = []
+                        this.resource.relations['liesWithin'] = []
                     }
                 }
             }
@@ -216,7 +216,7 @@ export class RelationPickerComponent implements OnChanges {
 
         try {
             this.suggestions = await getSuggestions(
-                this.datastore, this.document, this.relationDefinition, this.idSearchString);
+                this.datastore, this.resource, this.relationDefinition, this.idSearchString);
         } catch (err) {
             console.error(err);
         } finally {

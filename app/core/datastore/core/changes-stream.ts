@@ -10,7 +10,7 @@ import {ObserverUtil} from '../../util/observer-util';
 import {DatastoreUtil} from './datastore-util';
 import isProjectDocument = DatastoreUtil.isProjectDocument;
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
-import {ResourceId, RevisionId} from '../../../c';
+import {ResourceId, RevisionId} from '../../constants';
 import {SettingsService} from '../../settings/settings-service';
 
 

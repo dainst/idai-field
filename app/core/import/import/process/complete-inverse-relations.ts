@@ -14,7 +14,7 @@ import {AssertIsAllowedRelationDomainType} from '../types';
 import IS_AFTER = TIME_RELATIONS.IS_AFTER;
 import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
-import {ResourceId} from '../../../../c';
+import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 
 

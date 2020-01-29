@@ -3,7 +3,7 @@ import {Dating, Dimension, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPE, INPUT_TYPES} from '../../c';
+import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {subtract} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';

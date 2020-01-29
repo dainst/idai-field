@@ -5,7 +5,8 @@ import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefine
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {GroupUtil} from '../../core/model/group-util';
-import {GROUP_NAME, Name, ResourceId} from '../../c';
+import {Name, ResourceId} from '../../core/constants';
+import {GROUP_NAME} from '../constants';
 import {isBoolean} from '../../core/util/utils';
 import {UtilTranslations} from '../../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS} from '../../core/model/relation-constants';
@@ -150,10 +151,12 @@ export class FieldsViewComponent implements OnChanges {
 
         this.addBaseFields(resource);
 
+        const existsInResource = compose(lookup(resource), isDefined);
+
         const fields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
             .filter(on(NAME, isnt('relations')))
-            .filter(on(NAME, compose(lookup<any>(resource), isDefined)));
+            .filter(on(NAME, existsInResource));
 
         for (let field of fields) {
 

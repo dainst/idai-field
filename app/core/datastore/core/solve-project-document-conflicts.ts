@@ -2,7 +2,7 @@ import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfun
     isEmpty, compose, dissoc, append} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {DatastoreUtil} from './datastore-util';
-import {RevisionId} from '../../../c';
+import {RevisionId} from '../../constants';
 import {dissocIndices, penultimate, replaceLastPair, ultimate} from './helpers';
 import {withDissoc} from '../../import/util';
 import RESOURCE = Document.RESOURCE;

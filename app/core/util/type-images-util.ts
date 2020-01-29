@@ -4,6 +4,7 @@ import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ModelUtil} from '../model/model-util';
 import getMainImageId = ModelUtil.getMainImageId;
+import {ResourceId} from '../constants';
 
 const RESOURCE = 'resource';
 
@@ -30,7 +31,7 @@ export module TypeImagesUtil {
 
         return document.resource.type === 'TypeCatalog'
             ? getLinkedImageIdsForTypeCatalog(document, datastore)
-            : getLinkedImageIdsForType(document, datastore);
+            : getLinkedImageIdsForType(document.resource.id, datastore);
     }
 
 
@@ -47,30 +48,29 @@ export module TypeImagesUtil {
     }
 
 
-    async function getLinkedImageIdsForType(document: FieldDocument,
-                                            datastore: FieldReadDatastore): Promise<string[]> {
-
-        const documents: Array<FieldDocument> = (await datastore.find(
-            { constraints: { 'isInstanceOf:contain': document.resource.id } }
-        )).documents;
-
-        return documents
-            .map(to(RESOURCE))
-            .map(getMainImageId)
-            .filter(isDefined) as string[];
-    }
-
-
     async function getTypeImageId(document: FieldDocument,
                                   datastore: FieldReadDatastore): Promise<string|undefined> {
 
         let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
 
         if (!imageId) {
-            const linkedImageIds: string[] = await getLinkedImageIdsForType(document, datastore);
+            const linkedImageIds: string[] = await getLinkedImageIdsForType(document.resource.id, datastore);
             if (linkedImageIds.length > 0) imageId = linkedImageIds[0];
         }
 
         return imageId;
+    }
+
+
+    async function getLinkedImageIdsForType(resourceId: ResourceId,
+                                            datastore: FieldReadDatastore): Promise<string[]> {
+
+        const constraints = { constraints: { 'isInstanceOf:contain': resourceId }};
+
+        return (await datastore.find(constraints))
+            .documents
+            .map(to(RESOURCE))
+            .map(getMainImageId)
+            .filter(isDefined) as string[];
     }
 }

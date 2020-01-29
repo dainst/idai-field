@@ -34,3 +34,5 @@
                [field]="field"></dai-dimension>
 
 <dai-geometry *ngIf="field.inputType === 'geometry'" [resource]="resource"></dai-geometry>
+
+<dai-instance-of *ngIf="field.inputType === 'instanceOf'" [resource]="resource"></dai-instance-of>

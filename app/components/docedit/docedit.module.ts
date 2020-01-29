@@ -42,6 +42,8 @@ import {Validator} from '../../core/model/validator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {InstanceOfComponent} from './core/forms/instance-of.component';
+import {InstanceOfModalComponent} from './core/forms/instance-of-modal.component';
 
 
 @NgModule({
@@ -96,6 +98,8 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
         TextComponent,
         DatingComponent,
         DateComponent,
+        InstanceOfComponent,
+        InstanceOfModalComponent,
         DimensionComponent,
         DropdownRangeComponent,
         GeometryComponent,
@@ -109,6 +113,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
     entryComponents: [
         DoceditComponent,
         ConflictDeletedModalComponent,
+        InstanceOfModalComponent,
         ImagePickerComponent,
         DuplicateModalComponent,
         DeleteModalComponent,

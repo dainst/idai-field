@@ -39,7 +39,7 @@ import {M} from './m';
 import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
 import {SynchronizationStatus} from '../core/settings/synchronization-status';
-import {Translations} from '../common/translations';
+import {Translations} from '../translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {FieldDatastore} from '../core/datastore/field/field-datastore';
@@ -49,7 +49,7 @@ import {ProjectConfiguration} from '../core/configuration/project-configuration'
 import {ConfigReader} from '../core/configuration/config-reader';
 import {ConfigLoader} from '../core/configuration/config-loader';
 import {AppConfigurator} from '../core/configuration/app-configurator';
-import {StateSerializer} from '../common/state-serializer';
+import {StateSerializer} from '../core/common/state-serializer';
 import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 import {Router} from '@angular/router';
 import {TabManager} from '../core/tabs/tab-manager';

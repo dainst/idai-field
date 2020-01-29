@@ -5,8 +5,8 @@ import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefine
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {GroupUtil} from '../../core/model/group-util';
-import {GROUP_NAME, Name, ResourceId} from '../../common/c';
-import {isBoolean} from '../../common/utils';
+import {GROUP_NAME, Name, ResourceId} from '../../c';
+import {isBoolean} from '../../core/util/utils';
 import {UtilTranslations} from '../../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS} from '../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

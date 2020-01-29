@@ -1,6 +1,6 @@
 import {ProjectsModalComponent} from '../../../../app/components/navbar/projects-modal.component';
 import {M} from '../../../../app/components/m';
-import {StateSerializer} from '../../../../app/common/state-serializer';
+import {StateSerializer} from '../../../../app/core/common/state-serializer';
 
 
 /**

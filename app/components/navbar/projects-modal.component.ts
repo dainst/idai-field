@@ -4,9 +4,9 @@ import {Messages, Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../m';
-import {ProjectNameValidator} from '../../common/project-name-validator';
+import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {MenuService} from '../../desktop/menu-service';
-import {StateSerializer} from '../../common/state-serializer';
+import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 const remote = require('electron').remote;

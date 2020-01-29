@@ -1,7 +1,7 @@
 import {Observer, Observable} from 'rxjs';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesState} from './state/resources-state';
-import {StateSerializer} from '../../../common/state-serializer';
+import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../core/util/observer-util';

@@ -1,4 +1,4 @@
-import {M} from '../components/m';
+import {M} from '../../components/m';
 
 
 /**

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {StateSerializer} from './state-serializer';
-import {SettingsService} from '../core/settings/settings-service';
+import {SettingsService} from '../settings/settings-service';
 
 const remote = require('electron').remote;
 

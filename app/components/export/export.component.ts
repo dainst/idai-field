@@ -7,7 +7,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
-import {JavaToolExecutor} from '../../common/java-tool-executor';
+import {JavaToolExecutor} from '../../java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';

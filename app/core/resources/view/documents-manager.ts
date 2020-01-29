@@ -8,7 +8,7 @@ import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
-import {AngularUtility} from '../../../common/angular-utility';
+import {AngularUtility} from '../../../angular-utility';
 import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;

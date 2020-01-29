@@ -6,7 +6,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
-import {ProjectNameValidator} from '../../common/project-name-validator';
+import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {TabManager} from '../../core/tabs/tab-manager';
 
 

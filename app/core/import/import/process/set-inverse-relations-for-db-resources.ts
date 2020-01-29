@@ -3,7 +3,7 @@ import {asyncMap, asyncReduce} from 'tsfun-extra';
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {clone} from '../../../util/object-util';
-import {ResourceId} from '../../../../common/c';
+import {ResourceId} from '../../../../c';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';

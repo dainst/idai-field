@@ -1,6 +1,6 @@
 import {get} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
-import {ResourceId} from '../../common/c';
+import {ResourceId} from '../../c';
 
 /**
  * @author: Thomas Kleinke

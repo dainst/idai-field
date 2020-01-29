@@ -5,7 +5,7 @@ import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
-import {M} from '../../components/m';
+import {M} from '../../components/messages/m';
 import {SynchronizationStatus} from './synchronization-status';
 import {Name} from '../../c';
 import {AppConfigurator} from '../configuration/app-configurator';

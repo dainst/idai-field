@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {clone} from '../../../../app/core/util/object-util';
-import {M} from '../../../../app/components/m';
+import {M} from '../../../../app/components/messages/m';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../app/core/docedit/document-holder';
 

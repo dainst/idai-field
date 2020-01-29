@@ -1,5 +1,5 @@
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
-import {M} from '../m';
+import {M} from './m';
 
 export module ProjectNameValidatorMsgConversion {
 

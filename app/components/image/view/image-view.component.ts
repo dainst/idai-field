@@ -5,7 +5,7 @@ import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {RoutingService} from '../../routing-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {MenuService} from '../../../desktop/menu-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../log-messages';

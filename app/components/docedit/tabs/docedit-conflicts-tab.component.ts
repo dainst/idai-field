@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, Resource, Document, Messages} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Loading} from '../../widgets/loading';
 

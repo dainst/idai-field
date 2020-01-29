@@ -35,7 +35,7 @@ import {FulltextIndex} from '../core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {HelpComponent} from './help/help.component';
 import {TaskbarUpdateComponent} from './navbar/taskbar-update.component';
-import {M} from './m';
+import {M} from './messages/m';
 import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
 import {SynchronizationStatus} from '../core/settings/synchronization-status';

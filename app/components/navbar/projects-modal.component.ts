@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {MenuService} from '../../desktop/menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';

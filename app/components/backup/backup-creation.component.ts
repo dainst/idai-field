@@ -5,7 +5,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 
 

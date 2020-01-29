@@ -9,7 +9,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {UsernameProvider} from '../../../core/settings/username-provider';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';

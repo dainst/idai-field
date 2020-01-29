@@ -14,7 +14,7 @@ import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';

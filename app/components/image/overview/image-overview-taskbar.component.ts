@@ -9,7 +9,7 @@ import {DeleteModalComponent} from './delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {PersistenceHelperErrors} from '../../../core/images/overview/service/persistence-helper-errors';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 
 
 @Component({

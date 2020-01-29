@@ -4,7 +4,7 @@ import {Messages, Query, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {TypeUtility} from '../../../core/model/type-utility';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {clone} from '../../../core/util/object-util';
 
 

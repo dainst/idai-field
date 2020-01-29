@@ -8,7 +8,7 @@ import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {TypeUtility} from '../../core/model/type-utility';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../widgets/loading';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';

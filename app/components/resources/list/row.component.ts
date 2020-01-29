@@ -5,7 +5,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

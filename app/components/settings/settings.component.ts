@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 
 const address = require('address');

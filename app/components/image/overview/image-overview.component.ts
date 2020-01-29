@@ -7,7 +7,7 @@ import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewComponent} from '../view/image-view.component';
 import {MenuService} from '../../../desktop/menu-service';
-import {M} from '../../m';
+import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {TabManager} from '../../../core/tabs/tab-manager';

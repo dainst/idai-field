@@ -6,7 +6,7 @@ import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-
 import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../angular-utility';

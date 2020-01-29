@@ -4,7 +4,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
 import {FieldDocument, Messages, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {M} from '../m';
+import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {JavaToolExecutor} from '../../java-tool-executor';

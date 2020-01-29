@@ -48,13 +48,13 @@ export class TypeRowComponent implements OnChanges {
     public async nextPage() {
 
         const result: NextPageResult = this.imageRow.nextPage();
-        if (result.scrollWidth === 0) return;
+        if (result.positionLeft === 0) return;
 
         this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
             await this.getThumbnailUrls(result.newImageIds)
         );
 
-        this.imageRowElement.nativeElement.style['right'] = result.scrollWidth + 'px';
+        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
     }
 
 

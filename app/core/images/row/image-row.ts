@@ -2,7 +2,7 @@ import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
 
 
-export type NextPageResult = { newImageIds: string[], scrollWidth: number };
+export type NextPageResult = { newImageIds: string[], positionLeft: number };
 
 /**
  * @author Thomas Kleinke
@@ -14,6 +14,8 @@ export class ImageRow {
 
     private highestImageIndex: number = -1;
 
+    private positionLeft: number = 0;
+
 
     constructor(private width: number,
                 private height: number,
@@ -23,9 +25,10 @@ export class ImageRow {
 
     public nextPage(): NextPageResult {
 
-        if (this.images.length === 0) return { newImageIds: [], scrollWidth: 0 };
+        if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
 
         const scrollWidth: number = this.computeScrollWidth();
+        this.positionLeft -= scrollWidth;
 
         this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();
@@ -36,7 +39,7 @@ export class ImageRow {
 
         return {
             newImageIds: newImagesIds,
-            scrollWidth: scrollWidth
+            positionLeft: this.positionLeft
         }
     }
 

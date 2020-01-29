@@ -12,12 +12,13 @@ export module TypeImagesUtil {
 
     /**
      * @param document: A document of resource type Type or TypeCatalog
+     * @param datastore
      *
      * Returns images of linked types (for type catalogs) or finds (for types). If the types linked to a
      * type catalog are not directly linked to an image, the images of finds linked to the types are returned.
      */
     export function getIdsOfLinkedImages(document: FieldDocument,
-                                               datastore: FieldReadDatastore): Promise<string[]> {
+                                         datastore: FieldReadDatastore): Promise<string[]> {
 
         if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
             throw 'Illegal argument: Document must be of resource type Type or TypeCatalog.';

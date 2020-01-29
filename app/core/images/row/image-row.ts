@@ -2,7 +2,7 @@ import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
 
 
-export type NextPageResult = { newImageIds: string[], positionLeft: number };
+export type ImageRowUpdate = { newImageIds: string[], positionLeft: number };
 
 
 /**
@@ -23,7 +23,7 @@ export class ImageRow {
                 private images: Array<ImageDocument>) {}
 
 
-    public nextPage(): NextPageResult {
+    public nextPage(): ImageRowUpdate {
 
         if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
 
@@ -38,6 +38,24 @@ export class ImageRow {
 
         return {
             newImageIds: newImagesIds,
+            positionLeft: this.positionLeft
+        }
+    }
+
+
+    public previousPage(): ImageRowUpdate {
+
+        if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
+
+        this.lastShownImageIndex = this.firstShownImageIndex;
+        this.calculateFirstShownImageIndex();
+
+        this.highestImageIndex = Math.max(this.highestImageIndex, this.lastShownImageIndex);
+
+        this.positionLeft += this.computeScrollWidth();
+
+        return {
+            newImageIds: [],
             positionLeft: this.positionLeft
         }
     }
@@ -73,6 +91,18 @@ export class ImageRow {
             availableWidth -= this.calculateImageWidth(this.images[i]);
             this.lastShownImageIndex = i;
             if (availableWidth < 0) break;
+        }
+    }
+
+
+    private calculateFirstShownImageIndex() {
+
+        let availableWidth: number = this.width;
+
+        for (let i = this.lastShownImageIndex - 1; i >= 0; i--) {
+            availableWidth -= this.calculateImageWidth(this.images[i]);
+            if (availableWidth < 0) break;
+            this.firstShownImageIndex = i;
         }
     }
 

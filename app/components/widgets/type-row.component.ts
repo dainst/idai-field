@@ -4,7 +4,7 @@ import {FieldDocument, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {ReadImagestore} from '../../core/images/imagestore/read-imagestore';
-import {ImageRow, NextPageResult} from '../../core/images/row/image-row';
+import {ImageRow, ImageRowUpdate} from '../../core/images/row/image-row';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -47,7 +47,7 @@ export class TypeRowComponent implements OnChanges {
 
     public async nextPage() {
 
-        const result: NextPageResult = this.imageRow.nextPage();
+        const result: ImageRowUpdate = this.imageRow.nextPage();
         if (result.positionLeft === 0) return;
 
         this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
@@ -84,7 +84,7 @@ export class TypeRowComponent implements OnChanges {
             await this.imageDatastore.getMultiple(imageIds)
         );
 
-        const result: NextPageResult = this.imageRow.nextPage();
+        const result: ImageRowUpdate = this.imageRow.nextPage();
 
         this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
             await this.getThumbnailUrls(result.newImageIds)

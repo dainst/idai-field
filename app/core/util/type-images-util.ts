@@ -1,6 +1,6 @@
 import {to, isDefined} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument, FieldResource} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ModelUtil} from '../model/model-util';
 import getMainImageId = ModelUtil.getMainImageId;
@@ -30,31 +30,31 @@ export module TypeImagesUtil {
         }
 
         return document.resource.type === 'TypeCatalog'
-            ? getLinkedImageIdsForTypeCatalog(document, datastore)
+            ? getLinkedImageIdsForTypeCatalog(document.resource.id, datastore)
             : getLinkedImageIdsForType(document.resource.id, datastore);
     }
 
 
-    async function getLinkedImageIdsForTypeCatalog(document: FieldDocument,
+    async function getLinkedImageIdsForTypeCatalog(resourceId: ResourceId,
                                                    datastore: FieldReadDatastore): Promise<string[]> {
 
         const documents: Array<FieldDocument> = (await datastore.find(
-            { constraints: { 'liesWithin:contain': document.resource.id } }
+            { constraints: { 'liesWithin:contain': resourceId } }
         )).documents;
 
         return (await asyncMap(
-            (document: FieldDocument) => getTypeImageId(document, datastore)
+            (document: FieldDocument) => getTypeImageId(document.resource, datastore)
         )(documents)).filter(isDefined) as string[];
     }
 
 
-    async function getTypeImageId(document: FieldDocument,
+    async function getTypeImageId(resource: FieldResource,
                                   datastore: FieldReadDatastore): Promise<string|undefined> {
 
-        let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
+        let imageId: string|undefined = await ModelUtil.getMainImageId(resource);
 
         if (!imageId) {
-            const linkedImageIds: string[] = await getLinkedImageIdsForType(document.resource.id, datastore);
+            const linkedImageIds: string[] = await getLinkedImageIdsForType(resource.id, datastore);
             if (linkedImageIds.length > 0) imageId = linkedImageIds[0];
         }
 

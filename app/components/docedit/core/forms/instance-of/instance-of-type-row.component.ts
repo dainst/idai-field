@@ -12,7 +12,6 @@ import {FieldDocument} from 'idai-components-2';
  */
 export class InstanceOfTypeRowComponent {
 
-    @ViewChild('typeRow', { static: false }) typeRowElement: ElementRef;
 
     @Input() document: FieldDocument;
     @Input() imageIds: string[]

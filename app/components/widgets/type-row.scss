@@ -54,18 +54,17 @@
     height: 175px;
     position: absolute;
     width: 30px;
-    background-color: black;
-    opacity: 0.5;
-    transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+    background-color: #495057;
+    opacity: 0.7;
+    transition: background-color 0.15s ease-in-out;
     z-index: 1;
 
     &:hover {
-      background-color: lighten(black, 10%);
+      background-color: lighten(#495057, 10%);
     }
 
     &:active {
-      background-color: black !important;
-      opacity: 0.7;
+      background-color: darken(#495057, 10%);
     }
 
     .mdi {

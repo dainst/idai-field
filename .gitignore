@@ -34,7 +34,7 @@ typings
 css
 fonts
 tools
-app/components/app.css
+app/app.css
 app/**/*.js
 app/**/*.js.map
 config/Scripts/**/*.js.map

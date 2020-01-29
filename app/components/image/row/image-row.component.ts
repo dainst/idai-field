@@ -11,7 +11,7 @@ const MAX_IMAGE_WIDTH: number = 600;
 @Component({
     selector: 'image-row',
     moduleId: module.id,
-    templateUrl: './image-row.html',
+    templateUrl: './image-row.html'
 })
 /**
  * @author Thomas Kleinke
@@ -63,7 +63,7 @@ export class ImageRowComponent implements OnChanges {
             await this.getThumbnailUrls(update.newImageIds)
         );
 
-        this.imageRowElement.nativeElement.style.left = update.positionLeft + 'px';
+        this.imageRowElement.nativeElement.style.transform = 'translateX(' + update.positionLeft + 'px)';
     }
 
 

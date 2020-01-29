@@ -14,6 +14,7 @@ import {FieldsViewComponent} from './fields-view.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {TypeIconComponent} from './type-icon.component';
 import {TypeRowComponent} from './type-row.component';
+import {ImageRowComponent} from './image-row.component';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {TypeRowComponent} from './type-row.component';
         TypePickerComponent,
         ZoomButtonsComponent,
         TypeIconComponent,
-        TypeRowComponent
+        TypeRowComponent,
+        ImageRowComponent
     ],
     providers: [
         Loading
@@ -46,10 +48,10 @@ import {TypeRowComponent} from './type-row.component';
         TypePickerComponent,
         ZoomButtonsComponent,
         TypeIconComponent,
-        TypeRowComponent
+        TypeRowComponent,
+        ImageRowComponent
     ],
-    entryComponents: [
-    ]
+    entryComponents: []
 })
 
 export class WidgetsModule {}

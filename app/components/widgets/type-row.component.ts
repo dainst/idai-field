@@ -4,7 +4,7 @@ import {FieldDocument, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {ReadImagestore} from '../../core/images/imagestore/read-imagestore';
-import {ImageRow, ImageRowUpdate} from '../../core/images/row/image-row';
+import {ImageRow} from '../../core/images/row/image-row';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -16,20 +16,18 @@ const MAX_IMAGE_WIDTH: number = 600;
     templateUrl: './type-row.html',
 })
 /**
- * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class TypeRowComponent implements OnChanges {
 
     @ViewChild('typeRow', { static: false }) typeRowElement: ElementRef;
-    @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
     @Input() document: FieldDocument;
 
     public mainThumbnailUrl: string|undefined;
-    public linkedThumbnailUrls: string[] = [];
 
-    private imageRow: ImageRow;
+    public imageRow: any = undefined;
 
 
     constructor(private imagestore: ReadImagestore,
@@ -37,34 +35,11 @@ export class TypeRowComponent implements OnChanges {
                 private imageDatastore: ImageReadDatastore) {}
 
 
-    public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
-    public hasPreviousPage = (): boolean => this.imageRow && this.imageRow.hasPreviousPage();
-
-
     async ngOnChanges() {
 
         this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);
 
         await this.updateLinkedThumbnails(this.document);
-    }
-
-
-    public async nextPage() {
-
-        const result: ImageRowUpdate = this.imageRow.nextPage();
-
-        this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
-            await this.getThumbnailUrls(result.newImageIds)
-        );
-
-        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
-    }
-
-
-    public async previousPage() {
-
-        const result: ImageRowUpdate = this.imageRow.previousPage();
-        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
     }
 
 
@@ -83,7 +58,7 @@ export class TypeRowComponent implements OnChanges {
 
     private async updateLinkedThumbnails(document: FieldDocument) {
 
-        const imageIds: string[] = document.resource.type === 'TypeCatalog'
+        const imageIds = document.resource.type === 'TypeCatalog'
             ? await this.getLinkedImageIdsForTypeCatalog(document)
             : await this.getLinkedImageIdsForType(document);
 
@@ -92,12 +67,6 @@ export class TypeRowComponent implements OnChanges {
             this.typeRowElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
             await this.imageDatastore.getMultiple(imageIds)
-        );
-
-        const result: ImageRowUpdate = this.imageRow.nextPage();
-
-        this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
-            await this.getThumbnailUrls(result.newImageIds)
         );
     }
 
@@ -135,14 +104,6 @@ export class TypeRowComponent implements OnChanges {
         }
 
         return imageId;
-    }
-
-
-    private async getThumbnailUrls(imageIds: string[]): Promise<string[]> {
-
-        return asyncMap((imageId: string) => {
-            return this.imagestore.read(imageId, false, true);
-        })(imageIds);
     }
 
 

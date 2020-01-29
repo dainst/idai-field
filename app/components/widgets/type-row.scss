@@ -35,56 +35,6 @@
     }
   }
 
-  .image-row-container {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
 
-    .image-row {
-      position: relative;
-      width: fit-content;
-      display: flex;
-      align-items: center;
-      background-color: black;
-    }
-
-    .next-page-button,
-    .previous-page-button {
-      height: 175px;
-      position: absolute;
-      width: 30px;
-      background-color: #495057;
-      opacity: 0;
-      transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
-      z-index: 1;
-
-      &:hover {
-        background-color: lighten(#495057, 10%);
-      }
-
-      &:active {
-        background-color: darken(#495057, 10%);
-      }
-
-      .mdi {
-        position: relative;
-        top: 76px;
-        left: 7px;
-        color: white;
-      }
-    }
-
-    .next-page-button {
-      top: 0;
-      right: 0;
-    }
-
-    &:hover {
-      .next-page-button,
-      .previous-page-button {
-        opacity: 0.7;
-      }
-    }
-  }
 
 }

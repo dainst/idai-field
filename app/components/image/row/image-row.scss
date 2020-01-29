@@ -13,6 +13,7 @@ image-row {
       display: flex;
       align-items: center;
       background-color: black;
+      transition: transform 0.5s ease-in-out;
     }
 
     .next-page-button,

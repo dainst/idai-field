@@ -4,6 +4,7 @@ import {ImageWidthCalculator} from './image-width-calculator';
 
 export type NextPageResult = { newImageIds: string[], positionLeft: number };
 
+
 /**
  * @author Thomas Kleinke
  */
@@ -11,7 +12,6 @@ export class ImageRow {
 
     private firstShownImageIndex: number = 0;
     private lastShownImageIndex: number = 0;
-
     private highestImageIndex: number = -1;
 
     private positionLeft: number = 0;
@@ -27,8 +27,7 @@ export class ImageRow {
 
         if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
 
-        const scrollWidth: number = this.computeScrollWidth();
-        this.positionLeft -= scrollWidth;
+        this.positionLeft -= this.computeScrollWidth();
 
         this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();

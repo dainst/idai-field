@@ -3,13 +3,16 @@ import {asyncMap} from 'tsfun-extra';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ModelUtil} from '../model/model-util';
+import getMainImageId = ModelUtil.getMainImageId;
 
+const RESOURCE = 'resource';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module TypeImagesUtil {
+
 
     /**
      * @param document: A document of resource type Type or TypeCatalog
@@ -22,7 +25,7 @@ export module TypeImagesUtil {
                                          datastore: FieldReadDatastore): Promise<string[]> {
 
         if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
-            throw 'Illegal argument: Document must be of resource type Type or TypeCatalog.';
+            throw Error('Illegal argument: Document must be of resource type Type or TypeCatalog.');
         }
 
         return document.resource.type === 'TypeCatalog'
@@ -52,8 +55,8 @@ export module TypeImagesUtil {
         )).documents;
 
         return documents
-            .map(to('resource'))
-            .map(ModelUtil.getMainImageId)
+            .map(to(RESOURCE))
+            .map(getMainImageId)
             .filter(isDefined) as string[];
     }
 

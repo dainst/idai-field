@@ -9,14 +9,16 @@
     </div>
 
     <div class="image-row-container">
+        <div class="previous-page-button" (click)="previousPage()">
+            <span class="mdi mdi-chevron-left"></span>
+        </div>
         <div #imageRow class="image-row">
             <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
                 <img [src]="thumbnailUrl">
             </div>
         </div>
-    </div>
-
-    <div class="next-page-button" (click)="nextPage()">
-        <span class="mdi mdi-chevron-right"></span>
+        <div class="next-page-button" (click)="nextPage()">
+            <span class="mdi mdi-chevron-right"></span>
+        </div>
     </div>
 </div>

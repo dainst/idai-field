@@ -48,12 +48,18 @@ export class TypeRowComponent implements OnChanges {
     public async nextPage() {
 
         const result: ImageRowUpdate = this.imageRow.nextPage();
-        if (result.positionLeft === 0) return;
 
         this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
             await this.getThumbnailUrls(result.newImageIds)
         );
 
+        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
+    }
+
+
+    public async previousPage() {
+
+        const result: ImageRowUpdate = this.imageRow.previousPage();
         this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
     }
 

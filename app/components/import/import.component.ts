@@ -24,7 +24,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {AngularUtility} from '../../angular-utility';
+import {AngularUtility} from '../../angular/angular-utility';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import {TabManager} from '../../core/tabs/tab-manager';
 import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;

@@ -9,7 +9,7 @@ import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../messages/m';
 import {TypeUtility} from '../../core/model/type-utility';
 import {MoveModalComponent} from './move-modal.component';
-import {AngularUtility} from '../../angular-utility';
+import {AngularUtility} from '../../angular/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {TabManager} from '../../core/tabs/tab-manager';

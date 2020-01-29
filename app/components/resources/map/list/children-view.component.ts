@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {AngularUtility} from '../../../../angular-utility';
+import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {SidebarListComponent} from './sidebar-list.component';

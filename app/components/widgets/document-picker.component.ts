@@ -5,7 +5,7 @@ import {Query, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../../core/util/object-util';
-import {AngularUtility} from '../../angular-utility';
+import {AngularUtility} from '../../angular/angular-utility';
 import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-datastore';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

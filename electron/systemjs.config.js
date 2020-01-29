@@ -5,7 +5,7 @@
 
     config.packages = {
         'app': {
-            main: 'main.js',
+            main: 'angular/main.js',
             format: 'cjs',
             defaultExtension: 'js'
         },

@@ -1,6 +1,6 @@
 import {enableProdMode, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {AppModule} from './components/app.module';
+import {AppModule} from '../components/app.module';
 import {Translations} from './translations';
 
 const remote = require('electron').remote;

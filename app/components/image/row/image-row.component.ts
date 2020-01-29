@@ -36,6 +36,10 @@ export class ImageRowComponent implements OnChanges {
 
     public hasPreviousPage = (): boolean => this.imageRow && this.imageRow.hasPreviousPage();
 
+    public nextPage = () => this.applyUpdate(this.imageRow.nextPage());
+
+    public previousPage = () => this.applyUpdate(this.imageRow.previousPage());
+
 
     async ngOnChanges() {
 
@@ -52,22 +56,13 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
-    public async nextPage() {
-
-        const result: ImageRowUpdate = this.imageRow.nextPage();
+    private async applyUpdate(update: ImageRowUpdate) {
 
         this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
-            await this.getThumbnailUrls(result.newImageIds)
+            await this.getThumbnailUrls(update.newImageIds)
         );
 
-        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
-    }
-
-
-    public async previousPage() {
-
-        const result: ImageRowUpdate = this.imageRow.previousPage();
-        this.imageRowElement.nativeElement.style.left = result.positionLeft + 'px';
+        this.imageRowElement.nativeElement.style.left = update.positionLeft + 'px';
     }
 
 

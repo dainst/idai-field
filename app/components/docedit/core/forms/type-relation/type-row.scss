@@ -6,8 +6,24 @@
   display: flex;
 
   .type-info {
-    width: 150px;
+    min-width: 150px;
     max-width: 150px;
     height: 175px;
+    border-right: 2px solid lightgrey;
+
+    .type-image-container {
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-width: 150px;
+        max-height: 150px;
+      }
+    }
+
+    .type-title {
+      text-align: center;
+      height: 25px;
+    }
   }
 }

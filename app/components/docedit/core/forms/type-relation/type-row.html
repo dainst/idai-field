@@ -1,7 +1,12 @@
 <div class="type-row">
 
     <div class="type-info" (click)="onSelect.emit()">
-        {{document.resource.identifier}}
+        <div class="type-title">
+            <b>{{document.resource.identifier}}</b>
+        </div>
+        <div class="type-image-container">
+            <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
+        </div>
     </div>
 
     <image-row [imageIds]="imageIds"></image-row>

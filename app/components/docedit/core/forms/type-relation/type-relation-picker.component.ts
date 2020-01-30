@@ -5,6 +5,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Resource, FieldDocument} from 'idai-components-2/index';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
+import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
 
 
 @Component({
@@ -33,6 +34,12 @@ export class TypeRelationPickerComponent {
     }
 
 
+    public setResource(resource: Resource) {
+
+        this.resource = resource;
+    }
+
+
     public setQueryString(q: string) {
 
         if (this.timeoutRef) clearTimeout(this.timeoutRef);
@@ -42,18 +49,16 @@ export class TypeRelationPickerComponent {
 
     private async fetchTypes(q: string = '') {
 
-        const result = await this.datastore.find({q: q, types: ['Type']});
-        this.typeDocumentsWithLinkedImageIds = await asyncMap(async (document: FieldDocument) => {
-            return [
-                document,
-                await TypeImagesUtil.getIdsOfLinkedImages(document, this.datastore)
-            ] as [FieldDocument, string[]];
-        })(result.documents);
+        const documents = (await this.datastore.find({q: q, types: ['Type']})).documents;
+        this.typeDocumentsWithLinkedImageIds =
+            await this.makeTypeDocumentsWithLinkedImageIds(documents);
     }
 
 
-    public setResource(resource: Resource) {
-
-        this.resource = resource;
-    }
+    private makeTypeDocumentsWithLinkedImageIds = asyncMap(async (document: FieldDocument) => {
+        return [
+            document,
+            await getIdsOfLinkedImages(document, this.datastore)
+        ] as Pair<FieldDocument, string[]>;
+    });
 }

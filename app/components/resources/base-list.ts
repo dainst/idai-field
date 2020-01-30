@@ -10,7 +10,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
  */
 export class BaseList {
 
-    public navigationPath: NavigationPath = NavigationPath.empty();
+    public navigationPath: NavigationPath;
 
 
     constructor(public resourcesComponent: ResourcesComponent,

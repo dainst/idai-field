@@ -18,7 +18,9 @@
 </div>
 <div id="list-background" class="bg-light">
     <plus-button *ngIf="isPlusButtonShown()"
-                 id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
+                 id="create-document-button"
+                 [placement]="'top'"
+                 [preselectedGeometryType]="'none'"
                  [preselectedType]="getCurrentFilterType()"
                  [liesWithin]="getSelectedSegmentDoc()"
                  [isRecordedIn]="viewFacade.getCurrentOperation()"

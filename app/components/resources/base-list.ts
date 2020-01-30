@@ -13,14 +13,12 @@ export class BaseList {
     public navigationPath: NavigationPath = NavigationPath.empty();
 
 
-    constructor(
-        public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade,
-        protected loading: Loading
-    ) {
-        this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.navigationPath = path;
-        });
+    constructor(public resourcesComponent: ResourcesComponent,
+                public viewFacade: ViewFacade,
+                protected loading: Loading) {
+
+        this.navigationPath = this.viewFacade.getNavigationPath();
+        this.viewFacade.navigationPathNotifications().subscribe(path => this.navigationPath = path);
     }
 
 

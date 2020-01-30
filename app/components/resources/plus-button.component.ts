@@ -26,10 +26,10 @@ export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
-    // undefined when in resources overview
+    // undefined when in overview or type management
     @Input() isRecordedIn: FieldDocument | undefined;
 
-    //undefined when current level is operation
+    // undefined when current level is operation
     @Input() liesWithin: FieldDocument | undefined;
 
 
@@ -40,7 +40,7 @@ export class PlusButtonComponent implements OnChanges {
 
     @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
-    @ViewChild('popover', {static: false}) private popover: any;
+    @ViewChild('popover', { static: false }) private popover: any;
 
     public selectedType: string|undefined;
     public typesTreeList: Array<IdaiType>;

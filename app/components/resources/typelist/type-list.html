@@ -1,5 +1,18 @@
-<div id="resources-types">
-    <div *ngFor="let document of documents">
-        <type-row [document]="document"></type-row>
+<div id="type-list">
+    <div id="rows-container" class="bg-light">
+        <div *ngFor="let document of documents">
+            <type-row [document]="document"></type-row>
+        </div>
     </div>
+    <div id="plus-button-container" class="bg-light">
+        <plus-button *ngIf="isPlusButtonShown()"
+                     id="create-document-button"
+                     [placement]="'top'"
+                     [preselectedGeometryType]="'none'"
+                     [preselectedType]="getCurrentFilterType()"
+                     [liesWithin]="getSelectedSegmentDoc()"
+                     [isRecordedIn]="viewFacade.getCurrentOperation()"
+                     [status]="getPlusButtonStatus()"></plus-button>
+    </div>
+    <loading-icon></loading-icon>
 </div>

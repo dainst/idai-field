@@ -1,5 +1,23 @@
-#resources-types {
+#type-list {
   height: calc(100vh - 138px);
   overflow-y: scroll;
-  background-color: lightgrey;
+
+  #rows-container {
+    height: calc(100vh - 100px);
+    background-color: lightgrey;
+  }
+
+  #plus-button-container {
+    height: 38px;
+
+    #create-document-button .circular-button {
+      left: calc(50% - 20px);
+      margin: -60px auto auto auto;
+    }
+  }
+
+  loading-icon {
+    position: relative;
+    bottom: 14px;
+  }
 }

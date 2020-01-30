@@ -14,6 +14,15 @@ image-row {
       align-items: center;
       background-color: black;
       transition: transform 0.5s ease-in-out;
+
+      .type-image-container {
+        img {
+          max-width: 600px;
+          object-fit: scale-down;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+      }
     }
 
     .next-page-button,

@@ -1,15 +1,23 @@
 #type-relation-modal .type-row {
+
+  $type-row-height: 175px;
+
   width: 100%;
-  height: 175px;
-  max-height: 175px;
+  height: $type-row-height;
+  max-height: $type-row-height;
   position: relative;
   display: flex;
 
   .type-info {
     min-width: 150px;
     max-width: 150px;
-    height: 175px;
+    height: $type-row-height;
     border-right: 2px solid lightgrey;
+
+    .type-title {
+      text-align: center;
+      height: 25px;
+    }
 
     .type-image-container {
       display: flex;
@@ -20,10 +28,9 @@
         max-height: 150px;
       }
     }
+  }
 
-    .type-title {
-      text-align: center;
-      height: 25px;
-    }
+  image-row .image-row .type-image-container img {
+      max-height: $type-row-height;
   }
 }

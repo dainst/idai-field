@@ -1,4 +1,7 @@
 #resources-types .type-row {
+
+  $type-row-height: 175px;
+
   position: relative;
   display: flex;
   background-color: white;
@@ -6,7 +9,7 @@
 
   .type-info {
     min-width: 304px;
-    height: 175px;
+    height: $type-row-height;
     border-right: 2px solid lightgrey;
 
     .type-image-container {
@@ -25,13 +28,7 @@
     }
   }
 
-  .type-image-container {
-    img {
-      max-width: 600px;
-      max-height: 175px;
-      object-fit: scale-down;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
+  image-row .image-row .type-image-container img {
+        max-height: $type-row-height;
   }
 }

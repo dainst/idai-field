@@ -4,12 +4,12 @@ import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
-import {ObserverUtil} from '../../../core/util/observer-util';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {clone} from '../../../core/util/object-util';
-import {IndexFacade} from '../../../core/datastore/index/index-facade';
-import {TypeUtility} from '../../../core/model/type-utility';
-import {TabManager} from '../../../core/tabs/tab-manager';
+import {ObserverUtil} from '../../util/observer-util';
+import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
+import {clone} from '../../util/object-util';
+import {IndexFacade} from '../../datastore/index/index-facade';
+import {TypeUtility} from '../../model/type-utility';
+import {TabManager} from '../../tabs/tab-manager';
 
 
 /**

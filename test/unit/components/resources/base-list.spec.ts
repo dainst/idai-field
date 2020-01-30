@@ -14,8 +14,9 @@ describe('BaseList', () => {
     beforeEach(() => {
 
         viewFacade = jasmine.createSpyObj('viewFacade', ['isInExtendedSearchMode', 'navigationPathNotifications',
-            'isInOverview', 'getSelectedOperations', 'isReady']);
-        viewFacade.navigationPathNotifications.and.returnValue({subscribe: () => {}});
+            'getNavigationPath', 'isInOverview', 'getSelectedOperations', 'isReady']);
+        viewFacade.navigationPathNotifications.and.returnValue({ subscribe: () => {} });
+        viewFacade.getNavigationPath.and.returnValue({});
         viewFacade.getSelectedOperations.and.returnValue([]);
         viewFacade.isReady.and.returnValue(true);
 

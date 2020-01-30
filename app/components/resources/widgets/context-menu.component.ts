@@ -69,7 +69,10 @@ export class ContextMenuComponent implements OnChanges {
 
     public isMoveOptionAvailable(): boolean {
 
-        if (!this.contextMenu.document) return false;
+        if (!this.contextMenu.document || this.typeUtility.getAbstractFieldTypeNames()
+                .includes(this.contextMenu.document.resource.type)) {
+            return false;
+        }
 
         return this.typeUtility.getHierarchyParentTypes(
             this.contextMenu.document.resource.type

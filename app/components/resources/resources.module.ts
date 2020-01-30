@@ -33,7 +33,7 @@ import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
-import {ContextMenuComponent} from './map/context-menu.component';
+import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';

@@ -7,10 +7,11 @@ import {BaseList} from '../../base-list';
 import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
 import {RoutingService} from '../../../routing-service';
-import {ContextMenuAction} from '../context-menu.component';
+import {ContextMenuAction} from '../../widgets/context-menu.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
 import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
+import {ContextMenu} from '../../widgets/context-menu';
 
 
 @Component({
@@ -26,10 +27,8 @@ import {NavigationService} from '../../../../core/resources/navigation/navigatio
  */
 export class SidebarListComponent extends BaseList implements AfterViewInit {
 
-    public contextMenuPosition: { x: number, y: number }|undefined;
-    public contextMenuDocument: FieldDocument|undefined;
-
     public highlightedDocument: FieldDocument|undefined = undefined;
+    public contextMenu: ContextMenu = new ContextMenu();
 
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
@@ -51,7 +50,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
-            this.closeContextMenu();
+            this.contextMenu.close();
             this.sidebarElement.nativeElement.focus();
         });
     }
@@ -192,22 +191,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
-    public openContextMenu(event: MouseEvent, document: FieldDocument) {
-
-        if (!document.resource.id) return this.closeContextMenu();
-
-        this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-        this.contextMenuDocument = document;
-    }
-
-
-    public closeContextMenu() {
-
-        this.contextMenuPosition = undefined;
-        this.contextMenuDocument = undefined;
-    }
-
-
     public async performContextMenuAction(action: ContextMenuAction) {
 
         if (this.isPopoverMenuOpened() &&
@@ -217,10 +200,10 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
             this.closePopover();
         }
 
-        if (!this.contextMenuDocument) return;
-        const document: FieldDocument = this.contextMenuDocument;
+        if (!this.contextMenu.document) return;
+        const document: FieldDocument = this.contextMenu.document;
 
-        this.closeContextMenu();
+        this.contextMenu.close();
 
         switch (action) {
             case 'edit':
@@ -254,7 +237,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public handleClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenuPosition) return;
+        if (!this.contextMenu.position) return;
 
         let target = event.target;
         let inside: boolean = false;
@@ -268,7 +251,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
             target = target.parentNode;
         } while (target);
 
-        if (!inside) this.closeContextMenu();
+        if (!inside) this.contextMenu.close();
     }
 
 

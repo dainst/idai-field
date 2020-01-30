@@ -2,9 +2,9 @@
      class="dropdown-menu show"
      [class.orientation-top]="orientation === 'top'"
      [class.orientation-bottom]="orientation === 'bottom'"
-     [style.left]="position.x + 'px'"
-     [style.top]="position.y + 'px'"
-     [style.bottom]="getBottomPosition(position.y) + 'px'">
+     [style.left]="contextMenu.position.x + 'px'"
+     [style.top]="contextMenu.position.y + 'px'"
+     [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
     <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
@@ -41,22 +41,22 @@
             id="context-menu-edit-geo-button" class="dropdown-item" (click)="selectAction('edit-geometry')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" >
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'Polygon'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'Polygon'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.polygon">Polygon bearbeiten</span>
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiPolygon'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'MultiPolygon'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.multipolygon">Multipolygon bearbeiten</span>
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'LineString'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'LineString'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.polyline">Polyline bearbeiten</span>
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiLineString'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'MultiLineString'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.multipolyline">Multipolyline bearbeiten</span>
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'Point'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'Point'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.point">Punkt bearbeiten</span>
-                <span *ngIf="sidebarListComponent.contextMenuDocument.resource.geometry.type === 'MultiPoint'"
+                <span *ngIf="contextMenu.document.resource.geometry.type === 'MultiPoint'"
                       class="fieldvalue"
                       i18n="@@resources.contextMenu.editGeometry.multipoint">Multipunkt bearbeiten</span>
         </span>

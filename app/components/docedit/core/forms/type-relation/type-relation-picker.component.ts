@@ -51,11 +51,11 @@ export class TypeRelationPickerComponent {
 
         const documents = (await this.datastore.find({q: q, types: ['Type']})).documents;
         this.typeDocumentsWithLinkedImageIds =
-            await this.makeTypeDocumentsWithLinkedImageIds(documents);
+            await this.pairWithLinkedImageIds(documents);
     }
 
 
-    private makeTypeDocumentsWithLinkedImageIds = asyncMap(async (document: FieldDocument) => {
+    private pairWithLinkedImageIds = asyncMap(async (document: FieldDocument) => {
         return [
             document,
             await getIdsOfLinkedImages(document, this.datastore)

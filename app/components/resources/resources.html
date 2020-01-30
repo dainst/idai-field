@@ -80,8 +80,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
         <resources-map *ngIf="viewFacade.getMode() === 'map'"></resources-map>
         <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"></list>
-        <resources-types *ngIf="viewFacade.getMode() === 'types'"
-                         [documents]="viewFacade.getDocuments()">
-        </resources-types>
+        <type-list *ngIf="viewFacade.getMode() === 'types'"
+                   [documents]="viewFacade.getDocuments()"></type-list>
     </div>
 </div>

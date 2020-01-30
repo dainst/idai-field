@@ -22,10 +22,12 @@ export class TypeRowComponent implements OnChanges {
 
     constructor(private imagestore: ReadImagestore) {}
 
+
     async ngOnChanges() {
 
         if (this.document) this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);
     }
+
 
     private async getMainThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
 

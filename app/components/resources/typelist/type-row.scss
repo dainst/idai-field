@@ -5,12 +5,13 @@ type-row {
     position: relative;
     display: flex;
     background-color: white;
-    margin: 2px;
+    margin-bottom: -1px;
+    border-bottom: 2px solid #dddddd;
 
     .type-info {
       min-width: 304px;
       height: $type-row-height;
-      border-right: 2px solid lightgrey;
+      border-right: 1px solid #dddddd;
 
       .type-image-container {
         display: flex;
@@ -30,6 +31,12 @@ type-row {
 
     image-row .image-row .type-image-container img {
       max-height: $type-row-height;
+    }
+  }
+
+  &:last-child {
+    .type-row {
+      border-bottom: 1px solid #dddddd;
     }
   }
 }

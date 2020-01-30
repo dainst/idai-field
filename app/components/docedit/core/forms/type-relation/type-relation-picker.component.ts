@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Pair} from 'tsfun';
+import {Pair, first, second} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Resource, FieldDocument} from 'idai-components-2/index';
@@ -21,6 +21,8 @@ export class TypeRelationPickerComponent {
 
     public timeoutRef: any;
 
+    public typeDocument = first;
+    public imageIds = second;
     public typeDocumentsWithLinkedImageIds: Array<Pair<FieldDocument, string[]>> = [];
 
 

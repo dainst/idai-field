@@ -1,12 +1,14 @@
-import {unique} from 'tsfun';
-import {Component, Input} from '@angular/core';
+import {to, unique} from 'tsfun';
+import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, Resource} from 'idai-components-2';
-import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
+import {Resource} from 'idai-components-2';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
+import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 
+type ResourceIdentifier = string;
 const INSTANCE_OF = 'isInstanceOf';
+const toResourceIdentifier = to('resource.identifier');
 
 @Component({
     moduleId: module.id,
@@ -14,19 +16,25 @@ const INSTANCE_OF = 'isInstanceOf';
     templateUrl: './type-relation.html'
 })
 /**
- * TODO make that it has the functionality of relation-picker-group, so it behaves alike and so that types can be removed
- *
  * @author Daniel de Oliveira
  */
-export class TypeRelationComponent {
+export class TypeRelationComponent implements OnChanges {
 
     @Input() resource: Resource;
     @Input() fieldName: string;
 
+    public relationIdentifiers: Array<ResourceIdentifier> = [];
 
-    constructor(private datastore: ImageReadDatastore,
+
+    constructor(private datastore: FieldReadDatastore,
                 private modalService: NgbModal,
                 private doceditComponent: DoceditComponent) {}
+
+
+    ngOnChanges() {
+
+        this.fetchRelationIdentifiers();
+    }
 
 
     public async openInstanceOfModal () {
@@ -40,15 +48,51 @@ export class TypeRelationComponent {
 
         try {
             const result = await typeRelationPicker.result;
-
-            if (!this.resource.relations[INSTANCE_OF]) this.resource.relations[INSTANCE_OF];
-            this.resource.relations[INSTANCE_OF] =
-                unique(this.resource.relations[INSTANCE_OF].concat(result.resource.id))
-
-        } catch(err) {
-            // Image picker modal has been canceled
+            this.addRelation(result.resource.id);
+        } catch { // cancelled
         } finally {
             this.doceditComponent.subModalOpened = false;
+        }
+    }
+
+
+    private async fetchRelationIdentifiers() {
+
+        if (!this.relations()) return;
+        const documents = await this.datastore.getMultiple(this.relations());
+        this.relationIdentifiers = documents.map(toResourceIdentifier);
+    }
+
+
+    private addRelation(resourceId: string) {
+
+        if (!this.relations()) this.makeRelations();
+        this.resource.relations[INSTANCE_OF] = unique(this.relations().concat(resourceId));
+        this.fetchRelationIdentifiers();
+    }
+
+
+    private relations() {
+
+        return this.resource.relations[INSTANCE_OF];
+    }
+
+
+    private makeRelations() {
+
+        this.resource.relations[INSTANCE_OF] = [];
+    }
+
+
+    public deleteRelation(i: number) {
+
+        this.relations().splice(i, 1);
+        this.relationIdentifiers.splice(i, 1);
+
+        if (this.relations().length === 0) {
+
+            delete this.resource.relations[INSTANCE_OF];
+            this.relationIdentifiers = [];
         }
     }
 }

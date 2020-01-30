@@ -2,9 +2,23 @@
 @import 'type-relation-picker';
 
 .type-relation {
+  overflow: hidden;
 
   .add-type-relation {
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
+  }
+
+  .type-relation-entry {
+    position: relative;
+    height: 40px;
+    left: 3px;
+    margin-bottom: 10px;
+
+    .relation-identifier {
+      position: relative;
+      left: 40px;
+      top: 8px;
+    }
   }
 }

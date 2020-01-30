@@ -5,11 +5,15 @@
          (click)="openInstanceOfModal()">+</div>
 
     <div *ngIf="resource.relations['isInstanceOf'] && resource">
-        <div *ngFor="let relation of resource.relations['isInstanceOf']; let i = index">
-            <relation-picker [(resource)]="resource"
-                             [relationDefinition]="{ name: 'isInstanceOf'}"
-                             [relationIndex]="i" [primary]="'identifier'">
-            </relation-picker>
+        <div *ngFor="let relationIdentifier of relationIdentifiers; let i = index" class="type-relation-entry">
+
+            <div class="delete-relation small-circular-button red-button" (click)="deleteRelation(i)">
+                <span class="mdi mdi-delete"></span>
+            </div>
+
+            <div class="relation-identifier">
+                {{relationIdentifier}}
+            </div>
         </div>
     </div>
 </div>

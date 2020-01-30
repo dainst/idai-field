@@ -1,37 +1,39 @@
-#resources-types .type-row {
-  position: relative;
-  display: flex;
-  background-color: white;
-  margin: 2px;
+type-row {
+  .type-row {
+    position: relative;
+    display: flex;
+    background-color: white;
+    margin: 2px;
 
-  .type-info {
-    min-width: 304px;
-    height: 175px;
-    border-right: 2px solid lightgrey;
+    .type-info {
+      min-width: 304px;
+      height: 175px;
+      border-right: 2px solid lightgrey;
 
-    .type-image-container {
-      display: flex;
-      justify-content: center;
+      .type-image-container {
+        display: flex;
+        justify-content: center;
 
-      img {
-        max-width: 300px;
-        max-height: 150px;
+        img {
+          max-width: 300px;
+          max-height: 150px;
+        }
+      }
+
+      .type-title {
+        text-align: center;
+        height: 25px;
       }
     }
 
-    .type-title {
-      text-align: center;
-      height: 25px;
-    }
-  }
-
-  .type-image-container {
-    img {
-      max-width: 600px;
-      max-height: 175px;
-      object-fit: scale-down;
-      user-select: none;
-      -webkit-user-drag: none;
+    .type-image-container {
+      img {
+        max-width: 600px;
+        max-height: 175px;
+        object-fit: scale-down;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
     }
   }
 }

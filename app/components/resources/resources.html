@@ -44,6 +44,11 @@
                             ngbTooltip="Kartendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.map"
                             placement="left"
+                            triggers="manual"
+                            #mapModeTooltip="ngbTooltip"
+                            (mouseover)="mapModeTooltip.open()"
+                            (mouseleave)="mapModeTooltip.close()"
+                            (mousedown)="mapModeTooltip.close()"
                             class="btn btn-primary m-0"
                             [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
@@ -53,6 +58,11 @@
                             ngbTooltip="Typendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.types"
                             placement="left"
+                            triggers="manual"
+                            #typesModeTooltip="ngbTooltip"
+                            (mouseover)="typesModeTooltip.open()"
+                            (mouseleave)="typesModeTooltip.close()"
+                            (mousedown)="typesModeTooltip.close()"
                             class="btn btn-primary m-0"
                             [class.active]="isCurrentMode('types')">
                         <span class="mdi mdi-image-filter"></span>
@@ -63,6 +73,11 @@
                             ngbTooltip="Listendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"
+                            triggers="manual"
+                            #listModeTooltip="ngbTooltip"
+                            (mouseover)="listModeTooltip.open()"
+                            (mouseleave)="listModeTooltip.close()"
+                            (mousedown)="listModeTooltip.close()"
                             [class.active]="isCurrentMode('list')">
                         <span class="mdi mdi-table"></span>
                     </button>

@@ -74,9 +74,7 @@ export class ContextMenuComponent implements OnChanges {
             return false;
         }
 
-        return this.typeUtility.getHierarchyParentTypes(
-            this.contextMenu.document.resource.type
-        ).length > 0;
+        return this.typeUtility.getHierarchyParentTypes(this.contextMenu.document.resource.type).length > 0;
     }
 
 

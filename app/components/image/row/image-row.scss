@@ -30,17 +30,17 @@ image-row {
       height: 175px;
       position: absolute;
       width: 30px;
-      background-color: #636363;
+      background-color: #545454;
       opacity: 0;
       transition: background-color 0.15s ease-in-out, opacity 0.25s ease-in-out;
       z-index: 1;
 
       &:hover {
-        background-color: lighten(#636363, 10%);
+        background-color: lighten(#545454, 10%);
       }
 
       &:active {
-        background-color: darken(#636363, 10%);
+        background-color: darken(#545454, 10%);
       }
 
       .mdi {
@@ -59,7 +59,7 @@ image-row {
     &:hover {
       .next-page-button,
       .previous-page-button {
-        opacity: 0.9;
+        opacity: 0.8;
       }
     }
   }

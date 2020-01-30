@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
+import {Pair} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Resource, FieldDocument} from 'idai-components-2/index';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
-import {Pair} from '../../../../../core/util/utils';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class TypeRelationPickerComponent {
     constructor(public activeModal: NgbActiveModal,
                 public datastore: FieldReadDatastore) {
 
-        this.fetchTypes('');
+        this.fetchTypes();
     }
 
 
@@ -38,7 +38,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private async fetchTypes(q: string) {
+    private async fetchTypes(q: string = '') {
 
         const result = await this.datastore.find({q: q, types: ['Type']});
         this.typeDocumentsWithLinkedImageIds = await asyncMap(async (document: FieldDocument) => {

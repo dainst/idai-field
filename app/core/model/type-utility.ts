@@ -1,7 +1,10 @@
 import {Injectable} from '@angular/core';
-import {to} from 'tsfun';
+import {to, isnt} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
+
+const NAME = 'name';
+
 
 
 @Injectable()
@@ -86,19 +89,19 @@ export class TypeUtility {
 
     public getFieldTypeNames(): string[] {
 
-        return this.getFieldTypes().map(type => type.name);
+        return this.getFieldTypes().map(to(NAME));
     }
 
 
     public getConcreteFieldTypeNames(): string[] {
 
-        return this.getConcreteFieldTypes().map(type => type.name);
+        return this.getConcreteFieldTypes().map(to(NAME));
     }
 
 
     public getAbstractFieldTypeNames(): string[] {
 
-        return this.getAbstractFieldTypes().map(type => type.name);
+        return this.getAbstractFieldTypes().map(to(NAME));
     }
 
 
@@ -124,9 +127,9 @@ export class TypeUtility {
 
         return this.projectConfiguration
             .getTypesList()
-            .map(type => type.name)
-            .filter(typename => typename !== 'Place')
-            .filter(typename => typename !== 'Project')
+            .map(to(NAME))
+            .filter(isnt('Place'))
+            .filter(isnt('Project'))
             .filter(typename => !this.isSubtype(typename, 'Operation'))
             .filter(typename => !this.isSubtype(typename, 'Image'))
             .filter(typename => !this.isSubtype(typename, 'TypeCatalog'))
@@ -138,7 +141,7 @@ export class TypeUtility {
 
         return this.projectConfiguration
             .getTypesList()
-            .map(type => type.name)
+            .map(to(NAME))
             .filter(typename => this.isSubtype(typename, 'Operation'))
             .concat('Place');
     }

@@ -1,5 +1,11 @@
+<context-menu *ngIf="contextMenu.isOpen()"
+              [contextMenu]="contextMenu"
+              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+
 <div id="type-list">
-    <type-row *ngFor="let document of documents" [document]="document"></type-row>
+    <type-row *ngFor="let document of documents"
+              [document]="document"
+              (contextmenu)="contextMenu.open($event, document)"></type-row>
 </div>
 
 <div id="plus-button-container" class="bg-light">

@@ -9,7 +9,8 @@
             <thumbnail [identifier]="document.resource.identifier"
                        [isDepictedInRelations]="document.resource.relations.isDepictedIn"></thumbnail>
         </div>
-        <list-button-group [document]="document"></list-button-group>
+        <list-button-group [document]="document"
+                           [alwaysShowInfoButtons]="true"></list-button-group>
     </div>
 
     <image-row [imageIds]="linkedImagesIds"></image-row>

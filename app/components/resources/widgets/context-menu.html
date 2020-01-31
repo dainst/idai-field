@@ -1,4 +1,5 @@
-<div id="context-menu"
+<div *ngIf="contextMenu"
+     id="context-menu"
      class="dropdown-menu show"
      [class.orientation-top]="orientation === 'top'"
      [class.orientation-bottom]="orientation === 'bottom'"
@@ -61,5 +62,4 @@
                       i18n="@@resources.contextMenu.editGeometry.multipoint">Multipunkt bearbeiten</span>
         </span>
     </div>
-
 </div>

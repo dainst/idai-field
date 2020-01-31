@@ -1,7 +1,7 @@
 type-row {
-  .type-row {
-    $type-row-height: 175px;
+  $type-row-height: 174px;
 
+  .type-row {
     position: relative;
     display: flex;
     background-color: white;
@@ -9,6 +9,7 @@ type-row {
     border-bottom: 2px solid #dddddd;
 
     .type-info {
+      position: relative;
       min-width: 304px;
       height: $type-row-height;
       border-right: 1px solid #dddddd;
@@ -16,16 +17,38 @@ type-row {
       .type-image-container {
         display: flex;
         justify-content: center;
+        width: 275px;
 
         img {
-          max-width: 300px;
+          max-width: 275px;
           max-height: 150px;
         }
       }
 
       .type-title {
         text-align: center;
-        height: 25px;
+        height: 24px;
+        width: 279px;
+      }
+
+      .sidebar-list-button-group {
+        top: 0;
+        width: 24px;
+        height: $type-row-height;
+
+        .info-button {
+          height: 87px;
+        }
+
+        .hierarchy-button {
+          left: 0;
+          top: 87px;
+          height: 87px;
+        }
+
+        .btn span {
+          top: 31px;
+        }
       }
     }
 

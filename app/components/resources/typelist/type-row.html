@@ -1,4 +1,6 @@
-<div #typeRow class="type-row">
+<div #typeRow class="type-row"
+     (mouseover)="highlightDocument(document)"
+     (mouseleave)="highlightDocument(undefined)">
     <div class="type-info">
         <div class="type-title">
             <b>{{document.resource.identifier}}</b>
@@ -6,6 +8,7 @@
         <div class="type-image-container">
             <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
         </div>
+        <list-button-group [document]="document"></list-button-group>
     </div>
 
     <image-row [imageIds]="linkedImagesIds"></image-row>

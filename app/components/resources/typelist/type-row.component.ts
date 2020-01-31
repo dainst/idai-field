@@ -4,6 +4,7 @@ import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ModelUtil} from '../../../core/model/model-util';
+import {ResourcesComponent} from '../resources.component';
 
 
 @Component({
@@ -26,7 +27,12 @@ export class TypeRowComponent implements OnChanges {
 
 
     constructor(private imagestore: ReadImagestore,
-                private fieldDatastore: FieldReadDatastore) {}
+                private fieldDatastore: FieldReadDatastore,
+                private resourcesComponent: ResourcesComponent) {}
+
+
+    public highlightDocument = (document: FieldDocument|undefined) =>
+        this.resourcesComponent.highlightDocument(document);
 
 
     async ngOnChanges() {

@@ -56,6 +56,9 @@ export class ResourcesMapComponent {
     }
 
 
+    public isPopoverMenuOpened = () => this.resourcesComponent.isPopoverMenuOpened();
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && !this.resourcesComponent.isModalOpened) {

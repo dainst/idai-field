@@ -30,7 +30,7 @@
                    [isDepictedInRelations]="document.resource.relations['isDepictedIn']">
         </thumbnail>
 
-        <div id="document-info" [class.short-document-info]="hasThumbnail(document)">
+        <div id="document-info" [class.short-document-info]="hasThumbnail(document) && showThumbnail">
             <fields-view [expandAllGroups]="getExpandAllGroups()"
                          [resource]="document.resource"
                          (onJumpToResource)="jumpToResource($event)"

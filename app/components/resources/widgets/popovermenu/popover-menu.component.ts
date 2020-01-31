@@ -1,9 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
-import {PopoverMenu, ResourcesComponent} from '../resources.component';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {RoutingService} from '../../routing-service';
-import {Document} from 'idai-components-2/src/model/core/document';
+import {FieldDocument, Document} from 'idai-components-2';
+import {PopoverMenu, ResourcesComponent} from '../../resources.component';
+import {ViewFacade} from '../../../../core/resources/view/view-facade';
+import {RoutingService} from '../../../routing-service';
 
 
 @Component({
@@ -18,7 +17,7 @@ import {Document} from 'idai-components-2/src/model/core/document';
 export class PopoverMenuComponent {
 
     @Input() document: FieldDocument;
-    
+
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,

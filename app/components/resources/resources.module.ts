@@ -38,7 +38,7 @@ import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import {ListButtonGroupComponent} from './widgets/list-button-group.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
-import {ChildrenViewComponent} from './map/list/children-view.component';
+import {ChildrenViewComponent} from './widgets/popovermenu/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {MapComponent} from './map/map/map.component';
 import {TypeListComponent} from './typelist/type-list.component';
@@ -48,7 +48,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRowComponent} from './typelist/type-row.component';
-import {PopoverMenuComponent} from './widgets/popover-menu.component';
+import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
 
 const remote = require('electron').remote;
 

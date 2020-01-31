@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {to} from 'tsfun';
-import {Document, FieldDocument} from 'idai-components-2';
-import {PopoverMenu, ResourcesComponent} from '../../resources.component';
+import {FieldDocument} from 'idai-components-2';
+import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
@@ -60,6 +60,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public select = (document: FieldDocument) => this.resourcesComponent.select(document);
 
+    public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;
+
 
     ngAfterViewInit() {
 
@@ -96,12 +98,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     public async editDocument(document: FieldDocument) {
 
         await this.resourcesComponent.editDocument(document);
-    }
-
-
-    public isScrollbarVisible(element: HTMLElement): boolean {
-
-        return element.scrollHeight > element.clientHeight;
     }
 
 

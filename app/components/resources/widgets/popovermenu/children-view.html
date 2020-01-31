@@ -6,9 +6,10 @@
     <span *ngIf="childrenCount !== 1" i18n="@@resources.childrenView.resources">
         {{childrenCount}} Ressourcen
     </span>
-    <div class="btn btn-light right" (click)="closePopover()">
-        <span class="mdi mdi-close"></span>
-    </div>
+</div>
+
+<div id="close-popover-button" class="btn btn-light popover-header-button" (click)="closePopover()">
+    <span class="mdi mdi-close"></span>
 </div>
 
 <ul #childrenList

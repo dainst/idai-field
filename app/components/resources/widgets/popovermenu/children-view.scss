@@ -4,30 +4,37 @@
  * @author Sebastian Cuy
  */
 
-#children-list {
-  height: calc(100% - 40px);
-  overflow-y: auto;
+children-view {
+  position: relative;
 
-  loading-icon {
-    position: relative;
-    top: 49px;
-  }
-}
+  #children-list {
+    height: calc(100% - 40px);
+    overflow-y: auto;
 
-#open-child-collection-button {
-  .mdi-arrow-left {
-    padding-right: 4px;
+    loading-icon {
+      position: relative;
+      top: 49px;
+    }
   }
 
-  &:hover {
-    background-color: $popover-header-hover-bg-color;
+  #open-child-collection-button {
+    .mdi-arrow-left {
+      padding-right: 4px;
+    }
 
-    .btn {
-      background-color: $popover-header-bg-color;
+    &:hover {
+      background-color: $popover-header-hover-bg-color !important;
+    }
+  }
 
-      &:hover {
-        background-color: darken($popover-header-hover-bg-color, 3%);
-      }
+  #close-popover-button {
+    position: absolute;
+    top: 0;
+    left: 218px;
+    background-color: $popover-header-bg-color !important;
+
+    &:hover {
+      background-color: $popover-header-hover-bg-color !important;
     }
   }
 }

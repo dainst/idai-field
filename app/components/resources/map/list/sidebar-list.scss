@@ -39,61 +39,6 @@ sidebar-list {
     }
   }
 
-  .resources-listing {
-    .resources-listing-item {
-      position: relative;
-      display: block;
-      cursor: default;
-      border: 0;
-      border-radius: 0;
-      margin: 0 0 1px 0 !important;
-      user-select: none;
-      background-color: transparent;
-      padding: 0;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      min-height: $item-height;
-      height: $item-height;
-
-      &:hover {
-        background-color: darken($list-item-hover-color, 5%);
-        transition: background-color .65s ease;
-      }
-    }
-
-    .resources-listing-item-slim {
-      width: $teaser-width;
-    }
-
-    .resources-listing-item-wide {
-      width: $resources-listing-item-wide-width;
-    }
-
-    &.scrollbar-visible {
-      .resources-listing-item-slim {
-        width: $resources-listing-item-slim-width-with-scrollbar;
-      }
-
-      .resources-listing-item-wide {
-        width: $resources-listing-item-wide-width-with-scrollbar;
-      }
-
-      document-teaser {
-        width: $resources-listing-item-slim-width-with-scrollbar;
-      }
-    }
-
-    document-teaser {
-      position: absolute;
-      width: $teaser-width;
-      top: 0;
-      height: $item-height;
-      padding-left: $item-horizontal-padding;
-      padding-right: $item-horizontal-padding;
-    }
-  }
-
   #create-document-button .circular-button {
     left: 45%;
     margin: -45px auto auto auto;

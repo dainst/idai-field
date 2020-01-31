@@ -39,27 +39,27 @@
       .btn.right {
         right: 0;
       }
+    }
 
-      .btn {
-        position: absolute;
-        top: 0;
+    .popover-header-button {
+      position: absolute;
+      top: 0;
 
-        height: 39px;
-        background-color: transparent;
-        border: none;
+      height: 39px;
+      background-color: transparent;
+      border: none;
 
-        &:hover {
-          background-color: $popover-header-hover-bg-color;
-        }
+      &:hover {
+        background-color: $popover-header-hover-bg-color;
+      }
 
-        .mdi {
-          position: relative;
-          top: 3px;
-          color: #000;
-        }
-        .mdi.active {
-          background-color: darken($popover-header-hover-bg-color, 10%);
-        }
+      .mdi {
+        position: relative;
+        top: 3px;
+        color: #000;
+      }
+      .mdi.active {
+        background-color: darken($popover-header-hover-bg-color, 10%);
       }
     }
   }

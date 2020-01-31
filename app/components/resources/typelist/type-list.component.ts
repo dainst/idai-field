@@ -35,6 +35,9 @@ export class TypeListComponent extends BaseList {
     }
 
 
+    public getSelectedDocument = (): FieldDocument|undefined => this.viewFacade.getSelectedDocument();
+
+
     public async performContextMenuAction(action: ContextMenuAction) {
 
         if (!this.contextMenu.document) return;

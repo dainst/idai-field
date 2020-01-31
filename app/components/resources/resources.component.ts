@@ -14,6 +14,10 @@ import {ResourceDeletion} from './deletion/resource-deletion';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {NavigationService} from '../../core/resources/navigation/navigation-service';
+
+
+export type PopoverMenu = 'none'|'info'|'children';
 
 
 @Component({
@@ -30,6 +34,9 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
     public isModalOpened: boolean = false;
+
+    public activePopoverMenu: PopoverMenu = 'none';
+    public highlightedDocument: FieldDocument|undefined = undefined;
 
     public filterOptions: Array<IdaiType> = [];
     private scrollTarget: FieldDocument|undefined;
@@ -51,7 +58,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private typeUtility: TypeUtility,
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
-                private tabManager: TabManager
+                private tabManager: TabManager,
+                private navigationService: NavigationService
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.isEditingGeometry = false;
@@ -252,6 +260,82 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
+    public async select(document: FieldDocument, autoScroll: boolean = false) {
+
+        this.isEditingGeometry = false;
+
+        if (!document) {
+            this.viewFacade.deselect();
+        } else {
+            await this.viewFacade.setSelectedDocument(document.resource.id, false);
+        }
+
+        if (autoScroll) this.setScrollTarget(document);
+    }
+
+
+    public isSelected(document: FieldDocument) {
+
+        if (!this.viewFacade.getSelectedDocument()) return false;
+        return (this.viewFacade.getSelectedDocument() as FieldDocument).resource.id === document.resource.id;
+    }
+
+
+    public highlightDocument(document: FieldDocument|undefined) {
+
+        this.highlightedDocument = document;
+    };
+
+
+    public isHighlighted(document: FieldDocument): boolean {
+
+        if (!this.highlightedDocument) return false;
+        return this.highlightedDocument.resource.id === document.resource.id;
+    }
+
+
+    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
+
+        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
+            this.closePopover();
+        } else {
+            await this.openPopoverMenu(popoverMenu, document);
+        }
+    }
+
+
+    public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
+
+        return this.viewFacade.getSelectedDocument() !== undefined
+            && ((!popoverMenu && this.activePopoverMenu !== 'none')
+                || this.activePopoverMenu === popoverMenu)
+            && (!document || this.isSelected(document));
+    }
+
+
+    public closePopover() {
+
+        this.activePopoverMenu = 'none';
+        this.highlightedDocument = undefined;
+    };
+
+
+    public async navigatePopoverMenus(direction: 'previous'|'next') {
+
+        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+
+        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
+
+        let index: number = availablePopoverMenus.indexOf(this.activePopoverMenu)
+            + (direction === 'next' ? 1 : -1);
+        if (index < 0) index = availablePopoverMenus.length - 1;
+        if (index >= availablePopoverMenus.length) index = 0;
+
+        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         await this.viewFacade.setSelectedDocument(id);
@@ -296,14 +380,22 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    private static scrollToDocument(doc: FieldDocument): boolean {
+    private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
-        const element = document.getElementById('resource-' + doc.resource.identifier);
-        if (element) {
-            element.scrollIntoView({ block: 'nearest' });
-            return true;
+        this.activePopoverMenu = popoverMenu;
+
+        if (!this.isSelected(document)) await this.select(document);
+    }
+
+
+    private getAvailablePopoverMenus(document: FieldDocument): string[] {
+
+        const availablePopoverMenus: string[] = ['none', 'info'];
+        if (this.navigationService.shouldShowArrowBottomRight(document)) {
+            availablePopoverMenus.push('children');
         }
-        return false;
+
+        return availablePopoverMenus;
     }
 
 
@@ -320,5 +412,16 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         }
 
         this.isEditingGeometry = false;
+    }
+
+
+    private static scrollToDocument(doc: FieldDocument): boolean {
+
+        const element = document.getElementById('resource-' + doc.resource.identifier);
+        if (element) {
+            element.scrollIntoView({ block: 'nearest' });
+            return true;
+        }
+        return false;
     }
 }

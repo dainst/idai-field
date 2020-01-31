@@ -11,9 +11,6 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 
 
-export type PopoverMenu = 'none'|'info'|'children';
-
-
 @Component({
     selector: 'resources-map',
     moduleId: module.id,
@@ -31,7 +28,6 @@ export class ResourcesMapComponent {
 
     public parentDocument: FieldDocument|undefined;
     public coordinateReferenceSystem: string;
-    public activePopoverMenu: PopoverMenu = 'none';
 
 
     constructor(datastore: DocumentReadDatastore,

@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
-import {ResourcesComponent} from '../../resources.component';
+import {PopoverMenu, ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
-import {PopoverMenu, ResourcesMapComponent} from '../resources-map.component';
+import {ResourcesMapComponent} from '../resources-map.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
 import {RoutingService} from '../../../routing-service';
 import {ContextMenuAction} from '../../widgets/context-menu.component';
@@ -27,7 +27,6 @@ import {ContextMenu} from '../../widgets/context-menu';
  */
 export class SidebarListComponent extends BaseList implements AfterViewInit {
 
-    public highlightedDocument: FieldDocument|undefined = undefined;
     public contextMenu: ContextMenu = new ContextMenu();
 
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
@@ -42,9 +41,10 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
                 private routingService: RoutingService) {
 
         super(resourcesComponent, viewFacade, loading);
+
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
-            this.closePopover();
+            this.resourcesComponent.closePopover();
         });
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
@@ -64,6 +64,14 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
 
+    public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu);
+
+    public closePopover = () => this.resourcesComponent.closePopover();
+
+    public highlightDocument = (document: FieldDocument|undefined) => this.resourcesComponent.highlightDocument(document);
+
+    public select = (document: FieldDocument) => this.resourcesComponent.select(document);
+
 
     ngAfterViewInit() {
 
@@ -80,7 +88,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
         }
 
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            await this.navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
+            await this.resourcesComponent
+                .navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
             event.preventDefault();
         }
 
@@ -108,82 +117,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
-    public isSelected(document: FieldDocument) {
-
-        if (!this.viewFacade.getSelectedDocument()) return false;
-        return (this.viewFacade.getSelectedDocument() as FieldDocument).resource.id === document.resource.id;
-    }
-
-
-    public highlightDocument(document: FieldDocument) {
-
-        this.highlightedDocument = document;
-    };
-
-
-    public isHighlighted(document: FieldDocument): boolean {
-
-        if (!this.highlightedDocument) return false;
-        return this.highlightedDocument.resource.id === document.resource.id;
-    }
-
-
-    public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
-            this.closePopover();
-        } else {
-            await this.openPopoverMenu(popoverMenu, document);
-        }
-    }
-
-
-    public isPopoverMenuOpened(popoverMenu?: PopoverMenu, document?: FieldDocument): boolean {
-
-        return this.viewFacade.getSelectedDocument() !== undefined
-            && ((!popoverMenu && this.resourcesMapComponent.activePopoverMenu !== 'none')
-                || this.resourcesMapComponent.activePopoverMenu === popoverMenu)
-            && (!document || this.isSelected(document));
-    }
-
-
-    public closePopover() {
-
-        this.resourcesMapComponent.activePopoverMenu = 'none';
-        this.highlightedDocument = undefined;
-    };
-
-
-    public async navigatePopoverMenus(direction: 'previous'|'next') {
-
-        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-
-        const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
-
-        let index: number = availablePopoverMenus.indexOf(this.resourcesMapComponent.activePopoverMenu)
-            + (direction === 'next' ? 1 : -1);
-        if (index < 0) index = availablePopoverMenus.length - 1;
-        if (index >= availablePopoverMenus.length) index = 0;
-
-        await this.openPopoverMenu(availablePopoverMenus[index] as PopoverMenu, selectedDocument);
-    }
-
-
-    public async select(document: FieldDocument, autoScroll: boolean = false) {
-
-        this.resourcesComponent.isEditingGeometry = false;
-
-        if (!document) {
-            this.viewFacade.deselect();
-        } else {
-            await this.viewFacade.setSelectedDocument(document.resource.id, false);
-        }
-
-        if (autoScroll) this.resourcesComponent.setScrollTarget(document);
-    }
-
-
     public async jumpToResource(document: FieldDocument) {
 
         await this.routingService.jumpToResource(document);
@@ -193,11 +126,11 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public async performContextMenuAction(action: ContextMenuAction) {
 
-        if (this.isPopoverMenuOpened() &&
+        if (this.resourcesComponent.isPopoverMenuOpened() &&
             ['edit-geometry', 'create-polygon',
                 'create-line-string', 'create-point'].includes(action)) {
 
-            this.closePopover();
+            this.resourcesComponent.closePopover();
         }
 
         if (!this.contextMenu.document) return;
@@ -252,25 +185,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
         } while (target);
 
         if (!inside) this.contextMenu.close();
-    }
-
-
-    private async openPopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
-
-        this.resourcesMapComponent.activePopoverMenu = popoverMenu;
-
-        if (!this.isSelected(document)) await this.select(document);
-    }
-
-
-    private getAvailablePopoverMenus(document: FieldDocument): string[] {
-
-        const availablePopoverMenus: string[] = ['none', 'info'];
-        if (this.navigationService.shouldShowArrowBottomRight(document)) {
-            availablePopoverMenus.push('children');
-        }
-
-        return availablePopoverMenus;
     }
 
 

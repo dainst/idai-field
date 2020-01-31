@@ -48,7 +48,7 @@
     <li *ngFor="let document of viewFacade.getDocuments()"
         class="resources-listing-item resources-listing-item-wide"
         (mouseover)="highlightDocument(document)"
-        (mouseleave)="highlightedDocument = undefined"
+        (mouseleave)="highlightDocument(undefined)"
         (contextmenu)="contextMenu.open($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
@@ -58,10 +58,9 @@
 
         <sidebar-list-button-group [document]="document"></sidebar-list-button-group>
 
-        <document-teaser
-                (click)="select(document)"
-                (dblclick)="editDocument(document)"
-                [document]="document"></document-teaser>
+        <document-teaser (click)="select(document)"
+                         (dblclick)="editDocument(document)"
+                         [document]="document"></document-teaser>
     </li>
 </ul>
 

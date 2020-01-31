@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {SidebarListComponent} from './sidebar-list.component';
 import {TypeUtility} from '../../../../core/model/type-utility';
 import {RoutingService} from '../../../routing-service';
 import {ResourcesComponent} from '../../resources.component';
@@ -21,7 +20,6 @@ export class SidebarListButtonGroupComponent {
     @Input() document: FieldDocument;
 
     constructor(private resourcesComponent: ResourcesComponent,
-                public sidebarList: SidebarListComponent,
                 public viewFacade: ViewFacade,
                 public typeUtility: TypeUtility,
                 private routingService: RoutingService,
@@ -44,7 +42,7 @@ export class SidebarListButtonGroupComponent {
 
     public async jumpToResourceFromOverviewToOperation() {
 
-        this.sidebarList.closePopover();
+        this.resourcesComponent.closePopover();
         await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
         this.resourcesComponent.setScrollTarget(this.document);
     }

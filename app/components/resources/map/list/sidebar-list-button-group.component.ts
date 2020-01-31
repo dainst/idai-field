@@ -19,7 +19,7 @@ export class SidebarListButtonGroupComponent {
 
     @Input() document: FieldDocument;
 
-    constructor(private resourcesComponent: ResourcesComponent,
+    constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
                 public typeUtility: TypeUtility,
                 private routingService: RoutingService,

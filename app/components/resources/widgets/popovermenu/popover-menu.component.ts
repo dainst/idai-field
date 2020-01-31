@@ -17,6 +17,7 @@ import {RoutingService} from '../../../routing-service';
 export class PopoverMenuComponent {
 
     @Input() document: FieldDocument;
+    @Input() showThumbnail: boolean = true;
 
 
     constructor(private resourcesComponent: ResourcesComponent,

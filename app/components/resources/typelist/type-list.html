@@ -2,7 +2,8 @@
               [contextMenu]="contextMenu"
               (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
-<popover-menu [document]="getSelectedDocument()"></popover-menu>
+<popover-menu [document]="getSelectedDocument()"
+              [showThumbnail]="false"></popover-menu>
 
 <div id="type-list" (scroll)="contextMenu.close()">
     <type-row *ngFor="let document of documents"

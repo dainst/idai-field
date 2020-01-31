@@ -1,0 +1,39 @@
+<div *ngIf="isPopoverMenuOpened()" id="popover-menu">
+
+    <div *ngIf="isPopoverMenuOpened('children')" class="popover-menu-page">
+        <children-view [document]="document"></children-view>
+    </div>
+
+    <div *ngIf="isPopoverMenuOpened('info')" class="popover-menu-page">
+        <div class="popover-menu-header">
+            <div class="btn btn-light left"
+                 [class.active]="getExpandAllGroups()"
+                 (click)="tooltip.close(); toggleExpandAllGroups()"
+                 ngbTooltip="Alle Gruppen ausklappen"
+                 i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                 #tooltip="ngbTooltip"
+                 placement="right"
+                 container="body"
+                 triggers="manual"
+                 (mouseover)="tooltip.open()"
+                 (mouseleave)="tooltip.close()">
+                <span class="mdi mdi-unfold-more-horizontal"></span>
+            </div>
+            <div id="info-header">{{document.resource.identifier}}</div>
+            <div class="btn btn-light right" (click)="closePopover()">
+                <span class="mdi mdi-close"></span>
+            </div>
+        </div>
+
+        <thumbnail [identifier]="document.resource.identifier"
+                   [isDepictedInRelations]="document.resource.relations['isDepictedIn']">
+        </thumbnail>
+
+        <div id="document-info" [class.short-document-info]="hasThumbnail(document)">
+            <fields-view [expandAllGroups]="getExpandAllGroups()"
+                         [resource]="document.resource"
+                         (onJumpToResource)="jumpToResource($event)"
+                         (onSectionToggled)="disableExpandAllGroups()"></fields-view>
+        </div>
+    </div>
+</div>

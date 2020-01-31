@@ -271,7 +271,7 @@ describe('resources --', () => {
         DoceditPage.clickCloseEdit('discard');
 
         ResourcesPage.clickSelectResource('1', 'info');
-        browser.wait(EC.visibilityOf(element(by.id('sidebar-popover'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.id('popover-menu'))), delays.ECWaitTime);
         FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
     });
 

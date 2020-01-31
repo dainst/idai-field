@@ -1,0 +1,75 @@
+#popover-menu {
+  background-color: $popover-bg-color;
+  position: absolute;
+  left: $resources-listing-item-wide-width;
+  height: 100%;
+  width: $teaser-width;
+  z-index: 1002;
+  overflow: hidden;
+
+  #info-header {
+    position: relative;
+    left: 30px;
+    width: 176px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  .popover-menu-page {
+    height: 100%;
+
+    .popover-menu-header {
+      height: 40px;
+      padding: 11px;
+      background-color: $popover-header-bg-color;
+      border-bottom: 1px solid #ced4da;
+      text-align: center;
+      font-size: 14px;
+      user-select: none;
+      cursor: default;
+
+      .btn.left {
+        left: 0;
+      }
+      .btn.right {
+        right: 0;
+      }
+
+      .btn {
+        position: absolute;
+        top: 0;
+
+        height: 39px;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+          background-color: $popover-header-hover-bg-color;
+        }
+
+        .mdi {
+          position: relative;
+          top: 3px;
+          color: #000;
+        }
+        .mdi.active {
+          background-color: darken($popover-header-hover-bg-color, 10%);
+        }
+      }
+    }
+  }
+
+  #document-info {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+
+    &.short-document-info {
+      height: calc(100% - 212px);
+    }
+  }
+}

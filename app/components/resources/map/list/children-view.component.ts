@@ -5,6 +5,7 @@ import {Loading} from '../../../widgets/loading';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {SidebarListComponent} from './sidebar-list.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
+import {ResourcesComponent} from '../../resources.component';
 
 @Component({
     selector: 'children-view',
@@ -26,13 +27,14 @@ export class ChildrenViewComponent implements OnChanges {
     constructor(private viewFacade: ViewFacade,
                 private loading: Loading,
                 private datastore: FieldReadDatastore,
+                private resourcesComponent: ResourcesComponent,
                 private sidebarListComponent: SidebarListComponent) {}
 
 
     public isScrollbarVisible = (element: HTMLElement) =>
         this.sidebarListComponent.isScrollbarVisible(element);
 
-    public closePopover = () => this.sidebarListComponent.closePopover();
+    public closePopover = () => this.resourcesComponent.closePopover();
 
 
     async ngOnChanges() {
@@ -43,7 +45,7 @@ export class ChildrenViewComponent implements OnChanges {
 
     public async openChildCollection(documentToSelect?: FieldDocument) {
 
-        this.sidebarListComponent.closePopover();
+        this.resourcesComponent.closePopover();
 
         if (documentToSelect) {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);

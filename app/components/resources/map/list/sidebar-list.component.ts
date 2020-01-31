@@ -56,18 +56,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
-    public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
-
-    public toggleExpandAllGroups = () => this.viewFacade.toggleExpandAllGroups();
-
-    public disableExpandAllGroups = () => !this.getExpandAllGroups() || this.toggleExpandAllGroups();
-
-    public hasThumbnail = (document: FieldDocument): boolean => Document.hasRelations(document, 'isDepictedIn');
-
-    public isPopoverMenuOpened = (menu?: PopoverMenu): boolean => this.resourcesComponent.isPopoverMenuOpened(menu);
-
-    public closePopover = () => this.resourcesComponent.closePopover();
-
     public highlightDocument = (document: FieldDocument|undefined) => this.resourcesComponent.highlightDocument(document);
 
     public select = (document: FieldDocument) => this.resourcesComponent.select(document);
@@ -114,13 +102,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     public isScrollbarVisible(element: HTMLElement): boolean {
 
         return element.scrollHeight > element.clientHeight;
-    }
-
-
-    public async jumpToResource(document: FieldDocument) {
-
-        await this.routingService.jumpToResource(document);
-        this.resourcesComponent.setScrollTarget(document);
     }
 
 

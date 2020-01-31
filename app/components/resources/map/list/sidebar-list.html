@@ -2,46 +2,7 @@
               [contextMenu]="contextMenu"
               (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
-<div *ngIf="isPopoverMenuOpened()" id="sidebar-popover">
-
-    <div *ngIf="isPopoverMenuOpened('children')" class="sidebar-popover-page">
-        <children-view [document]="viewFacade.getSelectedDocument()"></children-view>
-    </div>
-
-    <div *ngIf="isPopoverMenuOpened('info')" class="sidebar-popover-page">
-        <div class="sidebar-popover-header">
-            <div class="btn btn-light left"
-                 [class.active]="getExpandAllGroups()"
-                 (click)="tooltip.close(); toggleExpandAllGroups()"
-                 ngbTooltip="Alle Gruppen ausklappen"
-                 i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-                 #tooltip="ngbTooltip"
-                 placement="right"
-                 container="body"
-                 triggers="manual"
-                 (mouseover)="tooltip.open()"
-                 (mouseleave)="tooltip.close()">
-                <span class="mdi mdi-unfold-more-horizontal"></span>
-            </div>
-            <div id="info-header">{{viewFacade.getSelectedDocument().resource.identifier}}</div>
-            <div class="btn btn-light right" (click)="closePopover()">
-                <span class="mdi mdi-close"></span>
-            </div>
-        </div>
-
-        <thumbnail [identifier]="viewFacade.getSelectedDocument().resource.identifier"
-                   [isDepictedInRelations]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
-        </thumbnail>
-
-        <div id="document-info" [class.short-document-info]="hasThumbnail(viewFacade.getSelectedDocument())">
-            <fields-view
-                    [expandAllGroups]="getExpandAllGroups()"
-                    [resource]="viewFacade.getSelectedDocument().resource"
-                    (onJumpToResource)="jumpToResource($event)"
-                    (onSectionToggled)="disableExpandAllGroups()"></fields-view>
-        </div>
-    </div>
-</div>
+<popover-menu [document]="viewFacade.getSelectedDocument()"></popover-menu>
 
 <ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
     tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">

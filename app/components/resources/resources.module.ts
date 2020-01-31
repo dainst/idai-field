@@ -48,6 +48,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRowComponent} from './typelist/type-row.component';
+import {PopoverMenuComponent} from './widgets/popover-menu.component';
 
 const remote = require('electron').remote;
 
@@ -76,6 +77,7 @@ const remote = require('electron').remote;
         PlusButtonComponent,
         SidebarListComponent,
         ListButtonGroupComponent,
+        PopoverMenuComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,
@@ -84,7 +86,7 @@ const remote = require('electron').remote;
         MoveModalComponent,
         DeletionInProgressModalComponent,
         ThumbnailComponent,
-        ChildrenViewComponent
+        ChildrenViewComponent,
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

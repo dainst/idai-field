@@ -1,9 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
-import {ModelUtil} from '../../../core/model/model-util';
 import {ResourcesComponent} from '../resources.component';
 
 
@@ -22,12 +20,10 @@ export class TypeRowComponent implements OnChanges {
 
     @Input() document: FieldDocument;
 
-    public mainThumbnailUrl: string|undefined;
     public linkedImagesIds: string[];
 
 
-    constructor(private imagestore: ReadImagestore,
-                private fieldDatastore: FieldReadDatastore,
+    constructor(private fieldDatastore: FieldReadDatastore,
                 private resourcesComponent: ResourcesComponent) {}
 
 
@@ -37,8 +33,6 @@ export class TypeRowComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.mainThumbnailUrl = await this.getMainThumbnailUrl(this.document);
-
         await this.updateLinkedImages(this.document);
     }
 
@@ -46,14 +40,5 @@ export class TypeRowComponent implements OnChanges {
     private async updateLinkedImages(document: FieldDocument) {
 
         this.linkedImagesIds = await TypeImagesUtil.getIdsOfLinkedImages(document, this.fieldDatastore);
-    }
-
-
-    private async getMainThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
-
-        const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
-        if (!mainImageId) return undefined;
-
-        return await this.imagestore.read(mainImageId, false, true);
     }
 }

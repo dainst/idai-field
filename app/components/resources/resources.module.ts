@@ -37,7 +37,7 @@ import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 import {ListButtonGroupComponent} from './widgets/list-button-group.component';
-import {ThumbnailComponent} from './map/list/thumbnail.component';
+import {ThumbnailComponent} from './widgets/thumbnail.component';
 import {ChildrenViewComponent} from './widgets/popovermenu/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {MapComponent} from './map/map/map.component';

@@ -5,8 +5,9 @@
         <div class="type-title">
             <b>{{document.resource.identifier}}</b>
         </div>
-        <div class="type-image-container">
-            <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
+        <div id="type-thumbnail">
+            <thumbnail [identifier]="document.resource.identifier"
+                       [isDepictedInRelations]="document.resource.relations.isDepictedIn"></thumbnail>
         </div>
         <list-button-group [document]="document"></list-button-group>
     </div>

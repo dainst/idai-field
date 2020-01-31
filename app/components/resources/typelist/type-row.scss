@@ -14,14 +14,14 @@ type-row {
       height: $type-row-height;
       border-right: 1px solid #dddddd;
 
-      .type-image-container {
-        display: flex;
-        justify-content: center;
-        width: 275px;
+      #type-thumbnail {
+        margin-left: 8px;
+        margin-top: 2px;
+        margin-bottom: 8px;
 
-        img {
-          max-width: 275px;
-          max-height: 150px;
+        thumbnail #thumbnail-container {
+          width: 267px;
+          height: 140px;
         }
       }
 

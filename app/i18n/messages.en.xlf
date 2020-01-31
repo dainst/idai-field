@@ -1754,7 +1754,7 @@
           <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="sourcefile">components/resources/widgets/list-button-group.html</context>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
@@ -1766,7 +1766,7 @@
           <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="sourcefile">components/resources/widgets/list-button-group.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
@@ -1778,7 +1778,7 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="sourcefile">components/resources/widgets/list-button-group.html</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
@@ -1810,7 +1810,7 @@
         <source>Daten anzeigen</source>
         <target state="final">Show resource data</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="sourcefile">components/resources/widgets/list-button-group.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
@@ -1818,7 +1818,7 @@
         <source>Untergeordnete Ressourcen anzeigen</source>
         <target state="final">Show child resources</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/map/list/sidebar-list-button-group.html</context>
+          <context context-type="sourcefile">components/resources/widgets/list-button-group.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>

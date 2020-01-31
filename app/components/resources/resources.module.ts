@@ -36,7 +36,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
-import {SidebarListButtonGroupComponent} from './map/list/sidebar-list-button-group.component';
+import {ListButtonGroupComponent} from './widgets/list-button-group.component';
 import {ThumbnailComponent} from './map/list/thumbnail.component';
 import {ChildrenViewComponent} from './map/list/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
@@ -75,7 +75,7 @@ const remote = require('electron').remote;
         TypeRowComponent,
         PlusButtonComponent,
         SidebarListComponent,
-        SidebarListButtonGroupComponent,
+        ListButtonGroupComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         ResourcesSearchConstraintsComponent,

@@ -56,7 +56,7 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <sidebar-list-button-group [document]="document"></sidebar-list-button-group>
+        <list-button-group [document]="document"></list-button-group>
 
         <document-teaser (click)="select(document)"
                          (dblclick)="editDocument(document)"

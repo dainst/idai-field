@@ -52,7 +52,7 @@ export module JavaToolExecutor {
 
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
-                resolve(JavaVersionParser.parseJavaVersion(stderr));
+                resolve(JavaVersionParser.parse(stderr));
             });
         });
     }

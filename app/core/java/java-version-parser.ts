@@ -6,7 +6,7 @@ export module JavaVersionParser {
     /**
      * @param javaVersionOutput: The output of "java -version"
      */
-    export function parseJavaVersion(javaVersionOutput: string): number {
+    export function parse(javaVersionOutput: string): number {
 
         if (new RegExp('version "\\d+\\.\\d+\\.\\d+_\\d+"').test(javaVersionOutput)) {
             return parseInt(getVersionString(javaVersionOutput).split('.')[1]);

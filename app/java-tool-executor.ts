@@ -50,9 +50,10 @@ export module JavaToolExecutor {
 
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
-                if (new RegExp('java version').test(stderr)) {
+                if (new RegExp('version "\\d+\\.\\d+\\.\\d+_\\d+"').test(stderr)) {
                     resolve(parseInt(getVersionString(stderr).split('.')[1]));
-                } else if (new RegExp('openjdk version').test(stderr)) {
+                } else if (new RegExp('version "\\d+"').test(stderr)
+                        || new RegExp('version "\\d+\\.\\d+\\.\\d+"').test(stderr)) {
                     resolve(parseInt(getVersionString(stderr).split('.')[0]));
                 } else {
                     resolve(0);

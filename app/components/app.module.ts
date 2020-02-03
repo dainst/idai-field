@@ -42,7 +42,6 @@ import {SynchronizationStatus} from '../core/settings/synchronization-status';
 import {Translations} from '../angular/translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
-import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {MenuService} from '../desktop/menu-service';
 import {UtilTranslations} from '../core/util/util-translations';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
@@ -59,6 +58,7 @@ import {PouchDbFsImagestore} from '../core/images/imagestore/pouch-db-fs-imagest
 import {ImageConverter} from '../core/images/imagestore/image-converter';
 import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
+import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 
 
 const remote = require('electron').remote;
@@ -204,17 +204,17 @@ registerLocaleData(localeDe, 'de');
         {
             provide: Validator,
             useFactory: (
-                fieldDocumentDatastore: FieldDatastore,
+                documentReadDatastore: DocumentReadDatastore,
                 projectConfiguration: ProjectConfiguration,
                 typeUtility: TypeUtility) => {
 
                 return new Validator(
                     projectConfiguration,
-                    (q: Query) => fieldDocumentDatastore.find(q),
+                    (q: Query) => documentReadDatastore.find(q),
                     typeUtility
                 )
             },
-            deps: [FieldDatastore, ProjectConfiguration, TypeUtility]
+            deps: [DocumentReadDatastore, ProjectConfiguration, TypeUtility]
         },
         ImportValidator,
         { provide: MD, useClass: M},
@@ -243,6 +243,6 @@ registerLocaleData(localeDe, 'de');
     entryComponents: [
         ProjectsModalComponent
     ],
-    bootstrap: [ AppComponent ]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

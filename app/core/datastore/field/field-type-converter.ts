@@ -26,7 +26,7 @@ export class FieldTypeConverter extends TypeConverter<Document> {
             if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be FeatureDocument';
         } else if (typeClass === 'FieldDocument') {
             if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be ImageDocument';
-            // feature docs are allowed to also be idai field documents
+            // feature documents are allowed to also be field documents
         }
     }
 
@@ -39,6 +39,8 @@ export class FieldTypeConverter extends TypeConverter<Document> {
             return this.typeUtility.getFeatureTypeNames();
         } else if (typeClass === 'FieldDocument') {
             return this.typeUtility.getFieldTypeNames();
+        } else {
+            return undefined;
         }
     }
 

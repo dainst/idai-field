@@ -127,6 +127,7 @@ export class ImportComponent implements OnInit {
     public isReady(): boolean|undefined {
 
         return !this.running
+            && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && this.importState.sourceType === 'file'
                 ? this.importState.file !== undefined
                 : this.url !== undefined;

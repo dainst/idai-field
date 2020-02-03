@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {JavaToolExecutor} from '../../java-tool-executor';
+import {JavaToolExecutor} from '../java/java-tool-executor';
 import {M} from '../../components/messages/m';
 
 const remote = require('electron').remote;

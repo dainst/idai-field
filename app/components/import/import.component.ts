@@ -16,7 +16,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
-import {JavaToolExecutor} from '../../java-tool-executor';
+import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';

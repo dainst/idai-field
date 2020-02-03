@@ -1,3 +1,5 @@
+import {JavaVersionParser} from './java-version-parser';
+
 const exec = require('child_process').exec;
 const remote = require('electron').remote;
 
@@ -50,14 +52,7 @@ export module JavaToolExecutor {
 
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
-                if (new RegExp('version "\\d+\\.\\d+\\.\\d+_\\d+"').test(stderr)) {
-                    resolve(parseInt(getVersionString(stderr).split('.')[1]));
-                } else if (new RegExp('version "\\d+"').test(stderr)
-                        || new RegExp('version "\\d+\\.\\d+\\.\\d+"').test(stderr)) {
-                    resolve(parseInt(getVersionString(stderr).split('.')[0]));
-                } else {
-                    resolve(0);
-                }
+                resolve(JavaVersionParser.parseJavaVersion(stderr));
             });
         });
     }
@@ -72,11 +67,5 @@ export module JavaToolExecutor {
     function getJarPath(jarName: string): string {
 
         return remote.getGlobal('toolsPath') + '/' + jarName;
-    }
-
-
-    function getVersionString(stderr: string): string {
-
-        return stderr.split(' ')[2].replace(/"/g, '');
     }
 }

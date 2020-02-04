@@ -1,6 +1,4 @@
-import {Document} from 'idai-components-2';
-import {FieldDocument} from 'idai-components-2';
-import {FeatureDocument} from 'idai-components-2';
+import {Document, FieldDocument, FeatureDocument} from 'idai-components-2';
 
 
 /**

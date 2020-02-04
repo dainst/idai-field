@@ -60,24 +60,24 @@ describe('ViewFacade/Subsystem', () => {
 
         spyOn(console, 'debug'); // suppress console.debug
 
-        trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
         trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
-        trenchDocument2 = Static.ifDoc('trench2','trench2','Trench','t2');
+        trenchDocument2 = Static.fieldDoc('trench2','trench2','Trench','t2');
         trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
-        findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+        findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
         findDocument1.resource.processor = 'person';
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        findDocument2 = Static.ifDoc('Find 2', 'find2', 'Find', 'find2');
+        findDocument2 = Static.fieldDoc('Find 2', 'find2', 'Find', 'find2');
         findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
             findDocument2.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
         findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
-        featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        featureDocument2 = Static.fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         await fieldDocumentDatastore.create(trenchDocument1, 'u');
@@ -162,7 +162,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('search -- show only resources of the selected type', async done => {
 
-        const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
+        const findDocument3 = Static.fieldDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         await fieldDocumentDatastore.create(findDocument3, 'u');
 

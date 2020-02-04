@@ -46,7 +46,7 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.loaded = true;
 
 
-        trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
     });
 
 
@@ -54,9 +54,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -83,10 +83,10 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
-        const findDocument2 = Static.ifDoc('Find 2', 'find2', 'Find', 'find2');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
+        const findDocument2 = Static.fieldDoc('Find 2', 'find2', 'Find', 'find2');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -116,9 +116,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -144,7 +144,7 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         documents = [trenchDocument1, featureDocument1];
@@ -163,7 +163,7 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         documents = [trenchDocument1, featureDocument1];
@@ -183,8 +183,8 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
@@ -209,8 +209,8 @@ describe('ResourcesStateManager', () => {
 
     it('set type filters and q', async done => {
 
-        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
+        const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
@@ -232,7 +232,7 @@ describe('ResourcesStateManager', () => {
 
     it('delete type filter and q of segment', async done => {
 
-        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -247,7 +247,7 @@ describe('ResourcesStateManager', () => {
 
     it('delete type filter and q of non segment', async done => {
 
-        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 

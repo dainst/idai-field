@@ -36,7 +36,7 @@ describe('NavigationService', () => {
         });
 
         expect(navigationService.showJumpToViewOption(
-            Static.ifDoc('abc', 'def', 'operationSubtype', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'operationSubtype', 'jkl'))
         ).toEqual(true);
     });
 
@@ -48,7 +48,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(true);
     });
 
@@ -60,7 +60,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
     });
 
@@ -72,7 +72,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.ifDoc('abc', 'def', 'ghi'))
+            Static.fieldDoc('abc', 'def', 'ghi'))
         ).toEqual(false);
     });
 
@@ -87,11 +87,11 @@ describe('NavigationService', () => {
         });
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
 
         expect(navigationService.showJumpToViewOption(
-            Static.ifDoc('abc', 'def', 'operationSubtype', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'operationSubtype', 'jkl'))
         ).toEqual(false);
     });
 });

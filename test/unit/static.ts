@@ -9,10 +9,10 @@ import {FeatureDocument} from 'idai-components-2';
  */
 export class Static {
 
-    public static ifDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as FieldDocument;
+    public static fieldDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as FieldDocument;
 
 
-    public static iffDoc = (sd, identifier?, type?, id?) => {
+    public static featureDoc = (sd, identifier?, type?, id?) => {
 
         const doc = Static.doc(sd, identifier, type, id) as FeatureDocument;
         doc.resource.relations.isContemporaryWith = [];

@@ -12,8 +12,8 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 
@@ -43,9 +43,9 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'f2');
-        const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'f3');
+        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument3 = Static.fieldDoc('Feature 3','feature3','Feature', 'f3');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 
@@ -76,9 +76,9 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'f2');
-        const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'f3');
+        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument3 = Static.fieldDoc('Feature 3','feature3','Feature', 'f3');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 

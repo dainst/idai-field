@@ -24,7 +24,7 @@ describe('CSVExport', () => {
 
     function ifResource(id: string, identifier: string, sd: string, type: string) {
 
-        return Static.ifDoc(sd, identifier, type, id).resource;
+        return Static.fieldDoc(sd, identifier, type, id).resource;
     }
 
 

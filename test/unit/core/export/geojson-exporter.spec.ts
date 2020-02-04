@@ -39,13 +39,13 @@ describe('GeojsonExporter', () => {
 
     it('create valid geojson file', async done => {
 
-        const pointFeature = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const pointFeature = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         pointFeature.resource.geometry = {
             type: 'Point',
             coordinates: [1.0, 2.0]
         };
 
-        const lineFeature = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const lineFeature = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
         lineFeature.resource.geometry = {
             type: 'LineString',
             coordinates: [[0.5, 1.5], [1.5, 2.5], [2.5, 3.5]]
@@ -63,7 +63,7 @@ describe('GeojsonExporter', () => {
 
     it('close ring and fix winding order for polygon geometry', async done => {
 
-        const polygonFeature = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const polygonFeature = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
         polygonFeature.resource.geometry = {
             type: 'Polygon',
             coordinates: [[[1.0, 2.0], [2.0, 2.0], [2.0, 1.0], [1.0, 1.0]]]

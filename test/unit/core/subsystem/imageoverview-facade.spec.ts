@@ -29,7 +29,7 @@ describe('ImageOverviewFacade/Subsystem', () => {
         for (let i = 0; i < 60; i++) { // create 60 documents
 
             const imageDocument = Static
-                .ifDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
+                .fieldDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
             await datastore.create(imageDocument, 'u');
         }
 

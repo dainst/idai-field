@@ -6,7 +6,6 @@ import {Static} from '../../../../static';
 /**
  * @author Thomas Kleinke
  */
-
 describe('NavigationPathSegment', () => {
 
     it('consider the first segment valid if the correct isRecordedIn relation is existing', () => {
@@ -66,7 +65,7 @@ describe('NavigationPathSegment', () => {
 
         const segments: Array<NavigationPathSegment> = [
             { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] },
+            { document: document2, q: '', types: [] }
         ];
 
         expect(NavigationPathSegment.isValid(
@@ -83,7 +82,7 @@ describe('NavigationPathSegment', () => {
 
         const segments: Array<NavigationPathSegment> = [
             { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] },
+            { document: document2, q: '', types: [] }
         ];
 
         expect(NavigationPathSegment.isValid(
@@ -100,7 +99,7 @@ describe('NavigationPathSegment', () => {
 
         const segments: Array<NavigationPathSegment> = [
             { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] },
+            { document: document2, q: '', types: [] }
         ];
 
         expect(NavigationPathSegment.isValid(

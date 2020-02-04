@@ -17,8 +17,8 @@ export interface NavigationPathSegment extends ViewContext {
 export module NavigationPathSegment {
 
     export function isValid(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
-                                  segments: Array<NavigationPathSegment>,
-                                  exists: (_: string) => boolean): boolean {
+                            segments: Array<NavigationPathSegment>,
+                            exists: (_: string) => boolean): boolean {
 
         return exists(segment.document.resource.id)
             && hasValidRelation(mainTypeDocumentResourceId, segment, segments);
@@ -33,7 +33,7 @@ export module NavigationPathSegment {
         return index === 0
             ? mainTypeDocumentResourceId !== undefined
                 && (Document.hasRelationTarget(segment.document, 'isRecordedIn', mainTypeDocumentResourceId)
-                    || segment.document.resource.type === 'Place')
+                    || ['Place', 'TypeCatalog'].includes(segment.document.resource.type))
             : Document.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id);
     }

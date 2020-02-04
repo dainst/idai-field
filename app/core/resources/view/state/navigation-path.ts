@@ -213,7 +213,6 @@ export module NavigationPath {
     }
 
 
-
     function getViewContext(navPath: NavigationPath): ViewContext {
 
         return navPath.selectedSegmentId

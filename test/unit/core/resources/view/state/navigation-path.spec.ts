@@ -7,7 +7,6 @@ import {toResourceId} from '../../../../../../app/core/resources/view/state/navi
  */
 describe('NavigationPath', () => {
 
-
     it('validateFieldDefinitions_ back and forth between two segments', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();

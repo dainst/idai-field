@@ -116,7 +116,6 @@
     "electron-packager": "14.0.5",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
-    "fsevents": "^1.2.11",
     "gulp": "4.0.2",
     "gulp-concat": "2.6.1",
     "gulp-rename": "1.4.0",

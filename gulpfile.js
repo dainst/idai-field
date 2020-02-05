@@ -24,18 +24,18 @@ gulp.task('convert-sass', () => {
         .pipe(gulp.dest('app/'));
 });
 
-gulp.task('copy-fonts-convert-sass', ['convert-sass'], () => {
+gulp.task('copy-fonts-convert-sass', gulp.series('convert-sass', () => {
 
-    gulp.src([
+    return gulp.src([
         'node_modules/roboto-fontface/fonts/**/*',
         'node_modules/@mdi/font/fonts/**/*'
     ])
     .pipe(gulp.dest('fonts'));
-});
+}));
 
 gulp.task('copy-shapefile-tool', () => {
 
-    gulp.src('java/target/shapefile-tool-*-jar-with-dependencies.jar')
+    return gulp.src('java/target/shapefile-tool-*-jar-with-dependencies.jar')
         .pipe(rename('shapefile-tool.jar'))
         .pipe(gulp.dest('tools'));
 });

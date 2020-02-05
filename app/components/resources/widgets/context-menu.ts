@@ -1,4 +1,4 @@
-import {FieldDocument} from 'idai-components-2/src/model/field-document';
+import {FieldDocument} from 'idai-components-2';
 
 /**
  * @author Thomas Kleinke

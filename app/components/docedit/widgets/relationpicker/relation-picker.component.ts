@@ -45,12 +45,11 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = '';
         this.selectedTarget = undefined;
 
-        const relationTargetResourceId: string =
-            this.resource.relations[this.relationDefinition.name][this.relationIndex];
+        const relationTargetIdentifier: string = this.getRelationTargetIdentifier();
 
-        if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
+        if (isNot(undefinedOrEmpty)(relationTargetIdentifier)) {
             try {
-                this.selectedTarget = await this.datastore.get(relationTargetResourceId);
+                this.selectedTarget = await this.datastore.get(relationTargetIdentifier);
             } catch (err) {
                 this.disabled = true;
                 console.error(err);
@@ -96,15 +95,12 @@ export class RelationPickerComponent implements OnChanges {
 
     public async leaveSuggestionMode() {
 
-        if (!this.resource.relations[this.relationDefinition.name][this.relationIndex]
-            || this.resource.relations[this.relationDefinition.name][this.relationIndex] === '') {
-            return this.deleteRelation();
-        }
+        const relationTargetIdentifier: string = this.getRelationTargetIdentifier();
+        if (!relationTargetIdentifier || relationTargetIdentifier === '') return this.deleteRelation();
 
         this.suggestionsVisible = false;
 
-        if (!this.selectedTarget && this.resource.relations[this.relationDefinition.name][this.relationIndex]
-            && this.resource.relations[this.relationDefinition.name][this.relationIndex] !== '') {
+        if (!this.selectedTarget && relationTargetIdentifier && relationTargetIdentifier !== '') {
             try {
                 this.selectedTarget = await this.datastore.get(
                     this.resource.relations[this.relationDefinition.name][this.relationIndex]
@@ -202,5 +198,11 @@ export class RelationPickerComponent implements OnChanges {
         } finally {
             this.updateSuggestionsMode = false;
         }
+    }
+
+
+    private getRelationTargetIdentifier(): string {
+
+        return this.resource.relations[this.relationDefinition.name][this.relationIndex];
     }
 }

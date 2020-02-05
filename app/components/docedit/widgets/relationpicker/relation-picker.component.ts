@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnChanges} from '@angular/core';
 import {isNot, undefinedOrEmpty} from 'tsfun';
 import {Document, Resource, ReadDatastore} from 'idai-components-2';
 import {getSuggestions} from '../../../../core/docedit/get-suggestions';
+import {RelationDefinition} from '../../../../core/configuration/model/relation-definition';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class RelationPickerComponent implements OnChanges {
 
     @Input() resource: Resource;
     
-    @Input() relationDefinition: any;
+    @Input() relationDefinition: RelationDefinition;
     @Input() relationIndex: number;
     @Input() primary: string;
 
@@ -32,7 +33,7 @@ export class RelationPickerComponent implements OnChanges {
     // This is to compensate for an issue where it is possible
     // to call updateSuggestions repeatedly in short time.
     // It is intended to be only used as guard in updateSuggestions.
-    private updateSuggestionsMode = false;
+    private updateSuggestionsMode: boolean = false;
 
 
     constructor(private element: ElementRef,
@@ -78,8 +79,10 @@ export class RelationPickerComponent implements OnChanges {
 
     public editTarget() {
 
-        this.idSearchString = (this.selectedTarget as any).resource[this.primary];
-        this.suggestions = [this.selectedTarget] as any;
+        if (!this.selectedTarget) return;
+
+        this.idSearchString = (this.selectedTarget).resource[this.primary];
+        this.suggestions = [this.selectedTarget];
         this.selectedSuggestionIndex = 0;
         this.selectedTarget = undefined;
 
@@ -102,9 +105,7 @@ export class RelationPickerComponent implements OnChanges {
 
         if (!this.selectedTarget && relationTargetIdentifier && relationTargetIdentifier !== '') {
             try {
-                this.selectedTarget = await this.datastore.get(
-                    this.resource.relations[this.relationDefinition.name][this.relationIndex]
-                );
+                this.selectedTarget = await this.datastore.get(relationTargetIdentifier);
             } catch (err) {
                 console.error(err);
             }
@@ -132,7 +133,7 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public keyDown(event: any) {
+    public keyDown(event: KeyboardEvent) {
 
         switch(event.key) {
             case 'ArrowUp':
@@ -161,7 +162,7 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public keyUp(event: any) {
+    public keyUp(event: KeyboardEvent) {
 
         switch(event.key) {
             case 'ArrowUp':
@@ -172,9 +173,7 @@ export class RelationPickerComponent implements OnChanges {
                 break;
             default:
                 this.selectedSuggestionIndex = 0;
-                setTimeout(() => {
-                    return this.updateSuggestions()}
-                , 100);
+                setTimeout(() => this.updateSuggestions(), 100);
                 // This is to compensate for
                 // a slight delay where idSearchString takes some time to get updated. The behaviour
                 // was discovered on an occasion where the search string got pasted into the input field.
@@ -192,7 +191,8 @@ export class RelationPickerComponent implements OnChanges {
 
         try {
             this.suggestions = await getSuggestions(
-                this.datastore, this.resource, this.relationDefinition, this.idSearchString);
+                this.datastore, this.resource, this.relationDefinition, this.idSearchString
+            );
         } catch (err) {
             console.error(err);
         } finally {

@@ -1,13 +1,12 @@
-import {Document} from 'idai-components-2/src/model/core/document';
-import {unionBy} from 'tsfun/base';
 import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {unionBy} from 'tsfun/base';
+import {asyncForEach} from 'tsfun-extra';
+import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {makeLookup} from '../util';
-import {Relations} from 'idai-components-2/src/model/core/relations';
 import {Id, Identifier} from './types';
-import {asyncForEach} from 'tsfun-extra';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 
 

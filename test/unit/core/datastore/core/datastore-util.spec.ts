@@ -1,9 +1,8 @@
-import {Document} from 'idai-components-2/src/model/core/document';
+import {Document} from 'idai-components-2';
 import {DatastoreUtil} from '../../../../../app/core/datastore/core/datastore-util';
 
 
 describe('DatastoreUtil', () => {
-
 
     it('sort revisions', () => {
 

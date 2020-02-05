@@ -48,15 +48,10 @@ export class RelationPickerComponent implements OnChanges {
             this.resource.relations[this.relationDefinition.name][this.relationIndex];
 
         if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
-
-            // See #8992
-            await this.deleteLiesWithinConditionally(relationTargetResourceId);
-
             this.datastore.get(relationTargetResourceId).then(
                 document => { this.selectedTarget = document as Document; },
                 err => { this.disabled = true; console.error(err); }
             );
-
         } else {
             setTimeout(() => {
                 (this.updateSuggestions() as any).then(() => {
@@ -83,7 +78,7 @@ export class RelationPickerComponent implements OnChanges {
     public editTarget() {
 
         this.idSearchString = (this.selectedTarget as any).resource[this.primary];
-        this.suggestions = [ this.selectedTarget ] as any;
+        this.suggestions = [this.selectedTarget] as any;
         this.selectedSuggestionIndex = 0;
         this.selectedTarget = undefined;
 
@@ -184,27 +179,6 @@ export class RelationPickerComponent implements OnChanges {
                 // If one does the keyup quickly after pasting, it wasn't working. If One leaves the command
                 // key somewhat later, it worked.
                 break;
-        }
-    }
-
-    private async deleteLiesWithinConditionally(relationId?: string) {
-
-        if (this.relationDefinition.name === 'isRecordedIn'
-            && this.resource.relations['liesWithin']
-            && this.resource.relations['liesWithin'].length > 0) {
-
-            const liesWithinTarget =
-                await this.datastore.get(this.resource.relations['liesWithin'][0]);
-
-            if (liesWithinTarget) {
-                if (liesWithinTarget.resource.relations['isRecordedIn']
-                    && liesWithinTarget.resource.relations['isRecordedIn'].length > 0) {
-
-                    if (liesWithinTarget.resource.relations['isRecordedIn'][0] !== relationId) {
-                        this.resource.relations['liesWithin'] = []
-                    }
-                }
-            }
         }
     }
 

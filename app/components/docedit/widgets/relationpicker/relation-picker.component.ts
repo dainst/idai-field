@@ -191,7 +191,7 @@ export class RelationPickerComponent implements OnChanges {
 
         try {
             this.suggestions = await getSuggestions(
-                this.datastore, this.resource, this.relationDefinition, false, this.idSearchString
+                this.datastore, this.resource, this.relationDefinition, this.isInverseMode(), this.idSearchString
             );
         } catch (err) {
             console.error(err);
@@ -204,5 +204,12 @@ export class RelationPickerComponent implements OnChanges {
     private getRelationTargetIdentifier(): string {
 
         return this.resource.relations[this.relationDefinition.name][this.relationIndex];
+    }
+
+
+    private isInverseMode(): boolean {
+
+        return !this.relationDefinition.domain.includes(this.resource.type)
+            && this.relationDefinition.range.includes(this.resource.type);
     }
 }

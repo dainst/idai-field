@@ -29,7 +29,7 @@ export class ProjectConfiguration {
 
     private typesColorMap: { [typeName: string]: string } = {};
 
-    private relationFields: any[]|undefined = undefined;
+    private relationFields: Array<RelationDefinition>|undefined = undefined;
 
 
     /**
@@ -112,21 +112,22 @@ export class ProjectConfiguration {
      * @param property to give only the definitions with a certain boolean property not set or set to true
      * @returns {Array<RelationDefinition>} the definitions for the type.
      */
-    public getRelationDefinitions(typeName: string, isRangeType: boolean = false, property?: string)
-            : Array<RelationDefinition>|undefined {
+    public getRelationDefinitions(typeName: string, isRangeType: boolean = false,
+                                  property?: string): Array<RelationDefinition>|undefined {
 
         if (!this.relationFields) return undefined;
 
-        const availableRelationFields = new Array<RelationDefinition>();
-        for (let i in this.relationFields) {
-            let types = isRangeType ? this.relationFields[i].range : this.relationFields[i].domain;
+        const availableRelationFields: Array<RelationDefinition> = [];
+        for (let relationField of this.relationFields) {
+            let types = isRangeType || relationField.editableFromRange
+                ? relationField.range
+                : relationField.domain;
 
             if (types.indexOf(typeName) > -1) {
-
                 if (!property ||
-                    this.relationFields[i][property] == undefined ||
-                    this.relationFields[i][property] == true) {
-                    availableRelationFields.push(this.relationFields[i]);
+                    (relationField as any)[property] == undefined ||
+                    (relationField as any)[property] == true) {
+                    availableRelationFields.push(relationField);
                 }
             }
         }

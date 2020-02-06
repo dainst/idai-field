@@ -4,6 +4,7 @@ import {ConfigLoader} from './config-loader';
 import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
 import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
+import {RelationDefinition} from './model/relation-definition';
 
 
 @Injectable()
@@ -308,7 +309,7 @@ export class AppConfigurator {
     };
 
 
-    private defaultRelations: any[] = [
+    private defaultRelations: Array<RelationDefinition> = [
         {
             name: 'depicts',
             domain: ['Image:inherit'],
@@ -629,7 +630,8 @@ export class AppConfigurator {
             name: 'isInstanceOf',
             label: this.i18n({ id: 'configuration.relations.isInstanceOf', value: 'Instanz von' }),
             domain: ['Find:inherit'],
-            range: ['Type:inherit']
+            range: ['Type:inherit'],
+            editableFromRange: true
         }
     ];
 

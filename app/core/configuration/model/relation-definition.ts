@@ -10,5 +10,6 @@ export interface RelationDefinition {
     inverse?: any;
     visible?: boolean; // determines the visiblity of that relation in show type widgets
     editable?: boolean; // determines the visiblity of that relation in edit type widgets
+    editableFromRange?: boolean;
     sameMainTypeResource?: boolean;
 }

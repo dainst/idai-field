@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, first, second} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {Resource, FieldDocument} from 'idai-components-2';
+import {Resource, FieldDocument, Query} from 'idai-components-2';
 import {ResourceId} from '../../../../../core/constants';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
+import {suggestTypeRelations} from '../../../../../core/docedit/core/type-relation/suggest-type-relations';
 
 
 @Component({
@@ -29,15 +30,13 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                public datastore: FieldReadDatastore) {
-
-        this.fetchTypes();
-    }
+                public datastore: FieldReadDatastore) {}
 
 
     public setResource(resource: Resource) {
 
         this.resource = resource;
+        this.fetchTypes();
     }
 
 
@@ -50,9 +49,17 @@ export class TypeRelationPickerComponent {
 
     private async fetchTypes(q: string = '') {
 
+        if (!this.resource) return;
+
         const documents = (await this.datastore.find({q: q, types: ['Type']})).documents;
+        const rankedDocuments =
+            await suggestTypeRelations(
+                documents,
+                this.resource.type,
+                (q: Query) => this.datastore.find(q));
+
         this.typeDocumentsWithLinkedImageIds =
-            await this.pairWithLinkedImageIds(documents);
+            await this.pairWithLinkedImageIds(rankedDocuments);
     }
 
 

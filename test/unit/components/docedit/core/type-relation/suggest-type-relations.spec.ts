@@ -28,16 +28,16 @@ describe('suggestTypeRelations', () => {
             'FindA',
             find);
 
-        expect(suggestionsForFindA[0][1][0].resource.id).toBe('1');
-        expect(suggestionsForFindA[1][1][0].resource.id).toBe('2');
+        expect(suggestionsForFindA[0].resource.id).toBe('T1');
+        expect(suggestionsForFindA[1].resource.id).toBe('T2');
 
         const suggestionsForFindB = await suggestTypeRelations(
             documents,
             'FindB',
             find);
 
-        expect(suggestionsForFindB[0][1][0].resource.id).toBe('2');
-        expect(suggestionsForFindB[1][1][0].resource.id).toBe('1');
+        expect(suggestionsForFindB[0].resource.id).toBe('T2');
+        expect(suggestionsForFindB[1].resource.id).toBe('T1');
         done();
     });
 });

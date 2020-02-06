@@ -1,4 +1,4 @@
-import {separate, Pair, to, is} from 'tsfun';
+import {separate, Pair, to, is, first} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, Query} from 'idai-components-2';
 import {Name} from '../../../constants';
@@ -21,13 +21,13 @@ type Row = Pair<FieldDocument, Array<FieldDocument>>;
  * @author Daniel de Oliveira
  */
 export async function suggestTypeRelations(documents: Array<FieldDocument>,
-                                     type: Name,
-                                     find: (query: Query) => Promise<FieldDocumentFindResult>) {
-
+                                           type: Name,
+                                           find: (query: Query) => Promise<FieldDocumentFindResult>)
+    : Promise<Array<FieldDocument>> {
 
     const rows: Array<Row> = await asyncMap(async (document: FieldDocument) => {
 
-        const constraints = {constraints: { 'isInstanceOf:contain': document.resource.id }};
+        const constraints = { constraints: { 'isInstanceOf:contain': document.resource.id }};
         const documents = (await find(constraints)).documents as Array<FieldDocument>;
 
         // pairWith
@@ -42,5 +42,5 @@ export async function suggestTypeRelations(documents: Array<FieldDocument>,
         return typesMatchingTypeNotMatching[0] > typesMatchingTypeNotMatching[1];
 
     })(rows);
-    return result[0].concat(result[1]);
+    return (result[0].concat(result[1])).map(first) as Array<FieldDocument>;
 }

@@ -1,4 +1,14 @@
 .image-picker {
+  .modal-header {
+    .row {
+      width: 100%;
+      padding-left: 18px;
+
+      input {
+        height: 39px;
+      }
+    }
+  }
   .modal-body {
     height: calc(100vh - 138px);
     overflow: auto;

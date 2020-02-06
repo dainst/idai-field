@@ -1,7 +1,16 @@
 <div id="type-relation-modal">
 
     <div class="modal-header">
-        Hallo
+        <select id="importFormatSelect" class="form-control" style="width: 175px"
+                [(ngModel)]="selectedCatalog"  (change)="selectCatalog()">
+            <option *ngFor="let catalog of availableCatalogs"
+                    [ngValue]="catalog"> {{catalog.identifier}}</option>
+        </select>
+        <div class="type-search-bar float-left" style="width: 100%">
+            <search-bar [showFiltersMenu]="false"
+                        (onQueryStringChanged)="setQueryString($event)">
+            </search-bar>
+        </div>
         <button type="button" class="btn btn-secondary"
                 (click)="activeModal.dismiss('cancel')">
             <span class="mdi mdi-close"></span>
@@ -10,11 +19,7 @@
 
     <div class="modal-body">
 
-        <div class="type-search-bar">
-            <search-bar [showFiltersMenu]="false"
-                        (onQueryStringChanged)="setQueryString($event)">
-            </search-bar>
-        </div>
+
 
         <div *ngFor="let typeDocumentWithLinkedImageIds of typeDocumentsWithLinkedImageIds">
             <dai-type-row

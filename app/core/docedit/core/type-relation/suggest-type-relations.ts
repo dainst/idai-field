@@ -1,10 +1,12 @@
 import {separate, Pair, to, is, first} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {FieldDocument, Query} from 'idai-components-2';
+import {FieldDocument, Query, FieldResource} from 'idai-components-2';
 import {Name} from '../../../constants';
 import {FieldDocumentFindResult} from '../../../datastore/field/field-read-datastore';
 
 type Row = Pair<FieldDocument, Array<FieldDocument>>;
+
+// @author Daniel de Oliveira
 
 /**
  * Suggests and ranks types.
@@ -17,20 +19,22 @@ type Row = Pair<FieldDocument, Array<FieldDocument>>;
  * @param type: type of the find which we want to declare to be INSTANCE_OF Type.
  * @param find
  * @param q
- *
- * @author Daniel de Oliveira
+ * @param selectedCatalog
  */
 export async function suggestTypeRelations(find: (query: Query) => Promise<FieldDocumentFindResult>,
                                            type: Name,
-                                           q: string = '')
+                                           q: string = '',
+                                           selectedCatalog: FieldResource|undefined = undefined)
     : Promise<Array<FieldDocument>> {
 
-    const documents = (await find({q: q, types: ['Type']})).documents;
+    const query: Query = { q: q, types: ['Type'] };
+    if (selectedCatalog) query.constraints = { 'liesWithin:contain': selectedCatalog.id };
+    const documents = (await find(query)).documents;
 
     const rows: Array<Row> = await asyncMap(async (document: FieldDocument) => {
 
-        const constraints = { constraints: { 'isInstanceOf:contain': document.resource.id }};
-        const documents = (await find(constraints)).documents as Array<FieldDocument>;
+        const query = { constraints: { 'isInstanceOf:contain': document.resource.id }};
+        const documents = (await find(query)).documents as Array<FieldDocument>;
 
         // pairWith
         return [document, documents] as Row;

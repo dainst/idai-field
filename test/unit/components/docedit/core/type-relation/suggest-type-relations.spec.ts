@@ -14,27 +14,24 @@ describe('suggestTypeRelations', () => {
             { resource: { id: 'T2' }}
         ] as Array<FieldDocument>;
 
-        const find = async ({constraints: {'isInstanceOf:contain': id}}: Query) => {
+        const find = async (q: Query) => {
 
-            if (id === 'T1') return { documents:
-                    [{ resource: { id: '1', type: 'FindA' }}] as Array<FieldDocument>, totalCount: 1 };
-            if (id === 'T2') return { documents:
-                    [{ resource: { id: '2', type: 'FindB' }}] as Array<FieldDocument>, totalCount: 1 };
-            return undefined;
+            const id = q.constraints ? q.constraints['isInstanceOf:contain'] : undefined;
+            if (id) {
+                if (id === 'T1') return { documents:
+                        [{ resource: { id: '1', type: 'FindA' }}] as Array<FieldDocument>, totalCount: 1 };
+                if (id === 'T2') return { documents:
+                        [{ resource: { id: '2', type: 'FindB' }}] as Array<FieldDocument>, totalCount: 1 };
+            }
+            return { documents: documents, totalCount: 2 };
         };
 
-        const suggestionsForFindA = await suggestTypeRelations(
-            documents,
-            'FindA',
-            find);
+        const suggestionsForFindA = await suggestTypeRelations(find, 'FindA');
 
         expect(suggestionsForFindA[0].resource.id).toBe('T1');
         expect(suggestionsForFindA[1].resource.id).toBe('T2');
 
-        const suggestionsForFindB = await suggestTypeRelations(
-            documents,
-            'FindB',
-            find);
+        const suggestionsForFindB = await suggestTypeRelations(find, 'FindB');
 
         expect(suggestionsForFindB[0].resource.id).toBe('T2');
         expect(suggestionsForFindB[1].resource.id).toBe('T1');

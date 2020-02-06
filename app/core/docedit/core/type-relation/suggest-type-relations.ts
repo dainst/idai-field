@@ -14,16 +14,18 @@ type Row = Pair<FieldDocument, Array<FieldDocument>>;
  * of their connected finds matching in type with the type
  * given as a param.
  *
- * @param documents
  * @param type: type of the find which we want to declare to be INSTANCE_OF Type.
  * @param find
+ * @param q
  *
  * @author Daniel de Oliveira
  */
-export async function suggestTypeRelations(documents: Array<FieldDocument>,
+export async function suggestTypeRelations(find: (query: Query) => Promise<FieldDocumentFindResult>,
                                            type: Name,
-                                           find: (query: Query) => Promise<FieldDocumentFindResult>)
+                                           q: string = '')
     : Promise<Array<FieldDocument>> {
+
+    const documents = (await find({q: q, types: ['Type']})).documents;
 
     const rows: Array<Row> = await asyncMap(async (document: FieldDocument) => {
 

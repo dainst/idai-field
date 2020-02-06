@@ -51,12 +51,11 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-        const documents = (await this.datastore.find({q: q, types: ['Type']})).documents;
         const rankedDocuments =
             await suggestTypeRelations(
-                documents,
+                (q: Query) => this.datastore.find(q),
                 this.resource.type,
-                (q: Query) => this.datastore.find(q));
+                q);
 
         this.typeDocumentsWithLinkedImageIds =
             await this.pairWithLinkedImageIds(rankedDocuments);

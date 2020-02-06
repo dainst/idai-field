@@ -1,4 +1,4 @@
-import {flatMap, flow as _} from 'tsfun';
+import {flatMap, flow, lookup, filter, map, forEach} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
@@ -60,15 +60,19 @@ export module FulltextIndex {
         if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
         fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
 
-        _(getFieldsToIndex(typesMap, document.resource.type)
-            .filter(field => document.resource[field])
-            .filter(field => document.resource[field] !== '')
-            .map(field => document.resource[field]),
-            flatMap((content: string) => content.split(tokenizationPattern)))
-            .map((token: string) => token.toLowerCase())
-            .map((token: string) => Array.from(token))
-            .forEach(indexToken);
+        flow(getFieldsToIndex(typesMap, document.resource.type),
+            filter(lookup(document.resource)),
+            filter((field: any) => document.resource[field] !== ''), // TODO use lookup
+            map(lookup(document.resource)),
+            flatMap(split(tokenizationPattern)),
+            map(toLowerCase),
+            map(toArray),
+            forEach(indexToken));
     }
+
+
+
+
 
 
     export function remove(fulltextIndex: FulltextIndex, doc: any) {
@@ -174,5 +178,23 @@ export module FulltextIndex {
 
         ResultSets.combine(resultSets, Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
         return resultSets;
+    }
+
+
+    function split(pattern: any) { // TODO move to a util
+
+        return (content: string) => content.split(pattern);
+    }
+
+
+    function toLowerCase(s: string) { // TODO move to a util
+
+        return s.toLowerCase();
+    }
+
+
+    function toArray(token: any) {
+
+        return Array.from(token);
     }
 }

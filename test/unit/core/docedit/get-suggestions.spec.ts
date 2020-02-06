@@ -30,7 +30,7 @@ describe('getSuggestions', () => {
             range: ['RangeType1', 'RangeType2']
         };
 
-        await getSuggestions(datastore, document.resource, relationDefinition,
+        await getSuggestions(datastore, document.resource, relationDefinition, false,
             'input');
 
         expect(datastore.find).toHaveBeenCalledWith({
@@ -139,6 +139,36 @@ describe('getSuggestions', () => {
                     value: [],
                     type: 'subtract'
                 },
+            }, limit: MAX_SUGGESTIONS,
+            sort: 'exactMatchFirst'
+        });
+
+        done();
+    });
+
+
+    it('create inverse suggestions query', async done => {
+
+        const document: Document
+            = Static.doc('shortDescription', 'identifier', 'RangeType','id');
+        document.resource.relations['relation'] = [''];
+
+        const relationDefinition: RelationDefinition = {
+            name: 'relation',
+            domain: ['DomainType'],
+            range: ['RangeType']
+        };
+
+        await getSuggestions(datastore, document.resource, relationDefinition, true);
+
+        expect(datastore.find).toHaveBeenCalledWith({
+            q: '',
+            types: ['DomainType'],
+            constraints: {
+                'relation:contain': {
+                    value: 'id',
+                    type: 'subtract'
+                }
             }, limit: MAX_SUGGESTIONS,
             sort: 'exactMatchFirst'
         });

@@ -191,7 +191,7 @@ export class RelationPickerComponent implements OnChanges {
 
         try {
             this.suggestions = await getSuggestions(
-                this.datastore, this.resource, this.relationDefinition, this.idSearchString
+                this.datastore, this.resource, this.relationDefinition, false, this.idSearchString
             );
         } catch (err) {
             console.error(err);

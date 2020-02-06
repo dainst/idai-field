@@ -71,10 +71,6 @@ export module FulltextIndex {
     }
 
 
-
-
-
-
     export function remove(fulltextIndex: FulltextIndex, doc: any) {
 
         Object.keys(fulltextIndex.index).forEach(type =>

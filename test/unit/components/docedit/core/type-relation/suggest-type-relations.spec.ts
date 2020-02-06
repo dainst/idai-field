@@ -7,7 +7,7 @@ import {suggestTypeRelations} from '../../../../../../app/core/docedit/core/type
  */
 describe('suggestTypeRelations', () => {
 
-    it('base', async done => {
+    it('base case', async done => {
 
         const documents = [
             { resource: { id: 'T1' }},
@@ -17,19 +17,27 @@ describe('suggestTypeRelations', () => {
         const find = async ({constraints: {'isInstanceOf:contain': id}}: Query) => {
 
             if (id === 'T1') return { documents:
-                    [{ resource: { id: '1' }}] as Array<FieldDocument>, totalCount: 1 };
+                    [{ resource: { id: '1', type: 'FindA' }}] as Array<FieldDocument>, totalCount: 1 };
             if (id === 'T2') return { documents:
-                    [{ resource: { id: '2' }}] as Array<FieldDocument>, totalCount: 1 };
+                    [{ resource: { id: '2', type: 'FindB' }}] as Array<FieldDocument>, totalCount: 1 };
             return undefined;
         };
 
-        const suggestions = await suggestTypeRelations(
+        const suggestionsForFindA = await suggestTypeRelations(
             documents,
-            'todo',
+            'FindA',
             find);
 
-        expect(suggestions[0][1][0].resource.id).toBe('1');
-        expect(suggestions[1][1][0].resource.id).toBe('2');
+        expect(suggestionsForFindA[0][1][0].resource.id).toBe('1');
+        expect(suggestionsForFindA[1][1][0].resource.id).toBe('2');
+
+        const suggestionsForFindB = await suggestTypeRelations(
+            documents,
+            'FindB',
+            find);
+
+        expect(suggestionsForFindB[0][1][0].resource.id).toBe('2');
+        expect(suggestionsForFindB[1][1][0].resource.id).toBe('1');
         done();
     });
 });

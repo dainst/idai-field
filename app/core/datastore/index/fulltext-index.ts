@@ -41,18 +41,6 @@ export module FulltextIndex {
                         typesMap: { [typeName: string]: IdaiType },
                         skipRemoval: boolean = false) {
 
-        function indexToken(tokenAsCharArray: string[]) {
-
-            const typeIndex = fulltextIndex.index[document.resource.type];
-
-            tokenAsCharArray.reduce((accumulator, letter) => {
-                accumulator += letter;
-                if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
-                typeIndex[accumulator][document.resource.id as any] = indexItem as any;
-                return accumulator;
-            }, '');
-        }
-
         if (!skipRemoval) remove(fulltextIndex, document);
         if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
         fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
@@ -60,12 +48,12 @@ export module FulltextIndex {
         flow(
             getFieldsToIndex(typesMap, document.resource.type),
             filter(lookup(document.resource)),
-            filter((field: any) => document.resource[field] !== ''), // TODO use lookup
+            filter((field: any) => document.resource[field] !== ''),
             map(lookup(document.resource)),
             flatMap(split(tokenizationPattern)),
             map(toLowerCase),
             map(toArray),
-            forEach(indexToken));
+            forEach(indexToken(fulltextIndex, document, indexItem)));
     }
 
 
@@ -113,6 +101,22 @@ export module FulltextIndex {
 
         fulltextIndex.index = {};
         return fulltextIndex;
+    }
+
+
+    function indexToken(fulltextIndex: FulltextIndex, document: Document, indexItem: IndexItem) {
+
+        return (tokenAsCharArray: string[]) => {
+
+            const typeIndex = fulltextIndex.index[document.resource.type];
+
+            tokenAsCharArray.reduce((accumulator, letter) => {
+                accumulator += letter;
+                if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
+                typeIndex[accumulator][document.resource.id as any] = indexItem as any;
+                return accumulator;
+            }, '');
+        }
     }
 
 

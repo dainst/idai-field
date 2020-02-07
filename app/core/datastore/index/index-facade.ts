@@ -18,7 +18,8 @@ export class IndexFacade {
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        private typesMap: { [typeName: string]: IdaiType }
+        private typesMap: { [typeName: string]: IdaiType },
+        private showWarnings: boolean
     ) {}
 
 
@@ -49,7 +50,7 @@ export class IndexFacade {
                skipRemoval: boolean = false,
                notify: boolean = true) {
 
-        const indexItem = IndexItem.from(document, this.fulltextIndex.showWarnings);
+        const indexItem = IndexItem.from(document, this.showWarnings);
         if (indexItem) {
             ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
             FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);

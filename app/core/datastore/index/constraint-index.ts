@@ -15,8 +15,6 @@ export interface IndexDefinition {
 
 export interface ConstraintIndex {
 
-    showWarnings: boolean;
-
     indexDefinitions: { [name: string]: IndexDefinition };
 
     containIndex: {
@@ -56,7 +54,6 @@ export module ConstraintIndex {
                          typesMap: { [typeName: string]: IdaiType }, showWarnings: boolean = true) {
 
         const constraintIndex: ConstraintIndex = {
-            showWarnings: true,
             indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}
         };
 
@@ -69,7 +66,6 @@ export module ConstraintIndex {
         if (validationError) throw validationError;
 
         setUp(constraintIndex);
-        constraintIndex.showWarnings = showWarnings;
         return constraintIndex;
     }
 

@@ -64,9 +64,9 @@ describe('ConstraintIndex', () => {
             doc('3')
         ];
         docs[0].resource.relations['isRecordedIn'] = ['1'];
-        const ie1 = IndexItem.from(docs[0], false);
+        const ie1 = IndexItem.from(docs[0]);
         docs[1].resource.relations['isRecordedIn'] = ['1'];
-        const ie2 = IndexItem.from(docs[1], false);
+        const ie2 = IndexItem.from(docs[1]);
 
         ci = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
@@ -86,7 +86,7 @@ describe('ConstraintIndex', () => {
             doc('1')
         ];
         docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
-        const ie = IndexItem.from(docs[0], false);
+        const ie = IndexItem.from(docs[0]);
 
         ci = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
@@ -113,7 +113,7 @@ describe('ConstraintIndex', () => {
         ];
         docs[0].resource.relations['isRecordedIn'] = ['2'];
         docs[0].resource.relations['liesWithin'] = ['3'];
-        const ie = IndexItem.from(docs[0], false);
+        const ie = IndexItem.from(docs[0]);
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
@@ -140,7 +140,7 @@ describe('ConstraintIndex', () => {
         const docs = [
             doc('1')
         ];
-        const ie = IndexItem.from(docs[0], false);
+        const ie = IndexItem.from(docs[0]);
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
@@ -158,7 +158,7 @@ describe('ConstraintIndex', () => {
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         }, typesMap, false);
         const d = doc('1');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
         ConstraintIndex.put(ci, d, ie);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([indexItem('1')]);
     });
@@ -171,7 +171,7 @@ describe('ConstraintIndex', () => {
         }, typesMap, false);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
-        const ie = IndexItem.from(doc0, false);
+        const ie = IndexItem.from(doc0);
         ConstraintIndex.put(ci, doc0, ie);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
     });

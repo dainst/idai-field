@@ -9,7 +9,7 @@ import {ProjectConfiguration} from './core/configuration/project-configuration';
  */
 export module IndexerConfiguration {
 
-    export function configureIndexers(projectConfiguration: ProjectConfiguration) {
+    export function configureIndexers(projectConfiguration: ProjectConfiguration, showWarnings = true) {
 
         const createdConstraintIndex = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
@@ -26,11 +26,12 @@ export module IndexerConfiguration {
             'conflicts:exist': { path: '_conflicts', type: 'exist' },
         }, projectConfiguration.getTypesMap(), true);
 
-        const createdFulltextIndex = FulltextIndex.setUp({ index: {}, showWarnings: true } as any);
+        const createdFulltextIndex = FulltextIndex.setUp({ index: {} } as any);
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            projectConfiguration.getTypesMap()
+            projectConfiguration.getTypesMap(),
+            showWarnings
         );
 
         return { createdConstraintIndex, createdFulltextIndex, createdIndexFacade };

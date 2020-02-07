@@ -34,7 +34,7 @@ describe('FulltextIndexer', () => {
 
     beforeEach(() => {
 
-        fi = FulltextIndex.setUp({showWarnings: false, index: {}});
+        fi = FulltextIndex.setUp({ index: {} });
 
         const defaultTypeConfiguration = {
             fields: [

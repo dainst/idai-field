@@ -7,9 +7,7 @@ import {IdaiType} from '../../configuration/model/idai-type';
 
 
 export interface FulltextIndex {
-
-    showWarnings: boolean,
-
+    // TODO simplify
     index: {
         [resourceType: string]: {
             [term: string]: {

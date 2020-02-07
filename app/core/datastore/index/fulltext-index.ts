@@ -1,4 +1,4 @@
-import {flatMap, flow, lookup, filter, map, forEach, empty, isNot} from 'tsfun';
+import {flatMap, flow, lookup, filter, map, forEach, empty, isNot, isEmpty, keys} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
@@ -77,7 +77,7 @@ export module FulltextIndex {
                         s: string,
                         types: string[]|undefined): Array<IndexItem> {
 
-        if (Object.keys(fulltextIndex.index).length === 0) return [];
+        if (isEmpty(fulltextIndex.index)) return [];
 
         const resultSets = s
             .split(tokenizationPattern)

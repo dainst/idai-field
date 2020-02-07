@@ -38,19 +38,15 @@ describe('IndexFacade', () => {
             false);
         await pouchdbManager.loadProjectDb(dbname, undefined);
 
-        return {
-            datastore,
-            documentCache,
-            createdIndexFacade
-        }
+        return { datastore, documentCache, createdIndexFacade };
     }
 
     async function init(projectConfiguration: ProjectConfiguration) {
 
-        const {datastore, documentCache, createdIndexFacade: indexFacade} =
+        const { datastore, documentCache, createdIndexFacade: indexFacade } =
             await createPouchdbDatastore('testdb', projectConfiguration);
 
-        return {datastore, documentCache, indexFacade};
+        return { datastore, documentCache, indexFacade };
     }
 
     let indexFacade: IndexFacade;

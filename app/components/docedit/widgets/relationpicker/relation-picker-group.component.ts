@@ -14,7 +14,6 @@ export class RelationPickerGroupComponent implements OnChanges {
 
     @Input() document: any;
     @Input() relationDefinition: any;
-    @Input() primary: string;
 
     public relations: any;
 

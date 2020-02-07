@@ -1,8 +1,7 @@
 <div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
     <relation-picker [(resource)]="document.resource"
                      [relationDefinition]="relationDefinition"
-                     [relationIndex]="i"
-                     [primary]="primary"></relation-picker>
+                     [relationIndex]="i"></relation-picker>
 </div>
 
 <div class="circular-button add-relation"

@@ -21,7 +21,6 @@ export class RelationPickerComponent implements OnChanges {
 
     @Input() relationDefinition: RelationDefinition;
     @Input() relationIndex: number;
-    @Input() primary: string;
 
     public disabled: boolean = false;
     public suggestions: Array<Document>;
@@ -85,7 +84,7 @@ export class RelationPickerComponent implements OnChanges {
 
         if (!this.relationPicker.selectedTarget) return;
 
-        this.idSearchString = (this.relationPicker.selectedTarget).resource[this.primary];
+        this.idSearchString = (this.relationPicker.selectedTarget).resource.identifier;
         this.suggestions = [this.relationPicker.selectedTarget];
         this.selectedSuggestionIndex = 0;
         this.relationPicker.selectedTarget = undefined;

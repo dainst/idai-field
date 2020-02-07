@@ -31,8 +31,7 @@ export module FulltextIndex {
     const tokenizationPattern: RegExp = /[ -]/;
 
 
-    export const clear = (fulltextIndex: FulltextIndex) =>
-        setUp(fulltextIndex);
+    export const clear = (fulltextIndex: FulltextIndex) => setUp(fulltextIndex);
 
 
     export function put(fulltextIndex: FulltextIndex,
@@ -113,7 +112,7 @@ export module FulltextIndex {
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
                 if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
-                typeIndex[accumulator][document.resource.id as any] = indexItem as any;
+                typeIndex[accumulator][document.resource.id] = indexItem;
                 return accumulator;
             }, '');
         }
@@ -170,7 +169,7 @@ export module FulltextIndex {
 
 
     function addKeyToResultSets(index: any, resultSets: ResultSets,
-                                      type: string, s: string): ResultSets {
+                                type: string, s: string): ResultSets {
 
         if (!index[type] || !index[type][s]) return resultSets;
 

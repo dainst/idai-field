@@ -166,26 +166,25 @@ export class PouchdbManager {
     public async reindex(indexFacade: IndexFacade) {
 
         await indexFacade.clear();
-        await this.fetchAll(
-        (doc: any) => {
-            (indexFacade as IndexFacade)
-                .put(Migrator.migrate(doc), true, false);
-        });
+        await this.fetchAll((docs: Array<any>) => indexFacade.reindex(docs));
     }
 
 
-    private async fetchAll(forEach: Function) {
+    private async fetchAll(callback: Function) {
 
         await this.dbHandle
-            .allDocs({
+            .allDocs(
+                {
                     include_docs: true,
                     conflicts: true
                 },
-                (err: any, resultDocs: any) => {
-                    (resultDocs.rows as Array<any>)
+                (err: any, resultDocs: any) =>
+                    callback((resultDocs.rows as Array<any>)
                         .filter(row => !PouchdbManager.isDesignDoc(row))
-                        .forEach(row => forEach(row.doc));
-                });
+                        .map(row => row.doc)
+                        .map(Migrator.migrate)
+                    )
+            );
     }
 
 

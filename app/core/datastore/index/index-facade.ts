@@ -1,4 +1,5 @@
 import {Observable, Observer} from 'rxjs';
+import {separate, on, is} from 'tsfun';
 import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -26,6 +27,17 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
+    // TODO write test
+    public reindex(documents: Array<Document>) {
+
+        const [typeDocuments, nonTypeDocuments]
+            = separate(on('resource.type', is('Type')))(documents);
+
+        typeDocuments.forEach(_ => this.put(_, true, false));
+        nonTypeDocuments.forEach(_ => this.put(_, true, false));
+    }
+
+
     /**
      * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
      *
@@ -47,8 +59,8 @@ export class IndexFacade {
 
 
     public put(document: Document,
-               skipRemoval: boolean = false,
-               notify: boolean = true) {
+               skipRemoval: boolean = false,    // TODO hide param
+               notify: boolean = true) {        // TODO hide param
 
         const indexItem = IndexItem.from(document, this.showWarnings);
         if (indexItem) {

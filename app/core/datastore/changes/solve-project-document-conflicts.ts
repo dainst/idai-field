@@ -1,9 +1,14 @@
 import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
     isEmpty, compose, dissoc, append} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
-import {DatastoreUtil} from '../datastore-util';
 import {RevisionId} from '../../constants';
-import {dissocIndices, penultimate, replaceLastPair, ultimate} from '../helpers';
+import {
+    dissocIndices,
+    penultimate,
+    replaceLastPair,
+    sortRevisionsByLastModified,
+    ultimate
+} from '../helpers';
 import {withDissoc} from '../../import/util';
 import RESOURCE = Document.RESOURCE;
 import {clone} from '../../util/object-util';
@@ -30,7 +35,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
         : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
     const clonedLatestRevision = clone(latestRevision);
-    const conflictedSortedRevisions = DatastoreUtil.sortRevisionsByLastModified(conflictedRevisions);
+    const conflictedSortedRevisions = sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(
         conflictedSortedRevisions.map(to(Document.RESOURCE)),

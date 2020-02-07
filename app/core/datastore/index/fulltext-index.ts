@@ -1,4 +1,4 @@
-import {flatMap, flow, lookup, filter, map, forEach} from 'tsfun';
+import {flatMap, flow, lookup, filter, map, forEach, empty, isNot} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
@@ -74,24 +74,17 @@ export module FulltextIndex {
      *   indexed under the specified types will be included in the results.
      */
     export function get(fulltextIndex: FulltextIndex,
-                        s: string, types: string[]|undefined): Array<IndexItem> {
+                        s: string,
+                        types: string[]|undefined): Array<IndexItem> {
 
         if (Object.keys(fulltextIndex.index).length === 0) return [];
 
-        function getFromIndex(resultSets: ResultSets, token: string) {
-            ResultSets.combine(resultSets,
-                getForToken(
-                    fulltextIndex.index, token, types ? types : Object.keys(fulltextIndex.index)
-                )
-            );
-            return resultSets;
-        }
-
-        return ResultSets.collapse(s
+        const resultSets = s
             .split(tokenizationPattern)
-            .filter(token => token.length > 0)
-            .reduce(getFromIndex, ResultSets.make())
-            ) as Array<IndexItem>;
+            .filter(isNot(empty))
+            .reduce(getFromIndex(fulltextIndex, types), ResultSets.make());
+
+        return ResultSets.collapse(resultSets) as Array<IndexItem>;
     }
 
 
@@ -99,6 +92,20 @@ export module FulltextIndex {
 
         fulltextIndex.index = {};
         return fulltextIndex;
+    }
+
+
+    function getFromIndex(fulltextIndex: FulltextIndex, types: string[]|undefined) {
+
+        return (resultSets: ResultSets, token: string) => {
+
+            ResultSets.combine(resultSets,
+                getForToken(
+                    fulltextIndex.index, token, types ? types : Object.keys(fulltextIndex.index)
+                )
+            );
+            return resultSets;
+        }
     }
 
 

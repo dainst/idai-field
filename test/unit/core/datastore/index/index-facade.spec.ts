@@ -78,11 +78,26 @@ describe('IndexFacade', () => {
             type1: defaultFieldConfiguration,
             type2: defaultFieldConfiguration,
             type3: defaultFieldConfiguration,
-            Find: defaultFieldConfiguration
+            Find: defaultFieldConfiguration,
+            Type: defaultFieldConfiguration
         });
 
         return projectConfiguration;
     }
+
+
+    it('should put a type and then a find', () => {
+
+        const typeDoc = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const findDoc = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        findDoc.resource.relations = { isInstanceOf: ['id1'] };
+
+        indexFacade.put(typeDoc);
+        indexFacade.put(findDoc);
+
+        const result = indexFacade.perform({ q: 'identifier' }).map(to('id'));
+        // TODO write expectation
+    });
 
 
     it('should find with filterSet undefined', () => {
@@ -160,7 +175,6 @@ describe('IndexFacade', () => {
         indexFacade.put(doc1);
         indexFacade.put(doc2);
         indexFacade.put(doc3);
-
 
         const result = indexFacade.perform({
             q: 'blub',

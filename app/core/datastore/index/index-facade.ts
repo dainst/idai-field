@@ -16,6 +16,8 @@ export class IndexFacade {
 
     private observers: Array<Observer<Document>> = [];
 
+    private indexItems: { [resourceId: string]: IndexItem } = {};
+
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
@@ -27,7 +29,7 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    // TODO write test
+    // TODO write test; rename to index
     public reindex(documents: Array<Document>) {
 
         const [typeDocuments, nonTypeDocuments]
@@ -68,6 +70,7 @@ export class IndexFacade {
 
         ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
+        delete this.indexItems[document.resource.id]; // TODO test
 
         ObserverUtil.notify(this.observers, document);
     }
@@ -96,8 +99,21 @@ export class IndexFacade {
                  skipRemoval: boolean,
                  notify: boolean) {
 
+        if (document.resource.relations && document.resource.relations['isInstanceOf']) { // TODO review
+            for (let target of document.resource.relations['isInstanceOf']) {
+                const typeItem: any = this.indexItems[target];
+                if (typeItem) {
+                    if (!typeItem['instances']) typeItem['instances'] = {};
+                    typeItem['instances'][target] = document.resource.type;
+                }
+            }
+        }
+
+        // TODO review: if we update a type document, we should not create an entirely new index item, but instead merge it with an existing one
+
         const indexItem = IndexItem.from(document, this.showWarnings);
         if (indexItem) {
+            this.indexItems[document.resource.id] = indexItem;
             ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
             FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);
         }
@@ -111,7 +127,7 @@ export class IndexFacade {
 
         return Object.keys(constraints)
             .reduce((resultSets, name: string) => {
-                const {type, value} = Constraint.convertTo(constraints[name]);
+                const { type, value } = Constraint.convertTo(constraints[name]);
                 ResultSets.combine(resultSets, ConstraintIndex.get(constraintIndex, name, value), type);
                 return resultSets;
             }, ResultSets.make());

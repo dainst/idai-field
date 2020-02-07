@@ -105,7 +105,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const orderedResults = await this.findIds(clonedQuery);
-        const {documents, totalCount} =
+        const { documents, totalCount } =
             await this.getDocumentsForIds(orderedResults, clonedQuery.limit, clonedQuery.offset);
 
         return {

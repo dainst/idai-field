@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {DatastoreUtil} from '../../../../../app/core/datastore/core/datastore-util';
+import {DatastoreUtil} from '../../../../../app/core/datastore/datastore-util';
 
 
 describe('DatastoreUtil', () => {

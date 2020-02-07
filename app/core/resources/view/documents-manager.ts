@@ -6,7 +6,7 @@ import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {ObserverUtil} from '../../util/observer-util';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
-import {IdaiFieldFindResult} from '../../datastore/core/cached/cached-read-datastore';
+import {IdaiFieldFindResult} from '../../datastore/cached/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
 import {AngularUtility} from '../../../angular/angular-utility';
 import {ModelUtil} from '../../model/model-util';

@@ -1,7 +1,7 @@
 import {Document, FieldDocument} from 'idai-components-2';
 import * as PouchDB from 'pouchdb';
 import {createApp, setupSyncTestDb} from './subsystem-helper';
-import {CachedDatastore} from '../../../../app/core/datastore/core/cached/cached-datastore';
+import {CachedDatastore} from '../../../../app/core/datastore/cached/cached-datastore';
 import {TabManager} from '../../../../app/core/tabs/tab-manager';
 import {ResourcesStateManager} from '../../../../app/core/resources/view/resources-state-manager';
 import {ViewFacade} from '../../../../app/core/resources/view/view-facade';

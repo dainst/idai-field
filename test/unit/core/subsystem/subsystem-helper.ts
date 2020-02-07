@@ -6,9 +6,9 @@ import {DocumentDatastore} from '../../../../app/core/datastore/document-datasto
 import {TypeUtility} from '../../../../app/core/model/type-utility';
 import {FieldTypeConverter} from '../../../../app/core/datastore/field/field-type-converter';
 import {IndexerConfiguration} from '../../../../app/indexer-configuration';
-import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb/pouchdb-datastore';
-import {DocumentCache} from '../../../../app/core/datastore/core/cached/document-cache';
-import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb/pouchdb-manager';
+import {PouchdbDatastore} from '../../../../app/core/datastore/pouchdb/pouchdb-datastore';
+import {DocumentCache} from '../../../../app/core/datastore/cached/document-cache';
+import {PouchdbManager} from '../../../../app/core/datastore/pouchdb/pouchdb-manager';
 import {ChangesStream} from '../../../../app/core/datastore/changes/changes-stream';
 import {PersistenceManager} from '../../../../app/core/model/persistence-manager';
 import {Validator} from '../../../../app/core/model/validator';

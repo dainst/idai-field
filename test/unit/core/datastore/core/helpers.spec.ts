@@ -1,4 +1,4 @@
-import {dissocIndices} from '../../../../../app/core/datastore/core/helpers';
+import {dissocIndices} from '../../../../../app/core/datastore/helpers';
 
 
 describe('helpers', () => {

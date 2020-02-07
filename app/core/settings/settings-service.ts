@@ -3,7 +3,7 @@ import {unique} from 'tsfun';
 import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
-import {PouchdbManager} from '../datastore/core/pouchdb/pouchdb-manager';
+import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/messages/m';
 import {SynchronizationStatus} from './synchronization-status';

@@ -3,8 +3,8 @@
 import {Injectable} from '@angular/core';
 import * as express from 'express';
 import {Document} from 'idai-components-2';
-import {PouchdbManager} from './datastore/core/pouchdb/pouchdb-manager';
-import {DocumentCache} from './datastore/core/cached/document-cache';
+import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
+import {DocumentCache} from './datastore/cached/document-cache';
 import {ImagesState} from './images/overview/view/images-state';
 import {IndexFacade} from './datastore/index/index-facade';
 import {TabManager} from './tabs/tab-manager';

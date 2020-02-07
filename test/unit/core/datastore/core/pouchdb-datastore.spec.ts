@@ -1,5 +1,5 @@
 import {DatastoreErrors, Document} from 'idai-components-2';
-import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb/pouchdb-datastore';
+import {PouchdbDatastore} from '../../../../../app/core/datastore/pouchdb/pouchdb-datastore';
 import {Static} from '../../../static';
 
 

@@ -18,7 +18,7 @@ import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
-import {IdGenerator} from '../../core/datastore/core/pouchdb/id-generator';
+import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
 import {TypeUtility} from '../../core/model/type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';

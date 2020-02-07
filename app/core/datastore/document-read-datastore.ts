@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {CachedReadDatastore} from './core/cached/cached-read-datastore';
+import {CachedReadDatastore} from './cached/cached-read-datastore';
 
 /**
  * @author Daniel de Oliveira

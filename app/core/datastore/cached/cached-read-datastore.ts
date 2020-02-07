@@ -3,9 +3,10 @@ import {FindResult, Query, ReadDatastore, DatastoreErrors, Document} from 'idai-
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {IndexFacade} from '../../index/index-facade';
-import {IndexItem, SimpleIndexItem} from '../../index/index-item';
-import {TypeUtility} from '../../../model/type-utility';
+import {IndexFacade} from '../index/index-facade';
+import {SimpleIndexItem} from '../index/index-item';
+import {TypeUtility} from '../../model/type-utility';
+import {getSortedIds} from './get-sorted-ids';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -149,29 +150,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         // Wrap asynchronously in order to make the app more responsive
         return new Promise<string[]>((resolve: any, reject: any) => {
             try {
-                resolve(this.getSortedIds(result, query));
+                resolve(getSortedIds(result, query));
             } catch (err) {
                 reject([DatastoreErrors.GENERIC_ERROR, err]);
             }
         });
-    }
-
-
-    private getSortedIds(indexItems: Array<SimpleIndexItem>, query: Query): string[] {
-
-        indexItems = IndexItem.generateOrderedResultList(indexItems);
-
-        if (query.sort === 'exactMatchFirst' && query.q && query.q.length > 0) {
-            const exactMatch: SimpleIndexItem | undefined
-                = indexItems.find((indexItem: any) => indexItem['identifier'] === query.q);
-
-            if (exactMatch) {
-                indexItems.splice(indexItems.indexOf(exactMatch), 1);
-                indexItems.unshift(exactMatch);
-            }
-        }
-
-        return indexItems.map(indexItem => indexItem.id);
     }
 
 

@@ -37,6 +37,7 @@ export module FulltextIndex {
 
     export function put(fulltextIndex: FulltextIndex,
                         document: Document,
+                        indexItem: IndexItem,
                         typesMap: { [typeName: string]: IdaiType },
                         skipRemoval: boolean = false) {
 
@@ -52,15 +53,12 @@ export module FulltextIndex {
             }, '');
         }
 
-
-        const indexItem = IndexItem.from(document, fulltextIndex.showWarnings);
-        if (!indexItem) return;
-
         if (!skipRemoval) remove(fulltextIndex, document);
         if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
         fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
 
-        flow(getFieldsToIndex(typesMap, document.resource.type),
+        flow(
+            getFieldsToIndex(typesMap, document.resource.type),
             filter(lookup(document.resource)),
             filter((field: any) => document.resource[field] !== ''), // TODO use lookup
             map(lookup(document.resource)),

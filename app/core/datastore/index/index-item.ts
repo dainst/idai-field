@@ -25,7 +25,7 @@ export class IndexItem {
     private constructor() {} // hide on purpose, use from or copy instead
 
 
-    public static from(document: Document, showWarnings: boolean): IndexItem|undefined {
+    public static from(document: Document, showWarnings: boolean = false): IndexItem|undefined {
 
         if (!document.resource) {
             if (showWarnings) console.warn('no resource, will not index');

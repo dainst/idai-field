@@ -3,7 +3,7 @@ import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {SimpleIndexItem} from './index-item';
+import {IndexItem, SimpleIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 import {IdaiType} from '../../configuration/model/idai-type';
 
@@ -49,9 +49,12 @@ export class IndexFacade {
                skipRemoval: boolean = false,
                notify: boolean = true) {
 
-        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
-        FulltextIndex.put(this.fulltextIndex, document,
-            this.typesMap, skipRemoval);
+        const indexItem = IndexItem.from(document, this.fulltextIndex.showWarnings);
+        if (indexItem) {
+            ConstraintIndex.put(this.constraintIndex, document, indexItem);
+            FulltextIndex.put(this.fulltextIndex, document, indexItem,
+                this.typesMap, skipRemoval);
+        }
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }

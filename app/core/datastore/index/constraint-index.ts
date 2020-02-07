@@ -77,11 +77,14 @@ export module ConstraintIndex {
     export const clear = (constraintIndex: ConstraintIndex) => setUp(constraintIndex);
 
 
-    export function put(constraintIndex: ConstraintIndex, doc: Document, skipRemoval: boolean = false) {
+    export function put(constraintIndex: ConstraintIndex,
+                        doc: Document,
+                        indexItem: IndexItem,
+                        skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(constraintIndex, doc);
         for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
-            putFor(constraintIndex, indexDefinition, doc);
+            putFor(constraintIndex, indexDefinition, doc, indexItem);
         }
     }
 
@@ -92,8 +95,8 @@ export module ConstraintIndex {
             .map(definition => (getIndex(constraintIndex, definition))[definition.path])
             .forEach(path =>
                 Object.keys(path)
-                    .filter(key => path[key][doc.resource.id as any])
-                    .forEach(key => delete path[key][doc.resource.id as any])
+                    .filter(key => path[key][doc.resource.id])
+                    .forEach(key => delete path[key][doc.resource.id])
             );
     }
 
@@ -140,7 +143,10 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition, doc: Document) {
+    function putFor(constraintIndex: ConstraintIndex,
+                    indexDefinition: IndexDefinition,
+                    doc: Document,
+                    indexItem: IndexItem) {
 
         const elForPath = getOn(indexDefinition.path, undefined)(doc);
 
@@ -151,19 +157,20 @@ export module ConstraintIndex {
                     doc,
                     indexDefinition.path,
                     isMissing(elForPath) ? 'UNKNOWN' : 'KNOWN',
-                    constraintIndex.showWarnings);
+                    indexItem);
                 break;
 
             case 'match':
                 if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
                 addToIndex(constraintIndex.matchIndex, doc, indexDefinition.path, elForPath.toString(),
-                    constraintIndex.showWarnings);
+                    indexItem);
                 break;
 
             case 'contain':
                 if (!elForPath || !Array.isArray(elForPath)) break;
                 for (let target of elForPath) {
-                    addToIndex(constraintIndex.containIndex, doc, indexDefinition.path, target, constraintIndex.showWarnings);
+                    addToIndex(constraintIndex.containIndex,
+                        doc, indexDefinition.path, target, indexItem);
                 }
                 break;
         }
@@ -364,11 +371,9 @@ export module ConstraintIndex {
     }
 
 
-    function addToIndex(index: any, doc: Document, path: string, target: string,
-                              showWarnings: boolean) {
-
-        const indexItem = IndexItem.from(doc, showWarnings);
-        if (!indexItem) return;
+    function addToIndex(index: any,
+                        doc: Document, path: string, target: string,
+                        indexItem: IndexItem) {
 
         if (!index[path][target]) index[path][target] = {};
         index[path][target][doc.resource.id as any] = indexItem;

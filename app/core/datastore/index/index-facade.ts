@@ -51,9 +51,8 @@ export class IndexFacade {
 
         const indexItem = IndexItem.from(document, this.fulltextIndex.showWarnings);
         if (indexItem) {
-            ConstraintIndex.put(this.constraintIndex, document, indexItem);
-            FulltextIndex.put(this.fulltextIndex, document, indexItem,
-                this.typesMap, skipRemoval);
+            ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
+            FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);
         }
 
         if (notify) ObserverUtil.notify(this.observers, document);

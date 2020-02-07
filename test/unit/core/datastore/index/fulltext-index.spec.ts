@@ -55,7 +55,7 @@ describe('FulltextIndexer', () => {
     it('match one with different search terms', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'identifier1', ['type'])).toEqual([indexItem('1')]);
@@ -66,9 +66,9 @@ describe('FulltextIndexer', () => {
     it('match two with the same search term', () => {
 
         const d1 = doc('1', 'identifier1', 'type');
-        const ie1 = IndexItem.from(d1, false);
+        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'identifier2', 'type');
-        const ie2 = IndexItem.from(d2, false);
+        const ie2 = IndexItem.from(d2);
 
         FulltextIndex.put(fi, d1, ie1, typesMap);
         FulltextIndex.put(fi, d2, ie2, typesMap);
@@ -79,7 +79,7 @@ describe('FulltextIndexer', () => {
     it('match in all types', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'identifier', undefined)).toEqual([indexItem('1')]);
@@ -89,7 +89,7 @@ describe('FulltextIndexer', () => {
     it('index short description', () => {
 
         const d = doc('1', 'identifier1', 'type', 'short');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'short', undefined)).toEqual([indexItem('1')]);
@@ -101,7 +101,7 @@ describe('FulltextIndexer', () => {
 
         const d = doc('1', 'identifier1', 'type', 'short');
         delete d.resource.identifier;
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'short', undefined)).toEqual([]);
@@ -123,11 +123,11 @@ describe('FulltextIndexer', () => {
     it('match in multiple selected types', () => {
 
         const d1 = doc('1', 'identifier1', 'type1');
-        const ie1 = IndexItem.from(d1, false);
+        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'identifier2', 'type2');
-        const ie2 = IndexItem.from(d2, false);
+        const ie2 = IndexItem.from(d2);
         const d3 = doc('3', 'identifier3', 'type3');
-        const ie3 = IndexItem.from(d3, false);
+        const ie3 = IndexItem.from(d3);
 
         FulltextIndex.put(fi, d1, ie1, typesMap);
         FulltextIndex.put(fi, d2, ie2, typesMap);
@@ -139,7 +139,7 @@ describe('FulltextIndexer', () => {
     it('do not match search term', () => {
 
         const d = doc('1', 'iden', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['type'])).toEqual([]);
@@ -149,7 +149,7 @@ describe('FulltextIndexer', () => {
     it('do not match search in type', () => {
 
         const d = doc('1', 'iden', 'type1');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['type2'])).toEqual([]);
@@ -159,7 +159,7 @@ describe('FulltextIndexer', () => {
     it('match one with two search terms', () => {
 
         const d = doc('1', 'identifier1', 'type', 'a short description');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi,'short description', ['type'])).toEqual([indexItem('1')]);
@@ -170,7 +170,7 @@ describe('FulltextIndexer', () => {
     it('ignore additional spaces and hyphens', () => {
 
         const d = doc('1', 'identifier1', 'type', 'a short description');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, ' a    short  description  ', ['type'])).toEqual([indexItem('1')]);
@@ -184,21 +184,22 @@ describe('FulltextIndexer', () => {
     });
 
 
+    // TODO review; clear seems to be used only in this test
     it('clear', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
-        FulltextIndex.clear(fi);
-        expect(FulltextIndex.get(fi, 'identifier', ['type'])).toEqual([]);
+        const clearedFi = FulltextIndex.clear(fi);
+        expect(FulltextIndex.get(clearedFi, 'identifier', ['type'])).toEqual([]);
     });
 
 
     it('remove', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         FulltextIndex.remove(fi, d);
@@ -209,7 +210,7 @@ describe('FulltextIndexer', () => {
     it('search *', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, '*', ['type'])).toEqual([indexItem('1')]);
@@ -219,7 +220,7 @@ describe('FulltextIndexer', () => {
     it('index other field', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d, false);
+        const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, typesMap);
         expect(FulltextIndex.get(fi, 'short', ['type'])).toEqual([indexItem('1')]);
@@ -229,9 +230,9 @@ describe('FulltextIndexer', () => {
     it('tokenize fields', () => {
 
         const d1 = doc('1', 'hello token', 'type');
-        const ie1 = IndexItem.from(d1, false);
+        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'another-one', 'type');
-        const ie2 = IndexItem.from(d2, false);
+        const ie2 = IndexItem.from(d2);
 
         FulltextIndex.put(fi, d1, ie1, typesMap);
         FulltextIndex.put(fi, d2, ie2, typesMap);
@@ -245,9 +246,9 @@ describe('FulltextIndexer', () => {
     it('find case insensitive', () => {
 
         const d1 = doc('1', 'Hello', 'type');
-        const ie1 = IndexItem.from(d1, false);
+        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'something', 'type');
-        const ie2 = IndexItem.from(d2, false);
+        const ie2 = IndexItem.from(d2);
 
         FulltextIndex.put(fi, d1, ie1, typesMap);
         FulltextIndex.put(fi, d2, ie2, typesMap);
@@ -260,11 +261,11 @@ describe('FulltextIndexer', () => {
     it('put overwrite', () => {
 
         const d = doc('1', 'identifier1', 'type');
-        const ie1 = IndexItem.from(d, false);
+        const ie1 = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie1, typesMap);
         d['resource']['identifier'] = 'identifier2';
-        const ie2 = IndexItem.from(d, false);
+        const ie2 = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie2, typesMap);
         expect(FulltextIndex.get(fi, 'identifier1', ['type'])).toEqual([]);
@@ -277,15 +278,15 @@ describe('FulltextIndexer', () => {
 
         const d = doc('1', 'identifier1', 'type');
         d['resource']['shortDescription'] = '';
-        const ie1 = IndexItem.from(d, false);
+        const ie1 = IndexItem.from(d);
         expect(FulltextIndex.get(fi, 'short', ['type'])).toEqual([]);
         FulltextIndex.put(fi, d, ie1, typesMap);
         d['resource']['shortDescription'] = undefined;
-        const ie2 = IndexItem.from(d, false);
+        const ie2 = IndexItem.from(d);
         FulltextIndex.put(fi, d, ie2, typesMap);
         expect(FulltextIndex.get(fi, 'short', ['type'])).toEqual([]);
         delete d['resource']['shortDescription'];
-        const ie3 = IndexItem.from(d, false);
+        const ie3 = IndexItem.from(d);
         FulltextIndex.put(fi, d, ie3, typesMap);
         expect(FulltextIndex.get(fi, 'short', ['type'])).toEqual([]);
     });
@@ -294,11 +295,11 @@ describe('FulltextIndexer', () => {
     it('do a placeholder search', () => {
 
         const d1 = doc('1', 'Hello-A-0033', 'type');
-        const ie1 = IndexItem.from(d1, false);
+        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'Hello-A-0021', 'type');
-        const ie2 = IndexItem.from(d2, false);
+        const ie2 = IndexItem.from(d2);
         const d3 = doc('3', 'Hello-A-0059', 'type');
-        const ie3 = IndexItem.from(d3, false);
+        const ie3 = IndexItem.from(d3);
 
         FulltextIndex.put(fi, d1, ie1, typesMap);
         FulltextIndex.put(fi, d2, ie2, typesMap);
@@ -326,7 +327,7 @@ describe('FulltextIndexer', () => {
 
         const document = doc('1', 'identifier1', 'type');
         document.resource.customField = 'testValue';
-        const ie = IndexItem.from(document, false);
+        const ie = IndexItem.from(document);
         FulltextIndex.put(fi, document, ie, typesMap);
 
         const results = FulltextIndex.get(fi, 'testValue', ['type']).map(result => result.identifier);

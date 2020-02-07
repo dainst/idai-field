@@ -8,14 +8,11 @@ import {split, toArray, toLowerCase} from '../../util/utils';
 
 
 export interface FulltextIndex {
-    // TODO simplify
-    index: {
-        [resourceType: string]: {
-            [term: string]: {
-                [resourceId: string]: IndexItem
-            }
+    [resourceType: string]: {
+        [term: string]: {
+            [resourceId: string]: IndexItem
         }
-    };
+    }
 }
 
 
@@ -40,8 +37,10 @@ export module FulltextIndex {
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(fulltextIndex, document);
-        if (!fulltextIndex.index[document.resource.type]) fulltextIndex.index[document.resource.type] = {'*' : { } };
-        fulltextIndex.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
+        if (!fulltextIndex[document.resource.type]) {
+            fulltextIndex[document.resource.type] = {'*' : { } };
+        }
+        fulltextIndex[document.resource.type]['*'][document.resource.id] = indexItem;
 
         flow(
             getFieldsToIndex(typesMap, document.resource.type),
@@ -55,12 +54,12 @@ export module FulltextIndex {
     }
 
 
-    export function remove(fulltextIndex: FulltextIndex, doc: any) {
+    export function remove(index: FulltextIndex, doc: any) {
 
-        Object.keys(fulltextIndex.index).forEach(type =>
-            Object.keys(fulltextIndex.index[type])
-                .filter(term => fulltextIndex.index[type][term][doc.resource.id])
-                .forEach(term => delete fulltextIndex.index[type][term][doc.resource.id]))
+        Object.keys(index).forEach(type =>
+            Object.keys(index[type])
+                .filter(term => index[type][term][doc.resource.id])
+                .forEach(term => delete index[type][term][doc.resource.id]))
     }
 
 
@@ -77,7 +76,7 @@ export module FulltextIndex {
                         s: string,
                         types: string[]|undefined): Array<IndexItem> {
 
-        if (isEmpty(fulltextIndex.index)) return [];
+        if (isEmpty(fulltextIndex)) return [];
 
         const resultSets = s
             .split(tokenizationPattern)
@@ -90,18 +89,22 @@ export module FulltextIndex {
 
     export function setUp(fulltextIndex: FulltextIndex) {
 
-        fulltextIndex.index = {};
+        fulltextIndex = {};
         return fulltextIndex;
     }
 
 
-    function getFromIndex(fulltextIndex: FulltextIndex, types: string[]|undefined) {
+    function getFromIndex(index: FulltextIndex, types: string[]|undefined) {
 
         return (resultSets: ResultSets, token: string) => {
 
             ResultSets.combine(resultSets,
                 getForToken(
-                    fulltextIndex.index, token, types ? types : Object.keys(fulltextIndex.index)
+                    index,
+                    token,
+                    types
+                        ? types
+                        : keys(index)
                 )
             );
             return resultSets;
@@ -109,11 +112,11 @@ export module FulltextIndex {
     }
 
 
-    function indexToken(fulltextIndex: FulltextIndex, document: Document, indexItem: IndexItem) {
+    function indexToken(index: FulltextIndex, document: Document, indexItem: IndexItem) {
 
         return (tokenAsCharArray: string[]) => {
 
-            const typeIndex = fulltextIndex.index[document.resource.type];
+            const typeIndex = index[document.resource.type];
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
@@ -147,7 +150,7 @@ export module FulltextIndex {
     }
 
 
-    function getForToken(index: any, token: string, types: string[]): Array<any> {
+    function getForToken(index: FulltextIndex, token: string, types: string[]): Array<any> {
 
         const s = token.toLowerCase();
 
@@ -163,7 +166,7 @@ export module FulltextIndex {
     }
 
 
-    function getWithPlaceholder(index: any, resultSets: ResultSets,
+    function getWithPlaceholder(index: FulltextIndex, resultSets: ResultSets,
                                 s: string, type: string, tokens: string): ResultSets {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
@@ -174,12 +177,12 @@ export module FulltextIndex {
     }
 
 
-    function addKeyToResultSets(index: any, resultSets: ResultSets,
+    function addKeyToResultSets(index: FulltextIndex, resultSets: ResultSets,
                                 type: string, s: string): ResultSets {
 
         if (!index[type] || !index[type][s]) return resultSets;
 
-        ResultSets.combine(resultSets, Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
+        ResultSets.combine(resultSets, keys(index[type][s]).map(id => clone(index[type][s][id])));
         return resultSets;
     }
 }

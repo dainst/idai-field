@@ -51,13 +51,4 @@ export class IndexItem {
             identifier: document.resource['identifier']
         };
     }
-
-
-    public static generateOrderedResultList(items: Array<SimpleIndexItem>): Array<SimpleIndexItem> {
-
-        return items
-            .sort((a: any, b: any) =>
-                // we know that an IndexItem created with from has the identifier field
-                SortUtil.alnumCompare(a['identifier'], b['identifier']));
-    }
 }

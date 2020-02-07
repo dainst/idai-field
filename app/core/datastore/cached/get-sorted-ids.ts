@@ -1,5 +1,6 @@
 import {IndexItem, SimpleIndexItem} from '../index/index-item';
 import {Query} from 'idai-components-2';
+import {SortUtil} from '../../util/sort-util';
 
 // @author Daniel de Oliveira
 // @author Thomas Kleinke
@@ -11,7 +12,7 @@ import {Query} from 'idai-components-2';
  */
 export function getSortedIds(indexItems: Array<SimpleIndexItem>, query: Query): string[] {
 
-    indexItems = IndexItem.generateOrderedResultList(indexItems); // TODO move to this file
+    indexItems = generateOrderedResultList(indexItems);
 
     if (query.sort === 'exactMatchFirst' && query.q && query.q.length > 0) {
 
@@ -25,4 +26,13 @@ export function getSortedIds(indexItems: Array<SimpleIndexItem>, query: Query): 
     }
 
     return indexItems.map(indexItem => indexItem.id);
+}
+
+
+function generateOrderedResultList(items: Array<SimpleIndexItem>): Array<SimpleIndexItem> {
+
+    return items
+        .sort((a: any, b: any) =>
+            // we know that an IndexItem created with from has the identifier field
+            SortUtil.alnumCompare(a['identifier'], b['identifier']));
 }

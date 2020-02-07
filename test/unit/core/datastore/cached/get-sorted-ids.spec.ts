@@ -5,13 +5,22 @@ import {getSortedIds} from '../../../../../app/core/datastore/cached/get-sorted-
  */
 describe('getSortedIds', () => {
 
-    it('base', () => {
+    it('exactMatchFirst', () => {
 
-        const as = [{ id: 'a', identifier: '1.a' }, { id: 'b', identifier: '1' }];
+        const as = [
+            { id: 'a', identifier: 'AB-C1' },
+            { id: 'b', identifier: 'AB-C2' },
+            { id: 'c', identifier: 'C2' }
+            ];
 
-        const result = getSortedIds(as as any, { q: '1',
-            sort: 'default' // <- TODO why would we need exactMatchFirst? alnumCompare seems to do the trick here, right?
+        const result1 = getSortedIds(as as any, { q: 'C2',
+            sort: 'default'
         });
-        expect(result).toEqual(['b', 'a'])
+        expect(result1).toEqual(['a', 'b', 'c']);
+
+        const result2 = getSortedIds(as as any, { q: 'C2',
+            sort: 'exactMatchFirst'
+        });
+        expect(result2).toEqual(['c', 'a', 'b']);
     });
 });

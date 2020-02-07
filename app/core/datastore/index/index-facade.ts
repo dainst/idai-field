@@ -33,8 +33,8 @@ export class IndexFacade {
         const [typeDocuments, nonTypeDocuments]
             = separate(on('resource.type', is('Type')))(documents);
 
-        typeDocuments.forEach(_ => this.put(_, true, false));
-        nonTypeDocuments.forEach(_ => this.put(_, true, false));
+        typeDocuments.forEach(_ => this._put(_, true, false));
+        nonTypeDocuments.forEach(_ => this._put(_, true, false));
     }
 
 
@@ -58,17 +58,9 @@ export class IndexFacade {
     }
 
 
-    public put(document: Document,
-               skipRemoval: boolean = false,    // TODO hide param
-               notify: boolean = true) {        // TODO hide param
+    public put(document: Document) {
 
-        const indexItem = IndexItem.from(document, this.showWarnings);
-        if (indexItem) {
-            ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
-            FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);
-        }
-
-        if (notify) ObserverUtil.notify(this.observers, document);
+        return this._put(document, false, true);
     }
 
 
@@ -97,6 +89,20 @@ export class IndexFacade {
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
         return ConstraintIndex.getDescendantIds(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+
+    private _put(document: Document,
+                 skipRemoval: boolean,
+                 notify: boolean) {
+
+        const indexItem = IndexItem.from(document, this.showWarnings);
+        if (indexItem) {
+            ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
+            FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);
+        }
+
+        if (notify) ObserverUtil.notify(this.observers, document);
     }
 
 

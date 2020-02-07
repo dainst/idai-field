@@ -1,6 +1,3 @@
-// Utils
-
-
 import {identity} from 'tsfun';
 
 
@@ -19,4 +16,22 @@ export function tuplify(...fs : any[]) {
 export function pairWith(f: any) {
 
     return tuplify(identity, f);
+}
+
+
+export function split(pattern: any) {
+
+    return (content: string) => content.split(pattern);
+}
+
+
+export function toLowerCase(s: string) {
+
+    return s.toLowerCase();
+}
+
+
+export function toArray(token: any) {
+
+    return Array.from(token);
 }

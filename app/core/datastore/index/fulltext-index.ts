@@ -4,6 +4,7 @@ import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {clone} from '../../util/object-util';
 import {IdaiType} from '../../configuration/model/idai-type';
+import {split, toArray, toLowerCase} from '../../util/utils';
 
 
 export interface FulltextIndex {
@@ -173,23 +174,5 @@ export module FulltextIndex {
 
         ResultSets.combine(resultSets, Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
         return resultSets;
-    }
-
-
-    function split(pattern: any) { // TODO move to a util
-
-        return (content: string) => content.split(pattern);
-    }
-
-
-    function toLowerCase(s: string) { // TODO move to a util
-
-        return s.toLowerCase();
-    }
-
-
-    function toArray(token: any) {
-
-        return Array.from(token);
     }
 }

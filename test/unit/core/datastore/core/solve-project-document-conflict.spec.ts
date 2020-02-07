@@ -1,6 +1,6 @@
 import {sameset} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/core/solve-project-document-conflicts';
+import {solveProjectDocumentConflict} from '../../../../../app/core/datastore/changes/solve-project-document-conflicts';
 
 
 describe('solveProjectDocumentConflict', () => {

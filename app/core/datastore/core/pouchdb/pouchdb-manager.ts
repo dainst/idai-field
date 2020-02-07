@@ -5,9 +5,9 @@ import * as PouchDB from 'pouchdb';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
-import {IndexFacade} from '../index/index-facade';
-import {Migrator} from '../field/migrator';
-import {Name} from '../../constants';
+import {IndexFacade} from '../../index/index-facade';
+import {Migrator} from '../../field/migrator';
+import {Name} from '../../../constants';
 
 const expressPouchDB = require('express-pouchdb');
 

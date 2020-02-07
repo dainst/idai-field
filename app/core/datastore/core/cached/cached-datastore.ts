@@ -1,9 +1,9 @@
 import {Datastore, Document, NewDocument} from 'idai-components-2';
-import {PouchdbDatastore} from './pouchdb-datastore';
+import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
 import {TypeConverter} from './type-converter';
-import {IndexFacade} from "../index/index-facade";
+import {IndexFacade} from "../../index/index-facade";
 
 
 /**

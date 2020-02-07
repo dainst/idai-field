@@ -4,7 +4,7 @@ import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {PouchdbProxy} from '../../datastore/core/pouchdb-proxy';
+import {PouchdbProxy} from '../../datastore/core/pouchdb/pouchdb-proxy';
 
 
 @Injectable()

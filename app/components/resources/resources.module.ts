@@ -20,7 +20,7 @@ import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';

@@ -6,7 +6,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
-import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 

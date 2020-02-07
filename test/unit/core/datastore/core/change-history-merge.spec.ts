@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {ChangeHistoryMerge} from '../../../../../app/core/datastore/core/change-history-merge';
+import {ChangeHistoryMerge} from '../../../../../app/core/datastore/core/pouchdb/change-history-merge';
 
 /**
  * @author Thomas Kleinke

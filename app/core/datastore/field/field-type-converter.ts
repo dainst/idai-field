@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Document, ImageDocument} from 'idai-components-2';
-import {TypeConverter} from '../core/type-converter';
+import {TypeConverter} from '../core/cached/type-converter';
 import {TypeUtility} from '../../model/type-utility';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/object-util';

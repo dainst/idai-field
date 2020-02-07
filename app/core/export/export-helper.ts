@@ -1,6 +1,6 @@
 import {arrayList} from 'tsfun';
 import {FieldResource, Query, Document} from 'idai-components-2';
-import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
+import {IdaiFieldFindResult} from '../datastore/core/cached/cached-read-datastore';
 import {IdaiType} from '../configuration/model/idai-type';
 
 

@@ -26,7 +26,7 @@ import {PersistenceManager} from '../core/model/persistence-manager';
 import {Validator} from '../core/model/validator';
 import {ImportValidator} from '../core/import/import/process/import-validator';
 import {MatrixModule} from './matrix/matrix.module';
-import {PouchdbManager} from '../core/datastore/core/pouchdb-manager';
+import {PouchdbManager} from '../core/datastore/core/pouchdb/pouchdb-manager';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
 import {TypeUtility} from '../core/model/type-utility';
 import {UsernameProvider} from '../core/settings/username-provider';

@@ -1,11 +1,11 @@
 import {jsonClone} from 'tsfun';
 import {FindResult, Query, ReadDatastore, DatastoreErrors, Document} from 'idai-components-2';
-import {PouchdbDatastore} from './pouchdb-datastore';
+import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {IndexFacade} from '../index/index-facade';
-import {IndexItem, SimpleIndexItem} from '../index/index-item';
-import {TypeUtility} from '../../model/type-utility';
+import {IndexFacade} from '../../index/index-facade';
+import {IndexItem, SimpleIndexItem} from '../../index/index-item';
+import {TypeUtility} from '../../../model/type-utility';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

@@ -1,4 +1,4 @@
-import {ChangesStream} from '../../../../app/core/datastore/core/changes-stream';
+import {ChangesStream} from '../../../../app/core/datastore/changes/changes-stream';
 
 /**
  * @author Thomas Kleinke

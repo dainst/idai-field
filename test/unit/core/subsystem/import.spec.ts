@@ -1,6 +1,6 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
-import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
+import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb/pouchdb-manager';
 import {Importer} from '../../../../app/core/import/importer';
 import {TypeUtility} from '../../../../app/core/model/type-utility';
 import {IdaiType} from '../../../../app/core/configuration/model/idai-type';

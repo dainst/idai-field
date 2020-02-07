@@ -1,4 +1,4 @@
-import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb-manager';
+import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb/pouchdb-manager';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 
 import fs = require('fs');

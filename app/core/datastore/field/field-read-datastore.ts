@@ -1,6 +1,6 @@
 import {Query} from 'idai-components-2';
 import {FieldDocument} from 'idai-components-2';
-import {CachedReadDatastore, IdaiFieldFindResult} from '../core/cached-read-datastore';
+import {CachedReadDatastore, IdaiFieldFindResult} from '../core/cached/cached-read-datastore';
 
 
 export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocument> {}

@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import {ChangesStream} from '../../core/datastore/changes/changes-stream';
+import {Component} from '@angular/core';
 import {SynchronizationStatus} from '../../core/settings/synchronization-status';
 import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
 
@@ -15,8 +14,6 @@ import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
  * @author Daniel de Oliveira
  */
 export class TaskbarSyncStatusComponent {
-
-    public receivingRemoteChanges: boolean = false;
 
 
     constructor(private synchronizationStatus: SynchronizationStatus) {

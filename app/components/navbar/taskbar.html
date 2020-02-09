@@ -36,8 +36,9 @@
                   placement="bottom" container="body">
             </span>
             <ng-template #tipError>
-                <p><b>Synchronisation fehlgeschlagen!</b></p>
-                <p>
+                <p><b i18n="@@navbar.taskbar.synchronization.error">
+                    Synchronisation fehlgeschlagen!</b></p>
+                <p i18n="@@navbar.taskbar.synchronization.error.general">
                     Stellen sie sicher, dass die angegebene Adresse korrekt ist und
                     eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
                     Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
@@ -49,8 +50,9 @@
                   placement="bottom" container="body">
             </span>
             <ng-template #tipAuthenticationError>
-                <p><b>Synchronisation fehlgeschlagen!</b></p>
-                <p>
+                <p><b i18n="@@navbar.taskbar.synchronization.error">
+                    Synchronisation fehlgeschlagen!</b></p>
+                <p i18n="@@navbar.taskbar.synchronization.error.authentication">
                     Nutzername oder Passwort falsch.
                 </p>
             </ng-template>
@@ -60,8 +62,9 @@
                   placement="bottom" container="body">
             </span>
             <ng-template #tipAuthorizationError>
-                <p><b>Synchronisation fehlgeschlagen!</b></p>
-                <p>
+                <p><b i18n="@@navbar.taskbar.synchronization.error">
+                    Synchronisation fehlgeschlagen!</b></p>
+                <p i18n="@@navbar.taskbar.synchronization.error.authorization">
                     Sie besitzen nicht die nötigen Rechte.
                 </p>
             </ng-template>

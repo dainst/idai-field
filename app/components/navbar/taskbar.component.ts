@@ -18,31 +18,12 @@ export class TaskbarComponent {
 
     public receivingRemoteChanges: boolean = false;
 
-    private remoteChangesTimeout: any = undefined;
 
+    constructor(private synchronizationStatus: SynchronizationStatus) {
 
-    constructor(private changeDetectorRef: ChangeDetectorRef,
-                private synchronizationStatus: SynchronizationStatus,
-                changesStream: ChangesStream) {
-
-        this.listenToRemoteChanges(changesStream);
     }
 
 
     public getStatus = (): SyncStatus => this.synchronizationStatus.getStatus();
 
-
-    private listenToRemoteChanges(changesStream: ChangesStream) {
-
-        changesStream.remoteChangesNotifications().subscribe(() => {
-            this.receivingRemoteChanges = true;
-            this.changeDetectorRef.detectChanges();
-
-            if (this.remoteChangesTimeout) clearTimeout(this.remoteChangesTimeout);
-            this.remoteChangesTimeout = setTimeout(() => {
-                this.receivingRemoteChanges = false;
-                this.changeDetectorRef.detectChanges();
-            }, 2000);
-        });
-    }
 }

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
 import * as express from 'express';
 import * as PouchDB from 'pouchdb';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
-import {SyncState} from './sync-state';
+import {SyncProcess, SyncStatus} from './sync-process';
 import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
@@ -40,7 +40,7 @@ export class PouchdbManager {
      * @returns {PouchdbProxy} a proxy that automatically hands over method
      *  calls to the actual PouchDB instance as soon as it is available
      */
-    public getDbProxy = () => this.dbProxy;
+    public getDbProxy = (): PouchdbProxy => this.dbProxy;
 
 
     /**
@@ -106,24 +106,29 @@ export class PouchdbManager {
      * @param url target datastore
      * @param project
      */
-    public setupSync(url: string, project: Name): Promise<SyncState> {
+    public async setupSync(url: string, project: Name): Promise<SyncProcess> {
 
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
         console.log('Start syncing');
 
-        return (this.getDbProxy() as any).ready().then((db: any) => {
-            let sync = db.sync(fullUrl, { live: true, retry: false });
-            this.syncHandles.push(sync as never);
-            return {
-                url: url,
-                cancel: () => {
-                    sync.cancel();
-                    this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
-                },
-                onError: Observable.create((obs: any) => sync.on('error', (err: any) => obs.next(err))),
-                onChange: Observable.create((obs: any) => sync.on('change', () => obs.next()))
-            };
-        });
+        let db = await this.getDbProxy().ready();
+        let sync = db.sync(fullUrl, { live: true, retry: false });
+        
+        this.syncHandles.push(sync as never);
+        return {
+            url: url,
+            cancel: () => {
+                sync.cancel();
+                this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
+            },
+            observe: Observable.create((obs: Observer<SyncStatus>) => {
+                sync.on('change', (info: any) => obs.next(getSyncStatusFromInfo(info)))
+                    .on('paused', () => obs.next(SyncStatus.InSync))
+                    .on('active', (info: any) => obs.next(getSyncStatusFromInfo(info)))
+                    .on('complete', (info: any) => obs.complete())
+                    .on('error', (err: any) => obs.error(err));
+            })
+        };
     }
 
 
@@ -199,3 +204,6 @@ export class PouchdbManager {
         return row.id.indexOf('_') == 0
     }
 }
+
+const getSyncStatusFromInfo = (info: any) =>
+    (info.direction == 'push') ? SyncStatus.Pushing : SyncStatus.Pulling;

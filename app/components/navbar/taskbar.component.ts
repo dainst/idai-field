@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {SynchronizationStatus} from '../../core/settings/synchronization-status';
+import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class TaskbarComponent {
     }
 
 
-    public isConnected = (): boolean => this.synchronizationStatus.isConnected();
+    public getStatus = (): SyncStatus => this.synchronizationStatus.getStatus();
 
 
     private listenToRemoteChanges(changesStream: ChangesStream) {

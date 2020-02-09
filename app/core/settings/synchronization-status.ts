@@ -1,15 +1,20 @@
 import {Injectable} from '@angular/core';
+import { SyncStatus } from '../datastore/pouchdb/sync-process';
 
 
 @Injectable()
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export class SynchronizationStatus {
 
-    private connected: boolean = false;
+    private status: SyncStatus = SyncStatus.Offline;
 
-    public isConnected = (): boolean => this.connected;
+    public getStatus = (): SyncStatus => this.status;
 
-    public setConnected = (connected: boolean) => this.connected = connected;
+    public setStatus = (status: SyncStatus) => {
+        console.log("setStatus", status);
+        this.status = status;
+    }
 }

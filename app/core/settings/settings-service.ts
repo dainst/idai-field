@@ -13,6 +13,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
+import { SyncStatus } from '../datastore/pouchdb/sync-process';
 
 const {remote, ipcRenderer} = require('electron');
 
@@ -29,6 +30,7 @@ const {remote, ipcRenderer} = require('electron');
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export class SettingsService {
 
@@ -206,11 +208,11 @@ export class SettingsService {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
-        this.synchronizationStatus.setConnected(false);
+        this.synchronizationStatus.setStatus(SyncStatus.Offline);
     }
 
 
-    private startSync_(): Promise<any> {
+    private async startSync_(): Promise<any> {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
@@ -218,19 +220,17 @@ export class SettingsService {
         if (!this.currentSyncUrl) return Promise.resolve();
         if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
 
-        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
-            .then(syncState => {
-
-                // avoid issuing 'connected' too early
-                const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
-
-                syncState.onError.subscribe(() => {
-                    clearTimeout(msg); // stop 'connected' msg if error
-                    syncState.cancel();
-                    this.synchronizationStatus.setConnected(false);
-                    this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
-                });
-            });
+        const syncProcess = await this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject());
+        this.synchronizationStatus.setStatus(SyncStatus.Unknown);
+        syncProcess.observe.subscribe(
+            status => this.synchronizationStatus.setStatus(status),
+            err => {
+                this.synchronizationStatus.setStatus(SyncStatus.InError)
+                syncProcess.cancel();
+                this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
+            },
+            () => this.synchronizationStatus.setStatus(SyncStatus.Offline)
+        );
     }
 
 

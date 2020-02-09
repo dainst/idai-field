@@ -9,19 +9,29 @@
 
     <li class="nav-item pr-2">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud" *ngIf="isConnected() && !receivingRemoteChanges"
-                  ngbTooltip="Synchronisation ist aktiv"
-                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.active"
+            <span class="mdi mdi-cloud-upload" *ngIf="getStatus() == 'PUSHING'"
+                  ngbTooltip="Es werden Daten hochgeladen"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-off-outline" *ngIf="!isConnected() && !receivingRemoteChanges"
+            <span class="mdi mdi-cloud-download" *ngIf="getStatus() == 'PULLING'"
+                  ngbTooltip="Es werden Daten heruntergeladen"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
+                  placement="bottom" container="body">
+            </span>
+            <span class="mdi mdi-cloud-off-outline" *ngIf="getStatus() == 'OFFLINE'"
                   ngbTooltip="Synchronisation ist deaktiviert"
-                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.deactivated"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.offline"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-download" *ngIf="receivingRemoteChanges"
-                  ngbTooltip="Daten werden empfangen..."
-                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.receivingData"
+            <span class="mdi mdi-cloud-check"  *ngIf="getStatus() == 'IN_SYNC'"
+                  ngbTooltip="Daten sind synchron"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.inSync"
+                  placement="bottom" container="body">
+            </span>
+            <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() == 'IN_ERROR'"
+                  ngbTooltip="Fehler bei der Synchronisation"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.inError"
                   placement="bottom" container="body">
             </span>
         </a>

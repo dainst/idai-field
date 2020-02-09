@@ -59,6 +59,7 @@ import {ImageConverter} from '../core/images/imagestore/image-converter';
 import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
+import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
 
 
 const remote = require('electron').remote;
@@ -97,6 +98,7 @@ registerLocaleData(localeDe, 'de');
         NavbarComponent,
         TaskbarComponent,
         TaskbarConflictsComponent,
+        TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
         ProjectsModalComponent,

@@ -35,9 +35,39 @@
                   i18n-ngbTooltip="@@navbar.taskbar.synchronization.inSync"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() == 'IN_ERROR'"
-                  ngbTooltip="Fehler bei der Synchronisation"
-                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.inError"
+            <ng-template #tipError>
+                <p><b>Synchronisation fehlgeschlagen!</b></p>
+                <p>
+                    Stellen sie sicher, dass die angegebene Adresse korrekt ist und
+                    eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
+                    Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
+                </p>
+            </ng-template>
+            <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() == 'ERROR'"
+                  [ngbTooltip]="tipError"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.error"
+                  placement="bottom" container="body">
+            </span>
+            <ng-template #tipAuthenticationError>
+                <p><b>Synchronisation fehlgeschlagen!</b></p>
+                <p>
+                    Nutzername oder Passwort falsch.
+                </p>
+            </ng-template>
+            <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() == 'AUTHENTICATION_ERROR'"
+                  [ngbTooltip]="tipAuthenticationError"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.authenticationError"
+                  placement="bottom" container="body">
+            </span>
+            <ng-template #tipAuthorizationError>
+                <p><b>Synchronisation fehlgeschlagen!</b></p>
+                <p>
+                    Sie besitzen nicht die nötigen Rechte.
+                </p>
+            </ng-template>
+            <span class="mdi mdi-cloud-alert"  *ngIf="getStatus() == 'AUTHORIZATION_ERROR'"
+                  [ngbTooltip]="tipAuthorizationError"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.authorizationError"
                   placement="bottom" container="body">
             </span>
         </a>

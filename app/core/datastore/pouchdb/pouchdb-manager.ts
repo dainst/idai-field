@@ -126,7 +126,7 @@ export class PouchdbManager {
                     .on('paused', () => obs.next(SyncStatus.InSync))
                     .on('active', (info: any) => obs.next(getSyncStatusFromInfo(info)))
                     .on('complete', (info: any) => obs.complete())
-                    .on('error', (err: any) => obs.error(err));
+                    .on('error', (err: any) => obs.error(getSyncStatusFromError(err)));
             })
         };
     }
@@ -207,3 +207,14 @@ export class PouchdbManager {
 
 const getSyncStatusFromInfo = (info: any) =>
     (info.direction == 'push') ? SyncStatus.Pushing : SyncStatus.Pulling;
+
+const getSyncStatusFromError = (err: any) => {
+    if (err.status == 401) {
+        if (err.reason == "Name or password is incorrect.") {
+            return SyncStatus.AuthenticationError;
+        } else {
+            return SyncStatus.AuthorizationError;
+        }
+    }
+    return SyncStatus.Error;
+}

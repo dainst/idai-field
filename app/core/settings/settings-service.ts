@@ -221,11 +221,10 @@ export class SettingsService {
         if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
 
         const syncProcess = await this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject());
-        this.synchronizationStatus.setStatus(SyncStatus.Unknown);
         syncProcess.observe.subscribe(
             status => this.synchronizationStatus.setStatus(status),
             err => {
-                this.synchronizationStatus.setStatus(SyncStatus.InError)
+                this.synchronizationStatus.setStatus(err)
                 syncProcess.cancel();
                 this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
             },

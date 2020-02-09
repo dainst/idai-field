@@ -13,5 +13,7 @@ export enum SyncStatus {
     Pushing = "PUSHING",
     Pulling = "PULLING",
     InSync = "IN_SYNC",
-    InError = "IN_ERROR"
+    Error = "ERROR",
+    AuthenticationError = "AUTHENTICATION_ERROR",
+    AuthorizationError = "AUTHORIZATION_ERROR"
 }

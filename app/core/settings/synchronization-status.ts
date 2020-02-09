@@ -14,7 +14,6 @@ export class SynchronizationStatus {
     public getStatus = (): SyncStatus => this.status;
 
     public setStatus = (status: SyncStatus) => {
-        console.log("setStatus", status);
         this.status = status;
     }
 }

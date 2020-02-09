@@ -9,12 +9,18 @@
 
     <li class="nav-item pr-2">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud-upload" *ngIf="getStatus() == 'PUSHING'"
+            <div class="slide-up cloud-overlay" *ngIf="getStatus() == 'PUSHING'">
+                <span class="mdi mdi-arrow-up-bold mdi-18px"></span>
+            </div>
+            <span class="mdi mdi-cloud" *ngIf="getStatus() == 'PUSHING'"
                   ngbTooltip="Es werden Daten hochgeladen"
                   i18n-ngbTooltip="@@navbar.taskbar.synchronization.uploading"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-download" *ngIf="getStatus() == 'PULLING'"
+            <div class="slide-down cloud-overlay" *ngIf="getStatus() == 'PULLING'">
+                <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+            </div>
+            <span class="mdi mdi-cloud" *ngIf="getStatus() == 'PULLING'"
                   ngbTooltip="Es werden Daten heruntergeladen"
                   i18n-ngbTooltip="@@navbar.taskbar.synchronization.downloading"
                   placement="bottom" container="body">

@@ -9,7 +9,6 @@ export interface SyncProcess {
 
 export enum SyncStatus {
     Offline = "OFFLINE",
-    Unknown = "UNKNOWN",
     Pushing = "PUSHING",
     Pulling = "PULLING",
     InSync = "IN_SYNC",

@@ -53,16 +53,6 @@ export function count<A>(p: Function) {
 }
 
 
-export function size<A>(as: Array<A>): number; // TODO import from tsfun
-export function size<T>(o: ObjectCollection<T>): number;
-export function size<T>(o: Array<T>|ObjectCollection<T>): number {
-
-    return (isArray(o)
-        ? o.length
-        : keys(o).length) as number;
-}
-
-
 export function sort<A>(f: (a: A, b: A) => number) { // TODO refactor; move to tsfun
 
     return (as: Array<A>): Array<A> => copy(as).sort(f as any);

@@ -1,10 +1,10 @@
-import {equal, is, isNot, on, Pair, to, undefinedOrEmpty} from 'tsfun';
+import {equal, is, isNot, on, Pair, to,
+    undefinedOrEmpty, size, isUndefinedOrEmpty} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
-import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
-import {count, doPaired, size, sort} from '../../util/utils';
+import {count, doPaired, sort} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -57,9 +57,9 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
 
     if (pctgA < pctgB) return 1;
     if (pctgA === pctgB) {
-
-        if (size(itemA.instances) < size(itemB.instances)) return 1;
-        return -1;
+        return size(itemA.instances) < size(itemB.instances)
+            ? 1
+            : -1;
     }
     return -1;
 }

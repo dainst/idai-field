@@ -1,4 +1,5 @@
-import {append, compose, dropRight, flow, takeRight, to, take, drop, cond, len, is, val, last, first} from 'tsfun';
+import {append, compose, dropRight, flow, takeRight,
+    take, drop, cond, size, is, val, last, first} from 'tsfun';
 import {Document} from 'idai-components-2/src/model/core/document';
 
 
@@ -34,7 +35,7 @@ function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): 
 }
 
 
-const lengthIs2 = compose(len, is(2));
+const lengthIs2 = compose(size, is(2));
 
 /**
  * Gets the penultimate of an Array of A's, if it exists.

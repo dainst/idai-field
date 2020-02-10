@@ -1,5 +1,5 @@
-import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove,
-    undefinedOrEmpty, size, isUndefinedOrEmpty} from 'tsfun';
+import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove, val, map,
+    undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -25,16 +25,20 @@ type Percentage = number;
 export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
-    let sortedItems =
-        (shouldRankTypes(query)
-            ? handleTypesForName(query.rankOptions[MATCH_TYPE])
-            : generateOrderedResultList)
-        (indexItems);
+    const rankEntries = (shouldRankTypes(query)
+        ? handleTypesForName(query.rankOptions[MATCH_TYPE])
+        : generateOrderedResultList);
 
-    if (shouldHandleExactMatch(query)) {
-        sortedItems = handleExactMatch(sortedItems, query.q as string /* TODO review typing */);
-    }
-    return sortedItems.map(to(ID));
+    const handleExactMatchIfQuerySaysSo =
+        cond(
+            val(shouldHandleExactMatch(query)),
+            handleExactMatch(query.q as string /* TODO review typing */));
+
+    return flow(
+        indexItems,
+        rankEntries,
+        handleExactMatchIfQuerySaysSo,
+        map(to(ID)));
 }
 
 
@@ -76,17 +80,19 @@ function calcPercentage(rankTypesFor: Name) {
 }
 
 
-function handleExactMatch(indexItems: Array<IndexItem>,
-                          q: string): Array<IndexItem> {
+function handleExactMatch(q: string){
 
-    const exactMatch: IndexItem|undefined = indexItems.find(on(IDENTIFIER, is(q)));
+    return (indexItems: Array<IndexItem>): Array<IndexItem> => {
 
-    return exactMatch !== undefined
-        ? flow(
-            indexItems,
-            remove(on(IDENTIFIER, is(q))),
-            prepend(exactMatch))
-        : copy(indexItems);
+        const exactMatch = indexItems.find(on(IDENTIFIER, is(q)));
+
+        return exactMatch !== undefined
+            ? flow(
+                indexItems,
+                remove(on(IDENTIFIER, is(q))),
+                prepend(exactMatch))
+            : copy(indexItems);
+    }
 }
 
 

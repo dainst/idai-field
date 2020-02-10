@@ -50,3 +50,13 @@ export function count<A>(p: Function) {
             : keys(filter(p as any)(as as any)).length // TODO refactor
     }
 }
+
+
+export function size<A>(as: Array<A>): number; // TODO import from tsfun
+export function size<T>(o: ObjectCollection<T>): number;
+export function size<T>(o: Array<T>|ObjectCollection<T>): number {
+
+    return (isArray(o)
+        ? o.length
+        : keys(o).length) as number;
+}

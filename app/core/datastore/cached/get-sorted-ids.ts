@@ -1,11 +1,11 @@
 import {on, is, isNot, undefinedOrEmpty, to, first,
-    keys, filter, equal, values, Pair, copy} from 'tsfun';
+    keys, equal, Pair, copy} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
-import {pairWith, count as count_ /* TODO move to tsfun */} from '../../util/utils';
+import {pairWith, count /* TODO move to tsfun */, size} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -68,8 +68,7 @@ function comparePercentages(a: Pair<TypeResourceIndexItem, Percentage>,
     if (a[1] < b[1]) return 1;
     if (a[1] === b[1]) {
 
-        // TODO make count replace keys + length
-        if (keys(a[0].instances).length < keys(b[0].instances).length) return 1;
+        if (size(a[0].instances) < size(b[0].instances)) return 1;
         return -1;
     }
     return -1;
@@ -83,7 +82,7 @@ function calcPercentages(indexItems: Array<TypeResourceIndexItem>,
 
         const instances = indexItem.instances;
         if (isUndefinedOrEmpty(instances)) return 0;
-        return count_(is(rankTypesFor))(instances) * 100 / keys(instances).length;
+        return count(is(rankTypesFor))(instances) * 100 / size(instances);
 
     })) as Array<Pair<TypeResourceIndexItem, Percentage>>;
 }

@@ -48,7 +48,7 @@ function shouldRankTypes(query: Query) {
 
     return equal(query.types)(['Type'])
         && query.rankOptions
-        && query.rankOptions[MATCH_TYPE]; // TODO simplify
+        && query.rankOptions[MATCH_TYPE];
 }
 
 

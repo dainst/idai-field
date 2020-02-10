@@ -1,4 +1,4 @@
-import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair} from 'tsfun';
+import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair, copy} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, SimpleIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -22,10 +22,10 @@ const MATCH_TYPE = 'matchType';
 export function getSortedIds(indexItems: Array<SimpleIndexItem>,
                              query: Query): Array<ResourceId> {
 
-    indexItems = generateOrderedResultList(indexItems);
-    if (shouldRankTypes(query)) {
-        indexItems = handleTypesForName(indexItems, query.rankOptions[MATCH_TYPE]);
-    }
+    indexItems = shouldRankTypes(query)
+        ? handleTypesForName(indexItems, query.rankOptions[MATCH_TYPE])
+        : generateOrderedResultList(indexItems);
+
     if (shouldHandleExactMatch(query)) {
         handleExactMatch(indexItems, query);
     }
@@ -75,7 +75,7 @@ function calcPercentages(indexItems: Array<SimpleIndexItem>, rankTypesFor: Name)
 
         const instances = (indexItem as any)[INSTANCES];
         if (isUndefinedOrEmpty(keys(instances))) return 0;
-        return filter(is(rankTypesFor))(values(instances)).length * 100.0 / keys(instances).length;
+        return filter(is(rankTypesFor))(values(instances)).length * 100 / keys(instances).length;
 
     })) as Array<Pair<SimpleIndexItem, number>>;
 }
@@ -95,7 +95,7 @@ function handleExactMatch(indexItems: Array<SimpleIndexItem>,
 
 function generateOrderedResultList(items: Array<SimpleIndexItem>): Array<SimpleIndexItem> {
 
-    return items
+    return copy(items)
         .sort((a: any, b: any) =>
             // we know that an IndexItem created with from has the identifier field
             SortUtil.alnumCompare(a[IDENTIFIER], b[IDENTIFIER]));

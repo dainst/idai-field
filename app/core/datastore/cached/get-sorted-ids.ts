@@ -1,11 +1,10 @@
-import {on, is, isNot, undefinedOrEmpty, to, first,
-    flow, equal, Pair, compose, map} from 'tsfun';
+import {equal, is, isNot, on, Pair, to, undefinedOrEmpty} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
-import {pairWith, count /* TODO move to tsfun */, size, sort, doPaired} from '../../util/utils';
+import {count, doPaired, size, sort} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -26,9 +25,11 @@ type Percentage = number;
 export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
-    indexItems = shouldRankTypes(query)
-        ? handleTypesForName(query.rankOptions[MATCH_TYPE])(indexItems)
-        : generateOrderedResultList(indexItems);
+    indexItems =
+        (shouldRankTypes(query)
+            ? handleTypesForName(query.rankOptions[MATCH_TYPE])
+            : generateOrderedResultList)
+        (indexItems);
 
     if (shouldHandleExactMatch(query)) {
         handleExactMatch(indexItems, query);

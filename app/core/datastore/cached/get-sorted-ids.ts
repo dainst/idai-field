@@ -1,4 +1,4 @@
-import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy,
+import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove,
     undefinedOrEmpty, size, isUndefinedOrEmpty} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
@@ -48,7 +48,7 @@ function shouldRankTypes(query: Query) {
 
     return equal(query.types)(['Type'])
         && query.rankOptions
-        && query.rankOptions[MATCH_TYPE];
+        && query.rankOptions[MATCH_TYPE]; // TODO simplify
 }
 
 
@@ -80,13 +80,13 @@ function handleExactMatch(indexItems: Array<IndexItem>,
                           q: string): Array<IndexItem> {
 
     const exactMatch: IndexItem|undefined = indexItems.find(on(IDENTIFIER, is(q)));
-    const copiedItems: Array<IndexItem> = copy(indexItems);
 
-    if (exactMatch) {
-        copiedItems.splice(copiedItems.indexOf(exactMatch), 1); // TODO do not modify in place
-        return prepend(exactMatch)(copiedItems);
-    }
-    return copiedItems;
+    return exactMatch !== undefined
+        ? flow(
+            indexItems,
+            remove(on(IDENTIFIER, is(q))),
+            prepend(exactMatch))
+        : copy(indexItems);
 }
 
 

@@ -10,11 +10,11 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r, [{id:'1'},{id:'2'}]);
-        ResultSets.combine(r,[{id:'2'},{id:'2'}]);
-        ResultSets.combine(r,[{id:'2'},{id:'3'}]);
+        ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
+        ResultSets.combine(r,[{id:'2'},{id:'2'}] as any);
+        ResultSets.combine(r,[{id:'2'},{id:'3'}] as any);
 
-        expect(ResultSets.collapse(r)).toEqual([{id:'2'}]);
+        expect(ResultSets.collapse(r)).toEqual([{id:'2'}] as any);
     });
 
 
@@ -22,8 +22,8 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{id:'1'},{id:'2'}]);
-        ResultSets.combine(r,[{id:'3'},{id:'4'}]);
+        ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
+        ResultSets.combine(r,[{id:'3'},{id:'4'}] as any);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -33,9 +33,9 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{id:'1'},{id:'2'}]);
-        ResultSets.combine(r,[{id:'2'},{id:'3'}]);
-        ResultSets.combine(r,[{id:'4'},{id:'5'}]);
+        ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
+        ResultSets.combine(r,[{id:'2'},{id:'3'}] as any);
+        ResultSets.combine(r,[{id:'4'},{id:'5'}] as any);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -45,10 +45,10 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
-        ResultSets.combine(r,[{ id: '3' }, { id: '4' }], 'subtract');
+        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
+        ResultSets.combine(r,[{ id: '3' }, { id: '4' }] as any, 'subtract');
 
-        expect(ResultSets.collapse(r)).toEqual([{ id: '1' }, { id: '2' }]);
+        expect(ResultSets.collapse(r)).toEqual([{ id: '1' }, { id: '2' }] as any);
     });
 
 
@@ -56,11 +56,11 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
-        ResultSets.combine(r,[{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }]);
-        ResultSets.combine(r,[{ id: '3' }], 'subtract');
-        ResultSets.combine(r,[{ id: '4' }], 'subtract');
+        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
+        ResultSets.combine(r,[{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }] as any);
+        ResultSets.combine(r,[{ id: '3' }] as any, 'subtract');
+        ResultSets.combine(r,[{ id: '4' }] as any, 'subtract');
 
-        expect(ResultSets.collapse(r)).toEqual([{ id: '2' }]);
+        expect(ResultSets.collapse(r)).toEqual([{ id: '2' }] as any);
     });
 });

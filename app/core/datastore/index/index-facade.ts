@@ -4,7 +4,7 @@ import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {IndexItem, SimpleIndexItem} from './index-item';
+import {IndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 import {IdaiType} from '../../configuration/model/idai-type';
 
@@ -45,7 +45,7 @@ export class IndexFacade {
      *
      * @param query
      */
-    public perform(query: Query): Array<SimpleIndexItem> {
+    public perform(query: Query): Array<IndexItem> {
 
         let resultSets = query.constraints ?
             IndexFacade.performConstraints(this.constraintIndex, query.constraints) :

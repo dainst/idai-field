@@ -1,22 +1,15 @@
 import {Action, Document} from 'idai-components-2';
-import {SortUtil} from '../../util/sort-util';
 
 
-export interface SimpleIndexItem {
+export interface IndexItem {
 
     id: string;
-}
-
-export interface IndexItem extends SimpleIndexItem {
-
     date: Date,
     identifier: string
 }
 
 
 /**
- * Companion object
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

@@ -1,6 +1,6 @@
 import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair, copy} from 'tsfun';
 import {Query} from 'idai-components-2';
-import {IndexItem, SimpleIndexItem} from '../index/index-item';
+import {IndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
@@ -14,12 +14,14 @@ const IDENTIFIER = 'identifier';
 const INSTANCES = 'instances';
 const MATCH_TYPE = 'matchType';
 
+type Percentage = number;
+
 
 /**
- * @param indexItems // TODO review typing: must be Array<IndexItem> if exactMatchFirst
+ * @param indexItems
  * @param query
  */
-export function getSortedIds(indexItems: Array<SimpleIndexItem>,
+export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
     indexItems = shouldRankTypes(query)
@@ -47,12 +49,12 @@ function shouldRankTypes(query: Query) {
 }
 
 
-function handleTypesForName(indexItems: Array<SimpleIndexItem>,
+function handleTypesForName(indexItems: Array<IndexItem>,
                             rankTypesFor: Name) {
 
     const pairs = calcPercentages(indexItems, rankTypesFor);
     pairs.sort(comparePercentages);
-    return pairs.map(first) as Array<SimpleIndexItem>;
+    return pairs.map(first) as Array<IndexItem>;
 }
 
 
@@ -69,19 +71,19 @@ function comparePercentages(a: any, b: any) {
 }
 
 
-function calcPercentages(indexItems: Array<SimpleIndexItem>, rankTypesFor: Name): Array<Pair<SimpleIndexItem, number>> {
+function calcPercentages(indexItems: Array<IndexItem>, rankTypesFor: Name): Array<Pair<IndexItem, Percentage>> {
 
-    return indexItems.map(pairWith((indexItem: SimpleIndexItem) => {
+    return indexItems.map(pairWith((indexItem: IndexItem) => {
 
         const instances = (indexItem as any)[INSTANCES];
         if (isUndefinedOrEmpty(keys(instances))) return 0;
         return filter(is(rankTypesFor))(values(instances)).length * 100 / keys(instances).length;
 
-    })) as Array<Pair<SimpleIndexItem, number>>;
+    })) as Array<Pair<IndexItem, Percentage>>;
 }
 
 
-function handleExactMatch(indexItems: Array<SimpleIndexItem>,
+function handleExactMatch(indexItems: Array<IndexItem>,
                           query: Query) {
 
     const exactMatch = indexItems.find(on(IDENTIFIER, is(query.q)));
@@ -93,10 +95,10 @@ function handleExactMatch(indexItems: Array<SimpleIndexItem>,
 }
 
 
-function generateOrderedResultList(items: Array<SimpleIndexItem>): Array<SimpleIndexItem> {
+function generateOrderedResultList(items: Array<IndexItem>): Array<IndexItem> {
 
     return copy(items)
-        .sort((a: any, b: any) =>
+        .sort((a: IndexItem, b: IndexItem) =>
             // we know that an IndexItem created with from has the identifier field
-            SortUtil.alnumCompare(a[IDENTIFIER], b[IDENTIFIER]));
+            SortUtil.alnumCompare(a.identifier, b.identifier));
 }

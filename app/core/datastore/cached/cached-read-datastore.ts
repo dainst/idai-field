@@ -4,7 +4,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {SimpleIndexItem} from '../index/index-item';
+import {IndexItem} from '../index/index-item';
 import {TypeUtility} from '../../model/type-utility';
 import {getSortedIds} from './get-sorted-ids';
 
@@ -140,7 +140,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     private async findIds(query: Query): Promise<string[]> {
 
-        let result: Array<SimpleIndexItem>;
+        let result: Array<IndexItem>;
         try {
             result = this.indexFacade.perform(query);
         } catch (err) {

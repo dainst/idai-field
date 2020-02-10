@@ -1,8 +1,8 @@
 import {intersection, NestedArray, union, subtract} from 'tsfun';
-import {SimpleIndexItem} from './index-item';
+import {IndexItem} from './index-item';
 
 type ResourceId = string;
-type IndexItemMap = {[id: string]: SimpleIndexItem};
+type IndexItemMap = {[id: string]: IndexItem};
 
 
 export interface ResultSets {
@@ -42,7 +42,7 @@ export module ResultSets {
 
 
     export function combine(resultSets: ResultSets,
-                            indexItems: Array<SimpleIndexItem>, mode: string = 'add') {
+                            indexItems: Array<IndexItem>, mode: string = 'add') {
 
 
         const keys = [];
@@ -59,7 +59,7 @@ export module ResultSets {
     }
 
 
-    export function collapse(resultSets: ResultSets): Array<SimpleIndexItem> {
+    export function collapse(resultSets: ResultSets): Array<IndexItem> {
 
         const addSetIds: string[] = intersection(resultSets.addSets);
 
@@ -71,7 +71,7 @@ export module ResultSets {
     }
 
 
-    export function unify(resultSets: ResultSets): Array<SimpleIndexItem> {
+    export function unify(resultSets: ResultSets): Array<IndexItem> {
 
         return pickFromMap(resultSets, union(resultSets.addSets));
     }

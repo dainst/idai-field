@@ -25,16 +25,16 @@ type Percentage = number;
 export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
-    indexItems =
+    let sortedItems =
         (shouldRankTypes(query)
             ? handleTypesForName(query.rankOptions[MATCH_TYPE])
             : generateOrderedResultList)
         (indexItems);
 
     if (shouldHandleExactMatch(query)) {
-        indexItems = handleExactMatch(indexItems, query.q as string /* TODO review typing */);
+        sortedItems = handleExactMatch(sortedItems, query.q as string /* TODO review typing */);
     }
-    return indexItems.map(to(ID));
+    return sortedItems.map(to(ID));
 }
 
 

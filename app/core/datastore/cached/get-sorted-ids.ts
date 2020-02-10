@@ -1,10 +1,10 @@
-import {equal, is, isNot, on, Pair, to,
+import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy,
     undefinedOrEmpty, size, isUndefinedOrEmpty} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
-import {count, doPaired, sort} from '../../util/utils';
+import {doPaired} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -32,7 +32,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
         (indexItems);
 
     if (shouldHandleExactMatch(query)) {
-        handleExactMatch(indexItems, query);
+        indexItems = handleExactMatch(indexItems, query.q as string /* TODO review typing */);
     }
     return indexItems.map(to(ID));
 }
@@ -77,14 +77,16 @@ function calcPercentage(rankTypesFor: Name) {
 
 
 function handleExactMatch(indexItems: Array<IndexItem>,
-                          query: Query) { // TODO return copy
+                          q: string): Array<IndexItem> {
 
-    const exactMatch = indexItems.find(on(IDENTIFIER, is(query.q)));
+    const exactMatch: IndexItem|undefined = indexItems.find(on(IDENTIFIER, is(q)));
+    const copiedItems: Array<IndexItem> = copy(indexItems);
 
     if (exactMatch) {
-        indexItems.splice(indexItems.indexOf(exactMatch), 1);
-        indexItems.unshift(exactMatch);
+        copiedItems.splice(copiedItems.indexOf(exactMatch), 1); // TODO do not modify in place
+        return prepend(exactMatch)(copiedItems);
     }
+    return copiedItems;
 }
 
 

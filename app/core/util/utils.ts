@@ -14,7 +14,7 @@ export function tuplify(...fs : any[]) {
 }
 
 
-export function pairWith(f: any) {
+export function pairWith(f: any) { // TODO move to tsfun
 
     return tuplify(identity, f);
 }
@@ -35,27 +35,6 @@ export function toLowerCase(s: string) {
 export function toArray(token: any) {
 
     return Array.from(token);
-}
-
-
-export function count<A>(p: Function): { // TODO move to tsfun; type p to Predicate; export Predicate
-    (as: Array<A>): number
-    (os: ObjectCollection<A>): number
-}
-export function count<A>(p: Function) {
-
-    return (as: Array<A>|ObjectCollection<A>): number => {
-
-        return isArray(as)
-            ? filter(p as any)(as as any).length
-            : keys(filter(p as any)(as as any)).length // TODO refactor
-    }
-}
-
-
-export function sort<A>(f: (a: A, b: A) => number) { // TODO refactor; move to tsfun
-
-    return (as: Array<A>): Array<A> => copy(as).sort(f as any);
 }
 
 

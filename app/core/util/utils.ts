@@ -1,4 +1,5 @@
-import {identity, filter, ObjectCollection, isArray, keys, copy} from 'tsfun';
+import {identity, filter, ObjectCollection, compose,
+    isArray, keys, copy, Pair, first, flow, map} from 'tsfun';
 
 
 export function isBoolean(value: any): boolean {
@@ -65,4 +66,17 @@ export function size<T>(o: Array<T>|ObjectCollection<T>): number {
 export function sort<A>(f: (a: A, b: A) => number) { // TODO refactor; move to tsfun
 
     return (as: Array<A>): Array<A> => copy(as).sort(f as any);
+}
+
+
+/**
+ * Returns a function which takes an array, whose
+ * elements get paired by elements produced with pairFunction,
+ * and which gets transformed and freed of the tmp
+ * elements before returned.
+ */
+export function doPaired<T, S>(pairFunction: (_: T) => S,
+                               transform: (_: Array<Pair<T, S>>) => Array<Pair<T, S>>) {
+
+    return compose(map(pairWith(pairFunction)), transform, map(first));
 }

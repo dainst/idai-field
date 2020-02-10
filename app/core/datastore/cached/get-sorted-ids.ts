@@ -1,11 +1,11 @@
 import {on, is, isNot, undefinedOrEmpty, to, first,
-    flow, equal, Pair, copy, map} from 'tsfun';
+    flow, equal, Pair, compose, map} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
-import {pairWith, count /* TODO move to tsfun */, size, sort} from '../../util/utils';
+import {pairWith, count /* TODO move to tsfun */, size, sort, doPaired} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -27,9 +27,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
     indexItems = shouldRankTypes(query)
-        ? handleTypesForName(
-            indexItems as Array<TypeResourceIndexItem>,
-            query.rankOptions[MATCH_TYPE])
+        ? handleTypesForName(query.rankOptions[MATCH_TYPE])(indexItems)
         : generateOrderedResultList(indexItems);
 
     if (shouldHandleExactMatch(query)) {
@@ -53,19 +51,6 @@ function shouldRankTypes(query: Query) {
 }
 
 
-function handleTypesForName(indexItems: Array<TypeResourceIndexItem>,
-                            rankTypesFor: Name): Array<IndexItem> {
-
-    const pairWithPercentage_ = pairWithPercentage(rankTypesFor);
-
-    return flow(
-        indexItems,
-        map(pairWithPercentage_),
-        sort(comparePercentages),
-        map(first));
-}
-
-
 function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percentage>,
                             [itemB, pctgB]: Pair<TypeResourceIndexItem, Percentage>) {
 
@@ -79,14 +64,14 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
 }
 
 
-function pairWithPercentage(rankTypesFor: Name) {
+function calcPercentage(rankTypesFor: Name) {
 
-    return pairWith((indexItem: TypeResourceIndexItem) => {
+    return (indexItem: TypeResourceIndexItem) => {
 
         const instances = indexItem.instances;
         if (isUndefinedOrEmpty(instances)) return 0;
         return count(is(rankTypesFor))(instances) * 100 / size(instances);
-    })
+    };
 }
 
 
@@ -105,6 +90,17 @@ function handleExactMatch(indexItems: Array<IndexItem>,
 function generateOrderedResultList(items: Array<IndexItem>): Array<IndexItem> {
 
     return sort((a: IndexItem, b: IndexItem) =>
-            // we know that an IndexItem created with from has the identifier field
             SortUtil.alnumCompare(a.identifier, b.identifier))(items);
 }
+
+
+/**
+ * Produces function which takes an Array<ResourceTypeIndexItem>.
+ *
+ * For the elements it calculates percentages based on how many
+ * instances match the given type, and sorts according to the calculated percentages.
+ */
+const handleTypesForName = (typeToMatch: Name) =>
+    doPaired(
+        calcPercentage(typeToMatch),
+        sort(comparePercentages));

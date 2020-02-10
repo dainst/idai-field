@@ -5,7 +5,7 @@ import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
-import {pairWith, count /* TODO move to tsfun */, size} from '../../util/utils';
+import {pairWith, count /* TODO move to tsfun */, size, sort} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -66,12 +66,6 @@ function handleTypesForName(indexItems: Array<TypeResourceIndexItem>,
 }
 
 
-function sort<A>(f: Function) {
-
-    return (as: Array<A>) => copy(as).sort(f as any);
-}
-
-
 function comparePercentages(a: Pair<TypeResourceIndexItem, Percentage>,
                             b: Pair<TypeResourceIndexItem, Percentage>) {
 
@@ -110,8 +104,7 @@ function handleExactMatch(indexItems: Array<IndexItem>,
 
 function generateOrderedResultList(items: Array<IndexItem>): Array<IndexItem> {
 
-    return copy(items)
-        .sort((a: IndexItem, b: IndexItem) =>
+    return sort((a: IndexItem, b: IndexItem) =>
             // we know that an IndexItem created with from has the identifier field
-            SortUtil.alnumCompare(a.identifier, b.identifier));
+            SortUtil.alnumCompare(a.identifier, b.identifier))(items);
 }

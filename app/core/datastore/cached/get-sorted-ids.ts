@@ -41,7 +41,11 @@ function handleTypesForName(indexItems: Array<SimpleIndexItem>,
     indexItems.sort((a: any, b: any) => {
 
         if (a['matchPercentage'] < b['matchPercentage']) return 1;
-        if (a['matchPercentage'] === b['matchPercentage']) return 0;
+        if (a['matchPercentage'] === b['matchPercentage']) {
+
+            if (keys(a['instances']).length < keys(b['instances']).length) return 1;
+            return -1;
+        }
         return -1;
     });
 }

@@ -47,4 +47,20 @@ describe('getSortedIds', () => {
             });
         expect(result2).toEqual(['c', 'b', 'a']);
     });
+
+
+    it('rankTypes - sort by type, then by count', () => {
+
+        const indexItems = [
+            { id: 'b', identifier: '1', instances: { 'c': 'Terracotta'}  },
+            { id: 'a', identifier: '2', instances: { 'e': 'Terracotta', 'd': 'Terracotta'  }  },
+        ];
+
+        const result1 = getSortedIds(indexItems as any,
+            {
+                types: ['Type'],
+                rankOptions: { matchType: 'Pottery' }
+            });
+        expect(result1).toEqual(['a', 'b']);
+    });
 });

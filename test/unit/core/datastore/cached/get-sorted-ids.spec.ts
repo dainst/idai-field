@@ -59,7 +59,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any,
             {
                 types: ['Type'],
-                rankOptions: { matchType: 'Pottery' }
+                rankOptions: { matchType: 'Terracotta' }
             });
         expect(result1).toEqual(['a', 'b']);
     });

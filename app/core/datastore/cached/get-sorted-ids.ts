@@ -1,13 +1,13 @@
-import {on, is, isNot, undefinedOrEmpty, to, keys, filter, equal} from 'tsfun';
+import {on, is, isNot, undefinedOrEmpty, to, keys, filter, equal, values, Pair} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, SimpleIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
+import {pairWith} from '../../util/utils';
 
 // @author Daniel de Oliveira
 // @author Thomas Kleinke
-
 
 /**
  * @param indexItems // TODO review typing: must be Array<IndexItem> if exactMatchFirst
@@ -17,44 +17,58 @@ export function getSortedIds(indexItems: Array<SimpleIndexItem>,
                              query: Query): Array<ResourceId> {
 
     indexItems = generateOrderedResultList(indexItems);
-    if (equal(query.types)(['Type']) && query.rankOptions && query.rankOptions['matchType']) {
-        handleTypesForName(indexItems, query, query.rankOptions['matchType']);
+    if (shouldRankTypes(query)) {
+        indexItems = handleTypesForName(indexItems, query.rankOptions['matchType']);
     }
     handleExactMatch(indexItems, query);
     return indexItems.map(to('id'));
 }
 
 
+function shouldRankTypes(query: Query) {
+
+    return equal(query.types)(['Type']) && query.rankOptions && query.rankOptions['matchType'];
+}
+
+
 function handleTypesForName(indexItems: Array<SimpleIndexItem>,
-                            query: Query,
                             rankTypesFor: Name) {
 
-    indexItems.map(indexItem => {
+    const pairs = calcPercentages(indexItems, rankTypesFor);
+    pairs.sort(comparePercentages);
+    return pairs.map(to('[0]'));
+}
 
-        if (isUndefinedOrEmpty(keys((indexItem as any)['instances']))) return indexItem;
 
-        (indexItem as any)['matchPercentage'] = keys(filter(is(rankTypesFor))((indexItem as any)['instances'])).length
-            * 100.0 / keys((indexItem as any)['instances']).length;
-        return indexItem;
-    });
+function comparePercentages(a: any, b: any) {
 
-    indexItems.sort((a: any, b: any) => {
+    if (a[1] < b[1]) return 1;
+    if (a[1] === b[1]) {
 
-        if (a['matchPercentage'] < b['matchPercentage']) return 1;
-        if (a['matchPercentage'] === b['matchPercentage']) {
-
-            if (keys(a['instances']).length < keys(b['instances']).length) return 1;
-            return -1;
-        }
+        // TODO make count replace keys + length
+        if (keys(a[0]['instances']).length < keys(b[0]['instances']).length) return 1;
         return -1;
-    });
+    }
+    return -1;
+}
+
+
+function calcPercentages(indexItems: Array<SimpleIndexItem>, rankTypesFor: Name): Array<Pair<SimpleIndexItem, number>> {
+
+    return indexItems.map(pairWith((indexItem: SimpleIndexItem) => {
+
+        const instances = (indexItem as any)['instances'];
+        if (isUndefinedOrEmpty(keys(instances))) return 0;
+        return filter(is(rankTypesFor))(values(instances)).length * 100.0 / keys(instances).length;
+
+    })) as Array<Pair<SimpleIndexItem, number>>;
 }
 
 
 function handleExactMatch(indexItems: Array<SimpleIndexItem>,
                           query: Query) {
 
-    if (query.sort === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)) {
+    if (query.sort === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)) { // TODO extract function; perhaps move up
 
         const exactMatch = indexItems.find(on('identifier', is(query.q)));
 

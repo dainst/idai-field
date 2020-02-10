@@ -88,21 +88,18 @@ function handleExactMatch(indexItems: Array<IndexItem>,
 }
 
 
-/**
- * Produces function which takes Array<IndexItem>
- */
-const generateOrderedResultList =
+const generateOrderedResultList:
+    (indexItems: Array<IndexItem>) => Array<IndexItem> =
     sort((a: IndexItem, b: IndexItem) =>
         SortUtil.alnumCompare(a.identifier, b.identifier));
 
 
 /**
- * Produces function which takes an Array<ResourceTypeIndexItem>.
- *
- * For the elements it calculates percentages based on how many
+ * For indexItems it calculates percentages based on how many
  * instances match the given type, and sorts according to the calculated percentages.
  */
-const handleTypesForName = (typeToMatch: Name) =>
+const handleTypesForName =
+    (typeToMatch: Name): (indexItems: Array<IndexItem>) => Array<IndexItem> =>
     doPaired(
         calcPercentage(typeToMatch),
         sort(comparePercentages));

@@ -20,14 +20,24 @@ export function getSortedIds(indexItems: Array<SimpleIndexItem>,
     if (shouldRankTypes(query)) {
         indexItems = handleTypesForName(indexItems, query.rankOptions['matchType']);
     }
-    handleExactMatch(indexItems, query);
+    if (shouldHandleExactMatch(query)) {
+        handleExactMatch(indexItems, query);
+    }
     return indexItems.map(to('id'));
+}
+
+
+function shouldHandleExactMatch(query: Query) {
+
+    return query.sort === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)
 }
 
 
 function shouldRankTypes(query: Query) {
 
-    return equal(query.types)(['Type']) && query.rankOptions && query.rankOptions['matchType'];
+    return equal(query.types)(['Type'])
+        && query.rankOptions
+        && query.rankOptions['matchType'];
 }
 
 
@@ -68,14 +78,11 @@ function calcPercentages(indexItems: Array<SimpleIndexItem>, rankTypesFor: Name)
 function handleExactMatch(indexItems: Array<SimpleIndexItem>,
                           query: Query) {
 
-    if (query.sort === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)) { // TODO extract function; perhaps move up
+    const exactMatch = indexItems.find(on('identifier', is(query.q)));
 
-        const exactMatch = indexItems.find(on('identifier', is(query.q)));
-
-        if (exactMatch) {
-            indexItems.splice(indexItems.indexOf(exactMatch), 1);
-            indexItems.unshift(exactMatch);
-        }
+    if (exactMatch) {
+        indexItems.splice(indexItems.indexOf(exactMatch), 1);
+        indexItems.unshift(exactMatch);
     }
 }
 

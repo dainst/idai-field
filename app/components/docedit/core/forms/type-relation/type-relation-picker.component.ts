@@ -7,7 +7,6 @@ import {Name, ResourceId} from '../../../../../core/constants';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
-import {suggestTypeRelations} from '../../../../../core/docedit/core/type-relation/suggest-type-relations';
 
 
 @Component({
@@ -72,12 +71,13 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-        const rankedDocuments =
-            await suggestTypeRelations(
-                (q: Query) => this.datastore.find(q),
-                this.resource.type,
-                q,
-                this.selectedCatalog);
+
+        const rankedDocuments = (await this.datastore.find(
+            {
+                q: q,
+                types: ['Type'],
+                rankOptions: { matchType: this.resource.type }
+            })).documents;
 
         this.typeDocumentsWithLinkedImageIds =
             await this.pairWithLinkedImageIds(rankedDocuments);

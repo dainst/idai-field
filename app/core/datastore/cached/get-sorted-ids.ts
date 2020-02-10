@@ -1,5 +1,5 @@
 import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove, val, map,
-    undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
+    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -82,17 +82,9 @@ function calcPercentage(rankTypesFor: Name) {
 
 function handleExactMatch(q: string){
 
-    return (indexItems: Array<IndexItem>): Array<IndexItem> => {
-
-        const exactMatch = indexItems.find(on(IDENTIFIER, is(q)));
-
-        return exactMatch !== undefined
-            ? flow(
-                indexItems,
-                remove(on(IDENTIFIER, is(q))),
-                prepend(exactMatch))
-            : copy(indexItems);
-    }
+    return compose(
+        separate(on(IDENTIFIER, is(q))),
+        ([match, nonMatch]: any) => match.concat(nonMatch));
 }
 
 

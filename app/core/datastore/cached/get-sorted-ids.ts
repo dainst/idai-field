@@ -1,6 +1,6 @@
 import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair, copy} from 'tsfun';
 import {Query} from 'idai-components-2';
-import {IndexItem} from '../index/index-item';
+import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {isUndefinedOrEmpty} from 'tsfun/src/predicate';
@@ -10,8 +10,8 @@ import {pairWith} from '../../util/utils';
 // @author Thomas Kleinke
 
 
+const ID = 'id';
 const IDENTIFIER = 'identifier';
-const INSTANCES = 'instances';
 const MATCH_TYPE = 'matchType';
 
 type Percentage = number;
@@ -25,13 +25,15 @@ export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
     indexItems = shouldRankTypes(query)
-        ? handleTypesForName(indexItems, query.rankOptions[MATCH_TYPE])
+        ? handleTypesForName(
+            indexItems as Array<TypeResourceIndexItem>,
+            query.rankOptions[MATCH_TYPE])
         : generateOrderedResultList(indexItems);
 
     if (shouldHandleExactMatch(query)) {
         handleExactMatch(indexItems, query);
     }
-    return indexItems.map(to('id'));
+    return indexItems.map(to(ID));
 }
 
 
@@ -49,7 +51,7 @@ function shouldRankTypes(query: Query) {
 }
 
 
-function handleTypesForName(indexItems: Array<IndexItem>,
+function handleTypesForName(indexItems: Array<TypeResourceIndexItem>,
                             rankTypesFor: Name) {
 
     const pairs = calcPercentages(indexItems, rankTypesFor);
@@ -58,28 +60,30 @@ function handleTypesForName(indexItems: Array<IndexItem>,
 }
 
 
-function comparePercentages(a: any, b: any) {
+function comparePercentages(a: Pair<TypeResourceIndexItem, Percentage>,
+                            b: Pair<TypeResourceIndexItem, Percentage>) {
 
     if (a[1] < b[1]) return 1;
     if (a[1] === b[1]) {
 
         // TODO make count replace keys + length
-        if (keys(a[0][INSTANCES]).length < keys(b[0][INSTANCES]).length) return 1;
+        if (keys(a[0].instances).length < keys(b[0].instances).length) return 1;
         return -1;
     }
     return -1;
 }
 
 
-function calcPercentages(indexItems: Array<IndexItem>, rankTypesFor: Name): Array<Pair<IndexItem, Percentage>> {
+function calcPercentages(indexItems: Array<TypeResourceIndexItem>,
+                         rankTypesFor: Name): Array<Pair<TypeResourceIndexItem, Percentage>> {
 
-    return indexItems.map(pairWith((indexItem: IndexItem) => {
+    return indexItems.map(pairWith((indexItem: TypeResourceIndexItem) => {
 
-        const instances = (indexItem as any)[INSTANCES];
+        const instances = indexItem.instances;
         if (isUndefinedOrEmpty(keys(instances))) return 0;
         return filter(is(rankTypesFor))(values(instances)).length * 100 / keys(instances).length;
 
-    })) as Array<Pair<IndexItem, Percentage>>;
+    })) as Array<Pair<TypeResourceIndexItem, Percentage>>;
 }
 
 

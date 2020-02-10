@@ -1,11 +1,18 @@
 import {Action, Document} from 'idai-components-2';
 
+type TypeName = string;
 
 export interface IndexItem {
 
     id: string;
     date: Date,
     identifier: string
+}
+
+
+export interface TypeResourceIndexItem extends IndexItem {
+
+    instances: { [resourceId: string]: TypeName}
 }
 
 

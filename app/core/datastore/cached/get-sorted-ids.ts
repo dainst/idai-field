@@ -1,5 +1,5 @@
 import {on, is, isNot, undefinedOrEmpty, to, first,
-    keys, equal, Pair, copy} from 'tsfun';
+    flow, equal, Pair, copy, map} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -54,11 +54,21 @@ function shouldRankTypes(query: Query) {
 
 
 function handleTypesForName(indexItems: Array<TypeResourceIndexItem>,
-                            rankTypesFor: Name) {
+                            rankTypesFor: Name): Array<IndexItem> {
 
-    const pairs = calcPercentages(indexItems, rankTypesFor);
-    pairs.sort(comparePercentages);
-    return pairs.map(first) as Array<IndexItem>;
+    const pairWithPercentage_ = pairWithPercentage(rankTypesFor);
+
+    return flow(
+        indexItems,
+        map(pairWithPercentage_),
+        sort(comparePercentages),
+        map(first));
+}
+
+
+function sort<A>(f: Function) {
+
+    return (as: Array<A>) => copy(as).sort(f as any);
 }
 
 
@@ -75,16 +85,14 @@ function comparePercentages(a: Pair<TypeResourceIndexItem, Percentage>,
 }
 
 
-function calcPercentages(indexItems: Array<TypeResourceIndexItem>,
-                         rankTypesFor: Name): Array<Pair<TypeResourceIndexItem, Percentage>> {
+function pairWithPercentage(rankTypesFor: Name) {
 
-    return indexItems.map(pairWith((indexItem: TypeResourceIndexItem) => {
+    return pairWith((indexItem: TypeResourceIndexItem) => {
 
         const instances = indexItem.instances;
         if (isUndefinedOrEmpty(instances)) return 0;
         return count(is(rankTypesFor))(instances) * 100 / size(instances);
-
-    })) as Array<Pair<TypeResourceIndexItem, Percentage>>;
+    })
 }
 
 

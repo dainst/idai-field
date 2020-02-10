@@ -66,13 +66,13 @@ function handleTypesForName(indexItems: Array<TypeResourceIndexItem>,
 }
 
 
-function comparePercentages(a: Pair<TypeResourceIndexItem, Percentage>,
-                            b: Pair<TypeResourceIndexItem, Percentage>) {
+function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percentage>,
+                            [itemB, pctgB]: Pair<TypeResourceIndexItem, Percentage>) {
 
-    if (a[1] < b[1]) return 1;
-    if (a[1] === b[1]) {
+    if (pctgA < pctgB) return 1;
+    if (pctgA === pctgB) {
 
-        if (size(a[0].instances) < size(b[0].instances)) return 1;
+        if (size(itemA.instances) < size(itemB.instances)) return 1;
         return -1;
     }
     return -1;

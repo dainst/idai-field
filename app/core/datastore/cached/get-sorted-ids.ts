@@ -91,7 +91,7 @@ function pairWithPercentage(rankTypesFor: Name) {
 
 
 function handleExactMatch(indexItems: Array<IndexItem>,
-                          query: Query) {
+                          query: Query) { // TODO return copy
 
     const exactMatch = indexItems.find(on(IDENTIFIER, is(query.q)));
 

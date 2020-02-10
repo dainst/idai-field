@@ -1,9 +1,9 @@
-import {Component, OnChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, first, second, to} from 'tsfun';
+import {first, Pair, second, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {Resource, FieldDocument, Query, FieldResource} from 'idai-components-2';
-import {Name, ResourceId} from '../../../../../core/constants';
+import {FieldDocument, FieldResource, Resource} from 'idai-components-2';
+import {ResourceId} from '../../../../../core/constants';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
@@ -71,11 +71,11 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-
         const rankedDocuments = (await this.datastore.find(
             {
                 q: q,
                 types: ['Type'],
+                sort: 'exactMatchFirst', // TODO test manually once
                 rankOptions: { matchType: this.resource.type }
             })).documents;
 

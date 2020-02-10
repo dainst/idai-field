@@ -35,7 +35,7 @@ export class IndexItem {
             if (showWarnings) console.warn('no resourceId, will not index');
             return undefined;
         }
-        if (!document.resource['identifier']) {
+        if (!document.resource.identifier) {
             if (showWarnings) console.warn('no identifier, will not index');
             return undefined;
         }
@@ -48,7 +48,7 @@ export class IndexItem {
         return {
             id: document.resource.id,
             date: lastModified.date as Date,
-            identifier: document.resource['identifier']
+            identifier: document.resource.identifier
         };
     }
 }

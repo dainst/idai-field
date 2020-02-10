@@ -87,11 +87,12 @@ function handleExactMatch(indexItems: Array<IndexItem>,
 }
 
 
-function generateOrderedResultList(items: Array<IndexItem>): Array<IndexItem> {
-
-    return sort((a: IndexItem, b: IndexItem) =>
-            SortUtil.alnumCompare(a.identifier, b.identifier))(items);
-}
+/**
+ * Produces function which takes Array<IndexItem>
+ */
+const generateOrderedResultList =
+    sort((a: IndexItem, b: IndexItem) =>
+        SortUtil.alnumCompare(a.identifier, b.identifier));
 
 
 /**

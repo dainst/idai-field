@@ -1,4 +1,4 @@
-import {on, is, isNot, undefinedOrEmpty, to, keys, filter, equal, values, Pair} from 'tsfun';
+import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, SimpleIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -36,7 +36,7 @@ function handleTypesForName(indexItems: Array<SimpleIndexItem>,
 
     const pairs = calcPercentages(indexItems, rankTypesFor);
     pairs.sort(comparePercentages);
-    return pairs.map(to('[0]'));
+    return pairs.map(first) as Array<SimpleIndexItem>;
 }
 
 

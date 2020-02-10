@@ -1,4 +1,5 @@
-import {on, is, isNot, undefinedOrEmpty, to, first, keys, filter, equal, values, Pair, copy} from 'tsfun';
+import {on, is, isNot, undefinedOrEmpty, to, first, count,
+    keys, filter, equal, values, Pair, copy} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
@@ -80,8 +81,8 @@ function calcPercentages(indexItems: Array<TypeResourceIndexItem>,
     return indexItems.map(pairWith((indexItem: TypeResourceIndexItem) => {
 
         const instances = indexItem.instances;
-        if (isUndefinedOrEmpty(keys(instances))) return 0;
-        return filter(is(rankTypesFor))(values(instances)).length * 100 / keys(instances).length;
+        if (isUndefinedOrEmpty(instances)) return 0;
+        return count(is(rankTypesFor))(values(instances)) * 100 / keys(instances).length;
 
     })) as Array<Pair<TypeResourceIndexItem, Percentage>>;
 }

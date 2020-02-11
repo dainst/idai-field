@@ -4,10 +4,11 @@ import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {IndexItem} from './index-item';
+import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 import {IdaiType} from '../../configuration/model/idai-type';
 
+const INSTANCE_OF = 'isInstanceOf';
 
 /**
  * @author Daniel de Oliveira
@@ -79,6 +80,7 @@ export class IndexFacade {
 
         ConstraintIndex.clear(this.constraintIndex);
         FulltextIndex.clear(this.fulltextIndex);
+        // TODO clear index items
     }
 
 
@@ -94,19 +96,25 @@ export class IndexFacade {
     }
 
 
+    private updateTypeItemIfNecessary(document: Document) {
+
+        if (!document.resource.relations[INSTANCE_OF]) return;
+
+        for (let target of document.resource.relations[INSTANCE_OF]) {
+            const typeItem = this.indexItems[target] as TypeResourceIndexItem;
+            if (typeItem) {
+                if (!typeItem.instances) typeItem.instances = {}; // TODO remove these relations on remove
+                typeItem.instances[target] = document.resource.type;
+            }
+        }
+    }
+
+
     private _put(document: Document,
                  skipRemoval: boolean,
                  notify: boolean) {
 
-        if (document.resource.relations && document.resource.relations['isInstanceOf']) { // TODO review
-            for (let target of document.resource.relations['isInstanceOf']) {
-                const typeItem: any = this.indexItems[target];
-                if (typeItem) {
-                    if (!typeItem['instances']) typeItem['instances'] = {};
-                    typeItem['instances'][target] = document.resource.type;
-                }
-            }
-        }
+        this.updateTypeItemIfNecessary(document);
 
         // TODO review: if we update a type document, we should not create an entirely new index item, but instead merge it with an existing one
 

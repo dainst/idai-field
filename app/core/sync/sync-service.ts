@@ -44,7 +44,7 @@ export class SyncService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
         const url = SyncService.generateSyncUrl(this.syncTarget, this.project, this.password);
-        const syncProcess = await this.pouchdbManager.setupSync(this.syncTarget, this.project);
+        const syncProcess = await this.pouchdbManager.setupSync(url, this.project);
         syncProcess.observe.subscribe(
             status => this.setStatus(status),
             err => {

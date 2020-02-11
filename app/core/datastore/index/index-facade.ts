@@ -38,7 +38,7 @@ export class IndexFacade {
     public perform(query: Query): Array<IndexItem> {
 
         let resultSets = query.constraints ?
-            IndexFacade.performConstraints(this.constraintIndex, query.constraints) :
+            ConstraintIndex.performConstraints(this.constraintIndex, query.constraints) :
             ResultSets.make();
 
         resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
@@ -126,18 +126,6 @@ export class IndexFacade {
         }
 
         if (notify) ObserverUtil.notify(this.observers, document);
-    }
-
-
-    private static performConstraints(constraintIndex: ConstraintIndex,
-                                      constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
-
-        return Object.keys(constraints)
-            .reduce((resultSets, name: string) => {
-                const { type, value } = Constraint.convertTo(constraints[name]);
-                ResultSets.combine(resultSets, ConstraintIndex.get(constraintIndex, name, value), type);
-                return resultSets;
-            }, ResultSets.make());
     }
 
 

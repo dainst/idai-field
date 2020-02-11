@@ -1,9 +1,10 @@
-import {getOn} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {getOn, keys, to, values} from 'tsfun';
+import {Constraint, Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
+import {ResultSets} from './result-sets';
 
 
 export interface IndexDefinition {
@@ -70,25 +71,25 @@ export module ConstraintIndex {
     }
 
 
-    export const clear = (constraintIndex: ConstraintIndex) => setUp(constraintIndex);
+    export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(constraintIndex: ConstraintIndex,
+    export function put(index: ConstraintIndex,
                         doc: Document,
                         indexItem: IndexItem,
                         skipRemoval: boolean = false) {
 
-        if (!skipRemoval) remove(constraintIndex, doc);
-        for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
-            putFor(constraintIndex, indexDefinition, doc, indexItem);
+        if (!skipRemoval) remove(index, doc);
+        for (let indexDefinition of Object.values(index.indexDefinitions)) {
+            putFor(index, indexDefinition, doc, indexItem);
         }
     }
 
 
-    export function remove(constraintIndex: ConstraintIndex, doc: Document) {
+    export function remove(index: ConstraintIndex, doc: Document) {
 
-        Object.values(constraintIndex.indexDefinitions)
-            .map(definition => (getIndex(constraintIndex, definition))[definition.path])
+        Object.values(index.indexDefinitions)
+            .map(definition => (getIndex(index, definition))[definition.path])
             .forEach(path =>
                 Object.keys(path)
                     .filter(key => path[key][doc.resource.id])
@@ -97,13 +98,13 @@ export module ConstraintIndex {
     }
 
 
-    export function get(constraintIndex: ConstraintIndex, indexName: string,
+    export function get(index: ConstraintIndex, indexName: string,
                         matchTerms: string|string[]): Array<IndexItem> {
 
-        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        const matchedDocuments = getIndexItems(constraintIndex, indexDefinition, matchTerms);
+        const matchedDocuments = getIndexItems(index, indexDefinition, matchTerms);
         if (!matchedDocuments) return [];
 
         return Object.keys(matchedDocuments).map(id => { return {
@@ -114,13 +115,15 @@ export module ConstraintIndex {
     }
 
 
-    export function getCount(constraintIndex: ConstraintIndex, indexName: string, matchTerm: string): number {
+    export function getCount(index: ConstraintIndex,
+                             indexName: string,
+                             matchTerm: string): number {
 
-        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
         const indexItems: { [id: string]: IndexItem }|undefined
-            = getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+            = getIndexItemsForSingleMatchTerm(index, indexDefinition, matchTerm);
 
         return indexItems
             ? Object.keys(indexItems).length
@@ -128,45 +131,59 @@ export module ConstraintIndex {
     }
 
 
-    export function getDescendantIds(constraintIndex: ConstraintIndex, indexName: string,
+    export function getDescendantIds(index: ConstraintIndex, indexName: string,
                                      matchTerm: string): string[] {
 
-        const indexDefinition: IndexDefinition = constraintIndex.indexDefinitions[indexName];
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        return getDescendants(constraintIndex, indexDefinition, matchTerm)
-            .map(indexItem => indexItem.id);
+        return getDescendants(index, indexDefinition, matchTerm)
+            .map(to('id'));
     }
 
 
-    function putFor(constraintIndex: ConstraintIndex,
-                    indexDefinition: IndexDefinition,
+    // TODO add test
+    export function performConstraints(index: ConstraintIndex,
+                                       constraints: { [name: string]: Constraint|string|string[] })
+        : ResultSets {
+
+        return keys(constraints)
+            .reduce((resultSets, name: string) => {
+                const { type, value } = Constraint.convertTo(constraints[name]);
+                ResultSets.combine(resultSets, ConstraintIndex.get(index, name, value), type);
+                return resultSets;
+            }, ResultSets.make());
+    }
+
+
+    function putFor(index: ConstraintIndex,
+                    definition: IndexDefinition,
                     doc: Document,
-                    indexItem: IndexItem) {
+                    item: IndexItem) {
 
-        const elForPath = getOn(indexDefinition.path, undefined)(doc);
+        const elForPath = getOn(definition.path, undefined)(doc);
 
-        switch(indexDefinition.type) {
+        switch(definition.type) {
             case 'exist':
                 addToIndex(
-                    constraintIndex.existIndex,
+                    index.existIndex,
                     doc,
-                    indexDefinition.path,
+                    definition.path,
                     isMissing(elForPath) ? 'UNKNOWN' : 'KNOWN',
-                    indexItem);
+                    item);
                 break;
 
             case 'match':
                 if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
-                addToIndex(constraintIndex.matchIndex, doc, indexDefinition.path, elForPath.toString(),
-                    indexItem);
+                addToIndex(index.matchIndex, doc, definition.path, elForPath.toString(),
+                    item);
                 break;
 
             case 'contain':
                 if (!elForPath || !Array.isArray(elForPath)) break;
                 for (let target of elForPath) {
-                    addToIndex(constraintIndex.containIndex,
-                        doc, indexDefinition.path, target, indexItem);
+                    addToIndex(index.containIndex,
+                        doc, definition.path, target, item);
                 }
                 break;
         }
@@ -180,43 +197,44 @@ export module ConstraintIndex {
     }
 
 
-    function setUp(constraintIndex: ConstraintIndex) {
+    function setUp(index: ConstraintIndex) {
 
-        constraintIndex.containIndex = {};
-        constraintIndex.matchIndex = {};
-        constraintIndex.existIndex = {};
+        index.containIndex = {};
+        index.matchIndex = {};
+        index.existIndex = {};
 
-        for (let indexDefinition of Object.values(constraintIndex.indexDefinitions)) {
-            getIndex(constraintIndex, indexDefinition)[indexDefinition.path] = {};
+        for (let indexDefinition of Object.values(index.indexDefinitions)) {
+            getIndex(index, indexDefinition)[indexDefinition.path] = {};
         }
     }
 
 
-    function getIndex(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition): any {
+    function getIndex(index: ConstraintIndex,
+                      definition: IndexDefinition): any {
 
-        switch (indexDefinition.type) {
-            case 'contain': return constraintIndex.containIndex;
-            case 'match':   return constraintIndex.matchIndex;
-            case 'exist':   return constraintIndex.existIndex;
+        switch (definition.type) {
+            case 'contain': return index.containIndex;
+            case 'match':   return index.matchIndex;
+            case 'exist':   return index.existIndex;
         }
     }
 
 
-    function getIndexItems(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+    function getIndexItems(index: ConstraintIndex, definition: IndexDefinition,
                            matchTerms: string|string[]): { [id: string]: IndexItem }|undefined {
 
         return Array.isArray(matchTerms)
-            ? getIndexItemsForMultipleMatchTerms(constraintIndex, indexDefinition, matchTerms)
-            : getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerms);
+            ? getIndexItemsForMultipleMatchTerms(index, definition, matchTerms)
+            : getIndexItemsForSingleMatchTerm(index, definition, matchTerms);
     }
 
 
-    function getIndexItemsForMultipleMatchTerms(constraintIndex: ConstraintIndex,
-                                                indexDefinition: IndexDefinition,
+    function getIndexItemsForMultipleMatchTerms(index: ConstraintIndex,
+                                                definition: IndexDefinition,
                                                 matchTerms: string[]): { [id: string]: IndexItem }|undefined {
 
         const result = matchTerms.map(matchTerm => {
-            return getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+            return getIndexItemsForSingleMatchTerm(index, definition, matchTerm);
         }).reduce((result: any, indexItems) => {
             if (!indexItems) return result;
             Object.keys(indexItems).forEach(id => result[id] = indexItems[id]);
@@ -227,14 +245,15 @@ export module ConstraintIndex {
     }
 
 
-    function getIndexItemsForSingleMatchTerm(constraintIndex: ConstraintIndex,
-                                             indexDefinition: IndexDefinition,
+    function getIndexItemsForSingleMatchTerm(index: ConstraintIndex,
+                                             definition: IndexDefinition,
                                              matchTerm: string): { [id: string]: IndexItem }|undefined {
 
-        return getIndex(constraintIndex, indexDefinition)[indexDefinition.path][matchTerm];
+        return getIndex(index, definition)[definition.path][matchTerm];
     }
 
 
+    // TODO review, public?
     export function getIndexType(field: FieldDefinition): string {
 
         switch (field.inputType) {
@@ -296,16 +315,16 @@ export module ConstraintIndex {
     }
 
 
-    function getDescendants(constraintIndex: ConstraintIndex, indexDefinition: IndexDefinition,
+    function getDescendants(index: ConstraintIndex, definition: IndexDefinition,
                             matchTerm: string): Array<IndexItem> {
 
         const result: { [id: string]: IndexItem }|undefined
-            = getIndexItemsForSingleMatchTerm(constraintIndex, indexDefinition, matchTerm);
+            = getIndexItemsForSingleMatchTerm(index, definition, matchTerm);
 
         const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
         const descendantIndexItems: Array<IndexItem> =
             indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => {
-                return items.concat(getDescendants(constraintIndex, indexDefinition, item.id))
+                return items.concat(getDescendants(index, definition, item.id))
             }, []);
 
         return indexItems.concat(descendantIndexItems);
@@ -345,7 +364,7 @@ export module ConstraintIndex {
 
     function combine(indexDefinitionsFromConfiguration
                                : Array<{ name: string, indexDefinition: IndexDefinition }>,
-                           defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
+                     defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
 
         return indexDefinitionsFromConfiguration.reduce((result: any, definition: any) => {
             result[definition.name] = definition.indexDefinition;
@@ -369,9 +388,9 @@ export module ConstraintIndex {
 
     function addToIndex(index: any,
                         doc: Document, path: string, target: string,
-                        indexItem: IndexItem) {
+                        item: IndexItem) {
 
         if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id as any] = indexItem;
+        index[path][target][doc.resource.id as any] = item;
     }
 }

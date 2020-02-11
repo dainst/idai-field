@@ -1,12 +1,8 @@
 import {to} from 'tsfun';
-import {Query, FieldDocument} from 'idai-components-2';
+import {Query} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
-import {DocumentCache} from '../../../../../app/core/datastore/cached/document-cache';
-import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
-import {PouchdbDatastore} from '../../../../../app/core/datastore/pouchdb/pouchdb-datastore';
-import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
 class IdGenerator {
@@ -22,43 +18,14 @@ class IdGenerator {
  */
 describe('IndexFacade', () => {
 
-    async function createPouchdbDatastore(dbname, projectConfiguration) {
-
-        const {createdIndexFacade} =
-            IndexerConfiguration.configureIndexers(projectConfiguration);
-
-        const documentCache = new DocumentCache<FieldDocument>();
-        const pouchdbManager = new PouchdbManager();
-
-        const datastore = new PouchdbDatastore(
-            pouchdbManager.getDbProxy(),
-            new IdGenerator(),
-            false);
-        await pouchdbManager.loadProjectDb(dbname, undefined);
-
-        return { datastore, documentCache, createdIndexFacade };
-    }
-
-
-    async function init(projectConfiguration: ProjectConfiguration) {
-
-        const { datastore, documentCache, createdIndexFacade: indexFacade } =
-            await createPouchdbDatastore('testdb', projectConfiguration);
-
-        return { datastore, documentCache, indexFacade };
-    }
-
-
     let indexFacade: IndexFacade;
 
 
-    beforeEach(async done => {
+    beforeEach(() => {
 
-        await init(createMockProjectConfiguration());
         const {createdIndexFacade} =
             IndexerConfiguration.configureIndexers(createMockProjectConfiguration());
         indexFacade = createdIndexFacade;
-        done();
     });
 
 

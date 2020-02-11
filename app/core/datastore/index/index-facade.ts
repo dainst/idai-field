@@ -131,7 +131,8 @@ export class IndexFacade {
 
     private static performFulltext(fulltextIndex: FulltextIndex,
                                    query: Query,
-                                   resultSets: ResultSets): ResultSets {
+                                   resultSets: ResultSets)
+        : ResultSets {
 
         const q = !query.q || query.q.trim() === '' ? '*' : query.q;
         ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));

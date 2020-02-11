@@ -6,14 +6,13 @@ import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/messages/m';
-import {SynchronizationStatus} from './synchronization-status';
+import {SyncService} from '../sync/sync-service';
 import {Name} from '../constants';
 import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
-import { SyncStatus } from '../datastore/pouchdb/sync-process';
 
 const {remote, ipcRenderer} = require('electron');
 
@@ -36,8 +35,6 @@ export class SettingsService {
 
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
-    private currentSyncUrl = '';
-    private currentSyncTimeout: any;
 
 
     constructor(private imagestore: Imagestore,
@@ -45,7 +42,7 @@ export class SettingsService {
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private imageConverter: ImageConverter,
-                private synchronizationStatus: SynchronizationStatus) {
+                private synchronizationService: SyncService) {
     }
 
 
@@ -79,7 +76,7 @@ export class SettingsService {
             this.getSelectedProject(),
             new FieldSampleDataLoader(this.imageConverter, this.settings.imagestorePath, this.settings.locale));
 
-        if (this.settings.isSyncActive) await this.startSync_();
+        if (this.settings.isSyncActive) await this.setupSync();
         await this.createProjectDocumentIfMissing();
     }
 
@@ -123,6 +120,24 @@ export class SettingsService {
         }
     }
 
+    public async setupSync() {
+
+        this.synchronizationService.stopSync();
+
+        if (!this.settings.isSyncActive
+                || !this.settings.dbs
+                || !(this.settings.dbs.length > 0))
+            return;
+
+        const currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
+        if (!currentSyncUrl) return;
+        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return;
+
+        this.synchronizationService.setSyncTarget(currentSyncUrl);
+        this.synchronizationService.setProject(this.getSelectedProject());
+        return this.synchronizationService.startSync();
+    }
+
 
     public async addProject(project: Name) {
 
@@ -133,12 +148,16 @@ export class SettingsService {
 
     public async selectProject(project: Name) {
 
+        this.synchronizationService.stopSync();
+
         this.settings.dbs = unique([project].concat(this.settings.dbs));
         await this.settingsSerializer.store(this.settings);
     }
 
 
     public async deleteProject(project: Name) {
+        
+        this.synchronizationService.stopSync();
 
         await this.pouchdbManager.destroyDb(project);
         this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
@@ -147,6 +166,8 @@ export class SettingsService {
 
 
     public async createProject(project: Name, destroyBeforeCreate: boolean) {
+        
+        this.synchronizationService.stopSync();
 
         await this.selectProject(project);
 
@@ -184,52 +205,6 @@ export class SettingsService {
                 }
             })
             .then(() => this.settingsSerializer.store(this.settings));
-    }
-
-
-    public startSync() {
-
-        this.stopSync();
-
-        if (!this.settings.isSyncActive
-                || !this.settings.dbs
-                || !(this.settings.dbs.length > 0))
-            return Promise.resolve();
-
-        return new Promise<any>(resolve => {
-                setTimeout(() => {
-                    this.startSync_().then(() => resolve());
-                }, 1000);
-            });
-    }
-
-
-    public stopSync() {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this.pouchdbManager.stopSync();
-        this.synchronizationStatus.setStatus(SyncStatus.Offline);
-    }
-
-
-    private async startSync_(): Promise<any> {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-
-        this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
-        if (!this.currentSyncUrl) return Promise.resolve();
-        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
-
-        const syncProcess = await this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject());
-        syncProcess.observe.subscribe(
-            status => this.synchronizationStatus.setStatus(status),
-            err => {
-                this.synchronizationStatus.setStatus(err)
-                syncProcess.cancel();
-                this.currentSyncTimeout = setTimeout(() => this.startSync_(), 5000); // retry
-            },
-            () => this.synchronizationStatus.setStatus(SyncStatus.Offline)
-        );
     }
 
 

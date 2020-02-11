@@ -4,10 +4,12 @@ export interface SyncProcess {
 
     url: string;
     cancel(): void;
-    observe: Observable<any>;
+    observe: Observable<SyncStatus>;
 }
 
+
 export enum SyncStatus {
+
     Offline = "OFFLINE",
     Pushing = "PUSHING",
     Pulling = "PULLING",

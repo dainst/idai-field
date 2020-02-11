@@ -20,6 +20,7 @@ export class TypeRowComponent implements OnChanges {
 
     @Input() document: FieldDocument;
 
+    public numberOfLinkedResources: number = -1;
     public linkedImagesIds: string[];
 
 
@@ -33,12 +34,26 @@ export class TypeRowComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        await this.updateLinkedImages(this.document);
+        this.numberOfLinkedResources = await this.getNumberOfLinkedResources();
+        this.linkedImagesIds = await this.getLinkedImagesIds();
     }
 
 
-    private async updateLinkedImages(document: FieldDocument) {
+    private getLinkedImagesIds(): Promise<string[]> {
 
-        this.linkedImagesIds = await TypeImagesUtil.getIdsOfLinkedImages(document, this.fieldDatastore);
+        return TypeImagesUtil.getIdsOfLinkedImages(this.document, this.fieldDatastore);
+    }
+
+
+    private async getNumberOfLinkedResources(): Promise<number> {
+
+        const relationName: string = this.document.resource.type === 'TypeCatalog'
+            ? 'liesWithin'
+            : 'isInstanceOf';
+
+        const constraints: { [constraintName: string]: string } = {};
+        constraints[relationName + ':contain'] = this.document.resource.id;
+
+        return (await this.fieldDatastore.find({ q: '', constraints: constraints })).totalCount;
     }
 }

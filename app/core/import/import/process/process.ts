@@ -72,7 +72,7 @@ export async function process(documents: Array<Document>,
                               validator: ImportValidator,
                               operationTypeNames: string[],
                               get: Get,
-                              inverseRelationsMap: {[_: string]: string}, // TODO move param one up
+                              inverseRelationsMap: {[_: string]: string},
                               importOptions : ImportOptions = {})
         : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 

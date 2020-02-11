@@ -27,20 +27,20 @@ export module FulltextIndex {
     const tokenizationPattern: RegExp = /[ -]/;
 
 
-    export const clear = (fulltextIndex: FulltextIndex) => setUp(fulltextIndex);
+    export const clear = (index: FulltextIndex) => setUp(index);
 
 
-    export function put(fulltextIndex: FulltextIndex,
+    export function put(index: FulltextIndex,
                         document: Document,
                         indexItem: IndexItem,
                         typesMap: { [typeName: string]: IdaiType },
                         skipRemoval: boolean = false) {
 
-        if (!skipRemoval) remove(fulltextIndex, document);
-        if (!fulltextIndex[document.resource.type]) {
-            fulltextIndex[document.resource.type] = {'*' : { } };
+        if (!skipRemoval) remove(index, document);
+        if (!index[document.resource.type]) {
+            index[document.resource.type] = {'*' : { } };
         }
-        fulltextIndex[document.resource.type]['*'][document.resource.id] = indexItem;
+        index[document.resource.type]['*'][document.resource.id] = indexItem;
 
         flow(
             getFieldsToIndex(typesMap, document.resource.type),
@@ -50,7 +50,7 @@ export module FulltextIndex {
             flatMap(split(tokenizationPattern)),
             map(toLowerCase),
             map(toArray),
-            forEach(indexToken(fulltextIndex, document, indexItem)));
+            forEach(indexToken(index, document, indexItem)));
     }
 
 
@@ -64,7 +64,7 @@ export module FulltextIndex {
 
 
     /**
-     * @param fulltextIndex
+     * @param index
      * @param s search string, which gets tokenized, so that the result will include
      *   search hits for any of the tokens. If s is "hello world", all items which are
      *   indexed under either "hello" or "world" will be included in the result. The
@@ -72,25 +72,25 @@ export module FulltextIndex {
      * @param types if undefined, searches in all types. If defined, only search hits
      *   indexed under the specified types will be included in the results.
      */
-    export function get(fulltextIndex: FulltextIndex,
+    export function get(index: FulltextIndex,
                         s: string,
                         types: string[]|undefined): Array<IndexItem> {
 
-        if (isEmpty(fulltextIndex)) return [];
+        if (isEmpty(index)) return [];
 
         const resultSets = s
             .split(tokenizationPattern)
             .filter(isNot(empty))
-            .reduce(getFromIndex(fulltextIndex, types), ResultSets.make());
+            .reduce(getFromIndex(index, types), ResultSets.make());
 
         return ResultSets.collapse(resultSets) as Array<IndexItem>;
     }
 
 
-    export function setUp(fulltextIndex: FulltextIndex) {
+    export function setUp(index: FulltextIndex) {
 
-        fulltextIndex = {};
-        return fulltextIndex;
+        index = {};
+        return index;
     }
 
 

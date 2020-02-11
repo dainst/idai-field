@@ -112,7 +112,7 @@ export module FulltextIndex {
     }
 
 
-    function indexToken(index: FulltextIndex, document: Document, indexItem: IndexItem) {
+    function indexToken(index: FulltextIndex, document: Document, item: IndexItem) {
 
         return (tokenAsCharArray: string[]) => {
 
@@ -121,7 +121,7 @@ export module FulltextIndex {
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
                 if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
-                typeIndex[accumulator][document.resource.id] = indexItem;
+                typeIndex[accumulator][document.resource.id] = item;
                 return accumulator;
             }, '');
         }

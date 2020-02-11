@@ -13,6 +13,7 @@ export class SyncService {
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;
     private project: string;
+    private password: string = "";
     private currentSyncTimeout: any;
 
 
@@ -32,6 +33,9 @@ export class SyncService {
     
     public setProject = (project: string) => this.project = project;
 
+    
+    public setPassword = (password: string) => this.password = password;
+
 
     public async startSync() {
 
@@ -39,6 +43,7 @@ export class SyncService {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
 
+        const url = SyncService.generateSyncUrl(this.syncTarget, this.project, this.password);
         const syncProcess = await this.pouchdbManager.setupSync(this.syncTarget, this.project);
         syncProcess.observe.subscribe(
             status => this.setStatus(status),
@@ -56,5 +61,16 @@ export class SyncService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.setStatus(SyncStatus.Offline);
+    }
+
+
+    private static generateSyncUrl(syncTarget: string, project: string, password: string) {
+
+        if (syncTarget.indexOf('http') == -1) syncTarget = 'http://' + syncTarget;
+
+        return !password
+            ? syncTarget
+            : syncTarget.replace(/(https?):\/\//, '$1://' +
+                project + ':' + password + '@');
     }
 }

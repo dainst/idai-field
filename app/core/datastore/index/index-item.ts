@@ -1,6 +1,6 @@
 import {Action, Document} from 'idai-components-2';
 
-type TypeName = string;
+export type TypeName = string;
 
 export interface IndexItem {
 

@@ -1,7 +1,7 @@
 import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove, val, map,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
 import {Query} from 'idai-components-2';
-import {IndexItem, TypeResourceIndexItem} from '../index/index-item';
+import {IndexItem, TypeName, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
 import {doPaired} from '../../util/utils';
@@ -13,6 +13,7 @@ import {doPaired} from '../../util/utils';
 
 const ID = 'id';
 const IDENTIFIER = 'identifier';
+const INSTANCES = 'instances';
 const MATCH_TYPE = 'matchType';
 
 type Percentage = number;
@@ -69,15 +70,14 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
 }
 
 
-function calcPercentage(rankTypesFor: Name) {
-
-    return (indexItem: TypeResourceIndexItem) => {
-
-        const instances = indexItem.instances;
-        if (isUndefinedOrEmpty(instances)) return 0;
-        return count(is(rankTypesFor))(instances) * 100 / size(instances);
-    };
-}
+const calcPercentage = (typeToMatch: Name)
+    : (indexItem: TypeResourceIndexItem) => number =>
+    compose(
+        to(INSTANCES),
+        cond(isUndefinedOrEmpty,
+            val(0),
+            (instances: { [resourceId: string]: TypeName }) =>
+                count(is(typeToMatch))(instances) * 100 / size(instances)));
 
 
 const handleExactMatch = (q: string)

@@ -24,7 +24,7 @@ export class TypeRowComponent implements OnChanges {
     public linkedImagesIds: string[];
 
 
-    constructor(private fieldDatastore: FieldReadDatastore,
+    constructor(private datastore: FieldReadDatastore,
                 private resourcesComponent: ResourcesComponent) {}
 
 
@@ -41,7 +41,7 @@ export class TypeRowComponent implements OnChanges {
 
     private getLinkedImagesIds(): Promise<string[]> {
 
-        return TypeImagesUtil.getIdsOfLinkedImages(this.document, this.fieldDatastore);
+        return TypeImagesUtil.getIdsOfLinkedImages(this.document, this.datastore);
     }
 
 
@@ -54,6 +54,6 @@ export class TypeRowComponent implements OnChanges {
         const constraints: { [constraintName: string]: string } = {};
         constraints[relationName + ':contain'] = this.document.resource.id;
 
-        return (await this.fieldDatastore.find({ q: '', constraints: constraints })).totalCount;
+        return (await this.datastore.find({ q: '', constraints: constraints })).totalCount;
     }
 }

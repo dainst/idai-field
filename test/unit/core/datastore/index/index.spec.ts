@@ -39,33 +39,30 @@ describe('Index', () => {
     });
 
 
-    it('should sort by last modified descending', async done => {
+    // TODO review
+    it('should sort by last modified descending', () => {
 
         const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
         const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
 
-        setTimeout(() => {
+        const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
+        doc2.resource.relations['isRecordedIn'] = ['id1'];
 
-            const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
-            doc2.resource.relations['isRecordedIn'] = ['id1'];
+        const q: Query = {
+            q: 'blub',
+            constraints: {
+                'isRecordedIn:contain': 'id1'
+            }
+        };
 
-            const q: Query = {
-                q: 'blub',
-                constraints: {
-                    'isRecordedIn:contain': 'id1'
-                }
-            };
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+        indexFacade.put(doc3);
 
-            indexFacade.put(doc1);
-            indexFacade.put(doc2);
-            indexFacade.put(doc3);
-
-            const result = indexFacade.find(q).map(to('id'));
-            expect(result.length).toBe(2);
-            expect(result[0]).toBe('id2');
-            expect(result[1]).toBe('id3');
-            done();
-        }, 100)
+        const result = indexFacade.find(q).map(to('id'));
+        expect(result.length).toBe(2);
+        expect(result[0]).toBe('id2');
+        expect(result[1]).toBe('id3');
     });
 });

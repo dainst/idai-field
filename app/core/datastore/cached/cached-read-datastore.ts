@@ -6,7 +6,7 @@ import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {IndexItem} from '../index/index-item';
 import {TypeUtility} from '../../model/type-utility';
-import {getSortedIds} from './get-sorted-ids';
+import {getSortedIds} from '../index/get-sorted-ids';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

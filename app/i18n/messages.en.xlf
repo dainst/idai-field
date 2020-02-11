@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
         <source>Es werden Daten hochgeladen</source>
-        <target state="new">Es werden Daten hochgeladen</target>
+        <target state="translated">Upload in progress</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">6</context>
@@ -932,7 +932,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
         <source>Es werden Daten heruntergeladen</source>
-        <target state="new">Es werden Daten heruntergeladen</target>
+        <target state="translated">Download in progress</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">14</context>
@@ -940,76 +940,58 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
         <source>Synchronisation ist deaktiviert</source>
-        <target state="new">Synchronisation ist deaktiviert</target>
+        <target state="translated">Synchronization is disabled</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
-        <source>Daten sind synchron</source>
-        <target state="new">Daten sind synchron</target>
+        <source>Synchronisation abgeschlossen</source>
+        <target state="translated">Synchronization completed</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
-        <source>
-            Synchronisation fehlgeschlagen!</source>
-        <target state="new">
-            Synchronisation fehlgeschlagen!</target>
+        <source>Synchronisation fehlgeschlagen</source>
+        <target state="translated">Synchronization failed</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
-        <source>
-            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
-            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
-            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
-        </source>
-        <target state="new">
-            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
-            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
-            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
-        </target>
+        <source>Stellen sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems</source>
+        <target state="translated">Make sure that the specified address is correct and that there is a network connection to the synchronization target. If necessary, also check the firewall settings of your system and the target system</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
-        <source>
-            Nutzername oder Passwort falsch.
-        </source>
-        <target state="new">
-            Nutzername oder Passwort falsch.
-        </target>
+        <source>Nutzername oder Passwort falsch</source>
+        <target state="translated">Wrong username or password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
-        <source>
-            Sie besitzen nicht die nötigen Rechte.
-        </source>
-        <target state="new">
-            Sie besitzen nicht die nötigen Rechte.
-        </target>
+        <source>Sie besitzen nicht die nötigen Rechte</source>
+        <target state="translated">Permission denied</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
@@ -1022,7 +1004,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart.</target>
+        <target state="translated">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">13</context>

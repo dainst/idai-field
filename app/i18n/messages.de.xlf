@@ -1405,69 +1405,51 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
-        <source>Daten sind synchron</source>
-        <target state="final">Daten sind synchron</target>
+        <source>Synchronisation abgeschlossen</source>
+        <target state="final">Synchronisation abgeschlossen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
-        <source>
-            Synchronisation fehlgeschlagen!</source>
-        <target state="final">
-            Synchronisation fehlgeschlagen!</target>
+        <source>Synchronisation fehlgeschlagen</source>
+        <target state="final">Synchronisation fehlgeschlagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
-        <source>
-            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
-            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
-            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
-        </source>
-        <target state="final">
-            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
-            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
-            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
-        </target>
+        <source>Stellen sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems</source>
+        <target state="final">Stellen sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
-        <source>
-            Nutzername oder Passwort falsch.
-        </source>
-        <target state="final">
-            Nutzername oder Passwort falsch.
-        </target>
+        <source>Nutzername oder Passwort falsch</source>
+        <target state="final">Nutzername oder Passwort falsch</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
-        <source>
-            Sie besitzen nicht die nötigen Rechte.
-        </source>
-        <target state="final">
-            Sie besitzen nicht die nötigen Rechte.
-        </target>
+        <source>Sie besitzen nicht die nötigen Rechte</source>
+        <target state="final">Sie besitzen nicht die nötigen Rechte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">

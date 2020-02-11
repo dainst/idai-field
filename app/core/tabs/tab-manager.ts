@@ -2,7 +2,7 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
-import {Index} from '../datastore/index/index';
+import {IndexFacade} from '../datastore/index/index-facade';
 import {StateSerializer} from '../common/state-serializer';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 
@@ -18,7 +18,7 @@ export class TabManager {
     private url: string = '';
 
 
-    constructor(indexFacade: Index,
+    constructor(indexFacade: IndexFacade,
                 private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
                 private datastore: FieldReadDatastore,

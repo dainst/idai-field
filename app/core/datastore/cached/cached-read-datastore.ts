@@ -3,7 +3,7 @@ import {DatastoreErrors, Document, FindResult, Query, ReadDatastore} from 'idai-
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {Index} from '../index/index';
+import {IndexFacade} from '../index/index-facade';
 import {TypeUtility} from '../../model/type-utility';
 
 
@@ -36,7 +36,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     public suppressWait = false;
 
     constructor(protected datastore: PouchdbDatastore,
-                protected indexFacade: Index,
+                protected indexFacade: IndexFacade,
                 protected documentCache: DocumentCache<T>,
                 protected typeConverter: TypeConverter<T>,
                 protected typeClass: string) { }

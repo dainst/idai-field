@@ -5,7 +5,7 @@ import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {UsernameProvider} from '../../../core/settings/username-provider';
-import {Index} from '../../../core/datastore/index/index';
+import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
@@ -24,7 +24,7 @@ export class ResourceDeletion {
                 private typeUtility: TypeUtility,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,
-                private indexFacade: Index) {}
+                private indexFacade: IndexFacade) {}
 
 
     public async delete(document: FieldDocument) {

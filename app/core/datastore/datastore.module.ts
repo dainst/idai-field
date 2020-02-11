@@ -13,7 +13,7 @@ import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {FieldTypeConverter} from './field/field-type-converter';
 import {ChangesStream} from './changes/changes-stream';
-import {Index} from './index/index';
+import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './pouchdb/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
 import {FeatureReadDatastore} from './field/feature-read-datastore';
@@ -64,13 +64,13 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         {
             provide: DocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 indexFacade: Index,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<Document>,
                                  documentConverter: TypeConverter<Document>,
             ): DocumentDatastore {
                 return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, Index, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
@@ -84,13 +84,13 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         {
             provide: FieldDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 indexFacade: Index,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<FieldDocument>,
                                  documentConverter: TypeConverter<FieldDocument>
             ): FieldDatastore {
                 return new FieldDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, Index, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: FieldReadDatastore, useExisting: FieldDatastore }, // read-only version of it
 
@@ -102,13 +102,13 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         {
             provide: ImageDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 indexFacade: Index,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<ImageDocument>,
                                  documentConverter: TypeConverter<ImageDocument>,
             ): ImageDatastore {
                 return new ImageDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
-            deps: [PouchdbDatastore, Index, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: ImageReadDatastore, useExisting: ImageDatastore }, // read-only version of it
 
@@ -120,13 +120,13 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         {
             provide: FeatureDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 indexFacade: Index,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<FeatureDocument>,
                                  documentConverter: TypeConverter<FeatureDocument>,
             ): FeatureDatastore {
                 return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, Index, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: FeatureReadDatastore, useExisting: FeatureDatastore }, // read-only version of it
     ]

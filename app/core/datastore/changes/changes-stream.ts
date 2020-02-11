@@ -5,7 +5,7 @@ import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {TypeConverter} from '../cached/type-converter';
-import {Index} from '../index/index';
+import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
 import {ResourceId, RevisionId} from '../../constants';
@@ -32,7 +32,7 @@ export class ChangesStream {
 
 
     constructor(private datastore: PouchdbDatastore,
-                private indexFacade: Index,
+                private indexFacade: IndexFacade,
                 private documentCache: DocumentCache<Document>,
                 private typeConverter: TypeConverter<Document>,
                 private settingsService: SettingsService) {

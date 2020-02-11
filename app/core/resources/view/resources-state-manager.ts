@@ -7,7 +7,7 @@ import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../util/observer-util';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
-import {Index} from '../../datastore/index/index';
+import {IndexFacade} from '../../datastore/index/index-facade';
 import {TypeUtility} from '../../model/type-utility';
 import {TabManager} from '../../tabs/tab-manager';
 
@@ -44,7 +44,7 @@ export class ResourcesStateManager {
 
     constructor(
         private datastore: FieldReadDatastore,
-        private indexFacade: Index,
+        private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,

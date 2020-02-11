@@ -3,7 +3,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
 import {TypeConverter} from './type-converter';
-import {Index} from "../index";
+import {IndexFacade} from "../index/index-facade";
 
 
 /**
@@ -20,7 +20,7 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
     constructor(
         datastore: PouchdbDatastore,
-        indexFacade: Index,
+        indexFacade: IndexFacade,
         documentCache: DocumentCache<T>,
         typeConverter: TypeConverter<T>,
         typeClass: string) {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import * as express from 'express';
 import * as PouchDB from 'pouchdb';
-import {Index} from '../index/index';
+import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
@@ -171,7 +171,7 @@ export class PouchdbManager {
     }
 
 
-    public async reindex(indexFacade: Index) {
+    public async reindex(indexFacade: IndexFacade) {
 
         await indexFacade.clear();
         await this.fetchAll((docs: Array<any>) => indexFacade.putMultiple(docs));

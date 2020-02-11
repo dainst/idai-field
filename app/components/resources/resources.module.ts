@@ -30,7 +30,7 @@ import {Loading} from '../widgets/loading';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
-import {Index} from '../../core/datastore/index/index';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './widgets/context-menu.component';
@@ -109,7 +109,7 @@ const remote = require('electron').remote;
         {
             provide: ResourcesStateManager,
             useFactory: (datastore: FieldReadDatastore,
-                         indexFacade: Index,
+                         indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService,
@@ -130,7 +130,7 @@ const remote = require('electron').remote;
                 );
             },
             deps: [
-                FieldReadDatastore, Index, StateSerializer, ProjectConfiguration, SettingsService,
+                FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
                 TypeUtility, TabManager
             ]
         },
@@ -142,7 +142,7 @@ const remote = require('electron').remote;
                 changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
-                indexFacade: Index
+                indexFacade: IndexFacade
             ) {
                 return new ViewFacade(
                     projectConfiguration,
@@ -159,7 +159,7 @@ const remote = require('electron').remote;
                 ChangesStream,
                 ResourcesStateManager,
                 Loading,
-                Index
+                IndexFacade
             ]
         },
     ],

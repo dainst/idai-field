@@ -6,7 +6,7 @@ import {Document} from 'idai-components-2';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
 import {DocumentCache} from './datastore/cached/document-cache';
 import {ImagesState} from './images/overview/view/images-state';
-import {Index} from './datastore/index/index';
+import {IndexFacade} from './datastore/index/index-facade';
 import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
@@ -24,7 +24,7 @@ export class AppController {
         private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
         private imagesState: ImagesState,
-        private indexFacade: Index,
+        private indexFacade: IndexFacade,
         private tabManager: TabManager) {
     }
     

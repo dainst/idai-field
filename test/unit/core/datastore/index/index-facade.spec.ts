@@ -1,5 +1,5 @@
 import {Query} from 'idai-components-2';
-import {Index} from '../../../../../app/core/datastore/index/index';
+import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
@@ -10,9 +10,9 @@ import {createMockProjectConfiguration} from './helpers';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-describe('Index', () => {
+describe('IndexFacade', () => {
 
-    let indexFacade: Index;
+    let indexFacade: IndexFacade;
 
 
     beforeEach(() => {

@@ -5,7 +5,7 @@ import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
-import {Index} from '../../datastore/index/index';
+import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 /**
@@ -34,7 +34,7 @@ export class ViewFacade {
         private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
-        private indexFacade: Index
+        private indexFacade: IndexFacade
     ) {
         this.documentsManager = new DocumentsManager(
             datastore,

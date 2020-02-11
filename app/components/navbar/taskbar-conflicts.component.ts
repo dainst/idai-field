@@ -2,7 +2,7 @@ import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {Index} from '../../core/datastore/index/index';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {NavbarComponent} from './navbar.component';
 
 
@@ -29,7 +29,7 @@ export class TaskbarConflictsComponent {
                 private elementRef: ElementRef,
                 private renderer: Renderer2,
                 private datastore: DocumentReadDatastore,
-                private indexFacade: Index,
+                private indexFacade: IndexFacade,
                 private navbarComponent: NavbarComponent) {
 
         this.fetchConflicts();

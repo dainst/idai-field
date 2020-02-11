@@ -15,7 +15,7 @@ const INSTANCE_OF = 'isInstanceOf';
 /**
  * @author Daniel de Oliveira
  */
-export class Index {
+export class IndexFacade {
 
     private observers: Array<Observer<Document>> = [];
 
@@ -94,9 +94,9 @@ export class Index {
         if (!item) return;
 
         if (document.resource.type === 'Type') {
-            Index.updateTypeItem(item as TypeResourceIndexItem);
+            IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
-            Index.updateAssociatedTypeItem(document, this.indexItems);
+            IndexFacade.updateAssociatedTypeItem(document, this.indexItems);
         }
 
         ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);

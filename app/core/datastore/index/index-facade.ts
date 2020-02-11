@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {separate, on, is} from 'tsfun';
+import {separate, on, is, keys} from 'tsfun';
 import {Constraint, Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -38,7 +38,7 @@ export class IndexFacade {
     public perform(query: Query): Array<IndexItem> {
 
         let resultSets = query.constraints ?
-            ConstraintIndex.performConstraints(this.constraintIndex, query.constraints) :
+            IndexFacade.performConstraints(this.constraintIndex, query.constraints) :
             ResultSets.make();
 
         resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
@@ -137,5 +137,18 @@ export class IndexFacade {
         ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));
 
         return resultSets;
+    }
+
+
+    private static performConstraints(constraintIndex: ConstraintIndex,
+                                      constraints: { [name: string]: Constraint|string|string[] })
+        : ResultSets {
+
+        return keys(constraints)
+            .reduce((resultSets, name: string) => {
+                const { type, value } = Constraint.convertTo(constraints[name]);
+                ResultSets.combine(resultSets, ConstraintIndex.get(constraintIndex, name, value), type);
+                return resultSets;
+            }, ResultSets.make());
     }
 }

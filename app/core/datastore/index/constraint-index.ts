@@ -1,10 +1,9 @@
-import {getOn, keys, to, values} from 'tsfun';
-import {Constraint, Document, Resource} from 'idai-components-2';
+import {getOn, to} from 'tsfun';
+import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
-import {ResultSets} from './result-sets';
 
 
 export interface IndexDefinition {
@@ -139,20 +138,6 @@ export module ConstraintIndex {
 
         return getDescendants(index, indexDefinition, matchTerm)
             .map(to('id'));
-    }
-
-
-    // TODO add test
-    export function performConstraints(index: ConstraintIndex,
-                                       constraints: { [name: string]: Constraint|string|string[] })
-        : ResultSets {
-
-        return keys(constraints)
-            .reduce((resultSets, name: string) => {
-                const { type, value } = Constraint.convertTo(constraints[name]);
-                ResultSets.combine(resultSets, ConstraintIndex.get(index, name, value), type);
-                return resultSets;
-            }, ResultSets.make());
     }
 
 

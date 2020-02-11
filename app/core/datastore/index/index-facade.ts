@@ -96,36 +96,51 @@ export class IndexFacade {
     }
 
 
-    private updateTypeItemIfNecessary(document: Document) {
-
-        if (!document.resource.relations[INSTANCE_OF]) return;
-
-        for (let target of document.resource.relations[INSTANCE_OF]) {
-            const typeItem = this.indexItems[target] as TypeResourceIndexItem;
-            if (typeItem) {
-                if (!typeItem.instances) typeItem.instances = {}; // TODO remove these relations on remove
-                typeItem.instances[target] = document.resource.type;
-            }
-        }
-    }
-
-
     private _put(document: Document,
                  skipRemoval: boolean,
                  notify: boolean) {
 
-        this.updateTypeItemIfNecessary(document);
+        const item = this.getIndexItem(document);
+        if (!item) return;
 
-        // TODO review: if we update a type document, we should not create an entirely new index item, but instead merge it with an existing one
-
-        const indexItem = IndexItem.from(document, this.showWarnings);
-        if (indexItem) {
-            this.indexItems[document.resource.id] = indexItem;
-            ConstraintIndex.put(this.constraintIndex, document, indexItem, skipRemoval);
-            FulltextIndex.put(this.fulltextIndex, document, indexItem, this.typesMap, skipRemoval);
+        if (document.resource.type === 'Type') {
+            IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
+        } else {
+            IndexFacade.updateAssociatedTypeItem(document, this.indexItems);
         }
 
+        ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);
+        FulltextIndex.put(this.fulltextIndex, document, item, this.typesMap, skipRemoval);
+
         if (notify) ObserverUtil.notify(this.observers, document);
+    }
+
+
+    private static updateAssociatedTypeItem(document: Document, items: { [resourceId: string]: IndexItem }) {
+
+        if (!document.resource.relations[INSTANCE_OF]) return;
+
+        for (let target of document.resource.relations[INSTANCE_OF]) {
+            const typeItem = items[target] as TypeResourceIndexItem;
+            if (typeItem) typeItem.instances[target] = document.resource.type; // TODO remove these relations on remove
+        }
+    }
+
+
+    private getIndexItem(document: Document) {
+
+        const existingItem = this.indexItems[document.resource.id];
+        const indexItem = existingItem !== undefined
+            ? existingItem
+            : IndexItem.from(document, this.showWarnings);
+        if (!existingItem && indexItem) this.indexItems[document.resource.id] = indexItem;
+        return indexItem;
+    }
+
+
+    private static updateTypeItem(item: TypeResourceIndexItem) {
+
+        if (!item.instances) item.instances = {};
     }
 
 

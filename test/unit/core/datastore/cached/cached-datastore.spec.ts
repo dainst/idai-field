@@ -203,20 +203,10 @@ describe('CachedDatastore', () => {
 
     it('should limit the number of documents returned on find', async done => {
 
-        await ds.create({ resource: {
-            id: '1',
-            relations: {}
-        } } as any, 'u');
+        await ds.create({ resource: { id: '1', relations: {}} } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {}} } as any, 'u');
 
-        await ds.create({ resource: {
-            id: '2',
-            relations: {}
-        } } as any, 'u');
-
-        mockIndexFacade.find.and.returnValues(['1', '2'
-            // { id: '1', identifier: 'eins' }, // TODO review
-            // { id: '2', identifier: 'zwei' }
-        ]);
+        mockIndexFacade.find.and.returnValues(['1', '2']);
 
         const { documents, totalCount } = await ds.find({ limit: 1 });
         expect(documents.length).toBe(1);
@@ -232,18 +222,13 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.find.and.returnValues(['3','1','2'
-            // { id: '1', identifier: 'eins' }, // TODO review
-            // { id: '2', identifier: 'zwei' },
-            // { id: '3', identifier: 'drei' }
-        ]);
+        mockIndexFacade.find.and.returnValues(['3','1','2']);
 
         const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(3);
         verifyIsFieldDocument(documents[0]);
 
-        // sorted order is 3, 1, 2, coresponding to drei, eins, zwei // TODO review
         expect(documents[0].resource.id).toBe('1');
         done();
     });

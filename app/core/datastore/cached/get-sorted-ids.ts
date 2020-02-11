@@ -26,9 +26,9 @@ type Percentage = number;
 export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
-    const rankEntries = (shouldRankTypes(query)
-        ? handleTypesForName(query.rankOptions[MATCH_TYPE])
-        : generateOrderedResultList);
+    const rankEntries = shouldRankTypes(query)
+        ? rankTypeResourceIndexItems(query.rankOptions[MATCH_TYPE])
+        : rankRegularIndexItems;
 
     const handleExactMatchIfQuerySaysSo =
         cond(
@@ -94,7 +94,7 @@ const handleExactMatch = (q: string)
         ([match, nonMatch]: any) => match.concat(nonMatch));
 
 
-const generateOrderedResultList
+const rankRegularIndexItems
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =
     sort((a: IndexItem, b: IndexItem) =>
         SortUtil.alnumCompare(a.identifier, b.identifier));
@@ -104,7 +104,7 @@ const generateOrderedResultList
  * For indexItems it calculates percentages based on how many
  * instances match the given type, and sorts according to the calculated percentages.
  */
-const handleTypesForName = (typeToMatch: Name)
+const rankTypeResourceIndexItems = (typeToMatch: Name)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
     doPaired(
         calcPercentage(typeToMatch),

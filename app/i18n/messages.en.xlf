@@ -972,7 +972,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
         <source>Stellen sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems</source>
-        <target state="translated">Make sure that the specified address is correct and that there is a network connection to the synchronization target. If necessary, also check the firewall settings of your system and the target system.</target>
+        <target state="translated">Make sure that the specified address is correct and that there is a network connection to the synchronization target. If necessary, also check the firewall settings of your system and the target system</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
           <context context-type="linenumber">31</context>
@@ -1004,7 +1004,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart.</target>
+        <target state="translated">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">13</context>

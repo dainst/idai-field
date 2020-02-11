@@ -80,16 +80,16 @@ function calcPercentage(rankTypesFor: Name) {
 }
 
 
-function handleExactMatch(q: string){
-
-    return compose(
+const handleExactMatch = (q: string)
+    : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
+     compose(
         separate(on(IDENTIFIER, is(q))),
         ([match, nonMatch]: any) => match.concat(nonMatch));
-}
 
 
-const generateOrderedResultList:
-    (indexItems: Array<IndexItem>) => Array<IndexItem> =
+
+const generateOrderedResultList
+    : (indexItems: Array<IndexItem>) => Array<IndexItem> =
     sort((a: IndexItem, b: IndexItem) =>
         SortUtil.alnumCompare(a.identifier, b.identifier));
 
@@ -98,8 +98,8 @@ const generateOrderedResultList:
  * For indexItems it calculates percentages based on how many
  * instances match the given type, and sorts according to the calculated percentages.
  */
-const handleTypesForName =
-    (typeToMatch: Name): (indexItems: Array<IndexItem>) => Array<IndexItem> =>
+const handleTypesForName = (typeToMatch: Name)
+    : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
     doPaired(
         calcPercentage(typeToMatch),
         sort(comparePercentages));

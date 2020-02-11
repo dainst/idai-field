@@ -1,4 +1,4 @@
-import {equal, is, isNot, on, Pair, to, sort, count, prepend, copy, flow, remove, val, map,
+import {equal, is, isNot, on, Pair, to, sort, count, flow, val, map,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeName, TypeResourceIndexItem} from '../index/index-item';

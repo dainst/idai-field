@@ -60,7 +60,7 @@ export class IndexFacade {
 
         ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
-        delete this.indexItems[document.resource.id]; // TODO test
+        delete this.indexItems[document.resource.id];
 
         ObserverUtil.notify(this.observers, document);
     }
@@ -70,7 +70,7 @@ export class IndexFacade {
 
         ConstraintIndex.clear(this.constraintIndex);
         FulltextIndex.clear(this.fulltextIndex);
-        // TODO clear index items
+        this.indexItems = {};
     }
 
 

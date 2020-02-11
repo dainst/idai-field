@@ -5,12 +5,6 @@ import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
 
 
-class IdGenerator {
-    public generateId() {
-        return Math.floor(Math.random() * 10000000).toString();
-    }
-}
-
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy

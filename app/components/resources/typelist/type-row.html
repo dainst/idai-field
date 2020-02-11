@@ -13,13 +13,23 @@
                            [alwaysShowInfoButtons]="true"></list-button-group>
     </div>
 
-    <div *ngIf="linkedImagesIds" class="badge badge-light">
-        <span *ngIf="linkedImagesIds.length > 1"
-              i18n="@@resources.typeList.linkedFinds">{{linkedImagesIds.length}} Funde</span>
-        <span *ngIf="linkedImagesIds.length === 1"
-              i18n="@@resources.typeList.oneFind">Ein Fund</span>
-        <span *ngIf="linkedImagesIds.length === 0"
-              i18n="@@resources.typeList.noLinkedFinds">Keine Funde</span>
+    <div *ngIf="numberOfLinkedResources > -1" class="badge badge-light">
+        <span *ngIf="document.resource.type === 'TypeCatalog'">
+            <span *ngIf="numberOfLinkedResources > 1"
+                  i18n="@@resources.typeList.linkedTypes">{{numberOfLinkedResources}} Typen</span>
+            <span *ngIf="numberOfLinkedResources === 1"
+                  i18n="@@resources.typeList.oneType">Ein Typ</span>
+            <span *ngIf="numberOfLinkedResources === 0"
+                  i18n="@@resources.typeList.noLinkedTypes">Keine Typen</span>
+        </span>
+        <span *ngIf="document.resource.type === 'Type'">
+            <span *ngIf="numberOfLinkedResources > 1"
+                  i18n="@@resources.typeList.linkedFinds">{{numberOfLinkedResources}} Funde</span>
+            <span *ngIf="numberOfLinkedResources === 1"
+                  i18n="@@resources.typeList.oneFind">Ein Fund</span>
+            <span *ngIf="numberOfLinkedResources === 0"
+                  i18n="@@resources.typeList.noLinkedFinds">Keine Funde</span>
+        </span>
     </div>
     <image-row [imageIds]="linkedImagesIds"></image-row>
 </div>

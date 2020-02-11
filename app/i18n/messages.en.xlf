@@ -1192,7 +1192,7 @@
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
         <source>Löschen</source>
-        <target state="translated">Delete</target>
+        <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -1872,12 +1872,36 @@
           <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.typeList.linkedFinds" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{linkedImagesIds.length}}"/> Funde</source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{linkedImagesIds.length}}"/> finds</target>
+      <trans-unit id="resources.typeList.linkedTypes" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Typen</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> types</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeList.oneType" datatype="html">
+        <source>Ein Typ</source>
+        <target state="final">One type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeList.noLinkedTypes" datatype="html">
+        <source>Keine Typen</source>
+        <target state="final">No types</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeList.linkedFinds" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Funde</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> finds</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneFind" datatype="html">
@@ -1885,15 +1909,15 @@
         <target state="final">One find</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
         <source>Keine Funde</source>
-        <target state="translated">No finds</target>
+        <target state="final">No finds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">

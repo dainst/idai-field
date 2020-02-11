@@ -42,8 +42,7 @@ describe('IndexFacade', () => {
     });
 
 
-    // TODO review
-    it('should sort by last modified descending', () => {
+    it('should sort by identifier ascending', () => {
 
         const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
         const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');

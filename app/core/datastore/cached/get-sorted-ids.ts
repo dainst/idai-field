@@ -4,7 +4,7 @@ import {Query} from 'idai-components-2';
 import {IndexItem, TypeName, TypeResourceIndexItem} from '../index/index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
-import {doPaired} from '../../util/utils';
+import {doPaired, tuplify} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -76,8 +76,9 @@ const calcPercentage = (typeToMatch: Name)
         to(INSTANCES),
         cond(isUndefinedOrEmpty,
             val(0),
-            (instances: { [resourceId: string]: TypeName }) =>
-                count(is(typeToMatch))(instances) * 100 / size(instances)));
+            compose(
+                tuplify(count(is(typeToMatch)), size),
+                ([numMatching, numTotal]: any) => numMatching * 100 / numTotal)));
 
 
 /**
@@ -91,7 +92,6 @@ const handleExactMatch = (q: string)
      compose(
         separate(on(IDENTIFIER, is(q))),
         ([match, nonMatch]: any) => match.concat(nonMatch));
-
 
 
 const generateOrderedResultList

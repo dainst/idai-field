@@ -8,7 +8,7 @@ import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SynchronizationService {
+export class SyncService {
 
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;

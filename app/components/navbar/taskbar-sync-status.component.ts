@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SynchronizationService} from '../../core/settings/synchronization-service';
+import {SyncService} from '../../core/settings/sync-service';
 import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
 
 
@@ -16,7 +16,7 @@ import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
 export class TaskbarSyncStatusComponent {
 
 
-    constructor(private synchronizationService: SynchronizationService) {
+    constructor(private synchronizationService: SyncService) {
 
     }
 

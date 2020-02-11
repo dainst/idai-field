@@ -6,7 +6,7 @@ import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/messages/m';
-import {SynchronizationService} from './synchronization-service';
+import {SyncService} from './sync-service';
 import {Name} from '../constants';
 import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -43,7 +43,7 @@ export class SettingsService {
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private imageConverter: ImageConverter,
-                private synchronizationService: SynchronizationService) {
+                private synchronizationService: SyncService) {
     }
 
 

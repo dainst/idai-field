@@ -1,6 +1,6 @@
 import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
-import {IndexFacade} from './core/datastore/index/index-facade';
+import {Index} from './core/datastore/index';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 
 /**
@@ -27,7 +27,7 @@ export module IndexerConfiguration {
         }, projectConfiguration.getTypesMap(), true);
 
         const createdFulltextIndex = FulltextIndex.setUp({ index: {} } as any);
-        const createdIndexFacade = new IndexFacade(
+        const createdIndexFacade = new Index(
             createdConstraintIndex,
             createdFulltextIndex,
             projectConfiguration.getTypesMap(),

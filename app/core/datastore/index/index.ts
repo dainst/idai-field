@@ -13,7 +13,7 @@ const INSTANCE_OF = 'isInstanceOf';
 /**
  * @author Daniel de Oliveira
  */
-export class IndexFacade { // TODO to get-sorted here
+export class Index { // TODO to get-sorted here
 
     private observers: Array<Observer<Document>> = [];
 
@@ -90,9 +90,9 @@ export class IndexFacade { // TODO to get-sorted here
         if (!item) return;
 
         if (document.resource.type === 'Type') {
-            IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
+            Index.updateTypeItem(item as TypeResourceIndexItem);
         } else {
-            IndexFacade.updateAssociatedTypeItem(document, this.indexItems);
+            Index.updateAssociatedTypeItem(document, this.indexItems);
         }
 
         ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);

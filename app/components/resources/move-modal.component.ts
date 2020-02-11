@@ -6,7 +6,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
-import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {Index} from '../../core/datastore/index';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
@@ -38,7 +38,7 @@ export class MoveModalComponent {
                 private typeUtility: TypeUtility,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
-                private indexFacade: IndexFacade,
+                private indexFacade: Index,
                 private messages: Messages,
                 private viewFacade: ViewFacade,
                 private projectConfiguration: ProjectConfiguration) {

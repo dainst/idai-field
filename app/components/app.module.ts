@@ -30,7 +30,7 @@ import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
 import {TypeUtility} from '../core/model/type-utility';
 import {UsernameProvider} from '../core/settings/username-provider';
-import {IndexFacade} from '../core/datastore/index/index-facade';
+import {Index} from '../core/datastore/index';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {HelpComponent} from './help/help.component';
@@ -67,7 +67,7 @@ const remote = require('electron').remote;
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
 let fulltextIndex: FulltextIndex|undefined = undefined;
 let constraintIndex: ConstraintIndex|undefined = undefined;
-let indexFacade: IndexFacade|undefined = undefined;
+let indexFacade: Index|undefined = undefined;
 
 
 registerLocaleData(localeDe, 'de');
@@ -192,7 +192,7 @@ registerLocaleData(localeDe, 'de');
             deps: []
         },
         {
-            provide: IndexFacade,
+            provide: Index,
             useFactory: () => {
                 if (!indexFacade) {
                     console.error('index facade has not yet been provided');
@@ -224,7 +224,7 @@ registerLocaleData(localeDe, 'de');
         {
             provide: TabManager,
             useFactory: (
-                indexFacade: IndexFacade,
+                indexFacade: Index,
                 tabSpaceCalculator: TabSpaceCalculator,
                 stateSerializer: StateSerializer,
                 datastore: FieldReadDatastore,
@@ -236,7 +236,7 @@ registerLocaleData(localeDe, 'de');
                 router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
                 return tabManager;
             },
-            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldReadDatastore, Router]
+            deps: [Index, TabSpaceCalculator, StateSerializer, FieldReadDatastore, Router]
         },
         TabSpaceCalculator,
         MenuService,

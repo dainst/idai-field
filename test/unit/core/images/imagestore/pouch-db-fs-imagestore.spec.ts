@@ -1,5 +1,5 @@
 import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
-import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
+import {Index} from '../../../../../app/core/datastore/index';
 
 import fs = require('fs');
 import rimraf = require('rimraf');
@@ -45,7 +45,7 @@ describe('PouchDbFsImagestore', () => {
             {}, {} as any);
 
         await manager.loadProjectDb('unittest', undefined);
-        await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false));
+        await manager.reindex(new Index(mockConstraintIndexer, mockFulltextIndexer, undefined, false));
 
         store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, manager.getDbProxy());
         await store.setPath('store/', 'unittest');

@@ -3,7 +3,7 @@ import {DocumentCache} from '../cached/document-cache';
 import {ImageDocument} from 'idai-components-2';
 import {TypeConverter} from '../cached/type-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
-import {IndexFacade} from "../index/index-facade";
+import {Index} from "../index";
 
 /**
  * Data Access Object
@@ -15,7 +15,7 @@ export class ImageDatastore
 
     constructor(
         datastore: PouchdbDatastore,
-        indexFacade: IndexFacade,
+        indexFacade: Index,
         documentCache: DocumentCache<ImageDocument>,
         documentConverter: TypeConverter<ImageDocument>) {
 

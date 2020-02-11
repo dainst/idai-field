@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
-import {IndexFacade} from '../datastore/index/index-facade';
+import {Index} from '../datastore/index';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -27,7 +27,7 @@ export class PersistenceManager {
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
         private typeUtility: TypeUtility,
-        private indexFacade: IndexFacade
+        private indexFacade: Index
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }

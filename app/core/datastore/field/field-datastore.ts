@@ -3,7 +3,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {TypeConverter} from '../cached/type-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
-import {IndexFacade} from '../index/index-facade';
+import {Index} from '../index';
 
 /**
  * Data Access Object
@@ -14,7 +14,7 @@ export class FieldDatastore extends CachedDatastore<FieldDocument> {
 
     constructor(
         datastore: PouchdbDatastore,
-        indexFacade: IndexFacade,
+        indexFacade: Index,
         documentCache: DocumentCache<FieldDocument>,
         documentConverter: TypeConverter<FieldDocument>) {
 

@@ -2,7 +2,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {TypeConverter} from '../cached/type-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
-import {IndexFacade} from '../index/index-facade';
+import {Index} from '../index';
 import {FeatureDocument} from 'idai-components-2';
 
 /**
@@ -15,7 +15,7 @@ export class FeatureDatastore
 
     constructor(
         datastore: PouchdbDatastore,
-        indexFacade: IndexFacade,
+        indexFacade: Index,
         documentCache: DocumentCache<FeatureDocument>,
         documentConverter: TypeConverter<FeatureDocument>) {
 

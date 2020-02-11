@@ -1,6 +1,6 @@
 import {to, on, is} from 'tsfun';
 import {Query} from 'idai-components-2';
-import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
+import {Index} from '../../../../../app/core/datastore/index';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
@@ -14,7 +14,7 @@ import {TypeResourceIndexItem} from '../../../../../app/core/datastore/index/ind
  */
 describe('IndexFacade', () => {
 
-    let indexFacade: IndexFacade;
+    let indexFacade: Index;
 
 
     beforeEach(() => {

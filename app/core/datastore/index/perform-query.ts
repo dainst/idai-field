@@ -9,7 +9,6 @@ import {IndexItem} from './index-item';
 // @author Daniel de Oliveira
 
 /**
- * TODO write unit test
  * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
  *
  * @param query

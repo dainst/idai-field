@@ -1,7 +1,7 @@
 import {FieldDocument, Document, Constraint} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {PersistenceManager} from '../model/persistence-manager';
-import {IndexFacade} from '../datastore/index/index-facade';
+import {Index} from '../datastore/index';
 import {IdaiType} from '../configuration/model/idai-type';
 
 
@@ -37,7 +37,7 @@ export module MoveUtility {
     }
 
 
-    export async function createConstraints(document: FieldDocument, indexFacade: IndexFacade)
+    export async function createConstraints(document: FieldDocument, indexFacade: Index)
             : Promise<{ [name: string]: Constraint }> {
 
         return {
@@ -50,7 +50,7 @@ export module MoveUtility {
 
 
     async function getResourceIdsToSubtract(document: FieldDocument,
-                                            indexFacade: IndexFacade): Promise<string[]> {
+                                            indexFacade: Index): Promise<string[]> {
 
         const ids: string[] = [document.resource.id];
 

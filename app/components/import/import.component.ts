@@ -12,7 +12,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {SynchronizationService} from '../../core/settings/synchronization-service';
+import {SyncService} from '../../core/settings/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
@@ -65,7 +65,7 @@ export class ImportComponent implements OnInit {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private synchronizationService: SynchronizationService,
+        private synchronizationService: SyncService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,

@@ -12,7 +12,7 @@ import {TypeResourceIndexItem} from '../../../../../app/core/datastore/index/ind
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-describe('IndexFacade', () => {
+describe('Index', () => {
 
     let indexFacade: Index;
 

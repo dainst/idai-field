@@ -190,6 +190,21 @@ export class TypeUtility {
     }
 
 
+    public getOverviewTypes(): string[] {
+
+        return Object.keys(this.getTypeAndSubtypes('Operation'))
+            .concat(['Place'])
+            .filter(el => el !== 'Operation');
+    }
+
+
+    public getTypeManagementTypes(): string[] {
+
+        return Object.keys(this.getTypeAndSubtypes('TypeCatalog'))
+            .concat(Object.keys(this.getTypeAndSubtypes('Type')));
+    }
+
+
     private static isProjectType(typeName: string): boolean {
 
         return typeName === 'Project';

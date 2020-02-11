@@ -187,23 +187,6 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    // TODO Move this to TypeUtility
-    private getOverviewTypes(): string[] {
-
-        return Object.keys(this.typeUtility.getTypeAndSubtypes('Operation'))
-            .concat(['Place'])
-            .filter(el => el !== 'Operation');
-    }
-
-
-    // TODO Move this to TypeUtility
-    private getTypeManagementTypes(): string[] {
-
-        return Object.keys(this.typeUtility.getTypeAndSubtypes('TypeCatalog'))
-            .concat(Object.keys(this.typeUtility.getTypeAndSubtypes('Type')));
-    }
-
-
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
         if (type.name === 'Image') return false;
@@ -215,8 +198,8 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? this.getOverviewTypes().includes(type.name)
-                    : this.getTypeManagementTypes().includes(type.name))) {
+                    ? this.typeUtility.getOverviewTypes().includes(type.name)
+                    : this.typeUtility.getTypeManagementTypes().includes(type.name))) {
                 return false;
             }
         }

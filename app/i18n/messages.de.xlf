@@ -2887,20 +2887,12 @@
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.synchronization.user" datatype="html">
-        <source>Benutzer</source>
-        <target state="final">Benutzer</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">87</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
         <source>Passwort</source>
         <target state="final">Passwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -2912,7 +2904,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress.info" datatype="html">
@@ -2926,7 +2918,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
@@ -2934,7 +2926,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -2946,7 +2938,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -2970,7 +2962,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -2978,7 +2970,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -2986,7 +2978,7 @@
         <target state="final">Automatische Prüfung auf Updates aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">

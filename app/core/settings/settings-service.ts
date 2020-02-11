@@ -129,12 +129,11 @@ export class SettingsService {
                 || !(this.settings.dbs.length > 0))
             return;
 
-        const currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
-        if (!currentSyncUrl) return;
         if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return;
 
-        this.synchronizationService.setSyncTarget(currentSyncUrl);
+        this.synchronizationService.setSyncTarget(this.settings.syncTarget.address);
         this.synchronizationService.setProject(this.getSelectedProject());
+        this.synchronizationService.setPassword(this.settings.syncTarget.password);
         return this.synchronizationService.startSync();
     }
 
@@ -232,20 +231,6 @@ export class SettingsService {
         return (address == '')
             ? true
             : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
-    }
-
-
-    private static makeUrlFromSyncTarget(serverSetting: any) {
-
-        let address = serverSetting['address'];
-        if (!address) return false;
-
-        if (address.indexOf('http') == -1) address = 'http://' + address;
-
-        return !serverSetting['username'] || !serverSetting['password']
-            ? address
-            : address.replace(/(https?):\/\//, '$1://' +
-                serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 
 

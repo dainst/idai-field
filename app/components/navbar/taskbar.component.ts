@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {SynchronizationStatus} from '../../core/settings/synchronization-status';
-import { SyncStatus } from '../../core/datastore/pouchdb/sync-process';
 
 
 @Component({

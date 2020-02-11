@@ -100,8 +100,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async selectProject(project: string) {
 
-        this.settingsService.stopSync();
-
         await this.settingsService.selectProject(project);
         ProjectsModalComponent.reload();
     }
@@ -115,8 +113,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             );
         if (validationErrorMessage) return this.messages.add(validationErrorMessage);
 
-        this.settingsService.stopSync();
-
         await this.settingsService.createProject(
             this.newProject,
             remote.getGlobal('switches')
@@ -129,8 +125,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     public async deleteProject() {
 
         if (!this.canDeleteProject()) return;
-
-        this.settingsService.stopSync();
 
         try {
             await this.stateSerializer.delete('resources-state');

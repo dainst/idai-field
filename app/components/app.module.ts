@@ -38,7 +38,7 @@ import {TaskbarUpdateComponent} from './navbar/taskbar-update.component';
 import {M} from './messages/m';
 import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
-import {SynchronizationStatus} from '../core/settings/synchronization-status';
+import {SynchronizationService} from '../core/settings/synchronization-service';
 import {Translations} from '../angular/translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
@@ -220,7 +220,7 @@ registerLocaleData(localeDe, 'de');
         },
         ImportValidator,
         { provide: MD, useClass: M},
-        SynchronizationStatus,
+        SynchronizationService,
         {
             provide: TabManager,
             useFactory: (

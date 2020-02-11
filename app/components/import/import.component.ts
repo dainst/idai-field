@@ -12,7 +12,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {SettingsService} from '../../core/settings/settings-service';
+import {SynchronizationService} from '../../core/settings/synchronization-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
@@ -65,7 +65,7 @@ export class ImportComponent implements OnInit {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private settingsService: SettingsService,
+        private synchronizationService: SynchronizationService,
         private idGenerator: IdGenerator,
         private typeUtility: TypeUtility,
         private tabManager: TabManager,
@@ -205,9 +205,9 @@ export class ImportComponent implements OnInit {
                 { backdrop: 'static', keyboard: false });
         }, 200);
 
-        this.settingsService.stopSync();
+        this.synchronizationService.stopSync();
         const importReport = await this.doImport(reader);
-        this.settingsService.startSync();
+        this.synchronizationService.startSync();
 
         uploadReady = true;
         if(uploadModalRef) uploadModalRef.close();

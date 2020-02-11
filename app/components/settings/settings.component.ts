@@ -83,7 +83,7 @@ export class SettingsComponent implements OnInit {
             window.location.reload();
         } else {
             try {
-                await this.settingsService.startSync();
+                await this.settingsService.setupSync();
                 this.messages.add([M.SETTINGS_SUCCESS]);
             } catch (err) {
                 console.error(err);

@@ -6,14 +6,13 @@ import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/messages/m';
-import {SyncService} from './sync-service';
+import {SyncService} from '../sync/sync-service';
 import {Name} from '../constants';
 import {AppConfigurator} from '../configuration/app-configurator';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
-import { SyncStatus } from '../datastore/pouchdb/sync-process';
 
 const {remote, ipcRenderer} = require('electron');
 

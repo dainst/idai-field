@@ -12,7 +12,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {SyncService} from '../../core/settings/sync-service';
+import {SyncService} from '../../core/sync/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';

@@ -7,7 +7,7 @@ import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
-import {SyncProcess, SyncStatus} from './sync-process';
+import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 
 const expressPouchDB = require('express-pouchdb');
 

@@ -38,7 +38,7 @@ import {TaskbarUpdateComponent} from './navbar/taskbar-update.component';
 import {M} from './messages/m';
 import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
-import {SyncService} from '../core/settings/sync-service';
+import {SyncService} from '../core/sync/sync-service';
 import {Translations} from '../angular/translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';

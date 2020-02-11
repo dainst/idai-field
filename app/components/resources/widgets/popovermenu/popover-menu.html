@@ -25,10 +25,7 @@
             </div>
         </div>
 
-        <thumbnail *ngIf="showThumbnail"
-                   [identifier]="document.resource.identifier"
-                   [isDepictedInRelations]="document.resource.relations['isDepictedIn']">
-        </thumbnail>
+        <thumbnail *ngIf="showThumbnail" [resource]="document.resource"></thumbnail>
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(document) && showThumbnail">
             <fields-view [expandAllGroups]="getExpandAllGroups()"

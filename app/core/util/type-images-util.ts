@@ -1,12 +1,18 @@
-import {to, isDefined} from 'tsfun';
+import {isDefined} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, FieldResource} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
+import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
 import getMainImageId = ModelUtil.getMainImageId;
-import {ResourceId} from '../constants';
 
-const RESOURCE = 'resource';
+
+export type LinkedImageContainer = {
+    
+    imageId: string;
+    resource: FieldResource;
+}
+
 
 /**
  * @author Daniel de Oliveira
@@ -21,55 +27,61 @@ export module TypeImagesUtil {
      * Returns images of linked types (for type catalogs) or finds (for types). If the types linked to a
      * type catalog are not directly linked to an image, the images of finds linked to the types are returned.
      */
-    export function getIdsOfLinkedImages(document: FieldDocument,
-                                         datastore: FieldReadDatastore): Promise<string[]> {
+    export function getLinkedImages(document: FieldDocument,
+                                    datastore: FieldReadDatastore): Promise<Array<LinkedImageContainer>> {
 
         if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
             throw Error('Illegal argument: Document must be of resource type Type or TypeCatalog.');
         }
 
         return document.resource.type === 'TypeCatalog'
-            ? getLinkedImageIdsForTypeCatalog(document.resource.id, datastore)
-            : getLinkedImageIdsForType(document.resource.id, datastore);
+            ? getLinkedImagesForTypeCatalog(document.resource.id, datastore)
+            : getLinkedImagesForType(document.resource.id, datastore);
     }
 
 
-    async function getLinkedImageIdsForTypeCatalog(resourceId: ResourceId,
-                                                   datastore: FieldReadDatastore): Promise<string[]> {
+    async function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
+                                                 datastore: FieldReadDatastore): Promise<Array<LinkedImageContainer>> {
 
         const documents: Array<FieldDocument> = (await datastore.find(
             { constraints: { 'liesWithin:contain': resourceId } }
         )).documents;
 
         return (await asyncMap(
-            (document: FieldDocument) => getTypeImageId(document.resource, datastore)
-        )(documents)).filter(isDefined) as string[];
+            (document: FieldDocument) => getTypeImage(document.resource, datastore)
+        )(documents)).filter(isDefined) as Array<LinkedImageContainer>;
     }
 
 
-    async function getTypeImageId(resource: FieldResource,
-                                  datastore: FieldReadDatastore): Promise<string|undefined> {
+    async function getTypeImage(resource: FieldResource,
+                                datastore: FieldReadDatastore): Promise<LinkedImageContainer|undefined> {
 
         let imageId: string|undefined = await ModelUtil.getMainImageId(resource);
 
-        if (!imageId) {
-            const linkedImageIds: string[] = await getLinkedImageIdsForType(resource.id, datastore);
-            if (linkedImageIds.length > 0) imageId = linkedImageIds[0];
-        }
+        if (imageId) {
+            return { imageId: imageId, resource: resource };
+        } else {
+            const linkedImageIds: Array<LinkedImageContainer> = await getLinkedImagesForType(
+                resource.id, datastore
+            );
 
-        return imageId;
+            return linkedImageIds.length > 0
+                ? linkedImageIds[0]
+                : undefined;
+        }
     }
 
 
-    async function getLinkedImageIdsForType(resourceId: ResourceId,
-                                            datastore: FieldReadDatastore): Promise<string[]> {
+    async function getLinkedImagesForType(resourceId: ResourceId,
+                                          datastore: FieldReadDatastore): Promise<Array<LinkedImageContainer>> {
 
         const constraints = { constraints: { 'isInstanceOf:contain': resourceId }};
 
         return (await datastore.find(constraints))
             .documents
-            .map(to(RESOURCE))
-            .map(getMainImageId)
-            .filter(isDefined) as string[];
+            .map(document => {
+                return { imageId: getMainImageId(document.resource), resource: document.resource };
+            })
+            .filter(isDefined) as Array<LinkedImageContainer>;
     }
 }

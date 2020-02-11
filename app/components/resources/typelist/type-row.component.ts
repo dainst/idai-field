@@ -1,8 +1,10 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {FieldDocument} from 'idai-components-2';
+import {to} from 'tsfun';
+import {FieldDocument, FieldResource} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {TypeImagesUtil} from '../../../core/util/type-images-util';
+import {LinkedImageContainer, TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ResourcesComponent} from '../resources.component';
+import {ImageModalLauncher} from '../service/image-modal-launcher';
 
 
 @Component({
@@ -21,11 +23,12 @@ export class TypeRowComponent implements OnChanges {
     @Input() document: FieldDocument;
 
     public numberOfLinkedResources: number = -1;
-    public linkedImagesIds: string[];
+    public linkedImages: Array<LinkedImageContainer>;
 
 
     constructor(private datastore: FieldReadDatastore,
-                private resourcesComponent: ResourcesComponent) {}
+                private resourcesComponent: ResourcesComponent,
+                private imageModalLauncher: ImageModalLauncher) {}
 
 
     public highlightDocument = (document: FieldDocument|undefined) =>
@@ -35,13 +38,19 @@ export class TypeRowComponent implements OnChanges {
     async ngOnChanges() {
 
         this.numberOfLinkedResources = await this.getNumberOfLinkedResources();
-        this.linkedImagesIds = await this.getLinkedImagesIds();
+        this.linkedImages = await this.getLinkedImages();
     }
 
 
-    private getLinkedImagesIds(): Promise<string[]> {
+    public async openImageModal(image: LinkedImageContainer) {
 
-        return TypeImagesUtil.getIdsOfLinkedImages(this.document, this.datastore);
+        await this.imageModalLauncher.openImageModal(image.resource, this.resourcesComponent);
+    }
+
+
+    private getLinkedImages(): Promise<Array<LinkedImageContainer>> {
+
+        return TypeImagesUtil.getLinkedImages(this.document, this.datastore);
     }
 
 
@@ -54,6 +63,6 @@ export class TypeRowComponent implements OnChanges {
         const constraints: { [constraintName: string]: string } = {};
         constraints[relationName + ':contain'] = this.document.resource.id;
 
-        return (await this.datastore.find({ q: '', constraints: constraints })).totalCount;
+        return (await this.datastore.find({ constraints: constraints })).totalCount;
     }
 }

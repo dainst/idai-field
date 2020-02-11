@@ -3,8 +3,10 @@
         <span class="mdi mdi-chevron-left"></span>
     </div>
     <div #imageRow class="image-row">
-        <div *ngFor="let thumbnailUrl of linkedThumbnailUrls" class="type-image-container">
-            <img [src]="thumbnailUrl">
+        <div *ngFor="let image of images"
+             class="type-image-container"
+             (click)="onThumbnailClicked(image)">
+            <img *ngIf="thumbnailUrls && thumbnailUrls[image.imageId]" [src]="thumbnailUrls[image.imageId]">
         </div>
     </div>
     <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage()">

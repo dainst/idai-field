@@ -6,8 +6,7 @@
             <b>{{document.resource.identifier}}</b>
         </div>
         <div id="type-thumbnail">
-            <thumbnail [identifier]="document.resource.identifier"
-                       [isDepictedInRelations]="document.resource.relations.isDepictedIn"></thumbnail>
+            <thumbnail [resource]="document.resource"></thumbnail>
         </div>
         <list-button-group [document]="document"
                            [alwaysShowInfoButtons]="true"></list-button-group>
@@ -31,5 +30,5 @@
                   i18n="@@resources.typeList.noLinkedFinds">Keine Funde</span>
         </span>
     </div>
-    <image-row [imageIds]="linkedImagesIds"></image-row>
+    <image-row [images]="linkedImages" (onImageClicked)="openImageModal($event)"></image-row>
 </div>

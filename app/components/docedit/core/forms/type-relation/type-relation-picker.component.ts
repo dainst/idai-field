@@ -3,10 +3,9 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {first, Pair, second, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, FieldResource, Resource} from 'idai-components-2';
-import {ResourceId} from '../../../../../core/constants';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
-import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
+import {LinkedImageContainer, TypeImagesUtil} from '../../../../../core/util/type-images-util';
+import getLinkedImages = TypeImagesUtil.getLinkedImages;
 
 
 @Component({
@@ -19,7 +18,7 @@ import getIdsOfLinkedImages = TypeImagesUtil.getIdsOfLinkedImages;
  */
 export class TypeRelationPickerComponent {
 
-    public resource: Resource | undefined = undefined;
+    public resource: Resource|undefined = undefined;
 
     public selectedCatalog: FieldResource|undefined = undefined;
     public availableCatalogs: Array<FieldResource> = [];
@@ -27,8 +26,8 @@ export class TypeRelationPickerComponent {
     public timeoutRef: any;
 
     public typeDocument = first;
-    public imageIds = second;
-    public typeDocumentsWithLinkedImageIds: Array<Pair<FieldDocument, ResourceId[]>> = [];
+    public images = second;
+    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<LinkedImageContainer>>> = [];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -61,7 +60,7 @@ export class TypeRelationPickerComponent {
     private async fetchCatalogs() {
 
         this.availableCatalogs =
-            (await this.datastore.find({types: ['TypeCatalog']}))
+            (await this.datastore.find({ types: ['TypeCatalog'] }))
                 .documents
                 .map(to('resource'));
     }
@@ -79,15 +78,14 @@ export class TypeRelationPickerComponent {
                 rankOptions: { matchType: this.resource.type }
             })).documents;
 
-        this.typeDocumentsWithLinkedImageIds =
-            await this.pairWithLinkedImageIds(rankedDocuments);
+        this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(rankedDocuments);
     }
 
 
-    private pairWithLinkedImageIds = asyncMap(async (document: FieldDocument) => {
+    private pairWithLinkedImages = asyncMap(async (document: FieldDocument) => {
         return [
             document,
-            await getIdsOfLinkedImages(document, this.datastore)
-        ] as Pair<FieldDocument, ResourceId[]>;
+            await getLinkedImages(document, this.datastore)
+        ] as Pair<FieldDocument, Array<LinkedImageContainer>>;
     });
 }

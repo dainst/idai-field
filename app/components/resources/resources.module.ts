@@ -49,6 +49,7 @@ import {NavigationService} from '../../core/resources/navigation/navigation-serv
 import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRowComponent} from './typelist/type-row.component';
 import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
+import {ImageModalLauncher} from './service/image-modal-launcher';
 
 const remote = require('electron').remote;
 
@@ -92,6 +93,7 @@ const remote = require('electron').remote;
         { provide: StateSerializer, useClass: StandardStateSerializer },
         RoutingService,
         DoceditLauncher,
+        ImageModalLauncher,
         LayerManager,
         LayerImageProvider,
         ResourceDeletion,

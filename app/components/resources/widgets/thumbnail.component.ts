@@ -1,12 +1,10 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from 'idai-components-2';
-import {MenuService} from '../../../desktop/menu-service';
-import {ImageViewComponent} from '../../image/view/image-view.component';
+import {FieldResource} from 'idai-components-2';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../resources.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import {ImageModalLauncher} from '../service/image-modal-launcher';
 
 
 @Component({
@@ -19,45 +17,25 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
  */
 export class ThumbnailComponent implements OnChanges {
 
-    @Input() identifier: string;
-    @Input() isDepictedInRelations: string[]|undefined;
+    @Input() resource: FieldResource;
 
     public thumbnailUrl: string|undefined;
-
-    private images: Array<ImageDocument> = [];
 
 
     constructor(private imagestore: Imagestore,
                 private datastore: ImageDatastore,
-                private modalService: NgbModal,
+                private imageModalLauncher: ImageModalLauncher,
                 private resourcesComponent: ResourcesComponent) {}
+
+
+    public openImageModal = () => this.imageModalLauncher.openImageModal(
+        this.resource, this.resourcesComponent
+    );
 
 
     async ngOnChanges() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.isDepictedInRelations);
-        this.images = await this.getImageDocuments(this.isDepictedInRelations);
-    }
-
-
-    public async openImageModal() {
-
-        MenuService.setContext('image-view');
-        this.resourcesComponent.isModalOpened = true;
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            ImageViewComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        await modalRef.componentInstance.initialize(
-            this.images,
-            this.images[0],
-            this.identifier
-        );
-        await modalRef.result;
-
-        MenuService.setContext('default');
-        this.resourcesComponent.isModalOpened = false;
+        this.thumbnailUrl = await this.getThumbnailUrl(this.resource.relations.isDepictedIn);
     }
 
 
@@ -66,19 +44,9 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return this.imagestore.read(
-                relations[0], false, true
-            );
+            return this.imagestore.read(relations[0], false, true);
         } catch (e) {
             return BlobMaker.blackImg;
         }
-    }
-
-
-    private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
-
-        return relations
-            ? this.datastore.getMultiple(relations)
-            : [];
     }
 }

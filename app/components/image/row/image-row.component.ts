@@ -1,8 +1,10 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {asyncMap} from 'tsfun-extra';
+import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output} from '@angular/core';
+import {to} from 'tsfun';
+import {asyncReduce} from 'tsfun-extra';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {LinkedImageContainer} from '../../../core/util/type-images-util';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -22,9 +24,11 @@ export class ImageRowComponent implements OnChanges {
     @ViewChild('imageRowContainer', { static: true }) containerElement: ElementRef;
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
-    @Input() imageIds: string[];
+    @Input() images: Array<LinkedImageContainer>;
 
-    public linkedThumbnailUrls: string[] = [];
+    @Output() onImageClicked: EventEmitter<LinkedImageContainer> = new EventEmitter<LinkedImageContainer>();
+
+    public thumbnailUrls: { [imageId: string]: string };
 
     private imageRow: ImageRow;
 
@@ -44,33 +48,41 @@ export class ImageRowComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        if (!this.imageIds) return;
+        if (!this.images) return;
 
         this.imageRow = new ImageRow(
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
-            await this.datastore.getMultiple(this.imageIds)
+            await this.datastore.getMultiple(this.images.map(to('imageId')))
         );
 
         await this.nextPage();
     }
 
 
+    public onThumbnailClicked(image: LinkedImageContainer) {
+
+        this.onImageClicked.emit(image);
+    }
+
+
     private async applyUpdate(update: ImageRowUpdate) {
 
-        this.linkedThumbnailUrls = this.linkedThumbnailUrls.concat(
-            await this.getThumbnailUrls(update.newImageIds)
-        );
-
+        await this.updateThumbnailUrls(update.newImageIds);
         this.imageRowElement.nativeElement.style.transform = 'translateX(' + update.positionLeft + 'px)';
     }
 
 
-    private async getThumbnailUrls(imageIds: string[]): Promise<string[]> {
+    private async updateThumbnailUrls(imageIds: string[]) {
 
-        return asyncMap((imageId: string) => {
-            return this.imagestore.read(imageId, false, true);
-        })(imageIds);
+        const thumbnailUrls: { [imageId: string]: string } = this.thumbnailUrls || {};
+
+        await asyncReduce(async (result: { [imageId: string]: string }, imageId: string) => {
+            result[imageId] = await this.imagestore.read(imageId, false, true);
+            return result;
+        }, thumbnailUrls)(imageIds);
+
+        this.thumbnailUrls = thumbnailUrls;
     }
 }

@@ -20,8 +20,19 @@ type Percentage = number;
 
 
 /**
+ * If not specified otherwise, indexItems get sorted
+ * alphanumerically by their identifier property.
+ *
  * @param indexItems
  * @param query
+ *   - if query.types === ['Type'],
+ *     query.rankOptions[MATCH_TYPE] can be set
+ *   . in order to perform a ranking of Type resources then.
+ *     if query.rankOptions[MATCH_TYPE] is not set, a regular
+ *     sort gets performed instead.
+ *   - if query.sort === 'exactMatchFirst', then, after sorting,
+ *     puts an element which matches the query exactly, to the
+ *     front of the resulting list.
  */
 export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
@@ -33,7 +44,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
     const handleExactMatchIfQuerySaysSo =
         cond(
             val(shouldHandleExactMatch(query)),
-            handleExactMatch(query.q as string /* TODO review typing */));
+            handleExactMatch(query.q as string));
 
     return flow(
         indexItems,
@@ -70,6 +81,12 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
 }
 
 
+/**
+ * { id: '1', instances: { '2', 'T1', '3': 'T2' }}
+ * typeToMatch = 'T1'
+ * ->
+ * 50
+ */
 const calcPercentage = (typeToMatch: Name)
     : (indexItem: TypeResourceIndexItem) => number =>
     compose(
@@ -101,8 +118,16 @@ const rankRegularIndexItems
 
 
 /**
- * For indexItems it calculates percentages based on how many
- * instances match the given type, and sorts according to the calculated percentages.
+ * [{id: '3', instances: {'7': 'T2'}}
+ *  {id: '2', instances: {'4': 'T1', '6': 'T2'}}
+ *  {id: '1', instances: {'4': 'T1', '5': 'T1'}}
+ *  {id: '0', instances: {'4': 'T1', '5': 'T1', '8': 'T1'}}]
+ * typeToMatch = 'T1'
+ * ->
+ * [{id: '0', instances: {'4': 'T1', '5': 'T1', '8': 'T1'}} // 100%, 3 matches
+ *  {id: '1', instances: {'4': 'T1', '5': 'T1'}}            // 100%, 2 matches
+ *  {id: '2', instances: {'4': 'T1', '6': 'T2'}}            // 50%
+ *  {id: '3', instances: {'7': 'T2'}}]                      // 0%
  */
 const rankTypeResourceIndexItems = (typeToMatch: Name)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {first, Pair, second, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {FieldDocument, FieldResource, Resource} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {LinkedImageContainer, TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -70,13 +70,17 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-        const rankedDocuments = (await this.datastore.find(
-            {
-                q: q,
-                types: ['Type'],
-                sort: 'exactMatchFirst', // TODO test manually once
-                rankOptions: { matchType: this.resource.type }
-            })).documents;
+        const query: Query = {
+            q: q,
+            types: ['Type'],
+            sort: 'exactMatchFirst', // TODO test manually once
+            rankOptions: { matchType: this.resource.type }
+        };
+        if (this.selectedCatalog) {
+            query.constraints = {'liesWithin:contain': this.selectedCatalog.id}; // TODO also handle subcatalogs
+        }
+
+        const rankedDocuments = (await this.datastore.find(query)).documents;
 
         this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(rankedDocuments);
     }

@@ -1,9 +1,10 @@
-import {to} from 'tsfun';
+import {to, on, is} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
+import {TypeResourceIndexItem} from '../../../../../app/core/datastore/index/index-item';
 
 
 /**
@@ -33,8 +34,8 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDoc);
         indexFacade.put(findDoc);
 
-        const result = indexFacade.find({ q: 'identifier' }).map(to('id'));
-        // TODO write expectation
+        const item = indexFacade.find({}).find(on('id', is('id1'))) as TypeResourceIndexItem;
+        expect(item.instances).toEqual({ id2: 'Find' });
     });
 
 

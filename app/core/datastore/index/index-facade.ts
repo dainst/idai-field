@@ -13,7 +13,7 @@ const INSTANCE_OF = 'isInstanceOf';
 /**
  * @author Daniel de Oliveira
  */
-export class IndexFacade {
+export class IndexFacade { // TODO to get-sorted here
 
     private observers: Array<Observer<Document>> = [];
 
@@ -108,7 +108,7 @@ export class IndexFacade {
 
         for (let target of document.resource.relations[INSTANCE_OF]) {
             const typeItem = items[target] as TypeResourceIndexItem;
-            if (typeItem) typeItem.instances[target] = document.resource.type; // TODO remove these relations on remove
+            if (typeItem) typeItem.instances[document.resource.id] = document.resource.type; // TODO remove these relations on remove
         }
     }
 

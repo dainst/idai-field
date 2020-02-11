@@ -3,7 +3,7 @@ import {DatastoreErrors, Document, FindResult, Query, ReadDatastore} from 'idai-
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {Index} from '../index';
+import {Index} from '../index/index';
 import {TypeUtility} from '../../model/type-utility';
 
 

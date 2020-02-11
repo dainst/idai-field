@@ -1,5 +1,5 @@
 import {Query} from 'idai-components-2';
-import {Index} from '../../../../../app/core/datastore/index';
+import {Index} from '../../../../../app/core/datastore/index/index';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';

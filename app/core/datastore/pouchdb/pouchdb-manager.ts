@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import * as express from 'express';
 import * as PouchDB from 'pouchdb';
-import {Index} from '../index';
+import {Index} from '../index/index';
 import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';

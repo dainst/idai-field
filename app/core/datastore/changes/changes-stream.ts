@@ -5,7 +5,7 @@ import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {TypeConverter} from '../cached/type-converter';
-import {Index} from '../index';
+import {Index} from '../index/index';
 import {ObserverUtil} from '../../util/observer-util';
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
 import {ResourceId, RevisionId} from '../../constants';

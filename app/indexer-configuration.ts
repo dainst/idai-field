@@ -1,6 +1,6 @@
 import {ConstraintIndex} from './core/datastore/index/constraint-index';
 import {FulltextIndex} from './core/datastore/index/fulltext-index';
-import {Index} from './core/datastore/index';
+import {Index} from './core/datastore/index/index';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 
 /**

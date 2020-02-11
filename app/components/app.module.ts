@@ -30,7 +30,7 @@ import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
 import {TypeUtility} from '../core/model/type-utility';
 import {UsernameProvider} from '../core/settings/username-provider';
-import {Index} from '../core/datastore/index';
+import {Index} from '../core/datastore/index/index';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {HelpComponent} from './help/help.component';

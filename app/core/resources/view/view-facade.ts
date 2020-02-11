@@ -5,7 +5,7 @@ import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
-import {Index} from '../../datastore/index';
+import {Index} from '../../datastore/index/index';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 /**

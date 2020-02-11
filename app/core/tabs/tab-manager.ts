@@ -2,7 +2,7 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
-import {Index} from '../datastore/index';
+import {Index} from '../datastore/index/index';
 import {StateSerializer} from '../common/state-serializer';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 

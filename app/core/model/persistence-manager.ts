@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
-import {Index} from '../datastore/index';
+import {Index} from '../datastore/index/index';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;

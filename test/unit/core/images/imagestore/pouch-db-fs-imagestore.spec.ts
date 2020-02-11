@@ -1,5 +1,5 @@
 import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
-import {Index} from '../../../../../app/core/datastore/index';
+import {Index} from '../../../../../app/core/datastore/index/index';
 
 import fs = require('fs');
 import rimraf = require('rimraf');

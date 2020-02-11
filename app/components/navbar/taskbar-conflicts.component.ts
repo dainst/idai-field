@@ -2,7 +2,7 @@ import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {Index} from '../../core/datastore/index';
+import {Index} from '../../core/datastore/index/index';
 import {NavbarComponent} from './navbar.component';
 
 

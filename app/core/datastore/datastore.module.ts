@@ -13,7 +13,7 @@ import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {FieldTypeConverter} from './field/field-type-converter';
 import {ChangesStream} from './changes/changes-stream';
-import {Index} from './index';
+import {Index} from './index/index';
 import {IdGenerator} from './pouchdb/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
 import {FeatureReadDatastore} from './field/feature-read-datastore';

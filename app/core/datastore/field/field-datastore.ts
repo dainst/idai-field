@@ -3,7 +3,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {TypeConverter} from '../cached/type-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
-import {Index} from '../index';
+import {Index} from '../index/index';
 
 /**
  * Data Access Object

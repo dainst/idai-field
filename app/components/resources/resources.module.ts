@@ -30,7 +30,7 @@ import {Loading} from '../widgets/loading';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
-import {Index} from '../../core/datastore/index';
+import {Index} from '../../core/datastore/index/index';
 import {MoveModalComponent} from './move-modal.component';
 import {TypeUtility} from '../../core/model/type-utility';
 import {ContextMenuComponent} from './widgets/context-menu.component';

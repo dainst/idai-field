@@ -7,7 +7,7 @@ import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../util/observer-util';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
-import {Index} from '../../datastore/index';
+import {Index} from '../../datastore/index/index';
 import {TypeUtility} from '../../model/type-utility';
 import {TabManager} from '../../tabs/tab-manager';
 

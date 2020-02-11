@@ -14,7 +14,6 @@ const RESOURCE = 'resource';
  */
 export module TypeImagesUtil {
 
-
     /**
      * @param document: A document of resource type Type or TypeCatalog
      * @param datastore

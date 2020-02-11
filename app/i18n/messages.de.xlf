@@ -1372,36 +1372,102 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
-        <source>Synchronisation ist aktiv</source>
-        <target state="final">Synchronisation ist aktiv</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.deactivated" datatype="html">
-        <source>Synchronisation ist deaktiviert</source>
-        <target state="final">Synchronisation ist deaktiviert</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.synchronization.receivingData" datatype="html">
-        <source>Daten werden empfangen...</source>
-        <target state="final">Daten werden empfangen...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-conflicts.html</context>
           <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
+        <source>Es werden Daten hochgeladen</source>
+        <target state="final">Es werden Daten hochgeladen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
+        <source>Es werden Daten heruntergeladen</source>
+        <target state="final">Es werden Daten heruntergeladen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.offline" datatype="html">
+        <source>Synchronisation ist deaktiviert</source>
+        <target state="final">Synchronisation ist deaktiviert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.inSync" datatype="html">
+        <source>Daten sind synchron</source>
+        <target state="final">Daten sind synchron</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error" datatype="html">
+        <source>
+            Synchronisation fehlgeschlagen!</source>
+        <target state="final">
+            Synchronisation fehlgeschlagen!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.general" datatype="html">
+        <source>
+            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
+            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
+            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
+        </source>
+        <target state="final">
+            Stellen sie sicher, dass die angegebene Adresse korrekt ist und
+            eine Netzwerkverbindung zum Synchronisationsziel besteht. Prüfen
+            Sie ggf. auch die Firewalleinstellungen ihres Systems und des Zielsystems.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.authentication" datatype="html">
+        <source>
+            Nutzername oder Passwort falsch.
+        </source>
+        <target state="final">
+            Nutzername oder Passwort falsch.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.error.authorization" datatype="html">
+        <source>
+            Sie besitzen nicht die nötigen Rechte.
+        </source>
+        <target state="final">
+            Sie besitzen nicht die nötigen Rechte.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-sync-status.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
@@ -2142,6 +2208,30 @@
           <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.typeList.linkedFinds" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{linkedImagesIds.length}}"/> Funde</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{linkedImagesIds.length}}"/> Funde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeList.oneFind" datatype="html">
+        <source>Ein Fund</source>
+        <target state="final">Ein Fund</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
+        <source>Keine Funde</source>
+        <target state="final">Keine Funde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
         <source>Daten anzeigen</source>
         <target state="final">Daten anzeigen</target>
@@ -2215,7 +2305,7 @@
         <target state="final">Bild verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
@@ -2223,7 +2313,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">
@@ -2391,7 +2481,7 @@
         <target state="final">Keine Ziele gefunden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/relationpicker/relation-picker.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">

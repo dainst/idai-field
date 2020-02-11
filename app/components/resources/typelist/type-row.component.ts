@@ -1,10 +1,10 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {to} from 'tsfun';
-import {FieldDocument, FieldResource} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {LinkedImageContainer, TypeImagesUtil} from '../../../core/util/type-images-util';
+import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ResourcesComponent} from '../resources.component';
 import {ImageModalLauncher} from '../service/image-modal-launcher';
+import {ImageRowItem} from '../../image/row/image-row.component';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class TypeRowComponent implements OnChanges {
     @Input() document: FieldDocument;
 
     public numberOfLinkedResources: number = -1;
-    public linkedImages: Array<LinkedImageContainer>;
+    public linkedImages: Array<ImageRowItem>;
 
 
     constructor(private datastore: FieldReadDatastore,
@@ -42,13 +42,13 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    public async openImageModal(image: LinkedImageContainer) {
+    public async openImageModal(image: ImageRowItem) {
 
         await this.imageModalLauncher.openImageModal(image.resource, this.resourcesComponent);
     }
 
 
-    private getLinkedImages(): Promise<Array<LinkedImageContainer>> {
+    private getLinkedImages(): Promise<Array<ImageRowItem>> {
 
         return TypeImagesUtil.getLinkedImages(this.document, this.datastore);
     }

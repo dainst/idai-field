@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ModelUtil} from '../../../../../core/model/model-util';
 import {ReadImagestore} from '../../../../../core/images/imagestore/read-imagestore';
-import {LinkedImageContainer} from '../../../../../core/util/type-images-util';
+import {ImageRowItem} from '../../../../image/row/image-row.component';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class TypeRowComponent implements OnChanges {
     public mainThumbnailUrl: string|undefined;
 
     @Input() document: FieldDocument;
-    @Input() images: Array<LinkedImageContainer>;
+    @Input() images: Array<ImageRowItem>;
     @Output() onSelect: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(private imagestore: ReadImagestore) {}

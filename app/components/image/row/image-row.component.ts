@@ -4,10 +4,17 @@ import {asyncReduce} from 'tsfun-extra';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {LinkedImageContainer} from '../../../core/util/type-images-util';
+import {FieldResource} from 'idai-components-2/src/model/field-resource';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
+
+
+export type ImageRowItem = {
+
+    imageId: string;
+    resource: FieldResource;
+}
 
 
 @Component({
@@ -24,9 +31,9 @@ export class ImageRowComponent implements OnChanges {
     @ViewChild('imageRowContainer', { static: true }) containerElement: ElementRef;
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
-    @Input() images: Array<LinkedImageContainer>;
+    @Input() images: Array<ImageRowItem>;
 
-    @Output() onImageClicked: EventEmitter<LinkedImageContainer> = new EventEmitter<LinkedImageContainer>();
+    @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
 
     public thumbnailUrls: { [imageId: string]: string };
 
@@ -61,7 +68,7 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
-    public onThumbnailClicked(image: LinkedImageContainer) {
+    public onThumbnailClicked(image: ImageRowItem) {
 
         this.onImageClicked.emit(image);
     }

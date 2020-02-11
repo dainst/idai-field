@@ -4,8 +4,9 @@ import {first, Pair, second, to} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {LinkedImageContainer, TypeImagesUtil} from '../../../../../core/util/type-images-util';
+import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
+import {ImageRowItem} from '../../../../image/row/image-row.component';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class TypeRelationPickerComponent {
 
     public typeDocument = first;
     public images = second;
-    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<LinkedImageContainer>>> = [];
+    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -90,6 +91,6 @@ export class TypeRelationPickerComponent {
         return [
             document,
             await getLinkedImages(document, this.datastore)
-        ] as Pair<FieldDocument, Array<LinkedImageContainer>>;
+        ] as Pair<FieldDocument, Array<ImageRowItem>>;
     });
 }

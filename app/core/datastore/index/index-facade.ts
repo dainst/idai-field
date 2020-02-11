@@ -1,12 +1,12 @@
 import {Observable, Observer} from 'rxjs';
-import {separate, on, is, keys} from 'tsfun';
-import {Constraint, Document, Query} from 'idai-components-2';
+import {is, on, separate} from 'tsfun';
+import {Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
-import {ResultSets} from './result-sets';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 import {IdaiType} from '../../configuration/model/idai-type';
+import {performQuery} from './perform-query';
 
 const INSTANCE_OF = 'isInstanceOf';
 
@@ -30,23 +30,9 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    /**
-     * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
-     *
-     * @param query
-     */
-    public perform(query: Query): Array<IndexItem> {
+    public find(query: Query): Array<IndexItem> {
 
-        let resultSets = query.constraints ?
-            IndexFacade.performConstraints(this.constraintIndex, query.constraints) :
-            ResultSets.make();
-
-        resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
-                || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))
-            ? resultSets
-            : IndexFacade.performFulltext(this.fulltextIndex, query, resultSets);
-
-        return ResultSets.collapse(resultSets);
+        return performQuery(query, this.constraintIndex, this.fulltextIndex);
     }
 
 
@@ -141,30 +127,5 @@ export class IndexFacade {
     private static updateTypeItem(item: TypeResourceIndexItem) {
 
         if (!item.instances) item.instances = {};
-    }
-
-
-    private static performFulltext(fulltextIndex: FulltextIndex,
-                                   query: Query,
-                                   resultSets: ResultSets)
-        : ResultSets {
-
-        const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-        ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));
-
-        return resultSets;
-    }
-
-
-    private static performConstraints(constraintIndex: ConstraintIndex,
-                                      constraints: { [name: string]: Constraint|string|string[] })
-        : ResultSets {
-
-        return keys(constraints)
-            .reduce((resultSets, name: string) => {
-                const { type, value } = Constraint.convertTo(constraints[name]);
-                ResultSets.combine(resultSets, ConstraintIndex.get(constraintIndex, name, value), type);
-                return resultSets;
-            }, ResultSets.make());
     }
 }

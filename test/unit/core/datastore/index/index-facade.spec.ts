@@ -56,7 +56,7 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDoc);
         indexFacade.put(findDoc);
 
-        const result = indexFacade.perform({ q: 'identifier' }).map(to('id'));
+        const result = indexFacade.find({ q: 'identifier' }).map(to('id'));
         // TODO write expectation
     });
 
@@ -66,7 +66,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({ q: 'identifier' }).map(to('id'));
+        const result = indexFacade.find({ q: 'identifier' }).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -76,7 +76,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({ q: undefined }).map(to('id'));
+        const result = indexFacade.find({ q: undefined }).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -86,7 +86,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({}).map(to('id'));
+        const result = indexFacade.find({}).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -96,7 +96,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({}).map(to('id'));
+        const result = indexFacade.find({}).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -108,7 +108,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc1);
         indexFacade.put(doc2);
 
-        const result = indexFacade.perform({ q: 'bla' }).map(to('id'));
+        const result = indexFacade.find({ q: 'bla' }).map(to('id'));
         expect(result.length).toBe(2);
     });
 
@@ -122,7 +122,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc2);
         indexFacade.put(doc3);
 
-        const result = indexFacade.perform({ q: 'blub', types: ['type3'] }).map(to('id'));
+        const result = indexFacade.find({ q: 'blub', types: ['type3'] }).map(to('id'));
         expect(result.length).toBe(1);
         expect(result[0]).toBe('id3');
     });
@@ -137,7 +137,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc2);
         indexFacade.put(doc3);
 
-        const result = indexFacade.perform({
+        const result = indexFacade.find({
             q: 'blub',
             types: ['type2']
         }).map(to('id'));
@@ -170,7 +170,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc3);
         indexFacade.put(doc4);
 
-        const result = indexFacade.perform(q).map(to('id'));
+        const result = indexFacade.find(q).map(to('id'));
         expect(result).toContain('id2');
         expect(result).toContain('id3');
         expect(result.length).toBe(2);
@@ -198,7 +198,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc2);
         indexFacade.put(doc3);
 
-        const result = indexFacade.perform(q).map(to('id'));
+        const result = indexFacade.find(q).map(to('id'));
         expect(result[0]).toBe('id3');
         expect(result.length).toBe(1);
     });
@@ -225,7 +225,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc3);
         indexFacade.put(doc4);
 
-        const result = indexFacade.perform(q).map(to('id'));
+        const result = indexFacade.find(q).map(to('id'));
         expect(result.length).toBe(3);
         expect(result).toEqual(['id1', 'id2', 'id3']);
     });
@@ -253,7 +253,7 @@ describe('IndexFacade', () => {
             indexFacade.put(doc2);
             indexFacade.put(doc3);
 
-            const result = indexFacade.perform(q).map(to('id'));
+            const result = indexFacade.find(q).map(to('id'));
             expect(result.length).toBe(2);
             expect(result[0]).toBe('id2');
             expect(result[1]).toBe('id3');

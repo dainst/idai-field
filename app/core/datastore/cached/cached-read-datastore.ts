@@ -142,7 +142,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         let result: Array<IndexItem>;
         try {
-            result = this.indexFacade.perform(query);
+            result = this.indexFacade.find(query);
         } catch (err) {
             return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
         }

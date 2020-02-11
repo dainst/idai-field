@@ -16,9 +16,7 @@ describe('CachedDatastore', () => {
     let mockdb: any;
     let mockIndexFacade: any;
 
-    function createMockedDatastore(
-        mockdb: any
-    ) {
+    function createMockedDatastore(mockdb: any) {
 
         const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
             ['isSubtype', 'validate', 'getFieldTypeNames']);
@@ -48,7 +46,7 @@ describe('CachedDatastore', () => {
         mockdb = jasmine.createSpyObj('mockdb',
                 ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
-            ['perform', 'put', 'remove']);
+            ['find', 'put', 'remove']);
 
         mockdb.update.and.callFake(function(dd) {
             // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -56,7 +54,7 @@ describe('CachedDatastore', () => {
             dd['_rev'] = '2';
             return Promise.resolve(dd);
         });
-        mockIndexFacade.perform.and.callFake(function() {
+        mockIndexFacade.find.and.callFake(function() {
             const d = Static.doc('sd1');
             d.resource.id = '1';
             return [{id: '1'}];
@@ -171,7 +169,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
              {
                 resource: {
@@ -194,7 +192,7 @@ describe('CachedDatastore', () => {
             id: '1',
             relations: {}
         } } as any, 'u');
-        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
@@ -215,7 +213,7 @@ describe('CachedDatastore', () => {
             relations: {}
         } } as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues([
+        mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
             { id: '2', identifier: 'zwei' }
         ]);
@@ -234,7 +232,7 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues([
+        mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
             { id: '2', identifier: 'zwei' },
             { id: '3', identifier: 'drei' }
@@ -257,7 +255,7 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues([
+        mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
             { id: '2', identifier: 'zwei' },
             { id: '3', identifier: 'drei' }
@@ -276,7 +274,7 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.perform.and.returnValues([
+        mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'A-B-100' },
             { id: '2', identifier: 'B-100' },
             { id: '3', identifier: 'C-100' }
@@ -295,7 +293,7 @@ describe('CachedDatastore', () => {
 
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.perform.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
@@ -307,7 +305,7 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.perform.and.returnValues([
+        mockIndexFacade.find.and.returnValues([
             { id: '1', identifier: 'eins' },
             { id: '2', identifier: 'zwei' }
         ]);

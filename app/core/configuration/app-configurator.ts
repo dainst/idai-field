@@ -526,7 +526,7 @@ export class AppConfigurator {
             name: 'includes',
             inverse: 'liesWithin',
             label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['TypeCatalog:inherit'],
+            domain: ['Type:inherit', 'TypeCatalog:inherit'],
             range: ['Type:inherit']
         },
         {
@@ -623,7 +623,7 @@ export class AppConfigurator {
             inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Type:inherit'],
-            range: ['TypeCatalog:inherit'],
+            range: ['Type:inherit', 'TypeCatalog:inherit'],
             editable: false
         },
         {

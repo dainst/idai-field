@@ -49,6 +49,9 @@ export class TypeListComponent extends BaseList {
             case 'edit':
                 await this.resourcesComponent.editDocument(document);
                 break;
+            case 'move':
+                await this.resourcesComponent.moveDocument(document);
+                break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(document);
                 break;

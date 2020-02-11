@@ -105,8 +105,6 @@ export class RowComponent implements AfterViewInit {
 
     public isMoveOptionAvailable(): boolean {
 
-        if (this.typeUtility.getAbstractFieldTypeNames().includes(this.document.resource.type)) return false;
-
         return this.typeUtility.getHierarchyParentTypes(this.document.resource.type).length > 0;
     }
 

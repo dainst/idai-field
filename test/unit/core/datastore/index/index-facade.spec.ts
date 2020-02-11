@@ -1,13 +1,11 @@
+import {to} from 'tsfun';
 import {Query, FieldDocument} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
-import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter';
-import {TypeUtility} from '../../../../../app/core/model/type-utility';
 import {DocumentCache} from '../../../../../app/core/datastore/cached/document-cache';
 import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbDatastore} from '../../../../../app/core/datastore/pouchdb/pouchdb-datastore';
-import {to} from 'tsfun';
 import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
@@ -41,6 +39,7 @@ describe('IndexFacade', () => {
         return { datastore, documentCache, createdIndexFacade };
     }
 
+
     async function init(projectConfiguration: ProjectConfiguration) {
 
         const { datastore, documentCache, createdIndexFacade: indexFacade } =
@@ -48,6 +47,7 @@ describe('IndexFacade', () => {
 
         return { datastore, documentCache, indexFacade };
     }
+
 
     let indexFacade: IndexFacade;
 
@@ -209,7 +209,6 @@ describe('IndexFacade', () => {
         indexFacade.put(doc3);
         indexFacade.put(doc4);
 
-
         const result = indexFacade.perform(q).map(to('id'));
         expect(result).toContain('id2');
         expect(result).toContain('id3');
@@ -237,7 +236,6 @@ describe('IndexFacade', () => {
         indexFacade.put(doc1);
         indexFacade.put(doc2);
         indexFacade.put(doc3);
-
 
         const result = indexFacade.perform(q).map(to('id'));
         expect(result[0]).toBe('id3');
@@ -299,6 +297,6 @@ describe('IndexFacade', () => {
             expect(result[0]).toBe('id2');
             expect(result[1]).toBe('id3');
             done();
-        },100)
+        }, 100)
     });
 });

@@ -81,7 +81,7 @@ const calcPercentage = (typeToMatch: Name)
 
 
 /**
- * as = [{identifier: 'a'}, {identifier: 'b'}, {identifier: 'c'}]
+ * [{identifier: 'a'}, {identifier: 'b'}, {identifier: 'c'}]
  * q = 'b'
  * ->
  * [{identifier: 'b'}, {identifier: 'a'}, {identifier: 'c'}]

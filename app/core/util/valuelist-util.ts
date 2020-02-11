@@ -40,7 +40,7 @@ export module ValuelistUtil {
     export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): string[] {
 
         const field: string[]|undefined = projectDocument.resource[fieldName];
-        return field && Array.isArray(field) ? field : [];
+        return field && isArray(field) ? field : [];
     }
 
 
@@ -48,7 +48,7 @@ export module ValuelistUtil {
                                     parentResource: Resource): string[] {
 
         const parentValues: string[] = parentResource[fieldName] || [];
-        return valuelist.filter(value => parentValues.includes(value));
+        return valuelist.filter(includedIn(parentValues));
     }
 }
 

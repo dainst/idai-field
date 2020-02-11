@@ -1,12 +1,10 @@
 import {jsonClone} from 'tsfun';
-import {FindResult, Query, ReadDatastore, DatastoreErrors, Document} from 'idai-components-2';
+import {DatastoreErrors, Document, FindResult, Query, ReadDatastore} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {Index} from '../index';
-import {IndexItem} from '../index/index-item';
 import {TypeUtility} from '../../model/type-utility';
-import {getSortedIds} from '../index/get-sorted-ids';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -140,17 +138,10 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     private async findIds(query: Query): Promise<string[]> {
 
-        let result: Array<IndexItem>;
-        try {
-            result = this.indexFacade.find(query);
-        } catch (err) {
-            return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
-        }
-
         // Wrap asynchronously in order to make the app more responsive
         return new Promise<string[]>((resolve: any, reject: any) => {
             try {
-                resolve(getSortedIds(result, query));
+                resolve(this.indexFacade.find(query));
             } catch (err) {
                 reject([DatastoreErrors.GENERIC_ERROR, err]);
             }

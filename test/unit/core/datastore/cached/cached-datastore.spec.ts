@@ -57,7 +57,7 @@ describe('CachedDatastore', () => {
         mockIndexFacade.find.and.callFake(function() {
             const d = Static.doc('sd1');
             d.resource.id = '1';
-            return [{id: '1'}];
+            return ['1'];
         });
         mockIndexFacade.put.and.callFake(function(doc) {
             return Promise.resolve(doc);
@@ -169,7 +169,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on find, bypassing cache', async done => {
 
-        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues(['1']);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
              {
                 resource: {
@@ -192,7 +192,7 @@ describe('CachedDatastore', () => {
             id: '1',
             relations: {}
         } } as any, 'u');
-        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues(['1']);
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
@@ -213,9 +213,9 @@ describe('CachedDatastore', () => {
             relations: {}
         } } as any, 'u');
 
-        mockIndexFacade.find.and.returnValues([
-            { id: '1', identifier: 'eins' },
-            { id: '2', identifier: 'zwei' }
+        mockIndexFacade.find.and.returnValues(['1', '2'
+            // { id: '1', identifier: 'eins' }, // TODO review
+            // { id: '2', identifier: 'zwei' }
         ]);
 
         const { documents, totalCount } = await ds.find({ limit: 1 });
@@ -232,10 +232,10 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.find.and.returnValues([
-            { id: '1', identifier: 'eins' },
-            { id: '2', identifier: 'zwei' },
-            { id: '3', identifier: 'drei' }
+        mockIndexFacade.find.and.returnValues(['3','1','2'
+            // { id: '1', identifier: 'eins' }, // TODO review
+            // { id: '2', identifier: 'zwei' },
+            // { id: '3', identifier: 'drei' }
         ]);
 
         const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
@@ -243,7 +243,7 @@ describe('CachedDatastore', () => {
         expect(totalCount).toBe(3);
         verifyIsFieldDocument(documents[0]);
 
-        // sorted order is 3, 1, 2, coresponding to drei, eins, zwei
+        // sorted order is 3, 1, 2, coresponding to drei, eins, zwei // TODO review
         expect(documents[0].resource.id).toBe('1');
         done();
     });
@@ -274,10 +274,10 @@ describe('CachedDatastore', () => {
         await ds.create({ resource: { id: '2', relations: {} } } as any, 'u');
         await ds.create({ resource: { id: '3', relations: {} } } as any, 'u');
 
-        mockIndexFacade.find.and.returnValues([
-            { id: '1', identifier: 'A-B-100' },
-            { id: '2', identifier: 'B-100' },
-            { id: '3', identifier: 'C-100' }
+        mockIndexFacade.find.and.returnValues(['2', '1', '3'
+            // { id: '1', identifier: 'A-B-100' }, // TODO review
+            // { id: '2', identifier: 'B-100' },
+            // { id: '3', identifier: 'C-100' }
         ]);
 
         const { documents, totalCount } = await ds.find({ q: 'B-100', sort: 'exactMatchFirst' });
@@ -293,7 +293,7 @@ describe('CachedDatastore', () => {
 
     it('cant find one and only document', async done => {
 
-        mockIndexFacade.find.and.returnValues([{ id: '1' }]);
+        mockIndexFacade.find.and.returnValues(['1']);
         mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
@@ -305,9 +305,9 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.find.and.returnValues([
-            { id: '1', identifier: 'eins' },
-            { id: '2', identifier: 'zwei' }
+        mockIndexFacade.find.and.returnValues(['1'
+            // { id: '1', identifier: 'eins' }, // TODO review
+            // { id: '2', identifier: 'zwei' }
         ]);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([

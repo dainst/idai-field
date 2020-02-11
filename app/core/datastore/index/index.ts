@@ -7,13 +7,15 @@ import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {performQuery} from './perform-query';
+import {ResourceId} from '../../constants';
+import {getSortedIds} from './get-sorted-ids';
 
 const INSTANCE_OF = 'isInstanceOf';
 
 /**
  * @author Daniel de Oliveira
  */
-export class Index { // TODO to get-sorted here
+export class Index {
 
     private observers: Array<Observer<Document>> = [];
 
@@ -30,9 +32,11 @@ export class Index { // TODO to get-sorted here
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    public find(query: Query): Array<IndexItem> {
+    public find(query: Query): Array<ResourceId> {
 
-        return performQuery(query, this.constraintIndex, this.fulltextIndex);
+        return getSortedIds(
+            performQuery(query, this.constraintIndex, this.fulltextIndex),
+            query);
     }
 
 

@@ -80,6 +80,12 @@ const calcPercentage = (typeToMatch: Name)
                 count(is(typeToMatch))(instances) * 100 / size(instances)));
 
 
+/**
+ * as = [{identifier: 'a'}, {identifier: 'b'}, {identifier: 'c'}]
+ * q = 'b'
+ * ->
+ * [{identifier: 'b'}, {identifier: 'a'}, {identifier: 'c'}]
+ */
 const handleExactMatch = (q: string)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
      compose(

@@ -174,7 +174,7 @@ export class PouchdbManager {
     public async reindex(indexFacade: IndexFacade) {
 
         await indexFacade.clear();
-        await this.fetchAll((docs: Array<any>) => indexFacade.reindex(docs));
+        await this.fetchAll((docs: Array<any>) => indexFacade.putMultiple(docs));
     }
 
 

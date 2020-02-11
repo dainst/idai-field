@@ -29,17 +29,6 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    // TODO write test; rename to index
-    public reindex(documents: Array<Document>) {
-
-        const [typeDocuments, nonTypeDocuments]
-            = separate(on('resource.type', is('Type')))(documents);
-
-        typeDocuments.forEach(_ => this._put(_, true, false));
-        nonTypeDocuments.forEach(_ => this._put(_, true, false));
-    }
-
-
     /**
      * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
      *
@@ -63,6 +52,16 @@ export class IndexFacade {
     public put(document: Document) {
 
         return this._put(document, false, true);
+    }
+
+
+    public putMultiple(documents: Array<Document>) {
+
+        const [typeDocuments, nonTypeDocuments]
+            = separate(on('resource.type', is('Type')))(documents);
+
+        typeDocuments.forEach(_ => this._put(_, true, false));
+        nonTypeDocuments.forEach(_ => this._put(_, true, false));
     }
 
 

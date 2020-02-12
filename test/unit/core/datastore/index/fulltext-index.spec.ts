@@ -107,18 +107,6 @@ describe('FulltextIndexer', () => {
     });
 
 
-    // TODO review
-    xit('do not index if no created and modified', () => { // tests interaction with IndexItem
-
-        const d = doc('1', 'identifier1', 'type', 'short');
-        delete d.modified;
-        delete d.created;
-
-        // FulltextIndex.put(fi, d, typesMap);
-        // expect(FulltextIndex.get(fi, 'short', undefined)).toEqual([]);
-    });
-
-
     it('match in multiple selected types', () => {
 
         const d1 = doc('1', 'identifier1', 'type1');

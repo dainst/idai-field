@@ -177,21 +177,6 @@ describe('ConstraintIndex', () => {
     });
 
 
-    // TODO review
-    xit('do not index if no created and modified', () => { // tests interaction with IndexItem
-
-        ci = ConstraintIndex.make({
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, typesMap);
-        const doc0 = doc('1');
-        delete doc0.created;
-        delete doc0.modified;
-        const ie = IndexItem.from(doc0);
-        ConstraintIndex.put(ci, doc0, ie);
-        expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
-    });
-
-
     it('clear index', () => {
 
         ci = ConstraintIndex.make({

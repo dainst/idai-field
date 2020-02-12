@@ -43,6 +43,10 @@ export class IndexFacade {
     }
 
 
+    /**
+     * @param document:
+     *   document.resource.identifier needs to be present, otherwise document gets not indexed
+     */
     public put(document: Document) {
 
         return this._put(document, false, true);

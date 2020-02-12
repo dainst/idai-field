@@ -17,8 +17,8 @@ describe('IndexFacade', () => {
 
     beforeEach(() => {
 
-        const {createdIndexFacade} =
-            IndexerConfiguration.configureIndexers(createMockProjectConfiguration());
+        const { createdIndexFacade } =
+            IndexerConfiguration.configureIndexers(createMockProjectConfiguration(), false);
         indexFacade = createdIndexFacade;
     });
 
@@ -169,5 +169,19 @@ describe('IndexFacade', () => {
 
         const result = indexFacade.find(q);
         expect(result).toEqual(['id2', 'id3']);
+    });
+
+
+    it('do not index if no identifier', () => {
+
+        const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        delete doc1.resource.identifier;
+        const doc2 = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+
+        const result = indexFacade.find({});
+        expect(result).toEqual(['id1']);
     });
 });

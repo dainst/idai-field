@@ -95,18 +95,6 @@ describe('FulltextIndexer', () => {
     });
 
 
-    // TODO review
-    xit('do not index if no identifier', () => { // tests interaction with IndexItem
-
-        const d = doc('1', 'identifier1', 'type', 'short');
-        delete d.resource.identifier;
-        const ie = IndexItem.from(d);
-
-        FulltextIndex.put(fi, d, ie, typesMap);
-        expect(FulltextIndex.get(fi, 'short', undefined)).toEqual([]);
-    });
-
-
     it('match in multiple selected types', () => {
 
         const d1 = doc('1', 'identifier1', 'type1');

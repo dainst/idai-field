@@ -48,6 +48,12 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
+    public async openDoceditModal() {
+
+        await this.resourcesComponent.editDocument(this.document);
+    }
+
+
     private getLinkedImages(): Promise<Array<ImageRowItem>> {
 
         return TypeImagesUtil.getLinkedImages(this.document, this.datastore);

@@ -74,8 +74,10 @@ export class TypeRelationPickerComponent {
         const query: Query = {
             q: q,
             types: ['Type'],
-            sort: 'exactMatchFirst', // TODO test manually once
-            rankOptions: { matchType: this.resource.type }
+            sort: {
+                matchType: this.resource.type,
+                mode: 'exactMatchFirst', // TODO test manually once
+            }
         };
         if (this.selectedCatalog) {
             query.constraints = {'liesWithin:contain': this.selectedCatalog.id}; // TODO also handle subcatalogs

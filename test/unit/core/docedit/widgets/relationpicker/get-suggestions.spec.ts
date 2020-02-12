@@ -41,8 +41,9 @@ describe('getSuggestions', () => {
                    value: ['id'],
                    type: 'subtract'
                }
-            }, limit: MAX_SUGGESTIONS,
-            sort: 'exactMatchFirst'
+            },
+            limit: MAX_SUGGESTIONS,
+            sort: { mode: 'exactMatchFirst' }
         });
 
         done();
@@ -72,8 +73,9 @@ describe('getSuggestions', () => {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
                     type: 'subtract'
                 }
-            }, limit: MAX_SUGGESTIONS,
-            sort: 'exactMatchFirst'
+            },
+            limit: MAX_SUGGESTIONS,
+            sort: { mode: 'exactMatchFirst' }
         });
 
         done();
@@ -104,8 +106,9 @@ describe('getSuggestions', () => {
                     value: ['id'],
                     type: 'subtract'
                 }, 'isRecordedIn:contain': 'operationId',
-            }, limit: MAX_SUGGESTIONS,
-            sort: 'exactMatchFirst'
+            },
+            limit: MAX_SUGGESTIONS,
+            sort: { mode: 'exactMatchFirst' }
         });
 
         done();
@@ -139,8 +142,9 @@ describe('getSuggestions', () => {
                     value: [],
                     type: 'subtract'
                 },
-            }, limit: MAX_SUGGESTIONS,
-            sort: 'exactMatchFirst'
+            },
+            limit: MAX_SUGGESTIONS,
+            sort: { mode: 'exactMatchFirst' }
         });
 
         done();
@@ -169,8 +173,9 @@ describe('getSuggestions', () => {
                     value: 'id',
                     type: 'subtract'
                 }
-            }, limit: MAX_SUGGESTIONS,
-            sort: 'exactMatchFirst'
+            },
+            limit: MAX_SUGGESTIONS,
+            sort: { mode: 'exactMatchFirst' }
         });
 
         done();

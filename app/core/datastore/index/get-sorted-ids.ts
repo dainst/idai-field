@@ -14,7 +14,7 @@ import {doPaired, tuplify} from '../../util/utils';
 const ID = 'id';
 const IDENTIFIER = 'identifier';
 const INSTANCES = 'instances';
-const MATCH_TYPE = 'matchType';
+const TYPE = 'Type';
 
 type Percentage = number;
 
@@ -38,7 +38,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
                              query: Query): Array<ResourceId> {
 
     const rankEntries = shouldRankTypes(query)
-        ? rankTypeResourceIndexItems(query.rankOptions[MATCH_TYPE])
+        ? rankTypeResourceIndexItems((query.sort as any).matchType)
         : rankRegularIndexItems;
 
     const handleExactMatchIfQuerySaysSo =
@@ -56,15 +56,13 @@ export function getSortedIds(indexItems: Array<IndexItem>,
 
 function shouldHandleExactMatch(query: Query) {
 
-    return query.sort === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)
+    return query.sort?.mode === 'exactMatchFirst' && isNot(undefinedOrEmpty)(query.q)
 }
 
 
 function shouldRankTypes(query: Query) {
 
-    return equal(query.types)(['Type'])
-        && query.rankOptions
-        && query.rankOptions[MATCH_TYPE];
+    return equal(query.types)([TYPE]) && query.sort?.matchType;
 }
 
 

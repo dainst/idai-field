@@ -26,7 +26,7 @@ function makeQuery(resource: Resource, relationDefinition: RelationDefinition, i
         types: inverse ? relationDefinition.domain : relationDefinition.range,
         constraints: makeConstraints(resource, relationDefinition, inverse),
         limit: MAX_SUGGESTIONS,
-        sort: 'exactMatchFirst'
+        sort: { mode: 'exactMatchFirst' }
     };
 }
 

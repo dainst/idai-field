@@ -14,12 +14,12 @@ describe('getSortedIds', () => {
             ];
 
         const result1 = getSortedIds(as as any, { q: 'C2',
-            sort: 'default'
+            sort: { mode: 'default' }
         });
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(as as any, { q: 'C2',
-            sort: 'exactMatchFirst'
+            sort: { mode: 'exactMatchFirst' }
         });
         expect(result2).toEqual(['c', 'a', 'b']);
     });
@@ -36,14 +36,14 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any,
             {
                 types: ['Type'],
-                rankOptions: { matchType: 'Pottery' }
+                sort: { matchType: 'Pottery' }
             });
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(indexItems as any,
             {
                 types: ['Type'],
-                rankOptions: { matchType: 'Terracotta' }
+                sort: { matchType: 'Terracotta' }
             });
         expect(result2).toEqual(['c', 'b', 'a']);
     });
@@ -59,7 +59,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any,
             {
                 types: ['Type'],
-                rankOptions: { matchType: 'Terracotta' }
+                sort: { matchType: 'Terracotta' }
             });
         expect(result1).toEqual(['a', 'b']);
     });

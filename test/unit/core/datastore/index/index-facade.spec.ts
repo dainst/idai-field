@@ -35,14 +35,14 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocB);
         indexFacade.put(typeDocA);
 
-        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items1).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
 
-        const items = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'FindA'} });
+        const items = indexFacade.find({ types: ['Type'], sort: { matchType: 'FindA'} });
         expect(items).toEqual(['id0', 'id1']);
     });
 
@@ -61,21 +61,21 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.remove(findDocB);
         indexFacade.remove(findDocC);
 
-        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(result).toEqual(['id0', 'id1']);
     });
 
@@ -94,14 +94,14 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
@@ -110,7 +110,7 @@ describe('IndexFacade', () => {
         indexFacade.put(findDocB);
         indexFacade.put(findDocC);
 
-        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(result).toEqual(['id0', 'id1']);
     });
 
@@ -129,20 +129,20 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.put(typeDocA);
 
-        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
         expect(result).toEqual(['id1', 'id0']);
     });
 

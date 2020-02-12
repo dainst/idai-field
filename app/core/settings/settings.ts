@@ -1,7 +1,6 @@
 export interface SyncTarget {
 
     address: string;
-    username: string;
     password: string;
 }
 

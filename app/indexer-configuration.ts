@@ -1,5 +1,4 @@
 import {ConstraintIndex} from './core/datastore/index/constraint-index';
-import {FulltextIndex} from './core/datastore/index/fulltext-index';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 
@@ -26,7 +25,7 @@ export module IndexerConfiguration {
             'conflicts:exist': { path: '_conflicts', type: 'exist' },
         }, projectConfiguration.getTypesMap());
 
-        const createdFulltextIndex = FulltextIndex.setUp({ index: {} } as any);
+        const createdFulltextIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,

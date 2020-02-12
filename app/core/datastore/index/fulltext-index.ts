@@ -27,9 +27,6 @@ export module FulltextIndex {
     const tokenizationPattern: RegExp = /[ -]/;
 
 
-    export const clear = (index: FulltextIndex) => setUp(index);
-
-
     export function put(index: FulltextIndex,
                         document: Document,
                         indexItem: IndexItem,
@@ -84,13 +81,6 @@ export module FulltextIndex {
             .reduce(getFromIndex(index, types), ResultSets.make());
 
         return ResultSets.collapse(resultSets) as Array<IndexItem>;
-    }
-
-
-    export function setUp(index: FulltextIndex) {
-
-        index = {};
-        return index;
     }
 
 

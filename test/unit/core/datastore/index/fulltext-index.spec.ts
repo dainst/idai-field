@@ -33,7 +33,7 @@ describe('FulltextIndexer', () => {
 
     beforeEach(() => {
 
-        fi = FulltextIndex.setUp({ index: {} });
+        fi = {};
 
         const defaultTypeConfiguration = {
             fields: [
@@ -168,18 +168,6 @@ describe('FulltextIndexer', () => {
     it('no types present', () => {
 
         expect(FulltextIndex.get(fi, 'identifier', ['type'])).toEqual([]);
-    });
-
-
-    // TODO review; clear seems to be used only in this test
-    it('clear', () => {
-
-        const d = doc('1', 'identifier1', 'type');
-        const ie = IndexItem.from(d);
-
-        FulltextIndex.put(fi, d, ie, typesMap);
-        const clearedFi = FulltextIndex.clear(fi);
-        expect(FulltextIndex.get(clearedFi, 'identifier', ['type'])).toEqual([]);
     });
 
 

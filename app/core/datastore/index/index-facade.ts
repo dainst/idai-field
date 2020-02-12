@@ -74,7 +74,7 @@ export class IndexFacade {
     public clear() {
 
         ConstraintIndex.clear(this.constraintIndex);
-        FulltextIndex.clear(this.fulltextIndex);
+        this.fulltextIndex = {};
         this.indexItems = {};
     }
 

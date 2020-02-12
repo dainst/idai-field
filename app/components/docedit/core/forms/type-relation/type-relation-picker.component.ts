@@ -21,6 +21,7 @@ export class TypeRelationPickerComponent {
 
     public resource: Resource|undefined = undefined;
 
+    public q: string = '';
     public selectedCatalog: FieldResource|undefined = undefined;
     public availableCatalogs: Array<FieldResource> = [];
 
@@ -47,14 +48,15 @@ export class TypeRelationPickerComponent {
 
     public selectCatalog() {
 
-        this.fetchTypes(); // TODO set query string
+        this.fetchTypes();
     }
 
 
     public setQueryString(q: string) {
 
+        this.q = q;
         if (this.timeoutRef) clearTimeout(this.timeoutRef);
-        this.timeoutRef = setTimeout(() => this.fetchTypes(q), 200);
+        this.timeoutRef = setTimeout(() => this.fetchTypes(), 200);
     }
 
 
@@ -67,12 +69,12 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private async fetchTypes(q: string = '') {
+    private async fetchTypes() {
 
         if (!this.resource) return;
 
         const query: Query = {
-            q: q,
+            q: this.q,
             types: ['Type'],
             sort: {
                 matchType: this.resource.type,

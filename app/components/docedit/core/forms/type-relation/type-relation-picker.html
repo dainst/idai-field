@@ -3,7 +3,7 @@
         <select id="importFormatSelect" class="form-control" style="width: 175px"
                 [(ngModel)]="selectedCatalog"  (change)="selectCatalog()">
             <option *ngFor="let catalog of availableCatalogs"
-                    [ngValue]="catalog"> {{catalog.identifier}}</option>
+                    [ngValue]="catalog">{{catalog.identifier}}</option>
         </select>
         <div class="type-search-bar float-left" style="width: 100%">
             <search-bar [showFiltersMenu]="false"

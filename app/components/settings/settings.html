@@ -60,6 +60,17 @@
 
                     <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
 
+                    <div class="form-group">
+
+                        <label for="sync-target-host-password-input"
+                               class="control-label col-form-label"
+                               i18n="@@settings.synchronization.hostPassword">Eigenes Passwort</label>
+                        <input id="sync-target-host-password-input" [ngModel]="settings.hostPassword"
+                               (ngModelChange)="settings.hostPassword = $event"
+                               class="form-control">
+
+                    </div>
+
                     <div class="row" style="margin: 15px 0 0;">
                         <div class="col-auto mr-auto">
                             <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>

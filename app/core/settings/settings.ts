@@ -11,6 +11,7 @@ export interface Settings {
     isAutoUpdateActive: boolean;
     isSyncActive: boolean;
     remoteSites: Array<string>;
+    hostPassword: string;
     syncTarget: SyncTarget;
     username: string;
     dbs: Array<string>;

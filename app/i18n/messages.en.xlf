@@ -1859,7 +1859,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> types</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneType" datatype="html">
@@ -1867,7 +1867,7 @@
         <target state="final">One type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedTypes" datatype="html">
@@ -1875,7 +1875,7 @@
         <target state="final">No types</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.linkedFinds" datatype="html">
@@ -1883,7 +1883,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> finds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneFind" datatype="html">
@@ -1891,7 +1891,7 @@
         <target state="final">One find</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
@@ -1899,7 +1899,7 @@
         <target state="final">No finds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
@@ -2803,6 +2803,14 @@
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/date.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">
+        <source>Alle Kataloge</source>
+        <target state="final">All Catalogs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>

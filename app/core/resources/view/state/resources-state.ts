@@ -173,7 +173,7 @@ export module ResourcesState {
             typesManagementState: {
                 operation: undefined,
                 layerIds: [],
-                mode: 'map',
+                mode: 'types',
                 bypassHierarchy: false,
                 expandAllGroups: false,
                 navigationPath: NavigationPath.empty(),

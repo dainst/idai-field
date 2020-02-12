@@ -78,7 +78,7 @@ export class TypeRelationPickerComponent {
             types: ['Type'],
             sort: {
                 matchType: this.resource.type,
-                mode: 'exactMatchFirst', // TODO test manually once
+                mode: 'exactMatchFirst',
             }
         };
         if (this.selectedCatalog && this.selectedCatalog !== 'all-catalogs') {

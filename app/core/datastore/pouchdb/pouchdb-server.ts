@@ -27,8 +27,10 @@ export class PouchdbServer {
         app.use(expressBasicAuth( {
             challenge: true,
             authorizer: (_: string, password: string) =>
-                expressBasicAuth.safeCompare(password, this.password)
-            } ));
+                expressBasicAuth.safeCompare(password, this.password),
+            unauthorizedResponse: () =>
+                ({ status: 401, reason: "Name or password is incorrect." })
+        } ));
         app.use('/', expressPouchDB(PouchDB, {
             mode: 'fullCouchDB',
             overrideMode: {

@@ -1,9 +1,7 @@
-
-
 function _(id: string) {
 
     return 'The filename of the missing image' +
-    ' is \’' + id + '\' (note: no file extension!). ' +
+    ' is \'' + id + '\' (note: no file extension!). ' +
     'It should be found in the project folder below the imagestore (see settings page).'
 }
 

@@ -280,7 +280,8 @@ export class SettingsService {
         };
     }
 
-    private static generatePassword() {
+    
+    private static generatePassword(): string {
         const length = 8,
             charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         let retVal = "";

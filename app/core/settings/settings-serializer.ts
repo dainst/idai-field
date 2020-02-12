@@ -34,6 +34,7 @@ export class SettingsSerializer {
         configToWrite['locale'] = settings.locale;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['isSyncActive'] = settings.isSyncActive;
+        configToWrite['hostPassword'] = settings.hostPassword;
 
         if (settings.syncTarget && (settings.syncTarget['password']
                 || settings.syncTarget['address'])) {

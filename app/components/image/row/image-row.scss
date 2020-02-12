@@ -21,6 +21,10 @@ image-row {
           object-fit: scale-down;
           user-select: none;
           -webkit-user-drag: none;
+
+          &.highlightOnHover:hover {
+            filter: brightness(95%);
+          }
         }
       }
     }

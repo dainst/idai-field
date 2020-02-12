@@ -6,7 +6,9 @@
         <div *ngFor="let image of images"
              class="type-image-container"
              (click)="onThumbnailClicked(image)">
-            <img *ngIf="thumbnailUrls && thumbnailUrls[image.imageId]" [src]="thumbnailUrls[image.imageId]">
+            <img *ngIf="thumbnailUrls && thumbnailUrls[image.imageId]"
+                 [src]="thumbnailUrls[image.imageId]"
+                 [class.highlightOnHover]="highlightOnHover">
         </div>
     </div>
     <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage()">

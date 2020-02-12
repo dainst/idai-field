@@ -30,5 +30,7 @@
                   i18n="@@resources.typeList.noLinkedFinds">Keine Funde</span>
         </span>
     </div>
-    <image-row [images]="linkedImages" (onImageClicked)="openImageModal($event)"></image-row>
+    <image-row [images]="linkedImages"
+               [highlightOnHover]="true"
+               (onImageClicked)="openImageModal($event)"></image-row>
 </div>

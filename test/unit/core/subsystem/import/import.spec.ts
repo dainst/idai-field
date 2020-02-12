@@ -1,12 +1,12 @@
 import {to} from 'tsfun';
-import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
-import {PouchdbManager} from '../../../../app/core/datastore/pouchdb/pouchdb-manager';
-import {PouchdbServer} from '../../../../app/core/datastore/pouchdb/pouchdb-server';
-import {Importer} from '../../../../app/core/import/importer';
-import {TypeUtility} from '../../../../app/core/model/type-utility';
-import {IdaiType} from '../../../../app/core/configuration/model/idai-type';
-import {ValidationErrors} from '../../../../app/core/model/validation-errors';
-import {ImportErrors} from '../../../../app/core/import/import/import-errors';
+import {createApp, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
+import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
+import {PouchdbServer} from '../../../../../app/core/datastore/pouchdb/pouchdb-server';
+import {Importer} from '../../../../../app/core/import/importer';
+import {TypeUtility} from '../../../../../app/core/model/type-utility';
+import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
+import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
+import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
 
 /**
  * @author Daniel de Oliveira

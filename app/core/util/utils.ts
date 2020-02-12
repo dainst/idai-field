@@ -1,22 +1,10 @@
 import {identity, filter, ObjectCollection, compose,
-    isArray, keys, copy, Pair, first, flow, map} from 'tsfun';
+    isArray, keys, copy, Pair, first, flow, map, pairWith} from 'tsfun';
 
 
 export function isBoolean(value: any): boolean {
 
     return typeof value === 'boolean';
-}
-
-
-export function tuplify(...fs : any[]) {
-
-    return (s: any) => fs.map(f => f(s));
-}
-
-
-export function pairWith(f: any) { // TODO move to tsfun
-
-    return tuplify(identity, f);
 }
 
 

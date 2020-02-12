@@ -27,6 +27,7 @@ import {Imagestore} from '../../../../app/core/images/imagestore/imagestore';
 import {ViewFacade} from '../../../../app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../app/core/resources/view/resources-state-manager';
 import {DocumentHolder} from '../../../../app/core/docedit/document-holder';
+import { PouchdbServer } from '../../../../app/core/datastore/pouchdb/pouchdb-server';
 
 
 class IdGenerator {
@@ -39,12 +40,13 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbmanager, projectName = 'testdb', startSync = false) {
+export async function setupSettingsService(pouchdbmanager, pouchdbserver, projectName = 'testdb', startSync = false) {
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
         pouchdbmanager,
+        pouchdbserver,
         undefined,
         new AppConfigurator(
             new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
@@ -59,6 +61,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
         isAutoUpdateActive: false,
         isSyncActive: startSync,
         remoteSites: [],
+        hostPassword: "",
         syncTarget: new class implements SyncTarget {
             address: string = 'http://localhost:3003/';
             password: string;
@@ -78,8 +81,10 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const pouchdbmanager = new PouchdbManager();
 
+    const pouchdbserver = new PouchdbServer();
+
     const {settingsService, projectConfiguration} = await setupSettingsService(
-        pouchdbmanager, projectName, startSync);
+        pouchdbmanager, pouchdbserver, projectName, startSync);
 
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 

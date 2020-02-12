@@ -1,6 +1,7 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {PouchdbManager} from '../../../../app/core/datastore/pouchdb/pouchdb-manager';
+import {PouchdbServer} from '../../../../app/core/datastore/pouchdb/pouchdb-server';
 import {Importer} from '../../../../app/core/import/importer';
 import {TypeUtility} from '../../../../app/core/model/type-utility';
 import {IdaiType} from '../../../../app/core/configuration/model/idai-type';
@@ -18,7 +19,7 @@ describe('Import/Subsystem', () => {
     beforeEach(async done => {
 
         await setupSyncTestDb();
-        const {projectConfiguration} = await setupSettingsService(new PouchdbManager());
+        const {projectConfiguration} = await setupSettingsService(new PouchdbManager(), new PouchdbServer());
         _projectConfiguration = projectConfiguration;
         const {fieldDocumentDatastore} = await createApp();
         datastore = fieldDocumentDatastore;

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import * as express from 'express';
 import * as PouchDB from 'pouchdb';
 import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
@@ -8,8 +7,6 @@ import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
-
-const expressPouchDB = require('express-pouchdb');
 
 
 @Injectable()
@@ -48,27 +45,6 @@ export class PouchdbManager {
      * @throws if trying do delete the currently active database
      */
     public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
-
-
-    /**
-     * Provides Fauxton
-     */
-    public setupServer(): Promise<any> {
-
-        return new Promise(resolve => {
-            const app = express();
-            app.use('/', expressPouchDB(PouchDB, {
-                mode: 'fullCouchDB',
-                overrideMode: {
-                    include: ['routes/fauxton']
-                }
-            }));
-            app.listen(3000, function() {
-                console.debug('PouchDB Server is listening on port 3000');
-                resolve();
-            });
-        });
-    }
 
 
     public async resetForE2E() {

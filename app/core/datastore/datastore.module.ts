@@ -4,6 +4,7 @@ import {Datastore, Document, ReadDatastore, FieldDocument, ImageDocument,
 import {DocumentCache} from './cached/document-cache';
 import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
 import {PouchdbManager} from './pouchdb/pouchdb-manager';
+import {PouchdbServer} from './pouchdb/pouchdb-server';
 import {FieldDatastore} from './field/field-datastore';
 import {FieldReadDatastore} from './field/field-read-datastore';
 import {ImageDatastore} from './field/image-datastore';
@@ -28,6 +29,7 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
     providers: [
         ChangesStream,
         PouchdbManager,
+        PouchdbServer,
         { provide: TypeConverter, useClass: FieldTypeConverter },
         DocumentCache,
         IdGenerator,

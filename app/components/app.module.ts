@@ -27,6 +27,7 @@ import {Validator} from '../core/model/validator';
 import {ImportValidator} from '../core/import/import/process/import-validator';
 import {MatrixModule} from './matrix/matrix.module';
 import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
+import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
 import {TypeUtility} from '../core/model/type-utility';
 import {UsernameProvider} from '../core/settings/username-provider';
@@ -116,9 +117,9 @@ registerLocaleData(localeDe, 'de');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [SettingsService, PouchdbManager],
-            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) => () =>
-                pouchdbManager.setupServer()
+            deps: [SettingsService, PouchdbManager, PouchdbServer],
+            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer) => () =>
+                pouchdbServer.setupServer()
                     .then(() => (new SettingsSerializer).load())
                     .then(settings =>
                         settingsService.bootProjectDb(settings).then(() =>

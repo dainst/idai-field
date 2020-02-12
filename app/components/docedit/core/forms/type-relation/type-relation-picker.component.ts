@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {first, Pair, second, to} from 'tsfun';
+import {first, Pair, second, to, isNot, undefinedOrEmpty} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -76,15 +76,20 @@ export class TypeRelationPickerComponent {
         const query: Query = {
             q: this.q,
             types: ['Type'],
+            limit: 5,
             sort: {
                 matchType: this.resource.type,
                 mode: 'exactMatchFirst',
-            }
+            },
+            constraints: {}
         };
+        if (isNot(undefinedOrEmpty)(this.resource.relations['isInstanceOf'])) {
+            (query.constraints as any)['id:match'] =
+                { value: this.resource.relations['isInstanceOf'], type: 'subtract' };
+        }
         if (this.selectedCatalog && this.selectedCatalog !== 'all-catalogs') {
             // TODO also handle subcatalogs
-            query.constraints =
-                {'liesWithin:contain': (this.selectedCatalog as FieldResource).id};
+            (query.constraints as any)['liesWithin:contain'] = (this.selectedCatalog as FieldResource).id
         }
 
         const documents = (await this.datastore.find(query)).documents;

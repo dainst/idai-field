@@ -248,7 +248,7 @@ export class SettingsService {
         if (!settings.username) settings.username = 'anonymous';
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
-        if (!settings.hostPassword) settings.hostPassword = "iDAI.field";
+        if (!settings.hostPassword) settings.hostPassword = this.generatePassword();
 
         if (settings.imagestorePath) {
             let path: string = settings.imagestorePath;
@@ -278,5 +278,15 @@ export class SettingsService {
             created: { user: username, date: new Date() },
             modified: [{ user: username, date: new Date() }]
         };
+    }
+
+    private static generatePassword() {
+        const length = 8,
+            charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) {
+            retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return retVal;
     }
 }

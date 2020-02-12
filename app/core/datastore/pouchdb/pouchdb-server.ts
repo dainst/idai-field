@@ -26,7 +26,7 @@ export class PouchdbServer {
         const app = express();
         app.use(expressBasicAuth( {
             challenge: true,
-            authorizer: (_: string, password: string) => 
+            authorizer: (_: string, password: string) =>
                 expressBasicAuth.safeCompare(password, this.password)
             } ));
         app.use('/', expressPouchDB(PouchDB, {

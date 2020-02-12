@@ -79,7 +79,13 @@ export class ImageRowComponent implements OnChanges {
     private async applyUpdate(update: ImageRowUpdate) {
 
         await this.updateThumbnailUrls(update.newImageIds);
-        this.imageRowElement.nativeElement.style.transform = 'translateX(' + update.positionLeft + 'px)';
+
+        if (update.firstShownImageIndex >= 0) {
+            const element = this.imageRowElement.nativeElement
+                .getElementsByClassName('type-image-container')
+                .item(update.firstShownImageIndex);
+            this.imageRowElement.nativeElement.style.transform = 'translateX(-' + element.offsetLeft + 'px)';
+        }
     }
 
 

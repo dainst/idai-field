@@ -2,7 +2,7 @@ import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
 
 
-export type ImageRowUpdate = { newImageIds: string[], positionLeft: number };
+export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: number };
 
 
 /**
@@ -16,8 +16,6 @@ export class ImageRow {
 
     private lastImageFullyVisible: boolean = false;
 
-    private positionLeft: number = 0;
-
 
     constructor(private width: number,
                 private height: number,
@@ -27,9 +25,7 @@ export class ImageRow {
 
     public nextPage(): ImageRowUpdate {
 
-        if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
-
-        this.positionLeft -= this.computeScrollWidth();
+        if (this.images.length === 0) return { newImageIds: [], firstShownImageIndex: -1 };
 
         this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();
@@ -40,25 +36,23 @@ export class ImageRow {
 
         return {
             newImageIds: newImagesIds,
-            positionLeft: this.positionLeft
+            firstShownImageIndex: this.firstShownImageIndex
         }
     }
 
 
     public previousPage(): ImageRowUpdate {
 
-        if (this.images.length === 0) return { newImageIds: [], positionLeft: 0 };
+        if (this.images.length === 0) return { newImageIds: [], firstShownImageIndex: -1 };
 
         this.lastShownImageIndex = this.firstShownImageIndex;
         this.calculateFirstShownImageIndex();
 
         this.highestImageIndex = Math.max(this.highestImageIndex, this.lastShownImageIndex);
 
-        this.positionLeft += this.computeScrollWidth();
-
         return {
             newImageIds: [],
-            positionLeft: this.positionLeft
+            firstShownImageIndex: this.firstShownImageIndex
         }
     }
 
@@ -72,20 +66,6 @@ export class ImageRow {
     public hasPreviousPage(): boolean {
 
         return this.firstShownImageIndex > 0;
-    }
-
-
-    private computeScrollWidth(): number {
-
-        let scrollWidth = 0;
-
-        if (this.lastShownImageIndex === 0) return scrollWidth;
-
-        for (let i = this.firstShownImageIndex; i < this.lastShownImageIndex; i++) {
-            scrollWidth += this.calculateImageWidth(this.images[i]);
-        }
-
-        return scrollWidth;
     }
 
 

@@ -32,32 +32,32 @@ describe('ImageRow', () => {
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1', 'i2']);
-        expect(result.positionLeft).toBe(0);
+        expect(result.firstShownImageIndex).toBe(0);
         // Show i1 and i2; i2 is not shown completely
 
         result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i3']);
-        expect(result.positionLeft).toBe(-200);
+        expect(result.firstShownImageIndex).toBe(1);
         // Show i2 and i3; i3 is not shown completely
 
         result = imageRow.nextPage();
         expect(result.newImageIds).toEqual([]);
-        expect(result.positionLeft).toBe(-450);
+        expect(result.firstShownImageIndex).toBe(2);
         // Show i3
 
         result = imageRow.previousPage();
         expect(result.newImageIds).toEqual([]);
-        expect(result.positionLeft).toBe(-200);
+        expect(result.firstShownImageIndex).toBe(1);
         // Show i2 and i3; i3 is not shown completely
 
         result = imageRow.previousPage();
         expect(result.newImageIds).toEqual([]);
-        expect(result.positionLeft).toBe(0);
+        expect(result.firstShownImageIndex).toBe(0);
         // Show i1 and i2; i2 is not shown completely
 
         result = imageRow.nextPage();
         expect(result.newImageIds).toEqual([]);
-        expect(result.positionLeft).toBe(-200);
+        expect(result.firstShownImageIndex).toBe(1);
         // Show i2 and i3; i3 is not shown completely
     });
 

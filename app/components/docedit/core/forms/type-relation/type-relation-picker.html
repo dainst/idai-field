@@ -2,6 +2,7 @@
     <div class="modal-header">
         <select id="importFormatSelect" class="form-control" style="width: 175px"
                 [(ngModel)]="selectedCatalog"  (change)="selectCatalog()">
+            <option value="all-catalogs">Alle Kataloge</option>
             <option *ngFor="let catalog of availableCatalogs"
                     [ngValue]="catalog">{{catalog.identifier}}</option>
         </select>

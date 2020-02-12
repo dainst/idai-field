@@ -4,6 +4,7 @@ import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
+import {PouchdbServer} from '../datastore/pouchdb/pouchdb-server';
 import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
 import {M} from '../../components/messages/m';
 import {SyncService} from '../sync/sync-service';
@@ -39,6 +40,7 @@ export class SettingsService {
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
+                private pouchdbServer: PouchdbServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private imageConverter: ImageConverter,
@@ -195,6 +197,8 @@ export class SettingsService {
 
         if (ipcRenderer) ipcRenderer.send('settingsChanged', this.settings);
 
+        this.pouchdbServer.setPassword(this.settings.hostPassword);
+
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
             .catch((errWithParams: any) => {
                 if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
@@ -244,6 +248,7 @@ export class SettingsService {
         if (!settings.username) settings.username = 'anonymous';
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
+        if (settings.hostPassword === undefined) settings.hostPassword = this.generatePassword();
 
         if (settings.imagestorePath) {
             let path: string = settings.imagestorePath;
@@ -273,5 +278,16 @@ export class SettingsService {
             created: { user: username, date: new Date() },
             modified: [{ user: username, date: new Date() }]
         };
+    }
+
+    
+    private static generatePassword(): string {
+        const length = 8,
+            charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) {
+            retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return retVal;
     }
 }

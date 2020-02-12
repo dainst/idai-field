@@ -35,7 +35,7 @@ export class SettingsSerializer {
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['isSyncActive'] = settings.isSyncActive;
 
-        if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password']
+        if (settings.syncTarget && (settings.syncTarget['password']
                 || settings.syncTarget['address'])) {
             configToWrite['syncTarget'] = settings.syncTarget;
         }

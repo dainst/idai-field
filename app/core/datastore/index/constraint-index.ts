@@ -237,7 +237,6 @@ export module ConstraintIndex {
     }
 
 
-    // TODO review, public?
     export function getIndexType(field: FieldDefinition): string {
 
         switch (field.inputType) {

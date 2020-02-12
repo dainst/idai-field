@@ -1,12 +1,14 @@
 <div #typeRow class="type-row"
      (mouseover)="highlightDocument(document)"
      (mouseleave)="highlightDocument(undefined)">
-    <div class="type-info">
-        <div class="type-title">
-            <b>{{document.resource.identifier}}</b>
-        </div>
-        <div id="type-thumbnail">
-            <thumbnail [resource]="document.resource"></thumbnail>
+    <div class="type-container">
+        <div class="type-info" (dblclick)="openDoceditModal()">
+            <div class="type-title">
+                <b>{{document.resource.identifier}}</b>
+            </div>
+            <div id="type-thumbnail">
+                <thumbnail [resource]="document.resource"></thumbnail>
+            </div>
         </div>
         <list-button-group [document]="document"
                            [alwaysShowInfoButtons]="true"></list-button-group>

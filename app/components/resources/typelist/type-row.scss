@@ -8,30 +8,33 @@ type-row {
     margin-bottom: -1px;
     border-bottom: 2px solid #dddddd;
 
-    .type-info {
+    .type-container {
       position: relative;
       min-width: 304px;
       height: $type-row-height;
       border-right: 1px solid #dddddd;
       user-select: none;
 
-      #type-thumbnail {
-        margin-left: 8px;
-        margin-top: 2px;
-        margin-bottom: 8px;
+      .type-info {
+        height: 100%;
 
-        thumbnail #thumbnail-container {
-          width: 267px;
-          height: 140px;
+        .type-title {
+          text-align: center;
+          height: 24px;
+          width: 279px;
+        }
+
+        #type-thumbnail {
+          margin-left: 8px;
+          margin-top: 2px;
+          margin-bottom: 8px;
+
+          thumbnail #thumbnail-container {
+            width: 267px;
+            height: 140px;
+          }
         }
       }
-
-      .type-title {
-        text-align: center;
-        height: 24px;
-        width: 279px;
-      }
-
       .sidebar-list-button-group {
         top: 0;
         width: 24px;

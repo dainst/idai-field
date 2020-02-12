@@ -1209,6 +1209,9 @@
     "Find": {
       "label": "Fund",
       "fields": {
+        "instanceOf": {
+          "label": "Instanz von"
+        },
         "amount": {
           "label": "Anzahl (gesamt)",
           "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke"

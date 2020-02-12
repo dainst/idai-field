@@ -1083,6 +1083,9 @@
     "Find": {
       "label": "Find",
       "fields": {
+        "instanceOf": {
+          "label": "Instance of"
+        },
         "amount": {
           "label": "Total number"
         },

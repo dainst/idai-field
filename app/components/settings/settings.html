@@ -45,7 +45,7 @@
                                class="form-control">
                     </div>
 
-                    <div class="settings-info" style="margin-top: 13px;" i18n="@@settings.userName.info">
+                    <div class="settings-info" i18n="@@settings.userName.info">
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
@@ -59,17 +59,6 @@
 
 
                     <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
-
-                    <div class="form-group">
-
-                        <label for="sync-target-host-password-input"
-                               class="control-label col-form-label"
-                               i18n="@@settings.synchronization.hostPassword">Eigenes Passwort</label>
-                        <input id="sync-target-host-password-input" [ngModel]="settings.hostPassword"
-                               (ngModelChange)="settings.hostPassword = $event"
-                               class="form-control">
-
-                    </div>
 
                     <div class="row" style="margin: 15px 0 0;">
                         <div class="col-auto mr-auto">
@@ -101,13 +90,26 @@
                                [ngModel]="settings.syncTarget.password"
                                (ngModelChange)="settings.syncTarget.password = $event"
                                class="form-control">
+                    </div>
+
+                    <div class="form-group">
 
                         <label class="control-label col-form-label" i18n="@@settings.synchronization.ownAddress">
-                            Eigene Adresse: http://{{ipAddress}}:3000
+                            Eigene Adresse
                         </label>
-                        <div class="settings-info" i18n="@@settings.synchronization.ownAddress.info">
-                            Diese Adresse kann in anderen iDAI.field-Clients eingetragen werden, um
-                            eine Synchronisationsverbindung zu diesem Client herzustellen.
+                        <pre><code>http://{{ipAddress}}:3000</code></pre>
+
+                        <label for="sync-target-host-password-input"
+                               class="control-label col-form-label"
+                               i18n="@@settings.synchronization.hostPassword">Eigenes Passwort</label>
+                        <input id="sync-target-host-password-input" [ngModel]="settings.hostPassword"
+                               (ngModelChange)="settings.hostPassword = $event"
+                               class="form-control">
+
+                        <div class="settings-info" i18n="@@settings.synchronization.info">
+                            Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients
+                            eingetragen werden, damit dieser Computer als Synchronisationsziel
+                            eingerichtet werden kann.
                         </div>
                     </div>
 
@@ -135,7 +137,7 @@
                             </label>
                         </div>
 
-                        <div class="settings-info" style="margin-top: 13px;" i18n="@@settings.images.path.info">
+                        <div class="settings-info" i18n="@@settings.images.path.info">
                             Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
                             sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
                             Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern geteilt wird.

@@ -33,7 +33,11 @@ image-row {
         .resource-info {
           position: absolute;
           bottom: 3px;
-          left: 3px;
+          left: 50%;
+          transform: translateX(-50%);
+          max-width: calc(100% - 60px);
+          overflow: hidden;
+          text-overflow: ellipsis;
           text-align: left;
           background-color: #f8f9fad4;
           opacity: 0;

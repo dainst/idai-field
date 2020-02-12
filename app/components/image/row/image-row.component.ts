@@ -33,6 +33,7 @@ export class ImageRowComponent implements OnChanges {
 
     @Input() images: Array<ImageRowItem>;
     @Input() highlightOnHover: boolean = false;
+    @Input() showResourceInfoOnHover: boolean = false;
 
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
 

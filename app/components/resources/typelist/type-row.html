@@ -12,7 +12,7 @@
                            [alwaysShowInfoButtons]="true"></list-button-group>
     </div>
 
-    <div *ngIf="numberOfLinkedResources > -1" class="badge badge-light">
+    <div *ngIf="numberOfLinkedResources > -1" class="numberOfLinkedResourcesInfo badge badge-light">
         <span *ngIf="document.resource.type === 'TypeCatalog'">
             <span *ngIf="numberOfLinkedResources > 1"
                   i18n="@@resources.typeList.linkedTypes">{{numberOfLinkedResources}} Typen</span>
@@ -32,5 +32,6 @@
     </div>
     <image-row [images]="linkedImages"
                [highlightOnHover]="true"
+               [showResourceInfoOnHover]="true"
                (onImageClicked)="openImageModal($event)"></image-row>
 </div>

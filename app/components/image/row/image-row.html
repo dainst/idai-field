@@ -9,6 +9,9 @@
             <img *ngIf="thumbnailUrls && thumbnailUrls[image.imageId]"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover">
+            <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">
+                {{image.resource.identifier}}
+            </div>
         </div>
     </div>
     <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage()">

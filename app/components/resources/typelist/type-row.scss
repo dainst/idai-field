@@ -52,12 +52,12 @@ type-row {
       }
     }
 
-    .badge {
+    .numberOfLinkedResourcesInfo {
       position: absolute;
       left: 307px;
       top: 3px;
       z-index: 2;
-      opacity: 0.8;
+      background-color: #f8f9fad4;
       user-select: none;
     }
 

@@ -16,14 +16,34 @@ image-row {
       transition: transform 0.5s ease-in-out;
 
       .type-image-container {
+        position: relative;
+
         img {
           max-width: 600px;
           object-fit: scale-down;
           user-select: none;
           -webkit-user-drag: none;
+          transition: filter 0.2s ease-in-out;
 
           &.highlightOnHover:hover {
             filter: brightness(95%);
+          }
+        }
+
+        .resource-info {
+          position: absolute;
+          bottom: 3px;
+          left: 3px;
+          text-align: left;
+          background-color: #f8f9fad4;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+          user-select: none;
+        }
+
+        &:hover {
+          .resource-info {
+            opacity: 1;
           }
         }
       }

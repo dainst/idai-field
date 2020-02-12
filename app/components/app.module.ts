@@ -126,7 +126,7 @@ registerLocaleData(localeDe, 'de');
                     .then(configuration => {
                         projectConfiguration = configuration;
 
-                        const {createdConstraintIndex, createdFulltextIndex, createdIndexFacade} =
+                        const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } =
                             IndexerConfiguration.configureIndexers(projectConfiguration);
                         constraintIndex = createdConstraintIndex;
                         fulltextIndex = createdFulltextIndex;

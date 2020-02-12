@@ -34,8 +34,6 @@ export module IndexerConfiguration {
             showWarnings
         );
 
-        return { createdConstraintIndex, createdFulltextIndex, createdIndexFacade,
-            createdTypesMap: projectConfiguration.getTypesMap() // TODO get rid of, since only used in test
-        };
+        return { createdConstraintIndex, createdFulltextIndex, createdIndexFacade };
     }
 }

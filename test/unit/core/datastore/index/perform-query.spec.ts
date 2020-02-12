@@ -19,11 +19,12 @@ describe('performQuery', () => {
 
     beforeEach(() => {
 
-        const {createdConstraintIndex, createdFulltextIndex, createdTypesMap} =
-            IndexerConfiguration.configureIndexers(createMockProjectConfiguration());
+        const projectConfiguration = createMockProjectConfiguration();
+        const {createdConstraintIndex, createdFulltextIndex} =
+            IndexerConfiguration.configureIndexers(projectConfiguration);
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
-        typesMap = createdTypesMap;
+        typesMap = projectConfiguration.getTypesMap();
     });
 
 

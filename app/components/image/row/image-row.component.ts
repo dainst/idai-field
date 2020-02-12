@@ -79,13 +79,7 @@ export class ImageRowComponent implements OnChanges {
     private async applyUpdate(update: ImageRowUpdate) {
 
         await this.updateThumbnailUrls(update.newImageIds);
-
-        if (update.firstShownImageIndex >= 0) {
-            const element = this.imageRowElement.nativeElement
-                .getElementsByClassName('type-image-container')
-                .item(update.firstShownImageIndex);
-            this.imageRowElement.nativeElement.style.transform = 'translateX(-' + element.offsetLeft + 'px)';
-        }
+        this.scroll(update);
     }
 
 
@@ -99,5 +93,16 @@ export class ImageRowComponent implements OnChanges {
         }, thumbnailUrls)(imageIds);
 
         this.thumbnailUrls = thumbnailUrls;
+    }
+
+
+    private scroll(update: ImageRowUpdate) {
+
+        if (update.firstShownImageIndex === -1) return;
+
+        const element: HTMLElement = this.imageRowElement.nativeElement
+            .getElementsByClassName('type-image-container')
+            .item(update.firstShownImageIndex);
+        this.imageRowElement.nativeElement.style.transform = 'translateX(-' + element.offsetLeft + 'px)';
     }
 }

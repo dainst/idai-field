@@ -8,7 +8,6 @@ import {ImageRowItem} from '../../components/image/row/image-row.component';
 import getMainImageId = ModelUtil.getMainImageId;
 
 
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -75,7 +74,10 @@ export module TypeImagesUtil {
         return (await datastore.find(constraints))
             .documents
             .map(document => {
-                return { imageId: getMainImageId(document.resource), resource: document.resource };
+                const imageId: string|undefined = getMainImageId(document.resource);
+                return imageId
+                    ? { imageId: imageId, resource: document.resource }
+                    : undefined;
             })
             .filter(isDefined) as Array<ImageRowItem>;
     }

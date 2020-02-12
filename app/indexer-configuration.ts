@@ -24,7 +24,7 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' },
-        }, projectConfiguration.getTypesMap(), true);
+        }, projectConfiguration.getTypesMap());
 
         const createdFulltextIndex = FulltextIndex.setUp({ index: {} } as any);
         const createdIndexFacade = new IndexFacade(

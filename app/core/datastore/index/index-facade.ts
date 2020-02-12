@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, separate} from 'tsfun';
+import {is, on, separate, flow, filter, forEach, isDefined} from 'tsfun';
 import {Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -9,7 +9,10 @@ import {IdaiType} from '../../configuration/model/idai-type';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
+import {Type} from '@angular/core';
 
+const TYPE = 'Type';
+const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
 
 /**
@@ -49,7 +52,7 @@ export class IndexFacade {
     public putMultiple(documents: Array<Document>) {
 
         const [typeDocuments, nonTypeDocuments]
-            = separate(on('resource.type', is('Type')))(documents);
+            = separate(on('resource.type', is(TYPE)))(documents);
 
         typeDocuments.forEach(_ => this._put(_, true, false));
         nonTypeDocuments.forEach(_ => this._put(_, true, false));
@@ -61,7 +64,9 @@ export class IndexFacade {
         ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
         delete this.indexItems[document.resource.id];
-
+        if (document.resource.type !== TYPE) {
+            IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
+        }
         ObserverUtil.notify(this.observers, document);
     }
 
@@ -93,27 +98,19 @@ export class IndexFacade {
         const item = this.getIndexItem(document);
         if (!item) return;
 
-        if (document.resource.type === 'Type') {
+        if (document.resource.type === TYPE) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
-            IndexFacade.updateAssociatedTypeItem(document, this.indexItems);
+            if (!skipRemoval) {
+                IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
+            }
+            IndexFacade.createAssociatedTypeItem(this.indexItems, document, );
         }
 
         ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);
         FulltextIndex.put(this.fulltextIndex, document, item, this.typesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
-    }
-
-
-    private static updateAssociatedTypeItem(document: Document, items: { [resourceId: string]: IndexItem }) {
-
-        if (!document.resource.relations[INSTANCE_OF]) return;
-
-        for (let target of document.resource.relations[INSTANCE_OF]) {
-            const typeItem = items[target] as TypeResourceIndexItem;
-            if (typeItem) typeItem.instances[document.resource.id] = document.resource.type; // TODO remove these relations on remove
-        }
     }
 
 
@@ -128,8 +125,36 @@ export class IndexFacade {
     }
 
 
+    private static createAssociatedTypeItem(items: { [resourceId: string]: IndexItem },
+                                            document: Document) {
+
+        if (!document.resource.relations[INSTANCE_OF]) return;
+
+        for (let target of document.resource.relations[INSTANCE_OF]) {
+            const typeItem = items[target] as TypeResourceIndexItem;
+            if (typeItem) {
+                typeItem.instances[document.resource.id] = document.resource.type;
+            }
+        }
+    }
+
+
+    private static deleteAssociatedTypeItem(items: { [resourceId: string]: IndexItem },
+                                            document: Document) {
+
+        flow(
+            items,
+            filter(on(INSTANCES, isDefined)),
+            forEach((item: TypeResourceIndexItem) => {
+                delete item[INSTANCES][document.resource.id];
+            }));
+    }
+
+
     private static updateTypeItem(item: TypeResourceIndexItem) {
 
-        if (!item.instances) item.instances = {};
+        if (!item.instances) { // keep existing instances on update
+            item.instances = {};
+        }
     }
 }

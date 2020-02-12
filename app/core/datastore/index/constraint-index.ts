@@ -1,4 +1,4 @@
-import {getOn, to} from 'tsfun';
+import {getOn, to, values} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -51,7 +51,7 @@ export interface ConstraintIndex {
 export module ConstraintIndex {
 
     export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                         typesMap: { [typeName: string]: IdaiType }, showWarnings: boolean = true) {
+                         typesMap: { [typeName: string]: IdaiType }) {
 
         const constraintIndex: ConstraintIndex = {
             indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}
@@ -79,7 +79,7 @@ export module ConstraintIndex {
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, doc);
-        for (let indexDefinition of Object.values(index.indexDefinitions)) {
+        for (let indexDefinition of values(index.indexDefinitions)) {
             putFor(index, indexDefinition, doc, indexItem);
         }
     }

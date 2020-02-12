@@ -34,11 +34,116 @@ describe('IndexFacade', () => {
 
         indexFacade.put(typeDocB);
         indexFacade.put(typeDocA);
+
+        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items1).toEqual(['id1', 'id0']);
+
+        // ->
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
 
         const items = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'FindA'} });
         expect(items).toEqual(['id0', 'id1']);
+    });
+
+
+    it('put a type, add finds, delete finds afterward', () => {
+
+        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        findDocA.resource.relations = { isInstanceOf: ['id0'] };
+        findDocB.resource.relations = { isInstanceOf: ['id1'] };
+        findDocC.resource.relations = { isInstanceOf: ['id1'] };
+
+        indexFacade.put(typeDocA);
+        indexFacade.put(typeDocB);
+
+        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items1).toEqual(['id0', 'id1']);
+
+        indexFacade.put(findDocB);
+        indexFacade.put(findDocA);
+        indexFacade.put(findDocC);
+
+        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items2).toEqual(['id1', 'id0']);
+
+        // ->
+        indexFacade.remove(findDocB);
+        indexFacade.remove(findDocC);
+
+        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(result).toEqual(['id0', 'id1']);
+    });
+
+
+    it('put a type, add finds, put finds afterward again', () => {
+
+        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        findDocA.resource.relations = { isInstanceOf: ['id0'] };
+        findDocB.resource.relations = { isInstanceOf: ['id1'] };
+        findDocC.resource.relations = { isInstanceOf: ['id1'] };
+
+        indexFacade.put(typeDocA);
+        indexFacade.put(typeDocB);
+
+        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items1).toEqual(['id0', 'id1']);
+
+        indexFacade.put(findDocB);
+        indexFacade.put(findDocA);
+        indexFacade.put(findDocC);
+
+        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items2).toEqual(['id1', 'id0']);
+
+        // ->
+        findDocB.resource.relations = { isInstanceOf: ['id0'] };
+        findDocC.resource.relations = { isInstanceOf: ['id0'] };
+        indexFacade.put(findDocB);
+        indexFacade.put(findDocC);
+
+        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(result).toEqual(['id0', 'id1']);
+    });
+
+
+    it('keep instances after re-putting type', () => {
+
+        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        findDocA.resource.relations = { isInstanceOf: ['id0'] };
+        findDocB.resource.relations = { isInstanceOf: ['id1'] };
+        findDocC.resource.relations = { isInstanceOf: ['id1'] };
+
+        indexFacade.put(typeDocA);
+        indexFacade.put(typeDocB);
+
+        const items1 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items1).toEqual(['id0', 'id1']);
+
+        indexFacade.put(findDocB);
+        indexFacade.put(findDocA);
+        indexFacade.put(findDocC);
+
+        const items2 = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(items2).toEqual(['id1', 'id0']);
+
+        // ->
+        indexFacade.put(typeDocA);
+
+        const result = indexFacade.find({ types: ['Type'], rankOptions: { matchType: 'Find'} });
+        expect(result).toEqual(['id1', 'id0']);
     });
 
 
@@ -63,8 +168,6 @@ describe('IndexFacade', () => {
         indexFacade.put(doc3);
 
         const result = indexFacade.find(q);
-        expect(result.length).toBe(2);
-        expect(result[0]).toBe('id2');
-        expect(result[1]).toBe('id3');
+        expect(result).toEqual(['id2', 'id3']);
     });
 });

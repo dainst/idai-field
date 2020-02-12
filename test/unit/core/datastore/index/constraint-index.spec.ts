@@ -70,7 +70,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         ConstraintIndex.put(ci, docs[0], ie1);
         ConstraintIndex.put(ci, docs[1], ie2);
@@ -144,7 +144,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         ConstraintIndex.put(ci, docs[0], ie);
 
@@ -156,7 +156,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, typesMap, false);
+        }, typesMap);
         const d = doc('1');
         const ie = IndexItem.from(d);
         ConstraintIndex.put(ci, d, ie);
@@ -168,7 +168,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, typesMap, false);
+        }, typesMap);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
         const ie = IndexItem.from(doc0);
@@ -182,7 +182,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, typesMap, false);
+        }, typesMap);
         const doc0 = doc('1');
         delete doc0.created;
         delete doc0.modified;
@@ -196,7 +196,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, typesMap, false);
+        }, typesMap);
         const d = doc('1');
         const ie = IndexItem.from(d);
         ConstraintIndex.put(ci, d, ie);
@@ -209,7 +209,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:contain': { path: 'resource.identifier', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         expect(ConstraintIndex.get(ci, 'identifier:contain', 'identifier1')).toEqual([]);
     });
@@ -271,7 +271,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -288,7 +288,7 @@ describe('ConstraintIndex', () => {
         expect(() => {
             ConstraintIndex.make({
                 'name': { path: 'testpath', type: 'unknown' }
-            }, typesMap, false)
+            }, typesMap)
         }).toThrow();
     });
 
@@ -304,7 +304,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -333,7 +333,7 @@ describe('ConstraintIndex', () => {
         ci = ConstraintIndex.make({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -367,7 +367,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -402,7 +402,7 @@ describe('ConstraintIndex', () => {
         docs[0].resource.customField2 = false;
         docs[0].resource.customField3 = ['testValue1', 'testValue2'];
 
-        ci = ConstraintIndex.make({}, typesMap, false);
+        ci = ConstraintIndex.make({}, typesMap);
 
         const ie = IndexItem.from(docs[0]);
 
@@ -433,7 +433,7 @@ describe('ConstraintIndex', () => {
         docs[0].resource.dropdownRangeField = 'testValue1';
         docs[0].resource.dropdownRangeFieldEnd = 'testValue2';
 
-        ci = ConstraintIndex.make({}, typesMap, false);
+        ci = ConstraintIndex.make({}, typesMap);
 
         const ie = IndexItem.from(docs[0]);
 
@@ -465,7 +465,7 @@ describe('ConstraintIndex', () => {
         docs[0].resource.field = 'value';
         docs[1].resource.field = ['value'];
 
-        ci = ConstraintIndex.make({}, typesMap, false);
+        ci = ConstraintIndex.make({}, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -491,7 +491,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -521,7 +521,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, typesMap, false);
+        }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);

@@ -13,6 +13,7 @@ type-row {
       min-width: 304px;
       height: $type-row-height;
       border-right: 1px solid #dddddd;
+      user-select: none;
 
       #type-thumbnail {
         margin-left: 8px;

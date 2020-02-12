@@ -1,9 +1,9 @@
-import {createApp, setupSyncTestDb} from './subsystem-helper';
+import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import * as PouchDB from 'pouchdb';
-import {Static} from '../../static';
+import {Static} from '../../../static';
 
 
-describe('DAOs/Access/Subsystem', () => {
+describe('datastore/access', () => {
 
     let image0;
     let trench0;
@@ -33,9 +33,6 @@ describe('DAOs/Access/Subsystem', () => {
         _idaiFieldImageDocumentDatastore = imageDatastore;
 
         spyOn(console, 'error');
-
-        // const result = await h.createPouchdbDatastore('testdb');
-        // const datastore = result.datastore;
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
@@ -152,82 +149,6 @@ describe('DAOs/Access/Subsystem', () => {
             fail();
         } catch (expected) {
             expectErr1(expected);
-        }
-        done();
-    });
-
-
-    // find
-
-    it('FieldDatastore - throw when find called with image type ', async done => {
-
-        try {
-            await _fieldDocumentDatastore.find({types: ['Image']});
-            fail();
-        } catch (expected) {
-            expectErr1(expected);
-        }
-        done();
-    });
-
-
-    it('ImageDatastore - throw when find called with non image type ', async done => {
-
-        try {
-            await _idaiFieldImageDocumentDatastore.find({types: ['Trench']});
-            fail();
-        } catch (expected) {
-            expectErr1(expected);
-        }
-        done();
-    });
-
-
-    it('DocumentDatastore - do not throw and return everything with all types', async done => {
-
-        try {
-            const result = await _documentDatastore.find({types: ['Trench', 'Image']});
-            expect(result.documents.length).toBe(2);
-        } catch (err) {
-            fail(err);
-        }
-        done();
-    });
-
-
-    it('DocumentDatastore - return everything when called without types', async done => {
-
-        try {
-            const result = await _documentDatastore.find({});
-            expect(result.documents.length).toBe(2);
-        } catch (err) {
-            fail(err);
-        }
-        done();
-    });
-
-
-    it('ImageDatastore - return only image type documents when called without types', async done => {
-
-        try {
-            const result = await _idaiFieldImageDocumentDatastore.find({});
-            expect(result.documents.length).toBe(1);
-            expect(result.documents[0].resource.id).toEqual('image0');
-        } catch (expected) {
-            fail();
-        }
-        done();
-    });
-
-
-    it('FieldDatastore - return only non image type documents when called without types', async done => {
-
-        try {
-            const result = await _fieldDocumentDatastore.find({});
-            expect(result.documents.length).toBe(1);
-            expect(result.documents[0].resource.id).toEqual('trench0');
-        } catch (expected) {
-            fail();
         }
         done();
     });

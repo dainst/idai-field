@@ -1,11 +1,11 @@
-import {createApp, setupSyncTestDb} from './subsystem-helper';
+import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import * as PouchDB from 'pouchdb';
-import {TypeUtility} from '../../../../app/core/model/type-utility';
-import {Static} from '../../static';
+import {TypeUtility} from '../../../../../app/core/model/type-utility';
+import {Static} from '../../../static';
 
 
 /**
- * This test suite focuses on the differences between the Data Access Objects.
+ * This test suite focuses on the differences between the datastores.
  *
  * Depending of the Type Class T and based on document.resource.type,
  * well-formed documents are about to be created.
@@ -13,7 +13,7 @@ import {Static} from '../../static';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('DAOs/Convert/Subsystem', () => {
+describe('datastore/convert', () => {
 
     let image0;
     let trench0;

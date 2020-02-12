@@ -108,7 +108,6 @@ export module ConstraintIndex {
 
         return Object.keys(matchedDocuments).map(id => { return {
             id: id,
-            date: matchedDocuments[id].date,
             identifier: matchedDocuments[id].identifier
         }});
     }

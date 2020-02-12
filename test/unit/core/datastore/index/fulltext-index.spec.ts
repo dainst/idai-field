@@ -26,7 +26,6 @@ describe('FulltextIndexer', () => {
         if (!identifier) identifier = 'identifier' + id;
         return {
             id: id,
-            date: ('2018-01-01' as any),
             identifier: identifier
         };
     }

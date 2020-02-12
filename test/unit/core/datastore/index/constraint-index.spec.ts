@@ -53,7 +53,7 @@ describe('ConstraintIndex', () => {
     function indexItem(id, identifier?): IndexItem {
 
         if (!identifier) identifier = 'identifier' + id;
-        return { id: id, date: new Date('2018-01-01'), identifier: identifier };
+        return { id: id, identifier: identifier };
     }
 
 

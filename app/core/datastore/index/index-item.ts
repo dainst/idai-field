@@ -5,7 +5,6 @@ export type TypeName = string;
 export interface IndexItem {
 
     id: string;
-    date: Date,
     identifier: string
 }
 
@@ -47,7 +46,6 @@ export class IndexItem {
 
         return {
             id: document.resource.id,
-            date: lastModified.date as Date,
             identifier: document.resource.identifier
         };
     }

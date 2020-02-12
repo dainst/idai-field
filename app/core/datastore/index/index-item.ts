@@ -27,12 +27,10 @@ export class IndexItem {
     public static from(document: Document, showWarnings: boolean = false): IndexItem|undefined {
 
         if (!document.resource) {
-            if (showWarnings) console.warn('no resource, will not index');
-            return undefined;
+            throw Error('illegal argument - document.resource undefined');
         }
         if (!document.resource.id) {
-            if (showWarnings) console.warn('no resourceId, will not index');
-            return undefined;
+            throw Error('illegal argument - document.id undefined');
         }
         if (!document.resource.identifier) {
             if (showWarnings) console.warn('no identifier, will not index');

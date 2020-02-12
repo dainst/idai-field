@@ -290,10 +290,7 @@ describe('CachedDatastore', () => {
 
     it('cant find second document', async done => {
 
-        mockIndexFacade.find.and.returnValues(['1'
-            // { id: '1', identifier: 'eins' }, // TODO review
-            // { id: '2', identifier: 'zwei' }
-        ]);
+        mockIndexFacade.find.and.returnValues(['1', '2']);
 
         mockdb.bulkFetch.and.returnValues(Promise.resolve([
             {

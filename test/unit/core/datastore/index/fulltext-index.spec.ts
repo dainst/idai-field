@@ -232,7 +232,6 @@ describe('FulltextIndexer', () => {
     });
 
 
-    // TODO review
     it('put overwrite', () => {
 
         const d = doc('1', 'identifier1', 'type');
@@ -248,7 +247,6 @@ describe('FulltextIndexer', () => {
     });
 
 
-    // TODO review
     it('shortDescription empty', () => {
 
         const d = doc('1', 'identifier1', 'type');

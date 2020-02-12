@@ -9,7 +9,6 @@ import {IdaiType} from '../../configuration/model/idai-type';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
-import {Type} from '@angular/core';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';

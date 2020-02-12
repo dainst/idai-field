@@ -1,4 +1,4 @@
-import {Action, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 
 export type TypeName = string;
 

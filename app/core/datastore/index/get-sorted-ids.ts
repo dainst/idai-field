@@ -1,10 +1,10 @@
-import {equal, is, isNot, on, Pair, to, sort, count, flow, val, map,
+import {equal, is, isNot, on, Pair, to, sort, count, flow, val, map, tuplify,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
-import {doPaired, tuplify} from '../../util/utils';
+import {doPaired} from '../../util/utils';
 
 
 // @author Daniel de Oliveira

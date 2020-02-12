@@ -2,12 +2,11 @@ import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-ty
 import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from './model/library-type-definition';
 import {CustomTypeDefinition, CustomTypeDefinitionsMap} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt,
-    jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup} from 'tsfun';
+    jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
 import {withDissoc} from '../import/util';
 import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
-import {pairWith} from '../util/utils';
 
 
 const VALUELISTS = 'valuelists';

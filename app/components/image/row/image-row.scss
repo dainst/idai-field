@@ -23,10 +23,10 @@ image-row {
           object-fit: scale-down;
           user-select: none;
           -webkit-user-drag: none;
-          transition: filter 0.2s ease-in-out;
+          transition: filter 0.25s ease-in-out;
 
           &.highlightOnHover:hover {
-            filter: brightness(95%);
+            filter: brightness(92%);
           }
         }
 
@@ -37,7 +37,7 @@ image-row {
           text-align: left;
           background-color: #f8f9fad4;
           opacity: 0;
-          transition: opacity 0.2s ease-in-out;
+          transition: opacity 0.25s ease-in-out;
           user-select: none;
         }
 

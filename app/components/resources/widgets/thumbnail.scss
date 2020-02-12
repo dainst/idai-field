@@ -13,9 +13,10 @@
     object-fit: scale-down;
     user-select: none;
     -webkit-user-drag: none;
+    transition: filter 0.25s ease-in-out;
 
     &:hover {
-      filter: brightness(95%);
+      filter: brightness(92%);
     }
   }
 }

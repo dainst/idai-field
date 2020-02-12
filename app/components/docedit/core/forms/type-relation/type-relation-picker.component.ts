@@ -22,7 +22,7 @@ export class TypeRelationPickerComponent {
     public resource: Resource|undefined = undefined;
 
     public q: string = '';
-    public selectedCatalog: FieldResource|undefined = undefined;
+    public selectedCatalog: FieldResource|string = 'all-catalogs';
     public availableCatalogs: Array<FieldResource> = [];
 
     public timeoutRef: any;
@@ -81,13 +81,14 @@ export class TypeRelationPickerComponent {
                 mode: 'exactMatchFirst', // TODO test manually once
             }
         };
-        if (this.selectedCatalog) {
-            query.constraints = {'liesWithin:contain': this.selectedCatalog.id}; // TODO also handle subcatalogs
+        if (this.selectedCatalog && this.selectedCatalog !== 'all-catalogs') {
+            // TODO also handle subcatalogs
+            query.constraints =
+                {'liesWithin:contain': (this.selectedCatalog as FieldResource).id};
         }
 
-        const rankedDocuments = (await this.datastore.find(query)).documents;
-
-        this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(rankedDocuments);
+        const documents = (await this.datastore.find(query)).documents;
+        this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
     }
 
 

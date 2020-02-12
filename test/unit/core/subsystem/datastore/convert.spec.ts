@@ -17,9 +17,9 @@ describe('datastore/convert', () => {
 
     let image0;
     let trench0;
-    let _documentDatastore;
-    let _fieldDocumentDatastore;
-    let _idaiFieldImageDocumentDatastore;
+    let documentDatastore;
+    let fieldDocumentDatastore;
+    let idaiFieldImageDocumentDatastore;
 
 
     function expectErr(err) {
@@ -34,20 +34,20 @@ describe('datastore/convert', () => {
         await setupSyncTestDb();
 
         const {
-            documentDatastore,
-            fieldDocumentDatastore,
-            imageDatastore
+            documentDatastore: d,
+            fieldDocumentDatastore: f,
+            imageDatastore: i
         } = await createApp();
 
-        _documentDatastore = documentDatastore;
-        _fieldDocumentDatastore = fieldDocumentDatastore;
-        _idaiFieldImageDocumentDatastore = imageDatastore;
+        documentDatastore = d;
+        fieldDocumentDatastore = f;
+        idaiFieldImageDocumentDatastore = i;
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
-        image0 = await _idaiFieldImageDocumentDatastore.create(image0);
-        trench0 = await _fieldDocumentDatastore.create(trench0);
+        image0 = await idaiFieldImageDocumentDatastore.create(image0);
+        trench0 = await fieldDocumentDatastore.create(trench0);
         done();
     });
 
@@ -64,7 +64,7 @@ describe('datastore/convert', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await _idaiFieldImageDocumentDatastore.
+            expect((await idaiFieldImageDocumentDatastore.
             create(Static.doc('Image','Image','Image','image1'))).
                 resource.relations.depicts).toEqual([]);
         } catch (err) {
@@ -77,7 +77,7 @@ describe('datastore/convert', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await _fieldDocumentDatastore.
+            expect((await fieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Trench','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
         } catch (err) {
@@ -90,7 +90,7 @@ describe('datastore/convert', () => {
     it('create - unknown type', async done => {
 
         try {
-            expect((await _fieldDocumentDatastore.
+            expect((await fieldDocumentDatastore.
             create(Static.doc('Trench','Trench','Unknown','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
             fail();
@@ -106,7 +106,7 @@ describe('datastore/convert', () => {
     it('ImageDatastore - add relations with update', async done => {
 
         delete image0.resource.relations.depicts;
-        expect((await _idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
+        expect((await idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
         done();
     });
 
@@ -114,7 +114,7 @@ describe('datastore/convert', () => {
     it('FieldDatastore - add relations with update', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
-        expect((await _fieldDocumentDatastore.
+        expect((await fieldDocumentDatastore.
         update(trench0)).resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -124,13 +124,13 @@ describe('datastore/convert', () => {
 
     it('get - add relations for FieldDocument', async done => {
 
-        expect((await _fieldDocumentDatastore.get('trench0', { skipCache: true })).
+        expect((await fieldDocumentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _fieldDocumentDatastore.get('trench0', { skipCache: false })).
+        expect((await fieldDocumentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skipCache: true })).
+        expect((await documentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await _documentDatastore.get('trench0', { skipCache: false })).
+        expect((await documentDatastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -138,13 +138,13 @@ describe('datastore/convert', () => {
 
     it('get - add relations for ImageDocument', async done => {
 
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
+        expect((await idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _idaiFieldImageDocumentDatastore.get('image0', { skipCache: false })).
+        expect((await idaiFieldImageDocumentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skipCache: true })).
+        expect((await documentDatastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await _documentDatastore.get('image0', { skipCache: false })).
+        expect((await documentDatastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
         done();
     });
@@ -154,9 +154,9 @@ describe('datastore/convert', () => {
 
     it('find - add relations for FieldDocument', async done => {
 
-        expect((await _fieldDocumentDatastore.find({})). // result coming from cache
+        expect((await fieldDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.isRecordedIn).toEqual([]);
-        expect((await _idaiFieldImageDocumentDatastore.find({})). // result coming from cache
+        expect((await idaiFieldImageDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.depicts).toEqual([]);
         done();
     });

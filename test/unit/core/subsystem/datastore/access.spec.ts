@@ -7,9 +7,9 @@ describe('datastore/access', () => {
 
     let image0;
     let trench0;
-    let _documentDatastore;
-    let _fieldDocumentDatastore;
-    let _idaiFieldImageDocumentDatastore;
+    let documentDatastore;
+    let fieldDocumentDatastore;
+    let idaiFieldImageDocumentDatastore;
 
     function expectErr1(err) {
 
@@ -23,22 +23,22 @@ describe('datastore/access', () => {
         await setupSyncTestDb();
 
         const {
-            documentDatastore,
-            fieldDocumentDatastore,
-            imageDatastore
+            documentDatastore: d,
+            fieldDocumentDatastore: f,
+            imageDatastore: i
         } = await createApp();
 
-        _documentDatastore = documentDatastore;
-        _fieldDocumentDatastore = fieldDocumentDatastore;
-        _idaiFieldImageDocumentDatastore = imageDatastore;
+        documentDatastore = d;
+        fieldDocumentDatastore = f;
+        idaiFieldImageDocumentDatastore = i;
 
         spyOn(console, 'error');
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
-        await _idaiFieldImageDocumentDatastore.create(image0);
-        await _fieldDocumentDatastore.create(trench0);
+        await idaiFieldImageDocumentDatastore.create(image0);
+        await fieldDocumentDatastore.create(trench0);
         done();
     });
 
@@ -55,7 +55,7 @@ describe('datastore/access', () => {
     it('FieldDatastore - throw when creating an image type', async done => {
 
         try {
-            await _fieldDocumentDatastore.create(image0);
+            await fieldDocumentDatastore.create(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -67,7 +67,7 @@ describe('datastore/access', () => {
     it('ImageDatastore - throw when creating a non image type', async done => {
 
         try {
-            await _idaiFieldImageDocumentDatastore.create(trench0);
+            await idaiFieldImageDocumentDatastore.create(trench0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -81,7 +81,7 @@ describe('datastore/access', () => {
     it('FieldDatastore - throw when updating an image type', async done => {
 
         try {
-            await _fieldDocumentDatastore.update(image0);
+            await fieldDocumentDatastore.update(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -93,7 +93,7 @@ describe('datastore/access', () => {
     it('ImageDatastore - throw when updating a non image type', async done => {
 
         try {
-            await _idaiFieldImageDocumentDatastore.update(trench0);
+            await idaiFieldImageDocumentDatastore.update(trench0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -107,7 +107,7 @@ describe('datastore/access', () => {
     it('FieldDatastore - throw when deleting an image type', async done => {
 
         try {
-            await _fieldDocumentDatastore.remove(image0);
+            await fieldDocumentDatastore.remove(image0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -119,7 +119,7 @@ describe('datastore/access', () => {
     it('ImageDatastore - throw when deleting a non image type', async done => {
 
         try {
-            await _idaiFieldImageDocumentDatastore.remove(trench0);
+            await idaiFieldImageDocumentDatastore.remove(trench0);
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -133,7 +133,7 @@ describe('datastore/access', () => {
     it('FieldDatastore - throw when getting an image type', async done => {
 
         try {
-            await _fieldDocumentDatastore.get('image0', { skipCache: true });
+            await fieldDocumentDatastore.get('image0', { skipCache: true });
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -145,7 +145,7 @@ describe('datastore/access', () => {
     it('ImageDatastore - throw when getting a non image type', async done => {
 
         try {
-            await _idaiFieldImageDocumentDatastore.get('trench0', { skipCache: true });
+            await idaiFieldImageDocumentDatastore.get('trench0', { skipCache: true });
             fail();
         } catch (expected) {
             expectErr1(expected);

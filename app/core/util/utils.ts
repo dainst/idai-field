@@ -24,16 +24,3 @@ export function toArray(token: any) {
 
     return Array.from(token);
 }
-
-
-/**
- * Returns a function which takes an array, whose
- * elements get paired by elements produced with pairFunction,
- * and which gets transformed and freed of the tmp
- * elements before returned.
- */
-export function doPaired<T, S>(pairFunction: (_: T) => S,
-                               transform: (_: Array<Pair<T, S>>) => Array<Pair<T, S>>) {
-
-    return compose(map(pairWith(pairFunction)), transform, map(first));
-}

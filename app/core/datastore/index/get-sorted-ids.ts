@@ -1,10 +1,11 @@
-import {equal, is, isNot, on, Pair, to, sort, count, flow, val, map, tuplify,
-    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond} from 'tsfun';
+import {
+    equal, is, isNot, on, Pair, to, sort, count, flow, val, map, tuplify,
+    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, first
+} from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
-import {doPaired} from '../../util/utils';
 
 
 // @author Daniel de Oliveira
@@ -129,6 +130,7 @@ const rankRegularIndexItems
  */
 const rankTypeResourceIndexItems = (typeToMatch: Name)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
-    doPaired(
-        calcPercentage(typeToMatch),
-        sort(comparePercentages));
+    compose(
+        map(pairWith(calcPercentage(typeToMatch))),
+        sort(comparePercentages),
+        map(first));

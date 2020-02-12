@@ -1,9 +1,11 @@
 import {append, compose, dropRight, flow, takeRight,
     take, drop, cond, size, is, val, last, first} from 'tsfun';
-import {Document} from 'idai-components-2/src/model/core/document';
+import {Document} from 'idai-components-2';
 
 
-// @author Daniel de Oliveira
+/**
+ * @author Daniel de Oliveira
+ */
 
 export function isProjectDocument(document: Document): boolean {
 

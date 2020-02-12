@@ -1,10 +1,10 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output} from '@angular/core';
 import {to} from 'tsfun';
 import {asyncReduce} from 'tsfun-extra';
+import {FieldResource} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {FieldResource} from 'idai-components-2/src/model/field-resource';
 
 
 const MAX_IMAGE_WIDTH: number = 600;

@@ -83,7 +83,8 @@ export class TypeRelationPickerComponent {
         };
         if (this.selectedCatalog && this.selectedCatalog !== 'all-catalogs') {
             // TODO also handle subcatalogs
-            query.constraints = {'liesWithin:contain': this.selectedCatalog.id};
+            query.constraints =
+                {'liesWithin:contain': (this.selectedCatalog as FieldResource).id};
         }
 
         const documents = (await this.datastore.find(query)).documents;

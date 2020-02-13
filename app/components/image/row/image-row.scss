@@ -23,11 +23,6 @@ image-row {
           object-fit: scale-down;
           user-select: none;
           -webkit-user-drag: none;
-          transition: filter 0.25s ease-in-out;
-
-          &.highlightOnHover:hover {
-            filter: brightness(92%);
-          }
         }
 
         .image-placeholder {
@@ -36,6 +31,15 @@ image-row {
           justify-content: center;
           width: 150px;
           background-color: #d9dee4;
+        }
+
+        img,
+        .image-placeholder {
+          transition: filter 0.25s ease-in-out;
+
+          &.highlightOnHover:hover {
+            filter: brightness(92%);
+          }
         }
 
         .resource-info {

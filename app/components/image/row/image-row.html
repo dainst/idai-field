@@ -9,7 +9,9 @@
             <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover">
-            <div *ngIf="isPlaceholder(image)" class="image-placeholder">
+            <div *ngIf="isPlaceholder(image)"
+                 class="image-placeholder"
+                 [class.highlightOnHover]="highlightOnHover">
                 <type-icon [type]="image.resource.type" [size]="60"></type-icon>
             </div>
             <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">

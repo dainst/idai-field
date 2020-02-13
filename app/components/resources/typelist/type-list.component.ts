@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {BaseList} from '../base-list';
-import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {ContextMenu} from '../widgets/context-menu';
 import {ContextMenuAction} from '../widgets/context-menu.component';
+import {BaseList} from '../base-list';
+import {ResourcesComponent} from '../resources.component';
 
 
 @Component({
@@ -68,7 +68,7 @@ export class TypeListComponent extends BaseList {
 
         do {
             if (target.id === 'context-menu'
-                || (rightClick && target.id && target.id === 'type-list')) {
+                || (rightClick && target.id && target.id.startsWith('type-container'))) {
                 inside = true;
                 break;
             }

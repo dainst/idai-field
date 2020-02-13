@@ -1,5 +1,6 @@
 import {FieldDocument} from 'idai-components-2';
 
+
 /**
  * @author Thomas Kleinke
  */

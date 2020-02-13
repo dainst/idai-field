@@ -1,10 +1,10 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
+import {ImageRowItem} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
 import {ImageModalLauncher} from '../service/image-modal-launcher';
-import {ImageRowItem} from '../../image/row/image-row.component';
 
 
 @Component({
@@ -22,6 +22,8 @@ export class TypeRowComponent implements OnChanges {
 
     @Input() document: FieldDocument;
 
+    @Output() onContextMenu: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+
     public numberOfLinkedResources: number = -1;
     public linkedImages: Array<ImageRowItem>;
 
@@ -33,6 +35,9 @@ export class TypeRowComponent implements OnChanges {
 
     public highlightDocument = (document: FieldDocument|undefined) =>
         this.resourcesComponent.highlightDocument(document);
+
+
+    public openContextMenu = (event: MouseEvent) => this.onContextMenu.emit(event);
 
 
     async ngOnChanges() {

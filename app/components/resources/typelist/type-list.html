@@ -8,7 +8,7 @@
 <div id="type-list" (scroll)="contextMenu.close()">
     <type-row *ngFor="let document of documents"
               [document]="document"
-              (contextmenu)="contextMenu.open($event, document)"></type-row>
+              (onContextMenu)="contextMenu.open($event, document)"></type-row>
 </div>
 
 <div id="plus-button-container" class="bg-light">

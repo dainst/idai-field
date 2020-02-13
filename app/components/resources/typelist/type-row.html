@@ -1,7 +1,9 @@
 <div #typeRow class="type-row"
      (mouseover)="highlightDocument(document)"
      (mouseleave)="highlightDocument(undefined)">
-    <div class="type-container">
+    <div id="type-container-{{document.resource.id}}"
+         class="type-container"
+         (contextmenu)="openContextMenu($event)">
         <div class="type-info" (dblclick)="openDoceditModal()">
             <div class="type-title">
                 <b>{{document.resource.identifier}}</b>

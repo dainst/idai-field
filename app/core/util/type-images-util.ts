@@ -4,7 +4,7 @@ import {FieldDocument, FieldResource} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
-import {ImageRowItem} from '../../components/image/row/image-row.component';
+import {ImageRowItem, PLACEHOLDER} from '../../components/image/row/image-row.component';
 import getMainImageId = ModelUtil.getMainImageId;
 
 
@@ -55,12 +55,12 @@ export module TypeImagesUtil {
         if (imageId) {
             return { imageId: imageId, resource: resource };
         } else {
-            const linkedImageIds: Array<ImageRowItem> = await getLinkedImagesForType(
+            const linkedImages: Array<ImageRowItem> = await getLinkedImagesForType(
                 resource.id, datastore
             );
 
-            return linkedImageIds.length > 0
-                ? linkedImageIds[0]
+            return linkedImages.length > 0
+                ? linkedImages[0]
                 : undefined;
         }
     }
@@ -75,9 +75,7 @@ export module TypeImagesUtil {
             .documents
             .map(document => {
                 const imageId: string|undefined = getMainImageId(document.resource);
-                return imageId
-                    ? { imageId: imageId, resource: document.resource }
-                    : undefined;
+                return { imageId: imageId ? imageId : PLACEHOLDER, resource: document.resource };
             })
             .filter(isDefined) as Array<ImageRowItem>;
     }

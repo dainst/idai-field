@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
-import {ImageRowItem} from '../../image/row/image-row.component';
+import {ImageRowItem, PLACEHOLDER} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
 import {ImageModalLauncher} from '../service/image-modal-launcher';
 
@@ -48,6 +48,8 @@ export class TypeRowComponent implements OnChanges {
 
 
     public async openImageModal(image: ImageRowItem) {
+
+        if (image.imageId === PLACEHOLDER) return;
 
         await this.imageModalLauncher.openImageModal(image.resource, this.resourcesComponent);
     }

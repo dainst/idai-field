@@ -9,10 +9,11 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
 
 const MAX_IMAGE_WIDTH: number = 600;
 
+export const PLACEHOLDER = 'PLACEHOLDER';
 
 export type ImageRowItem = {
 
-    imageId: string;
+    imageId: string|'PLACEHOLDER';
     resource: FieldResource;
 }
 
@@ -76,6 +77,20 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
+    public hasImageUrl(image: ImageRowItem): boolean {
+
+        return this.thumbnailUrls !== undefined
+            && this.thumbnailUrls[image.imageId] !== undefined
+            && this.thumbnailUrls[image.imageId] !== PLACEHOLDER;
+    }
+
+
+    public isPlaceholder(image: ImageRowItem): boolean {
+
+        return image.imageId === PLACEHOLDER;
+    }
+
+
     private async applyUpdate(update: ImageRowUpdate) {
 
         await this.updateThumbnailUrls(update.newImageIds);
@@ -88,7 +103,9 @@ export class ImageRowComponent implements OnChanges {
         const thumbnailUrls: { [imageId: string]: string } = this.thumbnailUrls || {};
 
         await asyncReduce(async (result: { [imageId: string]: string }, imageId: string) => {
-            result[imageId] = await this.imagestore.read(imageId, false, true);
+            if (imageId !== PLACEHOLDER) {
+                result[imageId] = await this.imagestore.read(imageId, false, true);
+            }
             return result;
         }, thumbnailUrls)(imageIds);
 

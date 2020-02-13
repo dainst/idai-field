@@ -30,6 +30,14 @@ image-row {
           }
         }
 
+        .image-placeholder {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 150px;
+          background-color: #d9dee4;
+        }
+
         .resource-info {
           position: absolute;
           bottom: 3px;

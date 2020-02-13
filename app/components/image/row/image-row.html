@@ -6,9 +6,12 @@
         <div *ngFor="let image of images"
              class="type-image-container"
              (click)="onThumbnailClicked(image)">
-            <img *ngIf="thumbnailUrls && thumbnailUrls[image.imageId]"
+            <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover">
+            <div *ngIf="isPlaceholder(image)" class="image-placeholder">
+                <type-icon [type]="image.resource.type" [size]="60"></type-icon>
+            </div>
             <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">
                 {{image.resource.identifier}}
             </div>

@@ -22,7 +22,7 @@ export class TypeRelationPickerComponent {
     public resource: Resource|undefined = undefined;
 
     public q: string = '';
-    public selectedCatalog: FieldResource|string = 'all-catalogs';
+    public selectedCatalog: 'all-catalogs' = 'all-catalogs';
     public availableCatalogs: Array<FieldResource> = [];
 
     public timeoutRef: any;
@@ -73,24 +73,8 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-        const query: Query = {
-            q: this.q,
-            types: ['Type'],
-            limit: 5,
-            sort: {
-                matchType: this.resource.type,
-                mode: 'exactMatchFirst',
-            },
-            constraints: {}
-        };
-        if (isNot(undefinedOrEmpty)(this.resource.relations['isInstanceOf'])) {
-            (query.constraints as any)['id:match'] =
-                { value: this.resource.relations['isInstanceOf'], type: 'subtract' };
-        }
-        if (this.selectedCatalog && this.selectedCatalog !== 'all-catalogs') {
-            // TODO also handle subcatalogs
-            (query.constraints as any)['liesWithin:contain'] = (this.selectedCatalog as FieldResource).id
-        }
+        const query = TypeRelationPickerComponent
+            .constructQuery(this.resource, this.q, this.selectedCatalog);
 
         const documents = (await this.datastore.find(query)).documents;
         this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
@@ -103,4 +87,30 @@ export class TypeRelationPickerComponent {
             await getLinkedImages(document, this.datastore)
         ] as Pair<FieldDocument, Array<ImageRowItem>>;
     });
+
+
+    private static constructQuery(resource: Resource,
+                                  q: string,
+                                  selectedCatalog: FieldResource|'all-catalogs') {
+
+        const query: Query = {
+            q: q,
+            types: ['Type'],
+            limit: 5,
+            sort: {
+                matchType: resource.type,
+                mode: 'exactMatchFirst',
+            },
+            constraints: {}
+        };
+        if (isNot(undefinedOrEmpty)(resource.relations['isInstanceOf'])) {
+            (query.constraints as any)['id:match'] =
+                { value: resource.relations['isInstanceOf'], type: 'subtract' };
+        }
+        if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
+            // TODO also handle subcatalogs
+            (query.constraints as any)['liesWithin:contain'] = (selectedCatalog as FieldResource).id
+        }
+        return query;
+    }
 }

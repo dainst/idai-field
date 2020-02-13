@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-components-2';
 import {ModelUtil} from '../../../../../core/model/model-util';
 import {ReadImagestore} from '../../../../../core/images/imagestore/read-imagestore';
@@ -15,7 +16,7 @@ import {ImageRowItem} from '../../../../image/row/image-row.component';
  */
 export class TypeRowComponent implements OnChanges {
 
-    public mainThumbnailUrl: string|undefined;
+    public mainThumbnailUrl: SafeResourceUrl|undefined;
 
     @Input() document: FieldDocument;
     @Input() images: Array<ImageRowItem>;
@@ -30,7 +31,7 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    private async getMainThumbnailUrl(document: FieldDocument): Promise<string|undefined> {
+    private async getMainThumbnailUrl(document: FieldDocument): Promise<SafeResourceUrl|undefined> {
 
         const mainImageId: string | undefined = ModelUtil.getMainImageId(document.resource);
         if (!mainImageId) return undefined;

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
 import {Imagestore} from '../../../../core/images/imagestore/imagestore';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../../core/images/imagestore/blob-maker';
@@ -30,7 +31,7 @@ export class LayerImageProvider {
     public reset() {
 
         for (let resourceId of Object.keys(this.imageContainers)) {
-            const thumb: boolean = this.imageContainers[resourceId].imgSrc ? false : true;
+            const thumb: boolean = !this.imageContainers[resourceId].imgSrc;
             this.imagestore.revoke(resourceId, thumb);
         }
 
@@ -38,24 +39,25 @@ export class LayerImageProvider {
     }
 
 
-    private createImageContainer(resourceId: string): Promise<ImageContainer> {
+    private async createImageContainer(resourceId: string): Promise<ImageContainer> {
 
-        return this.imagestore.read(resourceId, true, false)
-            .then(url => {
-                if (url != '') {
-                    return Promise.resolve({ imgSrc: url });
-                } else {
-                    return this.imagestore.read(resourceId, true, true)
-                        .then(thumbnailUrl => {
-                            return Promise.resolve({ thumbSrc: thumbnailUrl });
-                        }).catch(() => {
-                            return Promise.resolve({ imgSrc: BlobMaker.blackImg });
-                        });
-                }
-            }, () => {
-                console.error('Error while creating image container. Original image not found in imagestore for ' +
-                    'document:', document);
-                return Promise.resolve({ imgSrc: BlobMaker.blackImg });
-            });
+        let url: string|SafeResourceUrl;
+        try {
+            url = await this.imagestore.read(resourceId, true, false);
+        } catch (err) {
+            console.error('Error while creating image container. Original image not found in imagestore ' +
+                'for document:', document);
+            return { imgSrc: BlobMaker.blackImg };
+        }
+
+        if (url !== '') {
+            return { imgSrc: url };
+        } else {
+            try {
+                return { thumbSrc: await this.imagestore.read(resourceId, true, true) };
+            } catch (err) {
+                return { imgSrc: BlobMaker.blackImg };
+            }
+        }
     }
 }

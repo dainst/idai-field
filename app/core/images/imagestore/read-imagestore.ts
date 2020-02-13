@@ -1,3 +1,6 @@
+import {SafeResourceUrl} from '@angular/platform-browser';
+
+
 /**
  * The interface for general media stores supporting
  * the storage of general binary data
@@ -25,7 +28,7 @@ export abstract class ReadImagestore {
      *     [NOT_FOUND] - in case image is missing
      *     [EMPTY] - in case the retrieved image data is undefined
      */
-    abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string>;
+    abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string|SafeResourceUrl>;
 
 
     /**

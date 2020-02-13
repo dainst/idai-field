@@ -27,8 +27,8 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
  */
 export class ImageViewComponent implements OnInit, DoCheck {
 
-    @ViewChild('thumbnailSliderContainer', {static: false}) thumbnailSliderContainer: ElementRef;
-    @ViewChild('imageInfo', {static: false}) imageInfo: ElementRef;
+    @ViewChild('thumbnailSliderContainer', { static: false }) thumbnailSliderContainer: ElementRef;
+    @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
     public images: Array<ImageContainer> = [];
     public selectedImage: ImageContainer;

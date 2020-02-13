@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldResource} from 'idai-components-2';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../resources.component';
@@ -19,7 +20,7 @@ export class ThumbnailComponent implements OnChanges {
 
     @Input() resource: FieldResource;
 
-    public thumbnailUrl: string|undefined;
+    public thumbnailUrl: SafeResourceUrl|undefined;
 
 
     constructor(private imagestore: Imagestore,
@@ -39,7 +40,7 @@ export class ThumbnailComponent implements OnChanges {
     }
 
 
-    private async getThumbnailUrl(relations: string[]|undefined): Promise<string|undefined> {
+    private async getThumbnailUrl(relations: string[]|undefined): Promise<SafeResourceUrl|undefined> {
 
         if (!relations || relations.length === 0) return undefined;
 

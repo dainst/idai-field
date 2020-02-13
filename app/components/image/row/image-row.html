@@ -4,7 +4,7 @@
     </div>
     <div #imageRow class="image-row">
         <div *ngFor="let image of images"
-             class="type-image-container"
+             class="image-container"
              (click)="onThumbnailClicked(image)">
             <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"

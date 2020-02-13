@@ -118,7 +118,7 @@ export class ImageRowComponent implements OnChanges {
         if (update.firstShownImageIndex === -1) return;
 
         const element: HTMLElement = this.imageRowElement.nativeElement
-            .getElementsByClassName('type-image-container')
+            .getElementsByClassName('image-container')
             .item(update.firstShownImageIndex);
         this.imageRowElement.nativeElement.style.transform = 'translateX(-' + element.offsetLeft + 'px)';
     }

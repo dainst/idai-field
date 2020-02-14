@@ -57,3 +57,4 @@ export const SAME_AS = 'isSameAs';
 
 // Used to connect finds with type resources
 export const IS_INSTANCE_OF = 'isInstanceOf';
+export const HAS_INSTANCE = 'hasInstance';

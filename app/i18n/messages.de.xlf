@@ -1372,6 +1372,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.relations.hasInstance" datatype="html">
+        <source>Hat Instanz</source>
+        <target state="final">Hat Instanz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
         <target state="final">Konflikte</target>
@@ -2195,7 +2203,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneType" datatype="html">
@@ -2203,7 +2211,7 @@
         <target state="final">Ein Typ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedTypes" datatype="html">
@@ -2211,7 +2219,7 @@
         <target state="final">Keine Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.linkedFinds" datatype="html">
@@ -2219,7 +2227,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneFind" datatype="html">
@@ -2227,7 +2235,7 @@
         <target state="final">Ein Fund</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
@@ -2235,7 +2243,7 @@
         <target state="final">Keine Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">

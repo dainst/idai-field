@@ -119,9 +119,7 @@ export class ProjectConfiguration {
 
         const availableRelationFields: Array<RelationDefinition> = [];
         for (let relationField of this.relationFields) {
-            let types = isRangeType || relationField.editableFromRange
-                ? relationField.range
-                : relationField.domain;
+            const types: string[] = isRangeType ? relationField.range : relationField.domain;
 
             if (types.indexOf(typeName) > -1) {
                 if (!property ||

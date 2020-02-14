@@ -9,32 +9,36 @@ export const MAX_SUGGESTIONS: number = 5;
  */
 export async function getSuggestions(datastore: ReadDatastore, resource: Resource,
                                      relationDefinition: RelationDefinition,
-                                     inverse: boolean = false,
                                      idSearchString?: string): Promise<Array<Document>> {
 
     return (await datastore.find(
-        makeQuery(resource, relationDefinition, inverse, idSearchString)
+        makeQuery(resource, relationDefinition, idSearchString)
     )).documents;
 }
 
 
-function makeQuery(resource: Resource, relationDefinition: RelationDefinition, inverse: boolean,
+function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
                    idSearchString?: string): Query {
 
     return {
         q: idSearchString ? idSearchString : '',
-        types: inverse ? relationDefinition.domain : relationDefinition.range,
-        constraints: makeConstraints(resource, relationDefinition, inverse),
+        types: relationDefinition.range,
+        constraints: makeConstraints(resource, relationDefinition),
         limit: MAX_SUGGESTIONS,
         sort: { mode: 'exactMatchFirst' }
     };
 }
 
 
-function makeConstraints(resource: Resource, relationDefinition: RelationDefinition,
-                         inverse: boolean): { [constraintName: string]: Constraint } {
+function makeConstraints(resource: Resource,
+                         relationDefinition: RelationDefinition): { [constraintName: string]: Constraint } {
 
-    const constraints = getDefaultConstraints(resource, relationDefinition, inverse);
+    const constraints = {
+        'id:match': {
+            value: getForbiddenIds(resource, relationDefinition),
+            type: 'subtract'
+        }
+    };
 
     if (relationDefinition.sameMainTypeResource
             && Resource.hasRelations(resource, 'isRecordedIn')) {
@@ -42,29 +46,6 @@ function makeConstraints(resource: Resource, relationDefinition: RelationDefinit
     }
 
     return constraints;
-}
-
-
-function getDefaultConstraints(resource: Resource, relationDefinition: RelationDefinition,
-                               inverse: boolean): { [constraintName: string]: Constraint }  {
-
-    if (inverse) {
-        const constraints: { [constraintName: string]: Constraint } = {};
-
-        constraints[relationDefinition.name + ':contain'] = {
-            value: resource.id,
-            type: 'subtract'
-        };
-
-        return constraints;
-    } else {
-        return {
-            'id:match': {
-                value: getForbiddenIds(resource, relationDefinition),
-                type: 'subtract'
-            }
-        };
-    }
 }
 
 

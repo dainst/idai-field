@@ -70,7 +70,7 @@ export class DefaultRelationPicker extends RelationPicker {
     public getSuggestions(idSearchString: string): Promise<Array<Document>> {
 
         return getSuggestions(
-            this.datastore, this.resource, this.relationDefinition, false, idSearchString
+            this.datastore, this.resource, this.relationDefinition, idSearchString
         );
     }
 

@@ -1,5 +1,5 @@
 import {
-    equal, is, isNot, on, Pair, to, sort, count, flow, val, map, tuplify,
+    equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, first
 } from 'tsfun';
 import {Query} from 'idai-components-2';
@@ -91,7 +91,7 @@ const calcPercentage = (typeToMatch: Name)
     compose(
         to(INSTANCES),
         cond(isUndefinedOrEmpty,
-            val(0),
+            0,
             compose(
                 tuplify(count(is(typeToMatch)), size),
                 ([numMatching, numTotal]: any) => numMatching * 100 / numTotal)));

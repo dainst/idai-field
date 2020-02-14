@@ -47,7 +47,7 @@ export const penultimate = compose(
     takeRight(2),
     cond(lengthIs2,
         first,
-        val(undefined)));
+        undefined));
 
 
 export const ultimate = last;

@@ -278,7 +278,7 @@ export module CSVExport {
                 where,
                 nrOfNewItems,
                 flatMap(compose(
-                    cond(isDefined, computeReplacement, val([])),
+                    cond(isDefined, computeReplacement, []),
                     fillUpToSize(widthOfEachNewItem, EMPTY))));
         }
     }
@@ -389,10 +389,8 @@ export module CSVExport {
     function toCsvLine(fields: string[]): string {
 
         const wrapContents  = (field: string) => '"' + getFieldValue(field) + '"';
-        const createEmptyField = val('""');
-
         return fields
-            .map(cond(isDefined, wrapContents, createEmptyField))
+            .map(cond(isDefined, wrapContents, '""'))
             .join(SEPARATOR);
     }
 

@@ -55,7 +55,7 @@ function pruneInverseRelations(resourceId: string,
 
     flow(
         keys(relations),
-        filter(cond(val(keepAllNoInverseRelations), notUnidirectional)),
+        filter(cond(keepAllNoInverseRelations, notUnidirectional)),
         forEach(removeRelation(resourceId, relations)));
 }
 

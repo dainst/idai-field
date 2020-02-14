@@ -1,5 +1,5 @@
-import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys,
-    forEach, map, lookup, pairWith, filter, cond} from 'tsfun';
+import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys, isnt, isDefined,
+    forEach, map, lookup, pairWith, filter, cond, copy} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -34,10 +34,11 @@ export function determineDocsToUpdate(document: Document,
 
     for (let targetDocument of targetDocuments) {
 
-        pruneInverseRelations(
-            document.resource.id,
-            targetDocument.resource.relations,
-            setInverses);
+        targetDocument.resource.relations =
+            pruneInverseRelations(
+                targetDocument.resource.relations,
+                document.resource.id,
+                setInverses);
 
         if (setInverses) setInverseRelations(document, targetDocument, inverseRelationsMap);
     }
@@ -49,14 +50,27 @@ export function determineDocsToUpdate(document: Document,
 const notUnidirectional = isNot(includedIn([LIES_WITHIN, RECORDED_IN]));
 
 
-function pruneInverseRelations(resourceId: string,
-                               relations: Relations,
+/**
+ * { a: ['3'], b: ['3', '7'] }
+ * resourceId: '3'
+ * ->
+ * { b: ['3'] }
+ */
+function pruneInverseRelations(relations: Relations,
+                               resourceId: string,
                                keepAllNoInverseRelations: boolean) {
 
-    flow(
-        keys(relations),
-        filter(cond(keepAllNoInverseRelations, notUnidirectional)),
-        forEach(removeRelation(resourceId, relations)));
+    const copied = copy(relations);
+
+    keys(relations)
+        .filter(cond(keepAllNoInverseRelations, notUnidirectional))
+        .map(pairWith(lookup(relations)))
+        .forEach(([name, content]: [string, string[]]) => {
+            copied[name] = content.filter(isnt(resourceId));
+            if (copied[name].length === 0) delete copied[name];
+        });
+
+    return copied;
 }
 
 
@@ -97,21 +111,6 @@ function compare(targetDocuments: Array<Document>,
                 ? acc.concat(targetDoc)
                 : acc
         , []);
-}
-
-
-function removeRelation(resourceId: string, relations: any) {
-
-    return (relation: string): boolean => {
-
-        const index = relations[relation].indexOf(resourceId);
-        if (index === -1) return false;
-
-        relations[relation].splice(index, 1);
-        if (relations[relation].length === 0) delete relations[relation];
-
-        return true;
-    };
 }
 
 

@@ -40,7 +40,7 @@ export function determineDocsToUpdate(document: Document,
                 document.resource.id,
                 setInverses);
 
-        if (setInverses) setInverseRelations(document, targetDocument, inverseRelationsMap);
+        if (setInverses) setInverseRelations(targetDocument, document, inverseRelationsMap);
     }
 
     return compare(targetDocuments, cloneOfTargetDocuments);
@@ -74,19 +74,19 @@ function pruneInverseRelations(relations: Relations,
 }
 
 
-function setInverseRelations(document: Document, targetDocument: Document,
+function setInverseRelations(targetDocument: Document,
+                             document: Document,
                              inverseRelationsMap: {[_: string]: string}) {
 
     flow(
         keys(document.resource.relations),
         filter(notUnidirectional),
         map(pairWith(lookup(inverseRelationsMap))),
-        forEach(setInverseRelation(document.resource, targetDocument.resource)));
+        forEach(setInverseRelation(targetDocument.resource, document.resource)));
 }
 
 
-function setInverseRelation(resource: Resource,
-                            target: Resource) {
+function setInverseRelation(target: Resource, resource: Resource) {
 
     return ([relation, inverse]: [Name, Name|undefined]) => {
 

@@ -1,6 +1,6 @@
 import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys, remove,
-    forEach, map, lookup, pairWith, filter} from 'tsfun';
-import {Document, Resource, relationsEquivalent} from 'idai-components-2';
+    forEach, map, lookup, pairWith, filter, cond, val, isDefined} from 'tsfun';
+import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
@@ -36,7 +36,7 @@ export function determineDocsToUpdate(document: Document,
 
         pruneInverseRelations(
             document.resource.id,
-            targetDocument,
+            targetDocument.resource.relations,
             setInverses);
 
         if (setInverses) setInverseRelations(document, targetDocument, inverseRelationsMap);
@@ -46,14 +46,17 @@ export function determineDocsToUpdate(document: Document,
 }
 
 
+const notUnidirectional = isNot(includedIn([LIES_WITHIN, RECORDED_IN]));
+
+
 function pruneInverseRelations(resourceId: string,
-                               targetDocument: Document,
+                               relations: Relations,
                                keepAllNoInverseRelations: boolean) {
 
     flow(
-        keys(targetDocument.resource.relations),
-        remove(relation => keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN)),
-        forEach(removeRelation(resourceId, targetDocument.resource.relations)));
+        keys(relations),
+        filter(cond(val(keepAllNoInverseRelations), notUnidirectional)),
+        forEach(removeRelation(resourceId, relations)));
 }
 
 
@@ -62,7 +65,7 @@ function setInverseRelations(document: Document, targetDocument: Document,
 
     flow(
         keys(document.resource.relations),
-        filter(isNot(includedIn([LIES_WITHIN, RECORDED_IN]))),
+        filter(notUnidirectional),
         map(pairWith(lookup(inverseRelationsMap))),
         forEach(setInverseRelation(document.resource, targetDocument.resource)));
 }

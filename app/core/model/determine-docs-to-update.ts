@@ -1,5 +1,5 @@
-import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys, remove,
-    forEach, map, lookup, pairWith, filter, cond, val, isDefined} from 'tsfun';
+import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys,
+    forEach, map, lookup, pairWith, filter, cond, val} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;

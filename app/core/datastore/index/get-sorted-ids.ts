@@ -44,7 +44,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
 
     const handleExactMatchIfQuerySaysSo =
         cond(
-            val(shouldHandleExactMatch(query)),
+            shouldHandleExactMatch(query),
             handleExactMatch(query.q as string));
 
     return flow(

@@ -1,8 +1,10 @@
-import {on, tripleEqual, jsonClone, isnt, flow, keys, remove, forEach} from 'tsfun';
-import {Document, relationsEquivalent} from 'idai-components-2';
+import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys, remove,
+    forEach, map, lookup, pairWith, filter} from 'tsfun';
+import {Document, Resource, relationsEquivalent} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {Name} from '../constants';
 
 
 /**
@@ -48,8 +50,8 @@ function pruneInverseRelations(resourceId: string,
                                targetDocument: Document,
                                keepAllNoInverseRelations: boolean) {
 
-    flow(targetDocument.resource.relations,
-        keys,
+    flow(
+        keys(targetDocument.resource.relations),
         remove(relation => keepAllNoInverseRelations && (relation === RECORDED_IN || relation === LIES_WITHIN)),
         forEach(removeRelation(resourceId, targetDocument.resource.relations)));
 }
@@ -58,29 +60,29 @@ function pruneInverseRelations(resourceId: string,
 function setInverseRelations(document: Document, targetDocument: Document,
                              inverseRelationsMap: {[_: string]: string}) {
 
-    Object.keys(document.resource.relations)
-        .filter(isnt(RECORDED_IN))
-        .filter(isnt(LIES_WITHIN))
-        .forEach(relation => setInverseRelation(document, targetDocument,
-                relation, inverseRelationsMap[relation]));
+    flow(
+        keys(document.resource.relations),
+        filter(isNot(includedIn([LIES_WITHIN, RECORDED_IN]))),
+        map(pairWith(lookup(inverseRelationsMap))),
+        forEach(setInverseRelation(document.resource, targetDocument.resource)));
 }
 
 
-function setInverseRelation(document: Document,
-                            targetDoc: Document,
-                            relation: string,
-                            inverse: string|undefined) {
+function setInverseRelation(resource: Resource,
+                            target: Resource) {
 
+    return ([relation, inverse]: [Name, Name|undefined]) => {
 
-    if (!inverse) return;
-    document.resource.relations[relation]
-        .filter(tripleEqual(targetDoc.resource.id)) // match only the one targetDocument
-        .forEach(() => {
-            if (!targetDoc.resource.relations[inverse]) targetDoc.resource.relations[inverse] = [];
-            const index = targetDoc.resource.relations[inverse].indexOf(document.resource.id);
-            if (index !== -1) targetDoc.resource.relations[inverse].splice(index, 1);
-            targetDoc.resource.relations[inverse].push(document.resource.id);
-        });
+        if (!inverse) return;
+        resource.relations[relation]
+            .filter(tripleEqual(target.id)) // match only the one targetDocument
+            .forEach(() => {
+                if (!target.relations[inverse]) target.relations[inverse] = [];
+                const index = target.relations[inverse].indexOf(resource.id);
+                if (index !== -1) target.relations[inverse].splice(index, 1);
+                target.relations[inverse].push(resource.id);
+            });
+    }
 }
 
 
@@ -95,19 +97,22 @@ function compare(targetDocuments: Array<Document>,
 }
 
 
-function relationsEqualInDocuments(documentA: Document, documentB: Document): boolean {
+function removeRelation(resourceId: string, relations: any) {
 
-    return on('resource.relations', relationsEquivalent)(documentA)(documentB);
+    return (relation: string): boolean => {
+
+        const index = relations[relation].indexOf(resourceId);
+        if (index === -1) return false;
+
+        relations[relation].splice(index, 1);
+        if (relations[relation].length === 0) delete relations[relation];
+
+        return true;
+    };
 }
 
 
-const removeRelation = (resourceId: string, relations: any) => (relation: string): boolean => {
+function relationsEqualInDocuments(documentA: Document, documentB: Document): boolean {
 
-    const index = relations[relation].indexOf(resourceId);
-    if (index === -1) return false;
-
-    relations[relation].splice(index, 1);
-    if (relations[relation].length === 0) delete relations[relation];
-
-    return true;
+    return on('resource.relations', relationsEquivalent)(documentA)(documentB);
 }

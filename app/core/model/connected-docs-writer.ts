@@ -70,7 +70,7 @@ export class ConnectedDocsWriter {
 
     private async getExistingConnectedDocs(documents: Array<Document>) {
 
-        const uniqueConnectedDocIds = this.getUniqueConnectedDocumentsIds(
+        const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
             documents,
             this.projectConfiguration
                 .getAllRelationDefinitions()
@@ -95,7 +95,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
+    private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         const getAllRelationTargetsForDoc = (doc: Document) =>
             Relations.getAllTargets(doc.resource.relations, allowedRelations);

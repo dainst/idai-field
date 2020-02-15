@@ -1,5 +1,5 @@
-import {on, tripleEqual, jsonClone, isNot, includedIn, flow, keys, isnt, isDefined,
-    forEach, map, lookup, pairWith, filter, cond, copy} from 'tsfun';
+import {on, jsonClone, isNot, includedIn, flow, keys, isnt, append, isDefined,
+    forEach, map, lookup, pairWith, filter, cond, copy, get} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -30,7 +30,7 @@ export function determineDocsToUpdate(document: Document,
                                       inverseRelationsMap: {[_: string]: string},
                                       setInverses: boolean = true): Array<Document> {
 
-    const cloneOfTargetDocuments = jsonClone(targetDocuments);
+    const cloneOfTargetDocuments = jsonClone(targetDocuments); // TODO review; at the very least this should be done with clone instead of jsonClone
 
     for (let targetDocument of targetDocuments) {
 
@@ -40,7 +40,12 @@ export function determineDocsToUpdate(document: Document,
                 document.resource.id,
                 setInverses);
 
-        if (setInverses) setInverseRelations(targetDocument, document, inverseRelationsMap);
+        if (setInverses) {
+            setInverseRelations(
+                targetDocument.resource,
+                document.resource,
+                inverseRelationsMap);
+        }
     }
 
     return compare(targetDocuments, cloneOfTargetDocuments);
@@ -74,31 +79,46 @@ function pruneInverseRelations(relations: Relations,
 }
 
 
-function setInverseRelations(targetDocument: Document,
-                             document: Document,
+const removeUnidirectionalRelations = filter(notUnidirectional);
+
+const inverseIsDefined = on('[1]', isDefined);
+
+
+function setInverseRelations(target: Resource,
+                             resource: Resource,
                              inverseRelationsMap: {[_: string]: string}) {
 
     flow(
-        keys(document.resource.relations),
-        filter(notUnidirectional),
+        keys(resource.relations),
+        removeUnidirectionalRelations,
         map(pairWith(lookup(inverseRelationsMap))),
-        forEach(setInverseRelation(targetDocument.resource, document.resource)));
+        filter(inverseIsDefined),
+        forEach(setInverseRelation(target, resource)));
 }
 
 
+/**
+ * target.relations = {}
+ * resource = { id: '1', relations { a: ['2'] } }
+ * relation = 'a', inverse = 'a_inv'
+ * ->
+ * target.relations = { a: ['1'] }
+ *
+ * Modifies target in place!
+ */
 function setInverseRelation(target: Resource, resource: Resource) {
 
-    return ([relation, inverse]: [Name, Name|undefined]) => {
+    return ([relation, inverse]: [Name, Name]) => {
 
-        if (!inverse) return;
-        resource.relations[relation]
-            .filter(tripleEqual(target.id)) // match only the one targetDocument
-            .forEach(() => {
-                if (!target.relations[inverse]) target.relations[inverse] = [];
-                const index = target.relations[inverse].indexOf(resource.id);
-                if (index !== -1) target.relations[inverse].splice(index, 1);
-                target.relations[inverse].push(resource.id);
-            });
+        if (resource.relations[relation].includes(target.id)) {
+
+            target.relations[inverse] =
+                flow(
+                    target.relations,
+                    get(inverse, []),
+                    filter(isnt(resource.id)),
+                    append(resource.id));
+        }
     }
 }
 

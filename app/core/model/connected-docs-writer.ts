@@ -4,7 +4,9 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
 import {determineDocsToUpdate} from './determine-docs-to-update';
+import {Name} from '../constants';
 
+const NAME = 'name';
 
 /**
  * Architecture note: This class deals with automatic
@@ -29,7 +31,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async update(document: Document, otherVersions: Array<Document>, username: string): Promise<void> {
+    public async update(document: Document, otherVersions: Array<Document>, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
@@ -40,11 +42,11 @@ export class ConnectedDocsWriter {
             true
         );
 
-        await this.updateDocs(docsToUpdate, username);
+        await this.updateDocs(docsToUpdate, user);
     }
 
 
-    public async remove(document: Document, username: string): Promise<void> {
+    public async remove(document: Document, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document]);
 
@@ -55,15 +57,15 @@ export class ConnectedDocsWriter {
             false
         );
 
-        await this.updateDocs(docsToUpdate, username);
+        await this.updateDocs(docsToUpdate, user);
     }
 
 
-    private async updateDocs(docsToUpdate: Array<Document>, username: string) {
+    private async updateDocs(docsToUpdate: Array<Document>, user: Name) {
 
         // Note that this does not update a document for being target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
-            await this.datastore.update(docToUpdate, username, undefined);
+            await this.datastore.update(docToUpdate, user, undefined);
         }
     }
 
@@ -74,15 +76,15 @@ export class ConnectedDocsWriter {
             documents,
             this.projectConfiguration
                 .getAllRelationDefinitions()
-                .map(to('name'))
+                .map(to(NAME))
         );
 
         const connectedDocuments: Array<Document> = [];
         for (let id of uniqueConnectedDocIds) {
 
             try {
-                connectedDocuments.push(await this.datastore.get(id as string));
-            } catch (_) {
+                connectedDocuments.push(await this.datastore.get(id));
+            } catch {
                 // this can be either due to deletion order, for example when
                 // deleting multiple docs recordedIn some other, but related to one another
                 // or it can be due to 'really' missing documents. missing documents mean

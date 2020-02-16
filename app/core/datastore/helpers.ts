@@ -25,6 +25,7 @@ export function sortRevisionsByLastModified(documents: Array<Document>): Array<D
 }
 
 
+// TODO type as to Pair
 export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {
 
     return replaceRight(as, 2, replacement);

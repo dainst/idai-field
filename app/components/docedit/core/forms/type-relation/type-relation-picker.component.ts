@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {first, Pair, second, to, isNot, undefinedOrEmpty} from 'tsfun';
+import {first, Pair, to, isNot, undefinedOrEmpty, left, right} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
 import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -27,8 +27,8 @@ export class TypeRelationPickerComponent {
 
     public timeoutRef: any;
 
-    public typeDocument = first;
-    public images = second;
+    public typeDocument = left;
+    public images = right;
     public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
 
 

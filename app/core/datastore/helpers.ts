@@ -1,5 +1,5 @@
 import {append, compose, dropRight, flow, takeRight,
-    take, drop, cond, size, is, ArrayMinLength1, last, identity} from 'tsfun';
+    take, drop, cond, size, is, last, identity} from 'tsfun';
 import {Document} from 'idai-components-2';
 
 
@@ -61,12 +61,15 @@ export const ultimate = last;
  *
  * @param indices must be sorted in ascending order
  */
-export function dissocIndices<A>(indices: Array<number>) { return (as: Array<A>): Array<A> => {
+export function dissocIndices<A>(indices: Array<number>) {
 
-    if (indices.length === 0) return as;
+    return (as: Array<A>): Array<A> => {
 
-    const index = last(indices as ArrayMinLength1<number>);
-    return dissocIndices
-            (dropRight(1)(indices) as Array<number>)
-            (take(index)(as).concat(drop(index + 1)(as))) as Array<A>;
-}}
+        const index = last(indices);
+        if (index === undefined) return as;
+
+        return dissocIndices
+                (dropRight(1)(indices))
+                (take(index)(as).concat(drop(index + 1)(as))) as Array<A>;
+    }
+}

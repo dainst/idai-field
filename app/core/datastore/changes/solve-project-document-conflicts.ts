@@ -1,5 +1,5 @@
 import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
-    isEmpty, compose, dissoc, append, Pair, first, second} from 'tsfun';
+    isEmpty, compose, dissoc, append, Pair, left, right} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {RevisionId} from '../../constants';
 import {
@@ -120,27 +120,27 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
     if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
     const lastPair: Pair<Resource, Resource> = last2(revisions);
 
-    const resolved = solveConflictBetweenTwoRevisions(first(lastPair), second(lastPair));
+    const resolved = solveConflictBetweenTwoRevisions(left(lastPair), right(lastPair));
     return resolved !== undefined
         ? collapse(replaceLastPair(revisions, resolved), indicesOfUsedRevisions.concat(revisions.length - 2))
-        : collapse(replaceLastPair(revisions, second(lastPair)), indicesOfUsedRevisions);
+        : collapse(replaceLastPair(revisions, right(lastPair)), indicesOfUsedRevisions);
 }
 
 
-function solveConflictBetweenTwoRevisions(left: Resource, right: Resource): Resource|undefined {
+function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|undefined {
 
-    if (equal(left)(right)) return right;
+    if (equal(l)(r)) return r;
 
-    const l = withoutConstantProjectFields(left);
-    const r = withoutConstantProjectFields(right);
+    const l_ = withoutConstantProjectFields(l);
+    const r_ = withoutConstantProjectFields(r);
 
-    if (isEmpty(l) && left[CRS] === right[CRS]) return right;
-    else if (isEmpty(r) && left[CRS] === right[CRS]) return left;
+    if (isEmpty(l_) && l[CRS] === r[CRS]) return r;
+    else if (isEmpty(r_) && l[CRS] === r[CRS]) return l;
 
-    if (equal(withoutStaffAndCampaigns(left))(withoutStaffAndCampaigns(right))) {
-        return flow(right,
-            assoc(STAFF, union([left[STAFF], right[STAFF]])),
-            assoc(CAMPAIGNS, union([left[CAMPAIGNS], right[CAMPAIGNS]])));
+    if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
+        return flow(r,
+            assoc(STAFF, union([l[STAFF], r[STAFF]])),
+            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])));
     }
 
     return undefined;

@@ -1,10 +1,10 @@
 import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
-    isEmpty, compose, dissoc, append} from 'tsfun';
+    isEmpty, compose, dissoc, append, Pair, first, second} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {RevisionId} from '../../constants';
 import {
     dissocIndices,
-    penultimate,
+    last2,
     replaceLastPair,
     sortRevisionsByLastModified,
     ultimate
@@ -118,11 +118,12 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
         : [Array<Resource>, Array<ArrayIndex>] {
 
     if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
+    const lastPair: Pair<Resource, Resource> = last2(revisions);
 
-    const resolved = solveConflictBetweenTwoRevisions(penultimate(revisions), ultimate(revisions) as any);
+    const resolved = solveConflictBetweenTwoRevisions(first(lastPair), second(lastPair));
     return resolved !== undefined
         ? collapse(replaceLastPair(revisions, resolved), indicesOfUsedRevisions.concat(revisions.length - 2))
-        : collapse(replaceLastPair(revisions, ultimate(revisions) as any), indicesOfUsedRevisions);
+        : collapse(replaceLastPair(revisions, second(lastPair)), indicesOfUsedRevisions);
 }
 
 

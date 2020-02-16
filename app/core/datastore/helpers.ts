@@ -1,5 +1,5 @@
 import {append, compose, dropRight, flow, takeRight,
-    take, drop, cond, size, is, val, last, first} from 'tsfun';
+    take, drop, cond, size, is, ArrayMinLength1, last, identity} from 'tsfun';
 import {Document} from 'idai-components-2';
 
 
@@ -39,15 +39,12 @@ function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): 
 
 const lengthIs2 = compose(size, is(2));
 
-/**
- * Gets the penultimate of an Array of A's, if it exists.
- * @returns A|undefined
- */
-export const penultimate = compose(
+
+export const last2 = compose(
     takeRight(2),
     cond(lengthIs2,
-        first,
-        undefined));
+        identity,
+        () => { throw Error('Illegal argument, length must be at least 2') }));
 
 
 export const ultimate = last;
@@ -62,12 +59,12 @@ export const ultimate = last;
  *
  * @param indices must be sorted in ascending order
  */
-export function dissocIndices<A>(indices: number[]) { return (as: Array<A>): Array<A> => {
+export function dissocIndices<A>(indices: Array<number>) { return (as: Array<A>): Array<A> => {
 
-    const index = last(indices);
-    return index === undefined
-        ? as
-        : dissocIndices
-            (dropRight(1)(indices) as number[])
-            (take(index)(as).concat(drop(index + 1)(as)) as Array<A>) as Array<A>;
+    if (indices.length === 0) return as;
+
+    const index = last(indices as ArrayMinLength1<number>);
+    return dissocIndices
+            (dropRight(1)(indices) as Array<number>)
+            (take(index)(as).concat(drop(index + 1)(as))) as Array<A>;
 }}

@@ -13,8 +13,7 @@
 
 <div id="image-view-modal-body" class="modal-body px-0">
     <div id="image-view"
-         class="flex-nowrap bg-light px-0"
-         [class.thumbnail-slider-scrollbar-visible]="thumbnailSliderScrollbarVisible">
+         class="flex-nowrap bg-light px-0">
         <div id="popover">
             <div id="popover-header">
                 <button id="expand-all-groups-button" class="btn btn-light"
@@ -65,17 +64,9 @@
             </div>
         </div>
 
-        <div #thumbnailSliderContainer id="thumbnail-slider-container"
-             [class.scrollbar-visible]="thumbnailSliderScrollbarVisible">
-            <div id="thumbnail-slider">
-                <div *ngFor="let image of images"
-                     id="thumbnail-{{image.document.resource.id}}"
-                     class="thumbnail-container"
-                     [class.selected]="image === selectedImage">
-                    <img [class.missing-image]="isMissingImage(image)"
-                         [src]="image.thumbSrc" (click)="select(image)">
-                </div>
-            </div>
-        </div>
+        <image-row [images]="images"
+                   [highlightOnHover]="true"
+                   [allowSelection]="true"
+                   (onImageSelected)="onSelected($event)"></image-row>
     </div>
 </div>

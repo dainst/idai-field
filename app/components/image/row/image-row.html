@@ -8,14 +8,15 @@
              (click)="onThumbnailClicked(image)">
             <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"
-                 [class.highlightOnHover]="highlightOnHover">
+                 [class.highlightOnHover]="highlightOnHover"
+                 [class.selected-image]="image === selectedImage">
             <div *ngIf="isPlaceholder(image)"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">
-                <type-icon [type]="image.resource.type" [size]="60"></type-icon>
+                <type-icon [type]="image.document.resource.type" [size]="60"></type-icon>
             </div>
             <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">
-                {{image.resource.identifier}}
+                {{image.document.resource.identifier}}
             </div>
         </div>
     </div>

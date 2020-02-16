@@ -1,11 +1,10 @@
 import {isDefined} from 'tsfun';
 import {asyncMap} from 'tsfun-extra';
-import {FieldDocument, FieldResource} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
 import {ImageRowItem, PLACEHOLDER} from '../../components/image/row/image-row.component';
-import getMainImageId = ModelUtil.getMainImageId;
 
 
 /**
@@ -42,21 +41,21 @@ export module TypeImagesUtil {
         )).documents;
 
         return (await asyncMap(
-            (document: FieldDocument) => getTypeImage(document.resource, datastore)
+            (document: FieldDocument) => getTypeImage(document, datastore)
         )(documents)).filter(isDefined) as Array<ImageRowItem>;
     }
 
 
-    async function getTypeImage(resource: FieldResource,
+    async function getTypeImage(document: FieldDocument,
                                 datastore: FieldReadDatastore): Promise<ImageRowItem|undefined> {
 
-        let imageId: string|undefined = await ModelUtil.getMainImageId(resource);
+        let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
 
         if (imageId) {
-            return { imageId: imageId, resource: resource };
+            return { imageId: imageId, document: document };
         } else {
             const linkedImages: Array<ImageRowItem> = await getLinkedImagesForType(
-                resource.id, datastore
+                document.resource.id, datastore
             );
 
             return linkedImages.length > 0
@@ -74,8 +73,8 @@ export module TypeImagesUtil {
         return (await datastore.find(constraints))
             .documents
             .map(document => {
-                const imageId: string|undefined = getMainImageId(document.resource);
-                return { imageId: imageId ? imageId : PLACEHOLDER, resource: document.resource };
+                const imageId: string|undefined = ModelUtil.getMainImageId(document.resource);
+                return { imageId: imageId ? imageId : PLACEHOLDER, document: document };
             })
             .filter(isDefined) as Array<ImageRowItem>;
     }

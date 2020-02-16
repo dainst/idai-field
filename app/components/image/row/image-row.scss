@@ -40,6 +40,10 @@ image-row {
           &.highlightOnHover:hover {
             filter: brightness(92%);
           }
+
+          &.selected-image {
+            filter: brightness(150%);
+          }
         }
 
         .resource-info {

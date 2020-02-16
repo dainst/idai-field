@@ -32,10 +32,6 @@
     height: calc(100% - 169px);
     margin: 0;
 
-    &.thumbnail-slider-scrollbar-visible {
-      height: calc(100% - 176px);
-    }
-
     #image-container {
       height: 100%;
       background-color: #000;
@@ -58,44 +54,15 @@
       }
     }
 
-    #thumbnail-slider-container {
+    image-row {
       height: 169px;
-      overflow-x: auto;
-      background-color: #f8f9fa;
 
-      &.scrollbar-visible {
-        height: 176px;
+      img {
+        max-height: 169px;
       }
 
-      #thumbnail-slider {
-        height: 100%;
-        width: max-content;
-        padding: 8px 0 8px 8px;
-
-        .thumbnail-container {
-          height: 151px;
-          line-height: 151px;
-          float: left;
-          margin-right: 10px;
-
-          &.selected img {
-            box-shadow: 0 0 10px 2px #37588e !important;
-          }
-
-          img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: scale-down;
-            user-select: none;
-            -webkit-user-drag: none;
-
-            &.missing-image {
-              width: 100px;
-              height: 100%;
-              object-fit: initial;
-            }
-          }
-        }
+      .image-placeholder {
+        height: 169px;
       }
     }
 

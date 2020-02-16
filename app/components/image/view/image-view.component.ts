@@ -12,6 +12,7 @@ import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole
 import {ImageContainer} from '../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {ImageRowItem} from '../row/image-row.component';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
     @ViewChild('thumbnailSliderContainer', { static: false }) thumbnailSliderContainer: ElementRef;
     @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
-    public images: Array<ImageContainer> = [];
+    public images: Array<ImageRowItem> = [];
     public selectedImage: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
     public openSection: string|undefined = 'stem';
@@ -77,8 +78,12 @@ export class ImageViewComponent implements OnInit, DoCheck {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && !this.subModalOpened) await this.activeModal.close();
-        if (event.key === 'ArrowLeft') await this.selectPrevious();
-        if (event.key === 'ArrowRight') await this.selectNext();
+    }
+
+
+    public async onSelected(imageRowItem: ImageRowItem) {
+
+        this.selectedImage = await this.loadImage(imageRowItem.document as ImageDocument);
     }
 
 
@@ -90,27 +95,12 @@ export class ImageViewComponent implements OnInit, DoCheck {
         this.linkedResourceIdentifier = linkedResourceIdentifier;
 
         this.images = [];
-        await this.select(await this.fetchThumbnail(selectedDocument), false);
 
-        for (let document of documents) {
-            this.images.push(
-                document === selectedDocument
-                    ? this.selectedImage
-                    : await this.fetchThumbnail(document)
-            );
-        }
+        this.images = documents.map(document => {
+            return { imageId: document.resource.id, document: document };
+        });
 
         this.showErrorMessagesForMissingImages();
-        ImageViewComponent.scrollToThumbnail(this.selectedImage);
-    }
-
-
-    public async select(image: ImageContainer, scroll: boolean = true) {
-
-        if (!image.imgSrc) await this.addOriginal(image);
-
-        this.selectedImage = image;
-        if (scroll) ImageViewComponent.scrollToThumbnail(image);
     }
 
 
@@ -167,12 +157,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
-    public isMissingImage(image: ImageContainer): boolean {
-
-        return image.thumbSrc === BlobMaker.blackImg;
-    }
-
-
     private isThumbnailSliderScrollbarVisible(): boolean {
 
         return this.thumbnailSliderContainer
@@ -189,12 +173,22 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
-    private async fetchThumbnail(document: ImageDocument): Promise<ImageContainer> {
+    private async loadImage(document: ImageDocument): Promise<ImageContainer> {
 
         const image: ImageContainer = { document: document };
 
         try {
-            image.thumbSrc = await this.imagestore.read(document.resource.id, false, true);
+            image.imgSrc = await this.imagestore.read(
+                document.resource.id, false, false
+            );
+        } catch (e) {
+            image.imgSrc = BlobMaker.blackImg;
+        }
+
+        try {
+            image.thumbSrc = await this.imagestore.read(
+                document.resource.id, false, true
+            );
         } catch (e) {
             image.thumbSrc = BlobMaker.blackImg;
         }
@@ -203,64 +197,16 @@ export class ImageViewComponent implements OnInit, DoCheck {
     }
 
 
-    private async addOriginal(image: ImageContainer) {
-
-        if (!image.document) return;
-
-        try {
-            image.imgSrc = await this.imagestore.read(
-                image.document.resource.id, false, false
-            );
-        } catch (e) {
-            image.imgSrc = BlobMaker.blackImg;
-        }
-    }
-
-
-    private async selectPrevious() {
-
-        if (this.images.length < 2) return;
-
-        let index: number = this.images.indexOf(this.selectedImage);
-        index = index === 0
-            ? this.images.length - 1
-            : index - 1;
-
-        await this.select(this.images[index]);
-    }
-
-
-    private async selectNext() {
-
-        if (this.images.length < 2) return;
-
-        let index: number = this.images.indexOf(this.selectedImage);
-        index = index === this.images.length - 1
-            ? 0
-            : index + 1;
-
-        await this.select(this.images[index]);
-    }
-
-
     private showErrorMessagesForMissingImages() {
 
-        this.images
+        // TODO Show error messages
+
+        /*this.images
             .filter(image => !this.containsOriginal(image))
             .forEach(image => {
                 const name = image.document && image.document.resource ? image.document.resource.id : 'unknown';
                 if (this.isMissingImage(image)) showMissingImageMessageOnConsole(name);
                 else showMissingOginalImageMessageOnConsole(name);
-            });
-    }
-
-
-    private static scrollToThumbnail(image: ImageContainer) {
-
-        const element: HTMLElement|null = document.getElementById(
-            'thumbnail-' + (image.document as ImageDocument).resource.id
-        );
-
-        if (element) element.scrollIntoView({ inline: 'center' });
+            });*/
     }
 }

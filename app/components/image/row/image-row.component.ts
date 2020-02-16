@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {asyncReduce} from 'tsfun-extra';
-import {FieldResource} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
@@ -15,14 +15,17 @@ export const PLACEHOLDER = 'PLACEHOLDER';
 export type ImageRowItem = {
 
     imageId: string|'PLACEHOLDER';
-    resource: FieldResource;
+    document: Document;
 }
 
 
 @Component({
     selector: 'image-row',
     moduleId: module.id,
-    templateUrl: './image-row.html'
+    templateUrl: './image-row.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -36,10 +39,13 @@ export class ImageRowComponent implements OnChanges {
     @Input() images: Array<ImageRowItem>;
     @Input() highlightOnHover: boolean = false;
     @Input() showResourceInfoOnHover: boolean = false;
+    @Input() allowSelection: boolean = false;
 
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
+    @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
 
     public thumbnailUrls: { [imageId: string]: SafeResourceUrl };
+    public selectedImage: ImageRowItem|undefined;
 
     private imageRow: ImageRow;
 
@@ -68,13 +74,24 @@ export class ImageRowComponent implements OnChanges {
             await this.datastore.getMultiple(this.images.map(to('imageId')))
         );
 
+        if (this.allowSelection && this.images.length > 0) this.select(this.images[0]);
+
         await this.nextPage();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'ArrowLeft') await this.selectPrevious();
+        if (event.key === 'ArrowRight') await this.selectNext();
     }
 
 
     public onThumbnailClicked(image: ImageRowItem) {
 
-        this.onImageClicked.emit(image);
+        this.allowSelection
+            ? this.select(image)
+            : this.onImageClicked.emit(image);
     }
 
 
@@ -89,6 +106,41 @@ export class ImageRowComponent implements OnChanges {
     public isPlaceholder(image: ImageRowItem): boolean {
 
         return image.imageId === PLACEHOLDER;
+    }
+
+
+    public select(image: ImageRowItem) {
+
+        this.selectedImage = image;
+        this.onImageSelected.emit(image);
+
+        // TODO Switch to next page if necessary
+    }
+
+
+    private async selectPrevious() {
+
+        if (!this.selectedImage || this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === 0
+            ? this.images.length - 1
+            : index - 1;
+
+        await this.select(this.images[index]);
+    }
+
+
+    private async selectNext() {
+
+        if (!this.selectedImage || this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === this.images.length - 1
+            ? 0
+            : index + 1;
+
+        await this.select(this.images[index]);
     }
 
 

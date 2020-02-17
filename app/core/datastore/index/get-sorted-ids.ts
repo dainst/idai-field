@@ -1,6 +1,6 @@
 import {
     equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify,
-    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, first
+    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left
 } from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
@@ -133,4 +133,4 @@ const rankTypeResourceIndexItems = (typeToMatch: Name)
     compose(
         map(pairWith(calcPercentage(typeToMatch))),
         sort(comparePercentages),
-        map(first));
+        map(left));

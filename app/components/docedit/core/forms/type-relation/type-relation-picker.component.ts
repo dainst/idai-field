@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, right} from 'tsfun';
+import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
 import {asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -63,9 +63,10 @@ export class TypeRelationPickerComponent {
     private async fetchCatalogs() {
 
         this.availableCatalogs =
-            (await this.datastore.find({ types: ['TypeCatalog'] }))
-                .documents
-                .map(to('resource'));
+            await flow(
+                await this.datastore.find({ types: ['TypeCatalog'] }),
+                to('documents'),
+                map(to('resource')));
     }
 
 

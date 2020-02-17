@@ -1,10 +1,11 @@
 import {isDefined, filter} from 'tsfun';
 import {asyncMap, asyncFlow} from 'tsfun/async';
 import {FieldDocument} from 'idai-components-2';
-import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
+import {FieldDocumentFindResult, FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
 import {ImageRowItem, PLACEHOLDER} from '../../components/image/row/image-row.component';
+import {Query} from 'idai-components-2/index';
 
 
 /**
@@ -27,27 +28,29 @@ export module TypeImagesUtil {
             throw Error('Illegal argument: Document must be of resource type Type or TypeCatalog.');
         }
 
+        const find = (q: Query) => datastore.find(q);
+
         return document.resource.type === 'TypeCatalog'
-            ? getLinkedImagesForTypeCatalog(document.resource.id, datastore)
-            : getLinkedImagesForType(document.resource.id, datastore);
+            ? getLinkedImagesForTypeCatalog(document.resource.id, find)
+            : getLinkedImagesForType(document.resource.id, find);
     }
 
 
     async function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
-                                                 datastore: FieldReadDatastore): Promise<Array<ImageRowItem>> {
+                                                 find: (query: Query) => Promise<FieldDocumentFindResult>): Promise<Array<ImageRowItem>> {
 
-        const documents: Array<FieldDocument> = (await datastore.find(
+        const documents: Array<FieldDocument> = (await find(
             { constraints: { 'liesWithin:contain': resourceId } }
         )).documents;
 
         return asyncFlow(
             documents,
-            asyncMap(getTypeImage(datastore)),
+            asyncMap(getTypeImage(find)),
             filter(isDefined)) as Promise<Array<ImageRowItem>>;
     }
 
 
-    function getTypeImage(datastore: FieldReadDatastore) {
+    function getTypeImage(find: (query: Query) => Promise<FieldDocumentFindResult>) {
 
         return async (document: FieldDocument): Promise<ImageRowItem|undefined> => {
 
@@ -57,7 +60,7 @@ export module TypeImagesUtil {
                 return { imageId: imageId, document: document };
             } else {
                 const linkedImages: Array<ImageRowItem> = await getLinkedImagesForType(
-                    document.resource.id, datastore
+                    document.resource.id, find
                 );
 
                 return linkedImages.length > 0
@@ -69,11 +72,11 @@ export module TypeImagesUtil {
 
 
     async function getLinkedImagesForType(resourceId: ResourceId,
-                                          datastore: FieldReadDatastore): Promise<Array<ImageRowItem>> {
+                                          find: (query: Query) => Promise<FieldDocumentFindResult>): Promise<Array<ImageRowItem>> {
 
         const constraints = { constraints: { 'isInstanceOf:contain': resourceId }};
 
-        return (await datastore.find(constraints))
+        return (await find(constraints))
             .documents
             .map(document => {
                 const imageId: string|undefined = ModelUtil.getMainImageId(document.resource);

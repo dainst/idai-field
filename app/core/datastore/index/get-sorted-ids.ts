@@ -27,11 +27,11 @@ type Percentage = number;
  * @param indexItems
  * @param query
  *   - if query.types === ['Type'],
- *     query.rankOptions[MATCH_TYPE] can be set
+ *     query.sort.matchType can be set
  *   . in order to perform a ranking of Type resources then.
- *     if query.rankOptions[MATCH_TYPE] is not set, a regular
+ *     if query.sort.matchType is not set, a regular
  *     sort gets performed instead.
- *   - if query.sort === 'exactMatchFirst', then, after sorting,
+ *   - if query.sort.mode === 'exactMatchFirst', then, after sorting,
  *     puts an element which matches the query exactly, to the
  *     front of the resulting list.
  */

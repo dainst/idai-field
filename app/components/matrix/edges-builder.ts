@@ -1,5 +1,5 @@
 import {Document, Relations} from 'idai-components-2';
-import {unique, to, on, is} from 'tsfun';
+import {set, to, on, is} from 'tsfun';
 import {unionBy} from 'tsfun/base';
 import {intoObj} from 'tsfun-extra';
 
@@ -68,11 +68,11 @@ export module EdgesBuilder {
 
             const edges = {
                 aboveIds:
-                    unique(aboveTargetIds.map(to('targetId'))),
+                    set(aboveTargetIds.map(to('targetId'))),
                 belowIds:
-                    unique(belowTargetIds.map(to('targetId'))),
+                    set(belowTargetIds.map(to('targetId'))),
                 sameRankIds:
-                    unique(
+                    set(
                         sameRankTargetIds
                             .filter(idsResult => !idsResult.pathType || idsResult.pathType === 'sameRank')
                             .map(to('targetId'))

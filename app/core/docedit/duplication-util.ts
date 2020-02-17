@@ -1,6 +1,6 @@
 import {NewDocument, Document} from 'idai-components-2';
-import {Validator} from '../../core/model/validator';
-import {clone} from '../../core/util/object-util';
+import {Validator} from '../model/validator';
+import {clone} from '../util/object-util';
 
 
 /**

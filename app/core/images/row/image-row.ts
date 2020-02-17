@@ -32,6 +32,7 @@ export class ImageRow {
 
         this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
 
         const newImagesIds: string[] = this.getNewImagesIds();
 
@@ -50,6 +51,8 @@ export class ImageRow {
 
         this.lastShownImageIndex = this.firstShownImageIndex;
         this.calculateFirstShownImageIndex();
+        this.calculateLastShownImageIndex();
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
 
         this.highestImageIndex = Math.max(this.highestImageIndex, this.lastShownImageIndex);
 
@@ -112,8 +115,6 @@ export class ImageRow {
             this.lastShownImageIndex = i;
             if (availableWidth < 0) break;
         }
-
-        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 
@@ -126,8 +127,6 @@ export class ImageRow {
             if (availableWidth < 0) break;
             this.firstShownImageIndex = i;
         }
-
-        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 

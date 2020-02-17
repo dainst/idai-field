@@ -1,5 +1,5 @@
 import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
-import {unionBy} from 'tsfun/base';
+import {unionBy} from 'tsfun/by';
 import {asyncForEach} from 'tsfun-extra';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';

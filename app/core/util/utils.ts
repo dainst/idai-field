@@ -1,7 +1,3 @@
-import {identity, filter, ObjectCollection, compose,
-    isArray, keys, copy, Pair, first, flow, map, pairWith} from 'tsfun';
-
-
 export function isBoolean(value: any): boolean {
 
     return typeof value === 'boolean';

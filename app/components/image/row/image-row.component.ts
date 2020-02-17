@@ -74,9 +74,11 @@ export class ImageRowComponent implements OnChanges {
             await this.datastore.getMultiple(this.images.map(to('imageId')))
         );
 
-        if (this.allowSelection && this.images.length > 0) this.select(this.images[0]);
-
-        await this.nextPage();
+        if (this.allowSelection && this.images.length > 0) {
+            this.select(this.images[0]);
+        } else {
+            await this.nextPage();
+        }
     }
 
 
@@ -109,12 +111,11 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
-    public select(image: ImageRowItem) {
+    public async select(image: ImageRowItem) {
 
         this.selectedImage = image;
+        await this.applyUpdate(this.imageRow.switchToSelected(image));
         this.onImageSelected.emit(image);
-
-        // TODO Switch to next page if necessary
     }
 
 

@@ -11,5 +11,4 @@ export interface RelationDefinition {
     visible?: boolean; // determines the visibility of that relation in show type widgets
     editable?: boolean; // determines the visibility of that relation in edit type widgets
     sameMainTypeResource?: boolean;
-    transient?: boolean; // transient relations are not saved in database
 }

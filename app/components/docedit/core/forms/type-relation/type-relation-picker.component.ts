@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {first, Pair, to, isNot, undefinedOrEmpty, left, right} from 'tsfun';
-import {asyncMap} from 'tsfun-extra';
+import {Pair, to, isNot, undefinedOrEmpty, left, right} from 'tsfun';
+import {asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';

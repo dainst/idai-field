@@ -1,5 +1,5 @@
 import {includedIn, isNot, on, to} from 'tsfun';
-import {asyncMap} from 'tsfun-extra';
+import {asyncMap} from 'tsfun/async';
 import {Query, FieldDocument} from 'idai-components-2';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
 import {clone} from '../util/object-util';

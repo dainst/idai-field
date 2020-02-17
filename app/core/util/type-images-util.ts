@@ -1,5 +1,5 @@
 import {isDefined} from 'tsfun';
-import {asyncMap} from 'tsfun-extra';
+import {asyncMap} from 'tsfun/async';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';

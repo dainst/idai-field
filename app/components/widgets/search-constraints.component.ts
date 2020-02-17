@@ -1,6 +1,6 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {asyncFilter} from 'tsfun-extra';
+import {asyncFilter} from 'tsfun/async';
 import {ConstraintIndex} from '../../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';

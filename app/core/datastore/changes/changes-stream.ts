@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {asyncMap} from 'tsfun-extra';
+import {asyncMap} from 'tsfun/async';
 import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';

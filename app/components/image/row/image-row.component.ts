@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
-import {asyncReduce} from 'tsfun-extra';
+import {asyncReduce} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';

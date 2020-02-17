@@ -13,7 +13,10 @@ image-row {
       display: flex;
       align-items: center;
       background-color: black;
-      transition: transform 0.5s ease-in-out;
+
+      &.animated {
+        transition: transform 0.5s ease-in-out;
+      }
 
       .image-container {
         position: relative;

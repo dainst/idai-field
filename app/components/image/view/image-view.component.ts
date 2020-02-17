@@ -1,6 +1,7 @@
 import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {on, is} from 'tsfun';
 import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {RoutingService} from '../../routing-service';
@@ -32,7 +33,9 @@ export class ImageViewComponent implements OnInit, DoCheck {
     @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
-    public selectedImage: ImageContainer;
+    public selectedImage: ImageRowItem;
+
+    public imageContainer: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
     public openSection: string|undefined = 'stem';
 
@@ -83,7 +86,7 @@ export class ImageViewComponent implements OnInit, DoCheck {
 
     public async onSelected(imageRowItem: ImageRowItem) {
 
-        this.selectedImage = await this.loadImage(imageRowItem.document as ImageDocument);
+        this.imageContainer = await this.loadImage(imageRowItem.document as ImageDocument);
     }
 
 
@@ -94,11 +97,13 @@ export class ImageViewComponent implements OnInit, DoCheck {
 
         this.linkedResourceIdentifier = linkedResourceIdentifier;
 
-        this.images = [];
-
         this.images = documents.map(document => {
             return { imageId: document.resource.id, document: document };
         });
+
+        this.selectedImage = this.images.find(
+            on('imageId', is(selectedDocument.resource.id))
+        ) as ImageRowItem;
 
         this.showErrorMessagesForMissingImages();
     }
@@ -127,11 +132,11 @@ export class ImageViewComponent implements OnInit, DoCheck {
             { size: 'lg', backdrop: 'static' }
             );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.selectedImage.document as ImageDocument);
+        doceditModalComponent.setDocument(this.imageContainer.document as ImageDocument);
 
         try {
             const result = await doceditModalRef.result;
-            if (result.document) this.selectedImage.document = result.document;
+            if (result.document) this.imageContainer.document = result.document;
         } catch (closeReason) {
             if (closeReason === 'deleted') await this.activeModal.close();
         }

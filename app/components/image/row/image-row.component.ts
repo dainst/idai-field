@@ -6,6 +6,7 @@ import {Document} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {AngularUtility} from '../../../angular/angular-utility';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -37,6 +38,8 @@ export class ImageRowComponent implements OnChanges {
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
     @Input() images: Array<ImageRowItem>;
+    @Input() selectedImage: ImageRowItem;
+
     @Input() highlightOnHover: boolean = false;
     @Input() showResourceInfoOnHover: boolean = false;
     @Input() allowSelection: boolean = false;
@@ -45,7 +48,7 @@ export class ImageRowComponent implements OnChanges {
     @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
 
     public thumbnailUrls: { [imageId: string]: SafeResourceUrl };
-    public selectedImage: ImageRowItem|undefined;
+    public initializing: boolean;
 
     private imageRow: ImageRow;
 
@@ -67,6 +70,8 @@ export class ImageRowComponent implements OnChanges {
 
         if (!this.images) return;
 
+        this.initializing = true;
+
         this.imageRow = new ImageRow(
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
@@ -75,10 +80,12 @@ export class ImageRowComponent implements OnChanges {
         );
 
         if (this.allowSelection && this.images.length > 0) {
-            this.select(this.images[0]);
+            await this.select(this.selectedImage ? this.selectedImage : this.images[0]);
         } else {
             await this.nextPage();
         }
+
+        this.initializing = false;
     }
 
 
@@ -148,6 +155,7 @@ export class ImageRowComponent implements OnChanges {
     private async applyUpdate(update: ImageRowUpdate) {
 
         await this.updateThumbnailUrls(update.newImageIds);
+        await AngularUtility.refresh();
         this.scroll(update);
     }
 

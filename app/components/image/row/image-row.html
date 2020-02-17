@@ -2,7 +2,9 @@
     <div *ngIf="hasPreviousPage()" class="previous-page-button" (click)="previousPage()">
         <span class="mdi mdi-chevron-left"></span>
     </div>
-    <div #imageRow class="image-row">
+    <div #imageRow
+         class="image-row"
+         [class.animated]="!initializing">
         <div *ngFor="let image of images"
              class="image-container"
              (click)="onThumbnailClicked(image)">

@@ -25,8 +25,8 @@
                      (click)="tooltip.close(); toggleExpandAllGroups()">
                     <span class="mdi mdi-unfold-more-horizontal"></span>
                 </button>
-                <div *ngIf="selectedImage" id="identifier-label">
-                    {{selectedImage.document.resource.identifier}}
+                <div *ngIf="imageContainer" id="identifier-label">
+                    {{imageContainer.document.resource.identifier}}
                 </div>
                 <button id="edit-image-button" class="btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
@@ -35,18 +35,18 @@
 
             <div #imageInfo id="image-info"
                  [class.scrollbar-visible]="imageInfoScrollbarVisible">
-                <fields-view *ngIf="selectedImage"
-                             [resource]="selectedImage.document.resource"
+                <fields-view *ngIf="imageContainer"
+                             [resource]="imageContainer.document.resource"
                              [openSection]="openSection"
                              [expandAllGroups]="getExpandAllGroups()"
                              (onSectionToggled)="setOpenSection($event)"></fields-view>
-                <georeference-view *ngIf="selectedImage"
-                                   [document]="selectedImage.document"
+                <georeference-view *ngIf="imageContainer"
+                                   [document]="imageContainer.document"
                                    [openSection]="openSection"
                                    [expandAllGroups]="getExpandAllGroups()"
                                    (onSectionToggled)="setOpenSection($event)"></georeference-view>
-                <depicts-relations-view *ngIf="selectedImage"
-                                        [resource]="selectedImage.document.resource"
+                <depicts-relations-view *ngIf="imageContainer"
+                                        [resource]="imageContainer.document.resource"
                                         [openSection]="openSection"
                                         [expandAllGroups]="getExpandAllGroups()"
                                         (onSectionToggled)="setOpenSection($event)"
@@ -54,17 +54,18 @@
             </div>
         </div>
 
-        <div *ngIf="selectedImage" id="image-container">
+        <div *ngIf="imageContainer" id="image-container">
             <div class="d-flex align-items-center justify-content-center">
-                <div *ngIf="!containsOriginal(selectedImage)" class="alert alert-info" role="alert"
+                <div *ngIf="!containsOriginal(imageContainer)" class="alert alert-info" role="alert"
                      i18n="@@imageView.originalNotFoundWarning">
                     Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
                 </div>
-                <img [src]="containsOriginal(selectedImage) ? selectedImage.imgSrc : selectedImage.thumbSrc">
+                <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc">
             </div>
         </div>
 
         <image-row [images]="images"
+                   [selectedImage]="selectedImage"
                    [highlightOnHover]="true"
                    [allowSelection]="true"
                    (onImageSelected)="onSelected($event)"></image-row>

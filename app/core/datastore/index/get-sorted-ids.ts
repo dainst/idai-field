@@ -72,7 +72,7 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
 
     if (pctgA < pctgB) return 1;
     if (pctgA === pctgB) {
-        return size(itemA.instances) < size(itemB.instances)
+        return size(itemA.instances) <= size(itemB.instances)
             ? 1
             : -1;
     }

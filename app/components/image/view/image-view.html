@@ -35,18 +35,18 @@
 
             <div #imageInfo id="image-info"
                  [class.scrollbar-visible]="imageInfoScrollbarVisible">
-                <fields-view *ngIf="imageContainer"
-                             [resource]="imageContainer.document.resource"
+                <fields-view *ngIf="selectedImage"
+                             [resource]="selectedImage.document.resource"
                              [openSection]="openSection"
                              [expandAllGroups]="getExpandAllGroups()"
                              (onSectionToggled)="setOpenSection($event)"></fields-view>
-                <georeference-view *ngIf="imageContainer"
-                                   [document]="imageContainer.document"
+                <georeference-view *ngIf="selectedImage"
+                                   [document]="selectedImage.document"
                                    [openSection]="openSection"
                                    [expandAllGroups]="getExpandAllGroups()"
                                    (onSectionToggled)="setOpenSection($event)"></georeference-view>
-                <depicts-relations-view *ngIf="imageContainer"
-                                        [resource]="imageContainer.document.resource"
+                <depicts-relations-view *ngIf="selectedImage"
+                                        [resource]="selectedImage.document.resource"
                                         [openSection]="openSection"
                                         [expandAllGroups]="getExpandAllGroups()"
                                         (onSectionToggled)="setOpenSection($event)"

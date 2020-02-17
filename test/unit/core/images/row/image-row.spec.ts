@@ -62,6 +62,22 @@ describe('ImageRow', () => {
     });
 
 
+    it('switch pages to show selected image', () => {
+
+        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+
+        let result = imageRow.nextPage();
+        expect(result.newImageIds).toEqual(['i1', 'i2']);
+        expect(result.firstShownImageIndex).toBe(0);
+        // Show i1 and i2; i2 is not shown completely
+
+        result = imageRow.switchToSelected({ imageId: 'i3', document: null });
+        expect(result.newImageIds).toEqual(['i3']);
+        expect(result.firstShownImageIndex).toBe(2);
+        // Show i3
+    });
+
+
     it('return correct values for hasNextPage and hasPreviousPage', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);

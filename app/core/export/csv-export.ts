@@ -1,5 +1,5 @@
 import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
-    isnt, on, range, reduce, reverse, take, to, cond, val} from 'tsfun';
+    isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair} from 'tsfun';
 import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
@@ -21,11 +21,12 @@ export module CSVExport {
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
     const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
-    const H = 0;
-    const M = 1;
+    const H = left;
+    const M = right;
     type Cell = string;
+    type Matrix = Cell[][];
     type Heading = string;
-    type HeadingsAndMatrix = [Heading[], Cell[][]];
+    type HeadingsAndMatrix = Pair<Heading[], Matrix>;
 
 
     /**
@@ -54,7 +55,7 @@ export module CSVExport {
 
     function combine(headingsAndMatrix: HeadingsAndMatrix) {
 
-        return [headingsAndMatrix[H]].concat(headingsAndMatrix[M]).map(toCsvLine);
+        return [H(headingsAndMatrix)].concat(M(headingsAndMatrix)).map(toCsvLine);
     }
 
 
@@ -68,7 +69,7 @@ export module CSVExport {
 
     function expandDating(headingsAndMatrix: HeadingsAndMatrix) {
 
-        const indexOfDatingElement = headingsAndMatrix[H].indexOf('dating');
+        const indexOfDatingElement = H(headingsAndMatrix).indexOf('dating');
         if (indexOfDatingElement === -1) return headingsAndMatrix;
 
         return expand(
@@ -84,7 +85,7 @@ export module CSVExport {
 
         return (headings_and_matrix: HeadingsAndMatrix) => {
 
-            const dimensionIndices = reverse(getDimensionIndices(headings_and_matrix[H]));
+            const dimensionIndices = reverse(getDimensionIndices(H(headings_and_matrix)));
 
             return expand(
                     expandDimensionHeadings,
@@ -135,10 +136,10 @@ export module CSVExport {
 
         return reduce((headingsAndMatrix: HeadingsAndMatrix, columnIndex: number) => {
 
-                const max = Math.max(1, getMax(columnIndex)(headingsAndMatrix[M]));
+                const max = Math.max(1, getMax(columnIndex)(M(headingsAndMatrix)));
 
-                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headingsAndMatrix[H]);
-                const expandedRows   = headingsAndMatrix[M]
+                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(H(headingsAndMatrix));
+                const expandedRows   = M(headingsAndMatrix)
                     .map(expandLevelOne(columnIndex, max))
                     .map(expandLevelTwo(columnIndex, max));
 

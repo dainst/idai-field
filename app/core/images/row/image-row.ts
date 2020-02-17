@@ -1,8 +1,11 @@
 import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
+import {ImageRowItem} from '../../../components/image/row/image-row.component';
 
 
 export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: number };
+
+type PageInfo = 'same'|'previous'|'next';
 
 
 /**
@@ -29,6 +32,7 @@ export class ImageRow {
 
         this.firstShownImageIndex = this.lastShownImageIndex;
         this.calculateLastShownImageIndex();
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
 
         const newImagesIds: string[] = this.getNewImagesIds();
 
@@ -47,6 +51,8 @@ export class ImageRow {
 
         this.lastShownImageIndex = this.firstShownImageIndex;
         this.calculateFirstShownImageIndex();
+        this.calculateLastShownImageIndex();
+        this.lastImageFullyVisible = this.isLastImageFullyVisible();
 
         this.highestImageIndex = Math.max(this.highestImageIndex, this.lastShownImageIndex);
 
@@ -54,6 +60,29 @@ export class ImageRow {
             newImageIds: [],
             firstShownImageIndex: this.firstShownImageIndex
         }
+    }
+
+
+    public switchToSelected(selected: ImageRowItem): ImageRowUpdate {
+
+        const update: ImageRowUpdate = { newImageIds: [], firstShownImageIndex: -1 };
+
+        let pageInfo: PageInfo;
+        while ((pageInfo = this.getPageInfo(selected)) !== 'same') {
+            if (pageInfo === 'previous') {
+                const newUpdate: ImageRowUpdate = this.previousPage();
+                update.newImageIds = update.newImageIds.concat(newUpdate.newImageIds);
+                update.firstShownImageIndex = newUpdate.firstShownImageIndex
+            } else if (pageInfo === 'next') {
+                const newUpdate: ImageRowUpdate = this.nextPage();
+                update.newImageIds = update.newImageIds.concat(newUpdate.newImageIds);
+                update.firstShownImageIndex = newUpdate.firstShownImageIndex
+            } else {
+                break;
+            }
+        }
+
+        return update;
     }
 
 
@@ -86,8 +115,6 @@ export class ImageRow {
             this.lastShownImageIndex = i;
             if (availableWidth < 0) break;
         }
-
-        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 
@@ -100,8 +127,6 @@ export class ImageRow {
             if (availableWidth < 0) break;
             this.firstShownImageIndex = i;
         }
-
-        this.lastImageFullyVisible = this.isLastImageFullyVisible();
     }
 
 
@@ -124,5 +149,22 @@ export class ImageRow {
         }
 
         return true;
+    }
+
+
+    private getPageInfo(imageRowItem: ImageRowItem): PageInfo {
+
+        const index: number = this.images.indexOf(
+            this.images.find(image => image.resource.id === imageRowItem.imageId) as ImageDocument
+        );
+
+        if (this.firstShownImageIndex > index) {
+            return 'previous';
+        } else if (this.lastShownImageIndex < index
+                || (this.lastShownImageIndex === index && !this.lastImageFullyVisible)) {
+            return 'next';
+        } else {
+            return 'same';
+        }
     }
 }

@@ -2,10 +2,11 @@ import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {asyncReduce} from 'tsfun-extra';
-import {FieldResource} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {AngularUtility} from '../../../angular/angular-utility';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -15,14 +16,17 @@ export const PLACEHOLDER = 'PLACEHOLDER';
 export type ImageRowItem = {
 
     imageId: string|'PLACEHOLDER';
-    resource: FieldResource;
+    document: Document;
 }
 
 
 @Component({
     selector: 'image-row',
     moduleId: module.id,
-    templateUrl: './image-row.html'
+    templateUrl: './image-row.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -34,12 +38,17 @@ export class ImageRowComponent implements OnChanges {
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
 
     @Input() images: Array<ImageRowItem>;
+    @Input() selectedImage: ImageRowItem;
+
     @Input() highlightOnHover: boolean = false;
     @Input() showResourceInfoOnHover: boolean = false;
+    @Input() allowSelection: boolean = false;
 
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
+    @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
 
     public thumbnailUrls: { [imageId: string]: SafeResourceUrl };
+    public initializing: boolean;
 
     private imageRow: ImageRow;
 
@@ -61,6 +70,9 @@ export class ImageRowComponent implements OnChanges {
 
         if (!this.images) return;
 
+        this.initializing = true;
+        await AngularUtility.refresh();
+
         this.imageRow = new ImageRow(
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
@@ -68,13 +80,28 @@ export class ImageRowComponent implements OnChanges {
             await this.datastore.getMultiple(this.images.map(to('imageId')))
         );
 
-        await this.nextPage();
+        if (this.allowSelection && this.images.length > 0) {
+            await this.select(this.selectedImage ? this.selectedImage : this.images[0]);
+        } else {
+            await this.nextPage();
+        }
+
+        this.initializing = false;
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'ArrowLeft') await this.selectPrevious();
+        if (event.key === 'ArrowRight') await this.selectNext();
     }
 
 
     public onThumbnailClicked(image: ImageRowItem) {
 
-        this.onImageClicked.emit(image);
+        this.allowSelection
+            ? this.select(image)
+            : this.onImageClicked.emit(image);
     }
 
 
@@ -92,9 +119,44 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
+    public async select(image: ImageRowItem) {
+
+        this.selectedImage = image;
+        await this.applyUpdate(this.imageRow.switchToSelected(image));
+        this.onImageSelected.emit(image);
+    }
+
+
+    private async selectPrevious() {
+
+        if (!this.selectedImage || this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === 0
+            ? this.images.length - 1
+            : index - 1;
+
+        await this.select(this.images[index]);
+    }
+
+
+    private async selectNext() {
+
+        if (!this.selectedImage || this.images.length < 2) return;
+
+        let index: number = this.images.indexOf(this.selectedImage);
+        index = index === this.images.length - 1
+            ? 0
+            : index + 1;
+
+        await this.select(this.images[index]);
+    }
+
+
     private async applyUpdate(update: ImageRowUpdate) {
 
         await this.updateThumbnailUrls(update.newImageIds);
+        await AngularUtility.refresh();
         this.scroll(update);
     }
 

@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument, FieldResource} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ImageRowItem, PLACEHOLDER} from '../../image/row/image-row.component';
@@ -51,7 +51,10 @@ export class TypeRowComponent implements OnChanges {
 
         if (image.imageId === PLACEHOLDER) return;
 
-        await this.imageModalLauncher.openImageModal(image.resource, this.resourcesComponent);
+        await this.imageModalLauncher.openImageModal(
+            image.document.resource as FieldResource,
+            this.resourcesComponent
+        );
     }
 
 

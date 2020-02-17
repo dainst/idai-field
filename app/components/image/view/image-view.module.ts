@@ -15,13 +15,15 @@ import {PersistenceHelper} from '../../../core/images/overview/service/persisten
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {ImageRowModule} from '../row/image-row.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         NgbModule,
         WidgetsModule,
-        ImageGridModule
+        ImageGridModule,
+        ImageRowModule
     ],
     declarations: [
         ImageViewComponent,

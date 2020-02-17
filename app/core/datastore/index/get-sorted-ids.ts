@@ -1,6 +1,6 @@
 import {
     equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify,
-    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, first
+    compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left
 } from 'tsfun';
 import {Query} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
@@ -71,12 +71,12 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
                             [itemB, pctgB]: Pair<TypeResourceIndexItem, Percentage>) {
 
     if (pctgA < pctgB) return 1;
-    if (pctgA === pctgB) {
-        return size(itemA.instances) < size(itemB.instances)
-            ? 1
-            : -1;
-    }
-    return -1;
+    if (pctgA > pctgB) return -1;
+
+    if (size(itemA.instances) < size(itemB.instances)) return 1;
+    if (size(itemA.instances) > size(itemB.instances)) return -1;
+
+    return SortUtil.alnumCompare(itemA.identifier, itemB. identifier);
 }
 
 
@@ -133,4 +133,4 @@ const rankTypeResourceIndexItems = (typeToMatch: Name)
     compose(
         map(pairWith(calcPercentage(typeToMatch))),
         sort(comparePercentages),
-        map(first));
+        map(left));

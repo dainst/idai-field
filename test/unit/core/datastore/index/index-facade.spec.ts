@@ -35,15 +35,17 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocB);
         indexFacade.put(typeDocA);
 
-        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
-        expect(items1).toEqual(['id1', 'id0']);
+        const items1 = indexFacade.find(
+            { types: ['Type'], sort: { matchType: 'SomeFindType'} /* query is designed to trigger Type-based sort */
+            });
+        expect(items1).toEqual(['id0', 'id1']);
 
         // ->
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
 
-        const items = indexFacade.find({ types: ['Type'], sort: { matchType: 'FindA'} });
-        expect(items).toEqual(['id0', 'id1']);
+        const items = indexFacade.find({ types: ['Type'], sort: { matchType: 'FindB'} });
+        expect(items).toEqual(['id1', 'id0']);
     });
 
 

@@ -1,5 +1,5 @@
-import {isDefined} from 'tsfun';
-import {asyncMap} from 'tsfun/async';
+import {isDefined, filter} from 'tsfun';
+import {asyncMap, asyncFlow} from 'tsfun/async';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
@@ -40,27 +40,30 @@ export module TypeImagesUtil {
             { constraints: { 'liesWithin:contain': resourceId } }
         )).documents;
 
-        return (await asyncMap(
-            (document: FieldDocument) => getTypeImage(document, datastore)
-        )(documents)).filter(isDefined) as Array<ImageRowItem>;
+        return asyncFlow(
+            documents,
+            asyncMap(getTypeImage(datastore)),
+            filter(isDefined)) as Promise<Array<ImageRowItem>>;
     }
 
 
-    async function getTypeImage(document: FieldDocument,
-                                datastore: FieldReadDatastore): Promise<ImageRowItem|undefined> {
+    function getTypeImage(datastore: FieldReadDatastore) {
 
-        let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
+        return async (document: FieldDocument): Promise<ImageRowItem|undefined> => {
 
-        if (imageId) {
-            return { imageId: imageId, document: document };
-        } else {
-            const linkedImages: Array<ImageRowItem> = await getLinkedImagesForType(
-                document.resource.id, datastore
-            );
+            let imageId: string|undefined = await ModelUtil.getMainImageId(document.resource);
 
-            return linkedImages.length > 0
-                ? linkedImages[0]
-                : undefined;
+            if (imageId) {
+                return { imageId: imageId, document: document };
+            } else {
+                const linkedImages: Array<ImageRowItem> = await getLinkedImagesForType(
+                    document.resource.id, datastore
+                );
+
+                return linkedImages.length > 0
+                    ? linkedImages[0]
+                    : undefined;
+            }
         }
     }
 

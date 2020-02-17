@@ -71,6 +71,7 @@ export class ImageRowComponent implements OnChanges {
         if (!this.images) return;
 
         this.initializing = true;
+        await AngularUtility.refresh();
 
         this.imageRow = new ImageRow(
             this.containerElement.nativeElement.offsetWidth,

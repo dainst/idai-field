@@ -20,12 +20,17 @@ image-row {
 
       .image-container {
         position: relative;
+        background-color: #37588e;
 
         img {
           max-width: 600px;
           object-fit: scale-down;
           user-select: none;
           -webkit-user-drag: none;
+
+          &.selected-image {
+            opacity: 0.5;
+          }
         }
 
         .image-placeholder {
@@ -42,10 +47,6 @@ image-row {
 
           &.highlightOnHover:hover {
             filter: brightness(92%);
-          }
-
-          &.selected-image {
-            filter: brightness(150%);
           }
         }
 

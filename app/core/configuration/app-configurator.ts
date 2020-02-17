@@ -628,6 +628,7 @@ export class AppConfigurator {
         },
         {
             name: 'isInstanceOf',
+            inverse: 'hasInstance',
             label: this.i18n({ id: 'configuration.relations.isInstanceOf', value: 'Instanz von' }),
             domain: ['Find:inherit'],
             range: ['Type:inherit']

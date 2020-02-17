@@ -1,5 +1,5 @@
 import {Observer, Observable} from 'rxjs';
-import {subtract, unique, jsonClone} from 'tsfun';
+import {subtract, set, jsonClone} from 'tsfun';
 import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
@@ -295,7 +295,7 @@ export class DocumentsManager {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        this.newDocumentsFromRemote = set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(false);
     }
 

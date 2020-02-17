@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {unique} from 'tsfun';
+import {set} from 'tsfun';
 import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
@@ -142,7 +142,7 @@ export class SettingsService {
 
     public async addProject(project: Name) {
 
-        this.settings.dbs = unique(this.settings.dbs.concat([project]));
+        this.settings.dbs = set(this.settings.dbs.concat([project]));
         await this.settingsSerializer.store(this.settings);
     }
 
@@ -151,7 +151,7 @@ export class SettingsService {
 
         this.synchronizationService.stopSync();
 
-        this.settings.dbs = unique([project].concat(this.settings.dbs));
+        this.settings.dbs = set([project].concat(this.settings.dbs));
         await this.settingsSerializer.store(this.settings);
     }
 

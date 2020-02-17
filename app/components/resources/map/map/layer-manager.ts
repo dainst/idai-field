@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {unique, subtract} from 'tsfun';
+import {set, subtract} from 'tsfun';
 import {ImageDocument} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
@@ -63,7 +63,7 @@ export class LayerManager {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             subtract([resourceId])(this.activeLayerIds) :
-            unique(this.activeLayerIds.concat([resourceId]));
+            set(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }

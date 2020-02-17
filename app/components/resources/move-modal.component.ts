@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {unique} from 'tsfun';
+import {set} from 'tsfun';
 import {Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -62,7 +62,7 @@ export class MoveModalComponent {
         this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
         this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
 
-        this.filterOptions = unique(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
+        this.filterOptions = set(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
         if (this.showProjectOption) {
             this.filterOptions = [this.projectConfiguration.getTypesMap()['Project']]
                 .concat(this.filterOptions);

@@ -1,4 +1,4 @@
-import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, unique, flow, filter, forEach, isNot} from 'tsfun';
+import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, set, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import {longerThan, startsWith} from '../util';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
@@ -66,8 +66,8 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     if (indices.length !== 0 && indices.length !== headings.length) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
-    unique(indices).forEach((n, i) => {
-        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, unique(indices)];
+    set(indices).forEach((n, i) => {
+        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, set(indices)];
     });
 
     flow(headings,

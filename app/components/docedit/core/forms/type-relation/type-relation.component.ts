@@ -1,4 +1,4 @@
-import {to, unique} from 'tsfun';
+import {to, set} from 'tsfun';
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Resource} from 'idai-components-2';
@@ -67,7 +67,7 @@ export class TypeRelationComponent implements OnChanges {
     private addRelation(resourceId: string) {
 
         if (!this.relations()) this.makeRelations();
-        this.resource.relations[INSTANCE_OF] = unique(this.relations().concat(resourceId));
+        this.resource.relations[INSTANCE_OF] = set(this.relations().concat(resourceId));
         this.fetchRelationIdentifiers();
     }
 

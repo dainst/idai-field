@@ -278,13 +278,11 @@ function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {v
         const types_ = clone(types);
 
         const processFields = compose(
-            Object.values,
             filter(on('valuelistId', isDefined)),
             forEach((fd: TransientFieldDefinition) => fd.valuelist
                 = Object.keys(valuelistsConfiguration[fd.valuelistId as string].values)));
 
         flow(types_,
-            Object.values,
             filter(isDefined),
             map(to('fields')),
             forEach(processFields));

@@ -26,7 +26,8 @@ export module CSVExport {
     type Cell = string;
     type Matrix = Cell[][];
     type Heading = string;
-    type HeadingsAndMatrix = Pair<Heading[], Matrix>;
+    type Headings = Heading[];
+    type HeadingsAndMatrix = Pair<Headings, Matrix>;
 
 
     /**

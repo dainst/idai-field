@@ -1,4 +1,4 @@
-import {getOn, to, values} from 'tsfun';
+import {getOn, to, values, isArray} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -97,7 +97,8 @@ export module ConstraintIndex {
     }
 
 
-    export function get(index: ConstraintIndex, indexName: string,
+    export function get(index: ConstraintIndex,
+                        indexName: string,
                         matchTerms: string|string[]): Array<IndexItem> {
 
         const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
@@ -106,10 +107,22 @@ export module ConstraintIndex {
         const matchedDocuments = getIndexItems(index, indexDefinition, matchTerms);
         if (!matchedDocuments) return [];
 
-        return Object.keys(matchedDocuments).map(id => { return {
+        return Object.keys(matchedDocuments).map(id => ({
             id: id,
             identifier: matchedDocuments[id].identifier
-        }});
+        }));
+    }
+
+
+    export function getWithDescendants(index: ConstraintIndex,
+                        indexName: string,
+                        matchTerms: string|string[]): Array<IndexItem> {
+
+        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+
+        if (isArray(matchTerms)) throw Error('illegal argument - only a single match term is allowed with includeDescendants');
+        return getDescendants(index, indexDefinition, matchTerms as string);
     }
 
 
@@ -126,17 +139,6 @@ export module ConstraintIndex {
         return indexItems
             ? Object.keys(indexItems).length
             : 0;
-    }
-
-
-    export function getDescendantIds(index: ConstraintIndex, indexName: string,
-                                     matchTerm: string): string[] {
-
-        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
-        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
-
-        return getDescendants(index, indexDefinition, matchTerm)
-            .map(to('id'));
     }
 
 
@@ -298,7 +300,8 @@ export module ConstraintIndex {
     }
 
 
-    function getDescendants(index: ConstraintIndex, definition: IndexDefinition,
+    function getDescendants(index: ConstraintIndex,
+                            definition: IndexDefinition,
                             matchTerm: string): Array<IndexItem> {
 
         const result: { [id: string]: IndexItem }|undefined
@@ -374,6 +377,6 @@ export module ConstraintIndex {
                         item: IndexItem) {
 
         if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id as any] = item;
+        index[path][target][doc.resource.id] = item;
     }
 }

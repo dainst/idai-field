@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, separate, flow, filter, forEach, isDefined} from 'tsfun';
+import {is, on, separate, flow, filter, forEach, isDefined, to} from 'tsfun';
 import {Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -90,7 +90,7 @@ export class IndexFacade {
 
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
-        return ConstraintIndex.getDescendantIds(this.constraintIndex, constraintIndexName, matchTerm);
+        return ConstraintIndex.getWithDescendants(this.constraintIndex, constraintIndexName, matchTerm).map(to('id'));
     }
 
 

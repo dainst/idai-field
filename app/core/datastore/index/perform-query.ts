@@ -19,9 +19,7 @@ export function performQuery(query: Query,
                              constraintIndex: ConstraintIndex,
                              fulltextIndex: FulltextIndex): Array<IndexItem> {
 
-    let resultSets = query.constraints ?
-        performConstraints(constraintIndex, query.constraints) :
-        ResultSets.make();
+    let resultSets = performConstraints(constraintIndex, query.constraints ? query.constraints : {});
 
     resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
         || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))

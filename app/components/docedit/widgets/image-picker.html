@@ -1,8 +1,7 @@
 <div class="image-picker">
     <div class="modal-header" id="image-picker-modal-header">
-
         <div class="row">
-            <button id="add-image add" *ngIf="selectedDocuments.length <= 1"
+            <button id="add-image" *ngIf="selectedDocuments.length <= 1"
                     (click)="applySelection()"
                     class="btn btn-primary col-md-3"
                     [disabled]="selectedDocuments.length === 0"
@@ -10,7 +9,7 @@
                 <span class="mdi mdi-link"></span>
                 <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
             </button>
-            <button id="add-images add" *ngIf="selectedDocuments.length > 1"
+            <button id="add-images" *ngIf="selectedDocuments.length > 1"
                     (click)="applySelection()"
                     class="btn btn-primary col-md-3">
                 <span class="mdi mdi-link"></span>
@@ -31,7 +30,6 @@
     </div>
 
     <div class="modal-body" id="image-picker-modal">
-
         <div class="image-grid" (window:resize)="onResize()">
             <image-grid #imageGrid
                     [nrOfColumns]="3"

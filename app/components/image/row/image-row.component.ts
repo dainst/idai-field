@@ -7,6 +7,8 @@ import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {AngularUtility} from '../../../angular/angular-utility';
+import {showMissingThumbnailMessageOnConsole} from '../log-messages';
+import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -17,6 +19,7 @@ export type ImageRowItem = {
 
     imageId: string|'PLACEHOLDER';
     document: Document;
+    width?: number;
 }
 
 
@@ -65,6 +68,7 @@ export class ImageRowComponent implements OnChanges {
 
     public previousPage = () => this.applyUpdate(this.imageRow.previousPage());
 
+    public getImageWidth = (image: ImageRowItem) => this.imageRow.getImageWidth(image.imageId);
 
     async ngOnChanges() {
 

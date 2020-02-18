@@ -18,12 +18,16 @@ export class ImageRow {
     private highestImageIndex: number = -1;
 
     private lastImageFullyVisible: boolean = false;
+    private imageWidths: { [imageId: string]: number } = {};
 
 
     constructor(private width: number,
                 private height: number,
                 private maxImageWidth: number,
-                private images: Array<ImageDocument>) {}
+                private images: Array<ImageDocument>) {
+
+        this.imageWidths = this.calculateImageWidths(images);
+    }
 
 
     public nextPage(): ImageRowUpdate {
@@ -98,6 +102,21 @@ export class ImageRow {
     }
 
 
+    public getImageWidth(imageId: string): number {
+
+        return this.imageWidths[imageId];
+    }
+
+
+    private calculateImageWidths(images: Array<ImageDocument>): { [imageId: string]: number } {
+
+        return images.reduce((imageWidths: { [imageId: string]: number }, image: ImageDocument) => {
+            imageWidths[image.resource.id] = this.calculateImageWidth(image);
+            return imageWidths;
+        }, {});
+    }
+
+
     private calculateImageWidth(image: ImageDocument) {
 
         return ImageWidthCalculator.computeWidth(
@@ -111,7 +130,7 @@ export class ImageRow {
         let availableWidth: number = this.width;
 
         for (let i = this.firstShownImageIndex; i < this.images.length; i++) {
-            availableWidth -= this.calculateImageWidth(this.images[i]);
+            availableWidth -= this.getImageWidth(this.images[i].resource.id);
             this.lastShownImageIndex = i;
             if (availableWidth < 0) break;
         }
@@ -123,7 +142,7 @@ export class ImageRow {
         let availableWidth: number = this.width;
 
         for (let i = this.lastShownImageIndex - 1; i >= 0; i--) {
-            availableWidth -= this.calculateImageWidth(this.images[i]);
+            availableWidth -= this.getImageWidth(this.images[i].resource.id);
             if (availableWidth < 0) break;
             this.firstShownImageIndex = i;
         }
@@ -144,7 +163,7 @@ export class ImageRow {
         let availableWidth: number = this.width;
 
         for (let i = this.firstShownImageIndex; i <= this.lastShownImageIndex; i++) {
-            availableWidth -= this.calculateImageWidth(this.images[i]);
+            availableWidth -= this.getImageWidth(this.images[i].resource.id);
             if (availableWidth < 0) return false;
         }
 

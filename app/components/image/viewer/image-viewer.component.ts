@@ -1,9 +1,10 @@
-import {Component, OnChanges, Input} from '@angular/core';
-import {ImageDocument} from 'idai-components-2';
+import {Component, OnChanges, Input, OnInit} from '@angular/core';
+import {ImageDocument, Messages} from 'idai-components-2';
 import {ImageContainer} from '../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
-import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
+import {M} from '../../messages/m';
+import {Imagestore} from '../../../core/images/imagestore/imagestore';
 
 
 @Component({
@@ -15,14 +16,21 @@ import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConso
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageViewerComponent implements OnChanges {
+export class ImageViewerComponent implements OnInit, OnChanges {
 
     @Input() image: ImageDocument;
 
     public imageContainer: ImageContainer;
 
 
-    constructor(private imagestore: ReadImagestore) {}
+    constructor(private imagestore: Imagestore,
+                private messages: Messages) {}
+
+
+    ngOnInit() {
+
+        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+    }
 
 
     async ngOnChanges() {

@@ -6,10 +6,8 @@ import {Messages, FieldDocument, ImageDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {RoutingService} from '../../routing-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {M} from '../../messages/m';
 import {MenuService} from '../../../desktop/menu-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
-import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ImageRowItem} from '../row/image-row.component';
 
 
@@ -41,7 +39,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
     constructor(
         private activeModal: NgbActiveModal,
         private datastore: ImageReadDatastore,
-        private imagestore: Imagestore,
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
@@ -83,8 +80,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
 
     public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
                             linkedResourceIdentifier?: string) {
-
-        if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
         this.linkedResourceIdentifier = linkedResourceIdentifier;
 

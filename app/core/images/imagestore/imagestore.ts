@@ -8,8 +8,6 @@ import {ReadImagestore} from './read-imagestore';
  */
 export abstract class Imagestore extends ReadImagestore {
 
-
-
     abstract getPath(): string|undefined;
 
 

@@ -51,8 +51,6 @@ function performConstraints(constraintIndex: ConstraintIndex,
 
             const { type, value, searchRecursively } = Constraint.convertTo(constraints[name]);
 
-            // TODO pass Constraint to get and let ContraintIndex decide how to handle it
-
             const get = !searchRecursively
                 ? ConstraintIndex.get
                 : ConstraintIndex.getWithDescendants;

@@ -59,7 +59,7 @@ export class ResourcesPage {
 
     public static clickGotoImageView() {
 
-        return common.click(element(by.id('thumbnail-container')));
+        return common.click(element(by.css('.thumbnail-container')));
     }
 
 

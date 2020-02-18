@@ -20,8 +20,8 @@ import {constructGrid} from '../../../core/images/grid/construct-grid';
 export class ImageGridComponent implements OnChanges {
 
     @Input() nrOfColumns: number = 1;
-    @Input() documents: ImageDocument[];
-    @Input() selected: ImageDocument[] = [];
+    @Input() documents: Array<ImageDocument>;
+    @Input() selected: Array<ImageDocument> = [];
     @Input() main: ImageDocument|undefined;
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
@@ -39,19 +39,12 @@ export class ImageGridComponent implements OnChanges {
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
     public rows = [];
-    public resourceIdentifiers: {[id: string]: string} = {};
+    public resourceIdentifiers: { [id: string]: string } = {};
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridRunning = false;
     // to be able to reset the timeout on multiple onResize calls
     private calcGridTimeoutRef: any = undefined;
-
-    // it should be avoided that while being in an image overview and thumbs are missing,
-    // that the missing images messages is shown more than once, as it would happen
-    // on a recalculation of the grid on resize.
-    // only if the user leaves the component and comes back again,
-    // the message would be displayed again.
-    private imagesNotFoundMessageDisplayed = false;
 
 
     constructor(

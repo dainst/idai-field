@@ -210,4 +210,29 @@ describe('performQuery', () => {
         expect(result.length).toBe(3);
         expect(result).toEqual(['id1', 'id2', 'id3']);
     });
+
+
+    it('should get with descendants', () => {
+
+        const doc1 = Static.doc('Document 1', 'doc1', 'type1','id1');
+        const doc2 = Static.doc('Document 2', 'doc2', 'type1','id2');
+        const doc3 = Static.doc('Document 3', 'doc3', 'type2','id3');
+        doc2.resource.relations['liesWithin'] = ['id1'];
+        doc3.resource.relations['liesWithin'] = ['id2'];
+
+        const q: Query = {
+            q: 'doc',
+            constraints: {
+                'liesWithin:contain': { value: 'id1', type: 'add', searchRecursively: true }
+            }
+        };
+
+        put(doc1);
+        put(doc2);
+        put(doc3);
+
+        const result = performQuery(q).map(to('id'));
+        expect(result.length).toBe(2);
+        expect(result).toEqual(['id2', 'id3']);
+    });
 });

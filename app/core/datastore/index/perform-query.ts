@@ -48,8 +48,16 @@ function performConstraints(constraintIndex: ConstraintIndex,
 
     return keys(constraints)
         .reduce((resultSets, name: string) => {
-            const { type, value } = Constraint.convertTo(constraints[name]);
-            ResultSets.combine(resultSets, ConstraintIndex.get(constraintIndex, name, value), type);
+
+            const { type, value, searchRecursively } = Constraint.convertTo(constraints[name]);
+
+            // TODO pass Constraint to get and let ContraintIndex decide how to handle it
+
+            const get = !searchRecursively
+                ? ConstraintIndex.get
+                : ConstraintIndex.getWithDescendants;
+
+            ResultSets.combine(resultSets, get(constraintIndex, name, value), type);
             return resultSets;
         }, ResultSets.make());
 }

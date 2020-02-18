@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
 import {asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query, Constraint} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -105,12 +105,17 @@ export class TypeRelationPickerComponent {
             constraints: {}
         };
         if (isNot(undefinedOrEmpty)(resource.relations['isInstanceOf'])) {
-            (query.constraints as any)['id:match'] =
-                { value: resource.relations['isInstanceOf'], type: 'subtract' };
+            (query.constraints as any)['id:match'] = {
+                value: resource.relations['isInstanceOf'],
+                type: 'subtract'
+            } as Constraint;
         }
         if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
-            // TODO also handle subcatalogs
-            (query.constraints as any)['liesWithin:contain'] = (selectedCatalog as FieldResource).id
+            (query.constraints as any)['liesWithin:contain'] = {
+                value: (selectedCatalog as FieldResource).id,
+                type: 'add', // TODO allow to omit this
+                searchRecursively: true
+            } as Constraint;
         }
         return query;
     }

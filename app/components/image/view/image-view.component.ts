@@ -1,4 +1,4 @@
-import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
@@ -22,7 +22,7 @@ import {ImageRowItem} from '../row/image-row.component';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ImageViewComponent implements OnInit, DoCheck {
+export class ImageViewComponent implements DoCheck {
 
     @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
@@ -51,17 +51,11 @@ export class ImageViewComponent implements OnInit, DoCheck {
         !this.imagesState.getExpandAllGroups()
     );
 
-
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
 
 
-    ngOnInit() {
-
-        (window.getSelection() as any).removeAllRanges();
-    }
-
-
     ngDoCheck() {
+
         this.imageInfoScrollbarVisible = this.isImageInfoScrollbarVisible();
     }
 

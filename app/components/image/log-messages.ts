@@ -12,6 +12,12 @@ export function showMissingImageMessageOnConsole(id: string) {
 }
 
 
+export function showMissingThumbnailMessageOnConsole(id: string) {
+
+    console.error('No thumbnail found for image: ' + _(id));
+}
+
+
 export function showMissingOriginalImageMessageOnConsole(id: string) {
 
     console.warn('No original found for image: ' + _(id));

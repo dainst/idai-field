@@ -171,7 +171,12 @@ export class ImageRowComponent implements OnChanges {
 
         await asyncReduce(async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
             if (imageId !== PLACEHOLDER) {
-                result[imageId] = await this.imagestore.read(imageId, false, true);
+                try {
+                    result[imageId] = await this.imagestore.read(imageId, false, true);
+                } catch (e) {
+                    result[imageId] = BlobMaker.blackImg;
+                    showMissingThumbnailMessageOnConsole(imageId);
+                }
             }
             return result;
         }, thumbnailUrls)(imageIds);

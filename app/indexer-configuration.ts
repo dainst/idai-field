@@ -12,7 +12,7 @@ export module IndexerConfiguration {
 
         const createdConstraintIndex = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain', recursivelySearchable: true },
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },

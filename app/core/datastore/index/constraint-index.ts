@@ -10,6 +10,7 @@ export interface IndexDefinition {
 
     path: string;
     type: string;
+    recursivelySearchable?: boolean;
 }
 
 
@@ -115,14 +116,15 @@ export module ConstraintIndex {
 
 
     export function getWithDescendants(index: ConstraintIndex,
-                        indexName: string,
-                        matchTerms: string|string[]): Array<IndexItem> {
+                                       indexName: string,
+                                       matchTerms: string|string[]): Array<IndexItem> {
 
-        const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
-        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
+        const definition: IndexDefinition = index.indexDefinitions[indexName];
+        if (!definition) throw 'Ignoring unknown constraint "' + indexName + '".';
+        if (!definition.recursivelySearchable) throw Error('illegal argument  - given index not recursively searchable ' + indexName);
 
         if (isArray(matchTerms)) throw Error('illegal argument - only a single match term is allowed with includeDescendants');
-        return getDescendants(index, indexDefinition, matchTerms as string);
+        return getDescendants(index, definition, matchTerms as string);
     }
 
 
@@ -366,6 +368,9 @@ export module ConstraintIndex {
         for (let indexDefinition of indexDefinitions) {
             if (!indexDefinition.type) return 'Index definition type is undefined';
             if (types.indexOf(indexDefinition.type) == -1) return 'Invalid paths definition type';
+            if (indexDefinition.recursivelySearchable && indexDefinition.type !== 'contain') {
+                throw 'only contain indices can be configured to be recursively searchable';
+            }
         }
 
         return undefined;

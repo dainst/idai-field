@@ -13,7 +13,7 @@
                  [class.highlightOnHover]="highlightOnHover"
                  [class.selected-image]="image === selectedImage"
                  [style.width]="getImageWidth(image) + 'px'">
-            <div *ngIf="isPlaceholder(image)"
+            <div *ngIf="isPlaceholder(image) && !initializing"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">
                 <type-icon [type]="image.document.resource.type" [size]="60"></type-icon>

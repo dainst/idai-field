@@ -1,6 +1,6 @@
 import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
-import {ImageRowItem} from '../../../components/image/row/image-row.component';
+import {ImageRowItem, PLACEHOLDER} from '../../../components/image/row/image-row.component';
 
 
 export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: number };
@@ -119,9 +119,11 @@ export class ImageRow {
 
     private calculateImageWidth(image: ImageDocument) {
 
-        return ImageWidthCalculator.computeWidth(
-            image.resource.width, image.resource.height, this.height, this.maxImageWidth
-        );
+        return image.resource.id === PLACEHOLDER
+            ? image.resource.width
+            : ImageWidthCalculator.computeWidth(
+                image.resource.width, image.resource.height, this.height, this.maxImageWidth
+            );
     }
 
 

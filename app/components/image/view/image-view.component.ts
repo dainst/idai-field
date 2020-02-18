@@ -206,14 +206,14 @@ export class ImageViewComponent implements OnInit, DoCheck {
 
         if (this.containsOriginal(image)) return;
 
-        const name: string = image.document && image.document.resource
+        const imageId: string = image.document && image.document.resource
             ? image.document.resource.id
             : 'unknown';
 
         if (image.thumbSrc === BlobMaker.blackImg) {
-            showMissingImageMessageOnConsole(name);
+            showMissingImageMessageOnConsole(imageId);
         } else {
-            showMissingOriginalImageMessageOnConsole(name);
+            showMissingOriginalImageMessageOnConsole(imageId);
         }
     }
 }

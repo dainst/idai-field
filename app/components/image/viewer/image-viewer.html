@@ -1,0 +1,9 @@
+<div *ngIf="imageContainer" id="image-container">
+    <div class="d-flex align-items-center justify-content-center">
+        <div *ngIf="!containsOriginal(imageContainer)" class="alert alert-info" role="alert"
+             i18n="@@image.originalNotFoundWarning">
+            Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+        </div>
+        <img [src]="containsOriginal(imageContainer) ? imageContainer.imgSrc : imageContainer.thumbSrc">
+    </div>
+</div>

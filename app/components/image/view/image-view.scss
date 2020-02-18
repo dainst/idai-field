@@ -32,28 +32,6 @@
     height: calc(100% - 169px);
     margin: 0;
 
-    #image-container {
-      height: 100%;
-      background-color: #000;
-
-      img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: scale-down;
-        user-select: none;
-        -webkit-user-drag: none;
-      }
-
-      .align-items-center {
-        height: 100%;
-      }
-
-      .alert {
-        position: absolute;
-        top: 10px;
-      }
-    }
-
     image-row {
       height: 169px;
 

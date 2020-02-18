@@ -16,6 +16,8 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ImageRowModule} from '../row/image-row.module';
+import {ImageViewerModule} from '../viewer/image-viewer.module';
+
 
 @NgModule({
     imports: [
@@ -23,12 +25,13 @@ import {ImageRowModule} from '../row/image-row.module';
         NgbModule,
         WidgetsModule,
         ImageGridModule,
-        ImageRowModule
+        ImageRowModule,
+        ImageViewerModule
     ],
     declarations: [
         ImageViewComponent,
         GeoreferenceViewComponent,
-        DepictsRelationsViewComponent
+        DepictsRelationsViewComponent,
     ],
     providers: [
         {

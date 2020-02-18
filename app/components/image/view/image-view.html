@@ -25,8 +25,8 @@
                      (click)="tooltip.close(); toggleExpandAllGroups()">
                     <span class="mdi mdi-unfold-more-horizontal"></span>
                 </button>
-                <div *ngIf="imageContainer" id="identifier-label">
-                    {{imageContainer.document.resource.identifier}}
+                <div *ngIf="selectedImage" id="identifier-label">
+                    {{selectedImage.document.resource.identifier}}
                 </div>
                 <button id="edit-image-button" class="btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>

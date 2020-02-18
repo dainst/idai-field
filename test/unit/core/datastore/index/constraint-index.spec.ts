@@ -483,7 +483,11 @@ describe('ConstraintIndex', () => {
         docs[4].resource.relations['liesWithin'] = ['3'];
 
         ci = ConstraintIndex.make({
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+            'liesWithin:contain': {
+                path: 'resource.relations.liesWithin',
+                type: 'contain',
+                recursivelySearchable: true
+            }
         }, typesMap);
 
         const ie1 = IndexItem.from(docs[0]);
@@ -504,5 +508,20 @@ describe('ConstraintIndex', () => {
            .toEqual([]);
         expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '3').map(to('id')))
             .toEqual(['4', '5']);
+    });
+
+
+    // err cases
+
+    it('get with descendants - not a recursively searchable index', () => {
+
+        ci = ConstraintIndex.make({
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+        }, typesMap);
+
+        ConstraintIndex.put(ci, doc('1'), IndexItem.from(doc('1')));
+
+        expect(() => ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '1'))
+            .toThrowError();
     });
 });

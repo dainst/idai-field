@@ -11,7 +11,8 @@
             <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover"
-                 [class.selected-image]="image === selectedImage">
+                 [class.selected-image]="image === selectedImage"
+                 [style.width]="getImageWidth(image) + 'px'">
             <div *ngIf="isPlaceholder(image)"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">

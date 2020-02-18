@@ -33,6 +33,8 @@ export class ThumbnailComponent implements OnChanges {
         this.resource, this.resourcesComponent
     );
 
+    public isThumbnailFound = (): boolean => this.thumbnailUrl !== BlobMaker.blackImg;
+
 
     async ngOnChanges() {
 
@@ -45,7 +47,7 @@ export class ThumbnailComponent implements OnChanges {
         if (!relations || relations.length === 0) return undefined;
 
         try {
-            return this.imagestore.read(relations[0], false, true);
+            return await this.imagestore.read(relations[0], false, true);
         } catch (e) {
             return BlobMaker.blackImg;
         }

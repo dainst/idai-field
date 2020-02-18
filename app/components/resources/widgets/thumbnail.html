@@ -1,4 +1,6 @@
 <div *ngIf="thumbnailUrl"
      class="thumbnail-container d-flex align-items-center justify-content-center">
-    <img [src]="thumbnailUrl" (click)="openImageModal()">
+    <img [src]="thumbnailUrl"
+         [class.not-found]="!isThumbnailFound()"
+         (click)="openImageModal()">
 </div>

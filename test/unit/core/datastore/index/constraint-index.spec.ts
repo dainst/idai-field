@@ -1,3 +1,4 @@
+import {to} from 'tsfun';
 import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 import {doc} from '../test-helpers';
@@ -26,6 +27,7 @@ describe('ConstraintIndex', () => {
     });
 
 
+    // @deprecated, use IndexItem.from directly
     function indexItem(id, identifier?): IndexItem {
 
         if (!identifier) identifier = 'identifier' + id;
@@ -465,7 +467,7 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('get descendant ids', () => {
+    it('get with descendants', () => {
 
         const docs = [
             doc('1'),
@@ -496,17 +498,11 @@ describe('ConstraintIndex', () => {
         ConstraintIndex.put(ci, docs[3], ie4);
         ConstraintIndex.put(ci, docs[4], ie5);
 
-        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '1'))
+        expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '1').map(to('id')))
            .toEqual(['2', '3', '4', '5']);
-        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '2'))
+        expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '2').map(to('id')))
            .toEqual([]);
-        expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '3'))
+        expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '3').map(to('id')))
             .toEqual(['4', '5']);
-    });
-
-
-    it('find with descendants', () => {
-
-
     });
 });

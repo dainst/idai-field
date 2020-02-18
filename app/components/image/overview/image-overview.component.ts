@@ -29,7 +29,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
  */
 export class ImageOverviewComponent implements OnInit {
 
-    @ViewChild('imageGrid', {static: true}) public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
     public filterOptions: Array<IdaiType> = [];
     public modalOpened: boolean = false;

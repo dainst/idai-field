@@ -29,7 +29,6 @@ import {ImageRowItem} from '../row/image-row.component';
  */
 export class ImageViewComponent implements OnInit, DoCheck {
 
-    @ViewChild('thumbnailSliderContainer', { static: false }) thumbnailSliderContainer: ElementRef;
     @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
@@ -38,8 +37,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
     public imageContainer: ImageContainer;
     public linkedResourceIdentifier: string|undefined;
     public openSection: string|undefined = 'stem';
-
-    public thumbnailSliderScrollbarVisible: boolean = false;
     public imageInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
@@ -72,8 +69,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
 
 
     ngDoCheck() {
-
-        this.thumbnailSliderScrollbarVisible = this.isThumbnailSliderScrollbarVisible();
         this.imageInfoScrollbarVisible = this.isImageInfoScrollbarVisible();
     }
 
@@ -157,14 +152,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
     public containsOriginal(image: ImageContainer): boolean {
 
         return image.imgSrc !== undefined && image.imgSrc !== '';
-    }
-
-
-    private isThumbnailSliderScrollbarVisible(): boolean {
-
-        return this.thumbnailSliderContainer
-            && this.thumbnailSliderContainer.nativeElement.scrollWidth
-            > this.thumbnailSliderContainer.nativeElement.clientWidth;
     }
 
 

@@ -9,7 +9,7 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
 import {M} from '../../messages/m';
 import {MenuService} from '../../../desktop/menu-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
-import {showMissingImageMessageOnConsole, showMissingOginalImageMessageOnConsole} from '../log-messages';
+import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
 import {ImageContainer} from '../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
@@ -104,8 +104,6 @@ export class ImageViewComponent implements OnInit, DoCheck {
         this.selectedImage = this.images.find(
             on('imageId', is(selectedDocument.resource.id))
         ) as ImageRowItem;
-
-        this.showErrorMessagesForMissingImages();
     }
 
 
@@ -198,20 +196,24 @@ export class ImageViewComponent implements OnInit, DoCheck {
             image.thumbSrc = BlobMaker.blackImg;
         }
 
+        this.showConsoleErrorIfImageIsMissing(image);
+
         return image;
     }
 
 
-    private showErrorMessagesForMissingImages() {
+    private showConsoleErrorIfImageIsMissing(image: ImageContainer) {
 
-        // TODO Show error messages
+        if (this.containsOriginal(image)) return;
 
-        /*this.images
-            .filter(image => !this.containsOriginal(image))
-            .forEach(image => {
-                const name = image.document && image.document.resource ? image.document.resource.id : 'unknown';
-                if (this.isMissingImage(image)) showMissingImageMessageOnConsole(name);
-                else showMissingOginalImageMessageOnConsole(name);
-            });*/
+        const name: string = image.document && image.document.resource
+            ? image.document.resource.id
+            : 'unknown';
+
+        if (image.thumbSrc === BlobMaker.blackImg) {
+            showMissingImageMessageOnConsole(name);
+        } else {
+            showMissingOriginalImageMessageOnConsole(name);
+        }
     }
 }

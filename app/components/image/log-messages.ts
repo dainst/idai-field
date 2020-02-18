@@ -8,11 +8,11 @@ function _(id: string) {
 
 export function showMissingImageMessageOnConsole(id: string) {
 
-    console.error('Neither original nor thumbnail found for image. ' + _(id));
+    console.error('Neither original nor thumbnail found for image: ' + _(id));
 }
 
 
-export function showMissingOginalImageMessageOnConsole(id: string) {
+export function showMissingOriginalImageMessageOnConsole(id: string) {
 
-    console.warn('No original found for image. ' + _(id));
+    console.warn('No original found for image: ' + _(id));
 }

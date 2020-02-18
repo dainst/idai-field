@@ -8,9 +8,10 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
-import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
 import {MapPage} from '../map/map.page';
+import {ImageViewPage} from '../images/image-view.page';
+import {ImageRowPage} from '../images/image-row.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -560,18 +561,17 @@ describe('resources --', () => {
     });
 
 
-    it('images', done => {
+    it('images', () => {
 
         // create links for images
 
         addTwoImages('SE0');
         ResourcesPage.clickSelectResource('SE0', 'info');
-        ResourcesPage.clickGotoImageView();
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(2);
-        });
+        ResourcesPage.clickThumbnail();
+        ImageRowPage.getImages().then(images => expect(images.length).toBe(2));
 
-        ThumbnailViewPage.clickClose();
+        ImageViewPage.clickCloseButton();
+
 
         // delete links to one image
 
@@ -586,29 +586,24 @@ describe('resources --', () => {
         });
         DoceditPage.clickSaveDocument();
 
-        ResourcesPage.clickGotoImageView();
+        ResourcesPage.clickThumbnail();
+        ImageRowPage.getImages().then(images => expect(images.length).toBe(1));
 
-        ThumbnailViewPage.getThumbs().then(thumbs => {
-            expect(thumbs.length).toBe(1);
-            done();
-        });
+        ImageViewPage.clickCloseButton();
 
-        ThumbnailViewPage.clickClose();
 
         // delete links to the other
 
-        ThumbnailViewPage.makeSureThumbnailContainerDoesAppear();
+        browser.wait(EC.presenceOf(ResourcesPage.getThumbnail()), delays.ECWaitTime);
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickGotoImagesTab();
         DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
         DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
-            expect(cells.length).toBe(0);
-        });
+        DoceditImageTabPage.getCells().then(cells => expect(cells.length).toBe(0));
         DoceditPage.clickSaveDocument();
 
-        ThumbnailViewPage.makeSureThumbnailContainerDoesNotAppear();
+        browser.wait(EC.stalenessOf(ResourcesPage.getThumbnail()), delays.ECWaitTime);
     });
 });

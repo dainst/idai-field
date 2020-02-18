@@ -57,9 +57,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickGotoImageView() {
+    public static clickThumbnail() {
 
-        return common.click(element(by.css('.thumbnail-container')));
+        return common.click(this.getThumbnail());
     }
 
 
@@ -241,11 +241,17 @@ export class ResourcesPage {
     }
 
 
-    public static getListModeInputField (identifier, index) {
+    public static getListModeInputField(identifier, index) {
 
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
+    }
+
+
+    public static getThumbnail() {
+
+        return element(by.css('.thumbnail-container'));
     }
 
 

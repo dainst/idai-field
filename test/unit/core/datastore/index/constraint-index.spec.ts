@@ -1,6 +1,7 @@
-import {Document} from 'idai-components-2';
 import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
+import {doc} from '../test-helpers';
+
 
 /**
  * @author Daniel de Oliveira
@@ -23,31 +24,6 @@ describe('ConstraintIndex', () => {
             }
         };
     });
-
-
-    function doc(id: string, type: string = 'type'): Document {
-
-        return {
-            _id: id,
-            resource: {
-                id: id,
-                identifier: 'identifier' + id,
-                type: type,
-                relations: {}
-            },
-            created:
-                {
-                    date: new Date('2017-12-31'),
-                    user: 'testuser'
-                },
-            modified: [
-                {
-                    date: new Date('2018-01-01'),
-                    user: 'testuser'
-                }
-            ]
-        };
-    }
 
 
     function indexItem(id, identifier?): IndexItem {
@@ -526,5 +502,11 @@ describe('ConstraintIndex', () => {
            .toEqual([]);
         expect(ConstraintIndex.getDescendantIds(ci, 'liesWithin:contain', '3'))
             .toEqual(['4', '5']);
+    });
+
+
+    it('find with descendants', () => {
+
+
     });
 });

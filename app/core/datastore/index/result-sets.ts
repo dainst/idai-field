@@ -1,4 +1,4 @@
-import {intersection, NestedArray, union, subtract} from 'tsfun';
+import {intersection, NestedArray, union, subtract, lookup, flow, map} from 'tsfun';
 import {IndexItem} from './index-item';
 
 type ResourceId = string;
@@ -51,11 +51,10 @@ export module ResultSets {
             keys.push(item.id)
         }
 
-        if (mode !== 'subtract') {
-            resultSets.addSets.push(keys);
-        }  else {
-            resultSets.subtractSets.push(keys);
-        }
+        (mode !== 'subtract'
+            ? resultSets.addSets
+            : resultSets.subtractSets)
+            .push(keys);
     }
 
 
@@ -63,22 +62,21 @@ export module ResultSets {
 
         const addSetIds: string[] = intersection(resultSets.addSets);
 
-        return pickFromMap(resultSets,
+        return flow(
             resultSets.subtractSets.length === 0
                 ? addSetIds
-                : subtract(union(resultSets.subtractSets))(addSetIds)
-        );
+                : subtract(union(resultSets.subtractSets))(addSetIds),
+            pickFrom(resultSets));
     }
 
 
     export function unify(resultSets: ResultSets): Array<IndexItem> {
 
-        return pickFromMap(resultSets, union(resultSets.addSets));
+        return flow(
+            union(resultSets.addSets),
+            pickFrom(resultSets));
     }
 
 
-    function pickFromMap(resultSets: ResultSets, ids: string[]) {
-
-        return ids.map(id => resultSets.map[id]);
-    }
+    const pickFrom = (resultSets: ResultSets) => map(lookup(resultSets.map));
 }

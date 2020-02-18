@@ -78,6 +78,22 @@ describe('ImageRow', () => {
     });
 
 
+    it('change width', () => {
+
+        const imageRow = new ImageRow(150, 100, 300, imageDocuments);
+
+        let result = imageRow.nextPage();
+        expect(result.newImageIds).toEqual(['i1']);
+        expect(result.firstShownImageIndex).toBe(0);
+        // Show i1
+
+        result = imageRow.setWidth(300);
+        expect(result.newImageIds).toEqual(['i2']);
+        expect(result.firstShownImageIndex).toBe(0);
+        // Show i1 and i2; i2 is not shown completely
+    });
+
+
     it('return correct values for hasNextPage and hasPreviousPage', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);

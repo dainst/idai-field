@@ -90,6 +90,15 @@ export class ImageRow {
     }
 
 
+    public setWidth(width: number): ImageRowUpdate {
+
+        this.width = width;
+
+        this.lastShownImageIndex = this.firstShownImageIndex;
+        return this.nextPage();
+    }
+
+
     public hasNextPage(): boolean {
 
         return this.lastShownImageIndex < this.images.length && !this.lastImageFullyVisible;

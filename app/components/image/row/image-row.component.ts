@@ -29,7 +29,8 @@ export type ImageRowItem = {
     moduleId: module.id,
     templateUrl: './image-row.html',
     host: {
-        '(window:keydown)': 'onKeyDown($event)'
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:resize)': 'onResize()'
     }
 })
 /**
@@ -71,6 +72,7 @@ export class ImageRowComponent implements OnChanges {
 
     public getImageWidth = (image: ImageRowItem) => this.imageRow.getImageWidth(image.imageId);
 
+
     async ngOnChanges() {
 
         if (!this.images) return;
@@ -99,6 +101,12 @@ export class ImageRowComponent implements OnChanges {
 
         if (event.key === 'ArrowLeft') await this.selectPrevious();
         if (event.key === 'ArrowRight') await this.selectNext();
+    }
+
+
+    public async onResize() {
+
+        await this.applyUpdate(this.imageRow.setWidth(this.containerElement.nativeElement.offsetWidth));
     }
 
 

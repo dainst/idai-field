@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {asyncReduce} from 'tsfun/async';
-import {Document} from 'idai-components-2';
+import {Document, ImageDocument} from 'idai-components-2';
 import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
@@ -12,6 +12,7 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
+const PLACEHOLDER_WIDTH: number = 150;
 
 export const PLACEHOLDER = 'PLACEHOLDER';
 
@@ -81,7 +82,7 @@ export class ImageRowComponent implements OnChanges {
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
-            await this.datastore.getMultiple(this.images.map(to('imageId')))
+            await this.fetchImageDocuments(this.images)
         );
 
         if (this.allowSelection && this.images.length > 0) {
@@ -193,5 +194,21 @@ export class ImageRowComponent implements OnChanges {
             .getElementsByClassName('image-container')
             .item(update.firstShownImageIndex);
         this.imageRowElement.nativeElement.style.transform = 'translateX(-' + element.offsetLeft + 'px)';
+    }
+
+
+    private async fetchImageDocuments(images: Array<ImageRowItem>): Promise<Array<ImageDocument>> {
+
+        const imageDocuments: Array<ImageDocument> = await this.datastore.getMultiple(
+            images.filter(image => image.imageId !== PLACEHOLDER)
+                .map(to('imageId'))
+        );
+
+        return images.map(image => {
+            const document: ImageDocument|undefined
+                = imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId);
+
+            return document || { resource: { id: PLACEHOLDER, width: PLACEHOLDER_WIDTH }} as ImageDocument;
+        });
     }
 }

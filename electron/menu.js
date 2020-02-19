@@ -171,7 +171,7 @@ const getTemplate = (mainWindow, context) => {
                     infoWindow.show();
                 });
 
-                infoWindow.loadURL('file://' + __dirname + '/app/desktop/info-window.html');
+                infoWindow.loadURL('file://' + __dirname + '/../app/desktop/info-window.html');
             }
         }, {
             label: messages.get('menu.help'),

@@ -33,8 +33,13 @@ export module GroupUtil {
             return 'time';
         } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
             return 'position';
-        } else if (relationName === IS_INSTANCE_OF || relationName === HAS_INSTANCE) {
-            return 'identification';
+        } else if (relationName === IS_INSTANCE_OF) {
+            // we do not want to show it in any group,
+            // since this is done via an input type,
+            // unlike other relations; we use a custom widget instead
+            return undefined;
+        } else if (relationName === HAS_INSTANCE) {
+            return 'identification'
         } else {
             return undefined;
         }

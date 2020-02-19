@@ -118,7 +118,7 @@ export class PersistenceManager {
     }
 
 
-    private async findChildren(document: Document): Promise<Array<Document>> {
+    private async findChildren(document: Document): Promise<Array<Document>> { // TODO this looks very similar to the fetch-children-count I extracted today; we should put that together
 
         return this.typeUtility.isSubtype(document.resource.type, 'Operation')
             ? this.findDocsRecordedInDocs(document.resource.id)

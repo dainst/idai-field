@@ -133,7 +133,8 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: global.mode !== 'test'
+            webSecurity: global.mode !== 'test',
+            preload: __dirname + '/preload.js'
         },
         titleBarStyle: 'hiddenInset'
     });

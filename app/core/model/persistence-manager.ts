@@ -138,7 +138,7 @@ export class PersistenceManager {
 
     private async findAllLiesWithinDocs(resourceId: string): Promise<Array<Document>> {
 
-        return this.datastore.getMultiple(
+        return this.datastore.getMultiple( // TODO here we should be able to do this with find, for find supports such queries now; see if we can get rid of public getDescendantIds altogether
             this.indexFacade.getDescendantIds('liesWithin:contain', resourceId)
         );
     }

@@ -3,7 +3,7 @@ import * as PouchDB from 'pouchdb';
 import {Static} from '../../../static';
 
 
-describe('datastore/access', () => {
+describe('subsystem/datastore/access', () => {
 
     let image0;
     let trench0;

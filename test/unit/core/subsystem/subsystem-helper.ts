@@ -147,8 +147,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const persistenceManager = new PersistenceManager(
         fieldDocumentDatastore,
         projectConfiguration,
-        typeUtility,
-        createdIndexFacade
+        typeUtility
     );
 
     const documentHolder = new DocumentHolder(
@@ -175,7 +174,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         resourcesStateManager,
         stateSerializer,
         tabManager,
-        imageOverviewFacade
+        imageOverviewFacade,
+        persistenceManager
     }
 }
 

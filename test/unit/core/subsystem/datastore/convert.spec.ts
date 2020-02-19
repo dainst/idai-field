@@ -13,7 +13,7 @@ import {Static} from '../../../static';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('datastore/convert', () => {
+describe('subsystem/datastore/convert', () => {
 
     let image0;
     let trench0;

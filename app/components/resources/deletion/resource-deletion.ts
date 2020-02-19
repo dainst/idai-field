@@ -84,7 +84,7 @@ export class ResourceDeletion {
             : this.typeUtility.isSubtype(document.resource.type, 'Operation')
                 ? this.indexFacade.getCount('isRecordedIn:contain', document.resource.id)
                 : this.indexFacade
-                    .getDescendantIds('liesWithin:contain', document.resource.id)
+                    .getDescendantIds('liesWithin:contain', document.resource.id) // TODO do not access index directly, but allow for datastore to return only the count, without the documents
                     .length;
     }
 }

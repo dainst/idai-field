@@ -1,7 +1,7 @@
 import {to} from 'tsfun';
 import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
-import {doc} from '../test-helpers';
+import {doc} from '../../../test-helpers';
 
 
 /**

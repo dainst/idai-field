@@ -64,10 +64,9 @@ describe('PersistenceManager', () => {
             ['get', 'getMultiple', 'find', 'create', 'update', 'refresh', 'remove']);
         mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
         mockTypeUtility.isSubtype.and.returnValue(true);
-        mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['getDescendantIds']);
 
         persistenceManager = new PersistenceManager(
-            mockDatastore, projectConfiguration, mockTypeUtility, mockIndexFacade
+            mockDatastore, projectConfiguration, mockTypeUtility
         );
 
         mockDatastore.get.and.callFake(getFunction);
@@ -203,12 +202,13 @@ describe('PersistenceManager', () => {
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
         anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1'] };
 
-        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [relatedDoc, anotherRelatedDoc] }));
 
         let checked1 = false;
         let checked2 = false;
         let checked3 = false;
         mockDatastore.update.and.callFake((doc: any, u: string) => {
+
             if (doc.resource.id === '2') {
                 if (doc.resource.relations.isRecordedIn[0] !== 't2') fail();
                 checked2 = true;
@@ -236,7 +236,7 @@ describe('PersistenceManager', () => {
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
         anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1'] };
 
-        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [relatedDoc, anotherRelatedDoc] }));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.persist(doc, 'u');
@@ -252,7 +252,7 @@ describe('PersistenceManager', () => {
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t2'] };
         anotherRelatedDoc.resource.relations = { liesWithin: ['2'] };
 
-        mockDatastore.getMultiple.and.returnValue(Promise.resolve([relatedDoc, anotherRelatedDoc]));
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [relatedDoc, anotherRelatedDoc] }));
 
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.persist(doc, 'u');

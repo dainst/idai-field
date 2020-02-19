@@ -5,7 +5,6 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
-import {IndexFacade} from '../datastore/index/index-facade';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
@@ -26,8 +25,7 @@ export class PersistenceManager {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: TypeUtility,
-        private indexFacade: IndexFacade
+        private typeUtility: TypeUtility
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -138,9 +136,15 @@ export class PersistenceManager {
 
     private async findAllLiesWithinDocs(resourceId: string): Promise<Array<Document>> {
 
-        return this.datastore.getMultiple( // TODO here we should be able to do this with find, for find supports such queries now; see if we can get rid of public getDescendantIds altogether
-            this.indexFacade.getDescendantIds('liesWithin:contain', resourceId)
-        );
+        return (await this.datastore.find({
+            constraints: {
+                'liesWithin:contain': {
+                    value: resourceId,
+                    type: 'add',
+                    searchRecursively: true
+                }
+            }
+        })).documents; // TODO maybe reverse the order, to get rid of warn, see subsystem test for persistence-manager
     }
 
 

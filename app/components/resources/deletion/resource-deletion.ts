@@ -5,10 +5,10 @@ import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {UsernameProvider} from '../../../core/settings/username-provider';
-import {IndexFacade} from '../../../core/datastore/index/index-facade';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
 /**
@@ -24,7 +24,7 @@ export class ResourceDeletion {
                 private typeUtility: TypeUtility,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,
-                private indexFacade: IndexFacade) {}
+                private datastore: DocumentDatastore) {}
 
 
     public async delete(document: FieldDocument) {
@@ -77,14 +77,36 @@ export class ResourceDeletion {
     }
 
 
-    private fetchChildrenCount(document: Document): number {
+    private async fetchChildrenCount(document: Document): Promise<number> { // TODO move to util
 
         return !document.resource.id
             ? 0
             : this.typeUtility.isSubtype(document.resource.type, 'Operation')
-                ? this.indexFacade.getCount('isRecordedIn:contain', document.resource.id)
-                : this.indexFacade
-                    .getDescendantIds('liesWithin:contain', document.resource.id) // TODO do not access index directly, but allow for datastore to return only the count, without the documents
-                    .length;
+                ? await this.findAllIsRecordedInDocs(document.resource.id)
+                : await this.findAllLiesWithinDocs(document.resource.id);
+    }
+
+
+    private async findAllIsRecordedInDocs(resourceId: string): Promise<number> {
+
+        return (await this.datastore.find({
+            constraints: {
+                'isRecordedIn:contain': resourceId
+            }
+        })).totalCount;
+    }
+
+
+    private async findAllLiesWithinDocs(resourceId: string): Promise<number> { // TODO remove duplication with persistence manager and possibly type-relation-picker-component
+
+        return (await this.datastore.find({
+            constraints: {
+                'liesWithin:contain': {
+                    value: resourceId,
+                    type: 'add',
+                    searchRecursively: true
+                }
+            }
+        })).totalCount;
     }
 }

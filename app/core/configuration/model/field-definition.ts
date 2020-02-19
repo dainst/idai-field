@@ -6,7 +6,24 @@ export interface FieldDefinition {
     label?: string;
     name: string;
     description?: string;
-    inputType?: string;
+    inputType?:
+        'input'
+        |'unsignedInt'
+        |'unsignedFloat'
+        |'float'
+        |'text'
+        |'multiInput'
+        |'dropdown'
+        |'dropdownRange'
+        |'radio'
+        |'boolean'
+        |'checkboxes'
+        |'dating'
+        |'date'
+        |'dimension'
+        |'geometry'
+        |'instanceOf'
+        |'default'; // TODO review value 'default'
     valuelist?: string[];
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true

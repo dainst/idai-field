@@ -1,7 +1,12 @@
 import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
 import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from './model/library-type-definition';
-import {CustomTypeDefinition, CustomTypeDefinitionsMap} from './model/custom-type-definition';
-import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt,
+import {
+    CustomFieldDefinition,
+    CustomFieldDefinitionsMap,
+    CustomTypeDefinition,
+    CustomTypeDefinitionsMap
+} from './model/custom-type-definition';
+import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt, update,
     jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
@@ -474,25 +479,43 @@ function mergeFields(target: TransientFieldDefinitionsMap,
 }
 
 
-/**
- * @param customTypeName
- * @param customType
- * @param extendedType
- */
-function issueWarningOnFieldTypeChanges(customTypeName: string, customType: any, extendedType: any) {
+function isAllowedCombination(l: string, r: string, a: string, b: string) {
 
-    keysAndValues(customType.fields).forEach(([customTypeFieldName, customTypeField]: any) => {
+    return (l === a && r === b) || (l === b && r === a);
+}
 
-        const existingField = extendedType.fields[customTypeFieldName];
 
-        if (existingField
-            && existingField.inputType
-            && customTypeField.inputType
-            && customTypeField.inputType !== existingField.inputType) {
+function checkFieldTypeChange(
+    [customTypeName, fieldName, customFieldInputType, extendedFieldInputType]: [string, string, string, string]) {
 
-            console.warn('change of input type detected', customTypeName, customTypeFieldName);
-        }
-    });
+    if (customFieldInputType === extendedFieldInputType) return;
+
+    if (isAllowedCombination(customFieldInputType, extendedFieldInputType, 'checkboxes', 'input')
+        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'input')
+        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'checkboxes', 'radio')
+        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'input', 'radio')
+        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'radio')
+        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'checkboxes')) {
+
+        console.warn('change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
+    } else {
+        console.error('critical change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
+    }
+}
+
+
+function checkFieldTypeChanges(customTypeName: string,
+                               customTypeFields: CustomFieldDefinitionsMap,
+                               extendedTypeFields: TransientFieldDefinitionsMap) {
+
+    flow(customTypeFields,
+        map((field: CustomFieldDefinition, fieldName: string) =>
+            [customTypeName, fieldName, field, lookup(extendedTypeFields)(fieldName)]),
+        filter(on('[2].inputType', isDefined)),
+        filter(on('[3].inputType', isDefined)),
+        map(update(2, to('inputType'))),
+        map(update(3, to('inputType'))),
+        forEach(checkFieldTypeChange));
 }
 
 
@@ -528,7 +551,8 @@ function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
 
 
 function mergeTypes(selectableTypes: TransientTypeDefinitionsMap,
-                    customTypes: CustomTypeDefinitionsMap, assertInputTypePresentIfNotCommonType: Function) {
+                    customTypes: CustomTypeDefinitionsMap,
+                    assertInputTypePresentIfNotCommonType: Function) {
 
     const mergedTypes: TransientTypeDefinitionsMap = clone(selectableTypes);
 
@@ -539,7 +563,7 @@ function mergeTypes(selectableTypes: TransientTypeDefinitionsMap,
         const extendedType = mergedTypes[customTypeName];
 
         if (extendedType) {
-            issueWarningOnFieldTypeChanges(customTypeName, customType, extendedType);
+            checkFieldTypeChanges(customTypeName, customType.fields, extendedType.fields);
 
             const newMergedType: any = clone(extendedType);
             mergePropertiesOfType(newMergedType, customType);

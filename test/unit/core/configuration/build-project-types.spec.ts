@@ -998,4 +998,47 @@ describe('buildProjectTypes', () => {
         expect(result['A'].fields['field2'].inputType).toBe('text');
         expect(result['A'].fields['field3'].inputType).toBe('text');
     });
+
+    // err cases
+
+    xit('critical change of input type', () => {
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: {
+                superType: true,
+                userDefinedSubtypesAllowed: true,
+                fields : {}
+            }
+        };
+
+        const libraryTypes: LibraryTypeDefinitionsMap = {
+            'B:0': {
+                typeFamily: 'B',
+                parent: 'A',
+                commons: [],
+                valuelists: {},
+                fields: {
+                    field1: { inputType: 'text' }
+                },
+                creationDate: '',
+                createdBy: '',
+                description: {} }
+        };
+
+        const customTypes: CustomTypeDefinitionsMap = {
+            'B:0': {
+                fields: {
+                    field1: { inputType: 'radio' },
+                },
+                valuelists: {
+                    field1: 'valuelist_field1'
+                }
+            }
+        };
+
+        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes,
+            {}, {}, {});
+
+        // TODO write expectation; throw error
+    });
 });

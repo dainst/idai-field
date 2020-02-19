@@ -1,11 +1,6 @@
 import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
 import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from './model/library-type-definition';
-import {
-    CustomFieldDefinition,
-    CustomFieldDefinitionsMap,
-    CustomTypeDefinition,
-    CustomTypeDefinitionsMap
-} from './model/custom-type-definition';
+import {CustomFieldDefinition, CustomFieldDefinitionsMap, CustomTypeDefinition, CustomTypeDefinitionsMap} from './model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt, update,
     jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';

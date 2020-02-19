@@ -301,11 +301,9 @@ function toTypesByFamilyNames(transientTypes: TransientTypeDefinitionsMap): Tran
 
     return reduce(
         (acc: any, [transientTypeName, transientType]) => {
-            if (transientType.typeFamily) {
-                acc[transientType.typeFamily] = transientType;
-            } else {
-                acc[transientTypeName] = transientType;
-            }
+            acc[transientType.typeFamily
+                ? transientType.typeFamily
+                : transientTypeName] = transientType;
             return acc;
         }
         , {})(keysAndValues(transientTypes));

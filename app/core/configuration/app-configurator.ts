@@ -476,62 +476,7 @@ export class AppConfigurator {
             editable: false
         },
         {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Place'],
-            range: ['Operation:inherit', 'Place']
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Feature:inherit'],
-            range: ['Find:inherit', 'Feature:inherit', 'Sample'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Find:inherit'],
-            range: ['Inscription', 'Sample'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['BuildingPart:inherit'],
-            range: ['BuildingPart:inherit'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Area:inherit'],
-            range: ['Area:inherit', 'BuildingPart:inherit', 'Find:inherit'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Room'],
-            range: ['RoomWall', 'RoomFloor', 'RoomCeiling'],
-            sameMainTypeResource: true
-        },
-        {
-            name: 'includes',
-            inverse: 'liesWithin',
-            label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
-            domain: ['Type:inherit', 'TypeCatalog:inherit'],
-            range: ['Type:inherit']
-        },
-        {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Operation:inherit', 'Place'],
             range: ['Place'],
@@ -539,7 +484,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit'],
@@ -548,7 +492,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Inscription'],
             range: ['Find:inherit'],
@@ -557,7 +500,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
@@ -566,7 +508,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Sample'],
             range: ['Feature:inherit', 'Find:inherit'],
@@ -575,7 +516,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
@@ -584,7 +524,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Area:inherit'],
             range: ['Area:inherit'],
@@ -593,7 +532,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomFloor'],
             range: ['Room'],
@@ -602,7 +540,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomWall'],
             range: ['Room'],
@@ -611,7 +548,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomCeiling'],
             range: ['Room'],
@@ -620,7 +556,6 @@ export class AppConfigurator {
         },
         {
             name: 'liesWithin',
-            inverse: 'includes',
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Type:inherit'],
             range: ['Type:inherit', 'TypeCatalog:inherit'],

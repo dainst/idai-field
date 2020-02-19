@@ -131,7 +131,6 @@ $deactivated-button-color: lightgray;
     border-radius: 0;
     margin: 0 0 1px 0 !important;
     user-select: none;
-    background-color: transparent;
     padding: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -147,10 +146,12 @@ $deactivated-button-color: lightgray;
 
   .resources-listing-item-slim {
     width: $teaser-width;
+    background-color: transparent;
   }
 
   .resources-listing-item-wide {
     width: $resources-listing-item-wide-width;
+    background-color: white;
   }
 
   &.scrollbar-visible {

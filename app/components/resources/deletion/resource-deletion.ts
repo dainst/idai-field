@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, DatastoreErrors, Messages, Document} from 'idai-components-2';
+import {FieldDocument, DatastoreErrors, Messages, Query} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -9,11 +9,13 @@ import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
+import {fetchChildrenCount} from '../../../core/model/fetch-children-count';
+import {Name} from '../../../core/constants';
 
 
 /**
- * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 @Injectable()
 export class ResourceDeletion {
@@ -33,7 +35,12 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(await this.fetchChildrenCount(document));
+        modalRef.componentInstance.setCount(
+            await fetchChildrenCount(
+                document,
+                (type: Name, of: Name) => this.typeUtility.isSubtype(type, of),
+                (q: Query) => this.datastore.find(q))
+        );
 
         const decision: string = await modalRef.result;
         if (decision === 'delete') await this.performDeletion(document);
@@ -74,39 +81,5 @@ export class ResourceDeletion {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];
         }
-    }
-
-
-    private async fetchChildrenCount(document: Document): Promise<number> { // TODO move to util
-
-        return !document.resource.id
-            ? 0
-            : this.typeUtility.isSubtype(document.resource.type, 'Operation')
-                ? await this.findAllIsRecordedInDocs(document.resource.id)
-                : await this.findAllLiesWithinDocs(document.resource.id);
-    }
-
-
-    private async findAllIsRecordedInDocs(resourceId: string): Promise<number> {
-
-        return (await this.datastore.find({
-            constraints: {
-                'isRecordedIn:contain': resourceId
-            }
-        })).totalCount;
-    }
-
-
-    private async findAllLiesWithinDocs(resourceId: string): Promise<number> { // TODO remove duplication with persistence manager and possibly type-relation-picker-component
-
-        return (await this.datastore.find({
-            constraints: {
-                'liesWithin:contain': {
-                    value: resourceId,
-                    type: 'add',
-                    searchRecursively: true
-                }
-            }
-        })).totalCount;
     }
 }

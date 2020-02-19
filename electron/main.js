@@ -133,8 +133,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: global.mode !== 'test',
-            preload: __dirname + '/preload.js'
+            webSecurity: global.mode !== 'test'
         },
         titleBarStyle: 'hiddenInset'
     });
@@ -170,6 +169,9 @@ const createMenu = () => {
     const menu = electron.Menu.buildFromTemplate(require('./menu.js')(mainWindow, menuContext));
     electron.Menu.setApplicationMenu(menu);
 };
+
+
+electron.app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
 
 
 // This method will be called when Electron has finished

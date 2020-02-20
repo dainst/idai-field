@@ -7,7 +7,6 @@ environment:
 
 image:
   - Visual Studio 2019
-  - macOS
 
 platform: Any CPU
 
@@ -17,10 +16,6 @@ cache:
   - '%USERPROFILE%\.electron'
   - '%LOCALAPPDATA%\electron\Cache'
   - '%LOCALAPPDATA%\electron-builder\cache'
-  - "$HOME/.electron"
-  - "$HOME/.cache"
-  - "$HOME/Library/Caches/electron"
-  - "$HOME/Library/Caches/electron-builder"
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -30,4 +25,4 @@ install:
 
 build_script:
   - npm run build-all
-  - npm run package
+  - npm run package-win

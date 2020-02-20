@@ -18,8 +18,9 @@
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
-    "package": "electron-builder --x64 --ia32",
+    "package": "build -mw --publish never",
     "package-mac": "electron-builder -m",
+    "package-win": "electron-builder -w nsis --x64 --ia32",
     "i18n": "ng-xi18n --locale de --project app && ngx-extractor -i \"./app/**/*.ts\" \"./node_modules/idai-components-2/src/**/*.ts\" -o ./app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf app/messages.xlf"
   },
   "build": {

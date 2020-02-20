@@ -14,7 +14,8 @@ describe('determineDocsToUpdate', () => {
 
     const relationInverses = { 
         Above: 'Below', 
-        Below: 'Above' 
+        Below: 'Above',
+        isRecordedIn: undefined
     };
 
     beforeEach(() => {

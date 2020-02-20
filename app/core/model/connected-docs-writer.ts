@@ -28,6 +28,7 @@ export class ConnectedDocsWriter {
         private projectConfiguration: ProjectConfiguration) {
 
         this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
+        // TODO review, test manually if inverseRelationsMap's content is so that it is appropriate for determineDocsToUpdate after latest adjustment
     }
 
 

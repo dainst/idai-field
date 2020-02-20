@@ -13,7 +13,8 @@ export type InverseRelationsMap = {
 
 export function makeInverseRelationsMap(relationDefinitions: Array<RelationDefinition>) {
 
-    return relationDefinitions.reduce((acc, relationDefinition) => {
+    return relationDefinitions
+        .reduce((acc, relationDefinition) => {
 
         acc[relationDefinition.name] = relationDefinition.inverse;
         return acc;

@@ -5,6 +5,7 @@ import {Name} from '../constants';
 import {clone} from '../util/object-util';
 import {ObjectCollection} from 'tsfun/src/type';
 import {InverseRelationsMap} from '../configuration/project-configuration-helper';
+import {replaceIn} from '../util/utils';
 
 
 /**
@@ -73,7 +74,7 @@ function pruneInverseRelations(relations: Relations,
         filter(cond(setInverses, hasInverseRelation, true)),
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
-        replaceValuesIn(relations),
+        replaceIn(relations),
         remove(isEmpty));
 }
 
@@ -134,17 +135,3 @@ function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTar
 
 
 const documentsRelationsEquivalent = on('resource.relations', relationsEquivalent);
-
-
-/**
- * target: { a: 2, b: 3}
- * source: [['a', 17]]
- * ->
- * { a: 17, b: 3}
- */
-const replaceValuesIn = <T>(target: ObjectCollection<T>)
-    : (source: Array<Pair<string, string[]>>) => ObjectCollection<T>  =>
-    reduce((newRelations: any, [name, content]: Pair<string, string[]>) => {
-        newRelations[name] = content;
-        return newRelations;
-    }, copy(target)); // TODO compare this to projectConfigurationHelper.makeInverseRelationsMap

@@ -1,5 +1,6 @@
-import {ObjectCollection} from 'tsfun/src/type';
-import {copy, Pair, reduce} from 'tsfun';
+import {copy, Pair, reduce, ObjectCollection, to} from 'tsfun';
+
+// @author Daniel de Oliveira
 
 export function isBoolean(value: any): boolean {
 
@@ -39,5 +40,10 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
         (newRelations as any)[name] = content;
         return newRelations;
     }, copy(target as any)/* TODO get rid of any cast */);
+}
 
+
+export function toTuple(...keys: string[]) {
+
+    return <T>(o: ObjectCollection<T>) => keys.map((k: string) => to(k)(o));
 }

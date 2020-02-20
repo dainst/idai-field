@@ -1,5 +1,5 @@
 import {on, Predicate, flow, keys, isnt, append, isDefined, compose,
-    forEach, map, lookup, pairWith, filter, cond, copy, get} from 'tsfun';
+    forEach, map, lookup, pairWith, filter, cond, copy, get, zip, Pair} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
 import {clone} from '../util/object-util';
@@ -51,7 +51,7 @@ export function determineDocsToUpdate(document: Document,
         }
     }
 
-    return compare(targetDocuments, cloneOfTargetDocuments);
+    return determineChangedDocs(targetDocuments, cloneOfTargetDocuments);
 }
 
 
@@ -119,14 +119,18 @@ function setInverseRelation(target: Resource, resource: Resource) {
 }
 
 
-function compare(targetDocuments: Array<Document>,
-                 cloneOfTargetDocuments: Array<Document>): Array<Document> {
+function determineChangedDocs(targetDocuments: Array<Document>,
+                              cloneOfTargetDocuments: Array<Document>): Array<Document> {
 
-    return targetDocuments.reduce((acc: any, targetDoc: any, i: number) => // TODO use zip instead of using i
-            !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDocuments[i])
-                ? acc.concat(targetDoc)
-                : acc
-        , []);
+    return zip(targetDocuments)(cloneOfTargetDocuments).reduce(changedDocsReducer, []);
+}
+
+
+function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTargetDoc]: Pair<Document, Document>) {
+
+    return !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDoc)
+        ? changedDocs.concat(targetDoc)
+        : changedDocs;
 }
 
 

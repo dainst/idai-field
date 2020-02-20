@@ -39,7 +39,7 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
     return reduce((newRelations: ObjectCollection<T>|Array<T>, [name, content]: Pair<string|number, T>) => {
         (newRelations as any)[name] = content;
         return newRelations;
-    }, copy(target as any)/* TODO get rid of any cast */);
+    }, copy(target as any));
 }
 
 

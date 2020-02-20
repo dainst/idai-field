@@ -68,8 +68,7 @@ function pruneInverseRelations(relations: Relations,
                                hasInverseRelation: Predicate<String>) {
 
     return flow(
-        relations,
-        keys,
+        keys(relations),
         filter(cond(setInverses, hasInverseRelation, true)),
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),

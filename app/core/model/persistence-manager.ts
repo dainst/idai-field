@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {DescendantsUtility} from './descendants-utility';
 
 
 @Injectable()
@@ -25,7 +25,7 @@ export class PersistenceManager {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: TypeUtility
+        private descendantsUtility: DescendantsUtility
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -75,10 +75,10 @@ export class PersistenceManager {
      */
     public async remove(document: Document, username: string) {
 
-        for (let child of (await this.findChildren(document))) {
-            await this.removeWithConnections(child, username);
+        for (let descendant of (await this.descendantsUtility.fetchChildren(document))) {
+            await this.removeWithDescendants(descendant, username);
         }
-        await this.removeWithConnections(document, username);
+        await this.removeWithDescendants(document, username);
     }
 
 
@@ -94,11 +94,10 @@ export class PersistenceManager {
     }
 
 
-    private async removeWithConnections(document: Document, username: string): Promise<void> {
+    private async removeWithDescendants(document: Document, username: string) {
 
         await this.connectedDocsWriter.remove(document, username);
         await this.datastore.remove(document);
-        return undefined;
     }
 
 
@@ -106,7 +105,7 @@ export class PersistenceManager {
 
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
-        const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
+        const docsToCorrect = (await this.findRecordedInDocs(document.resource.id))
             .filter(on('resource.relations.' + RECORDED_IN, isArray))
             .filter(isNot(on('resource.relations.' + RECORDED_IN, sameset)(document)));
 
@@ -115,36 +114,6 @@ export class PersistenceManager {
             cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
             await this.datastore.update(cloned, username, undefined);
         }
-    }
-
-
-    private async findChildren(document: Document): Promise<Array<Document>> { // TODO this looks very similar to the fetch-children-count I extracted today; we should put that together
-
-        return this.typeUtility.isSubtype(document.resource.type, 'Operation')
-            ? this.findDocsRecordedInDocs(document.resource.id)
-            : this.findAllLiesWithinDocs(document.resource.id);
-    }
-
-
-    private async findDocsRecordedInDocs(resourceId: string): Promise<Array<Document>> {
-
-        return (await this.datastore.find({
-            constraints: { 'isRecordedIn:contain': resourceId }
-        })).documents;
-    }
-
-
-    private async findAllLiesWithinDocs(resourceId: string): Promise<Array<Document>> {
-
-        return (await this.datastore.find({
-            constraints: {
-                'liesWithin:contain': {
-                    value: resourceId,
-                    type: 'add',
-                    searchRecursively: true
-                }
-            }
-        })).documents; // TODO maybe reverse the order, to get rid of warn, see subsystem test for persistence-manager
     }
 
 
@@ -157,5 +126,13 @@ export class PersistenceManager {
                 username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
             : this.datastore.create(document, username);
+    }
+
+
+    public async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
+
+        return (await this.datastore.find({
+            constraints: { 'isRecordedIn:contain': resourceId },
+        })).documents;
     }
 }

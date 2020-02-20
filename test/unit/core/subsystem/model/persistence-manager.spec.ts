@@ -33,7 +33,7 @@ describe('subsystem/persistence-manager',() => {
     });
 
 
-    it('remove', async done => {
+    it('remove, beginning with Feature', async done => {
 
         const d1 = doc('id1', 'Trench') as FieldDocument;
         const d2 = doc('id2', 'Feature') as FieldDocument;
@@ -55,5 +55,30 @@ describe('subsystem/persistence-manager',() => {
        const result = (await fieldDocumentDatastore.find({})).documents.map(to('resource.id'));
        expect(result).toEqual(['id1']);
        done();
+    });
+
+
+    it('remove, beginning with Trench', async done => {
+
+        const d1 = doc('id1', 'Trench') as FieldDocument;
+        const d2 = doc('id2', 'Feature') as FieldDocument;
+        d2.resource.relations['isRecordedIn'] = ['id1'];
+        const d3 = doc('id3', 'Find') as FieldDocument;
+        d3.resource.relations['isRecordedIn'] = ['id1'];
+        d3.resource.relations['liesWithin'] = ['id2'];
+        const d4 = doc('id4', 'Find') as FieldDocument;
+        d4.resource.relations['isRecordedIn'] = ['id1'];
+        d4.resource.relations['liesWithin'] = ['id3'];
+
+        await fieldDocumentDatastore.create(d1, 'test');
+        await fieldDocumentDatastore.create(d2, 'test');
+        await fieldDocumentDatastore.create(d3, 'test');
+        await fieldDocumentDatastore.create(d4, 'test');
+
+        expect((await fieldDocumentDatastore.find({})).totalCount).toBe(4);
+        await persistenceManager.remove(d1, 'test');
+        const result = (await fieldDocumentDatastore.find({})).documents.map(to('resource.id'));
+        expect(result).toEqual([]);
+        done();
     });
 });

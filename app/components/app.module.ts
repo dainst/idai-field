@@ -61,6 +61,7 @@ import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
+import {DescendantsUtility} from '../core/model/descendants-utility';
 
 
 const remote = require('electron').remote;
@@ -153,7 +154,16 @@ registerLocaleData(localeDe, 'de');
             },
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
-        TypeUtility,
+        {
+            provide: TypeUtility,
+            useClass: TypeUtility,
+            deps: [ProjectConfiguration]
+        },
+        {
+            provide: DescendantsUtility,
+            useClass: DescendantsUtility,
+            deps: [TypeUtility, DocumentReadDatastore]
+        },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,

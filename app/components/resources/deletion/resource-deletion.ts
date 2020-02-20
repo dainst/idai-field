@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, DatastoreErrors, Messages, Query} from 'idai-components-2';
+import {FieldDocument, DatastoreErrors, Messages} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -9,8 +9,7 @@ import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
-import {fetchChildrenCount} from '../../../core/model/fetch-children-count';
-import {Name} from '../../../core/constants';
+import {DescendantsUtility} from '../../../core/model/descendants-utility';
 
 
 /**
@@ -26,7 +25,8 @@ export class ResourceDeletion {
                 private typeUtility: TypeUtility,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,
-                private datastore: DocumentDatastore) {}
+                private datastore: DocumentDatastore,
+                private descendantsUtility: DescendantsUtility) {}
 
 
     public async delete(document: FieldDocument) {
@@ -35,15 +35,11 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(
-            await fetchChildrenCount(
-                document,
-                (type: Name, of: Name) => this.typeUtility.isSubtype(type, of),
-                (q: Query) => this.datastore.find(q))
-        );
+        modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
 
-        const decision: string = await modalRef.result;
-        if (decision === 'delete') await this.performDeletion(document);
+        if ((await modalRef.result) === 'delete') {
+            await this.performDeletion(document);
+        }
     }
 
 
@@ -67,7 +63,7 @@ export class ResourceDeletion {
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {
             await this.imagestore.remove(document.resource.id);
-        } catch (err) {
+        } catch {
             throw [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
         }
     }

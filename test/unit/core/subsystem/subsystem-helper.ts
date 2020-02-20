@@ -28,6 +28,7 @@ import {ViewFacade} from '../../../../app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../app/core/resources/view/resources-state-manager';
 import {DocumentHolder} from '../../../../app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../app/core/datastore/pouchdb/pouchdb-server';
+import {DescendantsUtility} from '../../../../app/core/model/descendants-utility';
 
 
 class IdGenerator {
@@ -144,10 +145,14 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         createdIndexFacade
     );
 
+    const descendantsUtility = new DescendantsUtility(
+        typeUtility, documentDatastore
+    );
+
     const persistenceManager = new PersistenceManager(
         fieldDocumentDatastore,
         projectConfiguration,
-        typeUtility
+        descendantsUtility
     );
 
     const documentHolder = new DocumentHolder(

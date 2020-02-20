@@ -32,8 +32,7 @@ describe('PersistenceManager', () => {
     });
 
     let mockDatastore;
-    let mockTypeUtility;
-    let mockIndexFacade;
+    let mockDescendantsUtility;
     let persistenceManager;
     const id = 'abc';
 
@@ -62,11 +61,10 @@ describe('PersistenceManager', () => {
 
         mockDatastore = jasmine.createSpyObj('mockDatastore',
             ['get', 'getMultiple', 'find', 'create', 'update', 'refresh', 'remove']);
-        mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
-        mockTypeUtility.isSubtype.and.returnValue(true);
+        mockDescendantsUtility = jasmine.createSpyObj('mockDescendantsUtility', ['fetchChildren']);
 
         persistenceManager = new PersistenceManager(
-            mockDatastore, projectConfiguration, mockTypeUtility
+            mockDatastore, projectConfiguration, mockDescendantsUtility
         );
 
         mockDatastore.get.and.callFake(getFunction);
@@ -152,6 +150,8 @@ describe('PersistenceManager', () => {
 
     it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
 
+        mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc]);
+
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
         anotherRelatedDoc.resource.relations['BelongsTo'] = ['2'];
@@ -168,6 +168,8 @@ describe('PersistenceManager', () => {
 
 
     it('remove: should remove an operation type resource, with two dependent resources', async done => {
+
+        mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc, anotherRelatedDoc]);
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];

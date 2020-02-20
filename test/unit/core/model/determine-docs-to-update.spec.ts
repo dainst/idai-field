@@ -168,17 +168,24 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    // isRecordedIn specific behaviour
+    // specific behaviour for unidirectional relations
 
-    it('dont remove isRecordedIn relations of related documents', () => {
+    function adjustDocsForUnidirectionalRelationsTests() {
 
         doc.resource.relations['Above'] = ['2'];
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Below'] = ['1'];
+    }
+
+
+    it('dont remove isRecordedIn relations of related documents', () => {
+
+        adjustDocsForUnidirectionalRelationsTests();
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
+        // isBelow and isRecordedIn were both already set, so no update necessary
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
         expect(relatedDoc.resource.relations['Below']).toEqual(['1']);
@@ -187,9 +194,7 @@ describe('determineDocsToUpdate', () => {
 
     it('remove isRecordedIn relations of related documents on remove only', () => {
 
-        doc.resource.relations['Above'] = ['2'];
-        relatedDoc.resource.relations['isRecordedIn'] = ['1'];
-        relatedDoc.resource.relations['Below'] = ['1'];
+        adjustDocsForUnidirectionalRelationsTests();
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses, false);

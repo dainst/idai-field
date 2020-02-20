@@ -1,8 +1,9 @@
-import {on, Predicate, flow, keys, isnt, append, isDefined, compose,
-    forEach, map, lookup, pairWith, filter, cond, copy, get, zip, Pair} from 'tsfun';
+import {on, Predicate, flow, keys, isnt, append, isDefined, compose, remove, isEmpty, reduce,
+    forEach, map, lookup, pairWith, filter, cond, copy, get, zip, Pair, update} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
 import {clone} from '../util/object-util';
+import {ObjectCollection} from 'tsfun/src/type';
 
 
 /**
@@ -13,8 +14,8 @@ import {clone} from '../util/object-util';
  * @param document expected that relations is an object consisting only of proper relation names
  * @param targetDocuments
  * @param inverseRelationsMap
- * @param setInverses if <b>false</b>, relations of <i>targetDocuments</i>
- *   which point to <i>document</i>, get only removed, but not (re-)created
+ * @param setInverses if false, relations of targetDocuments
+ *   which point to document, get only removed, but not (re-)created
  *
  * @returns a selection with of the targetDocuments which
  *   got an update in their relations.
@@ -59,24 +60,22 @@ export function determineDocsToUpdate(document: Document,
  * { a: ['3'], b: ['3', '7'] }
  * resourceId: '3'
  * ->
- * { b: ['3'] }
+ * { b: ['7'] }
  */
 function pruneInverseRelations(relations: Relations,
                                resourceId: string,
                                setInverses: boolean,
                                hasInverseRelation: Predicate<String>) {
 
-    const newRelations = copy(relations);
-
-    keys(relations)
-        .filter(cond(setInverses, hasInverseRelation)) // TODO review
+    const updatedRelations = keys(relations)
+        .filter(cond(setInverses, hasInverseRelation, true))
         .map(pairWith(lookup(relations)))
-        .forEach(([name, content]: [string, string[]]) => {
-            newRelations[name] = content.filter(isnt(resourceId));
-            if (newRelations[name].length === 0) delete newRelations[name];
-        });
+        .map(update(1, filter(isnt(resourceId))));
 
-    return newRelations;
+    return flow(
+        updatedRelations,
+        replaceValuesIn(relations),
+        remove(isEmpty));
 }
 
 
@@ -134,4 +133,18 @@ function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTar
 }
 
 
-const documentsRelationsEquivalent = on('resource.relations', relationsEquivalent); // TODO review
+const documentsRelationsEquivalent = on('resource.relations', relationsEquivalent);
+
+
+/**
+ * target: { a: 2, b: 3}
+ * source: [['a', 17]]
+ * ->
+ * { a: 17, b: 3}
+ */
+const replaceValuesIn = <T>(target: ObjectCollection<T>)
+    : (source: Array<Pair<string, string[]>>) => ObjectCollection<T>  =>
+    reduce((newRelations: any, [name, content]: Pair<string, string[]>) => {
+        newRelations[name] = content;
+        return newRelations;
+    }, copy(target));

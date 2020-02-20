@@ -1,4 +1,4 @@
-import {flatMap, subtract, to} from 'tsfun';
+import {flatMap, subtract, to, flow} from 'tsfun';
 import {Document, Relations, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -99,11 +99,12 @@ export class ConnectedDocsWriter {
 
     private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
-        const getAllRelationTargetsForDoc = (doc: Document) =>
+        const getAllRelationTargetsForDoc = (doc: Document): any /* TODO type flatMap properly from A->B to get rid of any cast */=>
             Relations.getAllTargets(doc.resource.relations, allowedRelations);
 
-        return subtract
-            (documents.map(toResourceId))
-            (flatMap<any>(getAllRelationTargetsForDoc)(documents));
+        return flow(
+            documents,
+            flatMap(getAllRelationTargetsForDoc),
+            subtract(documents.map(toResourceId)));
     }
 }

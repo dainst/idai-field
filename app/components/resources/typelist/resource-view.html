@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <image-viewer [image]="selectedImage.document"></image-viewer>
+        <image-viewer *ngIf="selectedImage" [image]="selectedImage.document"></image-viewer>
 
         <image-row [images]="images"
                    [selectedImage]="selectedImage"

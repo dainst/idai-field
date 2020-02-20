@@ -1,4 +1,4 @@
-import {on, Predicate, flow, keys, isnt, append, isDefined, compose,
+import {Predicate, flow, keys, isnt, append, isDefined, compose,
     forEach, map, lookup, pairWith, filter, cond, copy, get} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
@@ -123,14 +123,8 @@ function compare(targetDocuments: Array<Document>,
                  cloneOfTargetDocuments: Array<Document>): Array<Document> {
 
     return targetDocuments.reduce((acc: any, targetDoc: any, i: number) =>
-            !relationsEqualInDocuments(targetDoc, cloneOfTargetDocuments[i])
+            !relationsEquivalent(targetDoc.resource.relations)(cloneOfTargetDocuments[i].resource.relations)
                 ? acc.concat(targetDoc)
                 : acc
         , []);
-}
-
-
-function relationsEqualInDocuments(documentA: Document, documentB: Document): boolean {
-
-    return on('resource.relations', relationsEquivalent)(documentA)(documentB);
 }

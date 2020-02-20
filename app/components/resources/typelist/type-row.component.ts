@@ -1,10 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {FieldDocument, FieldResource} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
-import {ImageRowItem, PLACEHOLDER} from '../../image/row/image-row.component';
+import {ImageRowItem} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
-import {ImageModalLauncher} from '../service/image-modal-launcher';
+import {MenuService} from '../../../desktop/menu-service';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ResourceViewComponent} from './resource-view.component';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class TypeRowComponent implements OnChanges {
 
     constructor(private datastore: FieldReadDatastore,
                 private resourcesComponent: ResourcesComponent,
-                private imageModalLauncher: ImageModalLauncher) {}
+                private modalService: NgbModal) {}
 
 
     public highlightDocument = (document: FieldDocument|undefined) =>
@@ -47,14 +49,20 @@ export class TypeRowComponent implements OnChanges {
     }
 
 
-    public async openImageModal(image: ImageRowItem) {
+    public async openResourceViewModal(image: ImageRowItem) {
 
-        if (image.imageId === PLACEHOLDER) return;
+        MenuService.setContext('image-view');
+        this.resourcesComponent.isModalOpened = true;
 
-        await this.imageModalLauncher.openImageModal(
-            image.document.resource as FieldResource,
-            this.resourcesComponent
+        const modalRef: NgbModalRef = this.modalService.open(
+            ResourceViewComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        await modalRef.componentInstance.initialize(image.document);
+        await modalRef.result;
+
+        MenuService.setContext('default');
+        this.resourcesComponent.isModalOpened = false;
     }
 
 

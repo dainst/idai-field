@@ -126,10 +126,7 @@ export class ImageViewComponent implements DoCheck {
 
     public async jumpToResource(documentToJumpTo: FieldDocument) {
 
-        await this.routingService.jumpToResource(
-            documentToJumpTo, true
-        );
-
+        await this.routingService.jumpToResource(documentToJumpTo, true);
         this.activeModal.close();
     }
 

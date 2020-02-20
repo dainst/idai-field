@@ -9,6 +9,7 @@ import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
 import {Get, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
+import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
 
 
 /**
@@ -41,7 +42,7 @@ import {ImportOptions} from '../import-documents';
 export async function processRelations(documents: Array<Document>,
                                        validator: ImportValidator,
                                        operationTypeNames: string[],
-                                       inverseRelationsMap: {[_: string]: string},
+                                       inverseRelationsMap: InverseRelationsMap,
                                        get: Get,
                                        { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
 

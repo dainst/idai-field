@@ -7,6 +7,7 @@ import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
+import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
 
 
 /**
@@ -27,7 +28,7 @@ export async function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
         getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
         get: (_: string) => Promise<Document>,
-        inverseRelationsMap: {[_: string]: string},
+        inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Promise<Array<Document>> {
 

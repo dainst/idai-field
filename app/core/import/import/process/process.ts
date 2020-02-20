@@ -8,6 +8,7 @@ import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';
+import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
 
 
 /**
@@ -72,7 +73,7 @@ export async function process(documents: Array<Document>,
                               validator: ImportValidator,
                               operationTypeNames: string[],
                               get: Get,
-                              inverseRelationsMap: {[_: string]: string},
+                              inverseRelationsMap: InverseRelationsMap,
                               importOptions : ImportOptions = {})
         : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 

@@ -16,6 +16,7 @@ import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
 import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
 
 
 type LookupDocument = (_: string) => Document|undefined;
@@ -50,7 +51,7 @@ type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, strin
  */
 export async function completeInverseRelations(importDocuments: Array<Document>,
                                                get: (_: string) => Promise<Document>,
-                                               inverseRelationsMap: {[_: string]: string},
+                                               inverseRelationsMap: InverseRelationsMap,
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
                                                mergeMode: boolean = false): Promise<Array<Document>> {
 
@@ -162,7 +163,7 @@ function setInverses(importDocument: Document,
 }
 
 // TODO remove document param, see if everything can be simplified because the recorded in lookup should give undefined anyway
-function pairRelationWithItsInverse(inverseRelationsMap: {[_: string]: string}) {
+function pairRelationWithItsInverse(inverseRelationsMap: InverseRelationsMap) {
 
     return (document: Document) => (relationName: string): [string, string|undefined] => {
 

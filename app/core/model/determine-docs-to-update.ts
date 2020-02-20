@@ -4,6 +4,7 @@ import {Document, Resource, relationsEquivalent, Relations} from 'idai-component
 import {Name} from '../constants';
 import {clone} from '../util/object-util';
 import {ObjectCollection} from 'tsfun/src/type';
+import {InverseRelationsMap} from '../configuration/project-configuration-helper';
 
 
 /**
@@ -26,7 +27,7 @@ import {ObjectCollection} from 'tsfun/src/type';
  */
 export function determineDocsToUpdate(document: Document,
                                       targetDocuments: Array<Document>,
-                                      inverseRelationsMap: {[_: string]: string}, // TODO should be string|undefined
+                                      inverseRelationsMap: InverseRelationsMap,
                                       setInverses: boolean = true): Array<Document> {
 
     const cloneOfTargetDocuments = clone(targetDocuments);

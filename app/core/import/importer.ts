@@ -11,7 +11,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {makeInverseRelationsMap} from '../configuration/project-configuration-helper';
+import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/project-configuration-helper';
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 
@@ -133,7 +133,7 @@ export module Importer {
                            mainTypeDocumentId: string,
                            mergeMode: boolean,
                            permitDeletions: boolean,
-                           inverseRelationsMap: {[_: string]: string},
+                           inverseRelationsMap: InverseRelationsMap,
                            generateId: () => string,
                            preprocessDocument: (document: Document) => Document,
                            postprocessDocument: (document: Document) => Document,

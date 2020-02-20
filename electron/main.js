@@ -171,9 +171,6 @@ const createMenu = () => {
 };
 
 
-electron.app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
-
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {

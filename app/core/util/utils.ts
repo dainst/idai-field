@@ -1,4 +1,5 @@
-import {copy, Pair, reduce, ObjectCollection, to, isDefined, convertPath, Predicate, getOn} from 'tsfun';
+import {copy, Pair, reduce, ObjectCollection, to,
+    isDefined, convertPath, Predicate, getOn, isArray, isObject} from 'tsfun';
 
 // @author Daniel de Oliveira
 
@@ -35,10 +36,23 @@ export function replaceIn<T>(target: ObjectCollection<T>): (source: Pair<string,
 export function replaceIn<T>(target: Array<T>): (source: Pair<number, T>) => Array<T>;
 export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 
-    return reduce((newRelations: ObjectCollection<T>|Array<T>, [name, content]: Pair<string|number, T>) => {
-        (newRelations as any)[name] = content;
-        return newRelations;
-    }, copy(target as any));
+    if (isArray(target)) {
+
+        return reduce((copied: Array<T>, [index, content]: Pair<number, T>) => {
+            copied[index] = content;
+            return copied;
+        }, copy(target as Array<T>)) as unknown as (source: Pair<number, T>) => Array<T>;
+
+    } else if (isObject(target)) {
+
+        return reduce((copied: ObjectCollection<T>, [key, content]: Pair<string, T>) => {
+            copied[key] = content;
+            return copied;
+        }, copy(target as ObjectCollection<T>)) as unknown as (source: Pair<string, T>) => ObjectCollection<T>;
+
+    } else {
+        throw 'illegal argument - must be array or object';
+    }
 }
 
 

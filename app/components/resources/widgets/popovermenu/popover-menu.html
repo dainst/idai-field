@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <thumbnail *ngIf="showThumbnail" [resource]="document.resource"></thumbnail>
+        <thumbnail *ngIf="showThumbnail" [document]="document"></thumbnail>
 
         <div id="document-info" [class.short-document-info]="hasThumbnail(document) && showThumbnail">
             <fields-view [expandAllGroups]="getExpandAllGroups()"

@@ -4,9 +4,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ImageRowItem} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
-import {MenuService} from '../../../desktop/menu-service';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ResourceViewComponent} from './resource-view.component';
+import {ViewModalLauncher} from '../service/view-modal-launcher';
 
 
 @Component({
@@ -32,37 +30,22 @@ export class TypeRowComponent implements OnChanges {
 
     constructor(private datastore: FieldReadDatastore,
                 private resourcesComponent: ResourcesComponent,
-                private modalService: NgbModal) {}
+                private viewModalLauncher: ViewModalLauncher) {}
 
 
     public highlightDocument = (document: FieldDocument|undefined) =>
         this.resourcesComponent.highlightDocument(document);
 
-
     public openContextMenu = (event: MouseEvent) => this.onContextMenu.emit(event);
+
+    public openResourceViewModal = (image: ImageRowItem) =>
+        this.viewModalLauncher.openResourceViewModal(image.document, this.resourcesComponent);
 
 
     async ngOnChanges() {
 
         this.numberOfLinkedResources = await this.getNumberOfLinkedResources();
         this.linkedImages = await this.getLinkedImages();
-    }
-
-
-    public async openResourceViewModal(image: ImageRowItem) {
-
-        MenuService.setContext('image-view');
-        this.resourcesComponent.isModalOpened = true;
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            ResourceViewComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false }
-        );
-        await modalRef.componentInstance.initialize(image.document);
-        await modalRef.result;
-
-        MenuService.setContext('default');
-        this.resourcesComponent.isModalOpened = false;
     }
 
 

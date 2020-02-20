@@ -1,4 +1,5 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output,
+    SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {asyncReduce} from 'tsfun/async';
@@ -73,9 +74,9 @@ export class ImageRowComponent implements OnChanges {
     public getImageWidth = (image: ImageRowItem) => this.imageRow.getImageWidth(image.imageId);
 
 
-    async ngOnChanges() {
+    async ngOnChanges(changes: SimpleChanges) {
 
-        if (!this.images) return;
+        if (!this.images || !changes['images']) return;
 
         this.initializing = true;
         await AngularUtility.refresh();

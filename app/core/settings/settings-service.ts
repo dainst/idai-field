@@ -100,6 +100,8 @@ export class SettingsService {
         if (this.getSelectedProject().startsWith('gadara-project')) customProjectName = 'Gadara';
         if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
         if (this.getSelectedProject().startsWith('ayamonte')) customProjectName = 'Ayamonte';
+        if (this.getSelectedProject().startsWith('abbircella')) customProjectName = 'AbbirCella';
+        if (this.getSelectedProject().startsWith('karthagocircus')) customProjectName = 'KarthagoCircus';
 
         try {
             return await this.appConfigurator.go(

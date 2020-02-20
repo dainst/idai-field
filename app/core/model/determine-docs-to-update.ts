@@ -65,17 +65,17 @@ function pruneInverseRelations(relations: Relations,
                                resourceId: string,
                                keepAllNoInverseRelations: boolean) {
 
-    const copied = copy(relations);
+    const newRelations = copy(relations);
 
     keys(relations)
         .filter(cond(keepAllNoInverseRelations, notUnidirectional))
         .map(pairWith(lookup(relations)))
         .forEach(([name, content]: [string, string[]]) => {
-            copied[name] = content.filter(isnt(resourceId));
-            if (copied[name].length === 0) delete copied[name];
+            newRelations[name] = content.filter(isnt(resourceId));
+            if (newRelations[name].length === 0) delete newRelations[name];
         });
 
-    return copied;
+    return newRelations;
 }
 
 

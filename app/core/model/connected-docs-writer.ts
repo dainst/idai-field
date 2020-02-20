@@ -99,7 +99,7 @@ export class ConnectedDocsWriter {
 
     private static getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
-        const getAllRelationTargetsForDoc = (doc: Document): any /* TODO type flatMap properly from A->B to get rid of any cast */=>
+        const getAllRelationTargetsForDoc = (doc: Document): string[] =>
             Relations.getAllTargets(doc.resource.relations, allowedRelations);
 
         return flow(

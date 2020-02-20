@@ -188,33 +188,39 @@ export module CSVExport {
     }
 
 
-    function expandDatingHeadings(n: number) { return (fieldName: string) => {
+    function expandDatingHeadings(n: number) {
 
-        return flatMap<any>((i: number) => [
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'type',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputType',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputYear',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputType',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
-            )(range(n));
-    }}
+        return (fieldName: string) => {
+
+            return flatMap(i => [
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'type',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputType',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputYear',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputType',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
+                )(range(n));
+        }
+    }
 
 
-    function expandDimensionHeadings(n:number) { return (fieldName: string) => {
+    function expandDimensionHeadings(n:number) {
 
-        return flatMap<any>((i: number) => [
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise']
-            )(range(n));
-    }}
+        return (fieldName: string) => {
+
+            return flatMap(i => [
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise']
+                )(range(n));
+        }
+    }
 
 
     function rowsWithDatingElementsExpanded(dating: Dating): string[] {

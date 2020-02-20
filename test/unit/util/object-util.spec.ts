@@ -1,4 +1,4 @@
-import {clone, takeOrMake} from "../../../app/core/util/object-util";
+import {clone} from "../../../app/core/util/object-util";
 
 /**
  * @author Daniel de Oliveira
@@ -48,21 +48,5 @@ describe('ObjectUtil', () => {
         expect(cloned.a.a2).toEqual('');
         expect(cloned.b instanceof Date).toBeTruthy();
         expect(cloned.c).toEqual('');
-    });
-
-
-    it('takeOrMake makes', () => {
-
-        const obj: any = { };
-        takeOrMake(obj, 'a.b.c', []);
-        expect(obj['a']['b']['c']).toEqual([]);
-    });
-
-
-    it('takeOrMake takes', () => {
-
-        const obj: any = {a:{ b: { c: 'a'}}};
-        takeOrMake(obj, 'a.b.c', []);
-        expect(obj['a']['b']['c']).toEqual('a')
     });
 });

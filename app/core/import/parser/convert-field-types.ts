@@ -1,14 +1,14 @@
 import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
-import {setOn} from 'tsfun-extra';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {CSVExport} from '../../export/csv-export';
 import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
+import {setOn} from '../../util/utils';
 
 
-type FieldType = 'dating' | 'date' | 'dimension' | 'checkboxes' | 'radio'
+type FieldType = 'dating' | 'date' | 'dimension' | 'radio'
     | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
     | 'checkboxes'; // | 'geometry'
 

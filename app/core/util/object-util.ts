@@ -1,5 +1,4 @@
-import {clone as tsfunClone, jsonClone, getOn} from 'tsfun';
-import {setOn} from 'tsfun-extra';
+import {clone as tsfunClone, jsonClone} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -14,13 +13,4 @@ export function clone<T>(struct: T): T {
             ? new Date(item)
             : jsonClone(item);
     });
-}
-
-
-/**
- * if o has not already a value at path, it sets it to alternative
- */
-export function takeOrMake<T>(o: T, path: string, alternative: any) {
-
-    return setOn(o, path)(getOn(path , alternative)(o));
 }

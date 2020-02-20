@@ -147,4 +147,4 @@ const replaceValuesIn = <T>(target: ObjectCollection<T>)
     reduce((newRelations: any, [name, content]: Pair<string, string[]>) => {
         newRelations[name] = content;
         return newRelations;
-    }, copy(target));
+    }, copy(target)); // TODO compare this to projectConfigurationHelper.makeInverseRelationsMap

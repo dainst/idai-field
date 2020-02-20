@@ -126,9 +126,10 @@ function determineChangedDocs(targetDocuments: Array<Document>,
 
 function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTargetDoc]: Pair<Document, Document>) {
 
-    return !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDoc)
-        ? changedDocs.concat(targetDoc)
-        : changedDocs;
+    return changedDocs.concat(
+        !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDoc)
+            ? targetDoc
+            : []);
 }
 
 

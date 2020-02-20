@@ -12,7 +12,10 @@ describe('determineDocsToUpdate', () => {
     let relatedDoc;
     let anotherRelatedDoc;
 
-    const relationInverses = { Contains: 'BelongsTo', BelongsTo: 'Contains' };
+    const relationInverses = { 
+        Above: 'Below', 
+        Below: 'Above' 
+    };
 
     beforeEach(() => {
 
@@ -36,7 +39,7 @@ describe('determineDocsToUpdate', () => {
 
     it('add one', () => {
 
-        doc.resource.relations['BelongsTo'] = ['2'];
+        doc.resource.relations['Below'] = ['2'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
@@ -47,120 +50,120 @@ describe('determineDocsToUpdate', () => {
 
     it('remove one', () => {
 
-        relatedDoc.resource.relations['Contains'] = ['1'];
+        relatedDoc.resource.relations['Above'] = ['1'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
+        expect(relatedDoc.resource.relations['Above']).toEqual(undefined);
     });
 
 
     it('add one and remove one', () => {
 
-        doc.resource.relations['BelongsTo'] = ['3'];
-        relatedDoc.resource.relations['Contains'] = ['1'];
+        doc.resource.relations['Below'] = ['3'];
+        relatedDoc.resource.relations['Above'] = ['1'];
 
         const docsToUpdate
             = determineDocsToUpdate(
                 doc, [relatedDoc, anotherRelatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc, anotherRelatedDoc]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
-        expect(anotherRelatedDoc.resource.relations['Contains']).toEqual(['1']);
+        expect(relatedDoc.resource.relations['Above']).toEqual(undefined);
+        expect(anotherRelatedDoc.resource.relations['Above']).toEqual(['1']);
     });
 
 
     it('dont touch a third party relation on add', () => {
 
-        doc.resource.relations['BelongsTo'] = ['2'];
-        relatedDoc.resource.relations['Contains'] = ['4'];
+        doc.resource.relations['Below'] = ['2'];
+        relatedDoc.resource.relations['Above'] = ['4'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
-        expect(relatedDoc.resource.relations['Contains'])
+        expect(relatedDoc.resource.relations['Above'].length).toEqual(2);
+        expect(relatedDoc.resource.relations['Above'])
             .toEqual(jasmine.arrayContaining(['1', '4']));
     });
 
 
     it('dont touch a third party relation on remove', () => {
 
-        relatedDoc.resource.relations['Contains'] = ['1','4'];
+        relatedDoc.resource.relations['Above'] = ['1','4'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
+        expect(relatedDoc.resource.relations['Above']).toEqual(['4']);
     });
 
 
     it('dont update if existed before with additional relation in related doc', () => {
 
-        doc.resource.relations['BelongsTo'] = ['2'];
-        relatedDoc.resource.relations['Contains'] = ['1','4'];
+        doc.resource.relations['Below'] = ['2'];
+        relatedDoc.resource.relations['Above'] = ['1','4'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
-        expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
-        expect(relatedDoc.resource.relations['Contains'])
+        expect(relatedDoc.resource.relations['Above'].length).toEqual(2);
+        expect(relatedDoc.resource.relations['Above'])
             .toEqual(jasmine.arrayContaining(['1', '4']));
     });
 
 
     it('do not update if existed before', () => {
 
-        doc.resource.relations['BelongsTo'] = ['2'];
-        relatedDoc.resource.relations['Contains'] = ['1'];
+        doc.resource.relations['Below'] = ['2'];
+        relatedDoc.resource.relations['Above'] = ['1'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(['1']);
+        expect(relatedDoc.resource.relations['Above']).toEqual(['1']);
     });
 
 
     it('remove only', () => {
 
-        doc.resource.relations['Contains'] = ['2'];
-        relatedDoc.resource.relations['BelongsTo'] = ['1'];
+        doc.resource.relations['Above'] = ['2'];
+        relatedDoc.resource.relations['Below'] = ['1'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
+        expect(relatedDoc.resource.relations['Below']).toEqual(undefined);
     });
 
 
     it('dont add on remove only', () => {
 
-        doc.resource.relations['Contains'] = ['2'];
+        doc.resource.relations['Above'] = ['2'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([]);
-        expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
+        expect(relatedDoc.resource.relations['Below']).toEqual(undefined);
     });
 
 
     it('dont touch a third party relation on remove only', () => {
 
-        relatedDoc.resource.relations['Contains'] = ['1', '4'];
+        relatedDoc.resource.relations['Above'] = ['1', '4'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
+        expect(relatedDoc.resource.relations['Above']).toEqual(['4']);
     });
 
 
@@ -168,31 +171,31 @@ describe('determineDocsToUpdate', () => {
 
     it('dont remove isRecordedIn relations of related documents', () => {
 
-        doc.resource.relations['Contains'] = ['2'];
+        doc.resource.relations['Above'] = ['2'];
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
-        relatedDoc.resource.relations['BelongsTo'] = ['1'];
+        relatedDoc.resource.relations['Below'] = ['1'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
-        expect(relatedDoc.resource.relations['BelongsTo']).toEqual(['1']);
+        expect(relatedDoc.resource.relations['Below']).toEqual(['1']);
     });
 
 
     it('remove isRecordedIn relations of related documents on remove only', () => {
 
-        doc.resource.relations['Contains'] = ['2'];
+        doc.resource.relations['Above'] = ['2'];
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
-        relatedDoc.resource.relations['BelongsTo'] = ['1'];
+        relatedDoc.resource.relations['Below'] = ['1'];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(undefined);
-        expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
+        expect(relatedDoc.resource.relations['Below']).toEqual(undefined);
     });
 
 

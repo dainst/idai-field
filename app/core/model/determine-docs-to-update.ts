@@ -18,7 +18,7 @@ import {clone} from '../util/object-util';
  *
  * @returns a selection with of the targetDocuments which
  *   got an update in their relations.
- *   Note that targetDocuments relations get modified <b>in place</b>.
+ *   - Modified in place! -
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

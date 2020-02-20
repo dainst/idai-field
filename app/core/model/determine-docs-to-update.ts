@@ -122,7 +122,7 @@ function setInverseRelation(target: Resource, resource: Resource) {
 function compare(targetDocuments: Array<Document>,
                  cloneOfTargetDocuments: Array<Document>): Array<Document> {
 
-    return targetDocuments.reduce((acc: any, targetDoc: any, i: number) =>
+    return targetDocuments.reduce((acc: any, targetDoc: any, i: number) => // TODO use zip instead of using i
             !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDocuments[i])
                 ? acc.concat(targetDoc)
                 : acc

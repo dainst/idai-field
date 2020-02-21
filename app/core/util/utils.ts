@@ -44,8 +44,8 @@ export function throwSomething(e: any) {
  * ->
  * { a: 17, b: 3}
  */
-export function replaceIn<T>(target: ObjectCollection<T>): (source: Pair<string, T>) => ObjectCollection<T>;
-export function replaceIn<T>(target: Array<T>): (source: Pair<number, T>) => Array<T>;
+export function replaceIn<T>(target: ObjectCollection<T>): (source: Array<Pair<string, T>>) => ObjectCollection<T>;
+export function replaceIn<T>(target: Array<T>): (source: Array<Pair<number, T>>) => Array<T>;
 export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 
     if (isArray(target)) {
@@ -53,16 +53,17 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
         return reduce((copied: Array<T>, [index, content]: Pair<number, T>) => {
             copied[index] = content;
             return copied;
-        }, copy(target as Array<T>)) as unknown as (source: Pair<number, T>) => Array<T>;
+        }, copy(target as Array<T>)) as (source: Array<Pair<number, T>>) => Array<T>;
 
     } else if (isObject(target)) {
 
         return reduce((copied: ObjectCollection<T>, [key, content]: Pair<string, T>) => {
             copied[key] = content;
             return copied;
-        }, copy(target as ObjectCollection<T>)) as unknown as (source: Pair<string, T>) => ObjectCollection<T>;
+        }, copy(target as ObjectCollection<T>)) as (source: Array<Pair<string, T>>) => ObjectCollection<T>;
 
     } else {
+
         throw 'illegal argument - must be array or object';
     }
 }

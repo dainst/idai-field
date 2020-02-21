@@ -69,7 +69,7 @@ describe('LayerManager', () => {
     });
 
 
-    it('add and remove correct layers when initializing with different resources states',
+    it('add and updateConnectedDocsForDocumentDeletion correct layers when initializing with different resources states',
             async done => {
 
         mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
@@ -89,7 +89,7 @@ describe('LayerManager', () => {
     });
 
 
-    it('add or remove no layers if the layers are initialized with the same resources state again',
+    it('add or updateConnectedDocsForDocumentDeletion no layers if the layers are initialized with the same resources state again',
         async done => {
 
             mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);

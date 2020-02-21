@@ -10,7 +10,7 @@ const NAME = 'name';
 
 /**
  * Architecture note: This class deals with automatic
- * update of documents directly connected
+ * updateConnectedDocsForDocumentUpdate of documents directly connected
  * to a document via relations.
  *
  * Other operations, like correcting documents' isRecordedIn relations
@@ -31,7 +31,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async update(document: Document, otherVersions: Array<Document>, user: Name) {
+    public async updateConnectedDocsForDocumentUpdate(document: Document, otherVersions: Array<Document>, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
@@ -46,7 +46,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async remove(document: Document, user: Name) {
+    public async updateConnectedDocsForDocumentDeletion(document: Document, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
 
@@ -63,7 +63,7 @@ export class ConnectedDocsWriter {
 
     private async updateDocs(docsToUpdate: Array<Document>, user: Name) {
 
-        // Note that this does not update a document for being target of isRecordedIn
+        // Note that this does not updateConnectedDocsForDocumentUpdate a document for being target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
             await this.datastore.update(docToUpdate, user, undefined);
         }

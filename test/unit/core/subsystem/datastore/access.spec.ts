@@ -76,7 +76,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    // update
+    // updateConnectedDocsForDocumentUpdate
 
     it('FieldDatastore - throw when updating an image type', async done => {
 
@@ -102,7 +102,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    // remove
+    // updateConnectedDocsForDocumentDeletion
 
     it('FieldDatastore - throw when deleting an image type', async done => {
 

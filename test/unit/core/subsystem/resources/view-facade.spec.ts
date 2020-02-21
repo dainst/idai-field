@@ -382,7 +382,7 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operation view: update children count map when populating document list', async done => {
+    it('operation view: updateConnectedDocsForDocumentUpdate children count map when populating document list', async done => {
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getChildrenCount(featureDocument1)).toBe(2);

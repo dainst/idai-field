@@ -54,7 +54,7 @@ describe('subsystem/persistence-manager',() => {
     }
 
 
-    it('remove, beginning with Feature', async done => {
+    it('updateConnectedDocsForDocumentDeletion, beginning with Feature', async done => {
 
         const [_, d2] = await create4TestResourcesForRemoveTests();
 
@@ -66,7 +66,7 @@ describe('subsystem/persistence-manager',() => {
     });
 
 
-    it('remove, beginning with Trench', async done => {
+    it('updateConnectedDocsForDocumentDeletion, beginning with Trench', async done => {
 
         const [d1, _] = await create4TestResourcesForRemoveTests();
 

@@ -15,7 +15,7 @@ const setUp = (mainWindow) => {
 
     if (initialized) return;
 
-    autoUpdater.on('update-available', updateInfo => {
+    autoUpdater.on('updateConnectedDocsForDocumentUpdate-available', updateInfo => {
         updateVersion = updateInfo.version;
 
         dialog.showMessageBox({
@@ -40,7 +40,7 @@ const setUp = (mainWindow) => {
         });
     });
 
-    autoUpdater.on('update-downloaded', updateInfo => {
+    autoUpdater.on('updateConnectedDocsForDocumentUpdate-downloaded', updateInfo => {
         mainWindow.webContents.send('updateDownloaded');
 
         dialog.showMessageBox({

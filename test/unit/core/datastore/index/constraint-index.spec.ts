@@ -178,7 +178,7 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('remove doc', () => {
+    it('updateConnectedDocsForDocumentDeletion doc', () => {
 
         const doc = docWithMultipleConstraints()[0];
 
@@ -190,7 +190,7 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('remove where one doc was recorded in multiple docs for the same constraint', () => {
+    it('updateConnectedDocsForDocumentDeletion where one doc was recorded in multiple docs for the same constraint', () => {
 
         const doc = docWithMultipleConstraintTargets()[0];
 
@@ -201,7 +201,7 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('update docs where the relations change', () => {
+    it('updateConnectedDocsForDocumentUpdate docs where the relations change', () => {
 
         const doc = docWithMultipleConstraints()[0];
 

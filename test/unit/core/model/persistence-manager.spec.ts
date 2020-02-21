@@ -148,7 +148,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
+    it('updateConnectedDocsForDocumentDeletion: should updateConnectedDocsForDocumentDeletion an operation type resource, another related resource gets relation updated', async done => {
 
         mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc]);
 
@@ -167,7 +167,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove an operation type resource, with two dependent resources', async done => {
+    it('updateConnectedDocsForDocumentDeletion: should updateConnectedDocsForDocumentDeletion an operation type resource, with two dependent resources', async done => {
 
         mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc, anotherRelatedDoc]);
 
@@ -187,7 +187,7 @@ describe('PersistenceManager', () => {
 
         await persistenceManager.remove(doc, 'u');
 
-        // do not update for beeing related to relatedDoc
+        // do not updateConnectedDocsForDocumentUpdate for beeing related to relatedDoc
         expect(mockDatastore.update).not.toHaveBeenCalledWith(doc, 'u');
         // this gets updates for beeing related to relatedDoc
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);

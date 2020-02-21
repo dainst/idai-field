@@ -149,7 +149,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should update an existing document with no identifier conflict', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should updateConnectedDocsForDocumentUpdate an existing document with no identifier conflict', async done => {
 
         let doc2 = Static.doc('id2');
         await datastore.create(Static.doc('id1'), 'u');
@@ -159,7 +159,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should not update if resource id not present', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should not updateConnectedDocsForDocumentUpdate if resource id not present', async done => {
 
         try {
             await datastore.update(Static.doc('sd1'), 'u');
@@ -171,7 +171,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should not update if created not present', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should not updateConnectedDocsForDocumentUpdate if created not present', async done => {
 
         const doc = Static.doc('sd1');
         doc.resource.id = '1';
@@ -187,7 +187,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should not update if not existent', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should not updateConnectedDocsForDocumentUpdate if not existent', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -201,7 +201,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should squash old revisions', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should squash old revisions', async done => {
 
         const doc = Static.doc('sd1');
         doc.resource.id = '1';
@@ -221,7 +221,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: should merge modified dates of squash revisions', async done => {
+    it('updateConnectedDocsForDocumentUpdate: should merge modified dates of squash revisions', async done => {
 
         const doc = Static.doc('sd1');
         doc.resource.id = '1';
@@ -257,7 +257,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: add modified date', async done => {
+    it('updateConnectedDocsForDocumentUpdate: add modified date', async done => {
 
         const doc = Static.doc('id2');
         doc.resource.id = '1';
@@ -284,7 +284,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('bulkUpdate: should not update if resource id not present', async done => {
+    it('bulkUpdate: should not updateConnectedDocsForDocumentUpdate if resource id not present', async done => {
 
         try {
             await datastore.bulkUpdate([Static.doc('sd1')], 'u');
@@ -329,7 +329,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('remove: should remove if existent', async (done) => {
+    it('updateConnectedDocsForDocumentDeletion: should updateConnectedDocsForDocumentDeletion if existent', async (done) => {
 
         await datastore.remove(Static.doc('sd1', 'identifier1', 'Find', 'id1'));
         expect(pouchdbProxy.remove).toHaveBeenCalled();
@@ -337,7 +337,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('remove: should throw when no resource id', async done => {
+    it('updateConnectedDocsForDocumentDeletion: should throw when no resource id', async done => {
 
         try {
             await datastore.remove(Static.doc('sd2'));
@@ -349,7 +349,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('remove: should throw when trying to remove and not existent', async done => {
+    it('updateConnectedDocsForDocumentDeletion: should throw when trying to updateConnectedDocsForDocumentDeletion and not existent', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -365,7 +365,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('remove: remove all conflicting revisions', async done => {
+    it('updateConnectedDocsForDocumentDeletion: updateConnectedDocsForDocumentDeletion all conflicting revisions', async done => {
 
         const document = Static.doc('shortDescription1', 'identifier1', 'Find', 'id1');
         document['_conflicts'] = ['revision1', 'revision2'];

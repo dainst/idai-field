@@ -91,7 +91,7 @@ describe('PouchDbFsImagestore', () => {
     });
 
 
-    it('should update a file', (done) => {
+    it('should updateConnectedDocsForDocumentUpdate a file', (done) => {
 
         store.create('test_update', str2ab('yxcv'))
             .then(() => { return store.update('test_update', str2ab('yxcvb')); })
@@ -109,7 +109,7 @@ describe('PouchDbFsImagestore', () => {
     });
 
 
-    it('should remove a file', (done) => {
+    it('should updateConnectedDocsForDocumentDeletion a file', (done) => {
 
         spyOn(console, 'error'); // to suppress console.error output
         store.create('test_remove', str2ab('sdfg'))

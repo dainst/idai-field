@@ -19,9 +19,9 @@ export class PouchdbDatastore {
     private deletedObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
-    // despite them beeing deleted in remove before. When they
+    // despite them beeing deleted in updateConnectedDocsForDocumentDeletion before. When they
     // pop up in 'change', they do not have the deleted property.
-    // So in order to identify them as to remove from the indices
+    // So in order to identify them as to updateConnectedDocsForDocumentDeletion from the indices
     // they are marked 'manually'.
     private deletedOnes = [];
 

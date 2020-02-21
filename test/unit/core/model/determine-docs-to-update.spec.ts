@@ -49,7 +49,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('remove one', () => {
+    it('updateConnectedDocsForDocumentDeletion one', () => {
 
         relatedDoc.resource.relations['Above'] = ['1'];
 
@@ -61,7 +61,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('add one and remove one', () => {
+    it('add one and updateConnectedDocsForDocumentDeletion one', () => {
 
         doc.resource.relations['Below'] = ['3'];
         relatedDoc.resource.relations['Above'] = ['1'];
@@ -91,7 +91,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('dont touch a third party relation on remove', () => {
+    it('dont touch a third party relation on updateConnectedDocsForDocumentDeletion', () => {
 
         relatedDoc.resource.relations['Above'] = ['1','4'];
 
@@ -103,7 +103,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('dont update if existed before with additional relation in related doc', () => {
+    it('dont updateConnectedDocsForDocumentUpdate if existed before with additional relation in related doc', () => {
 
         doc.resource.relations['Below'] = ['2'];
         relatedDoc.resource.relations['Above'] = ['1','4'];
@@ -118,7 +118,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('do not update if existed before', () => {
+    it('do not updateConnectedDocsForDocumentUpdate if existed before', () => {
 
         doc.resource.relations['Below'] = ['2'];
         relatedDoc.resource.relations['Above'] = ['1'];
@@ -131,7 +131,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('remove only', () => {
+    it('updateConnectedDocsForDocumentDeletion only', () => {
 
         doc.resource.relations['Above'] = ['2'];
         relatedDoc.resource.relations['Below'] = ['1'];
@@ -144,7 +144,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('dont add on remove only', () => {
+    it('dont add on updateConnectedDocsForDocumentDeletion only', () => {
 
         doc.resource.relations['Above'] = ['2'];
 
@@ -156,7 +156,7 @@ describe('determineDocsToUpdate', () => {
     });
 
 
-    it('dont touch a third party relation on remove only', () => {
+    it('dont touch a third party relation on updateConnectedDocsForDocumentDeletion only', () => {
 
         relatedDoc.resource.relations['Above'] = ['1', '4'];
 
@@ -178,21 +178,21 @@ describe('determineDocsToUpdate', () => {
     }
 
 
-    it('dont remove isRecordedIn relations of related documents', () => {
+    it('dont updateConnectedDocsForDocumentDeletion isRecordedIn relations of related documents', () => {
 
         adjustDocsForUnidirectionalRelationsTests();
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);
 
-        // isBelow and isRecordedIn were both already set, so no update necessary
+        // isBelow and isRecordedIn were both already set, so no updateConnectedDocsForDocumentUpdate necessary
         expect(docsToUpdate).toEqual([]);
         expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
         expect(relatedDoc.resource.relations['Below']).toEqual(['1']);
     });
 
 
-    it('remove isRecordedIn relations of related documents on remove only', () => {
+    it('updateConnectedDocsForDocumentDeletion isRecordedIn relations of related documents on updateConnectedDocsForDocumentDeletion only', () => {
 
         adjustDocsForUnidirectionalRelationsTests();
 

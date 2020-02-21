@@ -103,7 +103,7 @@ describe('utils', () => {
     });
 
 
-    // xit('reimplement takeOrMake', () => { TODO review, maybe remove
+    // xit('reimplement takeOrMake', () => { TODO review, maybe updateConnectedDocsForDocumentDeletion
     //
     //     const o1: any = {a: {b: {c: 'd'}}};
     //

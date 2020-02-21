@@ -23,7 +23,7 @@ import {InverseRelationsMap} from '../../../configuration/project-configuration-
  * @returns an array with 3 entries
  *   [
  *     the documents, prepared such that database updates can be performed,
- *     related documents, with adjusted relations so that the database will be consistent after update,
+ *     related documents, with adjusted relations so that the database will be consistent after updateConnectedDocsForDocumentUpdate,
  *     ImportErrors, if any
  *   ]
  *

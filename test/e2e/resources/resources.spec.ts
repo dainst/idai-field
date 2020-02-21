@@ -27,7 +27,7 @@ const common = require('../common');
  *   including relations
  * operations
  *   creation, deletion, editing
- *   update of navbar
+ *   updateConnectedDocsForDocumentUpdate of navbar
  * relations
  *   creation
  *   showing in sidebar
@@ -158,7 +158,7 @@ describe('resources --', () => {
     });
 
 
-    it('create/edit/delete an operation and update navbar', () => {
+    it('create/edit/delete an operation and updateConnectedDocsForDocumentUpdate navbar', () => {
 
         // edit
         NavbarPage.clickTab('project');
@@ -389,7 +389,7 @@ describe('resources --', () => {
     });
 
 
-    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    xit('updateConnectedDocsForDocumentDeletion new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();

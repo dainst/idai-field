@@ -101,9 +101,9 @@ describe('subsystem/datastore/convert', () => {
     });
 
 
-    // update
+    // updateConnectedDocsForDocumentUpdate
 
-    it('ImageDatastore - add relations with update', async done => {
+    it('ImageDatastore - add relations with updateConnectedDocsForDocumentUpdate', async done => {
 
         delete image0.resource.relations.depicts;
         expect((await idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
@@ -111,7 +111,7 @@ describe('subsystem/datastore/convert', () => {
     });
 
 
-    it('FieldDatastore - add relations with update', async done => {
+    it('FieldDatastore - add relations with updateConnectedDocsForDocumentUpdate', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
         expect((await fieldDocumentDatastore.

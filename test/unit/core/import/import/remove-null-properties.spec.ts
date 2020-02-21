@@ -17,7 +17,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('remove if null', () => {
+    it('updateConnectedDocsForDocumentDeletion if null', () => {
 
         const resource = { aField: 'aValue', bField: null };
 
@@ -45,7 +45,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
+    it('objectArray - convert null to undefined and updateConnectedDocsForDocumentDeletion undefined values of the right hand side', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 

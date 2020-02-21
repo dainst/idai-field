@@ -27,7 +27,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('update geometry of trench with geojson', async done => {
+    it('updateConnectedDocsForDocumentUpdate geometry of trench with geojson', async done => {
 
         await datastore.create(
             { resource: { identifier: 't1', type: 'Trench', relations: {}}});
@@ -98,7 +98,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('update a find with csv import', async done => {
+    it('updateConnectedDocsForDocumentUpdate a find with csv import', async done => {
 
         await datastore.create(
             { resource:
@@ -267,7 +267,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('update field', async done => {
+    it('updateConnectedDocsForDocumentUpdate field', async done => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', type: 'Trench', relations: {} }});
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});

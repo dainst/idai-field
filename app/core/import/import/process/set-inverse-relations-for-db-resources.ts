@@ -73,7 +73,7 @@ function reduceToDBDocumentsToBeUpdated(
 /**
  * If none of the target documents references the document here,
  * and the document here does not reference a targetDocument with a bi-directional relation,
- * there will be no update for that targetDocument
+ * there will be no updateConnectedDocsForDocumentUpdate for that targetDocument
  */
 function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Array<Document>,
                                        unidirectionalRelations: string[]) {

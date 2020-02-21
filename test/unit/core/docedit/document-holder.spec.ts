@@ -105,7 +105,7 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('remove empty and undefined relations', async done => {
+    it('updateConnectedDocsForDocumentDeletion empty and undefined relations', async done => {
 
         const cloned = clone(defaultDocument);
         delete cloned.resource.relations.undefrel;
@@ -120,7 +120,7 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('remove empty and undefined fields', async done => {
+    it('updateConnectedDocsForDocumentDeletion empty and undefined fields', async done => {
 
         const cloned = clone(defaultDocument);
         delete cloned.resource.undeffield;
@@ -136,7 +136,7 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('do not remove undefined field if it was part of the original object', async done => {
+    it('do not updateConnectedDocsForDocumentDeletion undefined field if it was part of the original object', async done => {
 
         docHolder.setDocument(defaultDocument);
         const savedDocument: Document = await docHolder.save();
@@ -145,7 +145,7 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('do not remove undefined relation if it was part of the original object', async done => {
+    it('do not updateConnectedDocsForDocumentDeletion undefined relation if it was part of the original object', async done => {
 
         docHolder.setDocument(defaultDocument);
         const savedDocument: Document = await docHolder.save();

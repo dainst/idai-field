@@ -32,6 +32,12 @@ export function denseArray(size: number) {
 }
 
 
+export function throwSomething(e: any) {
+
+    return (): any => { throw e };
+}
+
+
 /**
  * target: { a: 2, b: 3}
  * source: [['a', 17]]

@@ -1,7 +1,7 @@
 import {defined, dropRightWhile, isArray, isEmpty, isAssociative,
     isNot, keysAndValues, copy, ObjectCollection, isObject} from 'tsfun';
-import {isEmptyString} from '../util';
 import {ImportErrors} from './import-errors';
+import {isEmptyString} from '../../util/utils';
 
 
 /**

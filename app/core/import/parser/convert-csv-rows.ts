@@ -1,9 +1,8 @@
 import {reduce, map, ObjectStruct, values, isArray, isnt, set, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
-import {longerThan, startsWith} from '../util';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
-import {denseArray, throwSomething} from '../../util/utils';
+import {denseArray, longerThan, startsWith, throwSomething} from '../../util/utils';
 
 
 const PATH_SEPARATOR = '.';

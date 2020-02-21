@@ -5,9 +5,9 @@ import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {makeLookup} from '../util';
 import {Id, Identifier} from './types';
 import {DocumentDatastore} from '../../datastore/document-datastore';
+import {makeLookup} from '../../util/utils';
 
 
 export const unionOfDocuments = unionBy(on('resource.id'));

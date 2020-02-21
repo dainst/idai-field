@@ -1,22 +1,4 @@
-import {ObjectCollection, reduce, dissoc, getOn, isObject,
-    isArray, values, isEmpty, is, Associative} from 'tsfun';
-
-
-/**
- * @author Daniel de Oliveira
- */
-export const makeLookup = (path: string) => {
-
-    return <A>(as: Array<A>): ObjectCollection<A> => {
-
-        return reduce((amap: {[_:string]: A}, a: A) => {
-
-            amap[getOn(path)(a)] = a;
-            return amap;
-
-        }, {})(as);
-    }
-};
+import {Associative, is, isArray, isEmpty, isObject, values} from 'tsfun';
 
 
 /**
@@ -31,20 +13,3 @@ export function hasEmptyAssociatives(struct: Associative<any>): boolean {
         .map(hasEmptyAssociatives)
         .some(is(true));
 }
-
-
-export function withDissoc(struct: any, path: string) {
-
-   return dissoc(path)(struct);
-}
-
-
-export function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
-
-export function longerThan(than: string) { return (what: string) => what.length > than.length }
-
-export function includes(it: string) { return (what: string) => what.includes(it) }
-
-export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
-
-export function typeOf(v: any) { return typeof v }

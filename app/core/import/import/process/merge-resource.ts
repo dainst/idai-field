@@ -4,7 +4,8 @@ import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives, typeOf} from '../../util';
+import {hasEmptyAssociatives} from '../../util';
+import {typeOf} from '../../../util/utils';
 
 
 export const GEOMETRY = 'geometry';
@@ -124,7 +125,7 @@ function isObjectArray(as: Array<any>|any) {
     const arrayType = as
         .map(typeOf)
         // typeof null -> 'object', typeof undefined -> 'undefined'
-        .map(cond(is('undefined'), val('object')))
+        .map(cond(is('undefined'), 'object'))
         // By assertion we know our arrays are not empty and all entries are of one type
         [0];
 

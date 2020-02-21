@@ -5,8 +5,8 @@ import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot,
     jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from './model/field-definition';
-import {withDissoc} from '../import/util';
 import {ValuelistDefinition, ValuelistDefinitions} from './model/valuelist-definition';
+import {withDissoc} from '../util/utils';
 
 
 const VALUELISTS = 'valuelists';

@@ -2,16 +2,10 @@ import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfun
     isEmpty, compose, dissoc, append, Pair, left, right} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {RevisionId} from '../../constants';
-import {
-    dissocIndices,
-    last2,
-    replaceLastPair,
-    sortRevisionsByLastModified,
-    ultimate
-} from '../helpers';
-import {withDissoc} from '../../import/util';
+import {dissocIndices, last2, replaceLastPair, sortRevisionsByLastModified,} from '../helpers';
 import RESOURCE = Document.RESOURCE;
 import {clone} from '../../util/object-util';
+import {withDissoc} from '../../util/utils';
 
 type ArrayIndex = number;
 

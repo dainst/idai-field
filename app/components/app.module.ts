@@ -21,7 +21,6 @@ import {BackupModule} from './backup/backup.module';
 import {AppController} from '../core/app-controller';
 import {DatastoreModule} from '../core/datastore/datastore.module';
 import {ImageOverviewModule} from './image/overview/image-overview.module';
-import {ImageViewModule} from './image/view/image-view.module';
 import {PersistenceManager} from '../core/model/persistence-manager';
 import {Validator} from '../core/model/validator';
 import {ImportValidator} from '../core/import/import/process/import-validator';
@@ -62,6 +61,7 @@ import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
 import {DescendantsUtility} from '../core/model/descendants-utility';
+import {ViewModalModule} from './viewmodal/view-modal.module';
 
 
 const remote = require('electron').remote;
@@ -77,7 +77,7 @@ registerLocaleData(localeDe, 'de');
 
 @NgModule({
     imports: [
-        ImageViewModule,
+        ViewModalModule,
         ImageOverviewModule,
         ResourcesModule,
         SettingsModule,

@@ -5,7 +5,7 @@ import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {ImageViewComponent} from '../view/image-view.component';
+import {ImageViewComponent} from '../../viewmodal/image/image-view.component';
 import {MenuService} from '../../../desktop/menu-service';
 import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
@@ -120,7 +120,7 @@ export class ImageOverviewComponent implements OnInit {
     public async showImage(document: ImageDocument) {
 
         this.modalOpened = true;
-        MenuService.setContext('image-view');
+        MenuService.setContext('view-modal');
 
         this.imageOverviewFacade.select(document);
 

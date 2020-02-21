@@ -1,8 +1,10 @@
+@import 'resource/resource-view';
+
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-#resource-view-modal-header {
+#view-modal-header {
   height: 54px;
   padding: 7px;
   user-select: none;
@@ -18,11 +20,11 @@
   }
 }
 
-#resource-view-modal-body {
+#view-modal-body {
   height: calc(100vh - 119px);
   padding: 0;
 
-  #resource-view {
+  #view-modal-content {
     position: relative;
     z-index: 1001;
     width: 100%;
@@ -31,7 +33,6 @@
 
     image-row {
       height: 169px;
-      width: calc(100% - 258px);
 
       img {
         max-height: 169px;
@@ -43,7 +44,7 @@
     }
 
     #popover {
-      height: calc(100% + 169px);
+      height: 100%;
       background-color: #fff;
       width: $resources-listing-item-slim-width;
       overflow: hidden;
@@ -82,7 +83,7 @@
           }
         }
 
-        #edit-resource-button {
+        #edit-button {
           left: 109px;
           top: -71px;
         }

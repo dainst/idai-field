@@ -1,0 +1,12 @@
+/**
+ * @author Thomas Kleinke
+ */
+.resource-view-modal {
+  image-row {
+    width: calc(100% - 258px);
+  }
+
+  #popover {
+    height: calc(100% + 169px) !important;
+  }
+}

@@ -1,4 +1,4 @@
-<div id="image-view-modal-header" class="d-flex justify-content-between">
+<div id="view-modal-header" class="d-flex justify-content-between">
     <div *ngIf="!linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.images">Bilder</div>
     <div *ngIf="linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.linkedImages">
         Mit <strong>{{linkedResourceIdentifier}}</strong> verknüpfte Bilder
@@ -11,9 +11,8 @@
     </button>
 </div>
 
-<div id="image-view-modal-body" class="modal-body px-0">
-    <div id="image-view"
-         class="flex-nowrap bg-light px-0">
+<div id="view-modal-body" class="modal-body px-0">
+    <div id="view-modal-content" class="flex-nowrap bg-light px-0">
         <div id="popover">
             <div id="popover-header">
                 <button id="expand-all-groups-button" class="btn btn-light"
@@ -28,13 +27,13 @@
                 <div *ngIf="selectedImage" id="identifier-label">
                     {{selectedImage.document.resource.identifier}}
                 </div>
-                <button id="edit-image-button" class="btn btn-light" (click)="startEdit()">
+                <button id="edit-button" class="btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>
 
-            <div #imageInfo id="image-info"
-                 [class.scrollbar-visible]="imageInfoScrollbarVisible">
+            <div #resourceInfo id="resource-info"
+                 [class.scrollbar-visible]="resourceInfoScrollbarVisible">
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"
                              [openSection]="openSection"

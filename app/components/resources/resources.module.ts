@@ -50,7 +50,6 @@ import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRowComponent} from './typelist/type-row.component';
 import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
 import {ViewModalLauncher} from './service/view-modal-launcher';
-import {ResourceViewComponent} from './typelist/resource-view.component';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
 
 const remote = require('electron').remote;
@@ -90,8 +89,7 @@ const remote = require('electron').remote;
         MoveModalComponent,
         DeletionInProgressModalComponent,
         ThumbnailComponent,
-        ChildrenViewComponent,
-        ResourceViewComponent
+        ChildrenViewComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -174,8 +172,7 @@ const remote = require('electron').remote;
     ],
     entryComponents: [
         MoveModalComponent,
-        DeletionInProgressModalComponent,
-        ResourceViewComponent
+        DeletionInProgressModalComponent
     ]
 })
 

@@ -126,6 +126,21 @@ export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string|numbe
         copy(target as any) as any) as (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
 }
 
+/**
+ * source: ['17', '19']
+ * target: []
+ * f: a => a + a
+ * ->
+ * ['1717', '1919']
+ */
+export function concatReduce<A,T>(f: (a: A, i?: string|number) => T, as: Array<T>) {
+
+    return reduce(
+        (acc: Array<T>, a: A, i: string|number) => acc.concat(f(a, i)),
+        /* we do not modify target in place */
+        copy(as)) as (source: Array<A>|ObjectCollection<A>) => Array<T>;
+}
+
 
 /**
  * keys = ['a', 'b']

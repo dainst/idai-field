@@ -148,7 +148,7 @@ export function concatReduce<A,T>(f: (a: A, i?: string|number) => T, as: Array<T
  * ->
  * [1, 2]
  */
-export function toTuple(...keys: string[]) {
+export function toTuple(...keys: string[]) { // do not remove, even if not used currently
 
     return <T>(o: ObjectCollection<T>) => keys.map(k => to(k)(o));
 }

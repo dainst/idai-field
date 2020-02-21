@@ -10,7 +10,7 @@ import {RoutingService} from '../../routing-service';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './resource-view.html',
+    templateUrl: './resource-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -18,7 +18,7 @@ import {RoutingService} from '../../routing-service';
 /**
  * @author Thomas Kleinke
  */
-export class ResourceViewComponent extends ViewModalComponent {
+export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
 

@@ -2038,11 +2038,11 @@
         <source>Alle Gruppen ausklappen</source>
         <target state="final">Alle Gruppen ausklappen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/resource/resource-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/resource/resource-view-modal.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
@@ -4973,7 +4973,7 @@
         <source>Bilder</source>
         <target state="final">Bilder</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -4985,7 +4985,7 @@
         Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>

@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ImageViewComponent} from './image/image-view.component';
+import {ImageViewModalComponent} from './image/image-view-modal.component';
+import {ResourceViewModalComponent} from './resource/resource-view-modal.component';
 import {GeoreferenceViewComponent} from './image/georeference-view.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
@@ -17,7 +18,6 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {Imagestore} from '../../core/images/imagestore/imagestore';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
-import {ResourceViewComponent} from './resource/resource-view.component';
 
 
 @NgModule({
@@ -30,8 +30,8 @@ import {ResourceViewComponent} from './resource/resource-view.component';
         ImageViewerModule
     ],
     declarations: [
-        ImageViewComponent,
-        ResourceViewComponent,
+        ImageViewModalComponent,
+        ResourceViewModalComponent,
         GeoreferenceViewComponent,
         DepictsRelationsViewComponent,
     ],
@@ -53,8 +53,8 @@ import {ResourceViewComponent} from './resource/resource-view.component';
         }
     ],
     entryComponents: [
-        ImageViewComponent,
-        ResourceViewComponent
+        ImageViewModalComponent,
+        ResourceViewModalComponent
     ]
 })
 

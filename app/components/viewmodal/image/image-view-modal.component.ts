@@ -12,7 +12,7 @@ import {ViewModalComponent} from '../view-modal.component';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-view.html',
+    templateUrl: './image-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -21,7 +21,7 @@ import {ViewModalComponent} from '../view-modal.component';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ImageViewComponent extends ViewModalComponent {
+export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedResourceIdentifier: string|undefined;
 

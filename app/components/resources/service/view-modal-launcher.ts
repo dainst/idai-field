@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument} from 'idai-components-2';
 import {MenuService} from '../../../desktop/menu-service';
-import {ImageViewComponent} from '../../viewmodal/image/image-view.component';
-import {ResourcesComponent} from '../resources.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {ResourceViewComponent} from '../../viewmodal/resource/resource-view.component';
+import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
+import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
+import {ResourcesComponent} from '../resources.component';
 
 
 @Injectable()
@@ -28,7 +28,7 @@ export class ViewModalLauncher {
         );
 
         const modalRef: NgbModalRef = this.modalService.open(
-            ImageViewComponent,
+            ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(
@@ -49,7 +49,7 @@ export class ViewModalLauncher {
         resourcesComponent.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(
-            ResourceViewComponent,
+            ResourceViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(document);

@@ -5,7 +5,7 @@ import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {ImageViewComponent} from '../../viewmodal/image/image-view.component';
+import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {MenuService} from '../../../desktop/menu-service';
 import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
@@ -125,7 +125,7 @@ export class ImageOverviewComponent implements OnInit {
         this.imageOverviewFacade.select(document);
 
         const modalRef: NgbModalRef = this.modalService.open(
-            ImageViewComponent,
+            ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(

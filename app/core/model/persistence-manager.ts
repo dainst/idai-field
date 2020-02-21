@@ -76,9 +76,9 @@ export class PersistenceManager {
     public async remove(document: Document, username: string) {
 
         for (let descendant of (await this.descendantsUtility.fetchChildren(document))) {
-            await this.removeWithDescendants(descendant, username);
+            await this.removeWithConnectedDocuments(descendant, username);
         }
-        await this.removeWithDescendants(document, username);
+        await this.removeWithConnectedDocuments(document, username);
     }
 
 
@@ -88,15 +88,15 @@ export class PersistenceManager {
         const revs = revisionsToSquash.map(to('_rev')).filter(isDefined);
         const updated = await this.persistIt(document, username, revs);
 
-        await this.connectedDocsWriter.update(
+        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
             updated, [oldVersion].concat(revisionsToSquash), username);
         return updated as Document;
     }
 
 
-    private async removeWithDescendants(document: Document, username: string) {
+    private async removeWithConnectedDocuments(document: Document, username: string) {
 
-        await this.connectedDocsWriter.remove(document, username);
+        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(document, username);
         await this.datastore.remove(document);
     }
 
@@ -117,6 +117,14 @@ export class PersistenceManager {
     }
 
 
+    private async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
+
+        return (await this.datastore.find({
+            constraints: { 'isRecordedIn:contain': resourceId },
+        })).documents;
+    }
+
+
     private persistIt(document: Document|NewDocument, username: string,
                       squashRevisionIds: string[]): Promise<Document> {
 
@@ -126,13 +134,5 @@ export class PersistenceManager {
                 username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
             : this.datastore.create(document, username);
-    }
-
-
-    public async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
-
-        return (await this.datastore.find({
-            constraints: { 'isRecordedIn:contain': resourceId },
-        })).documents;
     }
 }

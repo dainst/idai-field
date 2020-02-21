@@ -31,7 +31,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async update(document: Document, otherVersions: Array<Document>, user: Name) {
+    public async updateConnectedDocumentsForDocumentUpdate(document: Document, otherVersions: Array<Document>, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
@@ -46,7 +46,7 @@ export class ConnectedDocsWriter {
     }
 
 
-    public async remove(document: Document, user: Name) {
+    public async updateConnectedDocumentsForDocumentRemove(document: Document, user: Name) {
 
         const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
 

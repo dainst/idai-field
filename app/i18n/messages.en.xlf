@@ -1176,12 +1176,12 @@
         <source>Löschen</source>
         <target state="final">Delete</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
@@ -1205,6 +1205,10 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/image/overview/link-modal.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
@@ -1215,10 +1219,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/image/overview/delete-modal.html</context>
           <context context-type="linenumber">15</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
-          <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/move-modal.html</context>
@@ -1480,7 +1480,7 @@
         <source>Bilder</source>
         <target state="final">Images</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/image-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -1492,7 +1492,7 @@
         Images linked to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/image-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
@@ -1604,7 +1604,7 @@
         Do you really want to delete the georeference data stored for this image?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -1612,7 +1612,7 @@
         <source>Georeferenzdaten</source>
         <target state="final">Georeference data</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
@@ -1620,7 +1620,7 @@
         <source>Vorhanden</source>
         <target state="final">Present</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -1628,7 +1628,7 @@
         <source>Georeferenzdaten löschen</source>
         <target state="final">Delete georeference data</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
@@ -1636,7 +1636,7 @@
         <source>Nicht vorhanden</source>
         <target state="final">Not present</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
@@ -1644,7 +1644,7 @@
         <source>Worldfile laden</source>
         <target state="final">Load world file</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/georeference-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
@@ -1652,7 +1652,7 @@
         <source>Dargestellte Ressourcen</source>
         <target state="final">Depicted resources</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/depicts-relations-view.html</context>
+          <context context-type="sourcefile">components/viewmodal/image/depicts-relations-view.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -2086,8 +2086,12 @@
         <source>Alle Gruppen ausklappen</source>
         <target state="final">Expand all groups</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/view/image-view.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="sourcefile">components/viewmodal/image/image-view.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/viewmodal/resource/resource-view.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/popovermenu/popover-menu.html</context>
@@ -2299,7 +2303,7 @@
         <target state="final">Link image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
@@ -2307,7 +2311,7 @@
         <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">

@@ -6,26 +6,6 @@ import {
 // @author Daniel de Oliveira
 
 
-export const makeLookup = (path: string) => {
-
-    return <A>(as: Array<A>): ObjectCollection<A> => {
-
-        return reduce((amap: {[_:string]: A}, a: A) => {
-
-            amap[getOn(path)(a)] = a;
-            return amap;
-
-        }, {})(as);
-    }
-};
-
-
-export function withDissoc(struct: any, path: string) {
-
-    return dissoc(path)(struct);
-}
-
-
 export function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
 
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
@@ -35,7 +15,6 @@ export function includes(it: string) { return (what: string) => what.includes(it
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
 export function typeOf(v: any) { return typeof v }
-
 
 export const isBoolean: Predicate<any> = (value: any) => typeof value === 'boolean';
 
@@ -70,6 +49,35 @@ export function throws(e: any) {
 
     return (): any => { throw e };
 }
+
+
+/**
+ * to be used with reduce
+ */
+export function withDissoc(struct: any, path: string) {
+
+    return dissoc(path)(struct);
+}
+
+
+/**
+ * path: 'd.e'
+ * as: [{d: {e: 17}}, {d: {e: 19}}]
+ * ->
+ * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
+ */
+export const makeLookup = (path: string) => {
+
+    return <A>(as: Array<A>): ObjectCollection<A> => {
+
+        return reduce((amap: {[_:string]: A}, a: A) => {
+
+            amap[getOn(path)(a)] = a;
+            return amap;
+
+        }, {})(as);
+    }
+};
 
 
 /**

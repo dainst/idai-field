@@ -94,7 +94,7 @@ function assertArraysHomogeneouslyTyped(o: Associative<any>) {
 
 function assertRelationsSet(into: Resource) {
 
-    if (!into.relations) throw Error('illegal argument in mergeResource: relations not defined for \'into\'');
+    if (!into.relations) throw 'illegal argument in mergeResource: relations not defined for \'into\'';
 }
 
 
@@ -112,7 +112,7 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
         dissoc(GEOMETRY),
         dissoc(RELATIONS),
         cond(hasEmptyAssociatives, () => {
-            throw Error('Precondition violated in mergeResource. Identifier: ' + resource.identifier);
+            throw 'Precondition violated in mergeResource. Identifier: ' + resource.identifier;
         }));
 }
 

@@ -534,7 +534,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual(Error('Precondition violated in mergeResource. Identifier: identifier1'));
+            expect(expected).toEqual('Precondition violated in mergeResource. Identifier: identifier1');
         }
     });
 
@@ -547,7 +547,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual(Error('Precondition violated in mergeResource. Identifier: identifier1'));
+            expect(expected).toEqual('Precondition violated in mergeResource. Identifier: identifier1');
         }
     });
 });

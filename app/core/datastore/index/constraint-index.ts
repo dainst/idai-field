@@ -121,9 +121,9 @@ export module ConstraintIndex {
 
         const definition: IndexDefinition = index.indexDefinitions[indexName];
         if (!definition) throw 'Ignoring unknown constraint "' + indexName + '".';
-        if (!definition.recursivelySearchable) throw Error('illegal argument  - given index not recursively searchable ' + indexName);
+        if (!definition.recursivelySearchable) throw 'illegal argument  - given index not recursively searchable ' + indexName;
 
-        if (isArray(matchTerms)) throw Error('illegal argument - only a single match term is allowed with includeDescendants');
+        if (isArray(matchTerms)) throw 'illegal argument - only a single match term is allowed with includeDescendants';
         return getDescendants(index, definition, matchTerms as string);
     }
 

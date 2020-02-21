@@ -45,7 +45,7 @@ export const last2 = compose(
     takeRight(2),
     cond(lengthIs2,
         identity,
-        () => { throw Error('Illegal argument, length must be at least 2') }));
+        () => { throw 'Illegal argument, length must be at least 2' }));
 
 
 // TODO maybe remove

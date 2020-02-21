@@ -522,6 +522,6 @@ describe('ConstraintIndex', () => {
         ConstraintIndex.put(ci, doc('1'), IndexItem.from(doc('1')));
 
         expect(() => ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', '1'))
-            .toThrowError();
+            .toThrow();
     });
 });

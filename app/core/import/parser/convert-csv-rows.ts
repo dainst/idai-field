@@ -52,7 +52,7 @@ export function convertCsvRows(separator: string) {
 function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[]) {
 
     // current implementation of parser gives at least ['']
-    if (headings.length === 0) throw Error('illegal argument');
+    if (headings.length === 0) throw 'illegal argument';
 
     if (headings.includes('')) throw [ParserErrors.CSV_HEADING_EMPTY_ENTRY];
 }
@@ -61,7 +61,7 @@ function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[])
 function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
 
     if (headings.length === 0) return;
-    if (headings.includes('')) throw Error('illegal argument');
+    if (headings.includes('')) throw 'illegal argument';
 
     const indices: number[] = extractLeadingIndices(headings);
     if (indices.length !== 0 && indices.length !== headings.length) {

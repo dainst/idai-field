@@ -25,7 +25,7 @@ export module TypeImagesUtil {
                                     datastore: FieldReadDatastore): Promise<Array<ImageRowItem>> {
 
         if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
-            throw Error('Illegal argument: Document must be of resource type Type or TypeCatalog.');
+            throw 'Illegal argument: Document must be of resource type Type or TypeCatalog.';
         }
 
         const find = (q: Query) => datastore.find(q);

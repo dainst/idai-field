@@ -68,6 +68,12 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 }
 
 
+/**
+ * keys = ['a', 'b']
+ * o = { a: 1, b: 2, c: 3 }
+ * ->
+ * [1, 2]
+ */
 export function toTuple(...keys: string[]) {
 
     return <T>(o: ObjectCollection<T>) => keys.map(k => to(k)(o));

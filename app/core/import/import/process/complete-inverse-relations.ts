@@ -162,7 +162,7 @@ function setInverses(importDocument: Document,
     }
 }
 
-// TODO updateConnectedDocsForDocumentDeletion document param, see if everything can be simplified because the recorded in lookup should give undefined anyway
+// TODO remove document param, see if everything can be simplified because the recorded in lookup should give undefined anyway
 function pairRelationWithItsInverse(inverseRelationsMap: InverseRelationsMap) {
 
     return (document: Document) => (relationName: string): [string, string|undefined] => {

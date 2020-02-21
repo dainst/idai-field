@@ -33,7 +33,7 @@ export abstract class ReadImagestore {
 
     /**
      * Revokes an image blob url which was previously created by calling read.
-     * Should be called as soon as the image is no longer displayed to allow the garbage collector to updateConnectedDocsForDocumentDeletion
+     * Should be called as soon as the image is no longer displayed to allow the garbage collector to remove
      * the image data from memory.
      * @param key must be an identifier of an existing file in the mediastore
      * @param thumb If true, the blob url of the thumb image will be revoked (instead of the original image).

@@ -16,7 +16,7 @@ describe('completeInverseRelations', () => {
 
     const inverseRelations = {
 
-        // leftover TODO review and updateConnectedDocsForDocumentDeletion
+        // leftover TODO review and remove
         // make sure it gets ignored even if inverses are set
         // if (_ === RECORDED_IN) throw 'E';
 
@@ -203,7 +203,7 @@ describe('completeInverseRelations', () => {
     });
 
 
-    it('updateConnectedDocsForDocumentDeletion one - where they are also related by other relation', async done => {
+    it('remove one - where they are also related by other relation', async done => {
 
         doc1.resource.relations = { isRecordedIn: [], isAfter: ['2']};
 
@@ -219,7 +219,7 @@ describe('completeInverseRelations', () => {
     });
 
 
-    it('updateConnectedDocsForDocumentDeletion one - where they are not related by other relations', async done => {
+    it('remove one - where they are not related by other relations', async done => {
 
         doc2.resource.relations[IS_ABOVE] = ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];

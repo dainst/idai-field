@@ -48,7 +48,7 @@ export const last2 = compose(
         () => { throw Error('Illegal argument, length must be at least 2') }));
 
 
-// TODO maybe updateConnectedDocsForDocumentDeletion
+// TODO maybe remove
 export const ultimate = last;
 
 

@@ -42,7 +42,7 @@ const messageDictionary = {
         'autoUpdate.available.message.2': ') is available. Do you want to download and install it?',
         'autoUpdate.available.yes': ' Yes ',
         'autoUpdate.available.no': ' No ',
-        'autoUpdate.downloaded.title': 'Install updateConnectedDocsForDocumentUpdate',
+        'autoUpdate.downloaded.title': 'Install update',
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the ' +
             'application to install it.',

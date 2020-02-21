@@ -154,7 +154,7 @@ export class LayerMapComponent extends MapComponent {
 
         const imageOverlay = this.imageOverlays[resourceId];
         if (!imageOverlay) {
-            console.warn('Failed to updateConnectedDocsForDocumentDeletion image ' + resourceId + ' from map. Image overlay not found.');
+            console.warn('Failed to remove image ' + resourceId + ' from map. Image overlay not found.');
             return;
         }
 
@@ -187,7 +187,7 @@ export class LayerMapComponent extends MapComponent {
 
     /**
      * Makes sure that layers are updated only once after switching to another view or main type document.
-     * Triggering the updateConnectedDocsForDocumentUpdate method more than once can lead to errors caused by resetting the layer image
+     * Triggering the update method more than once can lead to errors caused by resetting the layer image
      * provider while the images are still loading.
      */
     private static isLayersUpdateNecessary(changes: SimpleChanges): boolean {

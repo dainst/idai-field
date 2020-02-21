@@ -19,7 +19,7 @@ import {replaceIn} from '../util/utils';
  *   which point to document, get only removed, but not (re-)created
  *
  * @returns a selection with of the targetDocuments which
- *   got an updateConnectedDocsForDocumentUpdate in their relations.
+ *   got an update in their relations.
  *   - Modified in place! -
  *
  * @author Daniel de Oliveira

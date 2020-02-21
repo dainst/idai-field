@@ -402,7 +402,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- updateConnectedDocsForDocumentDeletion field from dropdown after adding constraint', () => {
+    it('search -- remove field from dropdown after adding constraint', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -419,7 +419,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- updateConnectedDocsForDocumentDeletion constraints if invalid after filter type change', () => {
+    it('search -- remove constraints if invalid after filter type change', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -519,7 +519,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('navpath -- updateConnectedDocsForDocumentUpdate navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
@@ -538,7 +538,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('navpath - updateConnectedDocsForDocumentUpdate when moving a resource within the same operation', () => {
+    it('navpath - update when moving a resource within the same operation', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.performCreateResource('S-New', 'feature');
@@ -558,7 +558,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('navpath - updateConnectedDocsForDocumentUpdate when moving a resource to another operation', () => {
+    it('navpath - update when moving a resource to another operation', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.performDescendHierarchy('SE0');

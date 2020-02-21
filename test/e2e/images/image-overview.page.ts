@@ -62,7 +62,7 @@ export module ImageOverviewPage {
 
     export function clickConfirmUnlinkButton() {
 
-        return common.click(element(by.id('updateConnectedDocsForDocumentDeletion-link-confirm')));
+        return common.click(element(by.id('remove-link-confirm')));
     }
 
 
@@ -74,7 +74,7 @@ export module ImageOverviewPage {
 
     export function clickUnlinkButton() {
 
-        return common.click(element(by.id('updateConnectedDocsForDocumentDeletion-link-btn')));
+        return common.click(element(by.id('remove-link-btn')));
     }
 
 

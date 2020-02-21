@@ -285,9 +285,9 @@ describe('CachedDatastore', () => {
     });
 
 
-    // updateConnectedDocsForDocumentUpdate
+    // update
 
-    it('should add missing fields on updateConnectedDocsForDocumentUpdate', async done => {
+    it('should add missing fields on update', async done => {
 
         await ds.update({ resource: { // trigger caching of document
             id: '1',
@@ -299,7 +299,7 @@ describe('CachedDatastore', () => {
     });
 
 
-    it('should add missing fields on updateConnectedDocsForDocumentUpdate with reassign', async done => {
+    it('should add missing fields on update with reassign', async done => {
 
         await ds.update({ resource: { // trigger caching of document
             id: '1',
@@ -356,7 +356,7 @@ describe('CachedDatastore', () => {
     });
 
 
-    it('should return cached instance on updateConnectedDocsForDocumentUpdate', async done => {
+    it('should return cached instance on update', async done => {
 
         let doc1 = Static.doc('sd1', 'identifier1');
         let doc2;

@@ -156,7 +156,7 @@ export class IndexFacade {
 
     private static updateTypeItem(item: TypeResourceIndexItem) {
 
-        if (!item.instances) { // keep existing instances on updateConnectedDocsForDocumentUpdate
+        if (!item.instances) { // keep existing instances on update
             item.instances = {};
         }
     }

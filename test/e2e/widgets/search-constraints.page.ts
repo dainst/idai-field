@@ -53,7 +53,7 @@ export class SearchConstraintsPage {
 
     public static clickRemoveConstraintButton(fieldName: string) {
 
-        common.click(element(by.id('updateConnectedDocsForDocumentDeletion-constraint-button-' + fieldName)));
+        common.click(element(by.id('remove-constraint-button-' + fieldName)));
     }
 
 
@@ -67,7 +67,7 @@ export class SearchConstraintsPage {
 
     public static getRemoveConstraintButton(fieldName: string) {
 
-        return element(by.id('updateConnectedDocsForDocumentDeletion-constraint-button-' + fieldName));
+        return element(by.id('remove-constraint-button-' + fieldName));
     }
 
 

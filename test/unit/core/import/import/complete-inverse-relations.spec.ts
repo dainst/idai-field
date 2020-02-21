@@ -16,17 +16,14 @@ describe('completeInverseRelations', () => {
 
     const inverseRelations = {
 
-        // leftover TODO review and remove
-        // make sure it gets ignored even if inverses are set
-        // if (_ === RECORDED_IN) throw 'E';
-
-        liesWithin: 'includes',
         isContemporaryWith: 'isContemporaryWith',
         isEquivalentTo: 'isEquivalentTo',
         isAfter: 'isBefore',
         isBefore: 'isAfter',
         isAbove: 'isBelow',
-        isBelow: 'isAbove'
+        isBelow: 'isAbove',
+        isRecordedIn: undefined,
+        liesWithin: undefined
     };
 
     let isRelationProperty;

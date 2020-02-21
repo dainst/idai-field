@@ -1,4 +1,5 @@
 import {flatMap, subtract, to, flow} from 'tsfun';
+import {asyncReduce} from 'tsfun/async';
 import {Document, Relations, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -48,7 +49,7 @@ export class ConnectedDocsWriter {
 
     public async remove(document: Document, user: Name) {
 
-        const connectedDocs = await this.getExistingConnectedDocs([document]);
+        const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
 
         const docsToUpdate = determineDocsToUpdate(
             document,
@@ -70,27 +71,52 @@ export class ConnectedDocsWriter {
     }
 
 
+    private getRelationDefinitionNames() {
+
+        return this.projectConfiguration
+            .getAllRelationDefinitions()
+            .map(to(NAME));
+    }
+
+
     private async getExistingConnectedDocs(documents: Array<Document>) {
 
         const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
-            documents,
-            this.projectConfiguration
-                .getAllRelationDefinitions()
-                .map(to(NAME))
-        );
+            documents, this.getRelationDefinitionNames());
+
+        return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
+            console.warn('connected document not found', id);
+        })
+    }
+
+
+    private async getExistingConnectedDocsForRemove(document: Document) {
+
+        const uniqueConnectedDocIds = ConnectedDocsWriter.getUniqueConnectedDocumentsIds(
+            [document], this.getRelationDefinitionNames());
+
+        const liesWithinTargets = Relations.getAllTargets(document.resource.relations, ['liesWithin']);
+        const recordedInTargets = Relations.getAllTargets(document.resource.relations, ['isRecordedIn']);
+
+        return this.getDocumentsForIds(uniqueConnectedDocIds, id => {
+            if (liesWithinTargets.includes(id) || recordedInTargets.includes(id)) {
+                // this can happen due to deletion order during deletion with descendants
+            } else {
+                console.warn('connected document not found', id);
+            }
+        });
+    }
+
+
+    private async getDocumentsForIds(ids: string[], handleError: (id: string) => void) {
 
         const connectedDocuments: Array<Document> = [];
-        for (let id of uniqueConnectedDocIds) {
+        for (let id of ids) {
 
             try {
                 connectedDocuments.push(await this.datastore.get(id));
             } catch {
-                // this can be either due to deletion order, for example when
-                // deleting multiple docs recordedIn some other, but related to one another
-                // or it can be due to 'really' missing documents. missing documents mean
-                // an inconsistent database state, which can for example result
-                // of docs not yet replicated
-                console.warn('connected document not found', id);
+                handleError(id);
             }
         }
         return connectedDocuments;

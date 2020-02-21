@@ -2,7 +2,7 @@ import {reduce, map, ObjectStruct, values, isArray, isnt, set, flow, filter, for
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
-import {denseArray, longerThan, startsWith, throwSomething} from '../../util/utils';
+import {denseArray, longerThan, startsWith, throws} from '../../util/utils';
 
 
 const PATH_SEPARATOR = '.';
@@ -133,7 +133,7 @@ function assertHeadingsConsistent(headings: string[]) {
             .filter(startsWith(heading))
             .filter(longerThan(heading))
             .filter(otherHeading => otherHeading.substr(heading.length).includes('.'))
-            .forEach(throwSomething([ParserErrors.CSV_INVALID_HEADING, heading]));
+            .forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading]));
     });
 }
 

@@ -37,7 +37,6 @@ export function isEmptyString(a: any) { return typeof a === 'string' && a === ''
 export function typeOf(v: any) { return typeof v }
 
 
-
 export const isBoolean: Predicate<any> = (value: any) => typeof value === 'boolean';
 
 export const isString: Predicate<any> = (as: any) => typeof as === 'string';
@@ -67,7 +66,7 @@ export function denseArray(size: number) {
 }
 
 
-export function throwSomething(e: any) {
+export function throws(e: any) {
 
     return (): any => { throw e };
 }
@@ -125,6 +124,7 @@ export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string|numbe
         /* we do not modify target in place */
         copy(target as any) as any) as (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
 }
+
 
 /**
  * source: ['17', '19']

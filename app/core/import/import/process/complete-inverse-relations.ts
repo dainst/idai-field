@@ -17,7 +17,7 @@ import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
 import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
-import {throwSomething} from '../../../util/utils';
+import {throws} from '../../../util/utils';
 
 
 type LookupDocument = (_: string) => Document|undefined;
@@ -206,7 +206,7 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
         .filter(isNot(undefinedOrEmpty))
         .map(intersect(relationTargets))
         .filter(isNot(empty))
-        .forEach(throwSomething([E.BAD_INTERRELATION, document.resource.identifier]));
+        .forEach(throws([E.BAD_INTERRELATION, document.resource.identifier]));
 }
 
 

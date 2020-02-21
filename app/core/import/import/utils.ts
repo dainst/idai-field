@@ -1,6 +1,6 @@
 import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {unionBy} from 'tsfun/by';
-import {asyncForEach} from 'tsfun/async';
+import {forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS} from '../../model/relation-constants';

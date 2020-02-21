@@ -1,5 +1,5 @@
 import {is, on, union, isNot, includedIn, keysAndValues} from 'tsfun';
-import {asyncMap, asyncReduce} from 'tsfun/async';
+import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {clone} from '../../../util/object-util';

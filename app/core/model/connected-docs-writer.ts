@@ -1,5 +1,4 @@
 import {flatMap, subtract, to, flow} from 'tsfun';
-import {asyncReduce} from 'tsfun/async';
 import {Document, Relations, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';

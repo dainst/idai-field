@@ -16,6 +16,10 @@ describe('completeInverseRelations', () => {
 
     const inverseRelations = {
 
+        // leftover TODO review and updateConnectedDocsForDocumentDeletion
+        // make sure it gets ignored even if inverses are set
+        // if (_ === RECORDED_IN) throw 'E';
+
         liesWithin: 'includes',
         isContemporaryWith: 'isContemporaryWith',
         isEquivalentTo: 'isEquivalentTo',

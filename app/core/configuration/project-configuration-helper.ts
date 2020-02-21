@@ -1,6 +1,6 @@
-import {flow, map} from 'tsfun';
+import {flow} from 'tsfun';
 import {RelationDefinition} from './model/relation-definition';
-import {replaceIn, toTuple} from '../util/utils';
+import {replaceReduce, toPair} from '../util/utils';
 
 // @author Daniel de Oliveira
 
@@ -17,6 +17,7 @@ export function makeInverseRelationsMap(relationDefinitions: Array<RelationDefin
 
     return flow(
         relationDefinitions,
-        map(toTuple('name', 'inverse')),
-        replaceIn({})) as InverseRelationsMap;
+        replaceReduce(
+            toPair<string>('name', 'inverse'),
+            {})) as InverseRelationsMap;
 }

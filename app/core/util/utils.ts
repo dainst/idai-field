@@ -69,6 +69,17 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 }
 
 
+export function replaceReduce<T,A>(f: (a: A) => [string, T], target: ObjectCollection<T>, ) {
+
+    return reduce((copied: ObjectCollection<T>, a: A) => {
+        const [k1, v1] = f(a);
+        copied[k1] = v1;
+        return copied;
+    }, copy(target as ObjectCollection<T>)) as (as: Array<A>) => ObjectCollection<T>;
+}
+
+
+
 /**
  * keys = ['a', 'b']
  * o = { a: 1, b: 2, c: 3 }
@@ -78,6 +89,12 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 export function toTuple(...keys: string[]) {
 
     return <T>(o: ObjectCollection<T>) => keys.map(k => to(k)(o));
+}
+
+
+export function toPair<T>(k1: string, k2: string) {
+
+    return (o: ObjectCollection<T>): Pair<T, T> => [o[k1], o[k2]];
 }
 
 

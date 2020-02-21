@@ -1,4 +1,4 @@
-import {copy, Pair, reduce, ObjectCollection, to,
+import {copy, Pair, reduce, ObjectCollection, to, range, map, val,
     isDefined, convertPath, Predicate, getOn, isArray, isObject} from 'tsfun';
 
 // @author Daniel de Oliveira
@@ -28,7 +28,7 @@ export function toArray(token: any) {
 
 export function denseArray(size: number) {
 
-    return Array.apply(null, Array(size))
+    return map(val(undefined))(range(size));
 }
 
 

@@ -26,6 +26,12 @@ export function toArray(token: any) {
 }
 
 
+export function denseArray(size: number) {
+
+    return Array.apply(null, Array(size))
+}
+
+
 /**
  * target: { a: 2, b: 3}
  * source: [['a', 17]]

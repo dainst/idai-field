@@ -1,8 +1,9 @@
-import {reduce, map, ObjectStruct, arrayList, values, isArray, isnt, set, flow, filter, forEach, isNot} from 'tsfun';
+import {reduce, map, ObjectStruct, values, isArray, isnt, set, flow, filter, forEach, isNot} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import {longerThan, startsWith} from '../util';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
+import {denseArray} from '../../util/utils';
 
 
 const PATH_SEPARATOR = '.';
@@ -171,7 +172,7 @@ function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) 
     }
 
     const nextIndex = parseInt(pathSegments[1]);
-    const newItem = isNaN(nextIndex) ? {} : arrayList(nextIndex + 1);
+    const newItem = isNaN(nextIndex) ? {} : denseArray(nextIndex + 1);
 
     if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
 

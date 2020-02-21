@@ -1,10 +1,11 @@
-import {arrayList, compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
+import {compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
     isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair} from 'tsfun';
 import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
 import {HIERARCHICAL_RELATIONS} from '../model/relation-constants';
 import {FieldDefinition} from '../configuration/model/field-definition';
+import {denseArray} from '../util/utils';
 
 
 /**
@@ -358,7 +359,7 @@ export module CSVExport {
 
     function toRowsArrangedBy(headings: Heading[]) { return (resource: FieldResource) => {
 
-        const row = arrayList(headings.length);
+        const row = denseArray(headings.length);
 
         return getUsableFieldNames(Object.keys(resource))
             .reduce((row, fieldName) => {

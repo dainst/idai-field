@@ -104,15 +104,27 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 }
 
 
-export function replaceReduce<T,A>(f: (a: A) => [string, T], target: ObjectCollection<T>, ) {
+/**
+ * source: ['c','d']
+ * target: {}
+ * f: a => [a, a + a]
+ * ->
+ * { c: 'cc', d: 'dd'}
+ */
+export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [number, T], target: Array<T>)
+    : (source: Array<A>|ObjectCollection<A>) => Array<T>;
+export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string, T], target: ObjectCollection<T>)
+    : (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
+export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string|number, T], target: ObjectCollection<T>|Array<T>) {
 
-    return reduce((copied: ObjectCollection<T>, a: A) => {
-        const [k1, v1] = f(a);
-        copied[k1] = v1;
-        return copied;
-    }, copy(target as ObjectCollection<T>)) as (as: Array<A>) => ObjectCollection<T>;
+    return reduce((copied: ObjectCollection<T>, a: A, i: number|string) => {
+            const [k1, v1] = f(a, i);
+            copied[k1] = v1;
+            return copied;
+        },
+        /* we do not modify target in place */
+        copy(target as any) as any) as (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
 }
-
 
 
 /**

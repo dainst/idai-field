@@ -16,7 +16,7 @@ import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
 import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
 import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
+import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 import {throws} from '../../../util/utils';
 
 

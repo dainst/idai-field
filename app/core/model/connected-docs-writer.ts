@@ -2,7 +2,7 @@ import {flatMap, subtract, to, flow} from 'tsfun';
 import {Document, Relations, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/project-configuration-helper';
+import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {determineDocsToUpdate} from './determine-docs-to-update';
 import {Name} from '../constants';
 

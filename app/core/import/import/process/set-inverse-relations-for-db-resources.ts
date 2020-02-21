@@ -7,7 +7,7 @@ import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
-import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
+import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 
 
 /**

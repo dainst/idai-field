@@ -8,7 +8,7 @@ import {Get, GetInverseRelation} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';
-import {InverseRelationsMap} from '../../../configuration/project-configuration-helper';
+import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 
 
 /**

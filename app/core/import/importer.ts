@@ -11,7 +11,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {IdaiType} from '../configuration/model/idai-type';
-import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/project-configuration-helper';
+import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 

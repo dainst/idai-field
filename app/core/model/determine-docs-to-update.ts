@@ -3,7 +3,7 @@ import {on, Predicate, flow, keys, isnt, append, isDefined, compose, remove, isE
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
 import {clone} from '../util/object-util';
-import {InverseRelationsMap} from '../configuration/project-configuration-helper';
+import {InverseRelationsMap} from '../configuration/inverse-relations-map';
 import {replaceIn} from '../util/utils';
 
 

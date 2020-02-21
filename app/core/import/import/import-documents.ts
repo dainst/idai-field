@@ -12,7 +12,7 @@ import {ImportErrors as E} from './import-errors';
 import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {InverseRelationsMap} from '../../configuration/project-configuration-helper';
+import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
 
 
 export interface ImportOptions {

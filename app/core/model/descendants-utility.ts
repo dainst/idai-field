@@ -60,7 +60,7 @@ export class DescendantsUtility {
                 }
             },
             skipDocuments: skipDocuments
-        });
+        }); // TODO maybe reverse the order, to get rid of warn, see subsystem test for persistence-manager
     }
 }
 

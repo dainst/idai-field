@@ -110,6 +110,15 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number,
 }
 
 
+/** experimental */
+export function mutateReduce<T,A>(f: (acc: ObjectCollection<T>, a: A, i?: string|number) => void, target: ObjectCollection<T>) {
+
+    return reduce(
+        (acc: ObjectCollection<T>, a: A, i?: string|number) => { f(acc, a, i); return acc; },
+        copy(target as ObjectCollection<T>));
+}
+
+
 /**
  * keys = ['a', 'b']
  * o = { a: 1, b: 2, c: 3 }

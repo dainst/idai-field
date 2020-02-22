@@ -66,18 +66,11 @@ export function withDissoc(struct: any, path: string) {
  * ->
  * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
  */
-export const makeLookup = (path: string) => {
+export function makeLookup(path: string) {
 
-    return <A>(as: Array<A>): ObjectCollection<A> => {
-
-        return reduce((amap: {[_:string]: A}, a: A) => {
-
-            amap[getOn(path)(a)] = a;
-            return amap;
-
-        }, {})(as);
-    }
-};
+    return <A>(as: Array<A>): ObjectCollection<A> =>
+        replaceReduce((a: A) => [getOn(path)(a), a], {})(as);
+}
 
 
 /**

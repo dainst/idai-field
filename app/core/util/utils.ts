@@ -69,7 +69,7 @@ export function withDissoc(struct: any, path: string) {
 export function makeLookup(path: string) {
 
     return <A>(as: Array<A>): ObjectCollection<A> =>
-        replaceReduce((a: A) => [getOn(path)(a), a], {})(as);
+        assocReduce((a: A) => [getOn(path)(a), a], {})(as);
 }
 
 
@@ -83,7 +83,7 @@ export function replaceIn<T>(target: ObjectCollection<T>): (source: Array<Pair<s
 export function replaceIn<T>(target: Array<T>): (source: Array<Pair<number, T>>) => Array<T>;
 export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
 
-    return replaceReduce(identity as any, target as ObjectCollection<T>) as any;
+    return assocReduce(identity as any, target as ObjectCollection<T>) as any;
 }
 
 
@@ -94,11 +94,11 @@ export function replaceIn<T>(target: ObjectCollection<T>|Array<T>) {
  * ->
  * { c: 'cc', d: 'dd'}
  */
-export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [number, T], target: Array<T>)
+export function assocReduce<T,A>(f: (a: A, i?: number|string) => [number, T], target: Array<T>)
     : (source: Array<A>|ObjectCollection<A>) => Array<T>;
-export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string, T], target: ObjectCollection<T>)
+export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string, T], target: ObjectCollection<T>)
     : (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
-export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string|number, T], target: ObjectCollection<T>|Array<T>) {
+export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number, T], target: ObjectCollection<T>|Array<T>) {
 
     return reduce((copied: ObjectCollection<T>, a: A, i: number|string) => {
             const [k1, v1] = f(a, i);
@@ -107,22 +107,6 @@ export function replaceReduce<T,A>(f: (a: A, i?: number|string) => [string|numbe
         },
         /* we do not modify target in place */
         copy(target as any) as any) as (source: Array<A>|ObjectCollection<A>) => ObjectCollection<T>;
-}
-
-
-/**
- * source: ['17', '19']
- * target: []
- * f: a => a + a
- * ->
- * ['1717', '1919']
- */
-export function concatReduce<A,T>(f: (a: A, i?: string|number) => T, as: Array<T>) {
-
-    return reduce(
-        (acc: Array<T>, a: A, i: string|number) => acc.concat(f(a, i)),
-        /* we do not modify target in place */
-        copy(as)) as (source: Array<A>|ObjectCollection<A>) => Array<T>;
 }
 
 

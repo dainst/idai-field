@@ -62,7 +62,7 @@ export function withDissoc(struct: any, path: string) {
 
 /**
  * path: 'd.e'
- * as: [{d: {e: 17}}, {d: {e: 19}}]
+ * as: [{ d: { e: 17 }}, { d: { e: 19 }}]
  * ->
  * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
  */
@@ -74,10 +74,10 @@ export function makeLookup(path: string) {
 
 
 /**
- * target: { a: 2, b: 3}
+ * target: { a: 2, b: 3 }
  * source: [['a', 17]]
  * ->
- * { a: 17, b: 3}
+ * { a: 17, b: 3 }
  */
 export function replaceIn<T>(target: ObjectCollection<T>): (source: Array<Pair<string, T>>) => ObjectCollection<T>;
 export function replaceIn<T>(target: Array<T>): (source: Array<Pair<number, T>>) => Array<T>;

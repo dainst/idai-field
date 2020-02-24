@@ -217,7 +217,7 @@ export class ProjectConfiguration {
     private initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {
-            this.typesMap[type.type] = new IdaiType(type);
+            this.typesMap[type.type] = IdaiType.build(type);
             this.typesColorMap[type.type] = this.generateColorForType(type.type) as any;
         }
 
@@ -227,7 +227,7 @@ export class ProjectConfiguration {
             } else {
                 const parentType = this.typesMap[type.parent as any];
                 if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-                parentType.addChildType(this.typesMap[type.type]);
+                IdaiType.addChildType(parentType, this.typesMap[type.type]);
             }
         }
         

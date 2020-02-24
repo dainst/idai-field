@@ -2,64 +2,69 @@ import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
 
+
+export interface IdaiType { // TODO review if we can use TypeDefinition directly
+
+    children: Array<IdaiType>;
+    parentType: IdaiType|undefined; //  = undefined;
+    isAbstract: boolean;
+    name: string;
+    label: string;
+    color: string|undefined;
+    fields: Array<FieldDefinition>;
+    mustLieWithin: boolean|undefined; // = undefined;
+}
+
+
 /**
  * @author F.Z.
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class IdaiType {
+export module IdaiType {
 
-    public children: Array<IdaiType>;
-    public parentType: IdaiType|undefined = undefined;
-    public isAbstract: boolean;
-    public name: string;
-    public label: string;
-    public color: string|undefined;
-    public fields: Array<FieldDefinition>;
+    export function build(definition: TypeDefinition): IdaiType {
 
-    /**
-     * @see BuiltinTypeDefinition
-     */
-    public mustLieWithin: boolean|undefined = undefined;
+        const idaiType: any = {};
 
+        idaiType.mustLieWithin = definition.mustLieWithin;
+        idaiType.name = definition.type;
+        idaiType.label = definition.label || idaiType.name;
+        idaiType.fields = definition.fields || [];
+        idaiType.isAbstract = definition.abstract || false;
+        idaiType.color = definition.color;
 
-    constructor(definition: TypeDefinition) {
-
-        this.mustLieWithin = definition.mustLieWithin;
-        this.name = definition.type;
-        this.label = definition.label || this.name;
-        this.fields = definition.fields || [];
-        this.isAbstract = definition.abstract || false;
-        this.color = definition.color;
+        return idaiType as IdaiType;
     }
 
 
-    private setParentType(parent: IdaiType) {
+    export function addChildType(type: IdaiType, child: IdaiType) {
 
-        this.parentType = parent;
-
-        for (let field of this.fields) {
-            if (!field['group']) (field as any)['group'] = 'child';
-        }
-
-        this.fields = this.getCombinedFields(parent.fields, this.fields);
-    }
-
-
-    public addChildType(child: IdaiType) {
-
-        if (!this.children) this.children = [];
+        if (!type.children) type.children = [];
         try {
-            child.setParentType(this);
+            setParentType(child, type);
         } catch (e) {
-            e.push(this.name);
+            e.push(type.name);
             e.push(child.name);
             throw [e];
         }
-        this.children.push(child)
+        type.children.push(child)
     }
 
 
-    private getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
+    function setParentType(type: IdaiType, parent: IdaiType) {
+
+        type.parentType = parent;
+
+        for (let field of type.fields) {
+            if (!field['group']) (field as any)['group'] = 'child';
+        }
+
+        type.fields = getCombinedFields(parent.fields, type.fields);
+    }
+
+
+    function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
 
         const fields: Array<FieldDefinition> = clone(parentFields);
 
@@ -69,7 +74,7 @@ export class IdaiType {
 
             if (field) {
                 if (field.name === 'campaign') {
-                    this.mergeFields(childField, field);
+                    mergeFields(childField, field);
                 } else {
                     throw ['tried to overwrite field of parent type', field.name];
                 }
@@ -82,7 +87,7 @@ export class IdaiType {
     }
 
 
-    private mergeFields(sourceField: any, targetField: any) {
+    function mergeFields(sourceField: any, targetField: any) {
 
         Object.keys(sourceField).forEach(key => targetField[key] = sourceField[key]);
     }

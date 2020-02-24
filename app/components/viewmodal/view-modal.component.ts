@@ -18,9 +18,6 @@ export abstract class ViewModalComponent implements DoCheck {
 
     public images: Array<ImageRowItem> = [];
     public selectedImage: ImageRowItem;
-
-    public openSection: string|undefined = 'stem';
-    public expandAllGroups: boolean = false;
     public resourceInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
@@ -40,6 +37,14 @@ export abstract class ViewModalComponent implements DoCheck {
     }
 
 
+    public abstract toggleExpandAllGroups(isImageDocument?: boolean): void;
+
+    public abstract getExpandAllGroups(isImageDocument?: boolean): boolean;
+
+    public abstract getOpenSection(isImageDocument?: boolean): string|undefined;
+
+    public abstract setOpenSection(section: string, isImageDocument?: boolean): void;
+
     protected abstract getDocument(isImageDocument?: boolean): Document;
 
     protected abstract setDocument(document: Document, isImageDocument?: boolean): void;
@@ -54,13 +59,6 @@ export abstract class ViewModalComponent implements DoCheck {
     public async onSelected(selectedImage: ImageRowItem) {
 
         this.selectedImage = selectedImage;
-    }
-
-
-    public setOpenSection(section: string) {
-
-        this.openSection = section;
-        this.expandAllGroups = false;
     }
 
 

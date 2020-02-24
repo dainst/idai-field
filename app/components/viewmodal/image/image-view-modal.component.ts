@@ -25,6 +25,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedResourceIdentifier: string|undefined;
 
+    private openSection: string|undefined = 'stem';
+
 
     constructor(private imagesState: ImagesState,
                 datastore: ImageReadDatastore,
@@ -37,16 +39,17 @@ export class ImageViewModalComponent extends ViewModalComponent {
         super(datastore, activeModal, messages, router, modalService, routingService);
     }
 
-
-    protected getDocument = () => this.selectedImage.document;
-
-    protected setDocument = (document: Document) => this.selectedImage.document = document;
+    public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
 
     public toggleExpandAllGroups = () => this.imagesState.setExpandAllGroups(
         !this.imagesState.getExpandAllGroups()
     );
 
-    public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
+    public getOpenSection = () => this.openSection;
+
+    protected getDocument = () => this.selectedImage.document;
+
+    protected setDocument = (document: Document) => this.selectedImage.document = document;
 
 
     public async initialize(documents: Array<ImageDocument>, selectedDocument: ImageDocument,
@@ -61,5 +64,12 @@ export class ImageViewModalComponent extends ViewModalComponent {
         this.selectedImage = this.images.find(
             on('imageId', is(selectedDocument.resource.id))
         ) as ImageRowItem;
+    }
+
+
+    public setOpenSection(section: string) {
+
+        this.openSection = section;
+        this.imagesState.setExpandAllGroups(false);
     }
 }

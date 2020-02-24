@@ -9,6 +9,9 @@ import {makeLookup} from '../util/utils';
 import {TypeDefinition} from './model/type-definition';
 
 const NAME = 'name';
+const COLOR = 'color';
+const MANDATORY = 'mandatory';
+const VISIBLE = 'visible';
 
 /**
  * ProjectConfiguration maintains the current projects properties.
@@ -97,6 +100,8 @@ export class ProjectConfiguration {
     }
 
     /**
+     * TODO extract another function and move it to project-configuration-util
+     *
      * @returns {boolean} True if the given domain type is a valid domain type for a relation definition which has the
      * given range type & name
      */
@@ -146,19 +151,19 @@ export class ProjectConfiguration {
 
     public getTypeColors() {
 
-        return map(to('color'))(this.typesMap) as { [typeName: string]: string };
+        return map(to(COLOR))(this.typesMap) as { [typeName: string]: string };
     }
 
 
     public isMandatory(typeName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, 'mandatory');
+        return this.hasProperty(typeName, fieldName, MANDATORY);
     }
 
 
     public isVisible(typeName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, 'visible');
+        return this.hasProperty(typeName, fieldName, VISIBLE);
     }
 
 

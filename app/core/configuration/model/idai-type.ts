@@ -38,6 +38,7 @@ export module IdaiType {
     }
 
 
+    // TODO make function pure
     export function addChildType(type: IdaiType, child: IdaiType) {
 
         if (!type.children) type.children = [];

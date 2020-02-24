@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {on, is} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
 import {ImageRowItem} from '../../image/row/image-row.component';
 import {ViewModalComponent} from '../view-modal.component';
@@ -22,7 +22,6 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
-
     public expandAllGroups: boolean = false;
 
     private openResourceSection: string|undefined = 'stem';
@@ -30,22 +29,20 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
 
     constructor(private imagesState: ImagesState,
-                datastore: ImageReadDatastore,
+                private datastore: ImageReadDatastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
-                router: Router,
                 modalService: NgbModal,
                 routingService: RoutingService) {
 
-        super(datastore, activeModal, messages, router, modalService, routingService);
+        super(activeModal, messages, modalService, routingService);
     }
 
 
     public async initialize(document: FieldDocument) {
 
         this.document = document;
-        this.images = await this.fetchImages();
-        if (this.images.length > 0) this.selectedImage = this.images[0];
+        await this.reloadImages();
     }
 
 
@@ -93,18 +90,37 @@ export class ResourceViewModalComponent extends ViewModalComponent {
     }
 
 
-    protected getDocument(isImageDocument?: boolean) {
+    protected getDocument(isImageDocument?: boolean): Document {
 
-        return isImageDocument ? this.selectedImage.document : this.document;
+        if (isImageDocument) {
+            if (!this.selectedImage) throw 'No image selected';
+            return this.selectedImage.document;
+        } else {
+            return this.document;
+        }
     }
 
 
-    protected setDocument(document: FieldDocument, isImageDocument?: boolean) {
+    protected async setDocument(document: FieldDocument, isImageDocument?: boolean) {
 
         if (isImageDocument) {
+            if (!this.selectedImage) throw 'No image selected';
             this.selectedImage.document = document;
         } else {
             this.document = document;
+            await this.reloadImages();
+        }
+    }
+
+
+    private async reloadImages() {
+
+        this.images = await this.fetchImages();
+
+        if (this.images.length === 0) {
+            this.selectedImage = undefined;
+        } else if (this.selectedImage) {
+            this.selectedImage = this.images.find(on('imageId', is(this.selectedImage.imageId)));
         }
     }
 

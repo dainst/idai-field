@@ -1,10 +1,8 @@
 import {DoCheck, ElementRef, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
-import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {MenuService} from '../../desktop/menu-service';
 import {ImageRowItem} from '../image/row/image-row.component';
 
@@ -17,16 +15,14 @@ export abstract class ViewModalComponent implements DoCheck {
     @ViewChild('resourceInfo', { static: false }) resourceInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
-    public selectedImage: ImageRowItem;
+    public selectedImage: ImageRowItem|undefined;
     public resourceInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
 
 
-    constructor(protected datastore: ImageReadDatastore,
-                private activeModal: NgbActiveModal,
+    constructor(private activeModal: NgbActiveModal,
                 private messages: Messages,
-                private router: Router,
                 private modalService: NgbModal,
                 private routingService: RoutingService) {}
 

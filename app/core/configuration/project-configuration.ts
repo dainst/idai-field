@@ -44,28 +44,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getInverseRelations(relationName: string): string|undefined {
-
-        if (!this.relationFields) return undefined;
-
-        for (let relationField of this.relationFields) {
-            if (relationField['name'] == relationName) return relationField['inverse'];
-        }
-        return undefined;
-    }
-
-
-    public isRelationProperty(propertyName: string): boolean {
-
-        if (!this.relationFields) return false;
-
-        for (let relationField of this.relationFields) {
-            if (relationField['name'] == propertyName) return true;
-        }
-        return false;
-    }
-
-
     public getAllRelationDefinitions(): Array<RelationDefinition> {
 
         return this.relationFields
@@ -80,15 +58,6 @@ export class ProjectConfiguration {
     public getTypesList(): Array<IdaiType> {
 
         return this.typesList;
-    }
-
-
-    /**
-     * @returns {Array<IdaiType>} All root types in array, including child types
-     */
-    public getTypesTreeList(): Array<IdaiType> {
-
-        return this.typesList.filter(type => this.typesTree[type.name] !== undefined);
     }
 
 
@@ -243,16 +212,6 @@ export class ProjectConfiguration {
             throw 'No type definition found for type \'' + typeName + '\'';
 
         return ProjectConfiguration.getLabel(fieldName, fieldDefinitions);
-    }
-
-
-    /**
-     * @returns {string} the name of the excavation, if defined.
-     *   <code>undefined</code> otherwise.
-     */
-    public getProjectIdentifier(): any {
-
-        return this.projectIdentifier;
     }
 
 

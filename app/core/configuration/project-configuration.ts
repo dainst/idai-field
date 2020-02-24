@@ -1,9 +1,12 @@
 import {MDInternal} from 'idai-components-2';
+import {flow, map} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './configuration-definition';
 import {ProjectConfigurationUtils} from './project-configuration-utils';
+import {makeLookup} from '../util/utils';
+import {TypeDefinition} from './model/type-definition';
 
 
 /**
@@ -217,8 +220,9 @@ export class ProjectConfiguration {
 
     private initTypes(configuration: ConfigurationDefinition) {
 
+        this.typesMap = ProjectConfiguration.makeTypesMap(configuration.types);
+
         for (let type of configuration.types) {
-            this.typesMap[type.type] = IdaiType.build(type);
 
             this.typesColorMap[type.type] =
                 this.typesMap[type.type] && this.typesMap[type.type].color
@@ -239,5 +243,14 @@ export class ProjectConfiguration {
         for (let type of configuration.types) {
             this.typesList.push(this.typesMap[type.type]);
         }
+    }
+
+
+    private static makeTypesMap(types: Array<TypeDefinition>) {
+
+        return flow(
+            types,
+            map(IdaiType.build),
+            makeLookup('name')) as { [typeName: string]: IdaiType };
     }
 }

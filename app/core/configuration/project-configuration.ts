@@ -4,11 +4,8 @@ import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './configuration-definition';
-import {ProjectConfigurationUtils} from './project-configuration-utils';
-import {makeLookup} from '../util/utils';
-import {TypeDefinition} from './model/type-definition';
+import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
 
-const NAME = 'name';
 const COLOR = 'color';
 const MANDATORY = 'mandatory';
 const VISIBLE = 'visible';
@@ -206,7 +203,7 @@ export class ProjectConfiguration {
                 type.color = ProjectConfigurationUtils.generateColorForType(type.type);
             }
         }
-        this.typesMap = ProjectConfiguration.makeTypesMap(configuration.types);
+        this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration.types);
 
         for (let type of configuration.types) {
             if (!type['parent']) {
@@ -229,14 +226,5 @@ export class ProjectConfiguration {
             filter(on(NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));
-    }
-
-
-    private static makeTypesMap(types: Array<TypeDefinition>) {
-
-        return flow(
-            types,
-            map(IdaiType.build),
-            makeLookup(NAME)) as { [typeName: string]: IdaiType };
     }
 }

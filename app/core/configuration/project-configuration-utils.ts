@@ -1,3 +1,11 @@
+import {TypeDefinition} from './model/type-definition';
+import {flow, map} from 'tsfun';
+import {IdaiType} from './model/idai-type';
+import {makeLookup} from '../util/utils';
+import {FieldDefinition} from './model/field-definition';
+
+export const NAME = 'name';
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -5,12 +13,21 @@
  */
 export module ProjectConfigurationUtils {
 
-    export function getLabel(fieldName: string, fields: Array<any>): string{
+    export function makeTypesMap(types: Array<TypeDefinition>) {
 
-        for (let i in fields) {
-            if (fields[i].name == fieldName) {
-                return fields[i].label
-                    ? fields[i].label
+        return flow(
+            types,
+            map(IdaiType.build),
+            makeLookup(NAME)) as { [typeName: string]: IdaiType };
+    }
+
+
+    export function getLabel(fieldName: string, fields: Array<any>): string {
+
+        for (let field of fields) {
+            if (field.name === fieldName) {
+                return field.label
+                    ? field.label
                     : fieldName;
             }
         }

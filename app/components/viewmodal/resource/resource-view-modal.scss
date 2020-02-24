@@ -6,7 +6,11 @@
     width: calc(100% - 258px);
   }
 
-  #popover {
+  #resource-info-popover {
     height: calc(100% + 169px) !important;
+  }
+
+  #image-info-popover {
+    float: right !important;
   }
 }

@@ -13,9 +13,9 @@
 
 <div id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0">
-        <div id="popover">
-            <div id="popover-header">
-                <button id="expand-all-groups-button" class="btn btn-light"
+        <div class="info-popover">
+            <div class="info-popover-header">
+                <button class="expand-all-groups-button btn btn-light"
                      [class.active]="getExpandAllGroups()"
                      ngbTooltip="Alle Gruppen ausklappen"
                      i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
@@ -24,15 +24,15 @@
                      (click)="tooltip.close(); toggleExpandAllGroups()">
                     <span class="mdi mdi-unfold-more-horizontal"></span>
                 </button>
-                <div *ngIf="selectedImage" id="identifier-label">
+                <div *ngIf="selectedImage" class="identifier-label">
                     {{selectedImage.document.resource.identifier}}
                 </div>
-                <button id="edit-button" class="btn btn-light" (click)="startEdit()">
+                <button class="edit-button btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>
 
-            <div #resourceInfo id="resource-info"
+            <div #resourceInfo class="resource-info"
                  [class.scrollbar-visible]="resourceInfoScrollbarVisible">
                 <fields-view *ngIf="selectedImage"
                              [resource]="selectedImage.document.resource"

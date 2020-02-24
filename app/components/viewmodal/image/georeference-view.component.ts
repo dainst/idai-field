@@ -87,9 +87,7 @@ export class GeoreferenceViewComponent {
         worldfileContent = GeoreferenceViewComponent.removeEmptyLines(worldfileContent);
         if (GeoreferenceViewComponent.worldFileContentIsValid(worldfileContent)) {
             this.document.resource.georeference = this.createGeoreference(worldfileContent);
-            this.save().then(
-                () => this.messages.add([M.IMAGES_SUCCESS_WORLDFILE_UPLOADED]),
-                msgWithParams => this.messages.add(msgWithParams));
+            this.save().catch(msgWithParams => this.messages.add(msgWithParams));
         } else {
             this.messages.add([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, file.name]);
         }
@@ -117,9 +115,7 @@ export class GeoreferenceViewComponent {
 
         this.document.resource.georeference = undefined;
 
-        this.save().then(
-            () => this.messages.add([M.IMAGES_SUCCESS_GEOREFERENCE_DELETED]),
-            msgWithParams => this.messages.add(msgWithParams));
+        this.save().catch(msgWithParams => this.messages.add(msgWithParams));
     }
 
 

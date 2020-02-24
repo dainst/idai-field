@@ -130,9 +130,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
 
     // Docedit Package
-    public static DOCEDIT_SUCCESS_SAVE = 'docedit.success.save';
-    public static DOCEDIT_SUCCESS_DUPLICATE = 'docedit.success.duplicate';
-    public static DOCEDIT_SUCCESS_DELETE = 'docedit.success.delete';
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
     public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit.warning.typeChange.fields';
     public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
@@ -152,10 +149,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
 
     // Images Package
-    public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images.success.imageUploaded';
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
-    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images.success.worldfileUploaded';
-    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images.success.georeferenceDeleted';
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
@@ -172,7 +166,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS = 'imagestore.dropArea.error.unsupportedExtensions';
 
     // Resources Package
-    public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources.success.imageImported';
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_WARNING_PROJECT_NAME_NOT_SAME = 'resources.error.projectNameNotSame';
     public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources.error.typeNotFound';
@@ -1039,33 +1032,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.DOCEDIT_SUCCESS_SAVE] = {
-            content: i18n({
-                id: 'messages.docedit.success.save',
-                value: 'Die Ressource wurde erfolgreich gespeichert.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.DOCEDIT_SUCCESS_DUPLICATE] = {
-            content: i18n({
-                id: 'messages.docedit.success.duplicate',
-                value: 'Die Ressourcen wurde erfolgreich gespeichert.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.DOCEDIT_SUCCESS_DELETE] = {
-            content: i18n({
-                id: 'messages.docedit.success.delete',
-                value: 'Die Ressource wurde erfolgreich gelöscht.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.DOCEDIT_WARNING_SAVE_CONFLICT] = {
             content: i18n({
                 id: 'messages.docedit.warning.saveConflict',
@@ -1219,37 +1185,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGES_SUCCESS_IMAGE_UPLOADED] = {
-            content: i18n({
-                id: 'messages.images.success.imageUploaded',
-                value: 'Das Bild wurde erfolgreich importiert.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {
             content: i18n({
                 id: 'messages.images.success.imagesUploaded',
                 value: '[0] Bilder wurden erfolgreich importiert.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_SUCCESS_WORLDFILE_UPLOADED] = {
-            content: i18n({
-                id: 'messages.images.success.worldfileUploaded',
-                value: 'Das Worldfile wurde erfolgreich geladen.'
-            }),
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_SUCCESS_GEOREFERENCE_DELETED] = {
-            content: i18n({
-                id: 'messages.images.success.georeferenceDeleted',
-                value: 'Die Georeferenzdaten wurden erfolgreich gelöscht.'
             }),
             level: 'success',
             params: [],
@@ -1360,15 +1299,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]'
             }),
             level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_SUCCESS_IMAGE_UPLOADED] = {
-            content: i18n({
-                id: 'messages.resources.success.imageUploaded',
-                value: 'Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.'
-            }),
-            level: 'success',
             params: [],
             hidden: false
         };

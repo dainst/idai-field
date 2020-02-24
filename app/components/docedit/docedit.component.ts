@@ -315,10 +315,6 @@ export class DoceditComponent {
         this.activeModal.close({
             document: (await this.datastore.get(resourceId))
         });
-        this.messages.add(operation === 'save'
-            ? [M.DOCEDIT_SUCCESS_SAVE]
-            : [M.DOCEDIT_SUCCESS_DUPLICATE]
-        );
     }
 
 

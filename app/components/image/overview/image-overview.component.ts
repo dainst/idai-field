@@ -141,11 +141,10 @@ export class ImageOverviewComponent implements OnInit {
 
     public async onImagesUploaded(uploadResult: ImageUploadResult) {
 
-        this.messages.add(
-            uploadResult.uploadedImages > 1
-                ? [M.IMAGES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString()]
-                : [M.IMAGES_SUCCESS_IMAGE_UPLOADED]
-        );
+        if (uploadResult.uploadedImages > 1) {
+            this.messages.add([M.IMAGES_SUCCESS_IMAGES_UPLOADED,
+                uploadResult.uploadedImages.toString()]);
+        }
 
         await this.refreshGrid();
     }

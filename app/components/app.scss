@@ -157,14 +157,22 @@ body {
 messages {
   position: fixed;
   top: 10px;
-  right: 60px;
+  right: 0;
+  left: 0;
   z-index: 1060;
+  pointer-events: none;
 
-  .alert {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    button {
-      padding-left: 16px;
+  .alert-container {
+    text-align: center;
+
+    .alert {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      pointer-events: all;
+      
+      button {
+        padding-left: 16px;
+      }
     }
   }
 }

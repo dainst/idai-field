@@ -10,9 +10,9 @@
 
 <div id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0 resource-view-modal">
-        <div id="popover">
-            <div id="popover-header">
-                <button id="expand-all-groups-button" class="btn btn-light"
+        <div id="resource-info-popover" class="info-popover">
+            <div class="info-popover-header">
+                <button class="expand-all-groups-button btn btn-light"
                         [class.active]="expandAllGroups"
                         ngbTooltip="Alle Gruppen ausklappen"
                         i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
@@ -21,18 +21,58 @@
                         (click)="tooltip.close(); expandAllGroups = !expandAllGroups;">
                     <span class="mdi mdi-unfold-more-horizontal"></span>
                 </button>
-                <div id="identifier-label">{{document.resource.identifier}}</div>
-                <button id="edit-button" class="btn btn-light" (click)="startEdit()">
+                <div class="identifier-label">{{document.resource.identifier}}</div>
+                <button class="edit-button btn btn-light" (click)="startEdit()">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>
 
-            <div #resourceInfo id="resource-info"
+            <div #resourceInfo class="resource-info"
                  [class.scrollbar-visible]="resourceInfoScrollbarVisible">
                 <fields-view [resource]="document.resource"
                              [openSection]="openSection"
                              [expandAllGroups]="expandAllGroups"
                              (onSectionToggled)="setOpenSection($event)"></fields-view>
+            </div>
+        </div>
+
+        <div id="image-info-popover" class="info-popover">
+            <div class="info-popover-header">
+                <button class="expand-all-groups-button btn btn-light"
+                        [class.active]="expandAllGroups"
+                        ngbTooltip="Alle Gruppen ausklappen"
+                        i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                        #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
+                        (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+                        (click)="tooltip.close(); expandAllGroups = !expandAllGroups;">
+                    <span class="mdi mdi-unfold-more-horizontal"></span>
+                </button>
+                <div *ngIf="selectedImage" class="identifier-label">
+                    {{selectedImage.document.resource.identifier}}
+                </div>
+                <button class="edit-button btn btn-light" (click)="startEdit(true)">
+                    <span class="mdi mdi-pencil"></span>
+                </button>
+            </div>
+
+            <div #imageInfo class="resource-info"
+                 [class.scrollbar-visible]="resourceInfoScrollbarVisible">
+                <fields-view *ngIf="selectedImage"
+                             [resource]="selectedImage.document.resource"
+                             [openSection]="openSection"
+                             [expandAllGroups]="expandAllGroups"
+                             (onSectionToggled)="setOpenSection($event)"></fields-view>
+                <georeference-view *ngIf="selectedImage"
+                                   [document]="selectedImage.document"
+                                   [openSection]="openSection"
+                                   [expandAllGroups]="expandAllGroups"
+                                   (onSectionToggled)="setOpenSection($event)"></georeference-view>
+                <depicts-relations-view *ngIf="selectedImage"
+                                        [resource]="selectedImage.document.resource"
+                                        [openSection]="openSection"
+                                        [expandAllGroups]="expandAllGroups"
+                                        (onSectionToggled)="setOpenSection($event)"
+                                        (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
             </div>
         </div>
 

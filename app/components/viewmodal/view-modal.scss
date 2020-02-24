@@ -43,7 +43,7 @@
       }
     }
 
-    #popover {
+    .info-popover {
       height: 100%;
       background-color: #fff;
       width: $resources-listing-item-slim-width;
@@ -54,7 +54,7 @@
         padding: 0;
       }
 
-      #popover-header {
+      .info-popover-header {
         height: 40px;
         padding: 11px;
         background-color: transparent;
@@ -64,7 +64,7 @@
         user-select: none;
         cursor: default;
 
-        #identifier-label {
+        .identifier-label {
           position: relative;
           left: 32px;
           top: -41px;
@@ -74,7 +74,7 @@
           white-space: nowrap;
         }
 
-        #expand-all-groups-button {
+        .expand-all-groups-button {
           left: -109px;
           top: -11px;
 
@@ -83,7 +83,7 @@
           }
         }
 
-        #edit-button {
+        .edit-button {
           left: 109px;
           top: -71px;
         }
@@ -104,7 +104,7 @@
         }
       }
 
-      #resource-info {
+      .resource-info {
         height: calc(100% - 40px);
         overflow-y: auto;
 

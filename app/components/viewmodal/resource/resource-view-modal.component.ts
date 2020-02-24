@@ -34,16 +34,27 @@ export class ResourceViewModalComponent extends ViewModalComponent {
     }
 
 
-    protected getDocument = () => this.document;
-
-    protected setDocument = (document: FieldDocument) => this.document = document;
-
-
     public async initialize(document: FieldDocument) {
 
         this.document = document;
         this.images = await this.fetchImages();
         if (this.images.length > 0) this.selectedImage = this.images[0];
+    }
+
+
+    protected getDocument(isImageDocument?: boolean) {
+
+        return isImageDocument ? this.selectedImage.document : this.document;
+    }
+
+
+    protected setDocument(document: FieldDocument, isImageDocument?: boolean) {
+
+        if (isImageDocument) {
+            this.selectedImage.document = document;
+        } else {
+            this.document = document;
+        }
     }
 
 

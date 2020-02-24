@@ -21,7 +21,6 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
-
     public expandAllGroups: boolean = false;
 
     private openResourceSection: string|undefined = 'stem';
@@ -29,13 +28,13 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
 
     constructor(private imagesState: ImagesState,
-                datastore: ImageReadDatastore,
+                private datastore: ImageReadDatastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
                 modalService: NgbModal,
                 routingService: RoutingService) {
 
-        super(datastore, activeModal, messages, modalService, routingService);
+        super(activeModal, messages, modalService, routingService);
     }
 
 

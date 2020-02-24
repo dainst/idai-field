@@ -3,7 +3,6 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
-import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {MenuService} from '../../desktop/menu-service';
 import {ImageRowItem} from '../image/row/image-row.component';
 
@@ -22,8 +21,7 @@ export abstract class ViewModalComponent implements DoCheck {
     private subModalOpened: boolean = false;
 
 
-    constructor(protected datastore: ImageReadDatastore,
-                private activeModal: NgbActiveModal,
+    constructor(private activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private routingService: RoutingService) {}

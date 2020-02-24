@@ -28,13 +28,13 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
 
     constructor(private imagesState: ImagesState,
-                datastore: ImageReadDatastore,
+                private datastore: ImageReadDatastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
                 modalService: NgbModal,
                 routingService: RoutingService) {
 
-        super(datastore, activeModal, messages, modalService, routingService);
+        super(activeModal, messages, modalService, routingService);
     }
 
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();

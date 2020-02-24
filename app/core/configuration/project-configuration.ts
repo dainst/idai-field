@@ -27,7 +27,7 @@ export class ProjectConfiguration {
 
     private typesMap: { [typeName: string]: IdaiType } = {};
 
-    private relationFields: Array<RelationDefinition>|undefined = undefined;
+    private relationFields: Array<RelationDefinition> = [];
 
 
     /**
@@ -36,15 +36,13 @@ export class ProjectConfiguration {
     constructor(configuration: any) {
 
         this.initTypes(configuration);
-        this.relationFields = configuration.relations;
+        this.relationFields = configuration.relations || [];
     }
 
 
-    public getAllRelationDefinitions(): Array<RelationDefinition> {
+    public getAllRelationDefinitions() {
 
-        return this.relationFields
-            ? this.relationFields as Array<RelationDefinition>
-            : [];
+        return this.relationFields as Array<RelationDefinition>;
     }
 
 
@@ -171,8 +169,7 @@ export class ProjectConfiguration {
      */
     public getRelationDefinitionLabel(relationName: string): string {
 
-        const relationFields = this.relationFields;
-        return ProjectConfigurationUtils.getLabel(relationName, relationFields as any);
+        return ProjectConfigurationUtils.getLabel(relationName, this.relationFields);
     }
 
 

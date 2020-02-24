@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
 import {ImageRowItem} from '../../image/row/image-row.component';
@@ -33,11 +32,10 @@ export class ResourceViewModalComponent extends ViewModalComponent {
                 datastore: ImageReadDatastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
-                router: Router,
                 modalService: NgbModal,
                 routingService: RoutingService) {
 
-        super(datastore, activeModal, messages, router, modalService, routingService);
+        super(datastore, activeModal, messages, modalService, routingService);
     }
 
 

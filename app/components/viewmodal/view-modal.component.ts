@@ -1,5 +1,4 @@
 import {DoCheck, ElementRef, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -26,7 +25,6 @@ export abstract class ViewModalComponent implements DoCheck {
     constructor(protected datastore: ImageReadDatastore,
                 private activeModal: NgbActiveModal,
                 private messages: Messages,
-                private router: Router,
                 private modalService: NgbModal,
                 private routingService: RoutingService) {}
 

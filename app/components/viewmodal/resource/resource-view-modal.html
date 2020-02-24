@@ -50,7 +50,7 @@
                 <div *ngIf="selectedImage" class="identifier-label">
                     {{selectedImage.document.resource.identifier}}
                 </div>
-                <button class="edit-button btn btn-light" (click)="startEdit()">
+                <button class="edit-button btn btn-light" (click)="startEdit(true)">
                     <span class="mdi mdi-pencil"></span>
                 </button>
             </div>

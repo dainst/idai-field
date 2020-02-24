@@ -40,9 +40,9 @@ export abstract class ViewModalComponent implements DoCheck {
     }
 
 
-    protected abstract getDocument(): Document;
+    protected abstract getDocument(isImageDocument?: boolean): Document;
 
-    protected abstract setDocument(document: Document): void;
+    protected abstract setDocument(document: Document, isImageDocument?: boolean): void;
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -70,7 +70,7 @@ export abstract class ViewModalComponent implements DoCheck {
     }
 
 
-    public async startEdit() {
+    public async startEdit(isImageDocument?: boolean) {
 
         this.subModalOpened = true;
         MenuService.setContext('docedit');
@@ -80,11 +80,11 @@ export abstract class ViewModalComponent implements DoCheck {
             { size: 'lg', backdrop: 'static' }
         );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.getDocument());
+        doceditModalComponent.setDocument(this.getDocument(isImageDocument), isImageDocument);
 
         try {
             const result = await doceditModalRef.result;
-            if (result.document) this.setDocument(result.document);
+            if (result.document) this.setDocument(result.document, isImageDocument);
         } catch (closeReason) {
             if (closeReason === 'deleted') await this.activeModal.close();
         }

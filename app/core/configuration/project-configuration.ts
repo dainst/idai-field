@@ -166,23 +166,6 @@ export class ProjectConfiguration {
     }
 
 
-    public isVisibleRelation(relationName: string, domainType: string): boolean {
-
-        if (!this.relationFields) return false;
-
-        for (let relationField of this.relationFields) {
-            if (relationField.name == relationName &&
-                    relationField.domain.indexOf(domainType) > -1 &&
-                    relationField.visible != undefined &&
-                    relationField.visible === false) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
     /**
      * Should be used only from within components.
      * 

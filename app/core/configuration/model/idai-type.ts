@@ -1,5 +1,6 @@
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
+import {clone} from '../../util/object-util';
 
 /**
  * @author F.Z.
@@ -54,7 +55,7 @@ export class IdaiType {
 
     private getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
 
-        const fields: Array<FieldDefinition> = parentFields.slice();
+        const fields: Array<FieldDefinition> = clone(parentFields);
 
         childFields.forEach(childField => {
             const field: FieldDefinition|undefined

@@ -126,4 +126,40 @@ describe('ProjectConfiguration', () => {
         expect(fields[0].inputType).toEqual('unsignedFloat');
         expect(fields[0].label).toEqual('Field A');
     });
+
+
+    it('should only modify field in child', () => {
+
+        const firstLevelType = {
+            type: 'FirstLevelType',
+            fields: [
+                {
+                    name: 'fieldA',
+                    label: 'Field A',
+                    inputType: 'text'
+                }
+            ]
+        };
+
+        const secondLevelType = {
+            type: 'SecondLevelType',
+            parent: 'FirstLevelType',
+            fields: [
+                {
+                    name: 'fieldA',
+                    label: 'Field A1'
+                }
+            ]
+        };
+
+        const configuration: ProjectConfiguration
+            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType]});
+        const firstLevelTypeFields = configuration.getFieldDefinitions('FirstLevelType');
+        const secondLevelTypeFields = configuration.getFieldDefinitions('SecondLevelType');
+
+        expect(secondLevelTypeFields[0].label).toEqual('Field A1');
+
+        // there had a bug where the parent fields label has been overwritten, so it was "Field A1", too
+        expect(firstLevelTypeFields[0].label).toEqual('Field A');
+    });
 });

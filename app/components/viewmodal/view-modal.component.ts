@@ -15,7 +15,7 @@ export abstract class ViewModalComponent implements DoCheck {
     @ViewChild('resourceInfo', { static: false }) resourceInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
-    public selectedImage: ImageRowItem;
+    public selectedImage: ImageRowItem|undefined;
     public resourceInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;

@@ -23,8 +23,6 @@ import {TypeDefinition} from './model/type-definition';
  */
 export class ProjectConfiguration {
 
-    private projectIdentifier: string;
-    
     private typesTree: { [typeName: string]: IdaiType } = {};
 
     private typesMap: { [typeName: string]: IdaiType } = {};
@@ -38,8 +36,6 @@ export class ProjectConfiguration {
     constructor(configuration: any) {
 
         this.initTypes(configuration);
-
-        this.projectIdentifier = configuration.identifier;
         this.relationFields = configuration.relations;
     }
 

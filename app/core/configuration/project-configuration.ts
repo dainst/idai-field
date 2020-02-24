@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values} from 'tsfun';
+import {flow, map, values, to} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -28,8 +28,6 @@ export class ProjectConfiguration {
     private typesTree: { [typeName: string]: IdaiType } = {};
 
     private typesMap: { [typeName: string]: IdaiType } = {};
-
-    private typesColorMap: { [typeName: string]: string } = {};
 
     private relationFields: Array<RelationDefinition>|undefined = undefined;
 
@@ -141,7 +139,7 @@ export class ProjectConfiguration {
 
     public getColorForType(typeName: string): string {
 
-        return this.typesColorMap[typeName];
+        return this.getTypeColors()[typeName];
     }
 
 
@@ -151,9 +149,9 @@ export class ProjectConfiguration {
     }
 
 
-    public getTypeColors(): { [typeName: string]: string } {
+    public getTypeColors() {
 
-        return this.typesColorMap;
+        return map(to('color'))(this.typesMap) as { [typeName: string]: string };
     }
 
 
@@ -161,7 +159,8 @@ export class ProjectConfiguration {
 
         return this.hasProperty(typeName, fieldName, 'mandatory');
     }
-    
+
+
     public isVisible(typeName: string, fieldName: string): boolean {
 
         return this.hasProperty(typeName, fieldName, 'visible');
@@ -218,15 +217,13 @@ export class ProjectConfiguration {
 
     private initTypes(configuration: ConfigurationDefinition) {
 
-        this.typesMap = ProjectConfiguration.makeTypesMap(configuration.types);
-
         for (let type of configuration.types) {
 
-            this.typesColorMap[type.type] =
-                this.typesMap[type.type] && this.typesMap[type.type].color
-                    ? this.typesMap[type.type].color as string
-                    : ProjectConfigurationUtils.generateColorForType(type.type);
+            if (!type.color) {
+                type.color = ProjectConfigurationUtils.generateColorForType(type.type);
+            }
         }
+        this.typesMap = ProjectConfiguration.makeTypesMap(configuration.types);
 
         for (let type of configuration.types) {
             if (!type['parent']) {

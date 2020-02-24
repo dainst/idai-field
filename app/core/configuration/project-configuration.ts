@@ -80,7 +80,7 @@ export class ProjectConfiguration {
      * @returns {Array<RelationDefinition>} the definitions for the type.
      */
     public getRelationDefinitions(typeName: string, isRangeType: boolean = false,
-                                  property?: string): Array<RelationDefinition>|undefined {
+                                  property?: string): Array<RelationDefinition>|undefined /* TODO get rid of undefined, return [], to simplify things */ {
 
         if (!this.relationFields) return undefined;
 

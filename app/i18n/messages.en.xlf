@@ -1108,10 +1108,10 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
         <source>
-        Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
+        Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
     </source>
         <target state="final">
-        Please enter the identifier of the resource to confirm the deletion.
+        Please enter the identifier of this resource to confirm the deletion.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>

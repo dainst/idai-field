@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div id="image-info-popover" class="info-popover">
+        <div *ngIf="selectedImage" id="image-info-popover" class="info-popover">
             <div class="info-popover-header">
                 <button class="expand-all-groups-button btn btn-light"
                         [class.active]="getExpandAllGroups(true)"
@@ -78,7 +78,8 @@
 
         <image-viewer *ngIf="selectedImage" [image]="selectedImage.document"></image-viewer>
 
-        <image-row [images]="images"
+        <image-row *ngIf="images.length > 0"
+                   [images]="images"
                    [selectedImage]="selectedImage"
                    [highlightOnHover]="true"
                    [allowSelection]="true"

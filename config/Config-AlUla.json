@@ -53,9 +53,6 @@
       "Firing": {
         "inputType": "checkboxes"
       },
-      "condition": {
-        "inputType": "dropdown"
-      },
       "clayColorInside": {
         "inputType": "checkboxes"
       },
@@ -139,9 +136,6 @@
         "inputType": "checkboxes"
       },
       "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "condition": {
         "inputType": "dropdown"
       },
       "Firing": {
@@ -443,9 +437,6 @@
       },
       "vesselpart": {
         "inputType": "checkboxes"
-      },
-      "condition": {
-        "inputType": "dropdown"
       },
       "decorationTechnique": {
         "inputType": "dropdown"

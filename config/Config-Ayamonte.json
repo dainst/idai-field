@@ -104,9 +104,6 @@
     "findObjectType": {
       "inputType": "dropdown"
     },
-    "material": {
-      "inputType": "input"
-    },
     "materialColor": {
       "inputType": "checkboxes"
     },
@@ -135,9 +132,6 @@
       "featureClassification": {
         "inputType": "dropdown"
       },
-      "layerClassification": {
-        "inputType": "dropdown"
-      },
       "createdAfterLayer": {
         "inputType": "input"
       }
@@ -145,8 +139,7 @@
     "valuelists": {
       "findMaterial": "Feature-findMaterial-ayamonte",
       "qualityRemark": "Feature-qualityRemark-ayamonte",
-      "featureClassification": "Feature-featureClassification-ayamonte",
-      "layerClassification": "Layer-layerClassification-default"
+      "featureClassification": "Feature-featureClassification-ayamonte"
     }
   },
   "Room:default": {
@@ -191,11 +184,7 @@
   },
   "Wood:default": {
     "hidden": [],
-    "fields": {
-      "materialDescription": {
-        "inputType": "input"
-      }
-    }
+    "fields": {}
   },
   "Architecture:default": {
     "hidden": [],
@@ -203,20 +192,12 @@
   },
   "Layer:default": {
     "hidden": [],
-    "fields": {
-      "findMaterial": {
-        "inputType": "checkboxes"
-      },
-      "qualityRemark": {
-        "inputType": "checkboxes"
-      }
-    },
+    "fields": {},
     "valuelists": {
       "findMaterial": "Layer-findMaterial-ayamonte",
       "qualityRemark": "Layer-qualityRemark-ayamonte"
     },
     "commons": [
-      "date",
       "campaign"
     ]
   },
@@ -242,18 +223,9 @@
   "Grave:default": {
     "hidden": [],
     "commons": [
-      "description",
-      "dimensionHeight",
-      "dimensionWidth",
-      "dimensionLength"
+      "dimensionHeight"
     ],
     "fields": {
-      "findMaterial": {
-        "inputType": "checkboxes"
-      },
-      "qualityRemark": {
-        "inputType": "checkboxes"
-      },
       "hasBurialGifts": {
         "inputType": "boolean"
       }
@@ -311,11 +283,7 @@
     "color": "#6da4fc",
     "commons": [
       "campaign",
-      "description",
       "dimensionHeight",
-      "dimensionWidth",
-      "dimensionVerticalExtent",
-      "date",
       "orientation"
     ],
     "fields": {

@@ -6,13 +6,13 @@
   },
   "Operation:default": {
     "hidden": [],
-    "commons": [
-      "dating"
-    ],
+    "commons": [],
     "fields": {}
   },
   "Survey:default": {
-    "commons": [],
+    "commons": [
+      "dating"
+    ],
     "fields": {},
     "hidden": []
   },
@@ -32,7 +32,9 @@
     "hidden": []
   },
   "Trench:default": {
-    "commons": [],
+    "commons": [
+      "dating"
+    ],
     "fields": {},
     "hidden": []
   },

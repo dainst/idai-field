@@ -116,7 +116,7 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    it('should merge child field with parent field of the same name', () => {
+    xit('should merge child field with parent field of the same name', () => {
 
         const configuration: ProjectConfiguration
             = new ProjectConfiguration({ types: [secondLevelType2, firstLevelType]});
@@ -128,7 +128,7 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    it('should only modify field in child', () => {
+    xit('should only modify field in child', () => {
 
         const firstLevelType = {
             type: 'FirstLevelType',
@@ -161,5 +161,36 @@ describe('ProjectConfiguration', () => {
 
         // there has a bug where the parent fields label has been overwritten, so it was "Field A1", too
         expect(firstLevelTypeFields[0].label).toEqual('Field A');
+    });
+
+    // err cases
+
+    it('should reject a field with the same name a parent field', () => {
+
+        const firstLevelType = {
+            type: 'FirstLevelType',
+            fields: [
+                {
+                    name: 'fieldA',
+                    label: 'Field A',
+                    inputType: 'text'
+                }
+            ]
+        };
+
+        const secondLevelType = {
+            type: 'SecondLevelType',
+            parent: 'FirstLevelType',
+            fields: [
+                {
+                    name: 'fieldA',
+                    label: 'Field A1'
+                }
+            ]
+        };
+
+        expect(
+            () => new ProjectConfiguration({ types: [firstLevelType, secondLevelType]})
+        ).toThrow([['tried to overwrite field of parent type','fieldA','FirstLevelType','SecondLevelType']]);
     });
 });

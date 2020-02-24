@@ -48,7 +48,13 @@ export class IdaiType {
     public addChildType(child: IdaiType) {
 
         if (!this.children) this.children = [];
-        child.setParentType(this);
+        try {
+            child.setParentType(this);
+        } catch (e) {
+            e.push(this.name);
+            e.push(child.name);
+            throw [e];
+        }
         this.children.push(child)
     }
 
@@ -62,7 +68,11 @@ export class IdaiType {
                 = fields.find(field => field.name === childField.name);
 
             if (field) {
-                this.mergeFields(childField, field);
+                if (field.name === 'campaign') {
+                    this.mergeFields(childField, field);
+                } else {
+                    throw ['tried to overwrite field of parent type', field.name];
+                }
             } else {
                 fields.push(childField);
             }

@@ -1,0 +1,56 @@
+/**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ * @author Sebastian Cuy
+ */
+export module ProjectConfigurationUtils {
+
+    export function getLabel(fieldName: string, fields: Array<any>): string{
+
+        for (let i in fields) {
+            if (fields[i].name == fieldName) {
+                return fields[i].label
+                    ? fields[i].label
+                    : fieldName;
+            }
+        }
+        return fieldName;
+    }
+
+
+    export function generateColorForType(typeName: string): string {
+
+        const hash = hashCode(typeName);
+        const r = (hash & 0xFF0000) >> 16;
+        const g = (hash & 0x00FF00) >> 8;
+        const b = hash & 0x0000FF;
+        return '#' + ('0' + r.toString(16)).substr(-2)
+            + ('0' + g.toString(16)).substr(-2) + ('0' + b.toString(16)).substr(-2);
+    }
+
+
+    export function isBrightColor(color: string): boolean {
+
+        color = color.substring(1); // strip #
+        let rgb = parseInt(color, 16);   // convert rrggbb to decimal
+        let r = (rgb >> 16) & 0xff;  // extract red
+        let g = (rgb >>  8) & 0xff;  // extract green
+        let b = (rgb >>  0) & 0xff;  // extract blue
+        let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+        return luma > 200;
+    }
+
+
+    function hashCode(string: any): number {
+
+        let hash = 0, i, chr;
+        if (string.length === 0) return hash;
+        for (i = 0; i < string.length; i++) {
+            chr   = string.charCodeAt(i);
+            hash  = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    }
+}

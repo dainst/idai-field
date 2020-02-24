@@ -3,6 +3,7 @@ import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './configuration-definition';
+import {ProjectConfigurationUtils} from './project-configuration-utils';
 
 
 /**
@@ -145,7 +146,7 @@ export class ProjectConfiguration {
 
     public getTextColorForType(typeName: string): string {
 
-        return ProjectConfiguration.isBrightColor(this.getColorForType(typeName)) ? '#000000' : '#ffffff';
+        return ProjectConfigurationUtils.isBrightColor(this.getColorForType(typeName)) ? '#000000' : '#ffffff';
     }
 
 
@@ -175,7 +176,7 @@ export class ProjectConfiguration {
     public getRelationDefinitionLabel(relationName: string): string {
 
         const relationFields = this.relationFields;
-        return ProjectConfiguration.getLabel(relationName, relationFields as any);
+        return ProjectConfigurationUtils.getLabel(relationName, relationFields as any);
     }
 
 
@@ -194,7 +195,7 @@ export class ProjectConfiguration {
         if (fieldDefinitions.length == 0)
             throw 'No type definition found for type \'' + typeName + '\'';
 
-        return ProjectConfiguration.getLabel(fieldName, fieldDefinitions);
+        return ProjectConfigurationUtils.getLabel(fieldName, fieldDefinitions);
     }
 
 
@@ -218,7 +219,11 @@ export class ProjectConfiguration {
 
         for (let type of configuration.types) {
             this.typesMap[type.type] = IdaiType.build(type);
-            this.typesColorMap[type.type] = this.generateColorForType(type.type) as any;
+
+            this.typesColorMap[type.type] =
+                this.typesMap[type.type] && this.typesMap[type.type].color
+                    ? this.typesMap[type.type].color as string
+                    : ProjectConfigurationUtils.generateColorForType(type.type);
         }
 
         for (let type of configuration.types) {
@@ -234,62 +239,5 @@ export class ProjectConfiguration {
         for (let type of configuration.types) {
             this.typesList.push(this.typesMap[type.type]);
         }
-    }
-
-
-    private generateColorForType(typeName: string): string|undefined {
-
-        if (this.typesMap[typeName] && this.typesMap[typeName].color) {
-            return this.typesMap[typeName].color;
-        } else {
-            const hash = ProjectConfiguration.hashCode(typeName);
-            const r = (hash & 0xFF0000) >> 16;
-            const g = (hash & 0x00FF00) >> 8;
-            const b = hash & 0x0000FF;
-            return '#' + ('0' + r.toString(16)).substr(-2)
-                + ('0' + g.toString(16)).substr(-2) + ('0' + b.toString(16)).substr(-2);
-        }
-    }
-
-
-    private static hashCode(string: any): number {
-
-        let hash = 0, i, chr;
-        if (string.length === 0) return hash;
-        for (i = 0; i < string.length; i++) {
-            chr   = string.charCodeAt(i);
-            hash  = ((hash << 5) - hash) + chr;
-            hash |= 0; // Convert to 32bit integer
-        }
-        return hash;
-    }
-
-
-    private static getLabel(fieldName: string, fields: Array<any>): string{
-
-        for (let i in fields) {
-            if (fields[i].name == fieldName) {
-                if (fields[i].label) {
-                    return fields[i].label;
-                } else {
-                    return fieldName;
-                }
-            }
-        }
-
-        return fieldName;
-    }
-
-
-    private static isBrightColor(color: string): boolean {
-
-        color = color.substring(1); // strip #
-        let rgb = parseInt(color, 16);   // convert rrggbb to decimal
-        let r = (rgb >> 16) & 0xff;  // extract red
-        let g = (rgb >>  8) & 0xff;  // extract green
-        let b = (rgb >>  0) & 0xff;  // extract blue
-        let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-        return luma > 200;
     }
 }

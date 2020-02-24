@@ -159,7 +159,7 @@ describe('ProjectConfiguration', () => {
 
         expect(secondLevelTypeFields[0].label).toEqual('Field A1');
 
-        // there had a bug where the parent fields label has been overwritten, so it was "Field A1", too
+        // there has a bug where the parent fields label has been overwritten, so it was "Field A1", too
         expect(firstLevelTypeFields[0].label).toEqual('Field A');
     });
 });

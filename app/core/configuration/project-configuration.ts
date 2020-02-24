@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map} from 'tsfun';
+import {flow, map, values} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -28,8 +28,6 @@ export class ProjectConfiguration {
     private typesTree: { [typeName: string]: IdaiType } = {};
 
     private typesMap: { [typeName: string]: IdaiType } = {};
-
-    private typesList: Array<IdaiType> = [];    
 
     private typesColorMap: { [typeName: string]: string } = {};
 
@@ -61,7 +59,7 @@ export class ProjectConfiguration {
      */
     public getTypesList(): Array<IdaiType> {
 
-        return this.typesList;
+        return values(this.typesMap);
     }
 
 
@@ -238,10 +236,6 @@ export class ProjectConfiguration {
                 if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
                 IdaiType.addChildType(parentType, this.typesMap[type.type]);
             }
-        }
-        
-        for (let type of configuration.types) {
-            this.typesList.push(this.typesMap[type.type]);
         }
     }
 

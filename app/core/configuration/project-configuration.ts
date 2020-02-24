@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values, to} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -8,6 +8,7 @@ import {ProjectConfigurationUtils} from './project-configuration-utils';
 import {makeLookup} from '../util/utils';
 import {TypeDefinition} from './model/type-definition';
 
+const NAME = 'name';
 
 /**
  * ProjectConfiguration maintains the current projects properties.
@@ -192,22 +193,6 @@ export class ProjectConfiguration {
     }
 
 
-    private hasProperty(typeName: string, fieldName: string, propertyName: string) {
-
-        if (!this.typesMap[typeName]) return false;
-        const fields = this.typesMap[typeName].fields;
-
-        for (let i in fields) {
-            if (fields[i].name == fieldName) {
-                if ((fields[i] as any)[propertyName as any] == true) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
     private initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {
@@ -230,11 +215,23 @@ export class ProjectConfiguration {
     }
 
 
+    private hasProperty(typeName: string, fieldName: string, propertyName: string) {
+
+        if (!this.typesMap[typeName]) return false;
+
+        return flow(
+            this.typesMap[typeName].fields,
+            filter(on(NAME, is(fieldName))),
+            filter(on(propertyName, is(true))),
+            isNot(empty));
+    }
+
+
     private static makeTypesMap(types: Array<TypeDefinition>) {
 
         return flow(
             types,
             map(IdaiType.build),
-            makeLookup('name')) as { [typeName: string]: IdaiType };
+            makeLookup(NAME)) as { [typeName: string]: IdaiType };
     }
 }

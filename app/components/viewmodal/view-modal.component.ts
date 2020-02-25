@@ -29,7 +29,7 @@ export abstract class ViewModalComponent implements DoCheck {
 
     ngDoCheck() {
 
-        this.resourceInfoScrollbarVisible = this.isResourceInfoScrollbarVisible();
+        this.resourceInfoScrollbarVisible = this.isScrollbarVisible();
     }
 
 
@@ -95,10 +95,8 @@ export abstract class ViewModalComponent implements DoCheck {
     }
 
 
-    private isResourceInfoScrollbarVisible(): boolean {
+    protected isScrollbarVisible(element: ElementRef = this.resourceInfo): boolean {
 
-        return this.resourceInfo
-            && this.resourceInfo.nativeElement.scrollHeight
-            > this.resourceInfo.nativeElement.clientHeight;
+        return element && element.nativeElement.scrollHeight > element.nativeElement.clientHeight;
     }
 }

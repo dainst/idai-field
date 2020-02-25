@@ -35,15 +35,26 @@ export class ThumbnailComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.document.resource.relations.isDepictedIn);
+        await this.updateThumbnailUrl();
     }
 
 
-    public openModal() {
+    public async openModal() {
 
-        this.modal === 'image'
-            ? this.viewModalLauncher.openImageViewModal(this.document, this.resourcesComponent)
-            : this.viewModalLauncher.openResourceViewModal(this.document, this.resourcesComponent);
+        if (this.modal === 'image') {
+            await this.viewModalLauncher.openImageViewModal(this.document, this.resourcesComponent)
+        } else {
+            const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
+                this.document, this.resourcesComponent
+            );
+            if (edited) await this.updateThumbnailUrl();
+        }
+    }
+
+
+    private async updateThumbnailUrl() {
+
+        this.thumbnailUrl = await this.getThumbnailUrl(this.document.resource.relations.isDepictedIn);
     }
 
 

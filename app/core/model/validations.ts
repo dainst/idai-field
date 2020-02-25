@@ -252,7 +252,7 @@ export module Validations {
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
+        const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {

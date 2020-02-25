@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values, to, on, isNot, empty, filter, is} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -76,24 +76,12 @@ export class ProjectConfiguration {
      * @param property to give only the definitions with a certain boolean property not set or set to true
      * @returns {Array<RelationDefinition>} the definitions for the type.
      */
-    public getRelationDefinitions(typeName: string, isRangeType: boolean = false,
-                                  property?: string): Array<RelationDefinition>|undefined /* TODO get rid of undefined, return [], to simplify things */ {
+    public getRelationDefinitions(typeName: string,
+                                  isRangeType: boolean = false,
+                                  property?: string): Array<RelationDefinition> {
 
-        if (!this.relationFields) return undefined;
-
-        const availableRelationFields: Array<RelationDefinition> = [];
-        for (let relationField of this.relationFields) {
-            const types: string[] = isRangeType ? relationField.range : relationField.domain;
-
-            if (types.indexOf(typeName) > -1) {
-                if (!property ||
-                    (relationField as any)[property] == undefined ||
-                    (relationField as any)[property] == true) {
-                    availableRelationFields.push(relationField);
-                }
-            }
-        }
-        return availableRelationFields;
+        return ProjectConfigurationUtils.getRelationDefinitions(
+            this.relationFields, typeName, isRangeType, property);
     }
 
     /**
@@ -104,8 +92,8 @@ export class ProjectConfiguration {
      */
     public isAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string, relationName: string): boolean {
 
-        const relationDefinitions: Array<RelationDefinition>|undefined = this.getRelationDefinitions(rangeTypeName, true);
-        if (!relationDefinitions) return false;
+        const relationDefinitions: Array<RelationDefinition> = this.getRelationDefinitions(rangeTypeName, true);
+        if (isEmpty(relationDefinitions)) return false;
 
         for (let relationDefinition of relationDefinitions) {
             if (relationName == relationDefinition.name
@@ -198,10 +186,7 @@ export class ProjectConfiguration {
     private initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {
-
-            if (!type.color) {
-                type.color = ProjectConfigurationUtils.generateColorForType(type.type);
-            }
+            if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
         }
         this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration.types);
 

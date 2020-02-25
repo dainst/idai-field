@@ -42,7 +42,7 @@ export class DoceditComponent {
     public activeGroup: string = 'stem';
     public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
-    public relationDefinitions: Array<RelationDefinition>|undefined;
+    public relationDefinitions: Array<RelationDefinition>;
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;

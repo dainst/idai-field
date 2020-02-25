@@ -2,7 +2,7 @@ import {TypeDefinition} from './model/type-definition';
 import {flow, map} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
-import {FieldDefinition} from './model/field-definition';
+import {RelationDefinition} from './model/relation-definition';
 
 export const NAME = 'name';
 
@@ -19,6 +19,27 @@ export module ProjectConfigurationUtils {
             types,
             map(IdaiType.build),
             makeLookup(NAME)) as { [typeName: string]: IdaiType };
+    }
+
+
+    export function getRelationDefinitions(relationFields: Array<RelationDefinition>,
+                                           typeName: string,
+                                           isRangeType: boolean = false,
+                                           property?: string) {
+
+        const availableRelationFields: Array<RelationDefinition> = [];
+        for (let relationField of relationFields) {
+            const types: string[] = isRangeType ? relationField.range : relationField.domain;
+
+            if (types.indexOf(typeName) > -1) {
+                if (!property ||
+                    (relationField as any)[property] == undefined ||
+                    (relationField as any)[property] == true) {
+                    availableRelationFields.push(relationField);
+                }
+            }
+        }
+        return availableRelationFields;
     }
 
 

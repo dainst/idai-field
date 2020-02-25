@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose, isEmpty} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {GroupUtil} from '../../core/model/group-util';
@@ -249,7 +249,7 @@ export class FieldsViewComponent implements OnChanges {
 
         const relations: Array<RelationDefinition>|undefined
             = this.projectConfiguration.getRelationDefinitions(resource.type);
-        if (!relations) return;
+        if (isEmpty(relations)) return;
 
         for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);

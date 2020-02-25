@@ -71,7 +71,7 @@ export class NavigationService {
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         return ((this.projectConfiguration
-            .getRelationDefinitions(document.resource.type, true) as any)
+            .getRelationDefinitions(document.resource.type, true))
             .map((_: RelationDefinition) => _.name)
             .indexOf('liesWithin') !== -1);
     }

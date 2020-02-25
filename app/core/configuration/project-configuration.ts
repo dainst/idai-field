@@ -1,9 +1,7 @@
-import {MDInternal} from 'idai-components-2';
 import {flow, map, values, to, on, isNot, empty, filter, is, isDefined, remove} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {ConfigurationDefinition} from './configuration-definition';
 import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
 
 const COLOR = 'color';
@@ -31,7 +29,7 @@ export class ProjectConfiguration {
 
     constructor(configuration: any) {
 
-        this.initTypes(configuration);
+        this.typesMap = ProjectConfigurationUtils.initTypes(configuration);
         this.relations = configuration.relations || [];
     }
 
@@ -172,23 +170,6 @@ export class ProjectConfiguration {
             throw 'No type definition found for type \'' + typeName + '\'';
 
         return ProjectConfigurationUtils.getLabel(fieldName, fieldDefinitions);
-    }
-
-
-    private initTypes(configuration: ConfigurationDefinition) {
-
-        for (let type of configuration.types) {
-            if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
-        }
-        this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration.types);
-
-        for (let type of configuration.types) {
-            if (type['parent']) {
-                const parentType = this.typesMap[type.parent as any];
-                if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-                IdaiType.addChildType(parentType, this.typesMap[type.type]);
-            }
-        }
     }
 
 

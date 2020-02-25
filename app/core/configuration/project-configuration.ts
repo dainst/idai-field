@@ -83,8 +83,6 @@ export class ProjectConfiguration {
     }
 
     /**
-     * TODO extract another function and move it to project-configuration-util
-     *
      * @returns {boolean} True if the given domain type is a valid domain type for a relation definition which has the
      * given range type & name
      */

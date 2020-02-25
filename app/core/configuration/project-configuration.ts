@@ -44,7 +44,7 @@ export class ProjectConfiguration {
 
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
-        const type = this.getTypesMap()[typeName];
+        const type: any = this.getTypesMap()[typeName];
         if (!type) throw [ProjectConfiguration.UNKNOWN_TYPE_ERROR, typeName];
         return (type.name === superTypeName)
             || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
@@ -66,13 +66,13 @@ export class ProjectConfiguration {
     }
 
 
-    public getTypesMap(): any {
+    public getTypesMap(): { [typeName: string]: IdaiType } {
 
         return this.typesMap;
     }
 
 
-    public getTypesTree() : any {
+    public getTypesTree(): { [typeName: string]: IdaiType } {
 
         return remove(on('parent', isDefined))(this.typesMap);
     }

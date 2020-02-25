@@ -229,8 +229,8 @@ export class FieldsViewComponent implements OnChanges {
 
     private getLabel(type: Name, field: Name): string {
 
-        return this.projectConfiguration
-            .getTypesMap()[type].fields
+        return (this.projectConfiguration
+            .getTypesMap() as any /* TODO review */)[type].fields
             .find(on(NAME, is(field))).label;
     }
 

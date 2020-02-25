@@ -80,7 +80,7 @@ export abstract class ViewModalComponent implements DoCheck {
             const result = await doceditModalRef.result;
             if (result.document) this.setDocument(result.document, isImageDocument);
         } catch (closeReason) {
-            if (closeReason === 'deleted') await this.close();
+            // Cancelled
         }
 
         this.subModalOpened = false;

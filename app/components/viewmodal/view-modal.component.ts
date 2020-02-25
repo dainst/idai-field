@@ -21,7 +21,7 @@ export abstract class ViewModalComponent implements DoCheck {
     private subModalOpened: boolean = false;
 
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(protected activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private routingService: RoutingService) {}
@@ -46,9 +46,9 @@ export abstract class ViewModalComponent implements DoCheck {
     protected abstract setDocument(document: Document, isImageDocument?: boolean): void;
 
 
-    public async onKeyDown(event: KeyboardEvent) {
+    public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.subModalOpened) await this.activeModal.close();
+        if (event.key === 'Escape' && !this.subModalOpened) this.close();
     }
 
 
@@ -80,7 +80,7 @@ export abstract class ViewModalComponent implements DoCheck {
             const result = await doceditModalRef.result;
             if (result.document) this.setDocument(result.document, isImageDocument);
         } catch (closeReason) {
-            if (closeReason === 'deleted') await this.activeModal.close();
+            if (closeReason === 'deleted') await this.close();
         }
 
         this.subModalOpened = false;
@@ -91,7 +91,7 @@ export abstract class ViewModalComponent implements DoCheck {
     public async jumpToResource(documentToJumpTo: FieldDocument) {
 
         await this.routingService.jumpToResource(documentToJumpTo, true);
-        this.activeModal.close();
+        this.close();
     }
 
 

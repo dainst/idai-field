@@ -29,6 +29,7 @@ export class ResourceViewModalComponent extends ViewModalComponent implements Do
 
     private openResourceSection: string|undefined = 'stem';
     private openImageSection: string|undefined = 'stem';
+    private resourceEdited: boolean = false;
 
 
     constructor(private imagesState: ImagesState,
@@ -99,6 +100,12 @@ export class ResourceViewModalComponent extends ViewModalComponent implements Do
     }
 
 
+    public close() {
+
+        this.activeModal.close(this.resourceEdited);
+    }
+
+
     protected getDocument(isImageDocument?: boolean): Document {
 
         if (isImageDocument) {
@@ -117,6 +124,7 @@ export class ResourceViewModalComponent extends ViewModalComponent implements Do
             this.selectedImage.document = document;
         } else {
             this.document = document;
+            this.resourceEdited = true;
             await this.reloadImages();
         }
     }

@@ -43,7 +43,11 @@ export class ViewModalLauncher {
     }
 
 
-    public async openResourceViewModal(document: Document, resourcesComponent: ResourcesComponent) {
+    /**
+     * Returns true if the document has been edited via the resource view modal, otherwise false
+     */
+    public async openResourceViewModal(document: Document,
+                                       resourcesComponent: ResourcesComponent): Promise<boolean> {
 
         MenuService.setContext('view-modal');
         resourcesComponent.isModalOpened = true;
@@ -53,10 +57,12 @@ export class ViewModalLauncher {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(document);
-        await modalRef.result;
+        const edited: boolean = await modalRef.result;
 
         MenuService.setContext('default');
         resourcesComponent.isModalOpened = false;
+
+        return edited;
     }
 
 

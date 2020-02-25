@@ -23,7 +23,7 @@ export class ListButtonGroupComponent {
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
-                public typeUtility: ProjectTypes,
+                public projectTypes: ProjectTypes,
                 private routingService: RoutingService,
                 private navigationService: NavigationService) {
     }

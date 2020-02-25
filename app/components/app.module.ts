@@ -219,12 +219,12 @@ registerLocaleData(localeDe, 'de');
             useFactory: (
                 documentReadDatastore: DocumentReadDatastore,
                 projectConfiguration: ProjectConfiguration,
-                typeUtility: ProjectTypes) => {
+                projectTypes: ProjectTypes) => {
 
                 return new Validator(
                     projectConfiguration,
                     (q: Query) => documentReadDatastore.find(q),
-                    typeUtility
+                    projectTypes
                 )
             },
             deps: [DocumentReadDatastore, ProjectConfiguration, ProjectTypes]

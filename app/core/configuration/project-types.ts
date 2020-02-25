@@ -15,7 +15,7 @@ const NAME = 'name';
  */
 export class ProjectTypes {
 
-    public static UNKNOWN_TYPE_ERROR = 'TypeUtility.Errors.UnknownType';
+    public static UNKNOWN_TYPE_ERROR = 'projectTypes.Errors.UnknownType';
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 

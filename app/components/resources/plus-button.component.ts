@@ -51,7 +51,7 @@ export class PlusButtonComponent implements OnChanges {
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private typeUtility: ProjectTypes,
+        private projectTypes: ProjectTypes,
         private viewFacade: ViewFacade,
         private i18n: I18n) {
 
@@ -61,7 +61,7 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    public isGeometryType = (typeName: string) => this.typeUtility.isGeometryType(typeName);
+    public isGeometryType = (typeName: string) => this.projectTypes.isGeometryType(typeName);
 
 
     ngOnChanges() {
@@ -198,8 +198,8 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? this.typeUtility.getOverviewTypes().includes(type.name)
-                    : this.typeUtility.getTypeManagementTypes().includes(type.name))) {
+                    ? this.projectTypes.getOverviewTypes().includes(type.name)
+                    : this.projectTypes.getTypeManagementTypes().includes(type.name))) {
                 return false;
             }
         }

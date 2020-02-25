@@ -55,12 +55,12 @@ import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relat
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         typeUtility: ProjectTypes,
+                         projectTypes: ProjectTypes,
                          usernameProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
                 return new DocumentHolder(projectConfiguration, persistenceManager,
-                    validator, typeUtility, usernameProvider, datastore);
+                    validator, projectTypes, usernameProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
                 ProjectTypes, UsernameProvider, DocumentDatastore]

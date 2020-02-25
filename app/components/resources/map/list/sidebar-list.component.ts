@@ -35,7 +35,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     constructor(resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 public viewFacade: ViewFacade,
-                public typeUtility: ProjectTypes,
+                public projectTypes: ProjectTypes,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
                 private routingService: RoutingService) {

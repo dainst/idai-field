@@ -16,7 +16,7 @@ import {ProjectConfiguration} from '../../../configuration/project-configuration
 
 @Injectable()
 /**
- * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
+ * Validates against data model of ProjectConfiguration and projectTypes and contents of Database
  *
  * Errors thrown are of type
  *   ImportError.* if specified in ImportValidator itself and of type
@@ -29,9 +29,9 @@ export class ImportValidator extends Validator {
 
     constructor(projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentDatastore,
-                typeUtility: ProjectTypes) {
+                projectTypes: ProjectTypes) {
 
-        super(projectConfiguration, (q: Query) => datastore.find(q), typeUtility);
+        super(projectConfiguration, (q: Query) => datastore.find(q), projectTypes);
     }
 
 
@@ -100,7 +100,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewType(document: Document|NewDocument) {
 
-        if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
+        if (this.projectTypes.getOverviewTypeNames().includes(document.resource.type)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];
         }

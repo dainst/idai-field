@@ -95,8 +95,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-    const typeUtility = new ProjectTypes(projectConfiguration);
-    const typeConverter = new FieldTypeConverter(typeUtility, projectConfiguration);
+    const projectTypes = new ProjectTypes(projectConfiguration);
+    const typeConverter = new FieldTypeConverter(projectTypes, projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
@@ -130,7 +130,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         createdIndexFacade,
         stateSerializer,
-        typeUtility,
+        projectTypes,
         tabManager,
         projectName,
         true
@@ -146,7 +146,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const descendantsUtility = new DescendantsUtility(
-        typeUtility, projectConfiguration, documentDatastore
+        projectTypes, projectConfiguration, documentDatastore
     );
 
     const persistenceManager = new PersistenceManager(
@@ -158,15 +158,15 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), typeUtility),
-        typeUtility,
+        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), projectTypes),
+        projectTypes,
         { getUsername: () => 'fakeuser' },
         documentDatastore
     );
 
     const imagesState = new ImagesState();
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, typeUtility);
+    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectTypes);
 
     return {
         remoteChangesStream,

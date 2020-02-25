@@ -44,7 +44,7 @@ export class RowComponent implements AfterViewInit {
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: ProjectTypes
+        private projectTypes: ProjectTypes
     ) {}
 
 
@@ -105,7 +105,7 @@ export class RowComponent implements AfterViewInit {
 
     public isMoveOptionAvailable(): boolean {
 
-        return this.typeUtility.getHierarchyParentTypes(this.document.resource.type).length > 0;
+        return this.projectTypes.getHierarchyParentTypes(this.document.resource.type).length > 0;
     }
 
 

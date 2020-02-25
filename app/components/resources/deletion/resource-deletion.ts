@@ -23,7 +23,7 @@ export class ResourceDeletion {
     constructor(private modalService: NgbModal,
                 private persistenceManager: PersistenceManager,
                 private imagestore: Imagestore,
-                private typeUtility: ProjectTypes,
+                private projectTypes: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,

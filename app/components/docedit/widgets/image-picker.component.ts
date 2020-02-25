@@ -39,7 +39,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: ImageReadDatastore,
         private el: ElementRef,
-        private typeUtility: ProjectTypes
+        private projectTypes: ProjectTypes
     ) {}
 
 
@@ -113,7 +113,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.typeUtility.getImageTypeNames();
+        this.query.types = this.projectTypes.getImageTypeNames();
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id, type: 'subtract' }
         };

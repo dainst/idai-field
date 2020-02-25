@@ -26,7 +26,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private typeUtility: ProjectTypes,
+                private projectTypes: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
@@ -135,9 +135,9 @@ export class RoutingService {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return this.typeUtility.getOverviewTypeNames().includes(document.resource.type)
+        return this.projectTypes.getOverviewTypeNames().includes(document.resource.type)
             ? 'project'
-            : this.typeUtility.getAbstractFieldTypeNames().includes(document.resource.type)
+            : this.projectTypes.getAbstractFieldTypeNames().includes(document.resource.type)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

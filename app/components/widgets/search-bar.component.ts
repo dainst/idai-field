@@ -37,7 +37,7 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private typeUtility: ProjectTypes) {}
+    constructor(private projectTypes: ProjectTypes) {}
 
 
     ngOnChanges() {
@@ -69,7 +69,7 @@ export class SearchBarComponent implements OnChanges {
     public chooseTypeFilter(type: IdaiType) {
 
         let newTypes: string[]|undefined = type
-            ? this.typeUtility.getNamesOfTypeAndSubtypes(type.name)
+            ? this.projectTypes.getNamesOfTypeAndSubtypes(type.name)
             : undefined;
 
         if (newTypes && newTypes.length > 1 && this.types && sameset(this.types)(newTypes)) {

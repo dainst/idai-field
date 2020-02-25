@@ -18,7 +18,7 @@ export class LinkModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private typeUtility: ProjectTypes) {}
+                private projectTypes: ProjectTypes) {}
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -29,7 +29,7 @@ export class LinkModalComponent {
 
     public initializeFilterOptions() {
 
-        this.filterOptions = this.typeUtility.getAllowedRelationDomainTypes(
+        this.filterOptions = this.projectTypes.getAllowedRelationDomainTypes(
             'isDepictedIn', 'Image'
         );
     }

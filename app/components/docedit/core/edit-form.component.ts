@@ -65,7 +65,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
                 private projectConfiguration: ProjectConfiguration,
-                private typeUtility: ProjectTypes) {}
+                private projectTypes: ProjectTypes) {}
 
     public activateGroup = (name: string) => this.activeGroup = name;
 
@@ -73,7 +73,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public shouldShow(groupName: string) {
 
         return (groupName === 'images'
-                && !this.typeUtility.getImageTypeNames().includes(this.document.resource.type))
+                && !this.projectTypes.getImageTypeNames().includes(this.document.resource.type))
             || (groupName === 'conflicts' && this.document._conflicts)
             || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
@@ -137,7 +137,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
 
-        if (this.typeUtility.isGeometryType(this.document.resource.type)) {
+        if (this.projectTypes.isGeometryType(this.document.resource.type)) {
             this.groups[GROUP_NAME.POSITION].fields.push({
                 name: 'geometry',
                 label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),

@@ -34,7 +34,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,
                 private renderer: Renderer2,
-                private typeUtility: ProjectTypes) {
+                private projectTypes: ProjectTypes) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -127,8 +127,8 @@ export class SearchSuggestionsComponent implements OnChanges {
         return this.viewFacade.getFilterTypes().length > 0
             ? this.viewFacade.getFilterTypes()
             : this.viewFacade.isInTypesManagement()
-                ? this.typeUtility.getAbstractFieldTypeNames()
-                : this.typeUtility.getConcreteFieldTypeNames();
+                ? this.projectTypes.getAbstractFieldTypeNames()
+                : this.projectTypes.getConcreteFieldTypeNames();
     }
 
 

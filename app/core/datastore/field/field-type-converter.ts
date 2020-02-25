@@ -13,7 +13,7 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
  */
 export class FieldTypeConverter extends TypeConverter<Document> {
 
-    constructor(private typeUtility: ProjectTypes,
+    constructor(private projectTypes: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration) {
 
         super();
@@ -36,11 +36,11 @@ export class FieldTypeConverter extends TypeConverter<Document> {
     public getTypesForClass(typeClass: string): string[]|undefined {
 
         if (typeClass === 'ImageDocument') {
-            return this.typeUtility.getImageTypeNames();
+            return this.projectTypes.getImageTypeNames();
         } else if (typeClass === 'FeatureDocument') {
-            return this.typeUtility.getFeatureTypeNames();
+            return this.projectTypes.getFeatureTypeNames();
         } else if (typeClass === 'FieldDocument') {
-            return this.typeUtility.getFieldTypeNames();
+            return this.projectTypes.getFieldTypeNames();
         } else {
             return undefined;
         }

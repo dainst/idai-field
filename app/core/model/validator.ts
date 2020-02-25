@@ -18,7 +18,7 @@ export class Validator {
 
     constructor(protected projectConfiguration: ProjectConfiguration,
                 protected find: (query: Query) => Promise<FindResult>,
-                protected typeUtility: ProjectTypes) {}
+                protected projectTypes: ProjectTypes) {}
 
 
     /**
@@ -92,7 +92,7 @@ export class Validator {
 
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
-        return this.typeUtility
+        return this.projectTypes
             .getRegularTypeNames()
             .includes(document.resource.type);
     }

@@ -87,8 +87,8 @@ describe('DocumentHolder', () => {
             return Promise.resolve(changedDocument);
         });
 
-        const typeUtility = jasmine.createSpyObj('TypeUtility', ['getRegularTypeNames']);
-        typeUtility.getRegularTypeNames.and.returnValue(['Find']);
+        const projectTypes = jasmine.createSpyObj('TypeUtility', ['getRegularTypeNames']);
+        projectTypes.getRegularTypeNames.and.returnValue(['Find']);
 
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);
@@ -98,7 +98,7 @@ describe('DocumentHolder', () => {
             pconf,
             persistenceManager,
             validator,
-            typeUtility,
+            projectTypes,
             usernameProvider,
             datastore
         );

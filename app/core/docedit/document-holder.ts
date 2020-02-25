@@ -41,7 +41,7 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private typeUtility: ProjectTypes,
+        private projectTypes: ProjectTypes,
         private usernameProvider: UsernameProvider,
         private datastore: DocumentDatastore) {
     }

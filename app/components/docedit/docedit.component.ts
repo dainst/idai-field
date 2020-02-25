@@ -56,7 +56,7 @@ export class DoceditComponent {
         private messages: Messages,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
-        private typeUtility: ProjectTypes,
+        private projectTypes: ProjectTypes,
         public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {

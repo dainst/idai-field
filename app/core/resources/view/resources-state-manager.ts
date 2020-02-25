@@ -46,7 +46,7 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        private typeUtility: ProjectTypes,
+        private projectTypes: ProjectTypes,
         private tabManager: TabManager,
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
@@ -64,11 +64,11 @@ export class ResourcesStateManager {
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
 
-    public getOverviewTypeNames = (): string[] => this.typeUtility.getOverviewTypeNames();
+    public getOverviewTypeNames = (): string[] => this.projectTypes.getOverviewTypeNames();
 
-    public getConcreteTypeNames = (): string[] => this.typeUtility.getConcreteFieldTypeNames();
+    public getConcreteTypeNames = (): string[] => this.projectTypes.getConcreteFieldTypeNames();
 
-    public getAbstractTypeNames = (): string[] => this.typeUtility.getAbstractFieldTypeNames();
+    public getAbstractTypeNames = (): string[] => this.projectTypes.getAbstractFieldTypeNames();
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 

@@ -10,7 +10,7 @@ import {ProjectTypes} from '../configuration/project-types';
  */
 export class DescendantsUtility {
 
-    constructor(private typeUtility: ProjectTypes,
+    constructor(private projectTypes: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore) {}
 

@@ -60,7 +60,7 @@ export class ExportComponent implements OnInit {
                 private viewFacade: ViewFacade,
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
-                private typeUtility: ProjectTypes,
+                private projectTypes: ProjectTypes,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -248,7 +248,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.fieldDatastore.find({
-                types: this.typeUtility.getOperationTypeNames()
+                types: this.projectTypes.getOperationTypeNames()
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

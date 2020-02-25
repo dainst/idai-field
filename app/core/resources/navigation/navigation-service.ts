@@ -23,7 +23,7 @@ export class NavigationService {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
                 private viewFacade: ViewFacade,
-                private typeUtility: ProjectTypes) {
+                private projectTypes: ProjectTypes) {
     }
 
 

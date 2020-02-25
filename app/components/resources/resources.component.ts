@@ -55,7 +55,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
-                private typeUtility: ProjectTypes,
+                private projectTypes: ProjectTypes,
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
@@ -131,12 +131,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? this.typeUtility.getFieldTypes().filter(type => !type.parentType)
-                : this.typeUtility.getOverviewTopLevelTypes();
+                ? this.projectTypes.getFieldTypes().filter(type => !type.parentType)
+                : this.projectTypes.getOverviewTopLevelTypes();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.typeUtility.getAbstractFieldTypes();
+            this.filterOptions = this.projectTypes.getAbstractFieldTypes();
         } else {
-            this.filterOptions = this.typeUtility.getAllowedRelationDomainTypes(
+            this.filterOptions = this.projectTypes.getAllowedRelationDomainTypes(
                 'isRecordedIn',
                 (this.viewFacade.getCurrentOperation() as FieldDocument).resource.type
             );

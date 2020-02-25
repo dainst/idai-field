@@ -30,7 +30,7 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private typeUtility: ProjectTypes) {}
+                private projectTypes: ProjectTypes) {}
 
 
     ngOnChanges() {
@@ -54,7 +54,7 @@ export class ContextMenuComponent implements OnChanges {
     public isCreateGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.typeUtility.isGeometryType(this.contextMenu.document.resource.type)
+            && this.projectTypes.isGeometryType(this.contextMenu.document.resource.type)
             && !this.contextMenu.document.resource.geometry;
     }
 
@@ -62,7 +62,7 @@ export class ContextMenuComponent implements OnChanges {
     public isEditGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.typeUtility.isGeometryType(this.contextMenu.document.resource.type)
+            && this.projectTypes.isGeometryType(this.contextMenu.document.resource.type)
             && this.contextMenu.document.resource.geometry !== undefined;
     }
 
@@ -71,7 +71,7 @@ export class ContextMenuComponent implements OnChanges {
 
         if (!this.contextMenu.document) return false;
 
-        return this.typeUtility.getHierarchyParentTypes(this.contextMenu.document.resource.type).length > 0;
+        return this.projectTypes.getHierarchyParentTypes(this.contextMenu.document.resource.type).length > 0;
     }
 
 

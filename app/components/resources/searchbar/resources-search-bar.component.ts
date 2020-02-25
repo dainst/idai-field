@@ -21,9 +21,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                typeUtility: ProjectTypes) {
+                projectTypes: ProjectTypes) {
 
-        super(typeUtility);
+        super(projectTypes);
     }
 
 

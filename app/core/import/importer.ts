@@ -40,7 +40,7 @@ export module Importer {
      * if any.
      *
      * @param format
-     * @param typeUtility
+     * @param projectTypes
      * @param datastore
      * @param usernameProvider
      * @param projectConfiguration
@@ -57,7 +57,7 @@ export module Importer {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   typeUtility: ProjectTypes,
+                                   projectTypes: ProjectTypes,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
@@ -80,8 +80,8 @@ export module Importer {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const operationTypeNames = typeUtility.getOverviewTypeNames().filter(isnt('Place'));
-        const importValidator =  new ImportValidator(projectConfiguration, datastore, typeUtility);
+        const operationTypeNames = projectTypes.getOverviewTypeNames().filter(isnt('Place'));
+        const importValidator =  new ImportValidator(projectConfiguration, datastore, projectTypes);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 

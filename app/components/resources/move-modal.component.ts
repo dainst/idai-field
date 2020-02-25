@@ -35,7 +35,7 @@ export class MoveModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private typeUtility: ProjectTypes,
+                private projectTypes: ProjectTypes,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
                 private indexFacade: IndexFacade,
@@ -103,7 +103,7 @@ export class MoveModalComponent {
 
     private getIsRecordedInTargetTypes(): Array<IdaiType> {
 
-        return this.typeUtility.getAllowedRelationRangeTypes(
+        return this.projectTypes.getAllowedRelationRangeTypes(
             'isRecordedIn', this.document.resource.type
         );
     }
@@ -111,7 +111,7 @@ export class MoveModalComponent {
 
     private getLiesWithinTargetTypes(): Array<IdaiType> {
 
-        return this.typeUtility.getAllowedRelationRangeTypes(
+        return this.projectTypes.getAllowedRelationRangeTypes(
             'liesWithin', this.document.resource.type
         );
     }

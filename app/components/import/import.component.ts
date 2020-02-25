@@ -67,7 +67,7 @@ export class ImportComponent implements OnInit {
         private modalService: NgbModal,
         private synchronizationService: SyncService,
         private idGenerator: IdGenerator,
-        private typeUtility: ProjectTypes,
+        private projectTypes: ProjectTypes,
         private tabManager: TabManager,
         public importState: ImportState) {
 
@@ -231,7 +231,7 @@ export class ImportComponent implements OnInit {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(this.typeUtility.getImageTypeNames());
+            : BASE_EXCLUSION.concat(this.projectTypes.getImageTypeNames());
     }
 
 
@@ -239,7 +239,7 @@ export class ImportComponent implements OnInit {
 
         return Importer.doImport(
             this.importState.format,
-            this.typeUtility,
+            this.projectTypes,
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,
@@ -291,7 +291,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                types: this.typeUtility.getOperationTypeNames()
+                types: this.projectTypes.getOperationTypeNames()
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

@@ -104,9 +104,9 @@ const remote = require('electron').remote;
             useFactory: (projectConfiguration: ProjectConfiguration,
                          routingService: RoutingService,
                          viewFacade: ViewFacade,
-                         typeUtility: ProjectTypes) => {
+                         projectTypes: ProjectTypes) => {
 
-                return new NavigationService(projectConfiguration, routingService, viewFacade, typeUtility);
+                return new NavigationService(projectConfiguration, routingService, viewFacade, projectTypes);
             },
             deps: [ProjectConfiguration, RoutingService, ViewFacade, ProjectTypes]
         },
@@ -117,7 +117,7 @@ const remote = require('electron').remote;
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService,
-                         typeUtility: ProjectTypes,
+                         projectTypes: ProjectTypes,
                          tabManager: TabManager) => {
 
                 const projectName = settingsService.getSelectedProject();
@@ -127,7 +127,7 @@ const remote = require('electron').remote;
                     datastore,
                     indexFacade,
                     stateSerializer,
-                    typeUtility,
+                    projectTypes,
                     tabManager,
                     projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test

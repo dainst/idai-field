@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty, isDefined, remove} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isDefined, remove} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -29,9 +29,6 @@ export class ProjectConfiguration {
     private relations: Array<RelationDefinition> = [];
 
 
-    /**
-     * @param configuration
-     */
     constructor(configuration: any) {
 
         this.initTypes(configuration);
@@ -83,15 +80,12 @@ export class ProjectConfiguration {
     }
 
     /**
-     * TODO extract another function and move it to project-configuration-util
-     *
      * @returns {boolean} True if the given domain type is a valid domain type for a relation definition which has the
      * given range type & name
      */
     public isAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string, relationName: string): boolean {
 
-        const relationDefinitions: Array<RelationDefinition> = this.getRelationDefinitions(rangeTypeName, true);
-        if (isEmpty(relationDefinitions)) return false;
+        const relationDefinitions = this.getRelationDefinitions(rangeTypeName, true);
 
         for (let relationDefinition of relationDefinitions) {
             if (relationName == relationDefinition.name

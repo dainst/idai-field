@@ -10,6 +10,7 @@ import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.com
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 import {DescendantsUtility} from '../../../core/model/descendants-utility';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 /**
@@ -23,6 +24,7 @@ export class ResourceDeletion {
                 private persistenceManager: PersistenceManager,
                 private imagestore: Imagestore,
                 private typeUtility: TypeUtility,
+                private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,
                 private datastore: DocumentDatastore,
@@ -58,7 +60,7 @@ export class ResourceDeletion {
 
     private async deleteImageWithImageStore(document: FieldDocument) {
 
-        if (!this.typeUtility.isSubtype(document.resource.type, 'Image')) return undefined;
+        if (!this.projectConfiguration.isSubtype(document.resource.type, 'Image')) return undefined;
 
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {

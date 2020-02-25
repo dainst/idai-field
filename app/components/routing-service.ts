@@ -5,6 +5,7 @@ import {Observable, Observer} from 'rxjs';
 import {DatastoreErrors, Document} from 'idai-components-2';
 import {TypeUtility} from '../core/model/type-utility';
 import {ViewFacade} from '../core/resources/view/view-facade';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
 
 
 @Injectable()
@@ -25,7 +26,8 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private typeUtility: TypeUtility) {}
+                private typeUtility: TypeUtility,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     // For ResourcesComponent
@@ -48,7 +50,7 @@ export class RoutingService {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
+        if (this.projectConfiguration.isSubtype(documentToSelect.resource.type, 'Image')) {
             await this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             await this.jumpToFieldTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
@@ -58,7 +60,7 @@ export class RoutingService {
 
     public async jumpToConflictResolver(document: Document) {
 
-        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+        if (this.projectConfiguration.isSubtype(document.resource.type, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             const viewName: 'project'|'types'|string = this.getViewName(document);

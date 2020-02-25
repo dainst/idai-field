@@ -91,7 +91,7 @@ export class ImportValidator extends Validator {
             throw [E.TYPE_NOT_ALLOWED, document.resource.type];
         }
 
-        if (document.resource.type === 'Image' || this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+        if (document.resource.type === 'Image' || this.projectConfiguration.isSubtype(document.resource.type, 'Image')) {
 
             throw [E.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
         }

@@ -22,6 +22,8 @@ const VISIBLE = 'visible';
  */
 export class ProjectConfiguration {
 
+    public static UNKNOWN_TYPE_ERROR = 'ProjectConfiguration.Errors.UnknownType';
+
     private typesMap: { [typeName: string]: IdaiType } = {};
 
     private relations: Array<RelationDefinition> = [];
@@ -37,6 +39,35 @@ export class ProjectConfiguration {
     public getAllRelationDefinitions(): Array<RelationDefinition> {
 
         return this.relations;
+    }
+
+
+    public isSubtype(typeName: string, superTypeName: string): boolean {
+
+        const type = this.getTypesMap()[typeName];
+        if (!type) throw [ProjectConfiguration.UNKNOWN_TYPE_ERROR, typeName];
+        return (type.name === superTypeName)
+            || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
+    }
+
+
+    public getTypeAndSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
+
+        const projectTypesMap: { [type: string]: IdaiType } = this.getTypesMap();
+        let subtypes: any = {};
+
+        if (projectTypesMap[superTypeName]) {
+            subtypes[superTypeName] = projectTypesMap[superTypeName];
+
+            if (projectTypesMap[superTypeName].children) {
+                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
+                    subtypes[projectTypesMap[superTypeName].children[i].name]
+                        = projectTypesMap[superTypeName].children[i];
+                }
+            }
+        }
+
+        return subtypes;
     }
 
 

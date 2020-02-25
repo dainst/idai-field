@@ -4,6 +4,7 @@ import {TypeConverter} from '../cached/type-converter';
 import {TypeUtility} from '../../model/type-utility';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
+import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 
 @Injectable()
@@ -12,7 +13,8 @@ import {takeOrMake} from '../../util/utils';
  */
 export class FieldTypeConverter extends TypeConverter<Document> {
 
-    constructor(private typeUtility: TypeUtility) {
+    constructor(private typeUtility: TypeUtility,
+                private projectConfiguration: ProjectConfiguration) {
 
         super();
     }
@@ -21,11 +23,11 @@ export class FieldTypeConverter extends TypeConverter<Document> {
     public assertTypeToBeOfClass(type: string, typeClass: string): void {
 
         if (typeClass === 'ImageDocument') {
-            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be ImageDocument';
+            if (!this.projectConfiguration.isSubtype(type, 'Image')) throw 'Wrong type class: must be ImageDocument';
         } else if (typeClass === 'FeatureDocument') {
-            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be FeatureDocument';
+            if (!this.projectConfiguration.isSubtype(type, 'Feature')) throw 'Wrong type class: must be FeatureDocument';
         } else if (typeClass === 'FieldDocument') {
-            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be ImageDocument';
+            if (this.projectConfiguration.isSubtype(type, 'Image')) throw 'Wrong type class: must not be ImageDocument';
             // feature documents are allowed to also be field documents
         }
     }
@@ -47,7 +49,7 @@ export class FieldTypeConverter extends TypeConverter<Document> {
 
     public convert<T extends Document>(document: Document): T {
 
-        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+        if (this.projectConfiguration.isSubtype(document.resource.type, 'Image')) {
             takeOrMake(document, 'resource.identifier','');
             takeOrMake(document, 'resource.relations.depicts', []);
         } else {

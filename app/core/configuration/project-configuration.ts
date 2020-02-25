@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty, isDefined} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty, isDefined, remove} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -62,7 +62,7 @@ export class ProjectConfiguration {
 
     public getTypesTree() : any {
 
-        return filter(on('parent', isDefined))(this.typesMap);
+        return remove(on('parent', isDefined))(this.typesMap);
     }
 
     /**

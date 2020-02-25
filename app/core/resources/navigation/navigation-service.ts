@@ -80,7 +80,7 @@ export class NavigationService {
     public shouldShowArrowTopRightForSearchMode(document: FieldDocument) {
 
         return (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-            && (!this.typeUtility.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
+            && (!this.projectConfiguration.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
     }
 
 
@@ -88,7 +88,7 @@ export class NavigationService {
 
         return (!this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode())
             || (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-                && (this.typeUtility.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))
+                && (this.projectConfiguration.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))
     }
 
 

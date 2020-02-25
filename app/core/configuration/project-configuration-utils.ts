@@ -3,6 +3,8 @@ import {flow, map} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
+import {ConfigurationDefinition} from './configuration-definition';
+import {MDInternal} from 'idai-components-2';
 
 export const NAME = 'name';
 
@@ -13,12 +15,23 @@ export const NAME = 'name';
  */
 export module ProjectConfigurationUtils {
 
-    export function makeTypesMap(types: Array<TypeDefinition>) {
 
-        return flow(
-            types,
-            map(IdaiType.build),
-            makeLookup(NAME)) as { [typeName: string]: IdaiType };
+    export function initTypes(configuration: ConfigurationDefinition) {
+
+        for (let type of configuration.types) {
+            if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
+        }
+        const typesMap: { [typeName: string]: IdaiType } = makeTypesMap(configuration.types);
+
+        for (let type of configuration.types) {
+            if (type['parent']) {
+                const parentType = typesMap[type.parent as any];
+                if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+                IdaiType.addChildType(parentType, typesMap[type.type]);
+            }
+        }
+
+        return typesMap;
     }
 
 
@@ -77,6 +90,15 @@ export module ProjectConfigurationUtils {
         let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
         return luma > 200;
+    }
+
+
+    function makeTypesMap(types: Array<TypeDefinition>) {
+
+        return flow(
+            types,
+            map(IdaiType.build),
+            makeLookup(NAME)) as { [typeName: string]: IdaiType };
     }
 
 

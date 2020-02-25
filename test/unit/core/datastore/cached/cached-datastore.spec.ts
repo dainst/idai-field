@@ -18,9 +18,9 @@ describe('CachedDatastore', () => {
 
     function createMockedDatastore(mockdb: any) {
 
-        const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
-            ['isSubtype', 'validate', 'getFieldTypeNames']);
-        mockTypeUtility.isSubtype.and.returnValue(false);
+        const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype', 'validate', 'getFieldTypeNames']);
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubtype']);
+        mockProjectConfiguration.isSubtype.and.returnValue(false);
         mockTypeUtility.getFieldTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<FieldDocument>();
@@ -28,7 +28,7 @@ describe('CachedDatastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new FieldTypeConverter(mockTypeUtility));
+            new FieldTypeConverter(mockTypeUtility, mockProjectConfiguration));
         docDatastore.suppressWait = true;
         return docDatastore;
     }

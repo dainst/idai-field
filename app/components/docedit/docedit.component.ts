@@ -95,7 +95,7 @@ export class DoceditComponent {
 
         return this.documentHolder.clonedDocument !== undefined
             && this.documentHolder.clonedDocument.resource.type !== 'Project'
-            && !this.typeUtility.isSubtype(
+            && !this.projectConfiguration.isSubtype(
                 this.documentHolder.clonedDocument.resource.type, 'Image'
             );
     }
@@ -105,7 +105,7 @@ export class DoceditComponent {
 
         this.documentHolder.setDocument(document);
 
-        this.showDoceditImagesTab = !this.typeUtility.isSubtype(document.resource.type, 'Image');
+        this.showDoceditImagesTab = !this.projectConfiguration.isSubtype(document.resource.type, 'Image');
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);

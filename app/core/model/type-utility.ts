@@ -20,35 +20,6 @@ export class TypeUtility {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public isSubtype(typeName: string, superTypeName: string): boolean {
-
-        const type = this.projectConfiguration.getTypesMap()[typeName];
-        if (!type) throw [TypeUtility.UNKNOWN_TYPE_ERROR, typeName];
-        return (type.name === superTypeName)
-            || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
-    }
-
-
-    public getTypeAndSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
-
-        const projectTypesMap: { [type: string]: IdaiType } = this.projectConfiguration.getTypesMap();
-        let subtypes: any = {};
-
-        if (projectTypesMap[superTypeName]) {
-            subtypes[superTypeName] = projectTypesMap[superTypeName];
-
-            if (projectTypesMap[superTypeName].children) {
-                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
-                    subtypes[projectTypesMap[superTypeName].children[i].name]
-                        = projectTypesMap[superTypeName].children[i];
-                }
-            }
-        }
-
-        return subtypes;
-    }
-
-
     public getOverviewTopLevelTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
@@ -59,7 +30,7 @@ export class TypeUtility {
     public getFieldTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => !this.isSubtype(type.name, 'Image'))
+            .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Image'))
             .filter(type => !TypeUtility.isProjectType(type.name));
     }
 
@@ -67,9 +38,9 @@ export class TypeUtility {
     public getConcreteFieldTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => !this.isSubtype(type.name, 'Image'))
-            .filter(type => !this.isSubtype(type.name, 'TypeCatalog'))
-            .filter(type => !this.isSubtype(type.name, 'Type'))
+            .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Image'))
+            .filter(type => !this.projectConfiguration.isSubtype(type.name, 'TypeCatalog'))
+            .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Type'))
             .filter(type => !TypeUtility.isProjectType(type.name));
     }
 
@@ -83,7 +54,7 @@ export class TypeUtility {
 
     public getNamesOfTypeAndSubtypes(superTypeName: string): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes(superTypeName));
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes(superTypeName));
     }
 
 
@@ -107,19 +78,19 @@ export class TypeUtility {
 
     public getImageTypeNames(): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes('Image'));
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes('Image'));
     }
 
 
     public getFeatureTypeNames(): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes('Feature'));
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes('Feature'));
     }
 
 
     public getOperationTypeNames(): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes('Operation'));
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes('Operation'));
     }
 
 
@@ -130,10 +101,10 @@ export class TypeUtility {
             .map(to(NAME))
             .filter(isnt('Place'))
             .filter(isnt('Project'))
-            .filter(typename => !this.isSubtype(typename, 'Operation'))
-            .filter(typename => !this.isSubtype(typename, 'Image'))
-            .filter(typename => !this.isSubtype(typename, 'TypeCatalog'))
-            .filter(typename => !this.isSubtype(typename, 'Type'));
+            .filter(typename => !this.projectConfiguration.isSubtype(typename, 'Operation'))
+            .filter(typename => !this.projectConfiguration.isSubtype(typename, 'Image'))
+            .filter(typename => !this.projectConfiguration.isSubtype(typename, 'TypeCatalog'))
+            .filter(typename => !this.projectConfiguration.isSubtype(typename, 'Type'));
     }
 
 
@@ -142,7 +113,7 @@ export class TypeUtility {
         return this.projectConfiguration
             .getTypesList()
             .map(to(NAME))
-            .filter(typename => this.isSubtype(typename, 'Operation'))
+            .filter(typename => this.projectConfiguration.isSubtype(typename, 'Operation'))
             .concat('Place');
     }
 
@@ -183,16 +154,16 @@ export class TypeUtility {
     public isGeometryType(typeName: string): boolean {
 
         return !this.getImageTypeNames().includes(typeName)
-            && !this.isSubtype(typeName, 'Inscription')
-            && !this.isSubtype(typeName, 'Type')
-            && !this.isSubtype(typeName, 'TypeCatalog')
+            && !this.projectConfiguration.isSubtype(typeName, 'Inscription')
+            && !this.projectConfiguration.isSubtype(typeName, 'Type')
+            && !this.projectConfiguration.isSubtype(typeName, 'TypeCatalog')
             && !TypeUtility.isProjectType(typeName);
     }
 
 
     public getOverviewTypes(): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes('Operation'))
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes('Operation'))
             .concat(['Place'])
             .filter(el => el !== 'Operation');
     }
@@ -200,8 +171,8 @@ export class TypeUtility {
 
     public getTypeManagementTypes(): string[] {
 
-        return Object.keys(this.getTypeAndSubtypes('TypeCatalog'))
-            .concat(Object.keys(this.getTypeAndSubtypes('Type')));
+        return Object.keys(this.projectConfiguration.getTypeAndSubtypes('TypeCatalog'))
+            .concat(Object.keys(this.projectConfiguration.getTypeAndSubtypes('Type')));
     }
 
 

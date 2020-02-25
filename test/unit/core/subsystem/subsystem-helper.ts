@@ -96,7 +96,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const documentCache = new DocumentCache<Document>();
     const typeUtility = new TypeUtility(projectConfiguration);
-    const typeConverter = new FieldTypeConverter(typeUtility);
+    const typeConverter = new FieldTypeConverter(typeUtility, projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, typeConverter);
@@ -146,7 +146,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const descendantsUtility = new DescendantsUtility(
-        typeUtility, documentDatastore
+        typeUtility, projectConfiguration, documentDatastore
     );
 
     const persistenceManager = new PersistenceManager(

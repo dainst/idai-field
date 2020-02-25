@@ -1,4 +1,5 @@
-import {ConfigurationErrors} from '../configuration-errors';
+
+import {ConfigurationErrors} from '../boot/configuration-errors';
 
 
 export type ValuelistId = string;

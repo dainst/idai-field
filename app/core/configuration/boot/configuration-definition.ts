@@ -1,5 +1,5 @@
-import {TypeDefinition} from './model/type-definition';
-import {RelationDefinition} from './model/relation-definition';
+import {TypeDefinition} from '../model/type-definition';
+import {RelationDefinition} from '../model/relation-definition';
 
 /**
  * @author Daniel de Oliveira

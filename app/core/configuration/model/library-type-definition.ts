@@ -1,5 +1,5 @@
-import {assertFieldsAreValid} from '../assert-fields-are-valid';
-import {ConfigurationErrors} from '../configuration-errors';
+import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
+import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
 import {Valuelists} from './valuelist-definition';
 

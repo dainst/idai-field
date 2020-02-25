@@ -1,5 +1,5 @@
 import {intersection, subtract} from 'tsfun';
-import {RelationDefinition} from './model/relation-definition';
+import {RelationDefinition} from '../model/relation-definition';
 
 /**
  * Used to validate to configuration in the form it comes from the user, i.e.

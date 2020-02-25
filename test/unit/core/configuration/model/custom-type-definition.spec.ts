@@ -1,5 +1,5 @@
 import {CustomTypeDefinition} from '../../../../../app/core/configuration/model/custom-type-definition';
-import {ConfigurationErrors} from '../../../../../app/core/configuration/configuration-errors';
+import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 
 describe('CustomTypeDefinition', () => {
 

@@ -1,6 +1,6 @@
 import {ConfigurationDefinition} from './configuration-definition';
-import {TypeDefinition} from './model/type-definition';
-import {RelationDefinition} from './model/relation-definition';
+import {TypeDefinition} from '../model/type-definition';
+import {RelationDefinition} from '../model/relation-definition';
 import {ConfigurationErrors} from './configuration-errors';
 
 /**

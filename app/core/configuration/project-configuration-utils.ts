@@ -3,7 +3,7 @@ import {flow, map} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
-import {ConfigurationDefinition} from './configuration-definition';
+import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
 
 export const NAME = 'name';

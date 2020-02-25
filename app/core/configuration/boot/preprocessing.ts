@@ -1,8 +1,8 @@
 import {empty, isNot, on, subtract} from 'tsfun';
-import {FieldDefinition} from './model/field-definition';
-import {TypeDefinition} from './model/type-definition';
-import {RelationDefinition} from './model/relation-definition';
-import {UnorderedConfigurationDefinition} from './model/unordered-configuration-definition';
+import {FieldDefinition} from '../model/field-definition';
+import {TypeDefinition} from '../model/type-definition';
+import {RelationDefinition} from '../model/relation-definition';
+import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {ConfigurationDefinition} from './configuration-definition';
 
 

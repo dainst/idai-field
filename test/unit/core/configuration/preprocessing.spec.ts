@@ -1,17 +1,14 @@
+import {LibraryTypeDefinition, LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
+import {UnorderedConfigurationDefinition} from '../../../../app/core/configuration/model/unordered-configuration-definition';
+import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
+import {Preprocessing} from '../../../../app/core/configuration/boot/preprocessing';
+import {TypeDefinition} from '../../../../app/core/configuration/model/type-definition';
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import {
-    LibraryTypeDefinition,
-    LibraryTypeDefinitionsMap
-} from '../../../../app/core/configuration/model/library-type-definition';
-import {UnorderedConfigurationDefinition} from '../../../../app/core/configuration/model/unordered-configuration-definition';
-import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
-import {Preprocessing} from '../../../../app/core/configuration/preprocessing';
-import {TypeDefinition} from '../../../../app/core/configuration/model/type-definition';
-
-
 describe('Preprocessing', () => {
 
     let configuration;

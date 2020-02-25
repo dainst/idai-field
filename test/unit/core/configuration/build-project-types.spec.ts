@@ -1,7 +1,7 @@
 import {BuiltinTypeDefinitions} from '../../../../app/core/configuration/model/builtin-type-definition';
 import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
-import {buildProjectTypes} from '../../../../app/core/configuration/build-project-types';
-import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
+import {buildProjectTypes} from '../../../../app/core/configuration/boot/build-project-types';
+import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
 import {LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
 

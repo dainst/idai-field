@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ProjectConfiguration} from './project-configuration';
+import {ProjectConfiguration} from '../project-configuration';
 import {Preprocessing} from './preprocessing';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
-import {RelationDefinition} from './model/relation-definition';
-import {FieldDefinition} from './model/field-definition';
+import {RelationDefinition} from '../model/relation-definition';
+import {FieldDefinition} from '../model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
-import {BuiltinTypeDefinitions} from "./model/builtin-type-definition";
-import {LibraryTypeDefinitionsMap} from "./model/library-type-definition";
+import {BuiltinTypeDefinitions} from "../model/builtin-type-definition";
+import {LibraryTypeDefinitionsMap} from "../model/library-type-definition";
 import {buildProjectTypes} from "./build-project-types";
 
 

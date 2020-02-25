@@ -1,8 +1,7 @@
-import {ConfigurationValidation} from '../../../../app/core/configuration/configuration-validation';
-import {ConfigurationDefinition} from '../../../../app/core/configuration/configuration-definition';
-import {ConfigLoader} from '../../../../app/core/configuration/config-loader';
+import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
+import {ConfigLoader} from '../../../../app/core/configuration/boot/config-loader';
 import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
-import {ConfigurationErrors} from '../../../../app/core/configuration/configuration-errors';
+import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
 
 
 /**

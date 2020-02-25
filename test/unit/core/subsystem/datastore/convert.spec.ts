@@ -2,6 +2,7 @@ import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import * as PouchDB from 'pouchdb';
 import {TypeUtility} from '../../../../../app/core/model/type-utility';
 import {Static} from '../../../static';
+import {ProjectConfiguration} from '../../../../../app/core/configuration/project-configuration';
 
 
 /**
@@ -25,7 +26,7 @@ describe('subsystem/datastore/convert', () => {
     function expectErr(err) {
 
         if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf(TypeUtility.UNKNOWN_TYPE_ERROR) === -1) fail('Wrong Err' + err);
+        if (err.indexOf(ProjectConfiguration.UNKNOWN_TYPE_ERROR) === -1) fail('Wrong Err' + err);
     }
 
 

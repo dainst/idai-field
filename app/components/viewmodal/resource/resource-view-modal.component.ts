@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
@@ -19,10 +19,13 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 /**
  * @author Thomas Kleinke
  */
-export class ResourceViewModalComponent extends ViewModalComponent {
+export class ResourceViewModalComponent extends ViewModalComponent implements DoCheck {
+
+    @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
     public document: FieldDocument;
     public expandAllGroups: boolean = false;
+    public imageInfoScrollbarVisible: boolean = false;
 
     private openResourceSection: string|undefined = 'stem';
     private openImageSection: string|undefined = 'stem';
@@ -36,6 +39,12 @@ export class ResourceViewModalComponent extends ViewModalComponent {
                 routingService: RoutingService) {
 
         super(activeModal, messages, modalService, routingService);
+    }
+
+
+    ngDoCheck() {
+
+        this.imageInfoScrollbarVisible = this.isScrollbarVisible(this.imageInfo);
     }
 
 

@@ -34,9 +34,9 @@ export class ProjectConfiguration {
     }
 
 
-    public getAllRelationDefinitions() {
+    public getAllRelationDefinitions(): Array<RelationDefinition> {
 
-        return this.relations as Array<RelationDefinition>;
+        return this.relations;
     }
 
 

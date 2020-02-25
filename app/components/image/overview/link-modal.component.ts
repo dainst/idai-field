@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {TypeUtility} from '../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 
 
@@ -18,7 +18,7 @@ export class LinkModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private typeUtility: TypeUtility) {}
+                private typeUtility: ProjectTypes) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

@@ -5,7 +5,7 @@ import {Validations} from './validations';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HIERARCHICAL_RELATIONS} from './relation-constants';
 import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import {TypeUtility} from '../configuration/type-utility';
+import {ProjectTypes} from '../configuration/project-types';
 
 
 /**
@@ -18,7 +18,7 @@ export class Validator {
 
     constructor(protected projectConfiguration: ProjectConfiguration,
                 protected find: (query: Query) => Promise<FindResult>,
-                protected typeUtility: TypeUtility) {}
+                protected typeUtility: ProjectTypes) {}
 
 
     /**

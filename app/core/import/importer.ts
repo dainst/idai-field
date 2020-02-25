@@ -6,7 +6,7 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './import/process/import-validator';
-import {TypeUtility} from '../configuration/type-utility';
+import {ProjectTypes} from '../configuration/project-types';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -57,7 +57,7 @@ export module Importer {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   typeUtility: TypeUtility,
+                                   typeUtility: ProjectTypes,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,

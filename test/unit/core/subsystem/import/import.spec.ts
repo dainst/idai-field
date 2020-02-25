@@ -3,7 +3,7 @@ import {createApp, setupSettingsService, setupSyncTestDb} from '../subsystem-hel
 import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../app/core/datastore/pouchdb/pouchdb-server';
 import {Importer} from '../../../../../app/core/import/importer';
-import {TypeUtility} from '../../../../../app/core/configuration/type-utility';
+import {ProjectTypes} from '../../../../../app/core/configuration/project-types';
 import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
 import {ValidationErrors} from '../../../../../app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../app/core/import/import/import-errors';
@@ -34,7 +34,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'geojson',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -71,7 +71,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'csv',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -118,7 +118,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'csv',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -147,7 +147,7 @@ describe('Import/Subsystem', () => {
 
        await Importer.doImport(
            'native',
-           new TypeUtility(_projectConfiguration),
+           new ProjectTypes(_projectConfiguration),
            datastore,
            { getUsername: () => 'testuser'},
            _projectConfiguration,
@@ -169,7 +169,7 @@ describe('Import/Subsystem', () => {
 
         const report = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -187,7 +187,7 @@ describe('Import/Subsystem', () => {
 
         const report = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -205,7 +205,7 @@ describe('Import/Subsystem', () => {
 
         const report = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -225,7 +225,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -250,7 +250,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -274,7 +274,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser' },
             _projectConfiguration,
@@ -301,7 +301,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser' },
             _projectConfiguration,
@@ -334,7 +334,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser' },
             _projectConfiguration,
@@ -362,7 +362,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser' },
             _projectConfiguration,
@@ -395,7 +395,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser' },
             _projectConfiguration,
@@ -417,7 +417,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -442,7 +442,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -465,7 +465,7 @@ describe('Import/Subsystem', () => {
 
         await Importer.doImport(
             'native',
-            new TypeUtility(_projectConfiguration),
+            new ProjectTypes(_projectConfiguration),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,

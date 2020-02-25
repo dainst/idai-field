@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {TypeUtility} from '../../core/configuration/type-utility';
+import {ProjectTypes} from '../../core/configuration/project-types';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
@@ -37,7 +37,7 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private typeUtility: TypeUtility) {}
+    constructor(private typeUtility: ProjectTypes) {}
 
 
     ngOnChanges() {

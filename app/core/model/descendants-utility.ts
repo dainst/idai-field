@@ -1,7 +1,7 @@
 import {Document, FindResult} from 'idai-components-2';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {TypeUtility} from '../configuration/type-utility';
+import {ProjectTypes} from '../configuration/project-types';
 
 
 /**
@@ -10,7 +10,7 @@ import {TypeUtility} from '../configuration/type-utility';
  */
 export class DescendantsUtility {
 
-    constructor(private typeUtility: TypeUtility,
+    constructor(private typeUtility: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore) {}
 

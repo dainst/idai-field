@@ -3,7 +3,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument, DatastoreErrors, Messages} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {TypeUtility} from '../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
@@ -23,7 +23,7 @@ export class ResourceDeletion {
     constructor(private modalService: NgbModal,
                 private persistenceManager: PersistenceManager,
                 private imagestore: Imagestore,
-                private typeUtility: TypeUtility,
+                private typeUtility: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private usernameProvider: UsernameProvider,

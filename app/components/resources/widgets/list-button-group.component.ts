@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {TypeUtility} from '../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -23,7 +23,7 @@ export class ListButtonGroupComponent {
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
-                public typeUtility: TypeUtility,
+                public typeUtility: ProjectTypes,
                 private routingService: RoutingService,
                 private navigationService: NavigationService) {
     }

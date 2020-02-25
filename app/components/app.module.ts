@@ -28,7 +28,7 @@ import {MatrixModule} from './matrix/matrix.module';
 import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
-import {TypeUtility} from '../core/configuration/type-utility';
+import {ProjectTypes} from '../core/configuration/project-types';
 import {UsernameProvider} from '../core/settings/username-provider';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
@@ -155,14 +155,14 @@ registerLocaleData(localeDe, 'de');
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
         {
-            provide: TypeUtility,
-            useClass: TypeUtility,
+            provide: ProjectTypes,
+            useClass: ProjectTypes,
             deps: [ProjectConfiguration]
         },
         {
             provide: DescendantsUtility,
             useClass: DescendantsUtility,
-            deps: [TypeUtility, DocumentReadDatastore]
+            deps: [ProjectTypes, DocumentReadDatastore]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -219,7 +219,7 @@ registerLocaleData(localeDe, 'de');
             useFactory: (
                 documentReadDatastore: DocumentReadDatastore,
                 projectConfiguration: ProjectConfiguration,
-                typeUtility: TypeUtility) => {
+                typeUtility: ProjectTypes) => {
 
                 return new Validator(
                     projectConfiguration,
@@ -227,7 +227,7 @@ registerLocaleData(localeDe, 'de');
                     typeUtility
                 )
             },
-            deps: [DocumentReadDatastore, ProjectConfiguration, TypeUtility]
+            deps: [DocumentReadDatastore, ProjectConfiguration, ProjectTypes]
         },
         ImportValidator,
         { provide: MD, useClass: M},

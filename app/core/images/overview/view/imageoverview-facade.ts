@@ -2,7 +2,7 @@ import {equal} from 'tsfun';
 import {Query, ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {TypeUtility} from '../../../configuration/type-utility';
+import {ProjectTypes} from '../../../configuration/project-types';
 import {clone} from '../../../util/object-util';
 
 
@@ -22,7 +22,7 @@ export class ImageOverviewFacade {
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
         private imagesState: ImagesState,
-        private typeUtility: TypeUtility
+        private typeUtility: ProjectTypes
     ) {}
 
 

@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
 import {DatastoreErrors, Document} from 'idai-components-2';
-import {TypeUtility} from '../core/configuration/type-utility';
+import {ProjectTypes} from '../core/configuration/project-types';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 
@@ -26,7 +26,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private typeUtility: TypeUtility,
+                private typeUtility: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration) {}
 
 

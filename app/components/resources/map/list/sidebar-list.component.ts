@@ -5,7 +5,7 @@ import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
 import {ResourcesMapComponent} from '../resources-map.component';
-import {TypeUtility} from '../../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../../core/configuration/project-types';
 import {RoutingService} from '../../../routing-service';
 import {ContextMenuAction} from '../../widgets/context-menu.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
@@ -35,7 +35,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     constructor(resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 public viewFacade: ViewFacade,
-                public typeUtility: TypeUtility,
+                public typeUtility: ProjectTypes,
                 private navigationService: NavigationService,
                 private resourcesMapComponent: ResourcesMapComponent,
                 private routingService: RoutingService) {

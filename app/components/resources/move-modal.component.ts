@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {set} from 'tsfun';
 import {Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
-import {TypeUtility} from '../../core/configuration/type-utility';
+import {ProjectTypes} from '../../core/configuration/project-types';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
@@ -35,7 +35,7 @@ export class MoveModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private typeUtility: TypeUtility,
+                private typeUtility: ProjectTypes,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
                 private indexFacade: IndexFacade,

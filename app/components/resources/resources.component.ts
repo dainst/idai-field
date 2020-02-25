@@ -7,7 +7,7 @@ import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../messages/m';
-import {TypeUtility} from '../../core/configuration/type-utility';
+import {ProjectTypes} from '../../core/configuration/project-types';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../angular/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
@@ -55,7 +55,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
-                private typeUtility: TypeUtility,
+                private typeUtility: ProjectTypes,
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,

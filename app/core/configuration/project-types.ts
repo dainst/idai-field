@@ -13,7 +13,7 @@ const NAME = 'name';
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class TypeUtility {
+export class ProjectTypes {
 
     public static UNKNOWN_TYPE_ERROR = 'TypeUtility.Errors.UnknownType';
 
@@ -31,7 +31,7 @@ export class TypeUtility {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Image'))
-            .filter(type => !TypeUtility.isProjectType(type.name));
+            .filter(type => !ProjectTypes.isProjectType(type.name));
     }
 
 
@@ -41,7 +41,7 @@ export class TypeUtility {
             .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Image'))
             .filter(type => !this.projectConfiguration.isSubtype(type.name, 'TypeCatalog'))
             .filter(type => !this.projectConfiguration.isSubtype(type.name, 'Type'))
-            .filter(type => !TypeUtility.isProjectType(type.name));
+            .filter(type => !ProjectTypes.isProjectType(type.name));
     }
 
 
@@ -157,7 +157,7 @@ export class TypeUtility {
             && !this.projectConfiguration.isSubtype(typeName, 'Inscription')
             && !this.projectConfiguration.isSubtype(typeName, 'Type')
             && !this.projectConfiguration.isSubtype(typeName, 'TypeCatalog')
-            && !TypeUtility.isProjectType(typeName);
+            && !ProjectTypes.isProjectType(typeName);
     }
 
 

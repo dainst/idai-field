@@ -32,7 +32,7 @@ import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
-import {TypeUtility} from '../../core/configuration/type-utility';
+import {ProjectTypes} from '../../core/configuration/project-types';
 import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
@@ -104,11 +104,11 @@ const remote = require('electron').remote;
             useFactory: (projectConfiguration: ProjectConfiguration,
                          routingService: RoutingService,
                          viewFacade: ViewFacade,
-                         typeUtility: TypeUtility) => {
+                         typeUtility: ProjectTypes) => {
 
                 return new NavigationService(projectConfiguration, routingService, viewFacade, typeUtility);
             },
-            deps: [ProjectConfiguration, RoutingService, ViewFacade, TypeUtility]
+            deps: [ProjectConfiguration, RoutingService, ViewFacade, ProjectTypes]
         },
         {
             provide: ResourcesStateManager,
@@ -117,7 +117,7 @@ const remote = require('electron').remote;
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService,
-                         typeUtility: TypeUtility,
+                         typeUtility: ProjectTypes,
                          tabManager: TabManager) => {
 
                 const projectName = settingsService.getSelectedProject();
@@ -135,7 +135,7 @@ const remote = require('electron').remote;
             },
             deps: [
                 FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
-                TypeUtility, TabManager
+                ProjectTypes, TabManager
             ]
         },
         {

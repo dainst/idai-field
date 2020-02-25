@@ -1,6 +1,6 @@
 import {FindResult} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
-import {TypeUtility} from '../../../../app/core/configuration/type-utility';
+import {ProjectTypes} from '../../../../app/core/configuration/project-types';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
@@ -57,7 +57,7 @@ describe('Validator', () => {
                 },
             }
         };
-        await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
+        await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration))
             .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
@@ -70,7 +70,7 @@ describe('Validator', () => {
         const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
 
         try {
-            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration))
+            await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration))
                 .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
@@ -91,7 +91,7 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, find, new TypeUtility(projectConfiguration)).assertIdentifierIsUnique(doc);
+            await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration)).assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);

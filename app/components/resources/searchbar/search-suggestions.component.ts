@@ -4,7 +4,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {TypeUtility} from '../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,
                 private renderer: Renderer2,
-                private typeUtility: TypeUtility) {
+                private typeUtility: ProjectTypes) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;

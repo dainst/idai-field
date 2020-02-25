@@ -4,7 +4,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {TypeUtility} from '../../configuration/type-utility';
+import {ProjectTypes} from '../../configuration/project-types';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -224,7 +224,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
                 this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
                 documents.push(this.documentCache.set(this.typeConverter.convert(document)));
             } catch (errWithParams) {
-                if (errWithParams[0] !== TypeUtility.UNKNOWN_TYPE_ERROR) throw errWithParams;
+                if (errWithParams[0] !== ProjectTypes.UNKNOWN_TYPE_ERROR) throw errWithParams;
             }
         });
 

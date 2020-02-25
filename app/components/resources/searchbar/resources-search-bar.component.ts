@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {TypeUtility} from '../../../core/configuration/type-utility';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +21,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                typeUtility: TypeUtility) {
+                typeUtility: ProjectTypes) {
 
         super(typeUtility);
     }

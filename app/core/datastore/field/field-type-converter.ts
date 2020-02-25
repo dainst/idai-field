@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {TypeConverter} from '../cached/type-converter';
-import {TypeUtility} from '../../configuration/type-utility';
+import {ProjectTypes} from '../../configuration/project-types';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
@@ -13,7 +13,7 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
  */
 export class FieldTypeConverter extends TypeConverter<Document> {
 
-    constructor(private typeUtility: TypeUtility,
+    constructor(private typeUtility: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration) {
 
         super();

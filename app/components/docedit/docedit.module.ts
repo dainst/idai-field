@@ -39,7 +39,7 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Validator} from '../../core/model/validator';
-import {TypeUtility} from '../../core/configuration/type-utility';
+import {ProjectTypes} from '../../core/configuration/project-types';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';
@@ -55,7 +55,7 @@ import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relat
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         typeUtility: TypeUtility,
+                         typeUtility: ProjectTypes,
                          usernameProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
@@ -63,7 +63,7 @@ import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relat
                     validator, typeUtility, usernameProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
-                TypeUtility, UsernameProvider, DocumentDatastore]
+                ProjectTypes, UsernameProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

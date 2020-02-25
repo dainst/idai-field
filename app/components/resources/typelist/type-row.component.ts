@@ -38,9 +38,6 @@ export class TypeRowComponent implements OnChanges {
 
     public openContextMenu = (event: MouseEvent) => this.onContextMenu.emit(event);
 
-    public openResourceViewModal = (image: ImageRowItem) =>
-        this.viewModalLauncher.openResourceViewModal(image.document, this.resourcesComponent);
-
 
     async ngOnChanges() {
 
@@ -52,6 +49,16 @@ export class TypeRowComponent implements OnChanges {
     public async openDoceditModal() {
 
         await this.resourcesComponent.editDocument(this.document);
+    }
+
+
+    public async openResourceViewModal(image: ImageRowItem) {
+
+        const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
+            image.document, this.resourcesComponent
+        );
+
+        if (edited) this.linkedImages = await this.getLinkedImages();
     }
 
 

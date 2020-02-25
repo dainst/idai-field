@@ -1,5 +1,5 @@
 import {MDInternal} from 'idai-components-2';
-import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isEmpty, isDefined} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -23,8 +23,6 @@ const VISIBLE = 'visible';
  * @author Sebastian Cuy
  */
 export class ProjectConfiguration {
-
-    private typesTree: { [typeName: string]: IdaiType } = {};
 
     private typesMap: { [typeName: string]: IdaiType } = {};
 
@@ -64,7 +62,7 @@ export class ProjectConfiguration {
 
     public getTypesTree() : any {
 
-        return this.typesTree;
+        return filter(on('parent', isDefined))(this.typesMap);
     }
 
     /**
@@ -191,9 +189,7 @@ export class ProjectConfiguration {
         this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration.types);
 
         for (let type of configuration.types) {
-            if (!type['parent']) {
-                this.typesTree[type.type] = this.typesMap[type.type];
-            } else {
+            if (type['parent']) {
                 const parentType = this.typesMap[type.parent as any];
                 if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
                 IdaiType.addChildType(parentType, this.typesMap[type.type]);

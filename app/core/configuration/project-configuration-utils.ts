@@ -16,6 +16,27 @@ export const NAME = 'name';
 export module ProjectConfigurationUtils {
 
 
+    export function getTypeAndSubtypes(projectTypesMap: { [type: string]: IdaiType },
+                                       superTypeName: string): { [typeName: string]: IdaiType } {
+
+        let subtypes: any = {};
+
+        if (projectTypesMap[superTypeName]) {
+            subtypes[superTypeName] = projectTypesMap[superTypeName];
+
+            if (projectTypesMap[superTypeName].children) {
+                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
+                    subtypes[projectTypesMap[superTypeName].children[i].name]
+                        = projectTypesMap[superTypeName].children[i];
+                }
+            }
+        }
+
+        return subtypes;
+    }
+
+
+
     export function initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {

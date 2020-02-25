@@ -6,7 +6,7 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './import/process/import-validator';
-import {TypeUtility} from '../model/type-utility';
+import {TypeUtility} from '../configuration/type-utility';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';

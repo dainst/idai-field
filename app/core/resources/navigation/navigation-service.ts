@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {FieldDocument, Document} from 'idai-components-2';
 import {ObserverUtil} from '../../util/observer-util';
-import {TypeUtility} from '../../model/type-utility';
+import {TypeUtility} from '../../configuration/type-utility';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {RelationDefinition} from '../../configuration/model/relation-definition';
 import {IdaiType} from '../../configuration/model/idai-type';

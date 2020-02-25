@@ -4,7 +4,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {TypeUtility} from '../../model/type-utility';
+import {TypeUtility} from '../../configuration/type-utility';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

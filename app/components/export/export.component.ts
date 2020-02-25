@@ -11,7 +11,7 @@ import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {CsvExporter} from '../../core/export/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';

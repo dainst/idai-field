@@ -388,7 +388,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (defaultField) return defaultField.label as string;
 
         if (fieldName.endsWith('End')) {
-            const baseField: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
+            const baseField: FieldDefinition = (this.projectConfiguration.getTypesMap() as any /* todo review */)[this.type].fields
                 .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
             if (baseField && baseField.inputType === 'dropdownRange') {
                 return baseField.label
@@ -397,7 +397,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         }
 
         const field: FieldDefinition = this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => field.name === fieldName);
+            .find((field: FieldDefinition) => field.name === fieldName) as any /* todo review */;
 
         return field.inputType === 'dropdownRange'
             ? this.getDropdownRangeLabel(field)

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {to, isnt} from 'tsfun';
-import {ProjectConfiguration} from '../configuration/project-configuration';
-import {IdaiType} from '../configuration/model/idai-type';
+import {ProjectConfiguration} from './project-configuration';
+import {IdaiType} from './model/idai-type';
 
 const NAME = 'name';
 

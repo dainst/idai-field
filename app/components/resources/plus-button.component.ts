@@ -2,7 +2,7 @@ import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {M} from '../messages/m';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

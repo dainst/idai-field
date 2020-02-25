@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 
 

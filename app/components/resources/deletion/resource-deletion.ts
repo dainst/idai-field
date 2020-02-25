@@ -3,7 +3,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument, DatastoreErrors, Messages} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';

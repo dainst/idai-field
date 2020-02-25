@@ -2,7 +2,7 @@ import {equal} from 'tsfun';
 import {Query, ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {TypeUtility} from '../../../model/type-utility';
+import {TypeUtility} from '../../../configuration/type-utility';
 import {clone} from '../../../util/object-util';
 
 

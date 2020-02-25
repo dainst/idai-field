@@ -1,6 +1,6 @@
 import {FindResult} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
-import {TypeUtility} from '../../../../app/core/model/type-utility';
+import {TypeUtility} from '../../../../app/core/configuration/type-utility';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 

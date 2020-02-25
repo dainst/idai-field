@@ -1,7 +1,7 @@
 import {Document, FindResult} from 'idai-components-2';
-import {TypeUtility} from './type-utility';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
+import {TypeUtility} from '../configuration/type-utility';
 
 
 /**

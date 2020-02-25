@@ -4,7 +4,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({

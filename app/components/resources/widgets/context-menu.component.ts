@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, NewDocument, NewResource, Query, Resource} from 'idai-components-2';
-import {TypeUtility} from '../../../model/type-utility';
+import {TypeUtility} from '../../../configuration/type-utility';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';

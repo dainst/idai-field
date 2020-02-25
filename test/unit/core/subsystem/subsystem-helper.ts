@@ -3,7 +3,7 @@ import {Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
-import {TypeUtility} from '../../../../app/core/model/type-utility';
+import {TypeUtility} from '../../../../app/core/configuration/type-utility';
 import {FieldTypeConverter} from '../../../../app/core/datastore/field/field-type-converter';
 import {IndexerConfiguration} from '../../../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../../../app/core/datastore/pouchdb/pouchdb-datastore';

@@ -8,8 +8,8 @@ import {ObserverUtil} from '../../util/observer-util';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
-import {TypeUtility} from '../../model/type-utility';
 import {TabManager} from '../../tabs/tab-manager';
+import {TypeUtility} from '../../configuration/type-utility';
 
 
 /**

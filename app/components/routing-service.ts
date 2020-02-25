@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
 import {DatastoreErrors, Document} from 'idai-components-2';
-import {TypeUtility} from '../core/model/type-utility';
+import {TypeUtility} from '../core/configuration/type-utility';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 

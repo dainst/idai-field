@@ -5,7 +5,7 @@ import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
-import {TypeUtility} from '../model/type-utility';
+import {TypeUtility} from '../configuration/type-utility';
 import {UsernameProvider} from '../settings/username-provider';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';

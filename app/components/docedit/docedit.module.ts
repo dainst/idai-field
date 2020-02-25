@@ -39,7 +39,7 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Validator} from '../../core/model/validator';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';

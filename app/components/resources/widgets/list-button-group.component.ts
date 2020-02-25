@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';

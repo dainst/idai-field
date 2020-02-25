@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from 
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 import {GroupUtil} from '../../../core/model/group-util';
 import {GROUP_NAME} from '../../constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';

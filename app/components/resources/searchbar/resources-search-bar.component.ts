@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {TypeUtility} from '../../../core/model/type-utility';
+import {TypeUtility} from '../../../core/configuration/type-utility';
 
 @Component({
     moduleId: module.id,

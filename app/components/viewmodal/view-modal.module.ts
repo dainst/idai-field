@@ -11,7 +11,7 @@ import {ImageOverviewFacade} from '../../core/images/overview/view/imageoverview
 import {DepictsRelationsViewComponent} from './image/depicts-relations-view.component';
 import {ImagesState} from '../../core/images/overview/view/images-state';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {PersistenceHelper} from '../../core/images/overview/service/persistence-helper';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {UsernameProvider} from '../../core/settings/username-provider';

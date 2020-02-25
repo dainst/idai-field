@@ -7,7 +7,7 @@ import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.com
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {TypeUtility} from '../../core/model/type-utility';
+import {TypeUtility} from '../../core/configuration/type-utility';
 import {M} from '../messages/m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../widgets/loading';

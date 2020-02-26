@@ -162,7 +162,7 @@ registerLocaleData(localeDe, 'de');
         {
             provide: DescendantsUtility,
             useClass: DescendantsUtility,
-            deps: [ProjectTypes, DocumentReadDatastore]
+            deps: [ProjectTypes, ProjectConfiguration, DocumentReadDatastore]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },

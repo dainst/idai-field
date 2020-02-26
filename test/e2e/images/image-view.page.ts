@@ -40,7 +40,6 @@ export module ImageViewPage {
 
     export function getIdentifier() {
 
-        // browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .identifier .fieldvalue'))), delays.ECWaitTime);
-        return element(by.id('identifier-label')).getText();
+        return element(by.css('.identifier-label')).getText();
     }
 }

@@ -1,14 +1,12 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, DatastoreErrors, Messages} from 'idai-components-2';
+import {FieldDocument, DatastoreErrors} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {ProjectTypes} from '../../../core/configuration/project-types';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
@@ -23,11 +21,8 @@ export class ResourceDeletion {
     constructor(private modalService: NgbModal,
                 private persistenceManager: PersistenceManager,
                 private imagestore: Imagestore,
-                private projectTypes: ProjectTypes,
                 private projectConfiguration: ProjectConfiguration,
-                private messages: Messages,
                 private usernameProvider: UsernameProvider,
-                private datastore: DocumentDatastore,
                 private descendantsUtility: DescendantsUtility) {}
 
 

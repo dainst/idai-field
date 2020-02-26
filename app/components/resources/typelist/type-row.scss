@@ -18,6 +18,7 @@ type-row {
       .type-info {
         height: 100%;
         width: calc(100% - 24px);
+        transition: background-color 0.25s ease-in-out;
 
         .type-title {
           text-align: center;
@@ -33,6 +34,14 @@ type-row {
           thumbnail .thumbnail-container {
             width: 267px;
             height: 140px;
+          }
+        }
+
+        &:hover {
+          background-color: darken(#fff, 8%);
+
+          img {
+            filter: brightness(92%);
           }
         }
       }

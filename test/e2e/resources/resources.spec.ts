@@ -88,7 +88,6 @@ describe('resources --', () => {
     it('messages - everything fine / missing identifier', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
 
         browser.sleep(2500);
 
@@ -112,8 +111,6 @@ describe('resources --', () => {
         // do not warn if two different identifiers start with the same string
         ResourcesPage.performCreateResource('120',undefined,undefined,
             undefined,undefined,false);
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
 
         // same identifier
         ResourcesPage.performCreateResource('12',undefined,undefined,

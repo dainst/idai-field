@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument, FieldResource} from 'idai-components-2';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ResourcesComponent} from '../resources.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
@@ -19,6 +19,7 @@ import {ViewModalLauncher} from '../service/view-modal-launcher';
 export class ThumbnailComponent implements OnChanges {
 
     @Input() document: FieldDocument;
+    @Input() resource: FieldResource;   // Triggers ngOnChanges if document has been edited
     @Input() modal: 'image'|'resource' = 'image';
 
     public thumbnailUrl: SafeResourceUrl|undefined;

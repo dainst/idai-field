@@ -1060,7 +1060,7 @@
         <source>Typ</source>
         <target state="final">Typ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/core/configuration/config-loader.ts</context>
+          <context context-type="sourcefile">app/core/configuration/boot/config-loader.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1831,7 +1831,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.multiple" datatype="html">
@@ -1845,7 +1845,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
@@ -1857,7 +1857,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info" datatype="html">
@@ -2046,6 +2046,10 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/viewmodal/resource/resource-view-modal.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/popovermenu/popover-menu.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
@@ -2195,7 +2199,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneType" datatype="html">
@@ -2203,7 +2207,7 @@
         <target state="final">Ein Typ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedTypes" datatype="html">
@@ -2211,7 +2215,7 @@
         <target state="final">Keine Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.linkedFinds" datatype="html">
@@ -2219,7 +2223,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneFind" datatype="html">
@@ -2227,7 +2231,7 @@
         <target state="final">Ein Fund</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
@@ -2235,7 +2239,7 @@
         <target state="final">Keine Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
@@ -4119,30 +4123,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.success.save" datatype="html">
-        <source>Die Ressource wurde erfolgreich gespeichert.</source>
-        <target state="final">Die Ressource wurde erfolgreich gespeichert.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.docedit.success.duplicate" datatype="html">
-        <source>Die Ressourcen wurde erfolgreich gespeichert.</source>
-        <target state="final">Die Ressourcen wurde erfolgreich gespeichert.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.docedit.success.delete" datatype="html">
-        <source>Die Ressource wurde erfolgreich gelöscht.</source>
-        <target state="final">Die Ressource wurde erfolgreich gelöscht.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.docedit.warning.saveConflict" datatype="html">
         <source>Beim Speichern der Ressource ist ein Konflikt aufgetreten.</source>
         <target state="final">Beim Speichern der Ressource ist ein Konflikt aufgetreten.</target>
@@ -4279,33 +4259,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.images.success.imageUploaded" datatype="html">
-        <source>Das Bild wurde erfolgreich importiert.</source>
-        <target state="final">Das Bild wurde erfolgreich importiert.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.images.success.imagesUploaded" datatype="html">
         <source>[0] Bilder wurden erfolgreich importiert.</source>
         <target state="final">[0] Bilder wurden erfolgreich importiert.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.images.success.worldfileUploaded" datatype="html">
-        <source>Das Worldfile wurde erfolgreich geladen.</source>
-        <target state="final">Das Worldfile wurde erfolgreich geladen.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.images.success.georeferenceDeleted" datatype="html">
-        <source>Die Georeferenzdaten wurden erfolgreich gelöscht.</source>
-        <target state="final">Die Georeferenzdaten wurden erfolgreich gelöscht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4402,14 +4358,6 @@
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
         <source>Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</source>
         <target state="final">Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.success.imageUploaded" datatype="html">
-        <source>Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</source>
-        <target state="final">Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

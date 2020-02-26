@@ -5,6 +5,7 @@ import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ImageRowItem} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
+import {ThumbnailComponent} from '../widgets/thumbnail.component';
 
 
 @Component({
@@ -19,6 +20,7 @@ import {ViewModalLauncher} from '../service/view-modal-launcher';
 export class TypeRowComponent implements OnChanges {
 
     @ViewChild('typeRow', { static: false }) typeRowElement: ElementRef;
+    @ViewChild('thumbnail', { static: false }) thumbnailComponent: ThumbnailComponent;
 
     @Input() document: FieldDocument;
 
@@ -38,17 +40,13 @@ export class TypeRowComponent implements OnChanges {
 
     public openContextMenu = (event: MouseEvent) => this.onContextMenu.emit(event);
 
+    public openThumbnailModal = () => this.thumbnailComponent.openModal();
+
 
     async ngOnChanges() {
 
         this.numberOfLinkedResources = await this.getNumberOfLinkedResources();
         this.linkedImages = await this.getLinkedImages();
-    }
-
-
-    public async openDoceditModal() {
-
-        await this.resourcesComponent.editDocument(this.document);
     }
 
 

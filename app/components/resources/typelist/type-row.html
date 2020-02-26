@@ -4,12 +4,12 @@
     <div id="type-container-{{document.resource.id}}"
          class="type-container"
          (contextmenu)="openContextMenu($event)">
-        <div class="type-info" (dblclick)="openDoceditModal()">
+        <div class="type-info" (click)="openThumbnailModal()">
             <div class="type-title">
                 <b>{{document.resource.identifier}}</b>
             </div>
             <div class="type-thumbnail">
-                <thumbnail [document]="document" [modal]="'resource'"></thumbnail>
+                <thumbnail #thumbnail [document]="document" [modal]="'resource'"></thumbnail>
             </div>
         </div>
         <list-button-group [document]="document"

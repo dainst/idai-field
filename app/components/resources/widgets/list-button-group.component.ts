@@ -20,6 +20,7 @@ export class ListButtonGroupComponent {
 
     @Input() document: FieldDocument;
     @Input() alwaysShowInfoButtons: boolean = false;
+    @Input() hideInfoButtons: boolean = false;
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,

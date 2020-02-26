@@ -17,6 +17,7 @@ type-row {
 
       .type-info {
         height: 100%;
+        width: calc(100% - 24px);
 
         .type-title {
           text-align: center;
@@ -40,18 +41,13 @@ type-row {
         width: 24px;
         height: $type-row-height;
 
-        .info-button {
-          height: 87px;
-        }
-
         .hierarchy-button {
           left: 0;
-          top: 87px;
-          height: 87px;
+          height: 174px;
         }
 
         .btn span {
-          top: 31px;
+          top: 75px;
         }
       }
     }

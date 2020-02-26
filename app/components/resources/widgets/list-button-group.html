@@ -1,5 +1,5 @@
 <div class="sidebar-list-button-group">
-    <div class="btn info-button"
+    <div *ngIf="!hideInfoButtons" class="btn info-button"
          [class.sidebar-list-button-group-active-button]="resourcesComponent.isPopoverMenuOpened('info', document)"
          (click)="resourcesComponent.togglePopoverMenu('info', document); $event.stopPropagation();"
          placement="right"

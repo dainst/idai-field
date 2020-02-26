@@ -13,7 +13,8 @@
             </div>
         </div>
         <list-button-group [document]="document"
-                           [alwaysShowInfoButtons]="true"></list-button-group>
+                           [alwaysShowInfoButtons]="true" [hideInfoButtons]="true"
+        ></list-button-group>
     </div>
 
     <div *ngIf="numberOfLinkedResources > -1" class="numberOfLinkedResourcesInfo badge badge-light">

@@ -187,18 +187,6 @@ describe('resources --', () => {
     });
 
 
-    it('messages -- show the success message after saving via modal', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        ResourcesPage.openEditByDoubleClickResource('12');
-        DoceditPage.typeInInputField('identifier', '34');
-        DoceditPage.clickCloseEdit('save');
-
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
-    });
-
-
     it('fields', () => { // formerly sidebar/info
 
         ResourcesPage.performCreateResource('1', 'feature-architecture',

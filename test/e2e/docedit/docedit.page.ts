@@ -85,7 +85,7 @@ export class DoceditPage {
     };
 
 
-    public static clickSaveDocument(clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
+    public static clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {

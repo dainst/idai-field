@@ -43,7 +43,7 @@ export class NavbarPage {
     public static clickCloseAllMessages() {
 
         browser.wait(EC.presenceOf(element.all(by.css('.alert button')).first()), delays.ECWaitTime);
-        return element.all(by.css('.alert button')).then(buttonEls=>{
+        return element.all(by.css('.alert button')).then(buttonEls => {
             for (let buttonEl of buttonEls.reverse()) {
                 buttonEl.click();
             }

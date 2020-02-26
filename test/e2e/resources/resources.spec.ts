@@ -87,14 +87,12 @@ describe('resources --', () => {
 
     it('messages - everything fine / missing identifier', () => {
 
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.performCreateResource('12');
 
         browser.sleep(2500);
 
         // warn if identifier is missing
-        ResourcesPage.performCreateResource('', 'feature',
-            'diary', 'p', undefined,
-            false, false);
+        ResourcesPage.performCreateResource('', 'feature', 'diary', 'p', undefined, false);
 
         NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
         NavbarPage.awaitAlert('Bezeichner', false);
@@ -114,7 +112,7 @@ describe('resources --', () => {
 
         // same identifier
         ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,undefined,false, false);
+            undefined,undefined,false);
 
         NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickCloseAllMessages();
@@ -172,9 +170,6 @@ describe('resources --', () => {
         ResourcesPage.clickContextMenuDeleteButton();
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newIdentifier');
         ResourcesPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickCloseAllMessages();
-
         browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')), delays.ECWaitTime);
 
         // create

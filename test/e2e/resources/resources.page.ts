@@ -329,8 +329,7 @@ export class ResourcesPage {
     // sequences
 
     public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
-                                        inputFieldText?: string, skipGeometry?: boolean,
-                                        clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
+                                        inputFieldText?: string, skipGeometry?: boolean, waitForModalToClose: boolean = true) {
 
         this.clickCreateResource();
         this.clickSelectResourceType(typeName);
@@ -339,7 +338,7 @@ export class ResourcesPage {
         if (inputFieldName && inputFieldText) {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
-        DoceditPage.clickSaveDocument(clickMsgAway, waitForModalToClose);
+        DoceditPage.clickSaveDocument(false, waitForModalToClose);
     }
 
 

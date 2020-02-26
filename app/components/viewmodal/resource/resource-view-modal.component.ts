@@ -26,9 +26,9 @@ export class ResourceViewModalComponent extends ViewModalComponent implements Do
     public document: FieldDocument;
     public expandAllGroups: boolean = false;
     public imageInfoScrollbarVisible: boolean = false;
+    public openResourceSection: string|undefined = 'stem';
+    public openImageSection: string|undefined = 'stem';
 
-    private openResourceSection: string|undefined = 'stem';
-    private openImageSection: string|undefined = 'stem';
     private resourceEdited: boolean = false;
 
 

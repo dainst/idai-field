@@ -4335,6 +4335,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.images.success.wldFileUploaded" datatype="html">
+        <source>Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</source>
+        <target state="final">Georeference data from a world file has been added to one image.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.images.success.wldFilesUploaded" datatype="html">
+        <source>Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</source>
+        <target state="final">Georeference data from world files has been added to [0] images.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.images.error.fileReader" datatype="html">
         <source>Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</source>
         <target state="final">Failed to read the file '[0]' from the local file system.</target>
@@ -4361,7 +4377,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.unmachtedWldFiles" datatype="html">
         <source>Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]</source>
-        <target state="new">Die folgenden World-Files konnten nicht geladen werden. Die entsprechenden Bilddateien konnten nicht gefunden werden: [0]</target>
+        <target state="final">Failed to import the following world files: [0]. No corresponding images were found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

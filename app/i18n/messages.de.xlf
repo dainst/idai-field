@@ -4267,6 +4267,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.images.success.wldFileUploaded" datatype="html">
+        <source>Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</source>
+        <target state="final">Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.images.success.wldFilesUploaded" datatype="html">
+        <source>Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</source>
+        <target state="final">Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.images.error.fileReader" datatype="html">
         <source>Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</source>
         <target state="final">Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</target>

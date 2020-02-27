@@ -13,7 +13,7 @@ import {AngularUtility} from '../../angular/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {ViewFacade} from '../../core/resources/view/view-facade';
+import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 
 
@@ -222,7 +222,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async switchMode(mode: 'map'|'list'|'types') {
+    public async switchMode(mode: ResourcesViewMode) {
 
         if (!this.isReady()) return;
 

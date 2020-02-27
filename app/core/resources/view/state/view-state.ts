@@ -1,6 +1,7 @@
 import {FieldDocument} from 'idai-components-2';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
+import {ResourcesViewMode} from '../view-facade';
 
 
 /**
@@ -12,7 +13,7 @@ export interface ViewState {
     operation: FieldDocument|undefined;
     layerIds: string[];
     navigationPath: NavigationPath;
-    mode: 'map'|'list'|'types';
+    mode: ResourcesViewMode;
 
     // Extended search mode. The name bypassHierarchy is legacy and is kept to prevent issues with existing
     // config.json files.
@@ -26,7 +27,7 @@ export interface ViewState {
 
 export module ViewState {
 
-    export function build(mode: 'map'|'list'|'types' = 'map'): ViewState {
+    export function build(mode: ResourcesViewMode = 'map'): ViewState {
 
         return {
             operation: undefined,

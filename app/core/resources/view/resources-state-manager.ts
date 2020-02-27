@@ -10,6 +10,7 @@ import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
 import {ProjectTypes} from '../../configuration/project-types';
+import {ResourcesViewMode} from './view-facade';
 
 
 /**
@@ -80,7 +81,7 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
-        const currentMode: 'map'|'list'|'types' = this.getMode();
+        const currentMode: ResourcesViewMode = this.getMode();
 
         this.resourcesState.view = viewName;
 
@@ -118,7 +119,7 @@ export class ResourcesStateManager {
     }
 
 
-    public getMode(): 'map'|'list'|'types' {
+    public getMode(): ResourcesViewMode {
 
         return ResourcesState.getMode(this.resourcesState);
     }
@@ -161,7 +162,7 @@ export class ResourcesStateManager {
     }
 
 
-    public setMode(mode: 'map'|'list'|'types') {
+    public setMode(mode: ResourcesViewMode) {
 
         ResourcesState.setMode(this.resourcesState, mode);
         this.serialize();

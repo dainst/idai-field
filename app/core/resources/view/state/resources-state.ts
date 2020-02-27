@@ -3,6 +3,7 @@ import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
+import {ResourcesViewMode} from '../view-facade';
 
 
 /**
@@ -86,7 +87,7 @@ export module ResourcesState {
     }
 
 
-    export function getMode(state: ResourcesState): 'map'|'list'|'types' {
+    export function getMode(state: ResourcesState): ResourcesViewMode {
 
         return viewState(state).mode;
     }
@@ -145,7 +146,7 @@ export module ResourcesState {
     }
 
 
-    export function setMode(state: ResourcesState, mode: 'map'|'list'|'types') {
+    export function setMode(state: ResourcesState, mode: ResourcesViewMode) {
 
         viewState(state).mode = mode;
     }

@@ -8,6 +8,10 @@ import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 
+
+export type ResourcesViewMode = 'map'|'list'|'types';
+
+
 /**
  * Manages an overview of operation type resources
  * and different views for each operation type.
@@ -85,7 +89,7 @@ export class ViewFacade {
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: 'map'|'list'|'types') => this.resourcesStateManager.setMode(mode);
+    public setMode = (mode: ResourcesViewMode) => this.resourcesStateManager.setMode(mode);
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 

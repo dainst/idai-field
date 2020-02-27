@@ -13,6 +13,8 @@ import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import { IdaiFieldFindResult } from '../../../core/datastore/cached/cached-read-datastore';
+import { readWldFile } from '../../../core/images/wld/wld-import';
 
 export interface ImageUploadResult {
 
@@ -28,7 +30,8 @@ export interface ImageUploadResult {
  */
 export class ImageUploader {
 
-    public static readonly supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
+    public static readonly supportedImageFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
+    public static readonly supportedWorldFileTypes: Array<string> = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
 
 
     public constructor(
@@ -58,12 +61,13 @@ export class ImageUploader {
         }
 
         const files = ImageUploader.getFiles(event);
-        const result = ExtensionUtil.reportUnsupportedFileTypes(files, ImageUploader.supportedFileTypes);
+        const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
+        const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
         if (result[1]) {
             uploadResult.messages.push([
                 M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS,
                 result[1],
-                ImageUploader.supportedFileTypes.map(extension => '.' + extension).join(', ')
+                supportedFileTypes.map(extension => '.' + extension).join(', ')
             ]);
         }
         if (result[0] == 0) return Promise.resolve(uploadResult);
@@ -102,59 +106,101 @@ export class ImageUploader {
     }
 
 
-    private uploadFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
+    private async uploadFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
                         depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
-        if (!files) return Promise.resolve(uploadResult);
+        if (!files) uploadResult;
 
         this.uploadStatus.setTotalImages(files.length);
         this.uploadStatus.setHandledImages(0);
 
         const duplicateFilenames: string[] = [];
-        let promise: Promise<any> = Promise.resolve();
+        let wldFiles: File[] = [];
 
         for (let file of files) {
-            if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedFileTypes)) {
+            if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
+                if (!ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedWorldFileTypes)) {
+                    wldFiles.push(file);
+                }
             } else {
-                promise = promise.then(() => this.isDuplicateFilename(file.name))
-                    .then(isDuplicateFilename => {
-                        if (!isDuplicateFilename) {
-                            return this.uploadFile(file, type, depictsRelationTarget);
-                        } else {
-                            duplicateFilenames.push(file.name);
-                        }
-                    }).then(() => this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1));
+                try {
+                    await this.findImageByFilename(file.name)
+                        .then(result => result.totalCount > 0)
+                        .then(isDuplicateFilename => {
+                            if (!isDuplicateFilename) {
+                                return this.uploadFile(file, type, depictsRelationTarget);
+                            } else {
+                                duplicateFilenames.push(file.name);
+                            }
+                        }).then(() => this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1));
+                } catch(e) {
+                    uploadResult.messages.push(e);
+                }
             }
         }
 
-        return promise.then(
-            () => {
-                uploadResult.uploadedImages = this.uploadStatus.getHandledImages() - duplicateFilenames.length;
-            }, msgWithParams => {
-                uploadResult.messages.push(msgWithParams);
-            }
-        ).then(
-            () => {
-                if (duplicateFilenames.length == 1) {
-                    uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
-                } else if (duplicateFilenames.length > 1) {
-                    uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
-                }
+        uploadResult.uploadedImages = this.uploadStatus.getHandledImages() - duplicateFilenames.length;
+        if (duplicateFilenames.length == 1) {
+            uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
+        } else if (duplicateFilenames.length > 1) {
+            uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
+        }
 
-                return Promise.resolve(uploadResult);
-            }
-        )
+        if (wldFiles.length) {
+            uploadResult.messages = uploadResult.messages.concat(await this.handleWldFiles(wldFiles));
+        }
+
+        return uploadResult;
     }
 
 
-    private isDuplicateFilename(filename: string): Promise<boolean> {
+    private async handleWldFiles(files: File[]) {
+
+        let messages: Array<string[]> = [];
+        let unmatchedWldFiles = [];
+
+        outer: for (let file of files) {
+            for (let extension of ImageUploader.supportedImageFileTypes) {
+                const candidateName = ExtensionUtil.replaceExtension(file, extension);
+                const result = await this.findImageByFilename(candidateName);
+                if (result.totalCount > 0) {
+                    try {
+                        await this.saveWldFile(file, result.documents[0]);
+                        continue outer;
+                    } catch (e) {
+                        messages.push(e);
+                    }
+                }
+            }
+            unmatchedWldFiles.push(file.name);
+        }
+        
+        (unmatchedWldFiles.length > 0)
+            && messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        
+        const matchedFiles = files.length - unmatchedWldFiles.length;
+        (matchedFiles == 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        (matchedFiles > 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+
+        return messages;
+    }
+
+
+    private async saveWldFile(file: File, document: Document) {
+
+        document.resource.georeference = readWldFile(file, document);
+        await this.persistenceManager.persist(document, this.usernameProvider.getUsername());
+    }
+
+
+    private findImageByFilename(filename: string): Promise<IdaiFieldFindResult<Document>> {
 
         return this.datastore.find({
             constraints: {
                 'identifier:match' : filename
             }
-        }).then(result => result.totalCount > 0);
+        });
     }
 
 

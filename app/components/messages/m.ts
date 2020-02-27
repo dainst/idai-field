@@ -7,7 +7,7 @@ import {MD, Message} from 'idai-components-2';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-@Injectable()
+@Injectable() 
 export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just 'M'.
 
     // Internal messages from components
@@ -150,9 +150,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
+    public static IMAGES_SUCCESS_WLD_FILE_UPLOADED = 'images.success.wldFileUploaded';
+    public static IMAGES_SUCCESS_WLD_FILES_UPLOADED = 'images.success.wldFilesUploaded';
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -1194,6 +1197,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMAGES_SUCCESS_WLD_FILE_UPLOADED] = {
+            content: i18n({
+                id: 'messages.images.success.wldFileUploaded',
+                value: 'Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_SUCCESS_WLD_FILES_UPLOADED] = {
+            content: i18n({
+                id: 'messages.images.success.wldFilesUploaded',
+                value: 'Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMAGES_ERROR_FILEREADER] = {
             content: i18n({
                 id: 'messages.images.error.fileReader',
@@ -1216,6 +1237,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.images.error.duplicateFilenames',
                 value: 'Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {
+            content: i18n({
+                id: 'messages.images.error.unmachtedWldFiles',
+                value: 'Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]'
             }),
             level: 'danger',
             params: [],

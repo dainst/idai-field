@@ -4359,6 +4359,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.images.error.unmachtedWldFiles" datatype="html">
+        <source>Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]</source>
+        <target state="new">Die folgenden World-Files konnten nicht geladen werden. Die entsprechenden Bilddateien konnten nicht gefunden werden: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath" datatype="html">
         <source>Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</source>
         <target state="final">The image directory could not be found. The directory path '[0]' is invalid.</target>

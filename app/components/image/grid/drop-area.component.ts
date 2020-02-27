@@ -70,7 +70,8 @@ export class DropAreaComponent {
 
     public getSupportedFileExtensions(): string {
 
-        return ImageUploader.supportedFileTypes
+        return ImageUploader.supportedImageFileTypes
+            .concat(ImageUploader.supportedWorldFileTypes)
             .map(extension => '.' + extension)
             .join(',');
     }

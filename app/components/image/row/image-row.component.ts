@@ -21,7 +21,6 @@ export type ImageRowItem = {
 
     imageId: string|'PLACEHOLDER';
     document: Document;
-    width?: number;
 }
 
 

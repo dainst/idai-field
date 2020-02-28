@@ -47,10 +47,6 @@ export const last2 = compose(
         () => { throw 'Illegal argument, length must be at least 2' }));
 
 
-// TODO maybe remove
-export const ultimate = last;
-
-
 /**
  * Dissociates the given indices from an array.
  *

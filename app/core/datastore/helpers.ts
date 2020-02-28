@@ -1,6 +1,7 @@
 import {append, compose, dropRight, flow, takeRight,
-    take, drop, cond, size, is, last, identity} from 'tsfun';
+    take, drop, cond, size, isnt, last} from 'tsfun';
 import {Document} from 'idai-components-2';
+import {throws} from '../util/utils';
 
 
 /**
@@ -37,14 +38,12 @@ function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): 
 }
 
 
-const lengthIs2 = compose(size, is(2));
+const lengthIsnt2 = compose(size, isnt(2));
 
 
 export const last2 = compose(
     takeRight(2),
-    cond(lengthIs2,
-        identity,
-        () => { throw 'Illegal argument, length must be at least 2' }));
+    cond(lengthIsnt2, throws('Illegal argument, length must be at least 2')));
 
 
 /**

@@ -4,7 +4,7 @@ import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
 import {RESOURCE_IDENTIFIER} from '../../../constants';
 import {processRelations} from './process-relations';
-import {Get, GetInverseRelation} from '../types';
+import {Get} from '../types';
 import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';

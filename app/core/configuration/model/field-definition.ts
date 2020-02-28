@@ -23,7 +23,7 @@ export interface FieldDefinition {
         |'dimension'
         |'geometry'
         |'instanceOf'
-        |'default'; // TODO review value 'default'
+        |'default';
     valuelist?: string[];
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true

@@ -7,6 +7,7 @@ import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
 const COLOR = 'color';
 const MANDATORY = 'mandatory';
 const VISIBLE = 'visible';
+const PARENT = 'parent';
 
 /**
  * ProjectConfiguration maintains the current projects properties.
@@ -57,9 +58,6 @@ export class ProjectConfiguration {
     }
 
 
-    /**
-     * @returns {Array<IdaiType>} All types in flat array, ignoring hierarchy
-     */
     public getTypesList(): Array<IdaiType> {
 
         return values(this.typesMap);
@@ -74,7 +72,7 @@ export class ProjectConfiguration {
 
     public getTypesTree(): { [typeName: string]: IdaiType } {
 
-        return remove(on('parent', isDefined))(this.typesMap);
+        return remove(on(PARENT, isDefined))(this.typesMap);
     }
 
     /**

@@ -42,16 +42,17 @@ export module ProjectConfigurationUtils {
         for (let type of configuration.types) {
             if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
         }
-        const typesMap: { [typeName: string]: IdaiType } = makeTypesMap(configuration.types);
+        return configuration.types.reduce(addParentType, makeTypesMap(configuration.types));
+    }
 
-        for (let type of configuration.types) {
-            if (type['parent']) {
-                const parentType = typesMap[type.parent as any];
-                if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-                IdaiType.addChildType(parentType, typesMap[type.type]);
-            }
+
+    function addParentType(typesMap: { [typeName: string]: IdaiType }, type: TypeDefinition) {
+
+        if (type['parent']) {
+            const parentType = typesMap[type.parent];
+            if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+            IdaiType.addChildType(parentType, typesMap[type.type]);
         }
-
         return typesMap;
     }
 
@@ -63,8 +64,8 @@ export module ProjectConfigurationUtils {
 
         const availableRelationFields: Array<RelationDefinition> = [];
         for (let relationField of relationFields) {
-            const types: string[] = isRangeType ? relationField.range : relationField.domain;
 
+            const types: string[] = isRangeType ? relationField.range : relationField.domain;
             if (types.indexOf(typeName) > -1) {
                 if (!property ||
                     (relationField as any)[property] == undefined ||
@@ -114,12 +115,12 @@ export module ProjectConfigurationUtils {
     }
 
 
-    function makeTypesMap(types: Array<TypeDefinition>) {
+    function makeTypesMap(types: Array<TypeDefinition>): { [typeName: string]: IdaiType } {
 
         return flow(
             types,
             map(IdaiType.build),
-            makeLookup(NAME)) as { [typeName: string]: IdaiType };
+            makeLookup(NAME));
     }
 
 

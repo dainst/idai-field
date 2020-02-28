@@ -7,12 +7,13 @@ import {RoutingService} from '../routing-service';
 import {GroupUtil} from '../../core/model/group-util';
 import {Name, ResourceId} from '../../core/constants';
 import {GROUP_NAME} from '../constants';
-import {isBoolean} from '../../core/util/utils';
+import {isBoolean, pick} from '../../core/util/utils';
 import {UtilTranslations} from '../../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS} from '../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
+import {FieldDefinition} from '../../core/configuration/model/field-definition';
 
 
 type FieldViewGroupDefinition = {
@@ -229,9 +230,8 @@ export class FieldsViewComponent implements OnChanges {
 
     private getLabel(type: Name, field: Name): string {
 
-        return (this.projectConfiguration
-            .getTypesMap() as any /* TODO review */)[type].fields
-            .find(on(NAME, is(field))).label;
+        return (pick(this.projectConfiguration.getTypesMap(), type).fields
+            .find(on(NAME, is(field))) as FieldDefinition).label as string;
     }
 
 

@@ -119,6 +119,16 @@ export function objectReduce<T,A>(f: (acc: ObjectCollection<T>, a: A, i?: string
 }
 
 
+export function pick<T>(struct: ObjectCollection<T>, targetId: string): T;
+export function pick<A>(as: Array<A>, targetId: number): A;
+export function pick<A>(struct: ObjectCollection<A>|Array<A>, targetId: string|number): A  {
+
+    const result = (struct as any)[targetId];
+    if (!result) throw 'assertion violation - given key/index does not exist on associative';
+    return result as A;
+}
+
+
 /**
  * keys = ['a', 'b']
  * o = { a: 1, b: 2, c: 3 }

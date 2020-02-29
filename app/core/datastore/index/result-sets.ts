@@ -44,8 +44,7 @@ export module ResultSets {
     export function combine(resultSets: ResultSets,
                             indexItems: Array<IndexItem>, subtract: undefined|true = undefined) {
 
-
-        const keys = []; // TODO use makeLookup
+        const keys = [];
         for (let item of indexItems) {
             resultSets.map[item.id] = item;
             keys.push(item.id)

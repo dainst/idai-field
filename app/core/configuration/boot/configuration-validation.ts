@@ -14,14 +14,13 @@ export module ConfigurationValidation {
 
 
     export function findMissingRelationType(relations: Array<RelationDefinition>,
-                                          types: string[]): Array<Array<string>> {
+                                            types: string[]): Array<Array<string>> {
 
         let msgs = [] as any;
 
         function addMissingRelTypes(rangeOrDomain: string[]|undefined) {
             if (!rangeOrDomain) return;
             for (let type of rangeOrDomain) {
-                // TODO this is not done with : anymore
                 const typeWithoutInheritanceSuffix = type.substring(0, type.indexOf(':') !== -1 ? type.indexOf(':') : undefined);
                 if (types.indexOf(typeWithoutInheritanceSuffix) === -1 && type !== 'Project') {
                     msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONTYPE as never, type] as never);

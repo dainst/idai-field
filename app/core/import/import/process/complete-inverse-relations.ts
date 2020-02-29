@@ -1,5 +1,5 @@
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
-    isNot, isUndefinedOrEmpty, lookup, keys, values, empty,
+    isNot, isUndefinedOrEmpty, lookup, keys, values, empty, pairWith,
     map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
@@ -57,7 +57,7 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
     setInverseRelationsForImportResources(
         importDocuments,
         documentsLookup,
-        pairRelationWithItsInverse(inverseRelationsMap), // TODO use pairWith instead
+        inverseRelationsMap,
         assertIsAllowedRelationDomainType);
 
     return await setInverseRelationsForDbResources(
@@ -88,7 +88,7 @@ function getTargetIds(mergeMode: boolean,
             return [
                 targetIds,
                 subtract<ResourceId>(targetIds)(
-                    targetIdsReferingToDbResources(oldVersion as any, documentsLookup)
+                    targetIdsReferingToDbResources(oldVersion, documentsLookup)
                 )
             ];
         }
@@ -110,19 +110,16 @@ function targetIdsReferingToDbResources(document: Document,
 
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
                                                documentsLookup: { [_: string]: Document },
-                                               pairRelationWithItsInverse: (_: string) => [string, string|undefined],
+                                               inverseRelationsMap: InverseRelationsMap,
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {
 
-        const assertNotBadlyInterrelated_ = assertNotBadlyInterrelated(importDocument);
-        const setInverses_ = setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainType);
-
         flow(importDocument.resource.relations,
             keys,
-            map(pairRelationWithItsInverse),
-            forEach(assertNotBadlyInterrelated_),
-            forEach(setInverses_));
+            map(pairWith(lookup(inverseRelationsMap))),
+            forEach(assertNotBadlyInterrelated(importDocument)),
+            forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainType)));
     }
 }
 
@@ -155,17 +152,6 @@ function setInverses(importDocument: Document,
             forEach(assertInSameOperationWith(importDocument)),
             map(to('resource.relations')),
             forEach(setInverse(importDocument.resource.id, inverseRelationName as string)));
-    }
-}
-
-
-function pairRelationWithItsInverse(inverseRelationsMap: InverseRelationsMap) {
-
-    return (relationName: string): [string, string|undefined] => {
-
-        return relationName === RECORDED_IN
-            ? [RECORDED_IN, undefined]
-            : [relationName, inverseRelationsMap[relationName]];
     }
 }
 

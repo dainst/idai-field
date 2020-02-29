@@ -57,7 +57,6 @@ export class DescendantsUtility {
             constraints: {
                 'liesWithin:contain': {
                     value: resourceId,
-                    type: 'add',
                     searchRecursively: true
                 }
             },

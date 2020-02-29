@@ -197,7 +197,7 @@ describe('performQuery', () => {
         const q: Query = {
             q: 'doc',
             constraints: {
-                'isRecordedIn:contain': { value: 'id2', type: 'subtract' }
+                'isRecordedIn:contain': { value: 'id2', subtract: true }
             }
         };
 
@@ -223,7 +223,7 @@ describe('performQuery', () => {
         const q: Query = {
             q: 'doc',
             constraints: {
-                'liesWithin:contain': { value: 'id1', type: 'add', searchRecursively: true }
+                'liesWithin:contain': { value: 'id1', searchRecursively: true }
             }
         };
 

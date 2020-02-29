@@ -42,16 +42,16 @@ export module ResultSets {
 
 
     export function combine(resultSets: ResultSets,
-                            indexItems: Array<IndexItem>, mode: string = 'add') {
+                            indexItems: Array<IndexItem>, subtract: undefined|true = undefined) {
 
 
-        const keys = [];
+        const keys = []; // TODO use makeLookup
         for (let item of indexItems) {
             resultSets.map[item.id] = item;
             keys.push(item.id)
         }
 
-        (mode !== 'subtract'
+        (!subtract
             ? resultSets.addSets
             : resultSets.subtractSets)
             .push(keys);
@@ -63,7 +63,7 @@ export module ResultSets {
         const addSetIds: string[] = intersection(resultSets.addSets);
 
         return flow(
-            resultSets.subtractSets.length === 0
+            resultSets.subtractSets.length === 0 // TODO use cond and isEmpty
                 ? addSetIds
                 : subtract(union(resultSets.subtractSets))(addSetIds),
             pickFrom(resultSets));

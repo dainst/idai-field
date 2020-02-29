@@ -63,7 +63,7 @@ export class TypeRelationPickerComponent {
     private async fetchCatalogs() {
 
         this.availableCatalogs =
-            await flow(
+            flow(
                 await this.datastore.find({ types: ['TypeCatalog'] }),
                 to('documents'),
                 map(to('resource')));
@@ -113,7 +113,6 @@ export class TypeRelationPickerComponent {
         if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
             (query.constraints as any)['liesWithin:contain'] = {
                 value: (selectedCatalog as FieldResource).id,
-                type: 'add', // TODO allow to omit this
                 searchRecursively: true
             } as Constraint;
         }

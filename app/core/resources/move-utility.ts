@@ -43,7 +43,7 @@ export module MoveUtility {
         return {
             'id:match': {
                 value: await getResourceIdsToSubtract(document, indexFacade),
-                type: 'subtract'
+                subtract: true
             }
         };
     }

@@ -49,13 +49,13 @@ function performConstraints(constraintIndex: ConstraintIndex,
     return keys(constraints)
         .reduce((resultSets, name: string) => {
 
-            const { type, value, searchRecursively } = Constraint.convertTo(constraints[name]);
+            const { subtract, value, searchRecursively } = Constraint.convert(constraints[name]);
 
             const get = !searchRecursively
                 ? ConstraintIndex.get
                 : ConstraintIndex.getWithDescendants;
 
-            ResultSets.combine(resultSets, get(constraintIndex, name, value), type);
+            ResultSets.combine(resultSets, get(constraintIndex, name, value), subtract);
             return resultSets;
         }, ResultSets.make());
 }

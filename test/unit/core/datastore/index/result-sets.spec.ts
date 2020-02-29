@@ -8,7 +8,7 @@ describe('ResultSets', () => {
 
     it('basic stuff', () => {
 
-        let r: ResultSets = ResultSets.make();
+        const r: ResultSets = ResultSets.make();
 
         ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
         ResultSets.combine(r,[{id:'2'},{id:'2'}] as any);
@@ -20,7 +20,7 @@ describe('ResultSets', () => {
 
     it('no intersection', () => {
 
-        let r: ResultSets = ResultSets.make();
+        const r: ResultSets = ResultSets.make();
 
         ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
         ResultSets.combine(r,[{id:'3'},{id:'4'}] as any);
@@ -31,7 +31,7 @@ describe('ResultSets', () => {
 
     it('no intersection with more results', () => {
 
-        let r: ResultSets = ResultSets.make();
+        const r: ResultSets = ResultSets.make();
 
         ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
         ResultSets.combine(r,[{id:'2'},{id:'3'}] as any);
@@ -43,10 +43,10 @@ describe('ResultSets', () => {
 
     it('subtract', () => {
 
-        let r: ResultSets = ResultSets.make();
+        const r: ResultSets = ResultSets.make();
 
         ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
-        ResultSets.combine(r,[{ id: '3' }, { id: '4' }] as any, 'subtract');
+        ResultSets.combine(r,[{ id: '3' }, { id: '4' }] as any, true);
 
         expect(ResultSets.collapse(r)).toEqual([{ id: '1' }, { id: '2' }] as any);
     });
@@ -54,12 +54,12 @@ describe('ResultSets', () => {
 
     it('subtract and add multiple', () => {
 
-        let r: ResultSets = ResultSets.make();
+        const r: ResultSets = ResultSets.make();
 
         ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
         ResultSets.combine(r,[{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }] as any);
-        ResultSets.combine(r,[{ id: '3' }] as any, 'subtract');
-        ResultSets.combine(r,[{ id: '4' }] as any, 'subtract');
+        ResultSets.combine(r,[{ id: '3' }] as any, true);
+        ResultSets.combine(r,[{ id: '4' }] as any, true);
 
         expect(ResultSets.collapse(r)).toEqual([{ id: '2' }] as any);
     });

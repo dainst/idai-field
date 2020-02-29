@@ -1039,6 +1039,6 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes,
             {}, {}, {});
 
-        // TODO write expectation; throw error
+        // expectation?
     });
 });

@@ -1,7 +1,7 @@
 import {TypeDefinition} from './model/type-definition';
 import {flow, map} from 'tsfun';
 import {IdaiType} from './model/idai-type';
-import {makeLookup} from '../util/utils';
+import {makeLookup, objectReduce} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
@@ -36,24 +36,25 @@ export module ProjectConfigurationUtils {
     }
 
 
-
     export function initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {
             if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
         }
-        return configuration.types.reduce(addParentType, makeTypesMap(configuration.types));
+        return objectReduce(
+            addParentType,
+            makeTypesMap(configuration.types))
+        (configuration.types);
     }
 
 
     function addParentType(typesMap: { [typeName: string]: IdaiType }, type: TypeDefinition) {
 
-        if (type['parent']) {
-            const parentType = typesMap[type.parent];
-            if (parentType == undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-            IdaiType.addChildType(parentType, typesMap[type.type]);
-        }
-        return typesMap;
+        if (!type.parent) return;
+
+        const parentType = typesMap[type.parent];
+        if (parentType === undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+        IdaiType.addChildType(parentType, typesMap[type.type]);
     }
 
 

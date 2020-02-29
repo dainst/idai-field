@@ -38,10 +38,8 @@ export module IdaiType {
     }
 
 
-    // TODO make function pure
-    export function addChildType(type: IdaiType, child: IdaiType) {
+    export function addChildType(type: IdaiType, child: IdaiType): void {
 
-        if (!type.children) type.children = [];
         try {
             setParentType(child, type);
         } catch (e) {
@@ -49,11 +47,11 @@ export module IdaiType {
             e.push(child.name);
             throw [e];
         }
-        type.children.push(child)
+        type.children = (type.children || []).concat(child);
     }
 
 
-    function setParentType(type: IdaiType, parent: IdaiType) {
+    function setParentType(type: IdaiType, parent: IdaiType): void {
 
         type.parentType = parent;
 
@@ -65,7 +63,8 @@ export module IdaiType {
     }
 
 
-    function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
+    function getCombinedFields(parentFields: Array<FieldDefinition>,
+                               childFields: Array<FieldDefinition>) {
 
         const fields: Array<FieldDefinition> = clone(parentFields);
 

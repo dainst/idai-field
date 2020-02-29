@@ -39,7 +39,7 @@ export module ProjectConfigurationUtils {
     export function initTypes(configuration: ConfigurationDefinition) {
 
         for (let type of configuration.types) {
-            if (!type.color) type.color = ProjectConfigurationUtils.generateColorForType(type.type);
+            type.color = type.color ?? ProjectConfigurationUtils.generateColorForType(type.type);
         }
         return objectReduce(
             addParentType,

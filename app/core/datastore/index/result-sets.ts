@@ -1,4 +1,4 @@
-import {intersection, NestedArray, union, subtract, lookup, flow, map} from 'tsfun';
+import {intersection, NestedArray, union, subtract, lookup, flow, map, cond, on, isNot, empty} from 'tsfun';
 import {IndexItem} from './index-item';
 
 type ResourceId = string;
@@ -60,12 +60,11 @@ export module ResultSets {
 
     export function collapse(resultSets: ResultSets): Array<IndexItem> {
 
-        const addSetIds: string[] = intersection(resultSets.addSets);
-
         return flow(
-            resultSets.subtractSets.length === 0 // TODO use cond and isEmpty
-                ? addSetIds
-                : subtract(union(resultSets.subtractSets))(addSetIds),
+            intersection(resultSets.addSets),
+            cond(
+                isNot(empty)(resultSets.subtractSets),
+                subtract(union(resultSets.subtractSets))),
             pickFrom(resultSets));
     }
 

@@ -53,7 +53,7 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] });
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] } as any);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('A Field');
     });
@@ -70,7 +70,7 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] });
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] } as any);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('aField');
     });
@@ -78,7 +78,7 @@ describe('ProjectConfiguration', () => {
 
     it('should throw an error if field is not defined', () => {
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [] });
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [] } as any);
 
         expect(() => {
             configuration.getFieldDefinitionLabel('UndefinedType','someField');
@@ -89,7 +89,7 @@ describe('ProjectConfiguration', () => {
     it('should let types inherit fields from parent types', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType1] });
+            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType1] } as any);
         const fields = configuration.getFieldDefinitions('SecondLevelType');
 
         expect(fields[0].name).toEqual('fieldA');
@@ -100,7 +100,7 @@ describe('ProjectConfiguration', () => {
     it('list parent type fields first', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [secondLevelType1, firstLevelType]});
+            = new ProjectConfiguration({ types: [secondLevelType1, firstLevelType]} as any);
         const fields = configuration.getFieldDefinitions('SecondLevelType');
 
         expect(fields[0].name).toEqual('fieldA');
@@ -111,7 +111,7 @@ describe('ProjectConfiguration', () => {
     it('should fail if parent type is not defined', () => {
 
         expect(() => {
-            new ProjectConfiguration({ types: [secondLevelType1] });
+            new ProjectConfiguration({ types: [secondLevelType1] } as any);
         }).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 
@@ -119,7 +119,7 @@ describe('ProjectConfiguration', () => {
     xit('should merge child field with parent field of the same name', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [secondLevelType2, firstLevelType]});
+            = new ProjectConfiguration({ types: [secondLevelType2, firstLevelType]} as any);
         const fields = configuration.getFieldDefinitions('SecondLevelType');
 
         expect(fields.length).toBe(1);
@@ -153,7 +153,7 @@ describe('ProjectConfiguration', () => {
         };
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType]});
+            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType]} as any);
         const firstLevelTypeFields = configuration.getFieldDefinitions('FirstLevelType');
         const secondLevelTypeFields = configuration.getFieldDefinitions('SecondLevelType');
 
@@ -190,7 +190,7 @@ describe('ProjectConfiguration', () => {
         };
 
         expect(
-            () => new ProjectConfiguration({ types: [firstLevelType, secondLevelType]})
+            () => new ProjectConfiguration({ types: [firstLevelType, secondLevelType]} as any)
         ).toThrow([['tried to overwrite field of parent type','fieldA','FirstLevelType','SecondLevelType']]);
     });
 });

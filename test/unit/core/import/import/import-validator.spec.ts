@@ -47,7 +47,7 @@ describe('ImportValidator', () => {
                 {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}, // defined but not allowed
                 {name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE'}
             ]
-        }
+        } as any
     );
 
 

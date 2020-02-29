@@ -519,16 +519,16 @@ describe('ConfigLoader', () => {
                  undefined, 'de'
             );
 
-            expect(pconf.getTypesList()[0].name).toEqual('A');
-            expect(pconf.getTypesList()[0].fields[2].name).toEqual('fieldA1');
-            expect(pconf.getTypesList()[0].fields[3].name).toEqual('fieldA2');
-            expect(pconf.getTypesList()[1].name).toEqual('B');
-            expect(pconf.getTypesList()[1].fields[2].name).toEqual('fieldB1');
-            expect(pconf.getTypesList()[1].fields[3].name).toEqual('fieldB2');
-            expect(pconf.getTypesList()[1].fields[4].name).toEqual('fieldB3');
-            expect(pconf.getTypesList()[2].name).toEqual('C');
-            expect(pconf.getTypesList()[2].fields[2].name).toEqual('fieldC1');
-            expect(pconf.getTypesList()[2].fields[3].name).toEqual('fieldC2');
+            expect(pconf.getTypesList()[1].name).toEqual('A');
+            expect(pconf.getTypesList()[1].fields[2].name).toEqual('fieldA1');
+            expect(pconf.getTypesList()[1].fields[3].name).toEqual('fieldA2');
+            expect(pconf.getTypesList()[2].name).toEqual('B');
+            expect(pconf.getTypesList()[2].fields[2].name).toEqual('fieldB1');
+            expect(pconf.getTypesList()[2].fields[3].name).toEqual('fieldB2');
+            expect(pconf.getTypesList()[2].fields[4].name).toEqual('fieldB3');
+            expect(pconf.getTypesList()[3].name).toEqual('C');
+            expect(pconf.getTypesList()[3].fields[2].name).toEqual('fieldC1');
+            expect(pconf.getTypesList()[3].fields[3].name).toEqual('fieldC2');
 
             done();
         } catch(err) {
@@ -571,9 +571,9 @@ describe('ConfigLoader', () => {
             );
 
             expect(pconf.getTypesList().length).toBe(2);
-            expect(pconf.getTypesList()[0].fields.length).toBe(4);  // fieldA1, fieldA2, id, type
-            expect(pconf.getTypesList()[0].fields[2].name).toEqual('fieldA1');
-            expect(pconf.getTypesList()[0].fields[3].name).toEqual('fieldA2');
+            expect(pconf.getTypesList()[1].fields.length).toBe(4);  // fieldA1, fieldA2, id, type
+            expect(pconf.getTypesList()[1].fields[2].name).toEqual('fieldA1');
+            expect(pconf.getTypesList()[1].fields[3].name).toEqual('fieldA2');
 
             done();
         } catch(err) {

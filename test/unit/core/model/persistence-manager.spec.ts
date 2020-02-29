@@ -29,7 +29,7 @@ describe('PersistenceManager', () => {
                 'label': 'Gehört zu'
             }
         ]
-    });
+    } as any);
 
     let mockDatastore;
     let mockDescendantsUtility;

@@ -39,7 +39,7 @@ describe('Validator', () => {
                 {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
                 {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}
             ]
-        }
+        } as any
     );
 
 

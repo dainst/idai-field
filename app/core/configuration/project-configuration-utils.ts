@@ -1,12 +1,13 @@
 import {TypeDefinition} from './model/type-definition';
-import {flow, map} from 'tsfun';
+import {map, on, separate, defined, isNot} from 'tsfun';
 import {IdaiType} from './model/idai-type';
-import {makeLookup, objectReduce} from '../util/utils';
+import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
 
 export const NAME = 'name';
+export const PARENT = 'parent';
 
 /**
  * @author Thomas Kleinke
@@ -14,7 +15,6 @@ export const NAME = 'name';
  * @author Sebastian Cuy
  */
 export module ProjectConfigurationUtils {
-
 
     export function getTypeAndSubtypes(projectTypesMap: { [type: string]: IdaiType },
                                        superTypeName: string): { [typeName: string]: IdaiType } {
@@ -33,28 +33,6 @@ export module ProjectConfigurationUtils {
         }
 
         return subtypes;
-    }
-
-
-    export function initTypes(configuration: ConfigurationDefinition) {
-
-        for (let type of configuration.types) {
-            type.color = type.color ?? ProjectConfigurationUtils.generateColorForType(type.type);
-        }
-        return objectReduce(
-            addParentType,
-            makeTypesMap(configuration.types))
-        (configuration.types);
-    }
-
-
-    function addParentType(typesMap: { [typeName: string]: IdaiType }, type: TypeDefinition) {
-
-        if (!type.parent) return;
-
-        const parentType = typesMap[type.parent];
-        if (parentType === undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-        IdaiType.addChildType(parentType, typesMap[type.type]);
     }
 
 
@@ -79,61 +57,26 @@ export module ProjectConfigurationUtils {
     }
 
 
-    export function getLabel(fieldName: string, fields: Array<any>): string {
+    export function makeTypesMap(configuration: ConfigurationDefinition): { [typeName: string]: IdaiType } {
 
-        for (let field of fields) {
-            if (field.name === fieldName) {
-                return field.label
-                    ? field.label
-                    : fieldName;
-            }
-        }
-        return fieldName;
+        const [parentDefs, childDefs] = separate(on(PARENT, isNot(defined)))(configuration.types);
+        const parentTypes = makeLookup(NAME)(map(IdaiType.build)(parentDefs));
+
+        return childDefs.reduce(addChildType, parentTypes) as { [typeName: string]: IdaiType };
     }
 
 
-    export function generateColorForType(typeName: string): string {
+    function addChildType(typesMap: { [typeName: string]: IdaiType }, childDef: TypeDefinition) {
 
-        const hash = hashCode(typeName);
-        const r = (hash & 0xFF0000) >> 16;
-        const g = (hash & 0x00FF00) >> 8;
-        const b = hash & 0x0000FF;
-        return '#' + ('0' + r.toString(16)).substr(-2)
-            + ('0' + g.toString(16)).substr(-2) + ('0' + b.toString(16)).substr(-2);
-    }
+        const parentType = typesMap[childDef.parent as string];
+        if (parentType === undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
 
+        const childType = IdaiType.build(childDef);
+        childType.fields = IdaiType.makeChildFields(parentType, childType);
+        childType.parentType = parentType;
+        typesMap[childDef.type] = childType;
+        parentType.children.push(childType);
 
-    export function isBrightColor(color: string): boolean {
-
-        color = color.substring(1); // strip #
-        let rgb = parseInt(color, 16);   // convert rrggbb to decimal
-        let r = (rgb >> 16) & 0xff;  // extract red
-        let g = (rgb >>  8) & 0xff;  // extract green
-        let b = (rgb >>  0) & 0xff;  // extract blue
-        let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-        return luma > 200;
-    }
-
-
-    function makeTypesMap(types: Array<TypeDefinition>): { [typeName: string]: IdaiType } {
-
-        return flow(
-            types,
-            map(IdaiType.build),
-            makeLookup(NAME));
-    }
-
-
-    function hashCode(string: any): number {
-
-        let hash = 0, i, chr;
-        if (string.length === 0) return hash;
-        for (i = 0; i < string.length; i++) {
-            chr   = string.charCodeAt(i);
-            hash  = ((hash << 5) - hash) + chr;
-            hash |= 0; // Convert to 32bit integer
-        }
-        return hash;
+        return typesMap;
     }
 }

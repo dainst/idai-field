@@ -28,7 +28,7 @@ describe('ConnectedDocsWriter', () => {
                 'label': 'Gehört zu'
             }
         ]
-    });
+    } as any);
 
     let mockDatastore;
     let connectedDocsWriter: ConnectedDocsWriter;

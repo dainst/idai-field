@@ -3,6 +3,7 @@ import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
+import {ConfigurationDefinition} from './boot/configuration-definition';
 
 const COLOR = 'color';
 const MANDATORY = 'mandatory';
@@ -30,9 +31,9 @@ export class ProjectConfiguration {
     private relations: Array<RelationDefinition> = [];
 
 
-    constructor(configuration: any) {
+    constructor(configuration: ConfigurationDefinition) {
 
-        this.typesMap = ProjectConfigurationUtils.initTypes(configuration);
+        this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration);
         this.relations = configuration.relations || [];
     }
 
@@ -135,7 +136,7 @@ export class ProjectConfiguration {
 
     public getTextColorForType(typeName: string): string {
 
-        return ProjectConfigurationUtils.isBrightColor(this.getColorForType(typeName)) ? '#000000' : '#ffffff';
+        return IdaiType.isBrightColor(this.getColorForType(typeName)) ? '#000000' : '#ffffff';
     }
 
 
@@ -165,7 +166,7 @@ export class ProjectConfiguration {
      */
     public getRelationDefinitionLabel(relationName: string): string {
 
-        return ProjectConfigurationUtils.getLabel(relationName, this.relations);
+        return IdaiType.getLabel(relationName, this.relations);
     }
 
 
@@ -184,7 +185,7 @@ export class ProjectConfiguration {
         if (fieldDefinitions.length == 0)
             throw 'No type definition found for type \'' + typeName + '\'';
 
-        return ProjectConfigurationUtils.getLabel(fieldName, fieldDefinitions);
+        return IdaiType.getLabel(fieldName, fieldDefinitions);
     }
 
 

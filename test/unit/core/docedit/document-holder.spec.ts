@@ -57,7 +57,7 @@ describe('DocumentHolder', () => {
                     'range': ['Trench']
                 }
             ]
-        });
+        } as any);
 
         defaultDocument = {
             _id: '1',

@@ -3,22 +3,25 @@ import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/c
 
 describe('ProjectConfigurationUtils', () => {
 
-   it('initTypes', () => {
+   it('makeTypesMap', () => {
 
       const confDef: ConfigurationDefinition = {
          relations: [],
          identifier: '',
          types: [{
             type: 'A',
-            parent: 'P'
+            parent: 'P',
+            fields: [{ name: 'a', inputType: 'input' }]
          },{
-            type: 'P'
+            type: 'P',
+            fields: [{ name: 'p', inputType: 'input' }]
          }]
       };
 
-      const result = ProjectConfigurationUtils.initTypes(confDef);
+      const result = ProjectConfigurationUtils.makeTypesMap(confDef);
 
-      expect(result['A'].name).toEqual('A');
       expect(result['P'].name).toEqual('P');
+      expect(result['P'].children[0].name).toEqual('A');
+      expect(result['P'].children[0].fields.length).toBe(2);
    });
 });

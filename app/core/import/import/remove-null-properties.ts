@@ -19,7 +19,7 @@ export function removeNullProperties(struct: ObjectCollection<any>|Array<any>): 
     keysAndValues(struct_).forEach(([fieldName, originalFieldValue]: any) => {
 
         if (isObject(struct) && originalFieldValue === undefined) throw "unexpected 'undefined' value found in object parameter in removeNullProperties()";
-        if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING]; // TODO this should have been done earlier
+        if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
 
         if (isAssociative(originalFieldValue)) {
             struct_[fieldName] = removeNullProperties(originalFieldValue);

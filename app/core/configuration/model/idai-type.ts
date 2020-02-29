@@ -3,7 +3,7 @@ import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
 
 
-export interface IdaiType { // TODO review if we can use TypeDefinition directly
+export interface IdaiType {
 
     children: Array<IdaiType>;
     parentType: IdaiType|undefined; //  = undefined;

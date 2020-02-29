@@ -19,7 +19,7 @@ export module ProjectConfigurationUtils {
     export function getTypeAndSubtypes(projectTypesMap: { [type: string]: IdaiType },
                                        superTypeName: string): { [typeName: string]: IdaiType } {
 
-        let subtypes: any = {};
+        const subtypes: any = {};
 
         if (projectTypesMap[superTypeName]) {
             subtypes[superTypeName] = projectTypesMap[superTypeName];

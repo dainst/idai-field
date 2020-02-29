@@ -20,9 +20,6 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
 import {throws} from '../../../util/utils';
 
 
-type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, string|undefined]
-
-
 /**
  * Iterates over all relations (including obsolete relations) of the given resources.
  * Between import resources, it validates the relations.
@@ -60,7 +57,7 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
     setInverseRelationsForImportResources(
         importDocuments,
         documentsLookup,
-        pairRelationWithItsInverse(inverseRelationsMap),
+        pairRelationWithItsInverse(inverseRelationsMap), // TODO use pairWith instead
         assertIsAllowedRelationDomainType);
 
     return await setInverseRelationsForDbResources(
@@ -113,18 +110,17 @@ function targetIdsReferingToDbResources(document: Document,
 
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
                                                documentsLookup: { [_: string]: Document },
-                                               pairRelationWithItsInverse: PairRelationWithItsInverse,
+                                               pairRelationWithItsInverse: (_: string) => [string, string|undefined],
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {
 
-        const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
         const assertNotBadlyInterrelated_ = assertNotBadlyInterrelated(importDocument);
         const setInverses_ = setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainType);
 
         flow(importDocument.resource.relations,
             keys,
-            map(pairRelationWithItsInverse_),
+            map(pairRelationWithItsInverse),
             forEach(assertNotBadlyInterrelated_),
             forEach(setInverses_));
     }
@@ -162,16 +158,14 @@ function setInverses(importDocument: Document,
     }
 }
 
-// TODO remove document param, see if everything can be simplified because the recorded in lookup should give undefined anyway
+
 function pairRelationWithItsInverse(inverseRelationsMap: InverseRelationsMap) {
 
-    return (document: Document) => (relationName: string): [string, string|undefined] => {
+    return (relationName: string): [string, string|undefined] => {
 
-        if (relationName === RECORDED_IN) {
-            return [RECORDED_IN, undefined];
-        } else {
-            return [relationName, inverseRelationsMap[relationName]];
-        }
+        return relationName === RECORDED_IN
+            ? [RECORDED_IN, undefined]
+            : [relationName, inverseRelationsMap[relationName]];
     }
 }
 

@@ -20,7 +20,6 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
 import {throws} from '../../../util/utils';
 
 
-type LookupDocument = (_: string) => Document|undefined;
 type PairRelationWithItsInverse = (_: Document) => (_: string) => [string, string|undefined]
 
 
@@ -56,17 +55,17 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
                                                mergeMode: boolean = false): Promise<Array<Document>> {
 
-    const lookupDocument = lookup(makeDocumentsLookup(importDocuments));
+    const documentsLookup = makeDocumentsLookup(importDocuments);
 
     setInverseRelationsForImportResources(
         importDocuments,
-        lookupDocument,
+        documentsLookup,
         pairRelationWithItsInverse(inverseRelationsMap),
         assertIsAllowedRelationDomainType);
 
     return await setInverseRelationsForDbResources(
         importDocuments,
-        getTargetIds(mergeMode, get, lookupDocument),
+        getTargetIds(mergeMode, get, documentsLookup),
         get,
         inverseRelationsMap,
         assertIsAllowedRelationDomainType,
@@ -76,11 +75,11 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
 
 function getTargetIds(mergeMode: boolean,
                       get: (_: string) => Promise<Document>,
-                      lookupDocument: LookupDocument) {
+                      documentsLookup: { [_: string]: Document },) {
 
     return async (document: Document): Promise<[ResourceId[], ResourceId[]]>  => {
 
-        let targetIds = targetIdsReferingToDbResources(document, lookupDocument);
+        let targetIds = targetIdsReferingToDbResources(document, documentsLookup);
         if (mergeMode) {
             let oldVersion;
             try {
@@ -92,7 +91,7 @@ function getTargetIds(mergeMode: boolean,
             return [
                 targetIds,
                 subtract<ResourceId>(targetIds)(
-                    targetIdsReferingToDbResources(oldVersion as any, lookupDocument)
+                    targetIdsReferingToDbResources(oldVersion as any, documentsLookup)
                 )
             ];
         }
@@ -102,18 +101,18 @@ function getTargetIds(mergeMode: boolean,
 
 
 function targetIdsReferingToDbResources(document: Document,
-                                        lookupDocument: LookupDocument) {
+                                        documentsLookup: { [_: string]: Document }) {
 
     return flow(
         document.resource.relations,
         values,
         flatten,
-        remove(compose(lookupDocument, isDefined)));
+        remove(compose(lookup(documentsLookup), isDefined)));
 }
 
 
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
-                                               lookupDocument: LookupDocument,
+                                               documentsLookup: { [_: string]: Document },
                                                pairRelationWithItsInverse: PairRelationWithItsInverse,
                                                assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
 
@@ -121,7 +120,7 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
 
         const pairRelationWithItsInverse_ = pairRelationWithItsInverse(importDocument);
         const assertNotBadlyInterrelated_ = assertNotBadlyInterrelated(importDocument);
-        const setInverses_ = setInverses(importDocument, lookupDocument, assertIsAllowedRelationDomainType);
+        const setInverses_ = setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainType);
 
         flow(importDocument.resource.relations,
             keys,
@@ -133,7 +132,7 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
 
 
 function setInverses(importDocument: Document,
-                     lookupDocument: LookupDocument,
+                     documentsLookup: { [_: string]: Document },
                      assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
 
     return ([relationName, inverseRelationName]: [string, string|undefined]) => {
@@ -149,7 +148,7 @@ function setInverses(importDocument: Document,
 
         const tmp = flow(
             importDocument.resource.relations[relationName],
-            map(lookupDocument),
+            map(lookup(documentsLookup)),
             filter(isDefined),
             forEach(assertIsAllowedRelationDomainType_));
 

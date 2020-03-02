@@ -24,6 +24,7 @@ export class PouchdbServer {
     public async setupServer() {
 
         const app = express();
+
         app.use(expressBasicAuth( {
             challenge: true,
             authorizer: (_: string, password: string) =>
@@ -31,6 +32,11 @@ export class PouchdbServer {
             unauthorizedResponse: () =>
                 ({ status: 401, reason: "Name or password is incorrect." })
         } ));
+
+        // prevent the creation of new databases when syncing
+        app.put('/:db', (_: any, res: any) =>
+            res.status(401).send( { status: 401 }));
+
         app.use('/', expressPouchDB(PouchDB, {
             mode: 'fullCouchDB',
             overrideMode: {

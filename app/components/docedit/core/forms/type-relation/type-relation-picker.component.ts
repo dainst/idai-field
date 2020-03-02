@@ -108,7 +108,7 @@ export class TypeRelationPickerComponent {
             (query.constraints as any)['id:match'] = {
                 value: resource.relations['isInstanceOf'],
                 subtract: true
-            } as Constraint;
+            };
         }
         if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
             (query.constraints as any)['liesWithin:contain'] = {

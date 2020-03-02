@@ -1,10 +1,14 @@
-import {includedIn, isNot, on, to} from 'tsfun';
-import {map as asyncMap} from 'tsfun/async';
+import {includedIn, isNot, on, to, map, pairWith, val, greaterThan} from 'tsfun';
+import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
 import {Query, FieldDocument} from 'idai-components-2';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
 import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './export-helper';
 import {IdaiType} from '../configuration/model/idai-type';
+
+
+const NAME = 'name';
+const RESOURCE = 'resource';
 
 
 /**
@@ -21,14 +25,6 @@ export module ExportRunner {
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
-    /**
-     * @param find
-     * @param selectedOperationId
-     * @param selectedType
-     * @param relations
-     * @param getIdentifierForId
-     * @param performExport
-     */
     export async function performExport(find: Find,
                                         selectedOperationId: string|undefined,
                                         selectedType: IdaiType,
@@ -36,26 +32,19 @@ export module ExportRunner {
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
-        const rewriteIdentifiers_ = rewriteIdentifiers(getIdentifierForId);
-
-        const fetchDocs = async (selectedOperationId: string) => {
-
-            const docs = await fetchDocuments(find, selectedOperationId, selectedType);
-            return asyncMap(rewriteIdentifiers_)(docs)
-        };
-
-        await performExport(
-            selectedOperationId
-                ? (await fetchDocs(selectedOperationId)).map(to('resource'))
-                : [],
-            selectedType,
-            relations);
+        return await asyncFlow(
+                selectedOperationId
+                    ? await fetchDocuments(find, selectedOperationId, selectedType)
+                    : [],
+                asyncMap(rewriteIdentifiers(getIdentifierForId)),
+                map(to(RESOURCE)),
+                performExport(selectedType, relations));
     }
 
 
     export function getTypesWithoutExcludedTypes(types: Array<IdaiType>, exclusion: string[]) {
 
-        return types.filter(on('name', isNot(includedIn(exclusion))))
+        return types.filter(on(NAME, isNot(includedIn(exclusion))))
     }
 
 
@@ -83,14 +72,14 @@ export module ExportRunner {
                 (await find(query)).totalCount
             ]);
         }
-        return resourceTypeCounts.filter(_ => _[1] > 0);
+        return resourceTypeCounts.filter(on('[1]', greaterThan(0)));
     }
 
 
-    function determineTypeCountsForSchema(typesList: Array<IdaiType>): Array<ResourceTypeCount> {
+    function determineTypeCountsForSchema(typesList: Array<IdaiType>) {
 
         const resourceTypes = getTypesWithoutExcludedTypes(typesList, BASE_EXCLUSION);
-        return resourceTypes.map(type => [type, -1] as ResourceTypeCount);
+        return resourceTypes.map(pairWith(val(-1))) as Array<ResourceTypeCount>;
     }
 
 

@@ -9,7 +9,7 @@ export type ResourceTypeCount = [ IdaiType, Count ];
 
 export type Find = (query: Query) => Promise<IdaiFieldFindResult<Document>>;
 export type GetIdentifierForId = (resourceId: string) => Promise<string>;
-export type PerformExport = (resources: Array<FieldResource>, resourceType: IdaiType, relations: string[]) => Promise<void>;
+export type PerformExport = (resourceType: IdaiType, relations: string[]) => (resources: Array<FieldResource>) => Promise<void>;
 
 
 

@@ -38,7 +38,7 @@ describe('getSuggestions', () => {
             constraints: {
                'id:match': {
                    value: ['id'],
-                   type: 'subtract'
+                   subtract: true
                }
             },
             limit: MAX_SUGGESTIONS,
@@ -70,7 +70,7 @@ describe('getSuggestions', () => {
             constraints: {
                 'id:match': {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
-                    type: 'subtract'
+                    subtract: true
                 }
             },
             limit: MAX_SUGGESTIONS,
@@ -103,7 +103,7 @@ describe('getSuggestions', () => {
             constraints: {
                 'id:match': {
                     value: ['id'],
-                    type: 'subtract'
+                    subtract: true
                 }, 'isRecordedIn:contain': 'operationId',
             },
             limit: MAX_SUGGESTIONS,
@@ -139,7 +139,7 @@ describe('getSuggestions', () => {
             constraints: {
                 'id:match': {
                     value: [],
-                    type: 'subtract'
+                    subtract: true
                 },
             },
             limit: MAX_SUGGESTIONS,

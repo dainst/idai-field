@@ -33,10 +33,10 @@ function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
 function makeConstraints(resource: Resource,
                          relationDefinition: RelationDefinition): { [constraintName: string]: Constraint } {
 
-    const constraints = {
+    const constraints: { [constraintName: string]: Constraint } = {
         'id:match': {
             value: getForbiddenIds(resource, relationDefinition),
-            type: 'subtract'
+            subtract: true
         }
     };
 

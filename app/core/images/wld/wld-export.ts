@@ -5,7 +5,7 @@ import {ExtensionUtil} from '../../util/extension-util';
 export function downloadWldFile(imageDoc: ImageDocument) {
 
     const content = getWldFileContent(imageDoc);
-    const fileName = ExtensionUtil.replaceExtension(imageDoc.resource.identifier, '.wld');
+    const fileName = ExtensionUtil.replaceExtension(imageDoc.resource.identifier, 'wld');
     triggerDownload(content, fileName);    
 }
 

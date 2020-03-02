@@ -55,16 +55,11 @@
       }
     },
     "commons": [
-      "beginningDate",
       "orientation",
-      "endDate",
       "diary",
-      "description",
-      "processor",
       "dimensionLength",
       "dimensionWidth",
       "dimensionVerticalExtent",
-      "area",
       "spatialLocation"
     ],
     "valuelists": {
@@ -736,9 +731,7 @@
         "inputType": "checkboxes"
       }
     },
-    "commons": [
-      "spatialLocation"
-    ],
+    "commons": [],
     "parent": "Area",
     "color": "#339900",
     "valuelists": {

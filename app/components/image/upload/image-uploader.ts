@@ -19,7 +19,7 @@ import { readWldFile } from '../../../core/images/wld/wld-import';
 export interface ImageUploadResult {
 
     uploadedImages: number;
-    messages: Array<Array<string>>;
+    messages: string[][];
 }
 
 @Injectable()
@@ -30,8 +30,8 @@ export interface ImageUploadResult {
  */
 export class ImageUploader {
 
-    public static readonly supportedImageFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
-    public static readonly supportedWorldFileTypes: Array<string> = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
+    public static readonly supportedImageFileTypes: string[] = ['jpg', 'jpeg', 'png'];
+    public static readonly supportedWorldFileTypes: string[] = ['wld', 'jpgw', 'jpegw', 'jgw', 'pngw', 'pgw'];
 
 
     public constructor(
@@ -157,12 +157,12 @@ export class ImageUploader {
 
     private async handleWldFiles(files: File[]) {
 
-        let messages: Array<string[]> = [];
+        let messages: string[][] = [];
         let unmatchedWldFiles = [];
 
         outer: for (let file of files) {
             for (let extension of ImageUploader.supportedImageFileTypes) {
-                const candidateName = ExtensionUtil.replaceExtension(file, extension);
+                const candidateName = ExtensionUtil.replaceExtension(file.name, extension);
                 const result = await this.findImageByFilename(candidateName);
                 if (result.totalCount > 0) {
                     try {
@@ -189,7 +189,7 @@ export class ImageUploader {
 
     private async saveWldFile(file: File, document: Document) {
 
-        document.resource.georeference = readWldFile(file, document);
+        document.resource.georeference = await readWldFile(file, document);
         await this.persistenceManager.persist(document, this.usernameProvider.getUsername());
     }
 

@@ -1,10 +1,11 @@
-import { ImageGeoreference } from "idai-components-2";
-import { Document } from 'idai-components-2';
+import {ImageGeoreference, Document} from 'idai-components-2';
+
 
 export enum Errors {
     FileReaderError,
     InvalidWldFileError
 }
+
 
 export function readWldFile(file: File, doc: Document): Promise<ImageGeoreference> {
 
@@ -19,7 +20,7 @@ export function readWldFile(file: File, doc: Document): Promise<ImageGeoreferenc
 
 function importWldFile(wldfileContent: string, doc: Document): ImageGeoreference {
 
-    const cleanedWldfileContent = removeEmptyLines(wldfileContent.split("\n"));
+    const cleanedWldfileContent = removeEmptyLines(wldfileContent.split('\n'));
     if (worldFileContentIsValid(cleanedWldfileContent)) {
         return createGeoreference(cleanedWldfileContent, doc);
     } else {
@@ -38,9 +39,9 @@ function createGeoreference(worldfileContent: string[], doc: Document): ImageGeo
     const bottomLeftCoordinates: [number, number] = computeLatLng(0, height - 1, worldfileContent);
 
     return {
-        topLeftCoordinates: topLeftCoordinates,
-        topRightCoordinates: topRightCoordinates,
-        bottomLeftCoordinates: bottomLeftCoordinates
+        topLeftCoordinates,
+        topRightCoordinates,
+        bottomLeftCoordinates
     };
 }
 

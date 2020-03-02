@@ -36,8 +36,10 @@ export class ExtensionUtil {
     }
     
     
-    public static replaceExtension = (file: File, extension: string): string =>
-        file.name.substr(0, file.name.lastIndexOf(".")) + "." + extension;
+    public static replaceExtension = (fileName: string, extension: string): string =>
+        (fileName.indexOf('.') === -1)
+            ? fileName + '.' + extension
+            : fileName.substr(0, fileName.lastIndexOf(".")) + "." + extension;
 
 
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {

@@ -22,12 +22,20 @@
         <div class="card-body">
             <div *ngIf="document.resource.georeference" class="field">
                 <span class="field-value" i18n="@@imageView.georeferenceView.present">Vorhanden</span>
-                <div *ngIf="document.resource.georeference" id="delete-georeference-button" class="btn btn-link"
-                     ngbTooltip="Georeferenzdaten löschen"
-                     i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.deleteGeoreferenceData"
-                     (click)="openDeleteModal(deleteModal)">
-                    <span class="mdi mdi-delete"></span>
-                </div>
+                <span *ngIf="document.resource.georeference">
+                    <div id="export-georeference-button" class="btn btn-link"
+                        ngbTooltip="Georeferenzdaten als Worldfile exportieren"
+                        i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.exportGeoreferenceData"
+                        (click)="exportWldFile(deleteModal)">
+                        <span class="mdi mdi-file-export"></span>
+                    </div>
+                    <div id="delete-georeference-button" class="btn btn-link"
+                        ngbTooltip="Georeferenzdaten löschen"
+                        i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.deleteGeoreferenceData"
+                        (click)="openDeleteModal(deleteModal)">
+                        <span class="mdi mdi-delete"></span>
+                    </div>
+                </span>
             </div>
             <div *ngIf="!document.resource.georeference" class="field">
                 <span class="field-value" i18n="@@imageView.georeferenceView.notPresent">Nicht vorhanden</span>

@@ -5,6 +5,7 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import { readWldFile, Errors } from '../../../core/images/wld/wld-import';
+import { downloadWldFile } from '../../../core/images/wld/wld-export';
 
 
 @Component({
@@ -69,6 +70,9 @@ export class GeoreferenceViewComponent {
             if (result == 'delete') this.deleteGeoreference();
         });
     }
+
+    
+    public exportWldFile = () => downloadWldFile(this.document);
 
 
     private deleteGeoreference() {

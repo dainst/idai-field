@@ -1,0 +1,136 @@
+/**
+ * @author Thomas Kleinke
+ */
+type-grid {
+  #type-grid {
+    height: calc(100vh - 100px);
+    margin-top: 2px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-top: 1px solid #e9ecef;
+    overflow-y: auto;
+
+    .type-grid-element {
+      position: relative;
+      width: 202px;
+      height: 227px;
+      margin: 10px;
+      float: left;
+      background-color: #fff;
+      border: 1px solid #dddddd;
+
+      .type-grid-resource-info {
+        height: 25px;
+        user-select: none;
+        border-bottom: 1px solid #dddddd;
+        text-align: center;
+      }
+
+      image-grid {
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover {
+        box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .type-grid-image-container {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+
+        &.second-solution {
+          width: 150px;
+          height: 150px;
+
+          img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+          }
+
+          &:nth-of-type(2) {
+            bottom: 10px;
+            left: 10px;
+            top: initial;
+            border: none;
+            z-index: 4;
+          }
+
+          &:nth-of-type(3) {
+            bottom: 16px;
+            left: 20px;
+            top: initial;
+            border: none;
+            z-index: 3;
+          }
+
+          &:nth-of-type(4) {
+            bottom: 22px;
+            left: 30px;
+            top: initial;
+            border: none;
+            z-index: 2;
+          }
+
+          &:nth-of-type(5) {
+            bottom: 28px;
+            left: 40px;
+            top: initial;
+            border: none;
+            z-index: 1;
+          }
+        }
+
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: scale-down;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+
+        &:nth-of-type(2) {
+          left: 0;
+          top: 25px;
+          border-right: 1px solid #dddddd;
+          border-bottom: 1px solid #dddddd;
+        }
+
+        &:nth-of-type(3) {
+          left: 100px;
+          top: 25px;
+          border-bottom: 1px solid #dddddd;
+        }
+
+        &:nth-of-type(4) {
+          left: 0;
+          top: 125px;
+          border-right: 1px solid #dddddd;
+        }
+
+        &:nth-of-type(5) {
+          left: 100px;
+          top: 125px;
+        }
+      }
+    }
+
+    #plus-button-container {
+      position: absolute;
+      bottom: 0;
+      height: 38px;
+      width: 100%;
+
+      #create-document-button .circular-button {
+        left: calc(50% - 20px);
+        margin: -22px auto auto auto;
+      }
+
+      .loading-icon {
+        margin: -23px auto auto auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<context-menu *ngIf="contextMenu.isOpen()"
+              [contextMenu]="contextMenu"
+              [showViewOption]="true"
+              (onSelectAction)="performContextMenuAction($event)"></context-menu>
+
+<div id="type-grid" class="bg-light" (scroll)="contextMenu.close()">
+    <div *ngFor="let document of documents"
+         id="type-grid-element-{{document.resource.id}}"
+         class="type-grid-element"
+         (click)="open(document)"
+         (contextmenu)="contextMenu.open($event, document)">
+        <div class="type-grid-resource-info">
+            {{document.resource.identifier}}
+        </div>
+        <div *ngFor="let imageUrl of getImageUrls(document)"
+             class="type-grid-image-container d-flex align-items-center justify-content-center second-solution">
+            <img [src]="imageUrl">
+        </div>
+    </div>
+
+    <div id="plus-button-container">
+        <plus-button *ngIf="isPlusButtonShown()"
+                     id="create-document-button"
+                     [placement]="'top'"
+                     [preselectedGeometryType]="'none'"
+                     [preselectedType]="getCurrentFilterType()"
+                     [liesWithin]="getSelectedSegmentDoc()"
+                     [isRecordedIn]="viewFacade.getCurrentOperation()"
+                     [status]="getPlusButtonStatus()"></plus-button>
+        <loading-icon></loading-icon>
+    </div>
+</div>

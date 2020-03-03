@@ -230,7 +230,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         await AngularUtility.refresh();
 
         // This is so that new elements are properly included and sorted when coming back to list
-        if (this.viewFacade.getMode() === 'list' && (mode === 'map' || mode === 'types')) {
+        if (this.viewFacade.getMode() === 'list' && mode !== 'list') {
             await this.viewFacade.populateDocumentList();
         }
 

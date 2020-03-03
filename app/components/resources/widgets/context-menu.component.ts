@@ -5,8 +5,8 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 
 
-export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'|'create-point'
-    |'edit-geometry';
+export type ContextMenuAction = 'view'|'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
+    |'create-point'|'edit-geometry';
 
 type ContextMenuOrientation = 'top'|'bottom';
 
@@ -22,6 +22,7 @@ type ContextMenuOrientation = 'top'|'bottom';
 export class ContextMenuComponent implements OnChanges {
 
     @Input() contextMenu: ContextMenu;
+    @Input() showViewOption: boolean = false;
 
     @Output() onSelectAction: EventEmitter<ContextMenuAction> = new EventEmitter<ContextMenuAction>();
 

@@ -15,6 +15,7 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
 import {ImageWidthCalculator} from '../../../core/images/row/image-width-calculator';
 import {ContextMenu} from '../widgets/context-menu';
 import {ContextMenuAction} from '../widgets/context-menu.component';
+import {ViewModalLauncher} from '../service/view-modal-launcher';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     constructor(private fieldDatastore: FieldReadDatastore,
                 private imageDatastore: ImageReadDatastore,
                 private imagestore: ReadImagestore,
+                private viewModalLauncher: ViewModalLauncher,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading) {
@@ -73,6 +75,9 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         this.contextMenu.close();
 
         switch (action) {
+            case 'view':
+                await this.viewModalLauncher.openResourceViewModal(document, this.resourcesComponent);
+                break;
             case 'edit':
                 await this.resourcesComponent.editDocument(document);
                 break;

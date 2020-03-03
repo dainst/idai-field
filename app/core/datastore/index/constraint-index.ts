@@ -1,4 +1,4 @@
-import {getOn, values, isArray, map, flatten, flow, cond, isNot, to, isDefined} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -126,7 +126,7 @@ export module ConstraintIndex {
 
         return flow(
             matchTerm,
-            cond(isNot(isArray), convertToArray),
+            cond(not(isArray), convertToArray),
             map(getDescendants(index, definition)),
             flatten);
     }

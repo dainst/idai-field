@@ -105,7 +105,7 @@ function extractLeadingIndices(paths: string[]): number[] {
  */
 function groupByFirstSegment(paths: string[]) {
 
-    return reduce((group, path: string) => {
+    return reduce((group: {[_:string]: any}, path: string) => {
 
         const first = path.split(PATH_SEPARATOR).slice(0)[0];
         const rest = path.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
@@ -114,7 +114,7 @@ function groupByFirstSegment(paths: string[]) {
         group[first].push(rest);
         return group;
 
-    }, {} as {[_:string]:any})(paths);
+    }, {})(paths);
 }
 
 

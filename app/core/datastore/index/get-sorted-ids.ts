@@ -1,5 +1,5 @@
 import {
-    equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify,
+    equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left
 } from 'tsfun';
 import {Query, Resource} from 'idai-components-2';
@@ -105,7 +105,7 @@ const handleExactMatch = (q: string)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
      compose(
         separate(on(Resource.IDENTIFIER, is(q))),
-        ([match, nonMatch]: any) => match.concat(nonMatch)); // TODO replace with flatten?
+        flatten);
 
 
 const rankRegularIndexItems

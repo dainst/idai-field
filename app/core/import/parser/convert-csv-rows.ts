@@ -1,4 +1,4 @@
-import {reduce, map, ObjectStruct, values, isArray, isnt, set,
+import {reduce, map, ObjectStruct, values, isArray, isnt, set, sort,
     flow, filter, forEach, isNot, dense, throws, first} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
@@ -73,7 +73,8 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
         if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, set(indices)];
     });
 
-    flow(headings,
+    flow(
+        headings,
         groupByFirstSegment,
         values,
         filter(isArray),
@@ -89,12 +90,13 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
  */
 function extractLeadingIndices(paths: string[]): number[] {
 
-    return paths
-        .map(split(PATH_SEPARATOR))
-        .map(first)
-        .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
-        .filter(isNot(isNaN))
-        .sort();
+    return flow(
+        paths,
+        map(split(PATH_SEPARATOR)),
+        map(first),
+        map((s: string) => parseInt(s)), // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
+        filter(isNot(isNaN)),
+        sort);
 }
 
 
@@ -133,11 +135,12 @@ function assertHeadingsConsistent(headings: string[]) {
     headings
         .forEach(heading => {
 
-        headings
-            .filter(startsWith(heading))
-            .filter(longerThan(heading))
-            .filter(otherHeading => otherHeading.substr(heading.length).includes('.'))
-            .forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading]));
+        flow(
+            headings,
+            filter(startsWith(heading)),
+            filter(longerThan(heading)),
+            filter((otherHeading: string) => otherHeading.substr(heading.length).includes('.')),
+            forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading])));
     });
 }
 

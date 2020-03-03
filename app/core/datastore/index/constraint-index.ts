@@ -1,10 +1,10 @@
 import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
-import {convertToArray, toArray} from '../../util/utils';
+import {convertToArray} from '../../util/utils';
 
 
 export interface IndexDefinition {
@@ -327,7 +327,7 @@ export module ConstraintIndex {
                 .concat(
                     flow(
                         indexItems,
-                        map(to('id')),
+                        map(to(Resource.ID)),
                         map(getDescendants(index, definition)),
                         flatten));
         }

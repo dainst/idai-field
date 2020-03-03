@@ -2,7 +2,7 @@ import {
     equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify,
     compose, separate, undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left
 } from 'tsfun';
-import {Query} from 'idai-components-2';
+import {Query, Resource} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {SortUtil} from '../../util/sort-util';
 import {Name, ResourceId} from '../../constants';
@@ -12,8 +12,6 @@ import {Name, ResourceId} from '../../constants';
 // @author Thomas Kleinke
 
 
-const ID = 'id';
-const IDENTIFIER = 'identifier';
 const INSTANCES = 'instances';
 const TYPE = 'Type';
 
@@ -51,7 +49,7 @@ export function getSortedIds(indexItems: Array<IndexItem>,
         indexItems,
         rankEntries,
         handleExactMatchIfQuerySaysSo,
-        map(to(ID)));
+        map(to(Resource.ID)));
 }
 
 
@@ -106,8 +104,8 @@ const calcPercentage = (typeToMatch: Name)
 const handleExactMatch = (q: string)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
      compose(
-        separate(on(IDENTIFIER, is(q))),
-        ([match, nonMatch]: any) => match.concat(nonMatch));
+        separate(on(Resource.IDENTIFIER, is(q))),
+        ([match, nonMatch]: any) => match.concat(nonMatch)); // TODO replace with flatten?
 
 
 const rankRegularIndexItems

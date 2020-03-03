@@ -142,7 +142,6 @@ function assertHeadingsConsistent(headings: string[]) {
 }
 
 
-
 const toNullIfEmptyString = (val: string) => val === '' ? null : val;
 
 

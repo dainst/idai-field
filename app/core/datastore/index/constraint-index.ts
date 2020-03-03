@@ -1,4 +1,4 @@
-import {getOn, values, isArray, map, flatten, flow, cond, isNot} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flow, cond, isNot, to, isDefined} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -306,21 +306,30 @@ export module ConstraintIndex {
     }
 
 
+    /**
+     * '1'
+     *  - '2'
+     *    - '3'
+     *
+     * matchTerm: '1'
+     * -> [{id: '2'}, {id: '3'}]
+     */
     function getDescendants(index: ConstraintIndex,
                             definition: IndexDefinition) {
 
         return (matchTerm: string): Array<IndexItem> => {
 
-            const result: { [id: string]: IndexItem }|undefined
-                = getIndexItemsForSingleMatchTerm(index, definition, matchTerm);
+            const indexItems = flow(
+                getIndexItemsForSingleMatchTerm(index, definition, matchTerm),
+                cond(isDefined, values, []));
 
-            const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
-            const descendantIndexItems: Array<IndexItem> =
-                indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => { // TODO convert reduce to map
-                    return items.concat(getDescendants(index, definition)(item.id))
-                }, []);
-
-            return indexItems.concat(descendantIndexItems);
+            return indexItems
+                .concat(
+                    flow(
+                        indexItems,
+                        map(to('id')),
+                        map(getDescendants(index, definition)),
+                        flatten));
         }
     }
 

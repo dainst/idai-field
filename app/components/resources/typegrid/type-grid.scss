@@ -116,5 +116,21 @@ type-grid {
         }
       }
     }
+
+    #plus-button-container {
+      position: absolute;
+      bottom: 0;
+      height: 38px;
+      width: 100%;
+
+      #create-document-button .circular-button {
+        left: calc(50% - 20px);
+        margin: -22px auto auto auto;
+      }
+
+      .loading-icon {
+        margin: -23px auto auto auto;
+      }
+    }
   }
 }

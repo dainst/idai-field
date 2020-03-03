@@ -1764,12 +1764,20 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.exportGeoreferenceData" datatype="html">
+        <source>Georeferenzdaten als Worldfile exportieren</source>
+        <target state="final">Georeferenzdaten als Worldfile exportieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageView.georeferenceView.tooltips.deleteGeoreferenceData" datatype="html">
         <source>Georeferenzdaten löschen</source>
         <target state="final">Georeferenzdaten löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.notPresent" datatype="html">
@@ -1777,7 +1785,7 @@
         <target state="final">Nicht vorhanden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.tooltips.loadWorldfile" datatype="html">
@@ -1785,7 +1793,7 @@
         <target state="final">Worldfile laden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.depictsRelationsView.depictedResources" datatype="html">
@@ -1922,20 +1930,32 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.tooltips.mode.types" datatype="html">
-        <source>Typendarstellung</source>
-        <target state="final">Typendarstellung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
         <source>Listendarstellung</source>
         <target state="final">Listendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.tooltips.mode.grid" datatype="html">
+        <source>Rasterdarstellung</source>
+        <target state="final">Rasterdarstellung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.view" datatype="html">
+        <source>Anzeigen</source>
+        <target state="final">Anzeigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
@@ -1943,7 +1963,7 @@
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
@@ -1951,7 +1971,7 @@
         <target state="final">Verschieben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
@@ -1959,7 +1979,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
@@ -1967,7 +1987,7 @@
         <target state="final">Polygon anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
@@ -1975,7 +1995,7 @@
         <target state="final">Polyline anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
@@ -1983,7 +2003,7 @@
         <target state="final">Punkt anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
@@ -1991,7 +2011,7 @@
         <target state="final">Polygon bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
@@ -1999,7 +2019,7 @@
         <target state="final">Multipolygon bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
@@ -2007,7 +2027,7 @@
         <target state="final">Polyline bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
@@ -2015,7 +2035,7 @@
         <target state="final">Multipolyline bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
@@ -2023,7 +2043,7 @@
         <target state="final">Punkt bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
@@ -2031,7 +2051,7 @@
         <target state="final">Multipunkt bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
@@ -2680,7 +2700,7 @@
         <target state="final">Alle Kataloge</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.add" datatype="html">

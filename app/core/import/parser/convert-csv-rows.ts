@@ -75,7 +75,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
         groupByFirstSegment,
         values,
         filter(isArray),
-        map(filter(isnt(''))), // TODO simplify with prune or isEmpty
+        map(filter(isnt(''))),
         forEach(assertHeadingsDoNotContainIncompleteArrays));
 }
 

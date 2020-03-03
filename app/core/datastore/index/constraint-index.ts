@@ -1,9 +1,10 @@
-import {getOn, to, values, isArray} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flow, cond, isNot} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
+import {convertToArray, toArray} from '../../util/utils';
 
 
 export interface IndexDefinition {
@@ -117,14 +118,17 @@ export module ConstraintIndex {
 
     export function getWithDescendants(index: ConstraintIndex,
                                        indexName: string,
-                                       matchTerms: string|string[]): Array<IndexItem> {
+                                       matchTerm: string|string[]): Array<IndexItem> {
 
         const definition: IndexDefinition = index.indexDefinitions[indexName];
         if (!definition) throw 'Ignoring unknown constraint "' + indexName + '".';
         if (!definition.recursivelySearchable) throw 'illegal argument  - given index not recursively searchable ' + indexName;
 
-        if (isArray(matchTerms)) throw 'illegal argument - only a single match term is allowed with includeDescendants';
-        return getDescendants(index, definition, matchTerms as string);
+        return flow(
+            matchTerm,
+            cond(isNot(isArray), convertToArray),
+            map(getDescendants(index, definition)),
+            flatten);
     }
 
 
@@ -303,19 +307,21 @@ export module ConstraintIndex {
 
 
     function getDescendants(index: ConstraintIndex,
-                            definition: IndexDefinition,
-                            matchTerm: string): Array<IndexItem> {
+                            definition: IndexDefinition) {
 
-        const result: { [id: string]: IndexItem }|undefined
-            = getIndexItemsForSingleMatchTerm(index, definition, matchTerm);
+        return (matchTerm: string): Array<IndexItem> => {
 
-        const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
-        const descendantIndexItems: Array<IndexItem> =
-            indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => {
-                return items.concat(getDescendants(index, definition, item.id))
-            }, []);
+            const result: { [id: string]: IndexItem }|undefined
+                = getIndexItemsForSingleMatchTerm(index, definition, matchTerm);
 
-        return indexItems.concat(descendantIndexItems);
+            const indexItems: Array<IndexItem> = result ? Object.values(result) : [];
+            const descendantIndexItems: Array<IndexItem> =
+                indexItems.reduce((items: Array<IndexItem>, item: IndexItem) => { // TODO convert reduce to map
+                    return items.concat(getDescendants(index, definition)(item.id))
+                }, []);
+
+            return indexItems.concat(descendantIndexItems);
+        }
     }
 
 

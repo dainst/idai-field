@@ -35,6 +35,12 @@ export function toArray(token: any) {
 }
 
 
+export function convertToArray(a: any) {
+
+    return [a];
+}
+
+
 /**
  * to be used with reduce
  */

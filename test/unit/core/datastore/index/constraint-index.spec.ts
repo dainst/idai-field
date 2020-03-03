@@ -511,6 +511,49 @@ describe('ConstraintIndex', () => {
     });
 
 
+    it('get with descendants for multiple constraint values', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2'),
+            doc('3'),
+            doc('4'),
+            doc('5'),
+            doc('6')
+        ];
+
+        docs[1].resource.relations['liesWithin'] = ['1'];
+        docs[2].resource.relations['liesWithin'] = ['2'];
+        docs[4].resource.relations['liesWithin'] = ['4'];
+        docs[5].resource.relations['liesWithin'] = ['5'];
+
+        ci = ConstraintIndex.make({
+            'liesWithin:contain': {
+                path: 'resource.relations.liesWithin',
+                type: 'contain',
+                recursivelySearchable: true
+            }
+        }, typesMap);
+
+        const ie1 = IndexItem.from(docs[0]);
+        const ie2 = IndexItem.from(docs[1]);
+        const ie3 = IndexItem.from(docs[2]);
+        const ie4 = IndexItem.from(docs[3]);
+        const ie5 = IndexItem.from(docs[4]);
+        const ie6 = IndexItem.from(docs[5]);
+
+        ConstraintIndex.put(ci, docs[0], ie1);
+        ConstraintIndex.put(ci, docs[1], ie2);
+        ConstraintIndex.put(ci, docs[2], ie3);
+        ConstraintIndex.put(ci, docs[3], ie4);
+        ConstraintIndex.put(ci, docs[4], ie5);
+        ConstraintIndex.put(ci, docs[5], ie6);
+
+        expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', ['1', '4']).map(to('id')))
+            .toEqual(['2', '3', '5', '6']);
+    });
+
+
     // err cases
 
     it('get with descendants - not a recursively searchable index', () => {

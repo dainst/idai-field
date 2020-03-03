@@ -44,7 +44,9 @@ export function convertCsvRows(separator: string) {
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
-        return map((row: string[]) => convertRowToStruct(headings, row))(rows);
+
+        return map((row: string[]) =>
+            reduce(insertFieldIntoDocument(headings), {})(row))(rows);
     }
 }
 
@@ -140,24 +142,20 @@ function assertHeadingsConsistent(headings: string[]) {
 }
 
 
-function convertRowToStruct(headings: string[], row: string[]): any {
 
-    return reduce((struct, fieldOfRow, i: number) => {
-        insertFieldIntoDocument(struct, headings[i], fieldOfRow);
-        return struct as ObjectStruct;
-    }, {})(row);
-}
+const toNullIfEmptyString = (val: string) => val === '' ? null : val;
 
 
-const convertIfEmpty = (val: string) => val === '' ? null : val;
+function insertFieldIntoDocument(headings: string[]) {
 
+    return (struct: any, fieldOfRow: string, i: number) => {
 
-function insertFieldIntoDocument(struct: any, fieldOfHeading: string, fieldOfRow: any) {
-
-    if (fieldOfHeading.includes(PATH_SEPARATOR)) {
-        implodePaths(struct, fieldOfHeading.split(PATH_SEPARATOR), fieldOfRow);
-    } else {
-        (struct as any)[fieldOfHeading] = convertIfEmpty(fieldOfRow);
+        if (headings[i].includes(PATH_SEPARATOR)) {
+            implodePaths(struct, headings[i].split(PATH_SEPARATOR), fieldOfRow);
+        } else {
+            struct[headings[i]] = toNullIfEmptyString(fieldOfRow);
+        }
+        return struct;
     }
 }
 
@@ -168,7 +166,7 @@ function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) 
     if (isNaN(index)) index = pathSegments[0];
 
     if (pathSegments.length < 2) {
-        currentSegmentObject[index] = convertIfEmpty(val);
+        currentSegmentObject[index] = toNullIfEmptyString(val);
         return;
     }
 
@@ -184,7 +182,7 @@ function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) 
 
 function getRows(content: string, separator: string): Field[][] {
 
-    let rows: string[][] = [];
+    const rows: string[][] = [];
     let currentRow: string[] = [];
     let currentField: string = '';
 

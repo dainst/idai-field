@@ -28,9 +28,9 @@ export interface FieldDefinition {
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
-    mandatory?: boolean;                // defaults to false
-    fulltextIndexed?: boolean;          // defaults to false
-    constraintIndexed?: boolean;        // defaults to false
-    allowOnlyValuesOfParent?: boolean;  // defaults to false
+    mandatory?: true;
+    fulltextIndexed?: true;
+    constraintIndexed?: true;
+    allowOnlyValuesOfParent?: true;
     readonly group: string;
 }

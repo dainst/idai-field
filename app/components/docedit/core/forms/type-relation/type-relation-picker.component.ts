@@ -24,6 +24,7 @@ export class TypeRelationPickerComponent {
     public q: string = '';
     public selectedCatalog: 'all-catalogs' = 'all-catalogs';
     public availableCatalogs: Array<FieldResource> = [];
+    public selectedCriterion: string = '';
 
     public timeoutRef: any;
 
@@ -52,6 +53,13 @@ export class TypeRelationPickerComponent {
     }
 
 
+    public async selectCriterion() {
+
+        await this.fetchCatalogs();
+        await this.fetchTypes();
+    }
+
+
     public setQueryString(q: string) {
 
         this.q = q;
@@ -62,9 +70,15 @@ export class TypeRelationPickerComponent {
 
     private async fetchCatalogs() {
 
+        const query = {
+            types: ['TypeCatalog'],
+            constraints: {}
+        };
+        if (this.selectedCriterion) query.constraints = { 'criterion:match': 'abc' };
+
         this.availableCatalogs =
             flow(
-                await this.datastore.find({ types: ['TypeCatalog'] }),
+                await this.datastore.find(query),
                 to('documents'),
                 map(to('resource')));
     }

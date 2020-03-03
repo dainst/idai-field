@@ -28,6 +28,7 @@ interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldD
     valuelistFromProjectField?: string;
     visible?: boolean;
     editable?: boolean;
+    constraintIndexed?: true;
 }
 
 type TransientTypeDefinitionsMap = { [typeName: string]: TransientTypeDefinition };

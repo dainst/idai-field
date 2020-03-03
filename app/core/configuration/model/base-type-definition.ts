@@ -4,13 +4,11 @@ export interface BaseTypeDefinition {
 }
 
 
-export type BaseTypeDefinitions = { [typeName: string]: BaseTypeDefinition };
-
-
 export type BaseFieldDefinitions = { [fieldName: string]: BaseFieldDefinition };
 
 
 export interface BaseFieldDefinition {
 
     inputType?: string;
+    constraintIndexed?: true
 }

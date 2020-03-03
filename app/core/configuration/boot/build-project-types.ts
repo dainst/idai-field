@@ -349,7 +349,7 @@ function eraseUnusedTypes(types: TransientTypeDefinitionsMap,
                           selectedTypeNames: string[]): TransientTypeDefinitionsMap {
 
     const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
-    const parentNamesOfSelectedTypes =
+    const parentNamesOfSelectedTypes: string[] =
         flow(
             keysOfNotSelectedTypes,
             reduce(withDissoc, types),

@@ -1,6 +1,6 @@
 import {
     copy, Pair, reduce, ObjectCollection, to, range, map, val, identity,
-    isDefined, convertPath, Predicate, getOn, dissoc
+    isDefined, convertPath, isString, getOn, dissoc
 } from 'tsfun';
 
 // @author Daniel de Oliveira
@@ -15,10 +15,6 @@ export function includes(it: string) { return (what: string) => what.includes(it
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
 export function typeOf(v: any) { return typeof v }
-
-export const isBoolean: Predicate<any> = (value: any) => typeof value === 'boolean';
-
-export const isString: Predicate<any> = (as: any) => typeof as === 'string';
 
 
 export function split(pattern: any) {
@@ -39,18 +35,6 @@ export function toArray(token: any) {
 }
 
 
-export function denseArray(size: number) {
-
-    return map(val(undefined))(range(size));
-}
-
-
-export function throws(e: any) {
-
-    return (): any => { throw e };
-}
-
-
 /**
  * to be used with reduce
  */
@@ -58,6 +42,7 @@ export function withDissoc(struct: any, path: string) {
 
     return dissoc(path)(struct);
 }
+// return map(val(undefined))(range(size));
 
 
 /**

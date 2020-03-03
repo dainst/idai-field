@@ -1,7 +1,7 @@
+import {dense} from 'tsfun';
 import {FieldResource, Query, Document} from 'idai-components-2';
 import {IdaiFieldFindResult} from '../datastore/cached/cached-read-datastore';
 import {IdaiType} from '../configuration/model/idai-type';
-import {denseArray} from '../util/utils';
 
 
 export type Count = number; // -1 signals that there is not usable count
@@ -30,7 +30,7 @@ export function fillUpToSize(targetSize: number, defaultVal: any) {
      */
     return (items: any[]) => {
 
-        const fills = denseArray(targetSize - items.length).map(() => defaultVal);
+        const fills = dense(targetSize - items.length).map(() => defaultVal);
         return items.concat(fills);
     }
 }

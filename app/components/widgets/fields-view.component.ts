@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose, isEmpty} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {GroupUtil} from '../../core/model/group-util';
 import {Name, ResourceId} from '../../core/constants';
 import {GROUP_NAME} from '../constants';
-import {isBoolean, pick} from '../../core/util/utils';
+import {pick} from '../../core/util/utils';
 import {UtilTranslations} from '../../core/util/util-translations';
 import {HIERARCHICAL_RELATIONS} from '../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

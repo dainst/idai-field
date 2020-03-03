@@ -1,5 +1,12 @@
 <div id="type-relation-modal">
     <div class="modal-header">
+
+        <select id="criterion" class="form-control" style="width: 175px"
+                [(ngModel)]="selectedCriterion"  (change)="selectCriterion()">
+            <option value="material">Material</option>
+            <option value="">None</option>
+        </select>
+
         <select id="importFormatSelect" class="form-control" style="width: 175px"
                 [(ngModel)]="selectedCatalog"  (change)="selectCatalog()">
             <option value="all-catalogs" i18n="@@docedit.forms.typeRelationPicker.allCatalogs">Alle Kataloge</option>

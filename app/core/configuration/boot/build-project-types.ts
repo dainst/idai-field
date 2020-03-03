@@ -28,6 +28,7 @@ interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldD
     valuelistFromProjectField?: string;
     visible?: boolean;
     editable?: boolean;
+    constraintIndexed?: true;
 }
 
 type TransientTypeDefinitionsMap = { [typeName: string]: TransientTypeDefinition };
@@ -349,7 +350,7 @@ function eraseUnusedTypes(types: TransientTypeDefinitionsMap,
                           selectedTypeNames: string[]): TransientTypeDefinitionsMap {
 
     const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
-    const parentNamesOfSelectedTypes =
+    const parentNamesOfSelectedTypes: string[] =
         flow(
             keysOfNotSelectedTypes,
             reduce(withDissoc, types),

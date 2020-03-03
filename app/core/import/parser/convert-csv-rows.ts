@@ -1,8 +1,9 @@
-import {reduce, map, ObjectStruct, values, isArray, isnt, set, flow, filter, forEach, isNot} from 'tsfun';
+import {reduce, map, ObjectStruct, values, isArray, isnt, set,
+    flow, filter, forEach, isNot, dense, throws, first} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
-import {denseArray, longerThan, startsWith, throws} from '../../util/utils';
+import {longerThan, split, startsWith} from '../../util/utils';
 
 
 const PATH_SEPARATOR = '.';
@@ -87,7 +88,8 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
 function extractLeadingIndices(paths: string[]): number[] {
 
     return paths
-        .map(path => path.split(PATH_SEPARATOR)[0])
+        .map(split(PATH_SEPARATOR))
+        .map(first)
         .map((s: string) => parseInt(s)) // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
         .filter(isNot(isNaN))
         .sort();
@@ -171,7 +173,7 @@ function implodePaths(currentSegmentObject: any, pathSegments: any[], val: any) 
     }
 
     const nextIndex = parseInt(pathSegments[1]);
-    const newItem = isNaN(nextIndex) ? {} : denseArray(nextIndex + 1);
+    const newItem = isNaN(nextIndex) ? {} : dense(nextIndex + 1);
 
     if (!currentSegmentObject[index]) currentSegmentObject[index] = newItem;
 

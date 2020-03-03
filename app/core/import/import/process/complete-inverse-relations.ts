@@ -1,6 +1,6 @@
 import {compose, filter, flatten, flow, forEach, intersect, isDefined,
     isNot, isUndefinedOrEmpty, lookup, keys, values, empty, pairWith,
-    map, remove, subtract, to, undefinedOrEmpty} from 'tsfun';
+    map, remove, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../model/relation-constants';
@@ -17,7 +17,6 @@ import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
 import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
-import {throws} from '../../../util/utils';
 
 
 /**

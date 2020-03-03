@@ -1,7 +1,6 @@
 import {append, compose, dropRight, flow, takeRight,
-    take, drop, cond, size, isnt, last} from 'tsfun';
+    take, drop, cond, size, isnt, last, throws} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {throws} from '../util/utils';
 
 
 /**

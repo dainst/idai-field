@@ -246,7 +246,12 @@ export class AppConfigurator {
         },
         TypeCatalog: {
             superType: true,
-            fields: {}
+            fields: {
+                criterion: {
+                    inputType: 'input',
+                    constraintIndexed: true
+                }
+            }
         },
         Type: {
             superType: true,

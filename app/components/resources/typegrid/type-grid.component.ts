@@ -129,7 +129,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         return asyncMap((image: ImageRowItem) => {
             return this.imagestore.read(image.imageId, false, true);
-        })(take(4)(await this.getSortedImages(linkedImages)));
+        })(take(4)(linkedImages));
     }
 
 

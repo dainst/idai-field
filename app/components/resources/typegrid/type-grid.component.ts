@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
@@ -12,7 +12,6 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {ImageRowItem, PLACEHOLDER} from '../../image/row/image-row.component';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {ImageWidthCalculator} from '../../../core/images/row/image-width-calculator';
 import {ContextMenu} from '../widgets/context-menu';
 import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
@@ -129,41 +128,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         return asyncMap((image: ImageRowItem) => {
             return this.imagestore.read(image.imageId, false, true);
-        })(take(4)(await this.getSortedImages(linkedImages)));
-    }
-
-
-    private async getSortedImages(images: Array<ImageRowItem>): Promise<Array<ImageRowItem>> {
-
-        const imageDocuments: Array<ImageDocument> = await this.imageDatastore.getMultiple(
-            images.map(image => image.imageId)
-        );
-
-        return images.sort((a: ImageRowItem, b: ImageRowItem) => {
-            const heightA: number = this.getHeight(a, imageDocuments);
-            const heightB: number = this.getHeight(b, imageDocuments);
-
-            return heightA > heightB
-                 ? 1
-                 : heightA === heightB
-                     ? 0
-                     : -1;
-        });
-    }
-
-
-    private getHeight(image: ImageRowItem, imageDocuments: Array<ImageDocument>): number {
-
-        const document: ImageDocument|undefined
-            = imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId);
-
-        if (!document) {
-            console.warn('Document ' + image.imageId + ' not found!');
-            return 0;
-        }
-
-        return ImageWidthCalculator.computeHeight(
-            document.resource.width, document.resource.height, 150, 150
-        );
+        })(take(4)(linkedImages));
     }
 }

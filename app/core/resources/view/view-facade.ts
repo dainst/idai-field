@@ -9,7 +9,7 @@ import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 
-export type ResourcesViewMode = 'map'|'list'|'types';
+export type ResourcesViewMode = 'map'|'list'|'type-list'|'type-grid';
 
 
 /**

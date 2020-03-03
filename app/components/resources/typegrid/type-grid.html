@@ -1,0 +1,13 @@
+<div id="type-grid" class="bg-light">
+    <div *ngFor="let document of documents"
+         class="type-grid-element"
+         (click)="open(document)">
+        <div class="type-grid-resource-info">
+            {{document.resource.identifier}}
+        </div>
+        <div *ngFor="let imageUrl of getImageUrls(document)"
+             class="type-grid-image-container d-flex align-items-center justify-content-center second-solution">
+            <img [src]="imageUrl">
+        </div>
+    </div>
+</div>

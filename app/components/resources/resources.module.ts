@@ -51,6 +51,7 @@ import {TypeRowComponent} from './typelist/type-row.component';
 import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
 import {ViewModalLauncher} from './service/view-modal-launcher';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
+import {TypeGridComponent} from './typegrid/type-grid.component';
 
 const remote = require('electron').remote;
 
@@ -73,6 +74,7 @@ const remote = require('electron').remote;
         EditableMapComponent,
         ResourcesMapComponent,
         TypeListComponent,
+        TypeGridComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,

@@ -10,7 +10,7 @@ import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
 import {ImageRowItem} from '../../../../image/row/image-row.component';
 import {TypeRelations} from '../../../../../core/model/relation-constants';
-import {CatalogCriteria} from './catalog-criteria';
+import {CatalogCriteria, CatalogCriterion} from './catalog-criteria';
 
 const CRITERION = 'criterion';
 
@@ -30,7 +30,7 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
-    public selectionCriteria: any = [];
+    public selectionCriteria: Array<CatalogCriterion> = [];
 
     public timeoutRef: any;
 
@@ -83,7 +83,7 @@ export class TypeRelationPickerComponent {
 
         this.selectionCriteria =
             catalogCriteria.catalogCriteria
-                .filter(on(CatalogCriteria.VALUE, includedIn(usedCriteria)));
+                .filter(on(CatalogCriterion.VALUE, includedIn(usedCriteria)));
 
         this.fetchCatalogs();
     }

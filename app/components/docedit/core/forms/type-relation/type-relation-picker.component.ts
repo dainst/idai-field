@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query, Constraint} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -79,8 +79,8 @@ export class TypeRelationPickerComponent {
         this.availableCatalogs =
             flow(
                 await this.datastore.find(query),
-                to('documents'),
-                map(to('resource')));
+                to(FindResult.DOCUMENTS),
+                map(to(Document.RESOURCE)));
     }
 
 

@@ -108,9 +108,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         this.contextMenu.close();
 
         switch (action) {
-            case 'view':
-                await this.viewModalLauncher.openResourceViewModal(document, this.resourcesComponent);
-                break;
             case 'edit':
                 await this.resourcesComponent.editDocument(document);
                 break;

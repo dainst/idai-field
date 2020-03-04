@@ -6,11 +6,6 @@
      [style.left]="contextMenu.position.x + 'px'"
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
-    <div *ngIf="showViewOption"
-         id="context-menu-info-button" class="dropdown-item"(click)="selectAction('view')">
-        <span class="mdi mdi-eye"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.view">Anzeigen</span>
-    </div>
     <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>

@@ -5,7 +5,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 
 
-export type ContextMenuAction = 'view'|'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
+export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
     |'create-point'|'edit-geometry';
 
 type ContextMenuOrientation = 'top'|'bottom';

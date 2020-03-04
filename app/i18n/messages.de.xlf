@@ -270,7 +270,7 @@
         <source>Ja</source>
         <target state="final">Ja</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/widgets/fields-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
@@ -298,7 +298,7 @@
         <source>Nein</source>
         <target state="final">Nein</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/widgets/fields-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
@@ -1000,7 +1000,7 @@
         <source>Grobdatierung</source>
         <target state="final">Grobdatierung</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1008,7 +1008,7 @@
         <source> (von)</source>
         <target state="final"> (von)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1016,7 +1016,7 @@
         <source>Grobdatierung (bis)</source>
         <target state="final">Grobdatierung (bis)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1540,7 +1540,7 @@
         <source>Löschen</source>
         <target state="final">Löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
@@ -1744,7 +1744,7 @@
         Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -1752,7 +1752,7 @@
         <source>Georeferenzdaten</source>
         <target state="final">Georeferenzdaten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
@@ -1760,7 +1760,7 @@
         <source>Vorhanden</source>
         <target state="final">Vorhanden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -1768,7 +1768,7 @@
         <source>Georeferenzdaten als Worldfile exportieren</source>
         <target state="final">Georeferenzdaten als Worldfile exportieren</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
@@ -1776,7 +1776,7 @@
         <source>Georeferenzdaten löschen</source>
         <target state="final">Georeferenzdaten löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
@@ -1784,7 +1784,7 @@
         <source>Nicht vorhanden</source>
         <target state="final">Nicht vorhanden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
@@ -1792,7 +1792,7 @@
         <source>Worldfile laden</source>
         <target state="final">Worldfile laden</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
@@ -1800,7 +1800,7 @@
         <source>Dargestellte Ressourcen</source>
         <target state="final">Dargestellte Ressourcen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/depicts-relations-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/depicts-relations-view.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -2058,16 +2058,8 @@
         <source>Alle Gruppen ausklappen</source>
         <target state="final">Alle Gruppen ausklappen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/resource/resource-view-modal.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/resource/resource-view-modal.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/document-info.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/popovermenu/popover-menu.html</context>
@@ -3227,7 +3219,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3239,7 +3231,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3251,7 +3243,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3263,7 +3255,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3275,7 +3267,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/fields-view.component.ts</context>
+          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -4605,7 +4597,7 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/viewmodal/image/georeference-view.html</context>
+          <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">

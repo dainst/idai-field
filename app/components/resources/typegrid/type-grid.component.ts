@@ -94,6 +94,12 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public isDocumentInfoVisible(): boolean {
+
+        return this.getMainDocument() !== undefined && !this.viewFacade.isInExtendedSearchMode();
+    }
+
+
     public async performContextMenuAction(action: ContextMenuAction) {
 
         if (!this.contextMenu.document) return;

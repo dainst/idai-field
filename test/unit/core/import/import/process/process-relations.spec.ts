@@ -1,7 +1,7 @@
 import {processRelations} from '../../../../../../app/core/import/import/process/process-relations';
-import {HIERARCHICAL_RELATIONS} from '../../../../../../app/core/model/relation-constants';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {HierarchicalRelations} from '../../../../../../app/core/model/relation-constants';
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
 
 

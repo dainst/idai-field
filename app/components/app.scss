@@ -22,6 +22,7 @@ $roboto-font-path: '../fonts/';
 @import 'image/image';
 @import 'matrix/matrix-view';
 @import 'help/help';
+@import 'configuration/project-configuration';
 
 .search-help-tooltip {
   .tooltip-inner {

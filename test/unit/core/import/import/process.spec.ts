@@ -2,9 +2,9 @@ import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../app/core/import/import/import-errors';
 import {process} from '../../../../../app/core/import/import/process/process';
 import {createMockValidator, d} from './helper';
-import {HIERARCHICAL_RELATIONS} from '../../../../../app/core/model/relation-constants';
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {HierarchicalRelations} from '../../../../../app/core/model/relation-constants';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 
 /**
  * @author Daniel de Oliveira

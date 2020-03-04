@@ -1358,7 +1358,11 @@
     },
     "TypeCatalog": {
       "label": "Typenkatalog",
-      "fields": {}
+      "fields": {
+        "criterion": {
+          "label": "Kriterium"
+        }
+      }
     }
   },
   "relations": {

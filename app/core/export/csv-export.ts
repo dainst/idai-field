@@ -3,7 +3,7 @@ import {compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefin
 import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
-import {HIERARCHICAL_RELATIONS} from '../model/relation-constants';
+import {HierarchicalRelations} from '../model/relation-constants';
 import {FieldDefinition} from '../configuration/model/field-definition';
 
 
@@ -171,9 +171,9 @@ export module CSVExport {
         return fieldNames
             .concat(
                 relations
-                    .filter(isNot(includedIn(HIERARCHICAL_RELATIONS.ALL)))
+                    .filter(isNot(includedIn(HierarchicalRelations.ALL)))
                     .map(relation => 'relations.' + relation))
-            .concat(relations.find(includedIn(HIERARCHICAL_RELATIONS.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
+            .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
 

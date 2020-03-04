@@ -108,7 +108,12 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) {
+    public async moveInto(document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false,
+                          rebuildNavigationPath: boolean = false) {
+
+        if (rebuildNavigationPath && document) {
+            await this.resourcesStateManager.updateNavigationPathForDocument(document, true);
+        }
 
         await this.resourcesStateManager.moveInto(document);
 

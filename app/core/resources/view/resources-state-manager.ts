@@ -214,13 +214,14 @@ export class ResourcesStateManager {
     }
 
 
-    public async updateNavigationPathForDocument(document: FieldDocument) {
+    public async updateNavigationPathForDocument(document: FieldDocument,
+                                                 documentAsContext: boolean = false) {
 
         this.setExtendedSearchMode(false);
 
         if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavigationPath(this.resourcesState),
                 this.resourcesState.view)) {
-            await this.createNavigationPathForDocument(document);
+            await this.createNavigationPathForDocument(document, documentAsContext);
         }
     }
 
@@ -231,9 +232,12 @@ export class ResourcesStateManager {
     }
 
 
-    private async createNavigationPathForDocument(document: FieldDocument) {
+    private async createNavigationPathForDocument(document: FieldDocument,
+                                                  documentAsContext: boolean = false) {
 
-        const segments = await NavigationPath.makeSegments(document, resourceId => this.datastore.get(resourceId));
+        const segments = await NavigationPath.makeSegments(
+            document, resourceId => this.datastore.get(resourceId), documentAsContext
+        );
         if (segments.length === 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(

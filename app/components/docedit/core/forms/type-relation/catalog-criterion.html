@@ -1,0 +1,6 @@
+<select [(ngModel)]="resource['criterion']"
+        class="form-control">
+    <option value="" i18n="@@docedit.catalogCriteria.none">Kein Kriterium</option>
+    <option *ngFor="let criterion of criteria"
+            value="{{criterion.value}}">{{criterion.label}}</option>
+</select>

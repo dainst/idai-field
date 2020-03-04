@@ -3,19 +3,19 @@ import {compose, filter, flatten, flow, forEach, intersect, isDefined,
     map, remove, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
-import {HIERARCHICAL_RELATIONS, POSITION_RELATIONS, TIME_RELATIONS} from '../../../model/relation-constants';
+import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
 import {assertInSameOperationWith, makeDocumentsLookup} from '../utils';
-import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
-import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
-import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import IS_BELOW = PositionRelations.BELOW;
+import IS_ABOVE = PositionRelations.ABOVE;
+import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {AssertIsAllowedRelationDomainType} from '../types';
-import IS_AFTER = TIME_RELATIONS.IS_AFTER;
-import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
-import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
+import IS_AFTER = TimeRelations.AFTER;
+import IS_BEFORE = TimeRelations.BEFORE;
+import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
 import {ResourceId} from '../../../constants';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 
 
@@ -145,7 +145,7 @@ function setInverses(importDocument: Document,
             forEach(assertIsAllowedRelationDomainType_));
 
         if (!inverseRelationName) return;
-        if (inverseRelationName === HIERARCHICAL_RELATIONS.INCLUDES) return;
+        if (inverseRelationName === HierarchicalRelations.INCLUDES) return;
 
         flow(tmp,
             forEach(assertInSameOperationWith(importDocument)),

@@ -21,7 +21,7 @@ describe('NavigationService', () => {
             ['getRelationDefinitions', 'getTypesMap']
         );
 
-        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade, undefined);
+        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
 
         viewFacade.isInOverview.and.returnValue(false);
         viewFacade.isInExtendedSearchMode.and.returnValue(false);

@@ -8,9 +8,9 @@ import {ImportErrors as E} from '../import-errors';
 import {ValidationErrors} from '../../../model/validation-errors';
 import {DocumentDatastore} from '../../../datastore/document-datastore';
 import {INPUT_TYPES, ResourceId} from '../../../constants';
-import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {HierarchicalRelations} from '../../../model/relation-constants';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 
 

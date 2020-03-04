@@ -23,6 +23,7 @@ export interface FieldDefinition {
         |'dimension'
         |'geometry'
         |'instanceOf'
+        |'catalogCriterion'
         |'default';
     valuelist?: string[];
     valuelistFromProjectField?: string;

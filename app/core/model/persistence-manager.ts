@@ -5,8 +5,8 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {HIERARCHICAL_RELATIONS} from './relation-constants';
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {HierarchicalRelations} from './relation-constants';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {DescendantsUtility} from './descendants-utility';
 
 

@@ -23,6 +23,7 @@ const messageDictionary = {
         'menu.edit.paste': 'Einfügen',
         'menu.edit.selectAll': 'Alles auswählen',
         'menu.tools': 'Werkzeuge',
+        'menu.tools.configuration': 'Formularkonfiguration',
         'menu.tools.images': 'Bilderverwaltung',
         'menu.tools.types': 'Typenverwaltung',
         'menu.tools.matrix': 'Matrix',

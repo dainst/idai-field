@@ -4,8 +4,8 @@ import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
 import {RESOURCE_ID} from '../../constants';
-import {HIERARCHICAL_RELATIONS, PARENT} from '../../model/relation-constants';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
+import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ImportOptions} from './import-documents';
 
 
@@ -109,7 +109,7 @@ function adjustRelations(document: Document, relations: Relations) {
 function assertHasNoHierarchicalRelations(document: Document) {
 
     const foundForbiddenRelations = Object.keys(document.resource.relations)
-        .filter(includedIn(HIERARCHICAL_RELATIONS.ALL))
+        .filter(includedIn(HierarchicalRelations.ALL))
         .join(', ');
     if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
 }

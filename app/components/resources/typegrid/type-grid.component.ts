@@ -15,6 +15,8 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
 import {ContextMenu} from '../widgets/context-menu';
 import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
+import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
+import {RoutingService} from '../../routing-service';
 
 
 @Component({
@@ -33,11 +35,14 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
 
+    private expandAllGroups: boolean = false;
+
 
     constructor(private fieldDatastore: FieldReadDatastore,
                 private imageDatastore: ImageReadDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
+                private routingService: RoutingService,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading) {
@@ -48,9 +53,20 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public getExpandAllGroups = () => this.expandAllGroups;
+
+    public setExpandAllGroups = (expand: boolean) => this.expandAllGroups = expand;
+
+
     async ngOnChanges() {
 
         await this.updateImages();
+    }
+
+
+    public getMainDocument(): FieldDocument|undefined {
+
+        return NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document;
     }
 
 
@@ -62,7 +78,25 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public async open(document: FieldDocument) {
 
-        await this.viewFacade.moveInto(document);
+        await this.viewFacade.moveInto(document, false, true);
+    }
+
+
+    public async edit(document: FieldDocument) {
+
+        await this.resourcesComponent.editDocument(document);
+    }
+
+
+    public async jumpToResource(document: FieldDocument) {
+
+        await this.routingService.jumpToResource(document);
+    }
+
+
+    public isDocumentInfoVisible(): boolean {
+
+        return this.getMainDocument() !== undefined && !this.viewFacade.isInExtendedSearchMode();
     }
 
 

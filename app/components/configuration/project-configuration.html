@@ -1,0 +1,43 @@
+<div class="project-configuration row">
+    <div class="col">
+
+        <div class="row">
+            <div class="col-lg-3 sidebar">
+                <type-picker *ngIf="typesTreeList" [typesTreeList]="typesTreeList"
+                    allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
+            </div>
+            <div class="col content">
+                <h1>{{ selectedType.label }} <small class="text-muted">{{ selectedType.name }}</small></h1>
+                
+                <div *ngFor="let field of selectedType.fields" class="card">
+                    <h5 class="card-header">{{ field.label }} <small class="text-muted">{{ field.name }}</small></h5>
+                    <div class="card-body">
+                        <p class="card-text">{{ field.description }}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <b i18n="@@configuration.field.group">Gruppe</b>:
+                                {{ field.group }}
+                            </li>
+                            <li class="list-group-item">
+                                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+                                {{ field.inputType }}
+                            </li>
+                            <li class="list-group-item">
+                                <b i18n="@@configuration.field.editable">Editierbar</b>:
+                                <span *ngIf="field.editable === true" i18n="@@boolean.yes">Ja</span>
+                                <span *ngIf="field.editable === false" i18n="@@boolean.no">Nein</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b i18n="@@configuration.field.visible">Sichtbar</b>:
+                                <span *ngIf="field.visible === true" i18n="@@boolean.yes">Ja</span>
+                                <span *ngIf="field.visible === false" i18n="@@boolean.no">Nein</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

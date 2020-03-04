@@ -1,5 +1,5 @@
 import {FieldDefinition} from '../configuration/model/field-definition';
-import {IS_INSTANCE_OF, HAS_INSTANCE, POSITION_RELATIONS, TIME_RELATIONS} from './relation-constants';
+import {PositionRelations, TimeRelations, TypeRelations} from './relation-constants';
 
 
 /**
@@ -29,16 +29,16 @@ export module GroupUtil {
 
     export function getGroupName(relationName: string): string|undefined {
 
-        if (TIME_RELATIONS.ALL.includes(relationName)) {
+        if (TimeRelations.ALL.includes(relationName)) {
             return 'time';
-        } else if (POSITION_RELATIONS.ALL.includes(relationName)) {
+        } else if (PositionRelations.ALL.includes(relationName)) {
             return 'position';
-        } else if (relationName === IS_INSTANCE_OF) {
+        } else if (relationName === TypeRelations.INSTANCEOF) {
             // we do not want to show it in any group,
             // since this is done via an input type,
             // unlike other relations; we use a custom widget instead
             return undefined;
-        } else if (relationName === HAS_INSTANCE) {
+        } else if (relationName === TypeRelations.HASINSTANCE) {
             return 'identification'
         } else {
             return undefined;

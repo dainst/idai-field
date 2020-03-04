@@ -1,4 +1,4 @@
-import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
@@ -19,17 +19,12 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 /**
  * @author Thomas Kleinke
  */
-export class ResourceViewModalComponent extends ViewModalComponent implements DoCheck {
-
-    @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
+export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
-    public expandAllGroups: boolean = false;
-    public imageInfoScrollbarVisible: boolean = false;
-    public openResourceSection: string|undefined = 'stem';
-    public openImageSection: string|undefined = 'stem';
 
     private resourceEdited: boolean = false;
+    private expandAllGroups: boolean = false;
 
 
     constructor(private imagesState: ImagesState,
@@ -43,60 +38,19 @@ export class ResourceViewModalComponent extends ViewModalComponent implements Do
     }
 
 
-    ngDoCheck() {
+    public getExpandAllGroupsForMainResource = () => this.expandAllGroups;
 
-        this.imageInfoScrollbarVisible = this.isScrollbarVisible(this.imageInfo);
-    }
+    public setExpandAllGroupsForMainResource = (expand: boolean) => this.expandAllGroups = expand;
+
+    public getExpandAllGroupsForImage = () => this.imagesState.getExpandAllGroups();
+
+    public setExpandAllGroupsForImage = (expand: boolean) => this.imagesState.setExpandAllGroups(expand);
 
 
     public async initialize(document: FieldDocument) {
 
         this.document = document;
         await this.reloadImages();
-    }
-
-
-    public getExpandAllGroups(isImageDocument?: boolean) {
-
-        return isImageDocument ? this.imagesState.getExpandAllGroups() : this.expandAllGroups;
-    }
-
-
-    public setExpandAllGroups(expandAllGroups: boolean, isImageDocument?: boolean) {
-
-        if (isImageDocument) {
-            this.imagesState.setExpandAllGroups(expandAllGroups);
-        } else {
-            this.expandAllGroups = expandAllGroups;
-        }
-    }
-
-
-    public toggleExpandAllGroups(isImageDocument?: boolean) {
-
-        if (isImageDocument) {
-            this.imagesState.setExpandAllGroups(!this.imagesState.getExpandAllGroups());
-        } else {
-            this.expandAllGroups = !this.expandAllGroups;
-        }
-    }
-
-
-    public getOpenSection(isImageDocument?: boolean): string | undefined {
-
-        return isImageDocument ? this.openImageSection : this.openResourceSection;
-    }
-
-
-    public setOpenSection(section: string, isImageDocument?: boolean) {
-
-        if (isImageDocument) {
-            this.openImageSection = section;
-        } else {
-            this.openResourceSection = section;
-        }
-
-        this.setExpandAllGroups(false, isImageDocument);
     }
 
 

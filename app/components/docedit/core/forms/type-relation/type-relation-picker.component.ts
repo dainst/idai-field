@@ -1,13 +1,20 @@
+import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn,
+    right, map, flow, empty, prune} from 'tsfun';
 import {Component} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query, Constraint} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
 import {ImageRowItem} from '../../../../image/row/image-row.component';
+import {TypeRelations} from '../../../../../core/model/relation-constants';
+import {CatalogCriteria, CatalogCriterion} from './catalog-criteria';
 
+const CRITERION = 'criterion';
+const TYPECATALOG = 'TypeCatalog';
+const TYPE = 'Type';
 
 @Component({
     selector: 'type-relation-picker',
@@ -22,9 +29,10 @@ export class TypeRelationPickerComponent {
     public resource: Resource|undefined = undefined;
 
     public q: string = '';
-    public selectedCatalog: 'all-catalogs' = 'all-catalogs';
+    public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
+    public selectionCriteria: Array<CatalogCriterion> = [];
 
     public timeoutRef: any;
 
@@ -34,9 +42,11 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                public datastore: FieldReadDatastore) {
+                public datastore: FieldReadDatastore,
+                public i18n: I18n,
+                catalogCriteria: CatalogCriteria) {
 
-        this.fetchCatalogs();
+        this.init(catalogCriteria);
     }
 
 
@@ -47,15 +57,16 @@ export class TypeRelationPickerComponent {
     }
 
 
-    public selectCatalog() {
+    public onSelectCatalog() {
 
         this.fetchTypes();
     }
 
 
-    public async selectCriterion() {
+    public async onSelectCriterion() {
 
         await this.fetchCatalogs();
+        this.selectedCatalog = undefined;
         await this.fetchTypes();
     }
 
@@ -68,19 +79,42 @@ export class TypeRelationPickerComponent {
     }
 
 
+    private async init(catalogCriteria: CatalogCriteria) {
+
+        const usedCriteria = await this.usedCatalogCriteria();
+
+        this.selectionCriteria =
+            catalogCriteria.catalogCriteria
+                .filter(on(CatalogCriterion.VALUE, includedIn(usedCriteria)));
+
+        this.fetchCatalogs();
+    }
+
+
+    private async usedCatalogCriteria() {
+
+        return flow(
+            await this.datastore.find({ types: [TYPECATALOG] }),
+            to(FindResult.DOCUMENTS),
+            map(to(Document.RESOURCE)),
+            map(to(CRITERION)),
+            prune);
+    }
+
+
     private async fetchCatalogs() {
 
         const query = {
-            types: ['TypeCatalog'],
+            types: [TYPECATALOG],
             constraints: {}
         };
-        if (this.selectedCriterion) query.constraints = { 'criterion:match': 'abc' };
+        if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
         this.availableCatalogs =
             flow(
                 await this.datastore.find(query),
-                to('documents'),
-                map(to('resource')));
+                to(FindResult.DOCUMENTS),
+                map(to(Document.RESOURCE)));
     }
 
 
@@ -89,7 +123,12 @@ export class TypeRelationPickerComponent {
         if (!this.resource) return;
 
         const query = TypeRelationPickerComponent
-            .constructQuery(this.resource, this.q, this.selectedCatalog);
+            .constructQuery(
+                this.resource,
+                this.q,
+                this.selectedCatalog
+                    ? [this.selectedCatalog]
+                    : this.availableCatalogs);
 
         const documents = (await this.datastore.find(query)).documents;
         this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
@@ -106,27 +145,27 @@ export class TypeRelationPickerComponent {
 
     private static constructQuery(resource: Resource,
                                   q: string,
-                                  selectedCatalog: FieldResource|'all-catalogs') {
+                                  selectedCatalogs: Array<FieldResource>) {
 
         const query: Query = {
             q: q,
-            types: ['Type'],
+            types: [TYPE],
             limit: 5,
             sort: {
                 matchType: resource.type,
-                mode: 'exactMatchFirst',
+                mode: Query.SORT_MODE_EXACTMATCHFIRST,
             },
             constraints: {}
         };
-        if (isNot(undefinedOrEmpty)(resource.relations['isInstanceOf'])) {
+        if (isNot(undefinedOrEmpty)(resource.relations[TypeRelations.INSTANCEOF])) {
             (query.constraints as any)['id:match'] = {
-                value: resource.relations['isInstanceOf'],
+                value: resource.relations[TypeRelations.INSTANCEOF],
                 subtract: true
             };
         }
-        if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
+        if (isNot(empty)(selectedCatalogs)) {
             (query.constraints as any)['liesWithin:contain'] = {
-                value: (selectedCatalog as FieldResource).id,
+                value: selectedCatalogs.map(to(Resource.ID)),
                 searchRecursively: true
             } as Constraint;
         }

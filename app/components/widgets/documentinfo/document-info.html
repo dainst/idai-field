@@ -20,7 +20,8 @@
         <fields-view [resource]="document.resource"
                      [openSection]="openSection"
                      [expandAllGroups]="getExpandAllGroups()"
-                     (onSectionToggled)="setOpenSection($event)"></fields-view>
+                     (onSectionToggled)="setOpenSection($event)"
+                     (onJumpToResource)="jumpToResource($event)"></fields-view>
         <georeference-view *ngIf="isImageDocument()"
                            [document]="document"
                            [openSection]="openSection"

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
+import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow, empty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -22,7 +22,7 @@ export class TypeRelationPickerComponent {
     public resource: Resource|undefined = undefined;
 
     public q: string = '';
-    public selectedCatalog: 'all-catalogs' = 'all-catalogs';
+    public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
     public selectionCriteria: string[] = ['material'];
@@ -90,7 +90,12 @@ export class TypeRelationPickerComponent {
         if (!this.resource) return;
 
         const query = TypeRelationPickerComponent
-            .constructQuery(this.resource, this.q, this.selectedCatalog);
+            .constructQuery(
+                this.resource,
+                this.q,
+                this.selectedCatalog
+                    ? [this.selectedCatalog]
+                    : this.availableCatalogs);
 
         const documents = (await this.datastore.find(query)).documents;
         this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
@@ -107,7 +112,7 @@ export class TypeRelationPickerComponent {
 
     private static constructQuery(resource: Resource,
                                   q: string,
-                                  selectedCatalog: FieldResource|'all-catalogs') {
+                                  selectedCatalogs: Array<FieldResource>) {
 
         const query: Query = {
             q: q,
@@ -125,9 +130,9 @@ export class TypeRelationPickerComponent {
                 subtract: true
             };
         }
-        if (selectedCatalog && selectedCatalog !== 'all-catalogs') {
+        if (isNot(empty)(selectedCatalogs)) {
             (query.constraints as any)['liesWithin:contain'] = {
-                value: (selectedCatalog as FieldResource).id,
+                value: selectedCatalogs.map(to(Resource.ID)),
                 searchRecursively: true
             } as Constraint;
         }

@@ -3,8 +3,8 @@ import {Document, FindResult, NewDocument, Query} from 'idai-components-2';
 import {ValidationErrors} from './validation-errors';
 import {Validations} from './validations';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {HIERARCHICAL_RELATIONS} from './relation-constants';
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {HierarchicalRelations} from './relation-constants';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {ProjectTypes} from '../configuration/project-types';
 
 

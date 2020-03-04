@@ -125,9 +125,9 @@ export class TypeRelationPickerComponent {
             },
             constraints: {}
         };
-        if (isNot(undefinedOrEmpty)(resource.relations[TypeRelations.IS_INSTANCE_OF])) {
+        if (isNot(undefinedOrEmpty)(resource.relations[TypeRelations.INSTANCEOF])) {
             (query.constraints as any)['id:match'] = {
-                value: resource.relations['isInstanceOf'],
+                value: resource.relations[TypeRelations.INSTANCEOF],
                 subtract: true
             };
         }

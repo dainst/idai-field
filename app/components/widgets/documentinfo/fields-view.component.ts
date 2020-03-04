@@ -9,7 +9,7 @@ import {Name, ResourceId} from '../../../core/constants';
 import {GROUP_NAME} from '../../constants';
 import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
-import {HIERARCHICAL_RELATIONS} from '../../../core/model/relation-constants';
+import {HierarchicalRelations} from '../../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
@@ -265,7 +265,7 @@ export class FieldsViewComponent implements OnChanges {
     private static computeRelationsToShow(resource: Resource,
                                           relations: Array<RelationDefinition>): Array<RelationDefinition> {
 
-        const isNotHierarchical = isNot(includedIn(HIERARCHICAL_RELATIONS.ALL));
+        const isNotHierarchical = isNot(includedIn(HierarchicalRelations.ALL));
         const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
 
         return relations

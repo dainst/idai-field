@@ -5,28 +5,28 @@
  *
  * Time relations are interpretations of users, based on position relations
  */
-export module TIME_RELATIONS {
+export module TimeRelations {
 
-    export const IS_BEFORE = 'isBefore';
-    export const IS_AFTER = 'isAfter';
-    export const IS_CONTEMPORARY_WITH = 'isContemporaryWith';
-    export const ALL = [IS_AFTER, IS_BEFORE, IS_CONTEMPORARY_WITH];
+    export const BEFORE = 'isBefore';
+    export const AFTER = 'isAfter';
+    export const CONTEMPORARY = 'isContemporaryWith';
+    export const ALL = [AFTER, BEFORE, CONTEMPORARY];
 }
 
 /**
  * Regarding stratigraphical units (Feature type)
  */
-export module POSITION_RELATIONS {
+export module PositionRelations {
 
-    export const IS_BELOW = 'isBelow';                // is read off by a user by sight
-    export const IS_ABOVE = 'isAbove';                // is read off by a user by sight
-    export const IS_EQUIVALENT_TO = 'isEquivalentTo'; // a user's interpretation that two stratigraphical units (Feature) are the same
+    export const BELOW = 'isBelow';                // is read off by a user by sight
+    export const ABOVE = 'isAbove';                // is read off by a user by sight
+    export const EQUIVALENT = 'isEquivalentTo'; // a user's interpretation that two stratigraphical units (Feature) are the same
 
     export const BORDERS = 'borders';                 //
     export const CUTS = 'cuts';                       //
-    export const IS_CUT_BY = 'isCutBy';               //
+    export const CUTBY = 'isCutBy';               //
 
-    export const ALL = [BORDERS, CUTS, IS_CUT_BY, IS_ABOVE, IS_BELOW, IS_EQUIVALENT_TO];
+    export const ALL = [BORDERS, CUTS, CUTBY, ABOVE, BELOW, EQUIVALENT];
 }
 
 
@@ -38,12 +38,12 @@ export module POSITION_RELATIONS {
  * accordingly (so that operations get views, in which other resoures are listed, and resources
  * are displayed as nested within other resources).
  */
-export module HIERARCHICAL_RELATIONS {
+export module HierarchicalRelations {
 
-    export const RECORDED_IN = 'isRecordedIn';
-    export const LIES_WITHIN = 'liesWithin';
+    export const RECORDEDIN = 'isRecordedIn';
+    export const LIESWITHIN = 'liesWithin';
     export const INCLUDES = 'includes';
-    export const ALL = [LIES_WITHIN, RECORDED_IN, INCLUDES];
+    export const ALL = [LIESWITHIN, RECORDEDIN, INCLUDES];
 }
 
 export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export
@@ -58,6 +58,6 @@ export const SAME_AS = 'isSameAs';
 // Used to connect finds with type resources
 export module TypeRelations {
 
-    export const IS_INSTANCE_OF = 'isInstanceOf';
-    export const HAS_INSTANCE = 'hasInstance';
+    export const INSTANCEOF = 'isInstanceOf';
+    export const HASINSTANCE = 'hasInstance';
 }

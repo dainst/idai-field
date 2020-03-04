@@ -2,7 +2,7 @@ import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssoc
     Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
-import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
+import {HierarchicalRelations} from '../../../model/relation-constants';
 import {ImportErrors} from '../import-errors';
 import {hasEmptyAssociatives} from '../../util';
 import {typeOf} from '../../../util/utils';
@@ -51,7 +51,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                 overwriteOrDeleteProperties(
                     target.relations,
                     additional.relations,
-                    [HIERARCHICAL_RELATIONS.RECORDED_IN]))
+                    [HierarchicalRelations.RECORDEDIN]))
             (target) as Resource;
 
     } catch (err) {

@@ -12,15 +12,15 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {POSITION_RELATIONS, TIME_RELATIONS} from '../../core/model/relation-constants';
-import IS_CONTEMPORARY_WITH = TIME_RELATIONS.IS_CONTEMPORARY_WITH;
-import IS_EQUIVALENT_TO = POSITION_RELATIONS.IS_EQUIVALENT_TO;
-import IS_BEFORE = TIME_RELATIONS.IS_BEFORE;
-import IS_AFTER = TIME_RELATIONS.IS_AFTER;
-import IS_ABOVE = POSITION_RELATIONS.IS_ABOVE;
-import IS_BELOW = POSITION_RELATIONS.IS_BELOW;
-import IS_CUT_BY = POSITION_RELATIONS.IS_CUT_BY;
-import CUTS = POSITION_RELATIONS.CUTS;
+import {PositionRelations, TimeRelations} from '../../core/model/relation-constants';
+import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
+import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
+import IS_BEFORE = TimeRelations.BEFORE;
+import IS_AFTER = TimeRelations.AFTER;
+import IS_ABOVE = PositionRelations.ABOVE;
+import IS_BELOW = PositionRelations.BELOW;
+import IS_CUT_BY = PositionRelations.CUTBY;
+import CUTS = PositionRelations.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 
 

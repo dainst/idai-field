@@ -3,9 +3,9 @@ import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, t
 import {Document, NewDocument, Relations} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
-import {HIERARCHICAL_RELATIONS} from '../../../model/relation-constants';
-import LIES_WITHIN = HIERARCHICAL_RELATIONS.LIES_WITHIN;
-import RECORDED_IN = HIERARCHICAL_RELATIONS.RECORDED_IN;
+import {HierarchicalRelations} from '../../../model/relation-constants';
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Get, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';

@@ -62,6 +62,7 @@ import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
 import {DescendantsUtility} from '../core/model/descendants-utility';
 import {ViewModalModule} from './viewmodal/view-modal.module';
+import {ConfigurationModule} from './configuration/configuration.module';
 
 
 const remote = require('electron').remote;
@@ -93,7 +94,8 @@ registerLocaleData(localeDe, 'de');
         ExportModule,
         BackupModule,
         DatastoreModule,
-        MatrixModule
+        MatrixModule,
+        ConfigurationModule
     ],
     declarations: [
         AppComponent,

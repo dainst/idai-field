@@ -1,0 +1,27 @@
+<div class="project-configuration row">
+    <div class="col">
+
+        <div class="row">
+            <div class="col-lg-3 sidebar">
+                <type-picker *ngIf="typesTreeList" [typesTreeList]="typesTreeList"
+                    allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
+            </div>
+            <div class="col content">
+                <h1>{{ selectedType.label }} <small class="text-muted">{{ selectedType.name }}</small></h1>
+                <div *ngFor="let field of selectedType.fields" class="card">
+                    <h5 class="card-header">{{ field.label }} <small class="text-muted">{{ field.name }}</small></h5>
+                    <div class="card-body">
+                        <p class="card-text">{{ field.description }}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>group</b>: {{ field.group }}</li>
+                            <li class="list-group-item"><b>inputType</b>: {{ field.inputType }}</li>
+                            <li class="list-group-item"><b>editable</b>: {{ field.editable }}</li>
+                            <li class="list-group-item"><b>visible</b>: {{ field.visible }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

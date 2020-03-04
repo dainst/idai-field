@@ -7,6 +7,7 @@ import {SettingsComponent} from './settings/settings.component';
 import {MatrixViewComponent} from './matrix/matrix-view.component';
 import {HelpComponent} from './help/help.component';
 import {ExportComponent} from './export/export.component';
+import { ProjectConfigurationComponent } from './configuration/project-configuration.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'resources/project', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
     { path: 'export', component: ExportComponent },
     { path: 'backup-creation', component: BackupCreationComponent },
     { path: 'backup-loading', component: BackupLoadingComponent },
-    { path: 'settings', component: SettingsComponent }
+    { path: 'settings', component: SettingsComponent },
+    { path: 'configuration', component: ProjectConfigurationComponent }
 ];
 
 export const routing = RouterModule.forRoot(routes);

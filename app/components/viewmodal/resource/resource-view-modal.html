@@ -10,71 +10,18 @@
 
 <div id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0 resource-view-modal">
-        <div id="resource-info-popover" class="info-popover">
-            <div class="info-popover-header">
-                <button class="expand-all-groups-button btn btn-light"
-                        [class.active]="getExpandAllGroups()"
-                        ngbTooltip="Alle Gruppen ausklappen"
-                        i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-                        #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
-                        (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
-                        (click)="tooltip.close(); toggleExpandAllGroups();">
-                    <span class="mdi mdi-unfold-more-horizontal"></span>
-                </button>
-                <div class="identifier-label">{{document.resource.identifier}}</div>
-                <button class="edit-button btn btn-light" (click)="startEdit()">
-                    <span class="mdi mdi-pencil"></span>
-                </button>
-            </div>
+        <document-info id="resource-info-popover"
+                       [document]="document"
+                       [getExpandAllGroups]="getExpandAllGroupsForMainResource"
+                       [setExpandAllGroups]="setExpandAllGroupsForMainResource"
+                       (onStartEdit)="startEdit()"></document-info>
 
-            <div #resourceInfo class="resource-info"
-                 [class.scrollbar-visible]="resourceInfoScrollbarVisible">
-                <fields-view [resource]="document.resource"
-                             [openSection]="openResourceSection"
-                             [expandAllGroups]="getExpandAllGroups()"
-                             (onSectionToggled)="setOpenSection($event)"></fields-view>
-            </div>
-        </div>
-
-        <div *ngIf="selectedImage" id="image-info-popover" class="info-popover">
-            <div class="info-popover-header">
-                <button class="expand-all-groups-button btn btn-light"
-                        [class.active]="getExpandAllGroups(true)"
-                        ngbTooltip="Alle Gruppen ausklappen"
-                        i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
-                        #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
-                        (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
-                        (click)="tooltip.close(); toggleExpandAllGroups(true);">
-                    <span class="mdi mdi-unfold-more-horizontal"></span>
-                </button>
-                <div *ngIf="selectedImage" class="identifier-label">
-                    {{selectedImage.document.resource.identifier}}
-                </div>
-                <button class="edit-button btn btn-light" (click)="startEdit(true)">
-                    <span class="mdi mdi-pencil"></span>
-                </button>
-            </div>
-
-            <div #imageInfo class="resource-info"
-                 [class.scrollbar-visible]="imageInfoScrollbarVisible">
-                <fields-view *ngIf="selectedImage"
-                             [resource]="selectedImage.document.resource"
-                             [openSection]="openImageSection"
-                             [expandAllGroups]="getExpandAllGroups(true)"
-                             (onSectionToggled)="setOpenSection($event, true)"></fields-view>
-                <georeference-view *ngIf="selectedImage"
-                                   [document]="selectedImage.document"
-                                   [openSection]="openImageSection"
-                                   [expandAllGroups]="getExpandAllGroups(true)"
-                                   (onSectionToggled)="setOpenSection($event, true)"></georeference-view>
-                <depicts-relations-view *ngIf="selectedImage"
-                                        [resource]="selectedImage.document.resource"
-                                        [openSection]="openImageSection"
-                                        [expandAllGroups]="getExpandAllGroups(true)"
-                                        (onSectionToggled)="setOpenSection($event, true)"
-                                        (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
-            </div>
-        </div>
+        <document-info id="image-info-popover"
+                       [document]="selectedImage?.document"
+                       [getExpandAllGroups]="getExpandAllGroupsForImage"
+                       [setExpandAllGroups]="setExpandAllGroupsForImage"
+                       (onStartEdit)="startEdit(true)"
+                       (onJumpToResource)="jumpToResource($event)"></document-info>
 
         <image-viewer *ngIf="selectedImage" [image]="selectedImage.document"></image-viewer>
 

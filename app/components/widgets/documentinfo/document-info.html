@@ -1,0 +1,36 @@
+<div *ngIf="document" class="document-info">
+    <div class="document-info-header">
+        <button class="expand-all-groups-button btn btn-light"
+                [class.active]="getExpandAllGroups()"
+                ngbTooltip="Alle Gruppen ausklappen"
+                i18n-ngbTooltip="@@resources.sidebarList.expandAllGroups"
+                #tooltip="ngbTooltip" placement="right" container="body" triggers="manual"
+                (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+                (click)="tooltip.close(); toggleExpandAllGroups();">
+            <span class="mdi mdi-unfold-more-horizontal"></span>
+        </button>
+        <div class="identifier-label">{{document.resource.identifier}}</div>
+        <button class="edit-button btn btn-light" (click)="startEdit()">
+            <span class="mdi mdi-pencil"></span>
+        </button>
+    </div>
+
+    <div #documentInfo class="info-container"
+         [class.scrollbar-visible]="scrollbarVisible">
+        <fields-view [resource]="document.resource"
+                     [openSection]="openSection"
+                     [expandAllGroups]="getExpandAllGroups()"
+                     (onSectionToggled)="setOpenSection($event)"></fields-view>
+        <georeference-view *ngIf="isImageDocument()"
+                           [document]="document"
+                           [openSection]="openSection"
+                           [expandAllGroups]="getExpandAllGroups()"
+                           (onSectionToggled)="setOpenSection($event)"></georeference-view>
+        <depicts-relations-view *ngIf="isImageDocument()"
+                                [resource]="document.resource"
+                                [openSection]="openSection"
+                                [expandAllGroups]="getExpandAllGroups()"
+                                (onSectionToggled)="setOpenSection($event)"
+                                (onRelationClicked)="jumpToResource($event)"></depicts-relations-view>
+    </div>
+</div>

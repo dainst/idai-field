@@ -10,9 +10,12 @@ import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
 import {TypePickerComponent} from './type-picker.component';
 import {ZoomButtonsComponent} from './zoom-buttons.component';
-import {FieldsViewComponent} from './fields-view.component';
+import {FieldsViewComponent} from './documentinfo/fields-view.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
 import {TypeIconComponent} from './type-icon.component';
+import {DocumentInfoComponent} from './documentinfo/document-info.component';
+import {GeoreferenceViewComponent} from './documentinfo/georeference-view.component';
+import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-view.component';
 
 @NgModule({
     imports: [
@@ -25,7 +28,10 @@ import {TypeIconComponent} from './type-icon.component';
     declarations: [
         DocumentPickerComponent,
         DocumentTeaserComponent,
+        DocumentInfoComponent,
         FieldsViewComponent,
+        GeoreferenceViewComponent,
+        DepictsRelationsViewComponent,
         LoadingIconComponent,
         SearchBarComponent,
         TypePickerComponent,
@@ -38,6 +44,7 @@ import {TypeIconComponent} from './type-icon.component';
     exports: [
         DocumentPickerComponent,
         DocumentTeaserComponent,
+        DocumentInfoComponent,
         FieldsViewComponent,
         LoadingIconComponent,
         SearchBarComponent,

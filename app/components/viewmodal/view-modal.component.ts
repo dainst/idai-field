@@ -1,4 +1,4 @@
-import {DoCheck, ElementRef, ViewChild} from '@angular/core';
+import {ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -10,13 +10,12 @@ import {ImageRowItem} from '../image/row/image-row.component';
 /**
  * @author Thomas Kleinke
  */
-export abstract class ViewModalComponent implements DoCheck {
+export abstract class ViewModalComponent {
 
     @ViewChild('resourceInfo', { static: false }) resourceInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
     public selectedImage: ImageRowItem|undefined;
-    public resourceInfoScrollbarVisible: boolean = false;
 
     private subModalOpened: boolean = false;
 
@@ -26,20 +25,6 @@ export abstract class ViewModalComponent implements DoCheck {
                 private modalService: NgbModal,
                 private routingService: RoutingService) {}
 
-
-    ngDoCheck() {
-
-        this.resourceInfoScrollbarVisible = this.isScrollbarVisible();
-    }
-
-
-    public abstract toggleExpandAllGroups(isImageDocument?: boolean): void;
-
-    public abstract getExpandAllGroups(isImageDocument?: boolean): boolean;
-
-    public abstract getOpenSection(isImageDocument?: boolean): string|undefined;
-
-    public abstract setOpenSection(section: string, isImageDocument?: boolean): void;
 
     protected abstract getDocument(isImageDocument?: boolean): Document;
 
@@ -92,11 +77,5 @@ export abstract class ViewModalComponent implements DoCheck {
 
         await this.routingService.jumpToResource(documentToJumpTo, true);
         this.close();
-    }
-
-
-    protected isScrollbarVisible(element: ElementRef = this.resourceInfo): boolean {
-
-        return element && element.nativeElement.scrollHeight > element.nativeElement.clientHeight;
     }
 }

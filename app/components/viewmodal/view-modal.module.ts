@@ -3,12 +3,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ImageViewModalComponent} from './image/image-view-modal.component';
 import {ResourceViewModalComponent} from './resource/resource-view-modal.component';
-import {GeoreferenceViewComponent} from './image/georeference-view.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {ImageDocumentsManager} from '../../core/images/overview/view/image-documents-manager';
 import {ImageOverviewFacade} from '../../core/images/overview/view/imageoverview-facade';
-import {DepictsRelationsViewComponent} from './image/depicts-relations-view.component';
 import {ImagesState} from '../../core/images/overview/view/images-state';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
 import {ProjectTypes} from '../../core/configuration/project-types';
@@ -31,9 +29,7 @@ import {ImageViewerModule} from '../image/viewer/image-viewer.module';
     ],
     declarations: [
         ImageViewModalComponent,
-        ResourceViewModalComponent,
-        GeoreferenceViewComponent,
-        DepictsRelationsViewComponent,
+        ResourceViewModalComponent
     ],
     providers: [
         {

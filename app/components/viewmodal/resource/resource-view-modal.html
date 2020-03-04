@@ -14,7 +14,8 @@
                        [document]="document"
                        [getExpandAllGroups]="getExpandAllGroupsForMainResource"
                        [setExpandAllGroups]="setExpandAllGroupsForMainResource"
-                       (onStartEdit)="startEdit()"></document-info>
+                       (onStartEdit)="startEdit()"
+                       (onJumpToResource)="jumpToResource($event)"></document-info>
 
         <document-info id="image-info-popover"
                        [document]="selectedImage?.document"

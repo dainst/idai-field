@@ -13,6 +13,7 @@ import {TypeRelations} from '../../../../../core/model/relation-constants';
 import {CatalogCriteria, CatalogCriterion} from './catalog-criteria';
 
 const CRITERION = 'criterion';
+const TYPECATALOG = 'TypeCatalog';
 
 @Component({
     selector: 'type-relation-picker',
@@ -92,7 +93,7 @@ export class TypeRelationPickerComponent {
     private async usedCatalogCriteria() {
 
         return flow(
-            await this.datastore.find({ types: ['TypeCatalog'] }),
+            await this.datastore.find({ types: [TYPECATALOG] }),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
@@ -103,7 +104,7 @@ export class TypeRelationPickerComponent {
     private async fetchCatalogs() {
 
         const query = {
-            types: ['TypeCatalog'],
+            types: [TYPECATALOG],
             constraints: {}
         };
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };

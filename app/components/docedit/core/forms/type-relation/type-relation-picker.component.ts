@@ -7,6 +7,7 @@ import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
 import {ImageRowItem} from '../../../../image/row/image-row.component';
+import {TypeRelations} from '../../../../../core/model/relation-constants';
 
 
 @Component({
@@ -124,7 +125,7 @@ export class TypeRelationPickerComponent {
             },
             constraints: {}
         };
-        if (isNot(undefinedOrEmpty)(resource.relations['isInstanceOf'])) {
+        if (isNot(undefinedOrEmpty)(resource.relations[TypeRelations.IS_INSTANCE_OF])) {
             (query.constraints as any)['id:match'] = {
                 value: resource.relations['isInstanceOf'],
                 subtract: true

@@ -1,7 +1,8 @@
+import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn,
+    right, map, flow, empty, prune} from 'tsfun';
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow, empty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -11,6 +12,7 @@ import {ImageRowItem} from '../../../../image/row/image-row.component';
 import {TypeRelations} from '../../../../../core/model/relation-constants';
 import {CatalogCriteria} from './catalog-criteria';
 
+const CRITERION = 'criterion';
 
 @Component({
     selector: 'type-relation-picker',
@@ -28,7 +30,7 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
-    public selectionCriteria: any = undefined;
+    public selectionCriteria: any = [];
 
     public timeoutRef: any;
 
@@ -42,8 +44,7 @@ export class TypeRelationPickerComponent {
                 public i18n: I18n,
                 catalogCriteria: CatalogCriteria) {
 
-        this.selectionCriteria = catalogCriteria.catalogCriteria;
-        this.fetchCatalogs();
+        this.init(catalogCriteria);
     }
 
 
@@ -73,6 +74,29 @@ export class TypeRelationPickerComponent {
         this.q = q;
         if (this.timeoutRef) clearTimeout(this.timeoutRef);
         this.timeoutRef = setTimeout(() => this.fetchTypes(), 200);
+    }
+
+
+    private async init(catalogCriteria: CatalogCriteria) {
+
+        const usedCriteria = await this.usedCatalogCriteria();
+
+        this.selectionCriteria =
+            catalogCriteria.catalogCriteria
+                .filter(on(CatalogCriteria.VALUE, includedIn(usedCriteria)));
+
+        this.fetchCatalogs();
+    }
+
+
+    private async usedCatalogCriteria() {
+
+        return flow(
+            await this.datastore.find({ types: ['TypeCatalog'] }),
+            to(FindResult.DOCUMENTS),
+            map(to(Document.RESOURCE)),
+            map(to(CRITERION)),
+            prune);
     }
 
 

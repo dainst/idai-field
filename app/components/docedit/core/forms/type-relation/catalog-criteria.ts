@@ -5,6 +5,8 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class CatalogCriteria {
 
+    public static VALUE = 'value';
+
     public catalogCriteria = [
         { value: 'material', label: this.i18n({id: 'typeCatalog.criterion.material', value: 'Material' }) }
     ];

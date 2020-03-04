@@ -78,6 +78,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public async open(document: FieldDocument) {
 
+        await this.viewFacade.setExtendedSearchMode(false);
         await this.viewFacade.moveInto(document);
     }
 

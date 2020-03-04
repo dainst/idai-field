@@ -101,7 +101,9 @@ export class ViewFacade {
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 
-    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false) => this.documentsManager.moveInto(document, resetFiltersAndSelection);
+    public moveInto = (document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false,
+                       rebuildNavigationPath: boolean = false) =>
+        this.documentsManager.moveInto(document, resetFiltersAndSelection, rebuildNavigationPath);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 

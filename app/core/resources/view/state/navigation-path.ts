@@ -90,8 +90,7 @@ export module NavigationPath {
     }
 
 
-    export function setSelectedDocument(navPath: NavigationPath,
-                                        document: FieldDocument|undefined) {
+    export function setSelectedDocument(navPath: NavigationPath, document: FieldDocument|undefined) {
 
         getViewContext(navPath).selected = document;
     }
@@ -153,8 +152,7 @@ export module NavigationPath {
     }
 
 
-    export function findInvalidSegment(mainTypeDocumentResourceId: string|undefined,
-                                       navPath: NavigationPath,
+    export function findInvalidSegment(mainTypeDocumentResourceId: string|undefined, navPath: NavigationPath,
                                        exists: (_: string) => boolean): NavigationPathSegment|undefined {
 
         for (let segment of navPath.segments) {
@@ -179,23 +177,25 @@ export module NavigationPath {
 
         return (!navPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
             && Document.hasRelationTarget(document, 'isRecordedIn',
-                mainTypeDocumentResourceId )
+                mainTypeDocumentResourceId)
             && !Document.hasRelations(document, 'liesWithin'));
     }
 
 
-    export async function makeSegments(document: FieldDocument, get: (_: string) => Promise<FieldDocument>) {
+    export async function makeSegments(document: FieldDocument, get: (_: string) => Promise<FieldDocument>,
+                                       documentAsContext: boolean = false): Promise<Array<NavigationPathSegment>> {
 
         const segments: Array<NavigationPathSegment> = [];
 
-        let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+        let currentResourceId: string|undefined = documentAsContext
+            ? document.resource.id
+            : ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
         while (currentResourceId) {
-
             const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
-
-            segments.unshift( { document: currentSegmentDoc, q: '', types: []});
+            segments.unshift( { document: currentSegmentDoc, q: '', types: [] });
         }
+
         return segments;
     }
 

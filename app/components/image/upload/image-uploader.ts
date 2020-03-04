@@ -13,8 +13,8 @@ import {M} from '../../messages/m';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import { IdaiFieldFindResult } from '../../../core/datastore/cached/cached-read-datastore';
-import { readWldFile } from '../../../core/images/wld/wld-import';
+import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
+import {readWldFile} from '../../../core/images/wld/wld-import';
 
 export interface ImageUploadResult {
 
@@ -51,13 +51,13 @@ export class ImageUploader {
      * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the specified document.
      */
-    public startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    public async startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
-        const uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
+        let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
         if (!this.imagestore.getPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
-            return Promise.resolve(uploadResult);
+            return uploadResult;
         }
 
         const files = ImageUploader.getFiles(event);
@@ -70,43 +70,46 @@ export class ImageUploader {
                 supportedFileTypes.map(extension => '.' + extension).join(', ')
             ]);
         }
-        if (result[0] == 0) return Promise.resolve(uploadResult);
+        if (result[0] == 0) return uploadResult;
 
-        let uploadModalRef: any;
-        return this.chooseType(files.length, depictsRelationTarget)
-            .then(type => {
-                uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-                return this.uploadFiles(files, type, uploadResult, depictsRelationTarget).then(result => {
-                    uploadModalRef.close();
-                    return Promise.resolve(result);
-                });
-            }).catch(() => Promise.resolve(uploadResult));
+        const imageFiles = files.filter(file =>
+            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file)));
+        if (imageFiles.length) {
+            const type = await this.chooseType(imageFiles.length, depictsRelationTarget);
+            const uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
+            uploadResult = await this.uploadImageFiles(imageFiles, type, uploadResult, depictsRelationTarget);
+            uploadModalRef.close();                
+        }
+
+        const wldFiles = files.filter(file =>
+            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(file)));
+        if (wldFiles.length) {
+            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
+        }
+        
+        return uploadResult;
+
     }
 
 
-    private chooseType(fileCount: number, depictsRelationTarget?: Document): Promise<IdaiType> {
+    private async chooseType(fileCount: number, depictsRelationTarget?: Document): Promise<IdaiType> {
 
-        return new Promise((resolve, reject) => {
+        const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
+        if ((imageType.children && imageType.children.length > 0) || fileCount >= 100 || depictsRelationTarget) {
+            const modal: NgbModalRef
+                = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
 
-            const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
-            if ((imageType.children && imageType.children.length > 0) || fileCount >= 100 || depictsRelationTarget) {
-                const modal: NgbModalRef
-                    = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
+            modal.componentInstance.fileCount = fileCount;
+            modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
 
-                modal.result.then(
-                    (type: IdaiType) => resolve(type),
-                    closeReason => reject());
-
-                modal.componentInstance.fileCount = fileCount;
-                modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
-            } else {
-                resolve(imageType);
-            }
-        });
+            return await modal.result;
+        } else {
+            return imageType;
+        }
     }
 
 
-    private async uploadFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
                         depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) uploadResult;
@@ -115,14 +118,10 @@ export class ImageUploader {
         this.uploadStatus.setHandledImages(0);
 
         const duplicateFilenames: string[] = [];
-        let wldFiles: File[] = [];
 
         for (let file of files) {
             if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
-                if (!ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedWorldFileTypes)) {
-                    wldFiles.push(file);
-                }
             } else {
                 try {
                     await this.findImageByFilename(file.name)
@@ -147,15 +146,11 @@ export class ImageUploader {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
         }
 
-        if (wldFiles.length) {
-            uploadResult.messages = uploadResult.messages.concat(await this.handleWldFiles(wldFiles));
-        }
-
         return uploadResult;
     }
 
 
-    private async handleWldFiles(files: File[]) {
+    private async uploadWldFiles(files: File[]) {
 
         let messages: string[][] = [];
         let unmatchedWldFiles = [];
@@ -274,7 +269,7 @@ export class ImageUploader {
     }
 
 
-    private static getFiles(_event: Event) {
+    private static getFiles(_event: Event): Array<File> {
 
         const event = _event as any;
 
@@ -287,6 +282,6 @@ export class ImageUploader {
             if (event['srcElement']['files']) files = event['srcElement']['files'];
         }
 
-        return files;
+        return Array.from(files);
     }
 }

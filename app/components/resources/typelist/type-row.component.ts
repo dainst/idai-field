@@ -5,7 +5,7 @@ import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {ImageRowItem} from '../../image/row/image-row.component';
 import {ResourcesComponent} from '../resources.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
-import {ThumbnailComponent} from '../widgets/thumbnail.component';
+import {ThumbnailComponent} from '../../widgets/documentinfo/thumbnail.component';
 
 
 @Component({

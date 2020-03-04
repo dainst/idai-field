@@ -16,7 +16,6 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 export class ThumbnailComponent implements OnChanges {
 
     @Input() resource: FieldResource;
-    @Input() modal: 'image'|'resource' = 'image';
 
     @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 

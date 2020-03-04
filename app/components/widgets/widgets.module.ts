@@ -16,6 +16,7 @@ import {TypeIconComponent} from './type-icon.component';
 import {DocumentInfoComponent} from './documentinfo/document-info.component';
 import {GeoreferenceViewComponent} from './documentinfo/georeference-view.component';
 import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-view.component';
+import {ThumbnailComponent} from './documentinfo/thumbnail.component';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-vi
         FieldsViewComponent,
         GeoreferenceViewComponent,
         DepictsRelationsViewComponent,
+        ThumbnailComponent,
         LoadingIconComponent,
         SearchBarComponent,
         TypePickerComponent,
@@ -46,6 +48,7 @@ import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-vi
         DocumentTeaserComponent,
         DocumentInfoComponent,
         FieldsViewComponent,
+        ThumbnailComponent,
         LoadingIconComponent,
         SearchBarComponent,
         TypePickerComponent,

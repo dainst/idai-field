@@ -18,6 +18,7 @@ export class DocumentInfoComponent implements DoCheck {
     @Input() document: Document;
     @Input() getExpandAllGroups: () => boolean;
     @Input() setExpandAllGroups: (expandAllGroups: boolean) => void;
+    @Input() showThumbnail: boolean = false;
 
     @Output() onStartEdit: EventEmitter<void> = new EventEmitter<void>();
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -56,6 +57,12 @@ export class DocumentInfoComponent implements DoCheck {
     public isImageDocument() {
 
         return this.projectTypes.getImageTypeNames().includes(this.document.resource.type);
+    }
+
+
+    public isThumbnailShown(): boolean {
+
+        return this.showThumbnail && Document.hasRelations(this.document, 'isDepictedIn');
     }
 
 

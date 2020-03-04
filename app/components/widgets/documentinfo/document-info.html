@@ -15,7 +15,10 @@
         </button>
     </div>
 
+    <thumbnail *ngIf="showThumbnail" [resource]="document.resource"></thumbnail>
+
     <div #documentInfo class="info-container"
+         [class.short-document-info]="isThumbnailShown()"
          [class.scrollbar-visible]="scrollbarVisible">
         <fields-view [resource]="document.resource"
                      [openSection]="openSection"

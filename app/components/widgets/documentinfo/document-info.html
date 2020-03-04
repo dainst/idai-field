@@ -15,7 +15,9 @@
         </button>
     </div>
 
-    <thumbnail *ngIf="showThumbnail" [resource]="document.resource"></thumbnail>
+    <thumbnail *ngIf="showThumbnail"
+               [resource]="document.resource"
+               (onClick)="clickThumbnail()"></thumbnail>
 
     <div #documentInfo class="info-container"
          [class.short-document-info]="isThumbnailShown()"

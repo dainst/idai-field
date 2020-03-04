@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
-import {FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
@@ -121,6 +121,12 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 await this.resourcesComponent.deleteDocument(document);
                 break;
         }
+    }
+
+
+    public async openImageViewModal(document: Document) {
+
+        await this.viewModalLauncher.openImageViewModal(document, this.resourcesComponent);
     }
 
 

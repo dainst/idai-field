@@ -10,7 +10,8 @@
                    [setExpandAllGroups]="setExpandAllGroups"
                    [showThumbnail]="true"
                    (onStartEdit)="edit(getMainDocument())"
-                   (onJumpToResource)="jumpToResource($event)"></document-info>
+                   (onJumpToResource)="jumpToResource($event)"
+                   (onThumbnailClicked)="openImageViewModal(getMainDocument())"></document-info>
 
     <div id="grid-elements-container">
         <div *ngFor="let document of documents"

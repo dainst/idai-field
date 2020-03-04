@@ -22,6 +22,7 @@ export class DocumentInfoComponent implements DoCheck {
 
     @Output() onStartEdit: EventEmitter<void> = new EventEmitter<void>();
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
+    @Output() onThumbnailClicked: EventEmitter<void> = new EventEmitter<void>();
 
     public scrollbarVisible: boolean = false;
     public openSection: string|undefined = 'stem';
@@ -33,6 +34,8 @@ export class DocumentInfoComponent implements DoCheck {
     public startEdit = () => this.onStartEdit.emit();
 
     public jumpToResource = (document: FieldDocument) => this.onJumpToResource.emit(document);
+
+    public clickThumbnail = () => this.onThumbnailClicked.emit();
 
 
     ngDoCheck() {

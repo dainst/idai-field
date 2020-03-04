@@ -84,6 +84,7 @@ type-grid {
       bottom: 0;
       height: 38px;
       width: 100%;
+      z-index: 5;
 
       #create-document-button .circular-button {
         left: calc(50% - 20px);

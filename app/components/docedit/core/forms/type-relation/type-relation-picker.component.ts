@@ -58,6 +58,7 @@ export class TypeRelationPickerComponent {
     public async onSelectCriterion() {
 
         await this.fetchCatalogs();
+        this.selectedCatalog = undefined;
         await this.fetchTypes();
     }
 

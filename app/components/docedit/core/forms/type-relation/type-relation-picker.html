@@ -2,13 +2,14 @@
     <div class="modal-header">
 
         <select id="criterion" class="form-control" style="width: 175px"
-                [(ngModel)]="selectedCriterion"  (change)="selectCriterion()">
-            <option value="material">Material</option>
+                [(ngModel)]="selectedCriterion"  (change)="onSelectCriterion()">
             <option value="">None</option>
+            <option *ngFor="let criterion of selectionCriteria"
+                    [ngValue]="criterion">{{criterion}}</option>
         </select>
 
         <select id="importFormatSelect" class="form-control" style="width: 175px"
-                [(ngModel)]="selectedCatalog"  (change)="selectCatalog()">
+                [(ngModel)]="selectedCatalog"  (change)="onSelectCatalog()">
             <option value="all-catalogs" i18n="@@docedit.forms.typeRelationPicker.allCatalogs">Alle Kataloge</option>
             <option *ngFor="let catalog of availableCatalogs"
                     [ngValue]="catalog">{{catalog.identifier}}</option>

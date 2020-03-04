@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query, Constraint} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -25,6 +25,7 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: 'all-catalogs' = 'all-catalogs';
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
+    public selectionCriteria: string[] = ['material'];
 
     public timeoutRef: any;
 
@@ -47,13 +48,13 @@ export class TypeRelationPickerComponent {
     }
 
 
-    public selectCatalog() {
+    public onSelectCatalog() {
 
         this.fetchTypes();
     }
 
 
-    public async selectCriterion() {
+    public async onSelectCriterion() {
 
         await this.fetchCatalogs();
         await this.fetchTypes();
@@ -74,13 +75,13 @@ export class TypeRelationPickerComponent {
             types: ['TypeCatalog'],
             constraints: {}
         };
-        if (this.selectedCriterion) query.constraints = { 'criterion:match': 'abc' };
+        if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
         this.availableCatalogs =
             flow(
                 await this.datastore.find(query),
-                to('documents'),
-                map(to('resource')));
+                to(FindResult.DOCUMENTS),
+                map(to(Document.RESOURCE)));
     }
 
 

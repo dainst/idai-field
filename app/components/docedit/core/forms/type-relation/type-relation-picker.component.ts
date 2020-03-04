@@ -14,6 +14,7 @@ import {CatalogCriteria, CatalogCriterion} from './catalog-criteria';
 
 const CRITERION = 'criterion';
 const TYPECATALOG = 'TypeCatalog';
+const TYPE = 'Type';
 
 @Component({
     selector: 'type-relation-picker',
@@ -148,11 +149,11 @@ export class TypeRelationPickerComponent {
 
         const query: Query = {
             q: q,
-            types: ['Type'],
+            types: [TYPE],
             limit: 5,
             sort: {
                 matchType: resource.type,
-                mode: 'exactMatchFirst',
+                mode: Query.SORT_MODE_EXACTMATCHFIRST,
             },
             constraints: {}
         };

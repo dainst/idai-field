@@ -274,6 +274,14 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
           <context context-type="linenumber">86</context>
         </context-group>
@@ -300,6 +308,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
           <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
@@ -994,6 +1010,38 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-loading.html</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.group" datatype="html">
+        <source>Gruppe</source>
+        <target state="final">Gruppe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.inputType" datatype="html">
+        <source>Eingabetyp</source>
+        <target state="final">Eingabetyp</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.editable" datatype="html">
+        <source>Editierbar</source>
+        <target state="final">Editierbar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.visible" datatype="html">
+        <source>Sichtbar</source>
+        <target state="final">Sichtbar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.period" datatype="html">
@@ -4522,6 +4570,14 @@
       <trans-unit id="navbar.tabs.settings" datatype="html">
         <source>Einstellungen</source>
         <target state="final">Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.tabs.configuration" datatype="html">
+        <source>Formularkonfiguration</source>
+        <target state="final">Formularkonfiguration</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>

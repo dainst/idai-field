@@ -10,6 +10,7 @@ type-grid {
     border-top: 1px solid #e9ecef;
 
     #grid-elements-container {
+      height: 100%;
       overflow-y: auto;
 
       .type-grid-element {

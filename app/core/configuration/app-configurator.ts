@@ -248,7 +248,7 @@ export class AppConfigurator {
             superType: true,
             fields: {
                 criterion: {
-                    inputType: 'input',
+                    inputType: 'catalogCriterion',
                     constraintIndexed: true
                 }
             }

@@ -3,7 +3,7 @@
 
         <select id="criterion" class="form-control" style="width: 175px"
                 [(ngModel)]="selectedCriterion"  (change)="onSelectCriterion()">
-            <option value="">None</option>
+            <option value="" i18n="@@docedit.catalogCriteria.none">Kein Kriterium</option>
             <option *ngFor="let criterion of selectionCriteria"
                     [ngValue]="criterion.value">{{criterion.label}}</option>
         </select>

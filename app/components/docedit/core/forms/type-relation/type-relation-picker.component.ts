@@ -9,6 +9,7 @@ import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
 import {ImageRowItem} from '../../../../image/row/image-row.component';
 import {TypeRelations} from '../../../../../core/model/relation-constants';
+import {CatalogCriteria} from './catalog-criteria';
 
 
 @Component({
@@ -27,10 +28,7 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
-    public selectionCriteria: any =
-        [
-            { value: 'material', label: this.i18n({id: 'typeCatalog.criterion.material', value: 'Material' }) }
-        ];
+    public selectionCriteria: any = undefined;
 
     public timeoutRef: any;
 
@@ -41,8 +39,10 @@ export class TypeRelationPickerComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 public datastore: FieldReadDatastore,
-                public i18n: I18n) {
+                public i18n: I18n,
+                catalogCriteria: CatalogCriteria) {
 
+        this.selectionCriteria = catalogCriteria.catalogCriteria;
         this.fetchCatalogs();
     }
 

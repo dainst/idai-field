@@ -34,7 +34,7 @@ export module NavigationPath {
     }
 
 
-    export function getSelectedSegment(navPath: NavigationPath) {
+    export function getSelectedSegment(navPath: NavigationPath): NavigationPathSegment {
 
         return navPath.segments
             .find(on('document.resource.id', is(navPath.selectedSegmentId))) as NavigationPathSegment;
